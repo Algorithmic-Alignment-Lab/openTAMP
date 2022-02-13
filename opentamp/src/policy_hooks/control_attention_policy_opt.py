@@ -10,87 +10,52 @@ import time
 import traceback
 
 import numpy as np
-import tensorflow as tf
-
-from gps.algorithm.policy_opt.config import POLICY_OPT_TF
-from gps.algorithm.policy_opt.policy_opt import PolicyOpt
-#from gps.algorithm.policy.tf_policy import TfPolicy
-from policy_hooks.utils.tf_utils import TfSolver
 from policy_hooks.utils.policy_solver_utils import *
-
 from policy_hooks.tf_policy import TfPolicy
+from policy_hooks.torch_models import *
 
 MAX_UPDATE_SIZE = 10000
 SCOPE_LIST = ['primitive', 'cont', 'label']
 
 
-class ControlAttentionPolicyOpt(PolicyOpt):
+class PolicyOpt(object):
     """ Policy optimization using tensor flow for DAG computations/nonlinear function approximation. """
     def __init__(self, hyperparams, dO, dU, dPrimObs, dContObs, dValObs, primBounds, contBounds=None, inputs=None):
-        global tf
-        import tensorflow as tf
         self.scope = hyperparams['scope'] if 'scope' in hyperparams else None
-        # tf.reset_default_graph()
-
-        config = copy.deepcopy(POLICY_OPT_TF)
-        config.update(hyperparams)
-
+        self.config = hyperparams
         self.split_nets = hyperparams.get('split_nets', False)
         self.valid_scopes = ['control'] if not self.split_nets else list(config['task_list'])
-
-        PolicyOpt.__init__(self, config, dO, dU)
-
-        tf.set_random_seed(self._hyperparams['random_seed'])
-
-        self.tf_iter = 0
+        self.torch_iter = 0
         self.batch_size = self._hyperparams['batch_size']
         self.load_all = self._hyperparams.get('load_all', False)
-
         self.input_layer = inputs
         self.share_buffers = self._hyperparams.get('share_buffer', True)
         if self._hyperparams.get('share_buffer', True):
             self.buffers = self._hyperparams['buffers']
             self.buf_sizes = self._hyperparams['buffer_sizes']
-        auxBounds = self._hyperparams.get('aux_boundaries', [])
-        self._dPrim = max([b[1] for b in primBounds] + [b[1] for b in auxBounds])
+
+        self._dPrim = max([b[1] for b in primBounds])
         self._dCont = max([b[1] for b in contBounds]) if contBounds is not None and len(contBounds) else 0
         self._dPrimObs = dPrimObs
         self._dContObs = dContObs
-        self._dValObs = dValObs
         self._primBounds = primBounds
         self._contBounds = contBounds if contBounds is not None else []
-        self.load_label = self._hyperparams['load_label']
-        self.task_map = {}
-        self.device_string = "/cpu:0"
+        self._compute_idx()
+
+        self.device = torch.device('cpu')
         if self._hyperparams['use_gpu'] == 1:
-            self.gpu_device = self._hyperparams['gpu_id']
-            self.device_string = "/gpu:" + str(self.gpu_device)
-        self.act_op = None  # mu_hat
-        self.feat_op = None # features
-        self.loss_scalar = None
-        self.obs_tensor = None
-        self.precision_tensor = None
-        self.action_tensor = None  # mu true
-        self.solver = None
-        self.feat_vals = None
-        self.init_network()
-        self.init_solver()
-        self.var = {task: self._hyperparams['init_var'] * np.ones(dU) for task in self.task_map}
-        self.var[""] = self._hyperparams['init_var'] * np.ones(dU)
-        self.distilled_var = self._hyperparams['init_var'] * np.ones(dU)
+            gpu_id = self._hyperparams['gpu_id']
+            self.device = torch.device('cuda:{}'.format(gpu_id)
+        self.gpu_fraction = self._hyperparams['gpu_fraction']
+        torch.cuda.set_per_process_memory_fraction(self.gpu_fraction, device=self.device)
+
+        self.init_networks()
+        self.init_solvers()
+
         self.weight_dir = self._hyperparams['weight_dir']
-        self.scope = self._hyperparams['scope'] if 'scope' in self._hyperparams else None
         self.last_pkl_t = time.time()
         self.cur_pkl = 0
 
-        self.gpu_fraction = self._hyperparams['gpu_fraction']
-        if not self._hyperparams['allow_growth']:
-            gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=self.gpu_fraction)
-        else:
-            gpu_options = tf.GPUOptions(allow_growth=True)
-        self.sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options, allow_soft_placement=True))
-        init_op = tf.initialize_all_variables()
-        self.sess.run(init_op)
         self.init_policies(dU)
         llpol = hyperparams.get('ll_policy', '')
         hlpol = hyperparams.get('hl_policy', '')
@@ -104,53 +69,13 @@ class ControlAttentionPolicyOpt(PolicyOpt):
             if len(contpol) and scope not in self.valid_scopes:
                 self.restore_ckpt(scope, dirname=contpol)
 
-        # List of indices for state (vector) data and image (tensor) data in observation.
-        self.x_idx, self.img_idx, i = [], [], 0
-        if 'obs_image_data' not in self._hyperparams['network_params']:
-            self._hyperparams['network_params'].update({'obs_image_data': []})
-        for sensor in self._hyperparams['network_params']['obs_include']:
-            dim = self._hyperparams['network_params']['sensor_dims'][sensor]
-            if sensor in self._hyperparams['network_params']['obs_image_data']:
-                self.img_idx = self.img_idx + list(range(i, i+dim))
-            else:
-                self.x_idx = self.x_idx + list(range(i, i+dim))
-            i += dim
-
-        self.prim_x_idx, self.prim_img_idx, i = [], [], 0
-        for sensor in self._hyperparams['primitive_network_params']['obs_include']:
-            dim = self._hyperparams['primitive_network_params']['sensor_dims'][sensor]
-            if sensor in self._hyperparams['primitive_network_params']['obs_image_data']:
-                self.prim_img_idx = self.prim_img_idx + list(range(i, i+dim))
-            else:
-                self.prim_x_idx = self.prim_x_idx + list(range(i, i+dim))
-            i += dim
-
-        self.cont_x_idx, self.cont_img_idx, i = [], [], 0
-        for sensor in self._hyperparams['cont_network_params']['obs_include']:
-            dim = self._hyperparams['cont_network_params']['sensor_dims'][sensor]
-            if sensor in self._hyperparams['cont_network_params']['obs_image_data']:
-                self.cont_img_idx = self.cont_img_idx + list(range(i, i+dim))
-            else:
-                self.cont_x_idx = self.cont_x_idx + list(range(i, i+dim))
-            i += dim
-
-
-        self.label_x_idx, self.label_img_idx, i = [], [], 0
-        for sensor in self._hyperparams['label_network_params']['obs_include']:
-            dim = self._hyperparams['label_network_params']['sensor_dims'][sensor]
-            if sensor in self._hyperparams['label_network_params']['obs_image_data']:
-                self.label_img_idx = self.label_img_idx + list(range(i, i+dim))
-            else:
-                self.label_x_idx = self.label_x_idx + list(range(i, i+dim))
-            i += dim
-
         self.update_count = 0
         if self.scope in ['primitive', 'cont']:
             self.update_size = self._hyperparams['prim_update_size']
         else:
             self.update_size = self._hyperparams['update_size']
 
-        self.update_size *= (1 + self._hyperparams.get('permute_hl', 0))
+        #self.update_size *= (1 + self._hyperparams.get('permute_hl', 0))
 
         self.train_iters = 0
         self.average_losses = []
@@ -161,6 +86,74 @@ class ControlAttentionPolicyOpt(PolicyOpt):
         self.lr_scale = 0.9975
         self.lr_policy = 'fixed'
         self._hyperparams['iterations'] = MAX_UPDATE_SIZE // self.batch_size + 1
+
+
+    def _compute_idx(self):
+        # List of indices for state (vector) data and image (tensor) data in observation.
+        self.x_idx, self.img_idx, i = [], [], 0
+        for sensor in self._hyperparams['network_params']['obs_include']:
+            dim = self._hyperparams['network_params']['sensor_dims'][sensor]
+            if sensor in self._hyperparams['network_params'].get('obs_image_data', []):
+                self.img_idx = self.img_idx + list(range(i, i+dim))
+            else:
+                self.x_idx = self.x_idx + list(range(i, i+dim))
+            i += dim
+
+        self.prim_x_idx, self.prim_img_idx, i = [], [], 0
+        for sensor in self._hyperparams['primitive_network_params']['obs_include']:
+            dim = self._hyperparams['primitive_network_params']['sensor_dims'][sensor]
+            if sensor in self._hyperparams['primitive_network_params'].get('obs_image_data', []):
+                self.prim_img_idx = self.prim_img_idx + list(range(i, i+dim))
+            else:
+                self.prim_x_idx = self.prim_x_idx + list(range(i, i+dim))
+            i += dim
+
+        self.cont_x_idx, self.cont_img_idx, i = [], [], 0
+        for sensor in self._hyperparams['cont_network_params']['obs_include']:
+            dim = self._hyperparams['cont_network_params']['sensor_dims'][sensor]
+            if sensor in self._hyperparams['cont_network_params'].get('obs_image_data', []):
+                self.cont_img_idx = self.cont_img_idx + list(range(i, i+dim))
+            else:
+                self.cont_x_idx = self.cont_x_idx + list(range(i, i+dim))
+            i += dim
+
+
+ 
+    def _set_opt(self, config, task):
+        opt_cls = config.get('opt_cls', optim.Adam)
+        if type(opt_cls) is str: opt_cls = getattr(optim, opt_cls)
+        lr = config.get('lr', 1e-3)
+        self.opts[task] = opt_cls(self.nets[task].parameters(), lr=lr) 
+
+
+    def train_step(self, x, y, precision=None):
+        if self.opt is None: self._set_opt()
+        (x, y) = (x.to(self.device), y.to(self.device))
+        pred = self(x)
+        if precision is None:
+            loss = self.loss_fn(pred, y, reduction='mean')
+        elif precision.size()[-1] > 1:
+            loss = self.loss_fn(pred, y, precision=precision)
+            loss = torch.mean(loss)
+        else:
+            loss = self.loss_fn(pred, y, reduction='none') * precision
+            loss = torch.mean(loss)
+
+        self.opt.zero_grad()
+        loss.backward()
+        self.opt.step()
+        return loss.item()
+
+
+    def update(self, task="control", check_val=False, aux=[]):
+        start_t = time.time()
+        average_loss = 0
+        for i in range(self._hyperparams['iterations']):
+            x, y, precision = self.data_loader.next()
+            train_loss = self.train_step()
+            average_loss += train_loss
+            self.tf_iter += 1
+        self.average_losses.append(average_loss / self._hyperparams['iterations'])
 
 
     def restore_ckpts(self, label=None):
@@ -355,6 +348,14 @@ class ControlAttentionPolicyOpt(PolicyOpt):
 
     def init_network(self):
         """ Helper method to initialize the tf networks used """
+        self.nets = {}
+        if self.load_all or self.scope is None:
+            for scope in self.valid_scopes:
+                self.nets[scope] = PolicyNet(self._hyperparams['network_model'], device=self.device)
+                
+        else:
+            config = self._hyperparams['network_model']
+            if 'primitive' == self.scope: config = self._hyperparams['primitive_network_model']
 
         input_tensor = None
         if self.load_all or self.scope is None or 'primitive' == self.scope:
@@ -453,75 +454,14 @@ class ControlAttentionPolicyOpt(PolicyOpt):
 
     def init_solver(self):
         """ Helper method to initialize the solver. """
-        self.dec_tensor = tf.placeholder('float', name='weight_dec')#tf.Variable(initial_value=self._hyperparams['prim_weight_decay'], name='weightdec')
-        if self.scope is None or 'primitive' == self.scope:
-            self.cur_hllr = self._hyperparams['hllr']
-            self.hllr_tensor = tf.Variable(initial_value=self._hyperparams['hllr'], name='hllr')
-            self.cur_dec = self._hyperparams['prim_weight_decay']
-            vars_to_opt = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope='primitive/')
-            with tf.variable_scope('primitive'):
-                self.primitive_solver = TfSolver(loss_scalar=self.primitive_loss_scalar,
-                                                   solver_name=self._hyperparams['solver_type'],
-                                                   base_lr=self.hllr_tensor,
-                                                   lr_policy=self._hyperparams['lr_policy'],
-                                                   momentum=self._hyperparams['momentum'],
-                                                   weight_decay=self.dec_tensor,#self._hyperparams['prim_weight_decay'],
-                                                   #weight_decay=self._hyperparams['prim_weight_decay'],
-                                                   fc_vars=self.primitive_fc_vars,
-                                                   last_conv_vars=self.primitive_last_conv_vars,
-                                                   vars_to_opt=vars_to_opt,
-                                                   aux_losses=self.primitive_aux_losses)
-        if (self.scope is None or 'cont' == self.scope) and len(self._contBounds):
-            self.cur_hllr = self._hyperparams['hllr']
-            self.hllr_tensor = tf.Variable(initial_value=self._hyperparams['hllr'], name='hllr')
-            self.cur_dec = self._hyperparams['cont_weight_decay']
-            vars_to_opt = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope='cont/')
-            with tf.variable_scope('cont'):
-                self.cont_solver = TfSolver(loss_scalar=self.cont_loss_scalar,
-                                           solver_name=self._hyperparams['solver_type'],
-                                           base_lr=self.hllr_tensor,
-                                           lr_policy=self._hyperparams['lr_policy'],
-                                           momentum=self._hyperparams['momentum'],
-                                           weight_decay=self.dec_tensor,
-                                           fc_vars=self.cont_fc_vars,
-                                           last_conv_vars=self.cont_last_conv_vars,
-                                           vars_to_opt=vars_to_opt,
-                                           aux_losses=self.cont_aux_losses)
-        self.lr_tensor = tf.Variable(initial_value=self._hyperparams['lr'], name='lr')
-        self.cur_lr = self._hyperparams['lr']
-        for scope in self.valid_scopes:
-            if self.scope is None or scope == self.scope:
-                self.cur_dec = self._hyperparams['weight_decay']
-                vars_to_opt = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope=scope+'/')
-                with tf.variable_scope(scope):
-                    self.task_map[scope]['solver'] = TfSolver(loss_scalar=self.task_map[scope]['loss_scalar'],
-                                                           solver_name=self._hyperparams['solver_type'],
-                                                           base_lr=self.lr_tensor,
-                                                           lr_policy=self._hyperparams['lr_policy'],
-                                                           momentum=self._hyperparams['momentum'],
-                                                           #weight_decay=self.dec_tensor,#self._hyperparams['weight_decay'],
-                                                           weight_decay=self._hyperparams['weight_decay'],
-                                                           fc_vars=self.task_map[scope]['fc_vars'],
-                                                           last_conv_vars=self.task_map[scope]['last_conv_vars'],
-                                                           vars_to_opt=vars_to_opt)
+        self.opts = {}
+        self.cur_dec = self._hyperparams['weight_decay']
+        if self.scope is not None:
+            self._set_opt(self.config, self.scope)
+        else:
+            for scope in self.scopes:
+                self._set_opt(self.config, scope)
 
-        if self.load_label and (self.scope is None or 'label' == self.scope):
-            self.cur_hllr = self._hyperparams['hllr']
-            self.hllr_tensor = tf.Variable(initial_value=self._hyperparams['hllr'], name='hllr')
-            self.cur_dec = self._hyperparams['prim_weight_decay']
-            vars_to_opt = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope='label/')
-            with tf.variable_scope('label'):
-                self.label_solver = TfSolver(loss_scalar=self.label_loss_scalar,
-                                                   solver_name=self._hyperparams['solver_type'],
-                                                   base_lr=self.hllr_tensor,
-                                                   lr_policy=self._hyperparams['lr_policy'],
-                                                   momentum=self._hyperparams['momentum'],
-                                                   weight_decay=self.dec_tensor,#self._hyperparams['prim_weight_decay'],
-                                                   #weight_decay=self._hyperparams['prim_weight_decay'],
-                                                   fc_vars=self.label_fc_vars,
-                                                   last_conv_vars=self.label_last_conv_vars,
-                                                   vars_to_opt=vars_to_opt,
-                                                   aux_losses=self.label_aux_losses)
 
     def get_policy(self, task):
         if task == 'primitive': return self.prim_policy
@@ -678,190 +618,10 @@ class ControlAttentionPolicyOpt(PolicyOpt):
         return val_loss
 
 
-    def update(self, task="control", check_val=False, aux=[]):
-        start_t = time.time()
-        average_loss = 0
-        for i in range(self._hyperparams['iterations']):
-            feed_dict = {self.hllr_tensor: self.cur_hllr} if task in ['label', 'cont', 'primitive'] else {self.lr_tensor: self.cur_lr}
-            feed_dict[self.dec_tensor] = self.cur_dec
-            if task in self.task_map:
-                solver = self.task_map[task]['solver']
-            elif task == 'primitive':
-                solver = self.primitive_solver
-            elif task == 'cont':
-                solver = self.cont_solver
-            elif task == 'label':
-                solver = self.label_solver
-            train_loss = solver(feed_dict, self.sess, device_string=self.device_string, train=True)[0]
-            average_loss += train_loss
-        self.tf_iter += self._hyperparams['iterations']
-        self.average_losses.append(average_loss / self._hyperparams['iterations'])
-
-        '''
-        # Optimize variance.
-        A = np.sum(tgt_prc_orig, 0) + 2 * NT * \
-                self._hyperparams['ent_reg'] * np.ones((dU, dU))
-        A = A / np.sum(tgt_wt)
-        self.var[task] = 1 / np.diag(A)
-        policy.chol_pol_covar = np.diag(np.sqrt(self.var[task]))
-        '''
-
-
-    def update_primitive_filter(self, obs, tgt_mu, tgt_prc, tgt_wt, check_val=False, aux=[]):
-        """
-        Update policy.
-        Args:
-            obs: Numpy array of observations, N x T x dO.
-            tgt_mu: Numpy array of mean filter outputs, N x T x dP.
-            tgt_prc: Numpy array of precision matrices, N x T x dP x dP.
-            tgt_wt: Numpy array of weights, N x T.
-        Returns:
-            A tensorflow object with updated weights.
-        """
-        N = obs.shape[0]
-
-        #tgt_wt *= (float(N) / np.sum(tgt_wt))
-        # Allow weights to be at most twice the robust median.
-        # mn = np.median(tgt_wt[(np.abs(tgt_wt) > 1e-3).nonzero()])
-        # for n in range(N):
-        #     tgt_wt[n] = min(tgt_wt[n], 2 * mn)
-        # Robust median should be around one.
-        # tgt_wt /= mn
-
-        # Reshape inputs.
-        obs = np.reshape(obs, (N, -1))
-        tgt_mu = np.reshape(tgt_mu, (N, -1))
-
-        '''
-        tgt_prc = np.reshape(tgt_prc, (N, dP, dP))
-        tgt_wt = np.reshape(tgt_wt, (N, 1, 1))
-
-        # Fold weights into tgt_prc.
-        tgt_prc = tgt_wt * tgt_prc
-        '''
-        tgt_prc = tgt_prc * tgt_wt.reshape((N, 1)) #tgt_wt.flatten()
-        if len(aux): aux = aux.reshape((-1,1))
-
-        # Assuming that N*T >= self.batch_size.
-        batch_size = np.minimum(self.batch_size, N)
-        batches_per_epoch = np.maximum(np.floor(N / batch_size), 1)
-        idx = list(range(N))
-        average_loss = 0
-        np.random.shuffle(idx)
-
-        '''
-        if self._hyperparams['fc_only_iterations'] > 0:
-            feed_dict = {self.obs_tensor: obs}
-            num_values = obs.shape[0]
-            conv_values = self.primitive_solver.get_last_conv_values(self.sess, feed_dict, num_values, batch_size)
-            for i in range(self._hyperparams['fc_only_iterations'] ):
-                start_idx = int(i * batch_size %
-                                (batches_per_epoch * batch_size))
-                idx_i = idx[start_idx:start_idx+batch_size]
-                feed_dict = {self.primitive_last_conv_vars: conv_values[idx_i],
-                             self.primitive_action_tensor: tgt_mu[idx_i],
-                             self.primitive_precision_tensor: tgt_prc[idx_i],
-                             self.hllr_tensor: self.cur_hllr}
-                train_loss = self.primitive_solver(feed_dict, self.sess, device_string=self.device_string, train=(not check_val), use_fc_solver=True)
-            average_loss = 0
-        '''
-
-        # actual training.
-        # for i in range(self._hyperparams['iterations']):
-        for i in range(self._hyperparams['iterations']):
-            # Load in data for this batch.
-            self.train_iters += 1
-            start_idx = int(i * self.batch_size %
-                            (batches_per_epoch * self.batch_size))
-            idx_i = idx[start_idx:start_idx+self.batch_size]
-            feed_dict = {self.primitive_obs_tensor: obs[idx_i],
-                         self.primitive_action_tensor: tgt_mu[idx_i],
-                         self.primitive_precision_tensor: tgt_prc[idx_i],
-                         self.hllr_tensor: self.cur_hllr}
-            if len(aux) and self.primitive_class_tensor is not None:
-                feed_dict[self.primitive_class_tensor] = aux[idx_i]
-            train_loss = self.primitive_solver(feed_dict, self.sess, device_string=self.device_string, train=(not check_val))[0]
-
-            average_loss += train_loss
-
-        self.tf_iter += self._hyperparams['iterations']
-        if check_val:
-            self.average_val_losses.append(average_loss / self._hyperparams['iterations'])
-        else:
-            self.average_losses.append(average_loss / self._hyperparams['iterations'])
-        feed_dict = {self.obs_tensor: obs}
-        num_values = obs.shape[0]
-        #if self.primitive_feat_op is not None:
-        #    self.primitive_feat_vals = self.primitive_solver.get_var_values(self.sess, self.primitive_feat_op, feed_dict, num_values, self.batch_size)
-
-
-    def traj_prob(self, obs, task="control"):
-        assert len(obs.shape) == 2 or obs.shape[0] == 1
-        mu, sig, prec, det_sig = self.prob(obs, task)
-        traj = np.tri(mu.shape[1]).dot(mu[0])
-        return np.array([traj]), sig, prec, det_sig
-
     def policy_initialized(self, task):
         if task in self.valid_scopes:
             return self.task_map[task]['policy'].scale is not None
         return self.task_map['control']['policy'].scale is not None
-
-    def prob(self, obs, task="control"):
-        """
-        Run policy forward.
-        Args:
-            obs: Numpy array of observations that is N x T x dO.
-        """
-        if len(obs.shape) < 3:
-            obs = obs.reshape((1, obs.shape[0], obs.shape[1]))
-        dU = self._dU
-        N, T = obs.shape[:2]
-
-        # Normalize obs.
-        if task not in self.valid_scopes:
-            task = "control"
-        if task in self.task_map:
-            policy = self.task_map[task]['policy']
-        else:
-            policy = getattr(self, '{0}_policy'.format(task))
-
-        if policy.scale is not None:
-            obs = obs.copy()
-            for n in range(N):
-                obs[n, :, self.x_idx] = (obs[n, :, self.x_idx].T.dot(policy.scale)
-                                         + policy.bias).T
-
-        output = np.zeros((N, T, dU))
-
-        for i in range(N):
-            for t in range(T):
-                # Feed in data.
-                if task in self.task_map:
-                    obs_tensor = self.task_map[task]['obs_tensor']
-                    act_op = self.task_map[task]['act_op']
-                else:
-                    obs_tensor = getattr(self, '{0}_obs_tensor'.format(task))
-                    act_op = getattr(self, '{0}_act_op'.format(task))
-                feed_dict = {obs_tensor: np.expand_dims(obs[i, t], axis=0)}
-                # with tf.device(self.device_string):
-                #     output[i, t, :] = self.sess.run(act_op, feed_dict=feed_dict)
-                output[i, t, :] = self.sess.run(act_op, feed_dict=feed_dict)
-
-        if task in self.var:
-            pol_sigma = np.tile(np.diag(self.var[task]), [N, T, 1, 1])
-            pol_prec = np.tile(np.diag(1.0 / self.var[task]), [N, T, 1, 1])
-            pol_det_sigma = np.tile(np.prod(self.var[task]), [N, T])
-        else:
-            var = getattr(self, '{0}_var'.format(task))
-            pol_sigma = np.tile(np.diag(var), [N, T, 1, 1])
-            pol_prec = np.tile(np.diag(1.0 / var), [N, T, 1, 1])
-            pol_det_sigma = np.tile(np.prod(var), [N, T])
-
-        return output, pol_sigma, pol_prec, pol_det_sigma
-
-    def set_ent_reg(self, ent_reg):
-        """ Set the entropy regularization. """
-        self._hyperparams['ent_reg'] = ent_reg
 
     def save_model(self, fname):
         # LOGGER.debug('Saving model to: %s', fname)
