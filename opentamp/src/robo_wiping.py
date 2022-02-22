@@ -70,7 +70,6 @@ obj_mode = 2
 env = robosuite.make(
     "Wipe",
     robots=["Sawyer"],             # load a Sawyer robot
-    # gripper_types="default",                # use default grippers per robot arm
     controller_configs=controller_config,   # each arm is controlled using OSC
     has_renderer=has_render,                      # on-screen rendering
     render_camera="frontview",              # visualize the "frontview" camera
@@ -79,14 +78,23 @@ env = robosuite.make(
     horizon=200,                            # each episode terminates after 200 steps
     use_object_obs=True,                   # no observations needed
     use_camera_obs=False,                   # no observations needed
-    # single_object_mode=obj_mode,
-    # object_type=cur_objs[0],
     ignore_done=True,
     reward_shaping=True,
     initialization_noise={'magnitude': 0., 'type': 'gaussian'},
     camera_widths=128,
     camera_heights=128,
 )
+# obs, _, _, _ = env.step(np.zeros(7)) # Step a null action to get an observation of the env's state.
+# wipe_centroid_pose = obs['wipe_centroid']
+
+# Get the locations of all dirt particles
+dirt_locs = np.zeros((env.num_markers, 3))
+for i, marker in enumerate(env.model.mujoco_arena.markers):
+    marker_pos = np.array(env.sim.data.body_xpos[env.sim.model.body_name2id(marker.root_body)])
+    dirt_locs[i,:] = marker_pos
+    print(marker_pos)
+    import ipdb; ipdb.set_trace()
+
 
 # First, we reset the environment and then manually set the joint positions to their
 # initial positions and all the joint velocities and accelerations to 0.
@@ -201,7 +209,6 @@ for act in plan.actions:
     # failed_preds = [p for p in failed_preds if (p[1]._rollout or not type(p[1].expr) is EqExpr)]
     print("FAILED:", t, failed_preds, act.name)
     old_state = env.sim.get_state()
-    # import ipdb; ipdb.set_trace()
     # env.sim.reset()
     # env.sim.data.qpos[:7] = plan.params['sawyer'].right[:,t]
     # env.sim.data.qpos[cereal_ind:cereal_ind+3] = plan.params['cereal'].pose[:,t]

@@ -74,13 +74,13 @@ def main():
 
     s += "SawyerPose (name {}); ".format("robot_init_pose")
     s += "SawyerPose (name {}); ".format("robot_end_pose")
-    s += "SawyerPose (name {}); ".format("robot_ontable_pose")
+    s += "SawyerPose (name {}); ".format("robot_prewipe_pose")
+    s += "SawyerPose (name {}); ".format("robot_postwipe_pose")
     s += "Obstacle (name {}); ".format("table_obs")
     s += "Box (name {}) \n\n".format("table")
 
     s += "Init: "
 
-    s += get_undefined_robot_pose_str("robot_ontable_pose")
     s += get_sawyer_str('sawyer', R_ARM_INIT, OPEN_GRIPPER, SAWYER_INIT_POSE)
     s += get_sawyer_pose_str('robot_init_pose', R_ARM_INIT, OPEN_GRIPPER, SAWYER_INIT_POSE)
     s += get_sawyer_end_pose_str('robot_end_pose')
