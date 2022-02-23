@@ -1,5 +1,7 @@
 """ This file provides an example tensorflow network used to define a policy. """
 
+import functools
+import operator
 import numpy as np
 import torch
 import torch.optim as optim
@@ -13,6 +15,7 @@ def precision_mse(output, y, precision):
 
 class PolicyNet(nn.Module):
     def __init__(self, config, device=None):
+        nn.Module.__init__(self)
         self.config = config
 
         if device is None: device = torch.device('cpu')
@@ -23,14 +26,16 @@ class PolicyNet(nn.Module):
         self.fc_layers = []
 
         self._compute_idx()
+        self.fc_input_dim = config['dim_input']
         self._build_conv_layers()
-        self._build_fc_layers()
-        self._set_nonlin_and_loss()
         
         self.conv_to_fc = config.get('conv_to_fc', 'fp')
         if self.conv_to_fc is 'fp':
             self.fp_tensor = None
             self._build_fp()
+
+        self._build_fc_layers()
+        self._set_nonlin_and_loss()
 
         self.to(self.device)
 
@@ -73,14 +78,14 @@ class PolicyNet(nn.Module):
         return self.fc_layers[-1](nn_input)
 
 
-    def _compute_idx(self, config):
-        if 'idx' in config:
-            self.x_idx, self.img_idx = config['idx']
+    def _compute_idx(self):
+        if 'idx' in self.config:
+            self.x_idx, self.img_idx = self.config['idx']
         else:
             x_idx, img_idx, i = [], [], 0
-            for sensor in config['obs_include']:
-                dim = config['sensor_dims'][sensor]
-                if sensor in config['obs_image_data']:
+            for sensor in self.config['obs_include']:
+                dim = self.config['sensor_dims'][sensor]
+                if sensor in self.config['obs_image_data']:
                     img_idx = img_idx + list(range(i, i+dim))
                 else:
                     x_idx = x_idx + list(range(i, i+dim))
@@ -89,51 +94,59 @@ class PolicyNet(nn.Module):
             self.img_idx = img_idx
 
 
-    def _set_nonlin_and_loss(self, config):
-        self.act_fn = config.get('act_fn', F.relu)
+    def _set_nonlin_and_loss(self):
+        self.act_fn = self.config.get('act_fn', F.relu)
         if type(self.act_fn) is str: self.act_fn = getattr(F, self.act_fn)
 
-        self.output_fn = config.get('output_fn', None)
+        self.output_fn = self.config.get('output_fn', None)
         if type(self.output_fn) is str: self.output_fn = getattr(F, self.output_fn)
 
-        self.loss_fn = config.get('loss_fn', F.mse_loss)
+        self.loss_fn = self.config.get('loss_fn', F.mse_loss)
         if self.loss_fn == 'precision_mse': self.loss_fn = precision_mse
         if type(self.loss_fn) is str: self.loss_fn = getattr(F, self.loss_fn)
 
    
-    def _build_conv_layers(self, config):
-        num_filters = config.get('num_filters', [])
-        filter_sizes = config.get('filter_sizes', [])
+    def _build_conv_layers(self):
+        num_filters = self.config.get('num_filters', [])
+        filter_sizes = self.config.get('filter_sizes', [])
         self.n_conv = len(num_filters)
-        im_height = config['image_height']
-        im_width = config['image_width']
-        num_channels = config['image_channels']
+        if self.n_conv == 0: return
 
+        im_height = self.config['image_height']
+        im_width = self.config['image_width']
+        num_channels = self.config['image_channels']
         cur_channels = num_channels
+
         for n in range(self.n_conv):
             conv_layer = nn.Conv2d(cur_channels, num_filters[n], filter_sizes[n])
-            cur_channels = num_channels[n]
+            cur_channels = num_filters[n]
             self.conv_layers.append(conv_layer)
 
+        # Compute size of output
+        temp_model = nn.Sequential(*self.conv_layers)
+        rand_inputs = torch.rand(1, num_channels, im_height, im_width)
+        shape = list(temp_model(rand_inputs).shape)
+        self.conv_output_dim = shape
+        self.fc_input_dim = functools.reduce(operator.mul, shape)
 
-    def _build_fc_layers(self, dim_input, dim_output, config):
-        n_fc_layers = config.get('n_layers', 1)
-        dim_hidden = config.get('dim_hidden', 40)
-        cur_dim = dim_input
+
+    def _build_fc_layers(self):
+        n_fc_layers = self.config.get('n_layers', 1)
+        dim_hidden = self.config.get('dim_hidden', 40)
+        cur_dim = self.fc_input_dim
         for n in range(n_fc_layers):
             next_dim = dim_hidden if np.isscalar(dim_hidden) else dim_hidden[n]
             fc_layer = nn.Linear(cur_dim, next_dim)
             cur_dim = next_dim
             self.fc_layers.append(fc_layer)
 
+        dim_output = self.config['dim_output']
         fc_layer = nn.Linear(cur_dim, dim_output)
         self.fc_layers.append(fc_layer)
 
 
-    def _build_fp(self, input_layer):
-        _, num_rows, num_cols, num_fp = input_layer.size()
-        num_rows, num_cols, num_fp = [int(x) for x in [num_rows, num_cols, num_fp]]
-
+    def _build_fp(self):
+        num_fp, num_rows, num_cols = self.conv_output_dim
         x_map = np.empty([num_rows, num_cols], np.float32)
         y_map = np.empty([num_rows, num_cols], np.float32)
 
@@ -149,10 +162,14 @@ class PolicyNet(nn.Module):
         y_map = torch.view(y_map, [num_rows * num_cols])
         self.fp_tensors = (x_map, y_map)
 
+        # Compute size of output
+        rand_inputs = torch.rand(1, nump_fp, num_rows, num_cols)
+        shape = list(self.compute_fp(rand_inputs).shape)
+        self.fc_input_dim = functools.reduce(operator.mul, shape)
 
-    def _compute_fp(self, input_layer):
+
+    def compute_fp(self, input_layer):
         if self.fp_tensors is None: self._build_fp(input_layer)
-        features = torch.transpose(input_layer, [0,3,1,2])
         features = torch.view(features, [-1, num_rows*num_cols])
         softmax = torch.nn.softmax(features)
         fp_x = torch.sum(torch.multiply(x_map, softmax), dim=[1], keepdim=True)

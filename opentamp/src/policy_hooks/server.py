@@ -192,14 +192,7 @@ class Server(object):
         hyperparams['policy_opt']['scope'] = None
         hyperparams['policy_opt']['gpu_fraction'] = 1./32.
         hyperparams['policy_opt']['allow_growth'] = True
-        self.policy_opt = hyperparams['policy_opt']['type'](hyperparams['policy_opt'],
-                                                            hyperparams['dO'],
-                                                            hyperparams['dU'],
-                                                            hyperparams['dPrimObs'],
-                                                            hyperparams['dContObs'],
-                                                            hyperparams['dValObs'],
-                                                            hyperparams['prim_bounds'],
-                                                            hyperparams['cont_bounds'])
+        self.policy_opt = hyperparams['policy_opt']['type'](hyperparams['policy_opt'])
         for alg in list(self.alg_map.values()):
             alg.local_policy_opt = self.policy_opt
         self.weights_to_store = {}

@@ -35,10 +35,12 @@ class PolicyOpt(object):
             self.buffers = self._hyperparams['buffers']
             self.buf_sizes = self._hyperparams['buffer_sizes']
 
-        self._primBounds = hyperparams.get('primBounds', [(0,0)])
-        self._contBounds = hyperparams.get('contBounds', [(0,0)])
+        self._primBounds = hyperparams.get('prim_bounds', [(0,0)])
+        self._contBounds = hyperparams.get('cont_bounds', [(0,0)])
+        self._dCtrl = hyperparams.get.get('dU')
         self._dPrim = max([b[1] for b in self._primBounds])
         self._dCont = max([b[1] for b in self._contBounds])
+        self._dO = hyperparams.get('dO', None)
         self._dPrimObs = hyperparams.get('dPrimObs', None)
         self._dContObs = hyperparams.get('dContObs', None)
         self._compute_idx()
@@ -304,17 +306,40 @@ class PolicyOpt(object):
             self.cur_lr *= self.lr_scale
             self.cur_hllr *= self.lr_scale
 
+    def _select_dims(self, scope):
+        dO = self.dO
+        if scope == 'primitive':
+            dO = self.dPrimObs
+        if scope == 'cont':
+            dO = self.dContObs
+
+        dU = self._dCtrl
+        if scope == 'primitive':
+            dU = self._dPrim
+        if scope == 'cont':
+            dU = self._dCont
+
+        return dO, dU
+
 
     def init_network(self):
         """ Helper method to initialize the tf networks used """
         self.nets = {}
         if self.load_all or self.scope is None:
             for scope in self.valid_scopes:
-                self.nets[scope] = PolicyNet(self._hyperparams['network_model'], device=self.device)
+                dO, dU = self._select_dims(scope)
+                config = self._hyperparams['network_model']
+                if 'primitive' == self.scope: config = self._hyperparams['primitive_network_model']
+                
+                config['dim_input'] = dO
+                config['dim_output'] = dU
+                self.nets[scope] = PolicyNet(config=config,
+                                             device=self.device)
                 
         else:
             config = self._hyperparams['network_model']
             if 'primitive' == self.scope: config = self._hyperparams['primitive_network_model']
+            dO, dU = self._select_dims(self.scope)
 
 
     def init_solver(self):
