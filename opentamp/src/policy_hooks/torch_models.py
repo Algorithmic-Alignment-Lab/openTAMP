@@ -102,7 +102,10 @@ class PolicyNet(nn.Module):
         if type(self.output_fn) is str: self.output_fn = getattr(F, self.output_fn)
 
         self.loss_fn = self.config.get('loss_fn', F.mse_loss)
-        if self.loss_fn == 'precision_mse': self.loss_fn = precision_mse
+        self.use_precision = False
+        if self.loss_fn == 'precision_mse': 
+            self.loss_fn = precision_mse
+            self.use_precision = True
         if type(self.loss_fn) is str: self.loss_fn = getattr(F, self.loss_fn)
 
    
@@ -176,4 +179,6 @@ class PolicyNet(nn.Module):
         fp_y = torch.sum(torch.multiply(y_map, softmax), dim=[1], keepdim=True)
         fp = torch.view(torch.cat(tensors=[fp_x, fp_y], dim=1), [-1, num_fp*2])
         return fp
+
+
 

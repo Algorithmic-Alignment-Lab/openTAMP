@@ -15,7 +15,7 @@ from policy_hooks.tf_policy import TfPolicy
 from policy_hooks.torch_models import *
 
 MAX_UPDATE_SIZE = 10000
-SCOPE_LIST = ['primitive', 'cont', 'label']
+SCOPE_LIST = ['primitive', 'cont']
 MODEL_DIR = 'saved_models/'
 
 
@@ -122,26 +122,32 @@ class PolicyOpt(object):
             i += dim
 
 
- 
-    def _set_opt(self, config, task):
-        opt_cls = config.get('opt_cls', optim.Adam)
+    def _set_opt(self, task):
+        opt_cls = self._hyperparams.get('opt_cls', optim.Adam)
         if type(opt_cls) is str: opt_cls = getattr(optim, opt_cls)
-        lr = config.get('lr', 1e-3)
+        lr = self._hyperparams.get('lr', 1e-3)
         self.opts[task] = opt_cls(self.nets[task].parameters(), lr=lr) 
 
 
-    def train_step(self, x, y, precision=None):
-        if self.opt is None: self._set_opt()
-        (x, y) = (x.to(self.device), y.to(self.device))
-        pred = self(x)
-        if precision is None:
-            loss = self.loss_fn(pred, y, reduction='mean')
-        elif precision.size()[-1] > 1:
-            loss = self.loss_fn(pred, y, precision=precision)
-            loss = torch.mean(loss)
+    def get_loss(self, task, x, y, precision=None):
+        model = self.nets[task]
+        target = model(x)
+        if model.use_precision:
+            if precision.size()[-1] > 1:
+                return torch.mean(model.loss_fn(target, y, precision))
+            else:
+                sum_loss = torch.sum(model.loss_fn(pred, y, reduction='none') * precision)
+                return sum_loss / torch.sum(precision)
         else:
-            loss = self.loss_fn(pred, y, reduction='none') * precision
-            loss = torch.mean(loss)
+            return model.loss_fn(target, y, reduction='mean')
+
+
+    def train_step(self, task, x, y, precision=None):
+        if task not in self.opts is None: self._set_opt(task)
+        (x, y) = (x.to(self.device), y.to(self.device))
+        model = self.nets[task]
+        pred = model(x)
+        loss = self.get_loss(task, x, y, precision)
 
         self.opt.zero_grad()
         loss.backward()
@@ -322,7 +328,7 @@ class PolicyOpt(object):
         return dO, dU
 
 
-    def init_network(self):
+    def init_networks(self):
         """ Helper method to initialize the tf networks used """
         self.nets = {}
         if self.load_all or self.scope is None:
@@ -340,18 +346,19 @@ class PolicyOpt(object):
             config = self._hyperparams['network_model']
             if 'primitive' == self.scope: config = self._hyperparams['primitive_network_model']
             dO, dU = self._select_dims(self.scope)
+            config['dim_input'] = dO
+            config['dim_output'] = dU
+            self.nets[scope] = PolicyNet(config=config,
+                                         device=self.device)
 
 
-    def init_solver(self):
+    def init_solvers(self):
         """ Helper method to initialize the solver. """
         self.opts = {}
         self.cur_dec = self._hyperparams['weight_decay']
-        if self.scope is not None:
-            self._set_opt(self.config, self.scope)
-
-        else:
-            for scope in self.scopes:
-                self._set_opt(self.config, scope)
+        scopes = self.scopes if self.scope is None else [self.scope]
+        for scope in scopes:
+            self._set_opt(self.config, scope)
 
 
     def get_policy(self, task):
@@ -394,17 +401,6 @@ class PolicyOpt(object):
                                                         self.device_string,
                                                         normalize=normalize,
                                                         copy_param_scope=None)
-
-        if self.load_label and (self.scope is None or self.scope == 'label'):
-            self.label_policy = TfPolicy(2,
-                                        self.label_obs_tensor,
-                                        self.label_act_op,
-                                        self.label_feat_op,
-                                        np.zeros(2),
-                                        self.sess,
-                                        self.device_string,
-                                        copy_param_scope=None,
-                                        normalize=False)
  
 
     def task_acc(self, obs, tgt_mu, prc, piecewise=False, scalar=True):
@@ -482,32 +478,7 @@ class PolicyOpt(object):
 
 
     def check_validation(self, obs, tgt_mu, tgt_prc, task="control"):
-        if task == 'primitive':
-            feed_dict = {self.primitive_obs_tensor: obs,
-                         self.primitive_action_tensor: tgt_mu,
-                         self.primitive_precision_tensor: tgt_prc,
-                         self.dec_tensor: self.cur_dec}
-            val_loss = self.primitive_solver(feed_dict, self.sess, device_string=self.device_string, train=False)
-        elif task == 'cont':
-            feed_dict = {self.cont_obs_tensor: obs,
-                         self.cont_action_tensor: tgt_mu,
-                         self.cont_precision_tensor: tgt_prc,
-                         self.dec_tensor: self.cur_dec}
-            val_loss = self.cont_solver(feed_dict, self.sess, device_string=self.device_string, train=False)
-        elif task == 'label':
-            feed_dict = {self.label_obs_tensor: obs,
-                         self.label_action_tensor: tgt_mu,
-                         self.label_precision_tensor: tgt_prc,
-                         self.dec_tensor: self.cur_dec}
-            val_loss = self.label_solver(feed_dict, self.sess, device_string=self.device_string, train=False)
-        else:
-            feed_dict = {self.task_map[task]['obs_tensor']: obs,
-                         self.task_map[task]['action_tensor']: tgt_mu,
-                         self.task_map[task]['precision_tensor']: tgt_prc,
-                         self.dec_tensor: self.cur_dec}
-            val_loss = self.task_map[task]['solver'](feed_dict, self.sess, device_string=self.device_string, train=False)
-        #self.average_val_losses.append(val_loss)
-        return val_loss
+        return self.get_loss(task, obs, tgt_mu, tgt_prc).item()
 
 
     def policy_initialized(self, task):
@@ -515,46 +486,4 @@ class PolicyOpt(object):
             return self.task_map[task]['policy'].scale is not None
         return self.task_map['control']['policy'].scale is not None
 
-    def save_model(self, fname):
-        # LOGGER.debug('Saving model to: %s', fname)
-        self.saver.save(self.sess, fname, write_meta_graph=False)
 
-    def restore_model(self, fname):
-        self.saver.restore(self.sess, fname)
-        # LOGGER.debug('Restoring model from: %s', fname)
-
-    # For pickling.
-    def __getstate__(self):
-        with tempfile.NamedTemporaryFile('w+b', delete=True) as f:
-            self.save_model(f.name) # TODO - is this implemented.
-            f.seek(0)
-            with open(f.name, 'r') as f2:
-                wts = f2.read()
-        return {
-            'hyperparams': self._hyperparams,
-            'dO': self._dO,
-            'dU': self._dU,
-            'scale': {task:self.task_map[task]['policy'].scale for task in self.task_map},
-            'bias': {task:self.task_map[task]['policy'].bias for task in self.task_map},
-            'tf_iter': self.tf_iter,
-            'x_idx': {task:self.task_map[task]['policy'].x_idx for task in self.task_map},
-            'chol_pol_covar': {task:self.task_map[task]['policy'].chol_pol_covar for task in self.task_map},
-            'wts': wts,
-        }
-
-    # For unpickling.
-    def __setstate__(self, state):
-        from tf.python.framework import ops
-        ops.reset_default_graph()  # we need to destroy the default graph before re_init or checkpoint won't restore.
-        self.__init__(state['hyperparams'], state['dO'], state['dU'])
-        for task in self.task_map:
-            self.policy[task].scale = state['scale']
-            self.policy[task].bias = state['bias']
-            self.policy[task].x_idx = state['x_idx']
-            self.policy[task].chol_pol_covar = state['chol_pol_covar']
-        self.tf_iter = state['tf_iter']
-
-        with tempfile.NamedTemporaryFile('w+b', delete=True) as f:
-            f.write(state['wts'])
-            f.seek(0)
-            self.restore_model(f.name)
