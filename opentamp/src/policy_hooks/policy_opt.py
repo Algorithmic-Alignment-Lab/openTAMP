@@ -16,13 +16,14 @@ from policy_hooks.torch_models import *
 
 MAX_UPDATE_SIZE = 10000
 SCOPE_LIST = ['primitive', 'cont', 'label']
+MODEL_DIR = 'saved_models/'
 
 
 class PolicyOpt(object):
     """ Policy optimization using tensor flow for DAG computations/nonlinear function approximation. """
-    def __init__(self, hyperparams, dO, dU, dPrimObs, dContObs, dValObs, primBounds, contBounds=None, inputs=None):
-        self.scope = hyperparams['scope'] if 'scope' in hyperparams else None
+    def __init__(self, hyperparams, inputs=None):
         self.config = hyperparams
+        self.scope = hyperparams.get('scope', None)
         self.split_nets = hyperparams.get('split_nets', False)
         self.valid_scopes = ['control'] if not self.split_nets else list(config['task_list'])
         self.torch_iter = 0
@@ -34,41 +35,28 @@ class PolicyOpt(object):
             self.buffers = self._hyperparams['buffers']
             self.buf_sizes = self._hyperparams['buffer_sizes']
 
-        self._dPrim = max([b[1] for b in primBounds])
-        self._dCont = max([b[1] for b in contBounds]) if contBounds is not None and len(contBounds) else 0
-        self._dPrimObs = dPrimObs
-        self._dContObs = dContObs
-        self._primBounds = primBounds
-        self._contBounds = contBounds if contBounds is not None else []
+        self._primBounds = hyperparams.get('primBounds', [(0,0)])
+        self._contBounds = hyperparams.get('contBounds', [(0,0)])
+        self._dPrim = max([b[1] for b in self._primBounds])
+        self._dCont = max([b[1] for b in self._contBounds])
+        self._dPrimObs = hyperparams.get('dPrimObs', None)
+        self._dContObs = hyperparams.get('dContObs', None)
         self._compute_idx()
 
         self.device = torch.device('cpu')
         if self._hyperparams['use_gpu'] == 1:
             gpu_id = self._hyperparams['gpu_id']
-            self.device = torch.device('cuda:{}'.format(gpu_id)
+            self.device = torch.device('cuda:{}'.format(gpu_id))
         self.gpu_fraction = self._hyperparams['gpu_fraction']
         torch.cuda.set_per_process_memory_fraction(self.gpu_fraction, device=self.device)
-
         self.init_networks()
         self.init_solvers()
+        self.init_policies()
+        self._load_scopes()
 
         self.weight_dir = self._hyperparams['weight_dir']
         self.last_pkl_t = time.time()
         self.cur_pkl = 0
-
-        self.init_policies(dU)
-        llpol = hyperparams.get('ll_policy', '')
-        hlpol = hyperparams.get('hl_policy', '')
-        contpol = hyperparams.get('cont_policy', '')
-        scopes = self.valid_scopes + SCOPE_LIST if self.scope is None else [self.scope]
-        for scope in scopes:
-            if len(llpol) and scope in self.valid_scopes:
-                self.restore_ckpt(scope, dirname=llpol)
-            if len(hlpol) and scope not in self.valid_scopes:
-                self.restore_ckpt(scope, dirname=hlpol)
-            if len(contpol) and scope not in self.valid_scopes:
-                self.restore_ckpt(scope, dirname=contpol)
-
         self.update_count = 0
         if self.scope in ['primitive', 'cont']:
             self.update_size = self._hyperparams['prim_update_size']
@@ -86,6 +74,20 @@ class PolicyOpt(object):
         self.lr_scale = 0.9975
         self.lr_policy = 'fixed'
         self._hyperparams['iterations'] = MAX_UPDATE_SIZE // self.batch_size + 1
+
+    
+    def _load_scopes(self):
+        llpol = self.config.get('ll_policy', '')
+        hlpol = self.config.get('hl_policy', '')
+        contpol = self.config.get('cont_policy', '')
+        scopes = self.valid_scopes + SCOPE_LIST if self.scope is None else [self.scope]
+        for scope in scopes:
+            if len(llpol) and scope in self.valid_scopes:
+                self.restore_ckpt(scope, dirname=llpol)
+            if len(hlpol) and scope not in self.valid_scopes:
+                self.restore_ckpt(scope, dirname=hlpol)
+            if len(contpol) and scope not in self.valid_scopes:
+                self.restore_ckpt(scope, dirname=contpol)
 
 
     def _compute_idx(self):
@@ -150,7 +152,7 @@ class PolicyOpt(object):
         average_loss = 0
         for i in range(self._hyperparams['iterations']):
             x, y, precision = self.data_loader.next()
-            train_loss = self.train_step()
+            train_loss = self.train_step(x, y, precision)
             average_loss += train_loss
             self.tf_iter += 1
         self.average_losses.append(average_loss / self._hyperparams['iterations'])
@@ -164,26 +166,23 @@ class PolicyOpt(object):
 
 
     def restore_ckpt(self, scope, label=None, dirname=''):
-        variables = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope=scope+'/')
-        if not len(variables): return False
-        self.saver = tf.train.Saver(variables)
-        ext = ''
-        if label is not None:
-            ext = '_{0}'.format(label)
+        ext = '' if label is None else '_{0}'.format(label)
         success = True
         if not len(dirname):
             dirname = self.weight_dir
         try:
             if dirname[-1] == '/':
                 dirname = dirname[:-1]
-            self.saver.restore(self.sess, 'tf_saved/'+dirname+'/'+scope+'{0}.ckpt'.format(ext))
+           
+            model = self.nets[scope]
+            save_path = 'saved_models/'+dirname+'/'+scope+'{0}.ckpt'.format(ext)
+            model.load_state_dict(torch.load(save_path))
             if scope in self.task_map:
-                self.task_map[scope]['policy'].scale = np.load('tf_saved/'+dirname+'/'+scope+'_scale{0}.npy'.format(ext))
-                self.task_map[scope]['policy'].bias = np.load('tf_saved/'+dirname+'/'+scope+'_bias{0}.npy'.format(ext))
-                #self.var[scope] = np.load('tf_saved/'+dirname+'/'+scope+'_variance{0}.npy'.format(ext))
-                #self.task_map[scope]['policy'].chol_pol_covar = np.diag(np.sqrt(self.var[scope]))
+                self.task_map[scope]['policy'].scale = np.load(MODEL_DIR+dirname+'/'+scope+'_scale{0}.npy'.format(ext))
+                self.task_map[scope]['policy'].bias = np.load(MODEL_DIR+dirname+'/'+scope+'_bias{0}.npy'.format(ext))
             self.write_shared_weights([scope])
             print(('Restored', scope, 'from', dirname))
+
         except Exception as e:
             print(('Could not restore', scope, 'from', dirname))
             print(e)
@@ -193,8 +192,7 @@ class PolicyOpt(object):
 
 
     def write_shared_weights(self, scopes=None):
-        if scopes is None:
-            scopes = self.valid_scopes + SCOPE_LIST
+        if scopes is None: scopes = self.valid_scopes + SCOPE_LIST
 
         for scope in scopes:
             wts = self.serialize_weights([scope])
@@ -215,13 +213,12 @@ class PolicyOpt(object):
                 wts = self.buffers[scope][:self.buf_sizes[scope].value]
 
             wait_t = time.time() - start_t
-            if wait_t > 0.1 and scope == 'primitive': print('Time waiting on lock:', wait_t)
-            #if self.buf_sizes[scope].value == 0: skip = True
-            #wts = self.buffers[scope][:self.buf_sizes[scope].value]
-
+            if wait_t > 0.1 and scope == 'primitive': print('Time waiting on model weights lock:', wait_t)
             if skip: continue
+
             try:
                 self.deserialize_weights(wts)
+
             except Exception as e:
                 #traceback.print_exception(*sys.exc_info())
                 if not skip:
@@ -229,18 +226,12 @@ class PolicyOpt(object):
                     print('Could not load {0} weights from {1}'.format(scope, self.scope), e)
 
 
-    def serialize_weights(self, scopes=None, save=True):
-        if scopes is None:
-            scopes = self.valid_scopes + SCOPE_LIST
-
-        var_to_val = {}
-        for scope in scopes:
-            variables = self.sess.graph.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope=scope+'/')
-            for v in variables:
-                var_to_val[v.name] = self.sess.run(v).tolist()
-
+    def serialize_weights(self, scopes=None, save=False):
+        if scopes is None: scopes = self.valid_scopes + SCOPE_LIST
+        models = {scope: self.nets[scope].state_dict() for scope in scopes if scope in self.nets}
         scales = {task: self.task_map[task]['policy'].scale.tolist() for task in scopes if task in self.task_map}
         biases = {task: self.task_map[task]['policy'].bias.tolist() for task in scopes if task in self.task_map}
+
         if hasattr(self, 'prim_policy') and 'primitive' in scopes:
             scales['primitive'] = self.prim_policy.scale.tolist()
             biases['primitive'] = self.prim_policy.bias.tolist()
@@ -249,23 +240,17 @@ class PolicyOpt(object):
             scales['cont'] = self.cont_policy.scale.tolist()
             biases['cont'] = self.cont_policy.bias.tolist()
 
-        #variances = {task: self.var[task].tolist() for task in scopes if task in self.task_map}
-        variances = {}
         scales[''] = []
         biases[''] = []
-        variances[''] = []
         if save: self.store_scope_weights(scopes=scopes)
-        return pickle.dumps([scopes, var_to_val, scales, biases, variances])
+        return pickle.dumps([scopes, models, scales, biases])
 
 
     def deserialize_weights(self, json_wts, save=False):
-        scopes, var_to_val, scales, biases, variances = pickle.loads(json_wts)
+        scopes, models, scales, biases = pickle.loads(json_wts)
 
         for scope in scopes:
-            variables = self.sess.graph.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope=scope+'/')
-            for var in variables:
-                var.load(var_to_val[var.name], session=self.sess)
-
+            self.nets[scope].load_state_dict(models[scope])
             if scope == 'primitive' and hasattr(self, 'prim_policy'):
                 self.prim_policy.scale = np.array(scales[scope])
                 self.prim_policy.bias = np.array(biases[scope])
@@ -274,39 +259,38 @@ class PolicyOpt(object):
                 self.cont_policy.scale = np.array(scales[scope])
                 self.cont_policy.bias = np.array(biases[scope])
 
-            if scope not in self.valid_scopes: continue
-            # if save:
-            #     np.save('tf_saved/'+self.weight_dir+'/control'+'_scale', scales['control'])
-            #     np.save('tf_saved/'+self.weight_dir+'/control'+'_bias', biases['control'])
-            #     np.save('tf_saved/'+self.weight_dir+'/control'+'_variance', variances['control'])
-            #self.task_map[scope]['policy'].chol_pol_covar = np.diag(np.sqrt(np.array(variances[scope])))
+            if scope not in self.task_map: continue
             self.task_map[scope]['policy'].scale = np.array(scales[scope])
             self.task_map[scope]['policy'].bias = np.array(biases[scope])
-            #self.var[scope] = np.array(variances[scope])
         if save: self.store_scope_weights(scopes=scopes)
+
 
     def update_weights(self, scope, weight_dir=None):
         if weight_dir is None:
             weight_dir = self.weight_dir
-        self.saver.restore(self.sess, 'tf_saved/'+weight_dir+'/'+scope+'.ckpt')
+        model = self.nets[scope]
+        save_path = MODEL_DIR + weight_dir+'/'+scope+'.ckpt'
+        model.load_state_dict(torch.load(save_path))
+
 
     def store_scope_weights(self, scopes, weight_dir=None, lab=''):
         if weight_dir is None:
             weight_dir = self.weight_dir
         for scope in scopes:
+            model = self.nets[scope]
             try:
-                variables = self.sess.graph.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope=scope+'/')
-                saver = tf.train.Saver(variables)
-                saver.save(self.sess, 'tf_saved/'+weight_dir+'/'+scope+'{0}.ckpt'.format(lab))
+                save_path = MODEL_DIR + weight_dir+'/'+scope+'.ckpt'
+                torch.save(the_model.state_dict(), save_path)
+
             except:
-                print('Saving variables encountered an issue but it will not crash:')
+                print('Saving torch model encountered an issue but it will not crash:')
                 traceback.print_exception(*sys.exc_info())
 
         if scope in self.task_map:
             policy = self.task_map[scope]['policy']
-            np.save('tf_saved/'+weight_dir+'/'+scope+'_scale{0}'.format(lab), policy.scale)
-            np.save('tf_saved/'+weight_dir+'/'+scope+'_bias{0}'.format(lab), policy.bias)
-            #np.save('tf_saved/'+weight_dir+'/'+scope+'_variance{0}'.format(lab), self.var[scope])
+            np.save(MODEL_DIR+weight_dir+'/'+scope+'_scale{0}'.format(lab), policy.scale)
+            np.save(MODEL_DIR+weight_dir+'/'+scope+'_bias{0}'.format(lab), policy.bias)
+
 
     def store_weights(self, weight_dir=None):
         if self.scope is None:
@@ -314,36 +298,11 @@ class PolicyOpt(object):
         else:
             self.store_scope_weights([self.scope], weight_dir)
 
-    def get_data(self):
-        return [self.mu, self.obs, self.prc, self.wt, self.val_mu, self.val_obs, self.val_prc, self.val_wt]
-
 
     def update_lr(self):
         if self.method == 'linear':
             self.cur_lr *= self.lr_scale
             self.cur_hllr *= self.lr_scale
-
-
-    def _create_network(self, name, info):
-        with tf.variable_scope(name):
-            self.etas[name] = tf.placeholder_with_default(1., shape=())
-            tf_map_generator = info['network_model']
-            info['network_params']['eta'] = self.etas[name]
-            #self.class_tensors[name] = tf.placeholder(shape=[None, 1], dtype='float32')
-            tf_map, fc_vars, last_conv_vars = tf_map_generator(dim_input=info['dO'], \
-                                                               dim_output=info['dOut'], \
-                                                               batch_size=info['batch_size'], \
-                                                               network_config=info['network_params'], \
-                                                               input_layer=info['input_layer'])
-
-            self.obs_tensors[name] = tf_map.get_input_tensor()
-            self.precision_tensors[name] = tf_map.get_precision_tensor()
-            self.action_tensors[name] = tf_map.get_target_output_tensor()
-            self.act_ops[name] = tf_map.get_output_op()
-            self.feat_ops[name] = tf_map.get_feature_op()
-            self.loss_scalars[name] = tf_map.get_loss_op()
-            self.fc_vars[name] = fc_vars
-            self.last_conv_vars[name] = last_conv_vars
 
 
     def init_network(self):
@@ -357,100 +316,6 @@ class PolicyOpt(object):
             config = self._hyperparams['network_model']
             if 'primitive' == self.scope: config = self._hyperparams['primitive_network_model']
 
-        input_tensor = None
-        if self.load_all or self.scope is None or 'primitive' == self.scope:
-            with tf.variable_scope('primitive'):
-                inputs = self.input_layer if 'primitive' == self.scope else None
-                self.primitive_eta = tf.placeholder_with_default(1., shape=())
-                tf_map_generator = self._hyperparams['primitive_network_model']
-                self.primitive_class_tensor = None
-                tf_map, fc_vars, last_conv_vars = tf_map_generator(dim_input=self._dPrimObs, \
-                                                                   dim_output=self._dPrim, \
-                                                                   batch_size=self.batch_size, \
-                                                                   network_config=self._hyperparams['primitive_network_params'], \
-                                                                   input_layer=inputs, \
-                                                                   eta=self.primitive_eta)
-                self.primitive_obs_tensor = tf_map.get_input_tensor()
-                self.primitive_precision_tensor = tf_map.get_precision_tensor()
-                self.primitive_action_tensor = tf_map.get_target_output_tensor()
-                self.primitive_act_op = tf_map.get_output_op()
-                self.primitive_feat_op = tf_map.get_feature_op()
-                self.primitive_loss_scalar = tf_map.get_loss_op()
-                self.primitive_fc_vars = fc_vars
-                self.primitive_last_conv_vars = last_conv_vars
-                self.primitive_aux_losses = tf_map.aux_loss_ops
-
-                # Setup the gradients
-                #self.primitive_grads = [tf.gradients(self.primitive_act_op[:,u], self.primitive_obs_tensor)[0] for u in range(self._dPrim)]
-
-        if (self.load_all or self.scope is None or 'cont' == self.scope) and len(self._contBounds):
-            with tf.variable_scope('cont'):
-                inputs = self.input_layer if 'cont' == self.scope else None
-                self.cont_eta = tf.placeholder_with_default(1., shape=())
-                tf_map_generator = self._hyperparams['cont_network_model']
-                tf_map, fc_vars, last_conv_vars = tf_map_generator(dim_input=self._dContObs, \
-                                                                   dim_output=self._dCont, \
-                                                                   batch_size=self.batch_size, \
-                                                                   network_config=self._hyperparams['cont_network_params'], \
-                                                                   input_layer=inputs, \
-                                                                   eta=self.cont_eta)
-                self.cont_obs_tensor = tf_map.get_input_tensor()
-                self.cont_precision_tensor = tf_map.get_precision_tensor()
-                self.cont_action_tensor = tf_map.get_target_output_tensor()
-                self.cont_act_op = tf_map.get_output_op()
-                self.cont_feat_op = tf_map.get_feature_op()
-                self.cont_loss_scalar = tf_map.get_loss_op()
-                self.cont_fc_vars = fc_vars
-                self.cont_last_conv_vars = last_conv_vars
-                self.cont_aux_losses = tf_map.aux_loss_ops
-
-        for scope in self.valid_scopes:
-            if self.scope is None or scope == self.scope:
-                with tf.variable_scope(scope):
-                    self.task_map[scope] = {}
-                    tf_map_generator = self._hyperparams['network_model']
-                    tf_map, fc_vars, last_conv_vars = tf_map_generator(dim_input=self._dO, \
-                                                                       dim_output=self._dU, \
-                                                                       batch_size=self.batch_size, \
-                                                                       network_config=self._hyperparams['network_params'], \
-                                                                       input_layer=self.input_layer)
-                    self.task_map[scope]['obs_tensor'] = tf_map.get_input_tensor()
-                    self.task_map[scope]['precision_tensor'] = tf_map.get_precision_tensor()
-                    self.task_map[scope]['action_tensor'] = tf_map.get_target_output_tensor()
-                    self.task_map[scope]['act_op'] = tf_map.get_output_op()
-                    self.task_map[scope]['feat_op'] = tf_map.get_feature_op()
-                    self.task_map[scope]['loss_scalar'] = tf_map.get_loss_op()
-                    self.task_map[scope]['fc_vars'] = fc_vars
-                    self.task_map[scope]['last_conv_vars'] = last_conv_vars
-
-                    # Setup the gradients
-                    #self.task_map[scope]['grads'] = [tf.gradients(self.task_map[scope]['act_op'][:,u], self.task_map[scope]['obs_tensor'])[0] for u in range(self._dU)]
-        
-        if (self.scope is None or 'label' == self.scope) and self.load_label:
-            with tf.variable_scope('label'):
-                inputs = self.input_layer if 'label' == self.scope else None
-                self.label_eta = tf.placeholder_with_default(1., shape=())
-                tf_map_generator = self._hyperparams['primitive_network_model']
-                self.label_class_tensor = None
-                tf_map, fc_vars, last_conv_vars = tf_map_generator(dim_input=self._dPrimObs, \
-                                                                   dim_output=2, \
-                                                                   batch_size=self.batch_size, \
-                                                                   network_config=self._hyperparams['label_network_params'], \
-                                                                   input_layer=inputs, \
-                                                                   eta=self.label_eta)
-                self.label_obs_tensor = tf_map.get_input_tensor()
-                self.label_precision_tensor = tf_map.get_precision_tensor()
-                self.label_action_tensor = tf_map.get_target_output_tensor()
-                self.label_act_op = tf_map.get_output_op()
-                self.label_feat_op = tf_map.get_feature_op()
-                self.label_loss_scalar = tf_map.get_loss_op()
-                self.label_fc_vars = fc_vars
-                self.label_last_conv_vars = last_conv_vars
-                self.label_aux_losses = tf_map.aux_loss_ops
-
-                # Setup the gradients
-                #self.primitive_grads = [tf.gradients(self.primitive_act_op[:,u], self.primitive_obs_tensor)[0] for u in range(self._dPrim)]
-
 
     def init_solver(self):
         """ Helper method to initialize the solver. """
@@ -458,6 +323,7 @@ class PolicyOpt(object):
         self.cur_dec = self._hyperparams['weight_decay']
         if self.scope is not None:
             self._set_opt(self.config, self.scope)
+
         else:
             for scope in self.scopes:
                 self._set_opt(self.config, scope)
@@ -468,6 +334,7 @@ class PolicyOpt(object):
         if task == 'cont': return self.cont_policy
         if task == 'label': return self.label_policy
         return self.task_map[task]['policy']
+
 
     def init_policies(self, dU):
         if self.load_all or self.scope is None or self.scope == 'primitive':
