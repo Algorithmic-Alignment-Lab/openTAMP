@@ -117,7 +117,7 @@ class Transfer(Action):
                 ('(IsMP ?robot)', '0:{0}'.format(et-1)),
                 ('(forall (?w - Obstacle) (not (RCollides ?robot ?w)))', '2:{0}'.format(et-1)),
                 ('(StationaryRot ?robot)', '{0}:{1}'.format(et-3, et-1)),
-                ('(ForThetaDirValid ?robot)', '{0}:{1}'.format(et-3, et-1)),
+                #('(ForThetaDirValid ?robot)', '{0}:{1}'.format(et-3, et-1)),
                 ('(not (GripperClosed ?robot))', '{0}:{1}'.format(et, et-1)),
                ]
 
