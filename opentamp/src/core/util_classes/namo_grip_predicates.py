@@ -12,8 +12,7 @@ import numpy as np
 import os
 import pybullet as P
 import sys
-import torch
-import torch.nn.functional as F
+import time
 import traceback
 
 from pma.ll_solver_gurobi import NAMOSolver
@@ -3594,7 +3593,7 @@ class ThetaDirValid(ExprPredicate):
         (self.r,) = params
         for attr in ['forward', 'reverse']:
             if not hasattr(self, attr):
-                setattr(self, attr, False)
+                setattr(self, attr, True)
 
         self.coeff = 1e0
         attr_inds = OrderedDict([(self.r, [("pose", np.array([0, 1], dtype=np.int)),
@@ -3616,11 +3615,14 @@ class ThetaDirValid(ExprPredicate):
             active_range=(0, 1),
         )
 
+
     def f(self, x):
         return self.coeff * np.array([[self.torch_func.eval_f(x)]])
 
+
     def grad(self, x):
-        return self.coeff * self.torch_func.eval_grad(x).T
+        return self.coeff * self.torch_func.eval_grad(x).reshape((1,-1))
+
 
     def resample(self, negated, time, plan):
         res = OrderedDict()
@@ -3719,20 +3721,20 @@ class ForThetaDirValid(ThetaDirValid):
     def __init__(
         self, name, params, expected_param_types, env=None, sess=None, debug=False
     ):
+        self.forward = True
         super(ForThetaDirValid, self).__init__(
             name, params, expected_param_types, env, debug
         )
-        self.forward = True
 
 
 class RevThetaDirValid(ThetaDirValid):
     def __init__(
         self, name, params, expected_param_types, env=None, sess=None, debug=False
     ):
+        self.reverse = True
         super(RevThetaDirValid, self).__init__(
             name, params, expected_param_types, env, debug
         )
-        self.reverse = True
 
 
 class ColObjPred(CollisionPredicate):
@@ -3757,14 +3759,16 @@ class ColObjPred(CollisionPredicate):
         self.radius = self.c.geom.radius + 2.5
         self.torch_func = GaussianBump(radius=self.radius, dim=2)
 
-        self.coeff = -coeff
-        self.neg_coeff = -coeff
+        self.col_ts = 2
+        self.coeff = coeff
+        self.neg_coeff = self.coeff
         col_expr = Expr(self.f, self.grad, self.hess)
-        val = np.zeros((1, 1))
-        e = LEqExpr(col_expr, val)
+        val = np.ones((1, 1))
+        e = EqExpr(col_expr, val)
 
+        neg_val = np.zeros((1, 1))
         col_expr_neg = Expr(self.f_neg, self.grad_neg, self.hess_neg)
-        self.neg_expr = LEqExpr(col_expr_neg, -val)
+        self.neg_expr = LEqExpr(col_expr_neg, neg_val)
 
         super(ColObjPred, self).__init__(
             name,
@@ -3781,8 +3785,8 @@ class ColObjPred(CollisionPredicate):
 
     def f(self, x):
         xs = [
-            float(COL_TS - t) / COL_TS * x[:4] + float(t) / COL_TS * x[4:]
-            for t in range(COL_TS + 1)
+            float(self.col_ts - t) / self.col_ts * x[:4] + float(t) / self.col_ts * x[4:]
+            for t in range(self.col_ts + 1)
         ]
         vals = []
         for i, pt in enumerate(xs):
@@ -3793,25 +3797,25 @@ class ColObjPred(CollisionPredicate):
 
     def grad(self, x):
         xs = [
-            float(COL_TS - t) / COL_TS * x[:4] + float(t) / COL_TS * x[4:]
-            for t in range(COL_TS + 1)
+            float(self.col_ts - t) / self.col_ts * x[:4] + float(t) / self.col_ts * x[4:]
+            for t in range(self.col_ts + 1)
         ]
         vals = []
         for i, pt in enumerate(xs):
-            curcoeff = float(COL_TS - i) / COL_TS
-            v = self.torch_func.grad(pt).T
+            curcoeff = float(self.col_ts - i) / self.col_ts
+            v = self.torch_func.eval_grad(pt).reshape((1,-1))
             vals.append(np.c_[curcoeff * v, (1 - curcoeff) * v])
         return self.coeff * np.sum(vals, axis=0)
 
 
     def hess(self, x):
         xs = [
-            float(COL_TS - t) / COL_TS * x[:4] + float(t) / COL_TS * x[4:]
-            for t in range(COL_TS + 1)
+            float(self.col_ts - t) / self.col_ts * x[:4] + float(t) / self.col_ts * x[4:]
+            for t in range(self.col_ts + 1)
         ]
         vals = []
         for i, pt in enumerate(xs):
-            curcoeff = float(COL_TS - i) / COL_TS
+            curcoeff = float(self.col_ts - i) / self.col_ts
             v = self.torch_func.eval_hess(pt)
             new_v = np.r_[
                 np.c_[curcoeff * v, np.zeros((4, 4))],
@@ -3822,15 +3826,15 @@ class ColObjPred(CollisionPredicate):
 
 
     def f_neg(self, x):
-        return -self.neg_coeff / self.coeff * self.f(x)
+        return self.neg_coeff / self.coeff * self.f(x)
 
 
     def grad_neg(self, x):
-        return -self.neg_coeff / self.coeff * self.grad(x)
+        return self.neg_coeff / self.coeff * self.grad(x)
 
 
     def hess_neg(self, x):
-        return -self.neg_coeff / self.coeff * self.hess(x)
+        return self.neg_coeff / self.coeff * self.hess(x)
 
 
 class BoxObjPred(CollisionPredicate):
@@ -3898,8 +3902,8 @@ class DoorColObjPred(CollisionPredicate):
 
     def f(self, x):
         xs = [
-            float(COL_TS - t) / COL_TS * x[:5] + float(t) / COL_TS * x[5:]
-            for t in range(COL_TS + 1)
+            float(self.col_ts - t) / self.col_ts * x[:5] + float(t) / self.col_ts * x[5:]
+            for t in range(self.col_ts + 1)
         ]
         if USE_TF:
             cur_tensor = get_tf_graph("door_bump_out")
@@ -3907,7 +3911,7 @@ class DoorColObjPred(CollisionPredicate):
             radius_tensor = get_tf_graph("door_bump_radius")
             len_tensor = get_tf_graph("door_len")
             vals = []
-            for i in range(COL_TS + 1):
+            for i in range(self.col_ts + 1):
                 pt = xs[i]
                 true_pt = pt[:2] + [1.5 * np.cos(x[2]), 1.5 * np.sin(x[2])]
                 if np.sum((true_pt - pt[3:]) ** 2) > (self.radius - 1e-3) ** 2:
@@ -3935,8 +3939,8 @@ class DoorColObjPred(CollisionPredicate):
 
     def grad(self, x):
         xs = [
-            float(COL_TS - t) / COL_TS * x[:5] + float(t) / COL_TS * x[5:]
-            for t in range(COL_TS + 1)
+            float(self.col_ts - t) / self.col_ts * x[:5] + float(t) / self.col_ts * x[5:]
+            for t in range(self.col_ts + 1)
         ]
         if USE_TF:
             cur_grads = get_tf_graph("door_bump_grads")
@@ -3944,7 +3948,7 @@ class DoorColObjPred(CollisionPredicate):
             radius_tensor = get_tf_graph("door_bump_radius")
             len_tensor = get_tf_graph("door_len")
             vals = []
-            for i in range(COL_TS + 1):
+            for i in range(self.col_ts + 1):
                 pt = xs[i]
                 true_pt = pt[:2] + [1.5 * np.cos(x[2]), 1.5 * np.sin(x[2])]
                 if np.sum((true_pt - pt[3:]) ** 2) > (self.radius - 1e-3) ** 2:
@@ -3964,7 +3968,7 @@ class DoorColObjPred(CollisionPredicate):
                     )
                     v[np.isnan(v)] = 0.0
                     v[np.isinf(v)] = 0.0
-                    curcoeff = float(COL_TS - i) / COL_TS
+                    curcoeff = float(self.col_ts - i) / self.col_ts
                     vals.append(np.c_[curcoeff * v, (1 - curcoeff) * v])
             return np.sum(vals, axis=0)
         return (
@@ -3979,8 +3983,8 @@ class DoorColObjPred(CollisionPredicate):
 
     def hess_neg(self, x):
         xs = [
-            float(COL_TS - t) / COL_TS * x[:5] + float(t) / COL_TS * x[5:]
-            for t in range(COL_TS + 1)
+            float(self.col_ts - t) / self.col_ts * x[:5] + float(t) / self.col_ts * x[5:]
+            for t in range(self.col_ts + 1)
         ]
         if USE_TF:
             cur_hess = get_tf_graph("door_bump_hess")
@@ -3988,7 +3992,7 @@ class DoorColObjPred(CollisionPredicate):
             radius_tensor = get_tf_graph("door_bump_radius")
             len_tensor = get_tf_graph("door_len")
             vals = []
-            for i in range(COL_TS + 1):
+            for i in range(self.col_ts + 1):
                 pt = xs[i]
                 true_pt = pt[:2] + [1.5 * np.cos(x[2]), 1.5 * np.sin(x[2])]
                 if np.sum((true_pt - pt[3:]) ** 2) > (self.radius - 1e-3) ** 2:
@@ -4005,7 +4009,7 @@ class DoorColObjPred(CollisionPredicate):
                     v[np.isnan(v)] = 0.0
                     v[np.isinf(v)] = 0.0
                     v = v.reshape((5, 5))
-                    curcoeff = float(COL_TS - i) / COL_TS
+                    curcoeff = float(self.col_ts - i) / self.col_ts
                     new_v = np.r_[
                         np.c_[curcoeff * v, np.zeros((5, 5))],
                         np.c_[np.zeros((5, 5)), (1 - curcoeff) * v],
