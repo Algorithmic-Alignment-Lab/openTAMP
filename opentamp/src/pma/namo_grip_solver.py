@@ -275,6 +275,8 @@ class NAMOSolverGurobi(backtrack_ll_solver.BacktrackLLSolverGurobi):
 
 class NAMOSolverOSQP(backtrack_ll_solver_OSQP.BacktrackLLSolverOSQP):
     def get_resample_param(self, a):
+        if a.name == 'transfer':
+            return [a.params[0], a.params[3]]
         return a.params[0]  # Experiment with avoiding robot pose symbols
 
         if a.name == "moveto":
@@ -399,20 +401,11 @@ class NAMOSolverOSQP(backtrack_ll_solver_OSQP.BacktrackLLSolverOSQP):
                     target_rot += 2 * np.pi
                 dist = -gripdist - dsafe
                 target_pos = target.value + [
-                    [-dist * np.sin(-target_rot)],
-                    [dist * np.cos(-target_rot)],
-                ]
-                target_pos = target.value + [
                     [-dist * np.sin(target_rot)],
                     [dist * np.cos(target_rot)],
                 ]
-                robot_pose.append(
-                    {
-                        "pose": target_pos,
-                        "gripper": np.array([[-0.1]]),
-                        "theta": np.array([[target_rot]]),
-                    }
-                )
+                robot_pose.append({act.params[0]: {'pose': target_pos, 'gripper': np.array([[-0.1]]), 'theta': np.array([[target_rot]])},
+                                   act.params[3]: {'pose': target.value.reshape((-1,1))}})
             elif act.name == "place":
                 target = act.params[4]
                 grasp = act.params[5]
@@ -550,7 +543,11 @@ class NAMOSolverOSQP(backtrack_ll_solver_OSQP.BacktrackLLSolverOSQP):
             pred = ColObjPred(
                 "obstr", params, expected_param_types, plan.env, coeff=coeff
             )
-            for t in range(active_ts[0], active_ts[1] - 1):
+            for t in range(active_ts[0], active_ts[1]):
+                if act.name.lower().find('move') >= 0 \
+                        and param in act.params \
+                        and t >= act.active_timesteps[1]-4: continue
+
                 var = self._spawn_sco_var_for_pred(pred, t)
                 bexpr = BoundExpr(pred.neg_expr.expr, var)
                 objs.append(bexpr)

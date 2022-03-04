@@ -26,11 +26,11 @@ bt_ll_gurobi.DEBUG = True
 bt_ll_gurobi.COL_COEFF = 0.01
 bt_ll_osqp.DEBUG = True
 bt_ll_osqp.COL_COEFF = 0.01
-N_OBJS = 2
+
 visual = len(os.environ.get('DISPLAY', '')) > 0
 d_c = main.parse_file_to_dict(prob_gen.domain_file)
 domain = parse_domain_config.ParseDomainConfig.parse(d_c)
-prob_file = os.getcwd() + '/opentamp' + "/domains/namo_domain/namo_probs/grip_prob_{}_8end_0aux.prob".format(N_OBJS)
+prob_file = os.getcwd() + '/opentamp' + "/domains/namo_domain/namo_probs/grip_prob_{}_8end_0aux.prob".format(prob_gen.NUM_OBJS)
 goal = '(and '
 p_c = main.parse_file_to_dict(prob_file)
 problem = parse_problem_config.ParseProblemConfig.parse(p_c, domain, None)
@@ -45,7 +45,7 @@ params['pr2'].pose[:,0] = np.array(possible_can_locs[inds[-1]]) / 10.
 for n in range(len(prob_gen.END_TARGETS)):
     params['end_target_{}'.format(n)].value[:,0] = prob_gen.END_TARGETS[n]
 
-for n in range(N_OBJS):
+for n in range(prob_gen.NUM_OBJS):
     params['can{}'.format(n)].pose[:,0] = np.array(possible_can_locs[inds[n]]) / 10.
     goal += '(Near can{} end_target_{})'.format(n, targ_inds[n])
 goal += ')'
@@ -70,7 +70,7 @@ act_jnts = ['robot_x', 'robot_y', 'robot_theta', 'left_finger_joint', 'right_fin
 items = []
 fname = fpath+'/robot_info/lidar_namo.xml'
 colors = [[1, 0, 0, 1], [0, 1, 0, 1], [0, 0, 1, 1], [0.7, 0.7, 0.1, 1], [1., 0.1, 0.8, 1], [0.5, 0.95, 0.5, 1], [0.75, 0.4, 0, 1], [0.25, 0.25, 0.5, 1], [0.5, 0, 0.25, 1], [0, 0.5, 0.75, 1], [0, 0, 0.5, 1]]
-for n in range(N_OBJS):
+for n in range(prob_gen.NUM_OBJS):
     cur_color = colors.pop(0)
     targ_color = cur_color[:3] + [1.]
     targ_pos = np.r_[plan.params['can{}'.format(n)].pose[:,-1], -0.15]
@@ -92,7 +92,7 @@ xval, yval = pr2.pose[:,0]
 grip = pr2.gripper[0,0]
 theta = pr2.theta[0,0]
 env.set_joints({'robot_x': xval, 'robot_y': yval, 'left_finger_joint': grip, 'right_finger_joint': grip, 'robot_theta': theta}, forward=False)
-for n in range(N_OBJS):
+for n in range(prob_gen.NUM_OBJS):
     pname = 'can{}'.format(n)
     param = plan.params[pname]
     env.set_item_pos(pname, np.r_[param.pose[:,0], 0.5])
@@ -118,3 +118,6 @@ for t in range(plan.horizon-1):
     env.step(ctrl_vec, mode='velocity')
     if visual:
         env.render(camera_id=0, height=256, width=256, view=True)
+
+obj_pos = [env.get_item_pos('can{}'.format(n)) for n in range(prob_gen.NUM_OBJS)]
+print('Final obj pos', obj_pos)
