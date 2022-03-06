@@ -150,7 +150,7 @@ class ParseDomainConfig(object):
                 eff_pred_strs = ParseDomainConfig._build_predicate_str(eff)
                 pred_strs = pre_pred_strs + eff_pred_strs
 
-                all_active_timesteps = [tuple(map(int, s.split(":"))) for s in v[inds[-1]:].strip().split()]
+                all_active_timesteps = [tuple(map(int, s.split(":"))) for s in v[inds[-1]:].strip().split()]                
                 # build list of params
                 params = []
                 for p in params_str.strip("()").split("?"):

@@ -1438,6 +1438,29 @@ class RobotAt(ExprPredicate):
         super(RobotAt, self).__init__(name, e, self.attr_inds, params, expected_param_types, priority = -2)
         self.spacial_anchor = True
 
+class PoseAdjacent(ExprPredicate):
+    """
+        Format: PoseAdjacent, RobotPose, RobotPose
+
+        Robot related
+
+        Requires:
+            attr_inds[OrderedDict]: robot attribute indices
+            attr_dim[Int]: dimension of robot attribute
+    """
+    #@profile
+    def __init__(self, name, params, expected_param_types, env=None):
+        assert len(params) == 2
+        self.robot_pose1, self.robot_pose2 = params
+        self.attr_inds =  OrderedDict([(self.robot_pose1, [('pose', np.array([0,1,2], dtype=np.int))]), (self.robot_pose2, [('pose', np.array([0,1,2], dtype=np.int))])])
+        self.attr_dim = 3
+
+        A = np.c_[np.eye(self.attr_dim), -np.eye(self.attr_dim)]
+        b, val = np.zeros((self.attr_dim, 1)), np.zeros((self.attr_dim, 1))
+        e = EqExpr(AffExpr(A, b), val)
+        super(PoseAdjacent, self).__init__(name, e, self.attr_inds, params, expected_param_types, priority = -2)
+        self.spacial_anchor = False
+
 class IsMP(RobotPredicate):
     """
         Format: IsMP Robot (Just the Robot Base)

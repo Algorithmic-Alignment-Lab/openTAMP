@@ -193,6 +193,7 @@ dp.add('HeightBlock', ['Item', 'Item'])
 dp.add('AboveTable', ['Item'])
 dp.add('InContactRobotTable', ['Robot', 'Box'])
 dp.add('WipedSurface', ['Robot'])
+dp.add('PoseAdjacent', ['RobotPose', 'RobotPose'])
 
 dom_str += dp.get_str() + '\n'
 
@@ -281,15 +282,15 @@ class MoveToTabletop(Action):
         self.end = end
         self.args = '(?robot - Robot ?table - Box ?start - RobotPose ?end - RobotPose)'
         self.pre = [\
-            ('(RobotAt ?robot ?start)', '{}:{}'.format(0, -1)),
-            ('(not (RobotAt ?robot ?end))', '{}:{}'.format(0, -1)),
+            ('(RobotAt ?robot ?start)', '{}:{}'.format(0, 1)),
+            ('(not (RobotAt ?robot ?end))', '{}:{}'.format(0, 1)),
             ('(not (InContactRobotTable ?robot ?table))', '{}:{}'.format(0, -1)),
             ('(IsMP ?robot)', '{}:{}'.format(0, end-1)),
             ('(WithinJointLimit ?robot)', '{}:{}'.format(0, end)),
         ]
         self.eff = [\
-            (' (not (RobotAt ?robot ?start))', '{}:{}'.format(end, end-1)),
-            ('(RobotAt ?robot ?end)', '{}:{}'.format(end, end-1)),
+            (' (not (RobotAt ?robot ?start))', '{}:{}'.format(end-1, end)),
+            ('(RobotAt ?robot ?end)', '{}:{}'.format(end-1, end)),
             ('(InContactRobotTable ?robot ?table)', '{}:{}'.format(end, end)),
             ]
 
@@ -301,15 +302,16 @@ class MoveAlongTabletop(Action):
         self.end = end
         self.args = '(?robot - Robot ?table - Box ?start - RobotPose ?end - RobotPose)'
         self.pre = [\
-            ('(RobotAt ?robot ?start)', '{}:{}'.format(0, -1)),
+            ('(RobotAt ?robot ?start)', '{}:{}'.format(0, 1)),
             ('(not (RobotAt ?robot ?end))', '{}:{}'.format(0, -1)),
             ('(InContactRobotTable ?robot ?table)', '{}:{}'.format(0, end)),
             ('(IsMP ?robot)', '{}:{}'.format(0, end-1)),
             ('(WithinJointLimit ?robot)', '{}:{}'.format(0, end)),
+            ('(PoseAdjacent ?start ?end)', '{}:{}'.format(0, -1))
         ]
         self.eff = [\
-            (' (not (RobotAt ?robot ?start))', '{}:{}'.format(end, end-1)),
-            ('(RobotAt ?robot ?end)', '{}:{}'.format(end, end-1)),
+            (' (not (RobotAt ?robot ?start))', '{}:{}'.format(end-1, end)),
+            ('(RobotAt ?robot ?end)', '{}:{}'.format(end-1, end)),
             ('(WipedSurface ?robot)', '{}:{}'.format(end, end-1))
             ]
 

@@ -101,7 +101,10 @@ class LLSearchNode(SearchNode):
                         for param in p['pred'].attr_inds:
                             for attr, _ in p['pred'].attr_inds[param]:
                                 if param.is_symbol():
-                                    aval = getattr(plan.params[param.name], attr)[:,0]
+                                    try:
+                                        aval = getattr(plan.params[param.name], attr)[:,0]
+                                    except AttributeError:
+                                        import ipdb; ipdb.set_trace()
                                 else:
                                     aval = getattr(plan.params[param.name], attr)[:,check_ts]
                                 old_vals[param, attr] = getattr(param, attr)[:,0].copy()

@@ -17,7 +17,6 @@ TABLE_GEOM = [0.5, 0.8, 0.9]
 TABLE_POS = [0.5, 0.0, -0.040]
 TABLE_ROT = [0,0,0]
 
-# TODO: Divide up table into 10 * 8 set of poses and define a point that's at the center of each one!
 num_rows = 10
 num_cols = 8
 xy_ontable_poses = [[] for _ in range(num_rows)]
@@ -116,6 +115,16 @@ def main():
     s += "(StationaryBase sawyer), "
     s += "(Stationary table), "
     s += "(WithinJointLimit sawyer), "
+    for row in range(num_rows):
+        for col in range(num_cols):
+            if row != 0:
+                s += f"(PoseAdjacent region_pose{row}_{col} region_pose{row-1}_{col}), "
+            if row != num_rows - 1:
+                s += f"(PoseAdjacent region_pose{row}_{col} region_pose{row+1}_{col}), "
+            if col != 0:
+                s += f"(PoseAdjacent region_pose{row}_{col} region_pose{row}_{col-1}), "
+            if col != num_cols - 1:
+                s += f"(PoseAdjacent region_pose{row}_{col} region_pose{row}_{col+1}), "
     s += "\n\n"
 
     with open(filename, "w") as f:
