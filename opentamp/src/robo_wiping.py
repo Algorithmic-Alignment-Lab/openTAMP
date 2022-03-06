@@ -6,7 +6,6 @@ import numpy as np
 import pybullet as P
 import robosuite
 import robosuite.utils.transform_utils as robo_T
-import scipy as sp
 from robosuite.controllers import load_controller_config
 from scipy.spatial.transform import Rotation
 
@@ -84,7 +83,7 @@ env = robosuite.make(
     camera_widths=128,
     camera_heights=128,
 )
-# obs, _, _, _ = env.step(np.zeros(7)) # Step a null action to get an observation of the env's state.
+obs, _, _, _ = env.step(np.zeros(7)) # Step a null action to 'boot' the environment.
 # wipe_centroid_pose = obs['wipe_centroid']
 
 # Get the locations of all dirt particles
@@ -92,9 +91,7 @@ dirt_locs = np.zeros((env.num_markers, 3))
 for i, marker in enumerate(env.model.mujoco_arena.markers):
     marker_pos = np.array(env.sim.data.body_xpos[env.sim.model.body_name2id(marker.root_body)])
     dirt_locs[i,:] = marker_pos
-    print(marker_pos)
-    import ipdb; ipdb.set_trace()
-
+# import ipdb; ipdb.set_trace()
 
 # First, we reset the environment and then manually set the joint positions to their
 # initial positions and all the joint velocities and accelerations to 0.

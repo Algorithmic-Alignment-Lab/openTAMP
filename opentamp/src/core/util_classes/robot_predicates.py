@@ -1545,6 +1545,37 @@ class WipedSurface(RobotPredicate):
         self.spacial_anchor = False
         self._nonrollout = True
 
+# TODO: (njk) make a dummy predicate that's basically just the At predicate
+# but is always true
+# class WipedSurfaceDummy(ExprPredicate):
+#     """
+#         Format: # At, Can, Target
+
+#         Non-robot related
+#     """
+#     #@profile
+#     def __init__(self, name, params, expected_param_types, env=None):
+#         assert len(params) == 2
+#         self.obj, self.target = params
+#         k = 'value' if self.target.is_symbol() else 'pose'
+#         attr_inds = OrderedDict([(self.obj, [("pose", np.array([0,1,2], dtype=np.int)),
+#                                              ("rotation", np.array([0,1,2], dtype=np.int))]),
+#                                  (self.target, [(k, np.array([0,1,2], dtype=np.int)),
+#                                                 ("rotation", np.array([0,1,2], dtype=np.int))])])
+
+#         A = np.c_[np.eye(6), -np.eye(6)]
+#         b, val = np.zeros((6, 1)), np.zeros((6, 1))
+#         if not self.target.is_symbol() and hasattr(self.target.geom, 'height'):
+#             h1 = self.obj.geom.height if hasattr(self.obj.geom, 'height') else self.obj.geom.radius
+#             h2 = self.target.geom.height
+#             b[2,0] = -(h1 + h2)
+
+#         aff_e = AffExpr(A, b)
+#         e = EqExpr(aff_e, val)
+
+#         super(At, self).__init__(name, e, attr_inds, params, expected_param_types, priority = -2)
+#         self.spacial_anchor = True
+
 class Stationary(ExprPredicate):
     """
         Format: Stationary, Can

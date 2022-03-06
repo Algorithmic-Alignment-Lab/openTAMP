@@ -201,7 +201,10 @@ class Symbol(Parameter):
     """
     def __init__(self, attrs=None, attr_types=None, class_types=[]):
         if attrs is not None:
-            assert "name" in attrs and "_type" in attrs and "value" in attrs
+            try:
+                assert "name" in attrs and "_type" in attrs and "value" in attrs
+            except AssertionError:
+                import ipdb; ipdb.set_trace()
         super(Symbol, self).__init__(attrs=attrs, attr_types=attr_types, class_types=class_types)
 
     def is_defined(self):
