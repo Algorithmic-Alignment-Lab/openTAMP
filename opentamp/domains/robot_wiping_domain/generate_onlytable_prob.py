@@ -43,6 +43,7 @@ def get_sawyer_ontable_pose_str(name, ee_pos):
     s += "(right_ee_rot {} {}), ".format(name, EE_ROT)
     s += "(right_gripper {} undefined), ".format(name)
     s += "(value {} undefined), ".format(name)
+    s += "(pose {} {}), ".format(name, ee_pos)
     s += "(rotation {} {}), ".format(name, [0.,0.,0.])
     return s
 

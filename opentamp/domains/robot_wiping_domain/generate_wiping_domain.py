@@ -289,7 +289,7 @@ class MoveToTabletop(Action):
             ('(WithinJointLimit ?robot)', '{}:{}'.format(0, end)),
         ]
         self.eff = [\
-            (' (not (RobotAt ?robot ?start))', '{}:{}'.format(end-1, end)),
+            ('(not (RobotAt ?robot ?start))', '{}:{}'.format(end-1, end)),
             ('(RobotAt ?robot ?end)', '{}:{}'.format(end-1, end)),
             ('(InContactRobotTable ?robot ?table)', '{}:{}'.format(end, end)),
             ]
