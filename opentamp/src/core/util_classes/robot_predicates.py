@@ -1452,7 +1452,7 @@ class PoseAdjacent(ExprPredicate):
     def __init__(self, name, params, expected_param_types, env=None):
         assert len(params) == 2
         self.robot_pose1, self.robot_pose2 = params
-        self.attr_inds =  OrderedDict([(self.robot_pose1, [('pose', np.array([0,1,2], dtype=np.int))]), (self.robot_pose2, [('pose', np.array([0,1,2], dtype=np.int))])])
+        self.attr_inds =  OrderedDict([(self.robot_pose1, [('value', np.array([0,1,2], dtype=np.int))]), (self.robot_pose2, [('value', np.array([0,1,2], dtype=np.int))])])
         self.attr_dim = 3
 
         A = np.c_[np.eye(self.attr_dim), -np.eye(self.attr_dim)]
