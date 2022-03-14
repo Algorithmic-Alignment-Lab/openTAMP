@@ -7,10 +7,13 @@ import queue
 import numpy as np
 import os, psutil
 
+import torch
+
 from opentamp.src.policy_hooks.control_attention_policy_opt import ControlAttentionPolicyOpt
 from opentamp.src.policy_hooks.msg_classes import *
-from opentamp.src.policy_hooks.policy_data_loader import DataLoader
+from opentamp.src.policy_hooks.queued_dataset import QueuedDataset
 from opentamp.src.policy_hooks.utils.policy_solver_utils import *
+
 
 LOG_DIR = 'experiment_logs/'
 MAX_QUEUE_SIZE = 100
@@ -18,15 +21,15 @@ UPDATE_TIME = 60
 
 class PolicyServer(object):
     def __init__(self, hyperparams):
-        global tf
-        import tensorflow as tf
         self.group_id = hyperparams['group_id']
         self.task = hyperparams['scope']
         self.task_list = hyperparams['task_list']
         self.weight_dir = LOG_DIR+hyperparams['weight_dir']
+
         self.seed = int((1e2*time.time()) % 1000.)
         np.random.seed(self.seed)
         random.seed(self.seed)
+
         n_gpu = hyperparams['n_gpu']
         if n_gpu == 0:
             gpus = -1
@@ -34,10 +37,8 @@ class PolicyServer(object):
             gpu = 0
         else:
             gpus = np.random.choice(range(n_gpu))
-            #gpus = n_gpu-1
-            #gpus = str(list(range(1, n_gpu+1)))[1:-1]
-            #gpus = str(list(range(0, n_gpu)))[1:-1]
         os.environ['CUDA_VISIBLE_DEVICES'] = "{0}".format(gpus)
+
         self.start_t = hyperparams['start_t']
         self.config = hyperparams
         self.permute = hyperparams['permute_hl'] > 0
@@ -45,7 +46,6 @@ class PolicyServer(object):
         ratios = hyperparams.get('ratios', {})
         for key in ['negative', 'optimal', 'dagger', 'rollout', 'human']:
             if key not in ratios: ratios[key] = hyperparams['perc_{}'.format(key)]
-
         for key in ratios: ratios[key] /= np.sum(list(ratios.values()))
         hyperparams['ratios'] = ratios
 
@@ -57,32 +57,85 @@ class PolicyServer(object):
         hyperparams['policy_opt']['load_all'] = self.task not in ['cont', 'primitive']
         hyperparams['agent']['master_config'] = hyperparams
         hyperparams['agent']['load_render'] = False
+
         self.agent = hyperparams['agent']['type'](hyperparams['agent'])
         self.map_cont_discr_tasks()
         self.prim_opts = self.agent.prob.get_prim_choices(self.agent.task_list)
         self.stopped = False
         self.warmup = hyperparams['tf_warmup_iters']
         self.queues = hyperparams['queues']
-        self.min_buffer = hyperparams['prim_update_size'] if self.task in ['cont', 'primitive'] else hyperparams['update_size']
+     
+        hyperparams['dPrim'] = len(hyperparams['prim_bounds'])
+        hyperparams['dCont'] = len(hyperparams['cont_bounds'])
+        hyperparams['policy_opt']['primitive_network_params']['output_boundaries'] = self.discr_bounds
+        hyperparams['policy_opt']['cont_network_params']['output_boundaries'] = self.cont_bounds
+        self.policy_opt = hyperparams['policy_opt']['type'](hyperparams['policy_opt'])
+        self.policy_opt.lr_policy = hyperparams['lr_policy']
+        self.lr_policy = hyperparams['lr_policy']
+
+        self.dataset.policy = self.policy_opt.get_policy(self.task)
+        self.dataset.data_buf.policy = self.policy_opt.get_policy(self.task)
+
+        self._setup_log_info()
+
+
+    def _compute_idx(self):
+        # List of indices for state (vector) data and image (tensor) data in observation.
+        self.x_idx, self.img_idx, i = [], [], 0
+        for sensor in self._hyperparams['network_params']['obs_include']:
+            dim = self._hyperparams['network_params']['sensor_dims'][sensor]
+            if sensor in self._hyperparams['network_params'].get('obs_image_data', []):
+                self.img_idx = self.img_idx + list(range(i, i+dim))
+            else:
+                self.x_idx = self.x_idx + list(range(i, i+dim))
+            i += dim
+
+        self.prim_x_idx, self.prim_img_idx, i = [], [], 0
+        for sensor in self._hyperparams['primitive_network_params']['obs_include']:
+            dim = self._hyperparams['primitive_network_params']['sensor_dims'][sensor]
+            if sensor in self._hyperparams['primitive_network_params'].get('obs_image_data', []):
+                self.prim_img_idx = self.prim_img_idx + list(range(i, i+dim))
+            else:
+                self.prim_x_idx = self.prim_x_idx + list(range(i, i+dim))
+            i += dim
+
+        self.cont_x_idx, self.cont_img_idx, i = [], [], 0
+        for sensor in self._hyperparams['cont_network_params']['obs_include']:
+            dim = self._hyperparams['cont_network_params']['sensor_dims'][sensor]
+            if sensor in self._hyperparams['cont_network_params'].get('obs_image_data', []):
+                self.cont_img_idx = self.cont_img_idx + list(range(i, i+dim))
+            else:
+                self.cont_x_idx = self.cont_x_idx + list(range(i, i+dim))
+            i += dim
+
+
+    def _setup_dataloading(self):
+        x_idx = self.x_dix
+        if self.task == 'primitive':
+            x_idx = self.prim_x_idx
+        elif self.task == 'cont':
+            x_idx = self.cont_x_idx
+
+        self.min_buffer = self.config['prim_update_size'] if self.task in ['cont', 'primitive'] else self.config['update_size']
         if self.task == 'label':
             self.min_buffer = 600
 
         if self.task == 'primitive':
-            self.in_queue = hyperparams['hl_queue']
+            self.in_queue = self.config['hl_queue']
         elif self.task == 'cont':
-            self.in_queue = hyperparams['cont_queue']
+            self.in_queue = self.config['cont_queue']
         elif self.task == 'label':
-            self.in_queue = hyperparams['label_queue']
+            self.in_queue = self.config['label_queue']
         else:
-            self.in_queue = hyperparams['ll_queue'][self.task]
+            self.in_queue = self.config['ll_queue'][self.task]
 
-        self.batch_size = hyperparams['batch_size']
+        self.batch_size = self.config['batch_size']
         if self.task in ['cont', 'primitive', 'label']:
             normalize = False
         else:
-            normalize = IM_ENUM not in hyperparams['obs_include']
+            normalize = IM_ENUM not in self.config['obs_include']
 
-        feed_prob = hyperparams['end_to_end_prob']
+        feed_prob = self.config['end_to_end_prob']
         in_inds, out_inds = None, None
         if len(self.continuous_opts):
             in_inds, out_inds = [], []
@@ -99,111 +152,35 @@ class PolicyServer(object):
             out_inds = np.concatenate(out_inds, axis=0)
 
         aug_f = None
-        no_im = IM_ENUM not in hyperparams['prim_obs_include']
-        if self.task == 'primitive' and hyperparams['permute_hl'] > 0 and no_im:
+        no_im = IM_ENUM not in self.config['prim_obs_include']
+        if self.task == 'primitive' and self.config['permute_hl'] > 0 and no_im:
             aug_f = self.agent.permute_hl_data
+ 
+        self.dataset = QueuedDataset(self.task, 
+                                     self.in_queue, 
+                                     self.batch_size,
+                                     x_idx=x_idx,
+                                     ratios=self.config['ratios'],
+                                     normalize=normalize, 
+                                     min_buffer=self.min_buffer, 
+                                     aug_f=aug_f, 
+                                     feed_prob=feed_prob, 
+                                     feed_inds=(in_inds, out_inds), 
+                                     feed_map=self.agent.center_cont, 
+                                     save_dir=self.weight_dir+'/samples/')
+        self.data_gen = FastDataLoader(self.dataset, batch_size=self.batch_size, shuffle=True)
 
-        #if self.task == 'cont':
-        #    aug_f = self.agent.permute_cont_data
 
-        self.data_gen = DataLoader(hyperparams, \
-                                   self.task, \
-                                   self.in_queue, \
-                                   self.batch_size, \
-                                   normalize, \
-                                   min_buffer=self.min_buffer, \
-                                   aug_f=aug_f, \
-                                   feed_prob=feed_prob, \
-                                   feed_inds=(in_inds, out_inds), \
-                                   feed_map=self.agent.center_cont, \
-                                   save_dir=self.weight_dir+'/samples/')
-      
-        hyperparams['dPrim'] = len(hyperparams['prim_bounds'])
-        hyperparams['dCont'] = len(hyperparams['cont_bounds'])
-        if self.task == 'primitive' or (self.task == 'cont' and not len(self.cont_bounds)):
-            dO = hyperparams['dPrimObs']
-            dU = max([b[1] for b in self.discr_bounds] + [b[1] for b in hyperparams['aux_bounds']])
-            dP = hyperparams['dPrim']
-            precShape = tf.TensorShape([None, dP])
-        elif self.task == 'cont':
-            dO = hyperparams['dContObs']
-            dU = max([b[1] for b in self.cont_bounds])
-            dP = dU
-            precShape = tf.TensorShape([None, dP, dP])
-        elif self.task == 'label':
-            dO = hyperparams['dPrimObs']
-            dU = 2
-            dP = 2
-            precShape = tf.TensorShape([None, dP])
-        else:
-            dO = hyperparams['dO']
-            dU = hyperparams['dU']
-            dP = hyperparams['dU']
-            precShape = tf.TensorShape([None, dP, dP])
-
-        data = tf.data.Dataset.from_tensor_slices([0, 1, 2, 3])
-        #self.load_f = lambda x: tf.data.Dataset.from_generator(self.data_gen.gen_load, \
-        #                                                 output_types=tf.int32, \
-        #                                                 args=())
-        #data = data.interleave(self.load_f, \
-        #                         cycle_length=4, \
-        #                         block_length=1)
-        self.gen_f = lambda x: tf.data.Dataset.from_generator(self.data_gen.gen_items, \
-                                                         output_types=(tf.float32, tf.float32, tf.float32), \
-                                                         output_shapes=(tf.TensorShape([None, dO]), tf.TensorShape([None, dU]), precShape),
-                                                         args=(x,))
-
-        try:
-            self.data = data.interleave(self.gen_f, \
-                                         cycle_length=4, \
-                                         block_length=1, \
-                                         num_parallel_calls=4)
-        except:
-            self.data = data.interleave(self.gen_f, \
-                                         cycle_length=4, \
-                                         block_length=1)
-
-        self.data = self.data.prefetch(4)
-
-        self.input, self.act, self.prc = self.data.make_one_shot_iterator().get_next()
-
-        hyperparams['policy_opt']['primitive_network_params']['output_boundaries'] = self.discr_bounds
-        hyperparams['policy_opt']['cont_network_params']['output_boundaries'] = self.cont_bounds
-        self.policy_opt = hyperparams['policy_opt']['type'](
-            hyperparams['policy_opt'],
-            hyperparams['dO'],
-            hyperparams['dU'],
-            hyperparams['dPrimObs'],
-            hyperparams['dContObs'],
-            hyperparams['dValObs'],
-            self.discr_bounds,
-            contBounds=self.cont_bounds,
-            inputs=(self.input, self.act, self.prc),
-        )
-        self.policy_opt.lr_policy = hyperparams['lr_policy']
-        self.lr_policy = hyperparams['lr_policy']
-        if self.task == 'primitive':
-            self.data_gen.data_buf.x_idx = self.policy_opt.prim_x_idx
-        elif self.task == 'cont':
-            self.data_gen.data_buf.x_idx = self.policy_opt.cont_x_idx
-        elif self.task == 'label':
-            self.data_gen.data_buf.x_idx = self.policy_opt.label_x_idx
-        else:
-            self.data_gen.data_buf.x_idx = self.policy_opt.x_idx
-
-        self.data_gen.policy = self.policy_opt.get_policy(self.task)
-        self.data_gen.data_buf.policy = self.policy_opt.get_policy(self.task)
-
-        self.policy_opt_log = LOG_DIR + hyperparams['weight_dir'] + '/policy_{0}_log.txt'.format(self.task)
-        self.policy_info_log = LOG_DIR + hyperparams['weight_dir'] + '/policy_{0}_info.txt'.format(self.task)
-        self.data_file = LOG_DIR + hyperparams['weight_dir'] + '/{0}_data.pkl'.format(self.task)
+    def _setup_log_info(self):
+        self.policy_opt_log = LOG_DIR + self.config['weight_dir'] + '/policy_{0}_log.txt'.format(self.task)
+        self.policy_info_log = LOG_DIR + self.config['weight_dir'] + '/policy_{0}_info.txt'.format(self.task)
+        self.data_file = LOG_DIR + self.config['weight_dir'] + '/{0}_data.pkl'.format(self.task)
         self.expert_demos = {'acs':[], 'obs':[], 'ep_rets':[], 'rews':[]}
-        self.expert_data_file = LOG_DIR+hyperparams['weight_dir']+'/'+str(self.task)+'_exp_data.npy'
+        self.expert_data_file = LOG_DIR+self.config['weight_dir']+'/'+str(self.task)+'_exp_data.npy'
         self.n_updates = 0
         self.update_t = time.time()
         self.n_data = []
         self.update_queue = []
-        self.policy_var = {}
         self.policy_loss = []
         self.train_losses = {'all': [], 'optimal':[], 'rollout':[], 'aux': []}
         self.val_losses = {'all': [], 'optimal':[], 'rollout':[], 'aux': []}

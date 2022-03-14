@@ -21,7 +21,7 @@ MODEL_DIR = 'saved_models/'
 
 class PolicyOpt(object):
     """ Policy optimization using tensor flow for DAG computations/nonlinear function approximation. """
-    def __init__(self, hyperparams, inputs=None):
+    def __init__(self, hyperparams):
         self.config = hyperparams
         self.scope = hyperparams.get('scope', None)
         self.split_nets = hyperparams.get('split_nets', False)
@@ -29,7 +29,6 @@ class PolicyOpt(object):
         self.torch_iter = 0
         self.batch_size = self._hyperparams['batch_size']
         self.load_all = self._hyperparams.get('load_all', False)
-        self.input_layer = inputs
         self.share_buffers = self._hyperparams.get('share_buffer', True)
         if self._hyperparams.get('share_buffer', True):
             self.buffers = self._hyperparams['buffers']
@@ -43,7 +42,6 @@ class PolicyOpt(object):
         self._dO = hyperparams.get('dO', None)
         self._dPrimObs = hyperparams.get('dPrimObs', None)
         self._dContObs = hyperparams.get('dContObs', None)
-        self._compute_idx()
 
         self.device = torch.device('cpu')
         if self._hyperparams['use_gpu'] == 1:
@@ -90,36 +88,6 @@ class PolicyOpt(object):
                 self.restore_ckpt(scope, dirname=hlpol)
             if len(contpol) and scope not in self.valid_scopes:
                 self.restore_ckpt(scope, dirname=contpol)
-
-
-    def _compute_idx(self):
-        # List of indices for state (vector) data and image (tensor) data in observation.
-        self.x_idx, self.img_idx, i = [], [], 0
-        for sensor in self._hyperparams['network_params']['obs_include']:
-            dim = self._hyperparams['network_params']['sensor_dims'][sensor]
-            if sensor in self._hyperparams['network_params'].get('obs_image_data', []):
-                self.img_idx = self.img_idx + list(range(i, i+dim))
-            else:
-                self.x_idx = self.x_idx + list(range(i, i+dim))
-            i += dim
-
-        self.prim_x_idx, self.prim_img_idx, i = [], [], 0
-        for sensor in self._hyperparams['primitive_network_params']['obs_include']:
-            dim = self._hyperparams['primitive_network_params']['sensor_dims'][sensor]
-            if sensor in self._hyperparams['primitive_network_params'].get('obs_image_data', []):
-                self.prim_img_idx = self.prim_img_idx + list(range(i, i+dim))
-            else:
-                self.prim_x_idx = self.prim_x_idx + list(range(i, i+dim))
-            i += dim
-
-        self.cont_x_idx, self.cont_img_idx, i = [], [], 0
-        for sensor in self._hyperparams['cont_network_params']['obs_include']:
-            dim = self._hyperparams['cont_network_params']['sensor_dims'][sensor]
-            if sensor in self._hyperparams['cont_network_params'].get('obs_image_data', []):
-                self.cont_img_idx = self.cont_img_idx + list(range(i, i+dim))
-            else:
-                self.cont_x_idx = self.cont_x_idx + list(range(i, i+dim))
-            i += dim
 
 
     def _set_opt(self, task):

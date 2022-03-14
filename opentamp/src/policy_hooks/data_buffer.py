@@ -1,16 +1,28 @@
 import numpy as np
+import torch
 
 
 MAX_BUFFER = 40000
 MIN_BUFFER = 1000
 
+
 class DataBuffer(object):
-    def __init__(self, policy, sizes={}, default_size=MAX_BUFFER, val_ratio=0.1, normalize=False, x_idx=None, min_buffer=MIN_BUFFER, ratios=None):
+    def __init__(self,
+                 policy,
+                 sizes={},
+                 default_size=MAX_BUFFER,
+                 val_ratio=0.1,
+                 normalize=False,
+                 x_idx=None,
+                 min_buffer=MIN_BUFFER,
+                 ratios=None,
+                 to_torch=False):
         self.sizes = sizes
         self.default_size = default_size
         self.val_ratio = val_ratio
         self.policy = policy
         self.ratios = ratios
+        self.to_torch = to_torch
 
         self.x_idx = x_idx
         self.normalize = normalize
@@ -20,6 +32,7 @@ class DataBuffer(object):
         self.min_buffer = min_buffer
         self._min_sample = min_buffer // 2
 
+        self.cur_len = 0
         self.obs = {}
         self.mu = {}
         self.wt = {}
@@ -65,6 +78,8 @@ class DataBuffer(object):
             self.aux[label].append(aux)
             self.tasks[label].append(task)
             self.lens[label] += 1
+            if label.find('VAL') < 0:
+                 self.cur_len += 1
         else:
             ind = np.random.randint(self.lens[label])
             self.aux[label][ind] = aux
@@ -96,16 +111,27 @@ class DataBuffer(object):
         size = max(size, self._min_sample)
         print('ADDED LABEL', label, 'WITH BUFFER SIZE', size)
 
-        self.obs[label] = np.nan * np.zeros((size,)+dO, dtype=np.float32)
-        self.mu[label] = np.nan * np.zeros((size,)+dU, dtype=np.float32)
-        self.prc[label] = np.nan * np.zeros((size,)+dP, dtype=np.float32)
-        self.wt[label] = np.nan * np.zeros((size,)+dW, dtype=np.float32)
-        self.aux[label] = []
-        self.primobs[label] = None
-        if dPrim is not None:
-            self.primobs[label] = np.zeros((size,)+dPrim, dtype=np.float32)
-        self.x[label] = np.zeros((size,)+dX, dtype=np.float32)
         self.tasks[label] = []
+        if self.to_torch:
+            self.obs[label] = torch.zeros((size,)+dO, dtype=torch.float32)
+            self.mu[label] = torch.zeros((size,)+dU, dtype=torch.float32)
+            self.prc[label] = torch.zeros((size,)+dP, dtype=torch.float32)
+            self.wt[label] = torch.zeros((size,)+dW, dtype=torch.float32)
+            self.aux[label] = []
+            self.primobs[label] = None
+            if dPrim is not None:
+                self.primobs[label] = torch.zeros((size,)+dPrim, dtype=torch.float32)
+            self.x[label] = torch.zeros((size,)+dX, dtype=torch.float32)
+        else:
+            self.obs[label] = np.nan * np.zeros((size,)+dO, dtype=np.float32)
+            self.mu[label] = np.nan * np.zeros((size,)+dU, dtype=np.float32)
+            self.prc[label] = np.nan * np.zeros((size,)+dP, dtype=np.float32)
+            self.wt[label] = np.nan * np.zeros((size,)+dW, dtype=np.float32)
+            self.aux[label] = []
+            self.primobs[label] = None
+            if dPrim is not None:
+                self.primobs[label] = np.zeros((size,)+dPrim, dtype=np.float32)
+            self.x[label] = np.zeros((size,)+dX, dtype=np.float32)
 
     
     def random_label(self, val=False, min_size=0):
@@ -151,37 +177,21 @@ class DataBuffer(object):
         if label is None: label = self.random_label(val, min_size=batch_size)
         if label is None or self.lens.get(label, 0) < batch_size: return None
 
-        if mix:
-            N = 4
-            per_label = batch_size // N
-            data = []
-            for n in range(N):
-                inds = np.random.choice(range(self.lens[label]), per_label, replace=False)
-                obs = self.obs[label][inds]
-                mu = self.mu[label][inds]
-                prc = self.prc[label][inds]
-                wt = self.wt[label][inds]
-                x = [self.x[label][ind] for ind in inds]
-                primobs = []
-                if self.primobs[label] is not None:
-                    primobs = self.primobs[label][inds]
-                aux = [self.aux[label][ind] for ind in inds]
-                data.append((obs, mu, prc, wt, x, primobs, aux))
-                label = self.random_label(val, min_size=per_label)
-                if label is None: return None
-            return (np.concatenate([data[j][i] for j in range(len(data))], axis=0) for i in range(len(data[0])))
-
-        else:
+        if type(batch_size) is int:
             inds = np.random.choice(range(self.lens[label]), batch_size, replace=False)
-            obs = self.obs[label][inds]
-            mu = self.mu[label][inds]
-            prc = self.prc[label][inds]
-            wt = self.wt[label][inds]
-            x = self.x[label][inds]
-            primobs = []
-            if self.primobs[label] is not None:
-                primobs = self.primobs[label][inds]
-            aux = [self.aux[label][ind] for ind in inds]
+        else:
+            # Assume batch_size is a slice object or similar
+            inds = batch_size
+
+        obs = self.obs[label][inds]
+        mu = self.mu[label][inds]
+        prc = self.prc[label][inds]
+        wt = self.wt[label][inds]
+        x = self.x[label][inds]
+        primobs = []
+        if self.primobs[label] is not None:
+            primobs = self.primobs[label][inds]
+        aux = [self.aux[label][ind] for ind in inds]
         return (obs, mu, prc, wt, x, primobs, aux)
 
 
@@ -268,5 +278,9 @@ class DataBuffer(object):
         val = 'val' if np.random.uniform() <= 0.1 else 'train'
         np.save('{}/{}_{}data_{}.npy'.format(save_dir, task, val, self.cur_save), data)
         self.cur_save += 1
+
+
+    def __len__(self):
+        return self.cur_len
 
 
