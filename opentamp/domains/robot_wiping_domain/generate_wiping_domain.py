@@ -284,7 +284,7 @@ class MoveToTabletop(Action):
         self.pre = [\
             ('(RobotAt ?robot ?start)', '{}:{}'.format(0, 1)),
             ('(not (RobotAt ?robot ?end))', '{}:{}'.format(0, 1)),
-            ('(not (InContactRobotTable ?robot ?table))', '{}:{}'.format(0, -1)),
+            ('(not (InContactRobotTable ?robot ?table))', '{}:{}'.format(0, 0)),
             ('(IsMP ?robot)', '{}:{}'.format(0, end-1)),
             ('(WithinJointLimit ?robot)', '{}:{}'.format(0, end)),
         ]
