@@ -91,7 +91,6 @@ dirt_locs = np.zeros((env.num_markers, 3))
 for i, marker in enumerate(env.model.mujoco_arena.markers):
     marker_pos = np.array(env.sim.data.body_xpos[env.sim.model.body_name2id(marker.root_body)])
     dirt_locs[i,:] = marker_pos
-# import ipdb; ipdb.set_trace()
 
 # First, we reset the environment and then manually set the joint positions to their
 # initial positions and all the joint velocities and accelerations to 0.
@@ -138,8 +137,8 @@ params["sawyer"].right_ee_pos[:, 0] = info["pos"]
 params["sawyer"].right_ee_pos[:, 0] = T.quaternion_to_euler(info["quat"], "xyzw")
 
 
-# goal = "(InContactRobotTable sawyer table)"
-goal = "(WipedSurface sawyer) (InContactRobotTable sawyer table)"
+goal = "(InContactRobotTable sawyer table)"
+# goal = "(WipedSurface sawyer) (InContactRobotTable sawyer table)"
 solver = RobotSolver()
 plan, descr = p_mod_abs(
     hls, solver, domain, problem, goal=goal, debug=True, n_resamples=10

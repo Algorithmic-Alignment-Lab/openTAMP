@@ -28,6 +28,4 @@ Derived Predicates: AtInit, Item, Reachable; RobotAt, Robot, RobotPose; IsMP, Ro
 
 
 
-Action moveto_pose_ontable 17: (?robot - Robot ?table - Box ?start - RobotPose ?end - RobotPose) (and (RobotAt ?robot ?start) (not (RobotAt ?robot ?end)) (not (InContactRobotTable ?robot ?table)) (IsMP ?robot) (WithinJointLimit ?robot) )(and (not (RobotAt ?robot ?start)) (RobotAt ?robot ?end) (InContactRobotTable ?robot ?table) ) 0:1 0:1 0:0 0:15 0:16 15:16 15:16 16:16 
-
-Action wipe_table 17: (?robot - Robot ?table - Box ?start - RobotPose ?end - RobotPose) (and (RobotAt ?robot ?start) (not (RobotAt ?robot ?end)) (InContactRobotTable ?robot ?table) (IsMP ?robot) (WithinJointLimit ?robot) (PoseAdjacent ?start ?end) )(and  (not (RobotAt ?robot ?start)) (RobotAt ?robot ?end) (WipedSurface ?robot) ) 0:1 0:-1 0:16 0:15 0:16 0:-1 15:16 15:16 16:15 
+Action moveto_pose_ontable 17: (?robot - Robot ?table - Box ?start - RobotPose ?end - RobotPose) (and (RobotAt ?robot ?start) (not (RobotAt ?robot ?end)) (not (InContactRobotTable ?robot ?table)) (IsMP ?robot) (WithinJointLimit ?robot) )(and (not (RobotAt ?robot ?start)) (RobotAt ?robot ?end) (InContactRobotTable ?robot ?table) ) 0:0 0:0 0:0 0:15 0:16 16:16 16:16 16:16 
