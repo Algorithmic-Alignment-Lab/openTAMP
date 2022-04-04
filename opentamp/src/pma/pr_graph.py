@@ -95,7 +95,7 @@ def p_mod_abs(
                 )
                 print(f"plan str: {n.curr_plan.get_plan_str()}")
 
-        # import ipdb; ipdb.set_trace()
+        import ipdb; ipdb.set_trace()
 
     print(("PR GRAPH hit iteration limit {0}".format(label)))
     return None, "Hit iteration limit, aborting."

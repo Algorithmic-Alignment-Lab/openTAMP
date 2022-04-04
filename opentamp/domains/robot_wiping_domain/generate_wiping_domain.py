@@ -282,14 +282,14 @@ class MoveToTabletop(Action):
         self.end = end
         self.args = '(?robot - Robot ?table - Box ?start - RobotPose ?end - RobotPose)'
         self.pre = [\
-            # ('(RobotAt ?robot ?start)', '{}:{}'.format(0, 0)),
+            ('(RobotAt ?robot ?start)', '{}:{}'.format(0, 0)),
             ('(not (RobotAt ?robot ?end))', '{}:{}'.format(0, 0)),
             ('(not (InContactRobotTable ?robot ?table))', '{}:{}'.format(0, 0)),
             ('(IsMP ?robot)', '{}:{}'.format(0, end-1)),
             ('(WithinJointLimit ?robot)', '{}:{}'.format(0, end)),
         ]
         self.eff = [\
-            # ('(not (RobotAt ?robot ?start))', '{}:{}'.format(end, end)),
+            ('(not (RobotAt ?robot ?start))', '{}:{}'.format(end, end)),
             ('(RobotAt ?robot ?end)', '{}:{}'.format(end, end)),
             ('(InContactRobotTable ?robot ?table)', '{}:{}'.format(end, end)),
             ]
