@@ -37,13 +37,13 @@ def get_sawyer_pose_str(name, RArm = R_ARM_INIT, G = OPEN_GRIPPER, Pos = SAWYER_
     return s
 
 def get_sawyer_ontable_pose_str(name, ee_pos):
+    # NOTE: All planning is happening in joint space.
     s = ""
-    s += "(right {} undefined), ".format(name)
+    s += "(right {} {}), ".format(name, ik_joint_vals)
     s += "(right_ee_pos {} {}), ".format(name, ee_pos)
     s += "(right_ee_rot {} {}), ".format(name, EE_ROT)
     s += "(right_gripper {} undefined), ".format(name)
-    s += "(value {} {}), ".format(name, ee_pos)
-    # s += "(pose {} {}), ".format(name, ee_pos)
+    s += "(value {} {}), ".format(name, robot_origin)
     s += "(rotation {} {}), ".format(name, [0.,0.,0.])
     return s
 

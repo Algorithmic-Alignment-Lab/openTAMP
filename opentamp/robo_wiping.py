@@ -120,6 +120,14 @@ body_ind = env.mjpy_model.body_name2id("robot0_base")
 # Resetting the initial state to specific values
 params["sawyer"].pose[:, 0] = env.sim.data.body_xpos[body_ind]
 
+# NOTE: there is an IK method associated with the
+# sawyer object in the planning scene. We can use this to
+# compute the IK. params["sawyer"].openrave_body.get_ik_from_pose(pos, quat, name="right")
+# robot origin = SAWYER_INIT_POSE = [-0.5, -0.1, 0.912]
+# to properly compute IK, i'll need to configure base of robot first.
+# robot_body.set_from_param(robot, 0)
+# loop thru and then find the right params
+
 jnts = params["sawyer"].geom.jnt_names["right"]
 jnts = ["robot0_" + jnt for jnt in jnts]
 jnt_vals = []
