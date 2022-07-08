@@ -278,15 +278,23 @@ class RobotSolver(backtrack_ll_solver_gurobi.BacktrackLLSolverGurobi):
                 # corresponding to z and the 0th timestep value of that
                 z = obj.pose[-1,0] + obj.geom.height
                 pos = np.array([x, y, z])
-                pose = self.vertical_gripper_with_obj_pose_sampler(
-                    robot,
-                    arm,
-                    pos,
-                    gripper_open,
-                    (st, et),
-                    rand=False,
-                    disp=np.zeros(3),
-                )
+                # pose = self.vertical_gripper_with_obj_pose_sampler(
+                #     robot,
+                #     arm,
+                #     pos,
+                #     gripper_open,
+                #     (st, et),
+                #     rand=False,
+                #     disp=np.zeros(3),
+                # )
+                pose = {}
+                # NOTE: Grabs the region pose IK, which is the last argument
+                # to the action and sets the arm pose to this.
+                pose[arm] = act.params[-1].right[:,0]
+                gripper = robot.geom.get_gripper(arm)
+                pose[gripper] = robot.geom.get_gripper_open_val()
+                pose[gripper] = np.array(pose[gripper]).reshape((-1, 1))
+
             elif a_name.find("moveto_pose") >= 0:
                 # In this case, 'obj' is actually a start_pose
                 # and targ is an end_pose
