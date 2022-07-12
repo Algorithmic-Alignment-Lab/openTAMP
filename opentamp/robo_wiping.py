@@ -138,9 +138,7 @@ info = params["sawyer"].openrave_body.fwd_kinematics("right")
 params["sawyer"].right_ee_pos[:, 0] = info["pos"]
 params["sawyer"].right_ee_pos[:, 0] = T.quaternion_to_euler(info["quat"], "xyzw")
 
-import ipdb; ipdb.set_trace()
-
-goal = "(RobotAt sawyer region_pose5_5)"
+goal = "(RobotAt sawyer region_pose1_1)"
 # goal = "(InContactRobotTable sawyer table)"
 # goal = "(WipedSurface sawyer) (InContactRobotTable sawyer table)"
 solver = RobotSolver()
