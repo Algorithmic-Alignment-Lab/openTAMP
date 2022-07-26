@@ -13,7 +13,8 @@ class HLSolver(object):
     HLSolver provides an interface to the chosen task planner.
     """
     def __init__(self, domain_config=None, abs_domain=None, cleanup_files=True):
-        self.cleanup_files = cleanup_files
+        # self.cleanup_files = cleanup_files
+        self.cleanup_files = False
         self.abs_domain = abs_domain if abs_domain else self._translate_domain(domain_config, first_ts_pre=True)
 
     def _translate_domain(self, domain_config):

@@ -265,6 +265,7 @@ class BacktrackLLSolverGurobi(LLSolver):
             viewer = callback()
 
         for priority in self.solve_priorities:
+            DEBUG=True
             if DEBUG: print('solving at priority', priority)
             for attempt in range(max(1, n_resamples)):
                 ## refinement loop
@@ -272,7 +273,7 @@ class BacktrackLLSolverGurobi(LLSolver):
                                 callback=callback, active_ts=active_ts, verbose=verbose,
                                 init_traj=init_traj, debug=debug)
 
-                import ipdb; ipdb.set_trace()
+                # import ipdb; ipdb.set_trace()
 
                 # No point in resampling if the endpoints or linear constraints can't be satisfied
                 if success or priority < 0 or n_resamples == 0:

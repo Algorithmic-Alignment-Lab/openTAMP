@@ -838,11 +838,11 @@ class PosePredicate(RobotPredicate):
     #@profile
     def rel_pos_error_f(self, obj_trans, robot_trans, rel_pt):
         """
-            This function calculates the value of the displacement between center of gripper and a point relative to the object
+        This function calculates the value of the displacement between center of gripper and a point relative to the object
 
-            obj_trans: object's rave_body transformation
-            robot_trans: robot gripper's rave_body transformation
-            rel_pt: offset between your target point and object's pose
+        obj_trans: object's rave_body transformation
+        robot_trans: robot gripper's rave_body transformation
+        rel_pt: offset between your target point and object's pose
         """
         gp = rel_pt
         robot_pos = robot_trans[:3, 3]
@@ -2530,8 +2530,8 @@ class InContactRobotTable(InGripper):
         get_robot_info[Function]:Function that returns robot's transformations and arm indices
         eval_f[Function]:Function returns predicate value
         eval_grad[Function]:Function returns predicate gradient
-        coeff[Float]:In Gripper coeffitions, used during optimization
-        opt_coeff[Float]:In Gripper coeffitions, used during optimization
+        coeff[Float]:In Gripper coefficients, used during optimization
+        opt_coeff[Float]:In Gripper coefficients, used during optimization
     """
     #@profile
     def __init__(self, name, params, expected_param_types, env=None, debug=False):
@@ -2544,6 +2544,7 @@ class InContactRobotTable(InGripper):
         # NOTE: We override this because we only care about contact in the z-direction, so 
         # we only return the last element!
         if self.eval_dim == 3:
+            # import ipdb; ipdb.set_trace()
             return self.coeff * self.pos_check_f(x, self.rel_pt)[-1,None]
         else:
             raise ValueError('stacked_f case for self.eval_dim being > 3 has not been handled yet')
