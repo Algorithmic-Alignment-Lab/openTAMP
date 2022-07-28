@@ -138,9 +138,8 @@ info = params["sawyer"].openrave_body.fwd_kinematics("right")
 params["sawyer"].right_ee_pos[:, 0] = info["pos"]
 params["sawyer"].right_ee_pos[:, 0] = T.quaternion_to_euler(info["quat"], "xyzw")
 
-goal = "(RobotAt sawyer region_pose1_1)"
-# goal = "(InContactRobotTable sawyer table)"
-# goal = "(WipedSurface sawyer) (InContactRobotTable sawyer table)"
+# goal = "(RobotAt sawyer region_pose1_1)"
+goal = "(WipedSurface sawyer)"
 solver = RobotSolver()
 plan, descr = p_mod_abs(
     hls, solver, domain, problem, goal=goal, debug=True, n_resamples=10

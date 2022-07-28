@@ -2544,7 +2544,9 @@ class InContactRobotTable(InGripper):
         # NOTE: We override this because we only care about contact in the z-direction, so 
         # we only return the last element!
         if self.eval_dim == 3:
-            # import ipdb; ipdb.set_trace()
+            # NOTE: when the below expression == 0, this overall predicate
+            # will evaluate to True (you can see this by going down the stack of
+            # functions that are being called from pos_check_f).
             return self.coeff * self.pos_check_f(x, self.rel_pt)[-1,None]
         else:
             raise ValueError('stacked_f case for self.eval_dim being > 3 has not been handled yet')
