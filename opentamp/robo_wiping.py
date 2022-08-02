@@ -22,8 +22,11 @@ from pma.robosuite_solver import RobotSolver
 from sco_py.expr import *
 import random
 
-
 random.seed(23)
+NUM_ROWS = 10
+NUM_COLS = 8
+TABLE_GEOM = [0.5, 0.8, 0.8 + 0.08909001]
+TABLE_POS = [0.5, 0.0, 0.025]
 REF_QUAT = np.array([0, 0, -0.7071, -0.7071])
 
 
@@ -84,13 +87,24 @@ env = robosuite.make(
     camera_heights=128,
 )
 obs, _, _, _ = env.step(np.zeros(7)) # Step a null action to 'boot' the environment.
-# wipe_centroid_pose = obs['wipe_centroid']
 
 # Get the locations of all dirt particles
 dirt_locs = np.zeros((env.num_markers, 3))
 for i, marker in enumerate(env.model.mujoco_arena.markers):
     marker_pos = np.array(env.sim.data.body_xpos[env.sim.model.body_name2id(marker.root_body)])
     dirt_locs[i,:] = marker_pos
+
+# Computes the dirty regions set, which contains a tuple (row, col) for every
+# region that is dirty. 
+dirty_regions = set()
+row_step_size = TABLE_GEOM[0] / NUM_ROWS
+col_step_size = TABLE_GEOM[1] / NUM_COLS
+for xyz_pose in dirt_locs.tolist():
+    x_pos = xyz_pose[0]
+    y_pos = xyz_pose[1]
+    row_idx = (x_pos - TABLE_POS[0]) // row_step_size
+    col_idx = (y_pos - TABLE_POS[1]) // col_step_size
+    dirty_regions.add((int(row_idx), int(col_idx)))
 
 # First, we reset the environment and then manually set the joint positions to their
 # initial positions and all the joint velocities and accelerations to 0.
@@ -138,8 +152,15 @@ info = params["sawyer"].openrave_body.fwd_kinematics("right")
 params["sawyer"].right_ee_pos[:, 0] = info["pos"]
 params["sawyer"].right_ee_pos[:, 0] = T.quaternion_to_euler(info["quat"], "xyzw")
 
-# goal = "(RobotAt sawyer region_pose1_1)"
-goal = "(WipedSurface sawyer)"
+# goal = "(and"
+# for dirty_region in dirty_regions:
+#     goal += f"(WipedSurface region_pose{dirty_region[0]}_{dirty_region[1]}"
+# goal += ")"
+
+# import ipdb; ipdb.set_trace()
+goal = "(RobotAt sawyer region_pose0_0)"
+
+
 solver = RobotSolver()
 plan, descr = p_mod_abs(
     hls, solver, domain, problem, goal=goal, debug=True, n_resamples=10

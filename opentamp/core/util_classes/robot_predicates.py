@@ -1543,29 +1543,26 @@ class WithinJointLimit(RobotPredicate):
         self.spacial_anchor = False
         self._nonrollout = True
 
-class WipedSurface(RobotPredicate):
+class WipedSurface(ExprPredicate):
     """
-        Format: WipedSurface Robot
+        Format: WipedSurface RobotPose
 
         Robot related
 
         Requires:
             attr_inds[OrderedDict]: robot attribute indices
     """
-    #@profile
     def __init__(self, name, params, expected_param_types, env=None, debug=False):
-        self._env = env
-        self.robot, = params
-        attrs = self.robot.geom.arms + ["pose", "rotation"] + self.robot.geom.grippers
-        attr_inds, attr_dim = init_robot_pred(self, self.robot, attrs={self.robot: attrs})
+        assert len(params) == 1
+        self.region_pose, = params
+        self.attr_inds =  OrderedDict([(self.region_pose, [('value', np.array([0,1,2], dtype='int32'))])])
+        self.attr_dim = 3
 
-        self._param_to_body = {self.robot: self.lazy_spawn_or_body(self.robot, self.robot.name, self.robot.geom)}
-
-        A, b, val = self.setup_mov_limit_check()
-        e = LEqExpr(AffExpr(A, b), val)
-        super(WipedSurface, self).__init__(name, e, attr_inds, params, expected_param_types, priority = -2)
+        A = np.zeros((3,3))
+        b, val = np.zeros((self.attr_dim, 1)), np.zeros((self.attr_dim, 1))
+        e = EqExpr(AffExpr(A, b), val)
+        super(WipedSurface, self).__init__(name, e, self.attr_inds, params, expected_param_types, priority = -2)
         self.spacial_anchor = False
-        self._nonrollout = True
 
 class Stationary(ExprPredicate):
     """
