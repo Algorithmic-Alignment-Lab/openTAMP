@@ -182,8 +182,6 @@ plan, descr = p_mod_abs(
 if len(sys.argv) > 1 and sys.argv[1] == "end":
     sys.exit(0)
 
-# from IPython import embed; embed()
-
 # if load_traj:
 #    inds, traj = np.load('MotionServer0_17.npy', allow_pickle=True)
 #    import ipdb; ipdb.set_trace()

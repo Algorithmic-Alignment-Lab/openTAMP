@@ -2544,6 +2544,7 @@ class InContactRobotTable(InGripper):
             # NOTE: when the below expression == 0, this overall predicate
             # will evaluate to True (you can see this by going down the stack of
             # functions that are being called from pos_check_f).
+            # import ipdb; ipdb.set_trace()
             return self.coeff * self.pos_check_f(x, self.rel_pt)[-1,None]
         else:
             raise ValueError('stacked_f case for self.eval_dim being > 3 has not been handled yet')

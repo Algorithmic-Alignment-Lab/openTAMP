@@ -25,8 +25,8 @@ import random
 random.seed(23)
 NUM_ROWS = 10
 NUM_COLS = 8
-TABLE_GEOM = [0.5, 0.8, 0.8 + 0.08909001]
-TABLE_POS = [0.5, 0.0, 0.025]
+TABLE_GEOM = [0.25, 0.40, 0.875 + 0.00506513]
+TABLE_POS = [0.15, 0.00, 0.00]
 REF_QUAT = np.array([0, 0, -0.7071, -0.7071])
 
 
@@ -97,14 +97,17 @@ for i, marker in enumerate(env.model.mujoco_arena.markers):
 # Computes the dirty regions set, which contains a tuple (row, col) for every
 # region that is dirty. 
 dirty_regions = set()
-row_step_size = TABLE_GEOM[0] / NUM_ROWS
-col_step_size = TABLE_GEOM[1] / NUM_COLS
+row_step_size = (TABLE_GEOM[0] * 2) / NUM_ROWS
+col_step_size = (TABLE_GEOM[1] * 2) / NUM_COLS
 for xyz_pose in dirt_locs.tolist():
     x_pos = xyz_pose[0]
     y_pos = xyz_pose[1]
-    row_idx = (x_pos - TABLE_POS[0]) // row_step_size
-    col_idx = (y_pos - TABLE_POS[1]) // col_step_size
+    row_idx = (x_pos - (TABLE_POS[0] - TABLE_GEOM[0])) // row_step_size
+    col_idx = (y_pos - (TABLE_POS[1] - TABLE_GEOM[1])) // col_step_size
+    # TODO: Put back in! Just commenting this out for debugging!
     dirty_regions.add((int(row_idx), int(col_idx)))
+# dirty_regions.add((4,0))
+# dirty_regions.add((4,7))
 
 # First, we reset the environment and then manually set the joint positions to their
 # initial positions and all the joint velocities and accelerations to 0.
@@ -152,14 +155,17 @@ info = params["sawyer"].openrave_body.fwd_kinematics("right")
 params["sawyer"].right_ee_pos[:, 0] = info["pos"]
 params["sawyer"].right_ee_pos[:, 0] = T.quaternion_to_euler(info["quat"], "xyzw")
 
-# goal = "(and"
-# for dirty_region in dirty_regions:
-#     goal += f"(WipedSurface region_pose{dirty_region[0]}_{dirty_region[1]}"
-# goal += ")"
-
 # import ipdb; ipdb.set_trace()
-goal = "(RobotAt sawyer region_pose0_0)"
 
+goal = "(and"
+for dirty_region in dirty_regions:
+    # Regions start at (0,0), so anything with negative numbers
+    # would indicate a bug.
+    assert dirty_region[0] >= 0 and dirty_region[1] >= 0
+    goal += f"(WipedSurface region_pose{dirty_region[0]}_{dirty_region[1]}) "
+goal += ")"
+
+# goal = "(RobotAt sawyer region_pose0_0)"
 
 solver = RobotSolver()
 plan, descr = p_mod_abs(
@@ -342,3 +348,4 @@ for act in plan.actions:
             print('EE PLAN VS SIM:', env.sim.data.site_xpos[grip_ind]-sawyer.right_ee_pos[:,t], t, env.reward())
         if has_render: env.render()
 plan.params['sawyer'].right[:,t] = env.sim.data.qpos[:7]
+import ipdb; ipdb.set_trace()
