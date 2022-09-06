@@ -20,15 +20,23 @@ from pma.hl_solver import *
 from pma.pr_graph import *
 from pma.robosuite_solver import RobotSolver
 from sco_py.expr import *
-import random
+import faulthandler
 
-random.seed(23)
-NUM_ROWS = 10
-NUM_COLS = 8
-TABLE_GEOM = [0.25, 0.40, 0.875 + 0.00506513]
+SAWYER_INIT_POSE = [-0.41, 0.0, 0.912]
+SAWYER_END_POSE = [0, 0, 0]
+R_ARM_INIT = [-0.3962099, -0.97739413, 0.04612799, 1.742205 , -0.03562013, 0.8089644, 0.45207395]
+OPEN_GRIPPER = [0.02, -0.01]
+CLOSE_GRIPPER = [0.01, -0.02]
+GRIPPER_SIZE = [0.05, 0.12, 0.015]
+EE_POS = [0.11338, -0.16325, 1.03655]
+EE_ROT = [3.139, 0.00, -2.182]
+TABLE_GEOM = [0.25, 0.40, 0.820]
 TABLE_POS = [0.15, 0.00, 0.00]
-REF_QUAT = np.array([0, 0, -0.7071, -0.7071])
+TABLE_ROT = [0,0,0]
+NUM_ROWS = int((TABLE_GEOM[0] * 2) / GRIPPER_SIZE[0])
+NUM_COLS = int((TABLE_GEOM[1] * 2) / GRIPPER_SIZE[1])
 
+REF_QUAT = np.array([0, 0, -0.7071, -0.7071])
 
 def theta_error(cur_quat, next_quat):
     sign1 = np.sign(cur_quat[np.argmax(np.abs(cur_quat))])
@@ -94,21 +102,6 @@ for i, marker in enumerate(env.model.mujoco_arena.markers):
     marker_pos = np.array(env.sim.data.body_xpos[env.sim.model.body_name2id(marker.root_body)])
     dirt_locs[i,:] = marker_pos
 
-# Computes the dirty regions set, which contains a tuple (row, col) for every
-# region that is dirty. 
-dirty_regions = set()
-row_step_size = (TABLE_GEOM[0] * 2) / NUM_ROWS
-col_step_size = (TABLE_GEOM[1] * 2) / NUM_COLS
-for xyz_pose in dirt_locs.tolist():
-    x_pos = xyz_pose[0]
-    y_pos = xyz_pose[1]
-    row_idx = (x_pos - (TABLE_POS[0] - TABLE_GEOM[0])) // row_step_size
-    col_idx = (y_pos - (TABLE_POS[1] - TABLE_GEOM[1])) // col_step_size
-    # TODO: Put back in! Just commenting this out for debugging!
-    dirty_regions.add((int(row_idx), int(col_idx)))
-# dirty_regions.add((4,0))
-# dirty_regions.add((4,7))
-
 # First, we reset the environment and then manually set the joint positions to their
 # initial positions and all the joint velocities and accelerations to 0.
 obs = env.reset()
@@ -133,10 +126,42 @@ visual = len(os.environ.get('DISPLAY', '')) > 0
 problem = parse_problem_config.ParseProblemConfig.parse(p_c, domain, None, use_tf=True, sess=None, visual=visual)
 params = problem.init_state.params
 body_ind = env.mjpy_model.body_name2id("robot0_base")
+table_ind = env.mjpy_model.body_name2id("table")
 
-# Resetting the initial state to specific values
+
+# Computes the dirty regions set, which contains a tuple (row, col) for every
+# region that is dirty. 
+dirty_regions = set()
+row_step_size = (TABLE_GEOM[0] * 2) / NUM_ROWS
+col_step_size = (TABLE_GEOM[1] * 2) / NUM_COLS
+for xyz_pose in dirt_locs.tolist():
+    x_pos = xyz_pose[0]
+    y_pos = xyz_pose[1]
+    # Analytical way to compute.
+    row_idx = (x_pos - (TABLE_POS[0] - TABLE_GEOM[0])) // row_step_size
+    col_idx = (y_pos - (TABLE_POS[1] - TABLE_GEOM[1])) // col_step_size
+    # Stupider way to do it.
+    closest_row_col = (0, 0)
+    dist_to_closest = float("inf")
+    for row in range(NUM_ROWS):
+        for col in range(NUM_COLS):
+            xyz_pose = params[f"region_pose{row}_{col}"].right_ee_pos.squeeze()
+            xy_pose = xyz_pose[:-1]
+            dist_to_rowcol = np.linalg.norm(xy_pose - np.array([x_pos, y_pos]))
+            if dist_to_rowcol < dist_to_closest:
+                closest_row_col = (row, col)
+                dist_to_closest = dist_to_rowcol
+
+    # dirty_regions.add((int(row_idx), int(col_idx)))
+    dirty_regions.add(closest_row_col)
+
+
+# Resetting the initial state to match the robotsuite sim.
 params["sawyer"].pose[:, 0] = env.sim.data.body_xpos[body_ind]
-
+# NOTE: for the table, we only want to set the (x,y) poses to
+# be equal, because we use a different geometry and thus the
+# height must be different.
+params["table"].pose[:2, 0] = env.sim.data.body_xpos[table_ind][:2]
 jnts = params["sawyer"].geom.jnt_names["right"]
 jnts = ["robot0_" + jnt for jnt in jnts]
 jnt_vals = []
@@ -155,8 +180,6 @@ info = params["sawyer"].openrave_body.fwd_kinematics("right")
 params["sawyer"].right_ee_pos[:, 0] = info["pos"]
 params["sawyer"].right_ee_pos[:, 0] = T.quaternion_to_euler(info["quat"], "xyzw")
 
-# import ipdb; ipdb.set_trace()
-
 goal = "(and"
 for dirty_region in dirty_regions:
     # Regions start at (0,0), so anything with negative numbers
@@ -165,12 +188,19 @@ for dirty_region in dirty_regions:
     goal += f"(WipedSurface region_pose{dirty_region[0]}_{dirty_region[1]}) "
 goal += ")"
 
-# goal = "(RobotAt sawyer region_pose0_0)"
+# for row in range(NUM_ROWS):
+#         for col in range(NUM_COLS):
+#                 xyz_pose = params[f"region_pose{row}_{col}"].right_ee_pos.squeeze()
+#                 quat = np.array([0.0, 1.0, 0.0, 0.0])
+#                 print(f'("region_pose{row}_{col}", np.{repr(params["sawyer"].openrave_body.get_ik_from_pose(xyz_pose, quat, "right"))}),')
+# exit()
 
 solver = RobotSolver()
 plan, descr = p_mod_abs(
     hls, solver, domain, problem, goal=goal, debug=True, n_resamples=10
 )
+
+print(plan)
 
 if len(sys.argv) > 1 and sys.argv[1] == "end":
     sys.exit(0)
@@ -206,13 +236,16 @@ rot_ref = T.euler_to_quaternion(params["sawyer"].right_ee_rot[:, 0], "xyzw")
 
 for _ in range(40):
     env.step(np.zeros(7))
-    env.sim.data.qpos[:7] = params["sawyer"].right[:, 0]
+    env.sim.data.qpos[:7] = params["sawyer"].right[:, 0]  # This will help set the simulator joint sets!
     env.sim.forward()
 
+if has_render:
+    env.render()
+
+print(dirty_regions)
 
 nsteps = 60
 cur_ind = 0
-
 tol = 1e-3
 
 true_lb, true_ub = plan.params["sawyer"].geom.get_joint_limits("right")
@@ -230,23 +263,8 @@ for act in plan.actions:
     oldvel = env.sim.data.qvel[:]
     oldwarm = env.sim.data.qacc_warmstart[:]
     oldctrl = env.sim.data.ctrl[:]
-    # failed_preds = [p for p in failed_preds if (p[1]._rollout or not type(p[1].expr) is EqExpr)]
     print("FAILED:", t, failed_preds, act.name)
     old_state = env.sim.get_state()
-    # env.sim.reset()
-    # env.sim.data.qpos[:7] = plan.params['sawyer'].right[:,t]
-    # env.sim.data.qpos[cereal_ind:cereal_ind+3] = plan.params['cereal'].pose[:,t]
-    # env.sim.data.qpos[cereal_ind+3:cereal_ind+7] = cereal_quat
-    # env.sim.data.qpos[7:9] = grip
-    # env.sim.data.qacc[:] = 0. #oldacc
-    # env.sim.data.qacc_warmstart[:] = 0.#oldwarm
-    # env.sim.data.qvel[:] = 0.
-    # env.sim.data.ctrl[:] = 0.#oldctrl
-    # env.sim.data.qfrc_applied[:] = 0.#oldqfrc
-    # env.sim.data.xfrc_applied[:] = 0.#oldxfrc
-    # env.sim.forward()
-    # env.sim.set_state(old_state)
-    # env.sim.forward()
 
     sawyer = plan.params["sawyer"]
     for t in range(act.active_timesteps[0], act.active_timesteps[1]):
@@ -348,4 +366,3 @@ for act in plan.actions:
             print('EE PLAN VS SIM:', env.sim.data.site_xpos[grip_ind]-sawyer.right_ee_pos[:,t], t, env.reward())
         if has_render: env.render()
 plan.params['sawyer'].right[:,t] = env.sim.data.qpos[:7]
-import ipdb; ipdb.set_trace()
