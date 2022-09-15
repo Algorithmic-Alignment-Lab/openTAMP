@@ -200,8 +200,6 @@ plan, descr = p_mod_abs(
     hls, solver, domain, problem, goal=goal, debug=True, n_resamples=10
 )
 
-print(plan)
-
 if len(sys.argv) > 1 and sys.argv[1] == "end":
     sys.exit(0)
 
@@ -242,7 +240,10 @@ for _ in range(40):
 if has_render:
     env.render()
 
-print(dirty_regions)
+print(f"dirty_regions: {dirty_regions}")
+print("plan:")
+for act in plan.actions:
+    print(act)
 
 nsteps = 60
 cur_ind = 0
