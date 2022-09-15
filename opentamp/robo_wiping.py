@@ -140,20 +140,22 @@ for xyz_pose in dirt_locs.tolist():
     # Analytical way to compute.
     row_idx = (x_pos - (TABLE_POS[0] - TABLE_GEOM[0])) // row_step_size
     col_idx = (y_pos - (TABLE_POS[1] - TABLE_GEOM[1])) // col_step_size
-    # Stupider way to do it.
-    closest_row_col = (0, 0)
-    dist_to_closest = float("inf")
+    # Computing and ranking all distances.
+    distance_dict = {}
     for row in range(NUM_ROWS):
         for col in range(NUM_COLS):
-            xyz_pose = params[f"region_pose{row}_{col}"].right_ee_pos.squeeze()
-            xy_pose = xyz_pose[:-1]
+            region_xyz_pose = params[f"region_pose{row}_{col}"].right_ee_pos.squeeze()
+            xy_pose = region_xyz_pose[:-1]
             dist_to_rowcol = np.linalg.norm(xy_pose - np.array([x_pos, y_pos]))
-            if dist_to_rowcol < dist_to_closest:
-                closest_row_col = (row, col)
-                dist_to_closest = dist_to_rowcol
+            distance_dict[(row, col)] = dist_to_rowcol
 
-    # dirty_regions.add((int(row_idx), int(col_idx)))
-    dirty_regions.add(closest_row_col)
+    print(xyz_pose)
+    print([(k, v) for k, v in sorted(distance_dict.items(), key=lambda item: item[1])][:4])
+    top_regions = [k for k, v in sorted(distance_dict.items(), key=lambda item: item[1])]
+    print(params[f"region_pose{top_regions[0][0]}_{top_regions[0][1]}"].right_ee_pos.squeeze())
+    print()
+    for i in range(4):
+        dirty_regions.add(top_regions[i])
 
 
 # Resetting the initial state to match the robotsuite sim.
@@ -240,10 +242,6 @@ for _ in range(40):
 if has_render:
     env.render()
 
-print(f"dirty_regions: {dirty_regions}")
-print("plan:")
-for act in plan.actions:
-    print(act)
 
 nsteps = 60
 cur_ind = 0
@@ -314,11 +312,6 @@ for act in plan.actions:
                 t,
             )
 
-            # if ee_to_sim_discrepancy[2] > 0.01:
-            #     from IPython import embed; embed()
-
-            # print('\n\n\n')
-
         else:
             targ = base_act[3:7]
             cur = env.sim.data.body_xquat[hand_ind]
@@ -364,6 +357,20 @@ for act in plan.actions:
                 # act[3:6] -= robosuite.utils.transform_utils.quat2axisangle(cur)
                 # act[:7] = (act[:7] - np.array([env.sim.data.qpos[ind] for ind in sawyer_inds]))
                 obs = env.step(act)
-            print('EE PLAN VS SIM:', env.sim.data.site_xpos[grip_ind]-sawyer.right_ee_pos[:,t], t, env.reward())
+            # print('EE PLAN VS SIM:', env.sim.data.site_xpos[grip_ind]-sawyer.right_ee_pos[:,t], t, env.reward())
         if has_render: env.render()
 plan.params['sawyer'].right[:,t] = env.sim.data.qpos[:7]
+
+if len(env.wiped_markers) == env.num_markers:
+    print("Task Completed Successfully!")
+else:
+    print(f"Task Failed: Num Missed Markers: {len(env.wiped_markers) - env.num_markers}")
+    for marker in env.model.mujoco_arena.markers:
+        if marker not in env.wiped_markers:
+            marker_pos = np.array(env.sim.data.body_xpos[env.sim.model.body_name2id(marker.root_body)])
+            print(f"Missed Marker: {marker_pos}")
+            row_idx = (marker_pos[0] - (TABLE_POS[0] - TABLE_GEOM[0])) / row_step_size
+            col_idx = (marker_pos[1] - (TABLE_POS[1] - TABLE_GEOM[1])) / col_step_size
+            print(f"Missed region: {(row_idx, col_idx)}")
+            print()
+    import ipdb; ipdb.set_trace()
