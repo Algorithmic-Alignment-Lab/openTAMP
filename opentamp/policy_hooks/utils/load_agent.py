@@ -33,7 +33,6 @@ def load_agent(config):
 
     bt_ll.COL_COEFF = config.get('col_coeff', 0.)
     time_limit = config.get('time_limit', 14400)
-    conditions = config['num_conds']
     task_list = tuple(sorted(list(get_tasks(config['task_map_file']).keys())))
     cur_n_rollout = 0
     config['task_list'] = task_list
@@ -53,7 +52,7 @@ def load_agent(config):
                                                     config['attr_map'], 
                                                     target_vector_include)
 
-    x0, targets = prob.get_random_initial_state_vec(config, False, dX, state_inds, conditions)
+    x0, targets = prob.get_random_initial_state_vec(config, False, dX, state_inds, 0)
 
 
     im_h = config.get('image_height', utils.IM_H)
@@ -209,7 +208,6 @@ def load_agent(config):
         'prim_out_include': prim_out,
         'cont_obs_include': config['cont_obs_include'],
         'cont_out_include': cont_out,
-        'conditions': config['num_conds'],
         'solver': None,
         'rollout_seed': config.get('rollout_seed', False),
         'num_objs': config['num_objs'],

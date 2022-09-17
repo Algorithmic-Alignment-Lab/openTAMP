@@ -38,21 +38,6 @@ class Server(object):
         self.weight_dir = self.config['weight_dir']
         self.exp_id = self.weight_dir.split('/')[-1]
         label = self.config['label_server']
-        self.classify_labels = self.config['classify_labels']
-        if self.config['weight_dir'].find('sawyer') >= 0:
-            if self.id.find('moretest') < 0 and \
-               self.id.find('0') < 0 and \
-               (not label or self.id.find('3') < 0) and \
-               (not label or self.id.find('4') < 0) and \
-               (not label or self.id.find('5') < 0) and \
-               (not label or self.id.find('6') < 0) and \
-               (not label or self.id.find('7') < 0) and \
-               (not label or self.id.find('8') < 0) and \
-               (not label or self.id.find('9') < 0) and \
-               self.id.find('label') < 0:
-                self.render = False
-                hyperparams['load_render'] = False
-                hyperparams['agent']['master_config']['load_render'] = False
 
         n_gpu = hyperparams['n_gpu']
         if n_gpu == 0:

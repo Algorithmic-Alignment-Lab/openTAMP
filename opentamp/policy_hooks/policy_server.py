@@ -50,8 +50,6 @@ class PolicyServer(object):
         hyperparams['ratios'] = ratios
 
         hyperparams['policy_opt']['scope'] = self.task
-        hyperparams['policy_opt']['load_label'] = hyperparams['classify_labels']
-        hyperparams['policy_opt']['split_hl_loss'] = hyperparams['split_hl_loss']
         hyperparams['policy_opt']['gpu_id'] = 0
         hyperparams['policy_opt']['use_gpu'] = 1
         hyperparams['policy_opt']['load_all'] = self.task not in ['cont', 'primitive']
@@ -62,7 +60,6 @@ class PolicyServer(object):
         self.map_cont_discr_tasks()
         self.prim_opts = self.agent.prob.get_prim_choices(self.agent.task_list)
         self.stopped = False
-        self.warmup = hyperparams['tf_warmup_iters']
         self.queues = hyperparams['queues']
      
         hyperparams['dPrim'] = len(hyperparams['prim_bounds'])
@@ -70,8 +67,8 @@ class PolicyServer(object):
         hyperparams['policy_opt']['hl_network_params']['output_boundaries'] = self.discr_bounds
         hyperparams['policy_opt']['cont_network_params']['output_boundaries'] = self.cont_bounds
         self.policy_opt = hyperparams['policy_opt']['type'](hyperparams['policy_opt'])
-        self.policy_opt.lr_policy = hyperparams['lr_policy']
-        self.lr_policy = hyperparams['lr_policy']
+        self.policy_opt.lr_schedule = hyperparams['lr_schedule']
+        self.lr_schedule = hyperparams['lr_schedule']
 
         self.dataset.policy = self.policy_opt.get_policy(self.task)
         self.dataset.data_buf.policy = self.policy_opt.get_policy(self.task)
@@ -240,7 +237,7 @@ class PolicyServer(object):
                 self.val_losses['all'].append(losses[0])
                 self.val_losses['aux'].append(losses)
 
-            if self.lr_policy == 'adaptive':
+            if self.lr_schedule == 'adaptive':
                 if len(self.train_losses['all']) and len(self.val_losses['all']) and self.policy_opt.cur_dec > 0:
                     ratio = np.mean(self.val_losses['optimal'][-5:]) / np.mean(self.train_losses['optimal'][-5:])
                     self.cur_ratio = ratio

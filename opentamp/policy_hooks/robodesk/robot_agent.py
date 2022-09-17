@@ -740,95 +740,6 @@ class RobotAgent(TAMPAgent):
                     plan.params['{0}_init_target'.format(pname)].rotation[:,0] = plan.params[pname].rotation[:,st]
 
 
-    def solve_sample_opt_traj(self, state, task, condition, traj_mean=[], inf_f=None, mp_var=0, targets=[], x_only=False, t_limit=60, n_resamples=10, out_coeff=None, smoothing=False, attr_dict=None):
-        success = False
-        old_targets = self.target_vecs[condition].copy()
-        if not len(targets):
-            targets = self.target_vecs[condition].copy()
-        else:
-            self.target_vecs[condition] = targets.copy()
-            for tname, attr in self.target_inds:
-                if attr == 'value':
-                    self.targets[condition][tname] = targets[self.target_inds[tname, attr]]
-
-        x0 = state[self._x_data_idx[STATE_ENUM]]
-
-        failed_preds = []
-        iteration = 0
-        iteration += 1
-        plan = self.plans[task]
-        prim_choices = self.prob.get_prim_choices(self.task_list)
-        set_params_attrs(plan.params, plan.state_inds, x0, 0)
-
-        for param_name in plan.params:
-            param = plan.params[param_name]
-            if '{0}_init_target'.format(param_name) in plan.params:
-                param.pose[:, 0] = x0[self.state_inds[param_name, 'pose']]
-                plan.params['{0}_init_target'.format(param_name)].value[:,0] = param.pose[:,0]
-
-        for tname, attr in self.target_inds:
-            if tname in plan.params:
-                getattr(plan.params[tname], attr)[:,0] = targets[self.target_inds[tname, attr]]
-
-        for param in plan.params.values():
-            if (param.name, 'pose') in self.state_inds:
-                param.pose[:, 0] = x0[self.state_inds[param.name, 'pose']]
-            if 'Robot' in param.get_type(True):
-                for arm in param.geom.arms:
-                    gripper = param.geom.get_gripper(arm)
-                    ee_attr = '{}_ee_pos'.format(arm)
-                    if (param.name, arm) in self.state_inds:
-                        getattr(param, arm)[:,0] = x0[self.state_inds[param.name, arm]]
-                    if (param.name, gripper) in self.state_inds:
-                        getattr(param, gripper)[:,0] = x0[self.state_inds[param.name, gripper]]
-                    if (param.name, ee_attr) in self.state_inds:
-                        getattr(param, ee_attr)[:,0] = x0[self.state_inds[param.name, ee_attr]]
-
-        run_solve = True
-        for param in list(plan.params.values()):
-            for attr in param._free_attrs:
-                if np.any(np.isnan(getattr(param, attr)[:,0])):
-                    getattr(param, attr)[:,0] = 0
-
-        try:
-            if smoothing:
-                success = self.solver.quick_solve(plan, n_resamples=n_resamples, traj_mean=traj_mean, attr_dict=attr_dict)
-            elif run_solve:
-                success = self.solver._backtrack_solve(plan, n_resamples=n_resamples, traj_mean=traj_mean, inf_f=inf_f, task=task, time_limit=t_limit)
-            else:
-                success = False
-        except Exception as e:
-            print(e)
-            # traceback.print_exception(*sys.exc_info())
-            success = False
-
-        #self.solver.strong_transfer_coeff = old_out_coeff
-
-        try:
-            if not len(failed_preds):
-                for action in plan.actions:
-                    failed_preds += [(pred, t) for negated, pred, t in plan.get_failed_preds(tol=1e-3, active_ts=action.active_timesteps)]
-        except:
-            failed_preds += ['Nan in pred check for {0}'.format(action)]
-
-        traj = np.zeros((plan.horizon, self.symbolic_bound))
-        for pname, aname in self.state_inds:
-            if plan.params[pname].is_symbol(): continue
-            inds = self.state_inds[pname, aname]
-            for t in range(plan.horizon):
-                traj[t][inds] = getattr(plan.params[pname], aname)[:,t]
-
-        sample = self.sample_task(optimal_pol(self.dU, self.action_inds, self.state_inds, traj), condition, state, task, noisy=False, skip_opt=True)
-
-        traj = sample.get(STATE_ENUM)
-        for param_name, attr in self.state_inds:
-            param = plan.params[param_name]
-            if param.is_symbol(): continue
-            diff = traj[:, self.state_inds[param_name, attr]].T - getattr(param, attr)
-        self.target_vecs[condition] = old_targets 
-        return sample, failed_preds, success
-
-
     def fill_sample(self, cond, sample, mp_state, t, task, fill_obs=False, targets=None):
         mp_state = mp_state.copy()
         if targets is None:
@@ -1117,8 +1028,6 @@ class RobotAgent(TAMPAgent):
 
 
     def sample_optimal_trajectory(self, state, task, condition, opt_traj=[], traj_mean=[], targets=[]):
-        if not len(opt_traj):
-            return self.solve_sample_opt_traj(state, task, condition, traj_mean, targets=targets)
         if not len(targets):
             old_targets = self.target_vecs[condition].copy()
         else:

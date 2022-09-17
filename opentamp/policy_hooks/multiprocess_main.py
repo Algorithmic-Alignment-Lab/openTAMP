@@ -83,7 +83,6 @@ class MultiProcessMain(object):
         self.config['start_t'] = time.time()
 
         prob = config['prob']
-        conditions = self.config['num_conds']
         self.task_list = tuple(sorted(list(get_tasks(self.config['task_map_file']).keys())))
         self.config['task_list'] = self.task_list
         self.weight_dir = self.config['weight_dir']

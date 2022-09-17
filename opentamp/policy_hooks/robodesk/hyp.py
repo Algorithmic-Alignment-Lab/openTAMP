@@ -30,42 +30,6 @@ N_DIRS = 16
 N_GRASPS = 4
 TIME_LIMIT = 14400
 
-
-common = {
-    'experiment_name': 'my_experiment' + '_' + \
-            datetime.strftime(datetime.now(), '%m-%d-%y_%H-%M'),
-    'experiment_dir': EXP_DIR,
-    'data_files_dir': EXP_DIR + 'data_files/',
-    'target_filename': EXP_DIR + 'target.npz',
-    'log_filename': EXP_DIR + 'log.txt',
-    'conditions': NUM_CONDS,
-}
-
-algorithm = {
-    'type': None,
-    'conditions': common['conditions'],
-    'policy_sample_mode': 'add',
-    'sample_on_policy': True,
-    'iterations': 1e3, #5e4,
-    'max_ent_traj': 0.0,
-    'fit_dynamics': False,
-    'stochastic_conditions': True,
-    'policy_inf_coeff': 1e2,
-    'policy_out_coeff': 1e1,
-    'kl_step': 1.,
-    'min_step_mult': 0.05,
-    'max_step_mult': 5.0,
-    'sample_ts_prob': 1.0,
-    'opt_wt': OPT_WT_MULT,
-    'fail_value': 50,
-    'use_centroids': True,
-    'n_traj_centers': N_TRAJ_CENTERS,
-    'num_samples': N_SAMPLES,
-    'mp_opt': True,
-    'her': False,
-    'rollout_opt': False,
-}
-
 def refresh_config(no=1, nt=1):
     #prob.GOAL_OPTIONS = [
     #            '(Stacked upright_block flat_block)',
@@ -81,16 +45,10 @@ def refresh_config(no=1, nt=1):
 
     prob.n_aux = 0
     config = {
-        'iterations': algorithm['iterations'],
-        'common': common,
-        'algorithm': algorithm,
-        'num_samples': algorithm['num_samples'],
+        'num_samples': N_SAMPLES,
         'num_conds': NUM_CONDS,
-        'opt_wt': algorithm['opt_wt'],
         'solver_type': 'adam', #'rmsprop',
         'base_weight_dir': 'panda_',
-        'policy_out_coeff': algorithm['policy_out_coeff'],
-        'policy_inf_coeff': algorithm['policy_inf_coeff'],
         'max_sample_queue': 5e2,
         'max_opt_sample_queue': 10,
         'task_map_file': prob.mapping_file,
@@ -131,8 +89,6 @@ def refresh_config(no=1, nt=1):
                              utils.RIGHT_GRIPPER_ENUM,
                              utils.GRIP_CMD_ENUM,
                              ],
-        'val_obs_include': [utils.ONEHOT_GOAL_ENUM,
-                            ],
         'prim_out_include': discr_opts,
         'cont_obs_include': [opt for opt in discr_opts],
         'sensor_dims': {
@@ -163,10 +119,6 @@ def refresh_config(no=1, nt=1):
                 # utils.INIT_OBJ_POSE_ENUM: 2,
             },
         'time_limit': TIME_LIMIT,
-        'curric_thresh': -1,
-        'n_thresh': -1,
-        'expand_process': False,
-        'her': False,
         'num_filters': [32, 32, 16],
         'filter_sizes': [7, 5, 3],
         'prim_filters': [16,16,16], # [16, 32],
