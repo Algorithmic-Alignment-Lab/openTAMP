@@ -9,18 +9,18 @@ import pybullet as P
 import scipy as sp
 from scipy.spatial.transform import Rotation
 
-import opentamp.core.util_classes.transform_utils as T
-import main
-from opentamp.core.parsing import parse_domain_config, parse_problem_config
-from opentamp.core.util_classes.openrave_body import *
-from opentamp.core.util_classes.transform_utils import *
-from opentamp.core.util_classes.viewer import PyBulletViewer
-from pma import backtrack_ll_solver_OSQP as bt_ll
-from pma.hl_solver import *
-from pma.pr_graph import *
-from pma.robot_solver import RobotSolverOSQP
-from sco_py.expr import *
-import random
+# import opentamp.core.util_classes.transform_utils as T
+# import main
+# from opentamp.core.parsing import parse_domain_config, parse_problem_config
+# from opentamp.core.util_classes.openrave_body import *
+# from opentamp.core.util_classes.transform_utils import *
+# from opentamp.core.util_classes.viewer import PyBulletViewer
+# from pma import backtrack_ll_solver_OSQP as bt_ll
+# from pma.hl_solver import *
+# from pma.pr_graph import *
+# from pma.robot_solver import RobotSolverOSQP
+# from sco_py.expr import *
+# import random
 
 
 # bt_ll.DEBUG = True
