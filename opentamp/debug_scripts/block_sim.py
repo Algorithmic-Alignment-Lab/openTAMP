@@ -1,9 +1,24 @@
 import opentamp
 from opentamp.envs import MJCEnv
 
+
+bt_ll.DEBUG = True
+openrave_bodies = None
+domain_fname = opentamp.__path__._path[0] + "/domains/robot_block_stacking/right_desk.domain"
+prob = opentamp.__path__._path[0] + "/domains/robot_block_stacking/probs/stack_3_blocks.prob"
+d_c = main.parse_file_to_dict(domain_fname)
+domain = parse_domain_config.ParseDomainConfig.parse(d_c)
+hls = FDSolver(d_c, cleanup_files=False)
+p_c = main.parse_file_to_dict(prob)
+visual = True # len(os.environ.get('DISPLAY', '')) > 0
+#visual = False
+problem = parse_problem_config.ParseProblemConfig.parse(p_c, domain, None, use_tf=True, sess=None, visual=visual)
+params = problem.init_state.params
+
+# Setup simulator below here
+
 PANDA_XML = opentamp.__path__._path[0] + "/robot_info/robodesk/franka_panda.xml"
 HEADER_XML = opentamp.__path__._path[0] + "/robot_info/robodesk/franka_panda_headers.xml"
-
 
 n_blocks = 3
 view = True

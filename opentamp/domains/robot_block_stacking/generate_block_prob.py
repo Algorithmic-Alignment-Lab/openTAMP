@@ -2,7 +2,7 @@ import opentamp
 
 
 N_BLOCKS = 3
-FILENAME = opentamp.__path__._path[0] + "/domains/robot_block_stacking/probs/stack_{}_blocks.prob"
+FILENAME = opentamp.__path__._path[0] + "/domains/robot_block_stacking/probs/stack_{}_blocks.prob".format(N_BLOCKS)
 
 
 PANDA_INIT_POSE = [0., 0.1, 0.55]
