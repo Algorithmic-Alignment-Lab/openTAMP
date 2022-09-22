@@ -1,5 +1,28 @@
 import opentamp
 from opentamp.envs import MJCEnv
+import os
+import sys
+import time
+
+import numpy as np
+import pybullet as P
+import robosuite
+import robosuite.utils.transform_utils as robo_T
+import scipy as sp
+from scipy.spatial.transform import Rotation
+
+import opentamp.core.util_classes.transform_utils as T
+import main
+from opentamp.core.parsing import parse_domain_config, parse_problem_config
+from opentamp.core.util_classes.openrave_body import *
+from opentamp.core.util_classes.transform_utils import *
+from opentamp.core.util_classes.viewer import PyBulletViewer
+from pma import backtrack_ll_solver_gurobi as bt_ll
+from pma.hl_solver import *
+from pma.pr_graph import *
+from pma.robosuite_solver import RobotSolver
+from sco_py.expr import *
+import random
 
 
 bt_ll.DEBUG = True
@@ -10,8 +33,7 @@ d_c = main.parse_file_to_dict(domain_fname)
 domain = parse_domain_config.ParseDomainConfig.parse(d_c)
 hls = FDSolver(d_c, cleanup_files=False)
 p_c = main.parse_file_to_dict(prob)
-visual = True # len(os.environ.get('DISPLAY', '')) > 0
-#visual = False
+visual = True
 problem = parse_problem_config.ParseProblemConfig.parse(p_c, domain, None, use_tf=True, sess=None, visual=visual)
 params = problem.init_state.params
 
