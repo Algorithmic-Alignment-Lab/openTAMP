@@ -15,10 +15,10 @@ from opentamp.core.parsing import parse_domain_config, parse_problem_config
 from opentamp.core.util_classes.openrave_body import *
 from opentamp.core.util_classes.transform_utils import *
 from opentamp.core.util_classes.viewer import PyBulletViewer
-from pma import backtrack_ll_solver_OSQP as bt_ll
-from pma.hl_solver import *
-from pma.pr_graph import *
-from pma.robot_solver import RobotSolverOSQP
+from opentamp.pma import backtrack_ll_solver_OSQP as bt_ll
+from opentamp.pma.hl_solver import *
+from opentamp.pma.pr_graph import *
+from opentamp.pma.robot_solver import RobotSolverOSQP
 from sco_py.expr import *
 import random
 
@@ -34,6 +34,9 @@ p_c = main.parse_file_to_dict(prob)
 visual = True
 problem = parse_problem_config.ParseProblemConfig.parse(p_c, domain, None, use_tf=True, sess=None, visual=visual)
 params = problem.init_state.params
+
+
+plan, descr = p_mod_abs(hls, solver, domain, problem, goal=GOAL, debug=True, n_resamples=5, max_iter=2)
 
 # Setup simulator below here
 
