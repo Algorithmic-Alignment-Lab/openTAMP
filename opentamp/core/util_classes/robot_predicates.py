@@ -3943,8 +3943,8 @@ class InReach(ExprPredicate):
         A = np.array([[-1.]])
         if self.obj.name.find('upright') >= 0:
             b = 0.8 * np.ones((1,1))
-        elif self.robot.name.find('panda') >= 0:
-            b = 0.6 * np.ones((1,1))
+        # elif self.robot.name.find('panda') >= 0:
+        #     b = 0.6 * np.ones((1,1))
         else:
             b = np.zeros((1,1))
         val = np.zeros((1,1))
@@ -3965,7 +3965,9 @@ class Stackable(ExprPredicate):
         if self.obj.name.find('flat') >= 0 and self.item.name.find('upright') >= 0:
             b = -1. * np.ones((1,1))
         else:
+            A = np.array([[0.]])
             b = np.zeros((1,1))
+
         val = np.zeros((1,1))
         aff_e = AffExpr(A, b)
         e = LEqExpr(aff_e, val)

@@ -94,12 +94,8 @@ def main():
     s += "(WithinJointLimit panda)"
     s += "\n\n"
 
-    goal = "(and "
-    for n in range(N_BLOCKS-1):
-        goal += "(Stacked block{} block{})".format(n, n+1)
-    goal += ")"
-    s += "Goal: {}\n\n".format(goal)
-
+    s += "Goal: (Stacked block1 block2), (Stacked block0 block1)\n\n"
+    
     s += "Invariants: "
     s += "(StationaryBase panda), "
     s += "\n\n"
