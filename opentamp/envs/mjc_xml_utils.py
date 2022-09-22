@@ -5,6 +5,8 @@ import os
 MUJOCO_MODEL_Z_OFFSET = -0.665 # -0.706
 MUJOCO_MODEL_X_OFFSET = -0.07
 
+DEFAULT_CAM_WIDTH = 200
+DEFAULT_CAM_HEIGHT = 150
 
 def get_param_xml(param):
     x, y, z = param.pose[:, 0]
@@ -251,7 +253,7 @@ def get_rope(length, spacing=0.1, radius=0.2, pos=(1.,0.,1.), color="0.8 0.2 0.1
     return 'B0_0', xml_body, {'assets': [xml_texture, xml_material]}
 
 
-def generate_xml(base_file, target_file, items=[], include_files=[], include_items=[], timestep=0.002):
+def generate_xml(base_file, target_file, items=[], include_files=[], include_items=[], timestep=0.002, frame_dims=(DEFAULT_CAM_WIDTH, DEFAULT_CAM_HEIGHT)):
     '''
     Parameters:
         base_file: path to where the base environment is defined
@@ -273,11 +275,39 @@ def generate_xml(base_file, target_file, items=[], include_files=[], include_ite
     base_xml = xml.parse(base_file)
     root = base_xml.getroot()
     worldbody = root.find('worldbody')
+
+    visual = root.find("visual")
+    if visual is None:
+        visual = xml.Element('visual')
+        root.append(visual)
+        visual.append(xml.fromstring('<global offwidth="{}" offheight="{}"/>'.format(*frame_dims)))
+
     contacts = root.find('contact')
+    if contacts is None:
+        contacts = xml.Element('contact')
+        root.append(contacts)
+
     assets = root.find('asset')
+    if assets is None:
+        assets = xml.Element('asset')
+        root.append(assets)
+
     equality = root.find('equality')
+    if equality is None:
+        equality = xml.Element('equality')
+        root.append(equality)
+
     actuators = root.find('actuator')
     sensors = root.find('sensor')
+    if sensors is None:
+        sensors = xml.Element('sensor')
+        root.append(sensors)
+
+    defaults = root.find('default')
+    if defaults is None:
+        defaults = xml.Element('default')
+        root.append(defaults)
+
 
     if root.find('compiler') is None:
         compiler_str = '<compiler coordinate="local" angle="radian" meshdir="{0}" texturedir="textures/" strippath="false" />'.format(os.getcwd() + '/opentamp'+'/')
@@ -288,6 +318,10 @@ def generate_xml(base_file, target_file, items=[], include_files=[], include_ite
         option_str = '<option timestep="{0}"  gravity="0 0 -9.81" integrator="Euler" solver="Newton" noslip_iterations="0"/>'.format(timestep)
         option_xml = xml.fromstring(option_str)
         root.append(option_xml)
+
+    for item_ind, (item_name, item_body, tag_dict) in enumerate(items):
+        if type(item_body) is str:
+            items[item_ind] = (item_name, xml.fromstring(item_body), tag_dict)
 
     for item_dict in include_items:
         name = item_dict["name"]
@@ -325,6 +359,9 @@ def generate_xml(base_file, target_file, items=[], include_files=[], include_ite
         if 'sensors' in tag_dict:
             for sen in tag_dict['sensors']:
                 sensors.append(sen)
+        if 'default' in tag_dict:
+            for default in tag_dict['default']:
+                defaults.append(default)
 
     for f_name in include_files:
         if f_name.lower().endswith('.mjcf') or f_name.lower().endswith('.xml'):
@@ -358,19 +395,24 @@ def generate_xml(base_file, target_file, items=[], include_files=[], include_ite
             else:
                 body = elem.find('body')
 
-            name = elem.get('model')
-            body.set('name', name)
+            if body is not None:
+                name = elem.get('model')
+                body.set('name', name)
+                worldbody.append(body)
 
             # Set mesh
-            new_assets = elem.find('assets')
+            new_assets = elem.find('asset')
             path = f_name.rsplit('/', 1)[0]
             if new_assets is not None:
-                mesh = new_assets.find('mesh')
-                mesh_file = mesh.get('file')
-                mesh.set('file', path+'/'+mesh_file)
-                assets.append(list(new_assets))
+                for asset in new_assets:
+                    asset_file = asset.get('file')
+                    if asset_file is None: continue
+                    asset.set('file', path+'/'+asset_file)
+                    assets.append(asset)
 
-            worldbody.append(body)
+            new_defaults = elem.find("default")
+            if new_defaults is not None:
+                defaults.extend(new_defaults)
 
             if local_actuators is not None:
                 for act in list(local_actuators):

@@ -29,6 +29,7 @@ from opentamp.policy_hooks.utils.load_task_definitions import *
 from opentamp.policy_hooks.utils.policy_solver_utils import *
 from opentamp.policy_hooks.utils.file_utils import *
 import opentamp.policy_hooks.utils.policy_solver_utils as utils
+from opentamp.policy_hooks.utils.file_utils import load_config
 
 
 def spawn_server(cls, hyperparams, load_at_spawn=False):
@@ -289,9 +290,18 @@ class MultiProcessMain(object):
 
 
     def start_servers(self):
-        for p in self.processes:
-            p.start()
+        n_proc = len(self.processes)
+        for p_ind in range(n_proc):
+            # Guard to prevent passing child processes to child processes,
+            # which crashes the code on a mac (and possibly other OSes)
+            processes = self.processes
+            self.processes = []
+
+            processes[p_ind].start()
+
+            self.processes = processes
             time.sleep(0.1)
+
         for t in self.threads:
             t.start()
 
@@ -579,18 +589,4 @@ class MultiProcessMain(object):
             ind += 1
         '''
         sys.exit(0)
-
-
-def load_config(args, config=None, reload_module=None):
-    config_file = args.config
-    if reload_module is not None:
-        config_module = reload_module
-        imp.reload(config_module)
-    else:
-        config_module = importlib.import_module(config_file)
-    config = config_module.refresh_config(args.nobjs, args.nobjs)
-    config['num_objs'] = args.nobjs if args.nobjs > 0 else config['num_objs']
-    config['num_targs'] = args.ntargs if args.nobjs > 0 else config['num_targs']
-    config['server_id'] = args.server_id if args.server_id != '' else str(random.randint(0,2**32))
-    return config, config_module
 

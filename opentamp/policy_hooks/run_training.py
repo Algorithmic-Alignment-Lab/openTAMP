@@ -9,11 +9,11 @@ import shutil
 import sys
 import time
 
-from opentamp.policy_hooks.multiprocess_main import MultiProcessMain, load_config
-from opentamp.policy_hooks.utils.file_utils import LOG_DIR
+from opentamp.policy_hooks.multiprocess_main import MultiProcessMain
+from opentamp.policy_hooks.utils.file_utils import LOG_DIR, load_config
 
 
-USE_BASELINES = True 
+USE_BASELINES = False 
 if USE_BASELINES:
     from opentamp.policy_hooks.baselines.argparse import argsparser as baseline_argsparser
 

@@ -16,10 +16,7 @@ import xml.etree.ElementTree as xml
 from sco_py.expr import *
 
 import opentamp.core.util_classes.common_constants as const
-if const.USE_OPENRAVE:
-    pass
-else:
-    import pybullet as P
+import pybullet as P
 
 
 from opentamp.policy_hooks.sample_list import SampleList
@@ -31,7 +28,7 @@ import opentamp.core.util_classes.items as items
 from opentamp.core.util_classes.namo_grip_predicates import dsafe, NEAR_TOL, dmove, HLGraspFailed, HLTransferFailed, HLPlaceFailed, GRIP_VAL
 from opentamp.core.util_classes.openrave_body import OpenRAVEBody
 from opentamp.core.util_classes.viewer import OpenRAVEViewer
-import pma.backtrack_ll_solver as bt_ll
+import pma.backtrack_ll_solver_OSQP as bt_ll
 
 from opentamp.policy_hooks.agent import Agent
 from opentamp.policy_hooks.sample import Sample

@@ -15,13 +15,7 @@ import xml.etree.ElementTree as xml
 from sco_py.expr import *
 
 import opentamp.core.util_classes.common_constants as const
-if const.USE_OPENRAVE:
-    # import openravepy
-    # from openravepy import RaveCreatePhysicsEngine
-    # import ctrajoptpy
-    pass
-else:
-    import pybullet as P
+import pybullet as P
 
 
 from opentamp.policy_hooks.sample_list import SampleList

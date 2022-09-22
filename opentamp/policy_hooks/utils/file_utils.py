@@ -11,19 +11,22 @@ import time
 LOG_DIR = 'experiment_logs/'
 MODEL_DIR = 'torch_saved/'
 
+
 def load_config(args, config=None, reload_module=None):
     config_file = args.config
-
     if reload_module is not None:
         config_module = reload_module
         imp.reload(config_module)
     else:
         config_module = importlib.import_module(config_file)
-
     config = config_module.refresh_config(args.nobjs, args.nobjs)
+    config['num_objs'] = args.nobjs if args.nobjs > 0 else config['num_objs']
+    config['num_targs'] = args.ntargs if args.nobjs > 0 else config['num_targs']
     config['server_id'] = args.server_id if args.server_id != '' else str(random.randint(0,2**32))
-    return config, config_module
+    dir_name = config['base_weight_dir'] + '/objs{0}_{1}/{2}'.format(config['num_objs'], config['num_targs'], config['descr'])
+    config['weight_dir'] = dir_name 
 
+    return config, config_module
 
 def setup_dirs(c, args, rank=0):
     current_id = 0 if c.get('index', -1) < 0 else c['index']

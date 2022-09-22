@@ -20,21 +20,18 @@ from opentamp.envs.mjc_xml_utils import *
 from opentamp.envs import transform_utils as T
 
 
-
 BASE_XML = opentamp.__path__._path[0] +'/robot_info/empty.xml'
 ENV_XML = opentamp.__path__._path[0] + '/robot_info/current_empty.xml'
 SPECIFIC_ENV_XML = opentamp.__path__._path[0] + '/robot_info/temp_env_xmls/current_{0}.xml'
 
 _MAX_FRONTBUFFER_SIZE = 2048
-_CAM_WIDTH = 200
-_CAM_HEIGHT = 150
 
 CTRL_MODES = ['joint_angle', 'end_effector', 'end_effector_pos', 'discrete_pos', 'discrete']
 
 class MJCEnv(Env):
     metadata = {'render.modes': ['human', 'rgb_array', 'depth'], 'video.frames_per_second': 67}
 
-    def __init__(self, mode='end_effector', obs_include=[], items=[], include_files=[], include_items=[], im_dims=(_CAM_WIDTH, _CAM_HEIGHT), sim_freq=25, timestep=0.002, max_iter=250, mult=3e2, view=False, load_render=True, act_jnts=[], xmlid='0'):
+    def __init__(self, mode='end_effector', obs_include=[], items=[], include_files=[], include_items=[], im_dims=(DEFAULT_CAM_WIDTH, DEFAULT_CAM_HEIGHT), sim_freq=25, timestep=0.002, max_iter=250, mult=3e2, view=False, load_render=True, act_jnts=[], xmlid='0'):
         assert mode in CTRL_MODES, 'Env mode must be one of {0}'.format(CTRL_MODES)
         self.ctrl_mode = mode
         self.active = True
@@ -104,7 +101,7 @@ class MJCEnv(Env):
         items = config.get("items", [])
         include_files = config.get("include_files", [])
         include_items = config.get("include_items", [])
-        im_dims = config.get("image_dimensions", (_CAM_WIDTH, _CAM_HEIGHT))
+        im_dims = config.get("image_dimensions", (DEFAULT_CAM_WIDTH, DEFAULT_CAM_HEIGHT))
         sim_freq = config.get("sim_freq", 25)
         ts = config.get("mjc_timestep", 0.002)
         mult = config.get("step_mult", 3e2)
@@ -118,7 +115,7 @@ class MJCEnv(Env):
 
     def _load_model(self):
         xmlpath = SPECIFIC_ENV_XML.format(self.xmlid)
-        generate_xml(BASE_XML, xmlpath, self.items, self.include_files, self.include_items, timestep=self.timestep)
+        generate_xml(BASE_XML, xmlpath, self.items, self.include_files, self.include_items, timestep=self.timestep, frame_dims=(self.im_wid, self.im_height))
         self.physics = Physics.from_xml_path(xmlpath)
 
 
@@ -129,7 +126,7 @@ class MJCEnv(Env):
     def add_viewer(self):
         if self._viewer is not None: return
         self.cur_im = np.zeros((self.im_height, self.im_wid, 3))
-        self._launch_viewer(_CAM_WIDTH, _CAM_HEIGHT)
+        self._launch_viewer(self.im_wid, self.im_height)
 
 
     def _launch_viewer(self, width, height, title='Main'):

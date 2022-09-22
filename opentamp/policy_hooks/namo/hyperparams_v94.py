@@ -9,7 +9,7 @@ import numpy as np
 
 import opentamp.policy_hooks.utils.policy_solver_utils as utils
 from opentamp.core.util_classes.namo_grip_predicates import ATTRMAP
-from opentamp.pma.namo_grip_solver import NAMOSolver
+from opentamp.pma.namo_grip_solver import NAMOSolverOSQP as NAMOSolver
 from opentamp.policy_hooks.namo.grip_agent import NAMOGripAgent
 import opentamp.policy_hooks.namo.sorting_prob_11 as prob
 from opentamp.policy_hooks.utils.file_utils import LOG_DIR
