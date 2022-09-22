@@ -6,8 +6,6 @@ import time
 
 import numpy as np
 import pybullet as P
-import robosuite
-import robosuite.utils.transform_utils as robo_T
 import scipy as sp
 from scipy.spatial.transform import Rotation
 
@@ -20,7 +18,7 @@ from opentamp.core.util_classes.viewer import PyBulletViewer
 from pma import backtrack_ll_solver_gurobi as bt_ll
 from pma.hl_solver import *
 from pma.pr_graph import *
-from pma.robosuite_solver import RobotSolver
+from pma.robot_solver import RobotSolver
 from sco_py.expr import *
 import random
 
