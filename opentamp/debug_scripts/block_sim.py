@@ -15,25 +15,25 @@ from opentamp.core.parsing import parse_domain_config, parse_problem_config
 from opentamp.core.util_classes.openrave_body import *
 from opentamp.core.util_classes.transform_utils import *
 from opentamp.core.util_classes.viewer import PyBulletViewer
-from pma import backtrack_ll_solver_gurobi as bt_ll
+from pma import backtrack_ll_solver_OSQP as bt_ll
 from pma.hl_solver import *
 from pma.pr_graph import *
-from pma.robot_solver import RobotSolver
+from pma.robot_solver import RobotSolverOSQP
 from sco_py.expr import *
 import random
 
 
-bt_ll.DEBUG = True
-openrave_bodies = None
-domain_fname = opentamp.__path__._path[0] + "/domains/robot_block_stacking/right_desk.domain"
-prob = opentamp.__path__._path[0] + "/domains/robot_block_stacking/probs/stack_3_blocks.prob"
-d_c = main.parse_file_to_dict(domain_fname)
-domain = parse_domain_config.ParseDomainConfig.parse(d_c)
-hls = FDSolver(d_c, cleanup_files=False)
-p_c = main.parse_file_to_dict(prob)
-visual = True
-problem = parse_problem_config.ParseProblemConfig.parse(p_c, domain, None, use_tf=True, sess=None, visual=visual)
-params = problem.init_state.params
+# bt_ll.DEBUG = True
+# openrave_bodies = None
+# domain_fname = opentamp.__path__._path[0] + "/domains/robot_manipulation_domain/right_desk.domain"
+# prob = opentamp.__path__._path[0] + "/domains/robot_block_stacking/probs/stack_3_blocks.prob"
+# d_c = main.parse_file_to_dict(domain_fname)
+# domain = parse_domain_config.ParseDomainConfig.parse(d_c)
+# hls = FDSolver(d_c, cleanup_files=False)
+# p_c = main.parse_file_to_dict(prob)
+# visual = True
+# problem = parse_problem_config.ParseProblemConfig.parse(p_c, domain, None, use_tf=True, sess=None, visual=visual)
+# params = problem.init_state.params
 
 # Setup simulator below here
 

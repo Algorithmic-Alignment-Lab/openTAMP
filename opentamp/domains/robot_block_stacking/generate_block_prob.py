@@ -61,8 +61,8 @@ def main():
     s += "Panda (name panda); "
 
     for n in range(N_BLOCKS):
-        s += "Box (name block{});".format(n)
-        s += "Target (block{}_target); ".format(n)
+        s += "Box (name block{}); ".format(n)
+        s += "Target (name block{}_target); ".format(n)
 
     s += "PandaPose (name {}); ".format("robot_init_pose")
     s += "PandaPose (name {}); ".format("robot_end_pose")
@@ -71,16 +71,16 @@ def main():
     s += "Init: "
 
     for n in range(N_BLOCKS):
-        s += "(geom block{0} {1}),".format(n, BLOCK_DIM)
-        s += "(pose block{} [{}, 0.3, 0.01]),".format(n, n/25.)
-        s += "(rotation block{} [0.0, 0.0, 0.0]),".format(n)
+        s += "(geom block{0} {1}), ".format(n, BLOCK_DIM)
+        s += "(pose block{} [{}, 0.3, 0.01]), ".format(n, n/25.)
+        s += "(rotation block{} [0.0, 0.0, 0.0]), ".format(n)
 
-        s += "(value block{}_target [{}, 0.3, 0.01]),".format(n, n/25.)
-        s += "(rotation block{}_target [0.0, 0.0, 0.0]),".format(n)
+        s += "(value block{}_target [{}, 0.3, 0.01]), ".format(n, n/25.)
+        s += "(rotation block{}_target [0.0, 0.0, 0.0]), ".format(n)
 
     s += get_panda_str('panda', R_ARM_INIT, OPEN_GRIPPER, PANDA_INIT_POSE)
     s += get_panda_pose_str('robot_init_pose', R_ARM_INIT, OPEN_GRIPPER, PANDA_INIT_POSE)
-    s += get_undefined_robot_pose_str('robot_end_pose')
+    s += get_undefined_robot_pose_str('robot_end_pose')[:-2]
     s += ";"
 
     for n in range(N_BLOCKS):
