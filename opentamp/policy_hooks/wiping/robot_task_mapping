@@ -1,0 +1,10 @@
+{
+    'moveto_pose_ontable': [
+        '0: MOVE_TO_POSE_ONTABLE SAWYER TABLE robot_init_pose {}',
+    ],
+
+    'wipe_table': [
+        '0: WIPE_TABLE SAWYER TABLE robot_init_pose {}',
+    ]
+
+};
