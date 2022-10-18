@@ -23,6 +23,7 @@ def load_config(args, config=None, reload_module=None):
     config['num_objs'] = args.nobjs if args.nobjs > 0 else config['num_objs']
     config['num_targs'] = args.ntargs if args.nobjs > 0 else config['num_targs']
     config['server_id'] = args.server_id if args.server_id != '' else str(random.randint(0,2**32))
+    config['descr'] = config.get('descr', args.descr)
     dir_name = config['base_weight_dir'] + '/objs{0}_{1}/{2}'.format(config['num_objs'], config['num_targs'], config['descr'])
     config['weight_dir'] = dir_name 
 

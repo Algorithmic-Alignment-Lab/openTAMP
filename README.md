@@ -21,7 +21,7 @@ To install and begin using OpenTAMP on an Ubuntu (>14.04) Linux Machine, follow 
 ### Mac
 To install and begin using OpenTAMP on a Mac, follow these steps
 1. Install Poetry by following instructions from [here](https://python-poetry.org/docs/#installation)
-1. Run ```brew install cmake glfw hdf5```
+1. Run ```brew install cmake glfw hdf5 ```
 1. Install [MuJoCo](https://mujoco.org/)
     1. Download the correct MuJoCo binary for your OS from [here](https://mujoco.org/download). Be sure to use version 2.1.0 and not a higher version!
     1. Extract the downloaded `mujoco210` directory into `~/.mujoco/mujoco210`
@@ -62,6 +62,7 @@ This should take under a minute to run.
 ### Install Learning Dependencies
 To run code related to learning, install these extra dependencies
 1. `poetry install --extras learning`
+1. If on a Mac, run `brew install python-tk`
 
 ### Verify learning (OUTDATED!!! WILL UPDATE SOON)
 If you wish to train policies from the code, verify that a Mujoco key titled `mjkey.txt` is in your home directory an that `FULL_INSTALL=true` in `setup.sh`. Once this has completed, make sure you are on the virtual env (by running `tampenv`) and try running `test_training.sh`; this script will attempt to train policies for a two object pick-place problem with some default parameter settings. Once completed, is will generate some plots on performance and videos of rollouts into the `~/Dropbox` directory. Note the script will use about 16 proccesses, so it's reccomended to run it from at least an 8-physical core machine.

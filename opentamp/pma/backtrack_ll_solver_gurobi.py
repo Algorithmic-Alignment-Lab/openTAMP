@@ -17,7 +17,6 @@ from opentamp.core.util_classes.openrave_body import OpenRAVEBody
 from opentamp.core.util_classes.viewer import OpenRAVEViewer
 from opentamp.pma.ll_solver_gurobi import LLParam, LLSolver
 
-
 MAX_PRIORITY = 3
 BASE_MOVE_COEFF = 1.0
 TRAJOPT_COEFF = 5e1
@@ -29,7 +28,6 @@ COL_COEFF = 0
 SAMPLE_SIZE = 5
 BASE_SAMPLE_SIZE = 5
 DEBUG = False
-
 
 class BacktrackLLSolverGurobi(LLSolver):
     def __init__(self, early_converge=False, transfer_norm='min-vel'):
@@ -274,6 +272,8 @@ class BacktrackLLSolverGurobi(LLSolver):
 
                 # No point in resampling if the endpoints or linear constraints can't be satisfied
                 if success or priority < 0 or n_resamples == 0:
+                    if priority < 0 and not success:
+                        import ipdb; ipdb.set_trace()
                     break
 
                 if DEBUG:

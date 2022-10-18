@@ -13,7 +13,7 @@ OPEN_GRIPPER = [0.04, 0.04]
 CLOSE_GRIPPER = [0., 0.]
 EE_POS = [0.11338, -0.16325, 1.03655]
 EE_ROT = [3.139, 0.00, -2.182]
-BLOCK_DIM = [0.01, 0.01, 0.01]
+BLOCK_DIM = [0.03, 0.03, 0.03]
 
 
 def get_panda_pose_str(name, RArm = R_ARM_INIT, G = OPEN_GRIPPER, Pos = PANDA_INIT_POSE, Rot = PANDA_INIT_ROT):
@@ -71,11 +71,12 @@ def main():
     s += "Init: "
 
     for n in range(N_BLOCKS):
-        s += "(geom block{0} {1}), ".format(n, BLOCK_DIM)
-        s += "(pose block{} [{}, 0.3, 0.01]), ".format(n, n/25.)
+        block_pos = [n/5.0, 0.35, 0.65]
+        s += "(geom block{} {}), ".format(n, BLOCK_DIM)
+        s += "(pose block{} {}), ".format(n, block_pos)
         s += "(rotation block{} [0.0, 0.0, 0.0]), ".format(n)
 
-        s += "(value block{}_target [{}, 0.3, 0.01]), ".format(n, n/25.)
+        s += "(value block{}_target {}), ".format(n, block_pos)
         s += "(rotation block{}_target [0.0, 0.0, 0.0]), ".format(n)
 
     s += get_panda_str('panda', R_ARM_INIT, OPEN_GRIPPER, PANDA_INIT_POSE)

@@ -84,7 +84,7 @@ class HLState(object):
 class FFSolver(HLSolver):
     FF_EXEC = opentamp.__path__._path[0]+"/task_planners/FF-v2.3/ff"
     FILE_PREFIX = "temp_"
-    PDDL_DIR = "opentamp/pddl_files/"
+    PDDL_DIR = opentamp.__path__._path[0]+"/pddl_files/"
 
     def _parse_precondition_ts(self, pre, ts):
         preds = ''
@@ -539,7 +539,7 @@ class FDSolver(FFSolver):
     FD_EXEC = opentamp.__path__._path[0]+"/task_planners/downward/fast-downward.py"
     FD_ARGS = ["--alias", "seq-sat-lama-2011"]
     FILE_PREFIX = "temp_"
-    PDDL_DIR = "opentamp/pddl_files/"
+    PDDL_DIR = opentamp.__path__._path[0]+"/pddl_files/"
 
     def _run_planner(self, abs_domain, abs_prob, label=''):
         """

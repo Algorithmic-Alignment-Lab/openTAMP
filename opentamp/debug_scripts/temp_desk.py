@@ -17,8 +17,10 @@ from opentamp.core.util_classes.openrave_body import *
 from opentamp.core.util_classes.transform_utils import *
 from opentamp.pma.hl_solver import *
 from opentamp.pma.pr_graph import *
-from opentamp.pma import backtrack_ll_solver_OSQP as bt_ll
-from opentamp.pma.robot_solver import RobotSolverOSQP
+# from opentamp.pma import backtrack_ll_solver_OSQP as bt_ll
+# from opentamp.pma.robot_solver import RobotSolverOSQP
+from opentamp.pma import backtrack_ll_solver_gurobi as bt_ll
+from opentamp.pma.robot_solver import RobotSolverGurobi
 import opentamp.core.util_classes.transform_utils as T
 
 from opentamp.policy_hooks.utils.file_utils import load_config, setup_dirs, LOG_DIR
@@ -163,16 +165,16 @@ if __name__ == '__main__':
         #goal = "(NearGripperRight panda green_button)"
 
         goals = [
-             #'(Lifted upright_block panda)',
-             #'(Lifted ball panda)',
-             #'(Stacked upright_block flat_block)',
+             # '(Lifted upright_block panda)',
+             # '(Lifted ball panda)',
+             '(Stacked upright_block flat_block)',
              #'(SlideDoorClose shelf_handle shelf)',
              #'(SlideDoorOpen drawer_handle drawer)',
              #'(Near flat_block bin_target)',
              #'(Near upright_block off_desk_target)',
              #'(InSlideDoor flat_block shelf)',
              #'(InGripperRight panda green_button)',
-             '(and (InSlideDoor upright_block shelf) (SlideDoorClose shelf_handle shelf))',
+             # '(and (InSlideDoor upright_block shelf) (SlideDoorClose shelf_handle shelf))',
                 ]
 
         goal = random.choice(goals)
@@ -188,7 +190,7 @@ if __name__ == '__main__':
         print('SOLVING:', goal, goal_info)
 
         print('CONSISTENT?', problem.init_state.is_consistent())
-        solver = RobotSolverOSQP()
+        solver = RobotSolverGurobi()
 
         plan, descr = p_mod_abs(hls, solver, domain, problem, goal=goal, debug=True, n_resamples=5, max_iter=2)
 

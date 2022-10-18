@@ -395,6 +395,7 @@ class MoveToGrasp(MoveArm):
                          #('(not (EEAtXY{} ?robot ?item))'.format(arm), '{0}:{1}'.format(0, 0)),
                          ('(not (NearGripper{} ?robot ?item))'.format(arm), '0:0'),
                          ('(InReach ?item ?robot)', '0:0'),
+                         ('(forall (?i - Item) (not (Lifted ?i ?robot)))', '{}:{}'.format(0, -1)),
                         ])
 
         self.eff.extend([#('(RightGripperDownRot ?robot)', '{0}:{1}'.format(3, self.end-1)),
@@ -916,6 +917,7 @@ class Lift(Action):
         self.pre = [
                     ('(forall (?door - Door) (not (SlideDoorAt ?item ?door)))', '{0}:{1}'.format(0, -1)),
                     ('(not (Lifted ?item ?robot))', '{}:{}'.format(0, -1)),
+                    ('(forall (?i - Item) (not (Lifted ?i ?robot)))', '{}:{}'.format(0, -1)),
                     ('(not (Fixed ?item))', '{}:{}'.format(0, -1)),
                     ('(forall (?obj - Item) (not (Stacked ?obj ?item)))', 
                         '{}:{}'.format(0, -1)),

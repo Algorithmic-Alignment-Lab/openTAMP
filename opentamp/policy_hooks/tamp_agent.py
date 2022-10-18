@@ -513,11 +513,6 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
         raise NotImplementedError('This should be defined in child')
 
 
-    @abstractmethod
-    def solve_sample_opt_traj(self, state, task, condition, traj_mean=[], fixed_targets=[]):
-        raise NotImplementedError
-
-
     def _sample_opt_traj(self, plan, state, task, condition):
         raise NotImplementedError('This should be defined in child')
 

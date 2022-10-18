@@ -3923,6 +3923,10 @@ class Lifted(ExprPredicate):
             b = 0.9 * np.ones((1,1))
         elif self.obj.name.lower().find('flat') >= 0:
             b = 0.8 * np.ones((1,1))
+        elif self.obj.name.lower().find('block') >= 0:
+            #b = 0.875 * np.ones((1,1))
+            z = self.robot.pose[2,0]
+            b = (z + 0.2) * np.ones((1,1))
         else:
             #b = 0.875 * np.ones((1,1))
             b = 0.85 * np.ones((1,1))
@@ -3940,12 +3944,13 @@ class InReach(ExprPredicate):
         self.obj, self.robot = params
         attr_inds = OrderedDict([(self.obj, [("pose", np.array([2], dtype='int32'))])])
             
-        A = np.array([[-1.]])
         if self.obj.name.find('upright') >= 0:
+            A = np.array([[-1.]])
             b = 0.8 * np.ones((1,1))
         # elif self.robot.name.find('panda') >= 0:
         #     b = 0.6 * np.ones((1,1))
         else:
+            A = np.zeros((1,1))
             b = np.zeros((1,1))
         val = np.zeros((1,1))
         aff_e = AffExpr(A, b)
@@ -3961,14 +3966,15 @@ class Stackable(ExprPredicate):
         self.obj, self.item = params
         attr_inds = OrderedDict([(self.obj, [("pose", np.array([2], dtype='int32'))])])
             
-        A = np.array([[1.]])
         if self.obj.name.find('flat') >= 0 and self.item.name.find('upright') >= 0:
+            A = np.array([[1.]])
             b = -1. * np.ones((1,1))
+            val = np.zeros((1,1))
         else:
-            A = np.array([[0.]])
+            A = np.zeros((1,1))
             b = np.zeros((1,1))
+            val = np.ones((1,1))
 
-        val = np.zeros((1,1))
         aff_e = AffExpr(A, b)
         e = LEqExpr(aff_e, val)
 

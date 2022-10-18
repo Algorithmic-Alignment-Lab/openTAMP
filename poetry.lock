@@ -128,7 +128,7 @@ version = "0.0.403778684"
 description = "Continuous control environments and MuJoCo Python bindings."
 category = "main"
 optional = false
-python-versions = ">=3.7, <3.10"
+python-versions = ">=3.7, <=3.11"
 
 [package.dependencies]
 absl-py = ">=0.7.0"
@@ -208,7 +208,7 @@ version = "2.1.6"
 description = ""
 category = "main"
 optional = false
-python-versions = ">=3.7.1,<3.11"
+python-versions = ">=3.7.1,<=3.11"
 
 [package.dependencies]
 cffi = ">=1.15.0,<2.0.0"
@@ -432,7 +432,7 @@ version = "0.36.0"
 description = "lightweight wrapper around basic LLVM functionality"
 category = "main"
 optional = false
-python-versions = ">=3.6,<3.10"
+python-versions = ">=3.6,<=3.11"
 
 [[package]]
 name = "lxml"
@@ -500,7 +500,7 @@ version = "0.53.1"
 description = "compiling Python code using LLVM"
 category = "main"
 optional = false
-python-versions = ">=3.6,<3.10"
+python-versions = ">=3.6,<=3.11"
 
 [package.dependencies]
 llvmlite = ">=0.36.0rc1,<0.37"
@@ -565,9 +565,9 @@ python-versions = ">=3.7.1"
 
 [package.dependencies]
 numpy = [
-    {version = ">=1.17.3", markers = "platform_machine != \"aarch64\" and platform_machine != \"arm64\" and python_version < \"3.10\""},
-    {version = ">=1.19.2", markers = "platform_machine == \"aarch64\" and python_version < \"3.10\""},
-    {version = ">=1.20.0", markers = "platform_machine == \"arm64\" and python_version < \"3.10\""},
+    {version = ">=1.17.3", markers = "platform_machine != \"aarch64\" and platform_machine != \"arm64\" and python_version < \"3.11\""},
+    {version = ">=1.19.2", markers = "platform_machine == \"aarch64\" and python_version < \"3.11\""},
+    {version = ">=1.20.0", markers = "platform_machine == \"arm64\" and python_version < \"3.11\""},
 ]
 python-dateutil = ">=2.7.3"
 pytz = ">=2017.3"
@@ -1033,7 +1033,7 @@ learning = ["torch", "pandas", "seaborn", "imageio", "mpi4py", "matplotlib"]
 
 [metadata]
 lock-version = "1.1"
-python-versions = ">=3.7.1,<3.10"
+python-versions = ">=3.7.1,<=3.11"
 content-hash = "24c543358a545184dda47fd08adf1cca545698b86f559825958993308a524a8d"
 
 [metadata.files]
