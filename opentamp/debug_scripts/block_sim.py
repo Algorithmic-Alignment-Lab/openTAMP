@@ -98,8 +98,8 @@ for i in range(n_blocks):
             "name": "block{0}".format(i),
             "type": "box",
             "is_fixed": False,
-            "pos": [0.3, i / 10., 0.02],
-            "dimensions": [0.01, 0.01, 0.01],
+            "pos": plan.params['block{}'.format(i)].pose[:,0] - [0., 0.1, 0.61],
+            "dimensions": [0.03, 0.03, 0.03],
             "rgba": (0.2, 0.2, 0.2, 1.0),
         })
 
@@ -109,7 +109,7 @@ config["include_items"].append({
         "type": "box",
         "is_fixed": True,
         "pos": [0, 0, 0],
-        "dimensions": [2., 2., 0.01],
+        "dimensions": [3., 3., 0.05],
         "rgba": (1.0, 1.0, 1.0, 1.0),
     })
 
