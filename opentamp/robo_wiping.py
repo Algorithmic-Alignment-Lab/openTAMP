@@ -14,7 +14,7 @@ from opentamp.core.util_classes.openrave_body import *
 from opentamp.core.util_classes.transform_utils import *
 from pma.hl_solver import *
 from pma.pr_graph import *
-from pma.robosuite_solver import RobotSolver
+from pma.robosuite_solver import RobotSolverOSQP
 from sco_py.expr import *
 
 
@@ -166,7 +166,7 @@ goal += ")"
 # exit()
 
 # Instantiate the solver.
-solver = RobotSolver()
+solver = RobotSolverOSQP()
 # Run planning to obtain a final plan.
 plan, descr = p_mod_abs(
     hls, solver, domain, problem, goal=goal, debug=True, n_resamples=10
