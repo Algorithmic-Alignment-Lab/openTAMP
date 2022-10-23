@@ -1524,3 +1524,19 @@ print(right_dom_str)
 f = open(opentamp.__path__._path[0]+'/domains/robot_manipulation_domain/right_desk.domain', 'w')
 f.write(right_dom_str)
 
+
+actions = [MoveToGraspRight(), LiftRight(), StackRight()]
+right_dom_str = dom_str
+for action in actions:
+    right_dom_str += '\n\n'
+    print(action.name)
+    right_dom_str += action.to_str()
+# removes all the extra spaces
+right_dom_str = right_dom_str.replace('            ', '')
+right_dom_str = right_dom_str.replace('    ', '')
+right_dom_str = right_dom_str.replace('    ', '')
+print(right_dom_str)
+f = open(opentamp.__path__._path[0]+'/domains/robot_manipulation_domain/right_stack.domain', 'w')
+f.write(right_dom_str)
+
+

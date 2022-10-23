@@ -15,13 +15,18 @@ from opentamp.core.parsing import parse_domain_config, parse_problem_config
 from opentamp.core.util_classes.openrave_body import *
 from opentamp.core.util_classes.transform_utils import *
 from opentamp.core.util_classes.viewer import PyBulletViewer
-from opentamp.pma import backtrack_ll_solver_gurobi as bt_ll
 from opentamp.pma.hl_solver import *
 from opentamp.pma.pr_graph import *
-from opentamp.pma.robot_solver import RobotSolverGurobi
 from sco_py.expr import *
 import random
 
+USE_OSQP = True
+if USE_OSQP:
+    from opentamp.pma import backtrack_ll_solver_OSQP as bt_ll
+    from opentamp.pma.robot_solver import RobotSolverOSQP as RobotSolver
+else:
+    from opentamp.pma import backtrack_ll_solver_gurobi as bt_ll
+    from opentamp.pma.robot_solver import RobotSolverGurobi as RobotSolver
 
 bt_ll.DEBUG = True
 
@@ -32,18 +37,18 @@ const.NEAR_RETREAT_COEFF = 8e-3
 const.NEAR_APPROACH_ROT_COEFF = 1e-3
 const.GRASP_DIST = 0.12
 const.PLACE_DIST = 0.12
-const.APPROACH_DIST = 0.01 
-const.RETREAT_DIST = 0.01
-const.EEREACHABLE_COEFF = 3e-1
+const.APPROACH_DIST = 0.02
+const.RETREAT_DIST = 0.02
+const.EEREACHABLE_COEFF = 2e-2
 const.EEREACHABLE_ROT_COEFF = 1e-2
-const.EEREACHABLE_STEPS = 5
-const.EEATXY_COEFF = 5e-2
+const.EEREACHABLE_STEPS = 4
+const.EEATXY_COEFF = 2e-2
 const.RCOLLIDES_COEFF = 2e-2
 const.OBSTRUCTS_COEFF = 2.5e-2
 
 bt_ll.INIT_TRAJ_COEFF = 3e-1
 bt_ll.TRAJOPT_COEFF = 1e3
-bt_ll.RS_COEFF = 1e2
+bt_ll.RS_COEFF = 1e3
 bt_ll.OSQP_MAX_ITER = int(4e03)
 bt_ll.INIT_TRUST_REGION_SIZE = 1e1
 
@@ -55,7 +60,7 @@ domain = parse_domain_config.ParseDomainConfig.parse(d_c)
 hls = FDSolver(d_c, cleanup_files=False)
 p_c = main.parse_file_to_dict(prob)
 visual = True
-solver = RobotSolverGurobi()
+solver = RobotSolver()
 problem = parse_problem_config.ParseProblemConfig.parse(p_c, domain, None, use_tf=True, sess=None, visual=visual)
 params = problem.init_state.params
 
