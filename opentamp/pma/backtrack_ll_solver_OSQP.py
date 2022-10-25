@@ -125,14 +125,11 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
         return True
 
     def backtrack_solve(self, plan, callback=None, verbose=False, n_resamples=5):
-        # plan.save_free_attrs()
         success = self._backtrack_solve(
             plan, callback, anum=0, verbose=verbose, n_resamples=n_resamples, 
         )
-        # plan.restore_free_attrs()
         return success
 
-    # @profile
     def _backtrack_solve(
         self,
         plan,
