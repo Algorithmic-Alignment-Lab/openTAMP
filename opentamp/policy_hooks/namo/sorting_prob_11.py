@@ -8,6 +8,7 @@ import numpy as np
 import random
 import time
 
+import opentamp
 from opentamp.core.internal_repr.plan import Plan
 from opentamp.core.util_classes.namo_predicates import dsafe
 from opentamp.core.util_classes.openrave_body import *
@@ -28,7 +29,7 @@ FIX_TARGETS = True
 CONST_TARGETS = False
 CONST_ORDER = False
 
-domain_file = "../domains/namo_domain/namo_current_holgrip.domain"
+domain_file = opentamp.__path__._path[0] + "/domains/namo_domain/namo_current_holgrip.domain"
 mapping_file = "policy_hooks/namo/grip_task_mapping"
 
 descriptor = 'namo_{0}_obj_sort_closet_{1}_perturb_{2}_feedback_to_tree_{3}'.format(NUM_OBJS, SORT_CLOSET, USE_PERTURB, OPT_MCTS_FEEDBACK)
@@ -72,8 +73,8 @@ for i in range(len(possible_can_locs)):
 
 def prob_file(descr=None):
     if descr is None:
-        descr = 'grip_prob_{0}_{1}end_{2}aux_{3}human'.format(NUM_OBJS, len(END_TARGETS), n_aux, N_HUMAN)
-    return "../domains/namo_domain/namo_probs/{0}.prob".format(descr)
+        descr = 'grip_prob_{0}_{1}end_{2}aux'.format(NUM_OBJS, len(END_TARGETS), n_aux)
+    return opentamp.__path__._path[0] + "/domains/namo_domain/namo_probs/{0}.prob".format(descr)
 
 
 def get_prim_choices(task_list=None):
@@ -122,6 +123,7 @@ def get_random_initial_state_vec(config, plans, dX, state_inds, conditions):
 # Information is track by the environment
     x0s = []
     targ_maps = []
+    conditions = max(1, conditions)
     for i in range(conditions):
         x0 = np.zeros((dX,))
 

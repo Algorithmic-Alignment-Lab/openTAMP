@@ -37,6 +37,9 @@ def spawn_server(cls, hyperparams, load_at_spawn=False):
         new_config, config_mod = load_config(hyperparams['args'])
         new_config.update(hyperparams)
         hyperparams = new_config
+        if 'main' not in hyperparams:
+            hyperparams['main'] = MultiProcessMain(hyperparams)
+
         hyperparams['main'].init(hyperparams)
         hyperparams['policy_opt']['share_buffer'] = True
         hyperparams['policy_opt']['buffers'] = hyperparams['buffers']
@@ -66,7 +69,7 @@ class MultiProcessMain(object):
         if load_at_spawn:
             task_file = config.get('task_map_file', '')
             self.pol_list = ('control',) if not config['args'].split_nets else tuple(get_tasks(task_file).keys())
-            config['main'] = self
+            # config['main'] = self
 
         else:
             task_file = config.get('task_map_file', '')
@@ -291,20 +294,20 @@ class MultiProcessMain(object):
 
     def start_servers(self):
         n_proc = len(self.processes)
+        processes = self.processes
+        self.processes = []
         for p_ind in range(n_proc):
             # Guard to prevent passing child processes to child processes,
             # which crashes the code on a mac (and possibly other OSes)
-            processes = self.processes
-            self.processes = []
 
             processes[p_ind].start()
 
-            self.processes = processes
             time.sleep(0.1)
 
         for t in self.threads:
             t.start()
 
+        self.processes = processes
 
     def create_server(self, server_cls, hyperparams, process=True):
         if hyperparams.get('seq', False):

@@ -7,6 +7,7 @@ import os.path
 
 import numpy as np
 
+import opentamp
 import opentamp.policy_hooks.utils.policy_solver_utils as utils
 from opentamp.core.util_classes.namo_grip_predicates import ATTRMAP
 from opentamp.pma.namo_grip_solver import NAMOSolverOSQP as NAMOSolver
@@ -14,7 +15,7 @@ from opentamp.policy_hooks.namo.grip_agent import NAMOGripAgent
 import opentamp.policy_hooks.namo.sorting_prob_11 as prob
 from opentamp.policy_hooks.utils.file_utils import LOG_DIR
 
-BASE_DIR = os.getcwd() + '/policy_hooks/'
+BASE_DIR = opentamp.__path__._path[0] +  '/policy_hooks/'
 EXP_DIR = BASE_DIR + 'experiments/'
 
 prob.NUM_OBJS = NUM_OBJS
@@ -42,7 +43,7 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
     prob.N_GRASPS = N_GRASPS
     prob.FIX_TARGETS = True
 
-    prob.domain_file = "../domains/namo_domain/namo_current_holgrip.domain"
+    prob.domain_file = opentamp.__path__._path[0] + "/domains/namo_domain/namo_current_holgrip.domain"
     prob.END_TARGETS = prob.END_TARGETS[:8]
     prob.n_aux = 0
     config = {
