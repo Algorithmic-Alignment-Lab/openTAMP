@@ -69,15 +69,17 @@ class QueuedDataset(TorchDataset):
         self.data_buf.write_data(self.save_dir, self.task, n_data)
 
 
-    def pop_queue(self):
+    def pop_queue(self, max_n=10):
         items = []
-        n = self.in_queue.qsize()
-        for _ in range(n):
+        i = 0
+        while i < max_n and not self.in_queue.empty():
             try:
                 data = self.in_queue.get_nowait()
                 items.append(data)
             except queue.Empty:
                 break
+
+            i += 1
 
         return items
 

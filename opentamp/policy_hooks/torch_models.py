@@ -22,8 +22,8 @@ class TorchNet(nn.Module):
         if type(device) is str: device = torch.device(device)
         self.device = device
 
-        self.conv_layers = []
-        self.fc_layers = []
+        self.conv_layers = nn.ModuleList()
+        self.fc_layers = nn.ModuleList()
 
         self.fc_input_dim = 0
         for sensor in self.config['obs_include']:
@@ -36,12 +36,14 @@ class TorchNet(nn.Module):
             self.output_dim += dim
 
         self._compute_idx()
-        self._build_conv_layers()
-        
-        self.conv_to_fc = config.get('conv_to_fc', 'fp')
-        if self.conv_to_fc is 'fp':
-            self.fp_tensor = None
-            self._build_fp()
+
+        if self.config['build_conv']:
+            self._build_conv_layers()
+            
+            self.conv_to_fc = config.get('conv_to_fc', 'fp')
+            if self.conv_to_fc is 'fp':
+                self.fp_tensor = None
+                self._build_fp()
 
         self._build_fc_layers()
         self._set_nonlin_and_loss()
@@ -164,7 +166,7 @@ class TorchNet(nn.Module):
 
 
     def _build_fp(self):
-        num_fp, num_rows, num_cols = self.conv_output_dim
+        _, num_fp, num_rows, num_cols = self.conv_output_dim
         x_map = np.empty([num_rows, num_cols], np.float32)
         y_map = np.empty([num_rows, num_cols], np.float32)
 
@@ -199,7 +201,7 @@ class TorchNet(nn.Module):
 class PolicyNet(TorchNet):
     def __init__(self, config, scope, device=None):
         self.scope = scope
-        self.normalize = self.config.get('normalize', False)
+        self.normalize = config.get('normalize', False)
         self.scale = None
         self.bias = None
 

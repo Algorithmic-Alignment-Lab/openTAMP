@@ -29,7 +29,7 @@ from opentamp.policy_hooks.utils.load_task_definitions import *
 from opentamp.policy_hooks.utils.policy_solver_utils import *
 from opentamp.policy_hooks.utils.file_utils import *
 import opentamp.policy_hooks.utils.policy_solver_utils as utils
-from opentamp.policy_hooks.utils.file_utils import load_config
+from opentamp.policy_hooks.utils.file_utils import load_config, check_dirs
 
 
 def spawn_server(cls, hyperparams, load_at_spawn=False):
@@ -65,7 +65,6 @@ class MultiProcessMain(object):
         self.monitor = True
         self.cpu_use = []
         self.config = config
-        setup_dirs(config, config['args'])
         if load_at_spawn:
             task_file = config.get('task_map_file', '')
             self.pol_list = ('control',) if not config['args'].split_nets else tuple(get_tasks(task_file).keys())
@@ -77,7 +76,7 @@ class MultiProcessMain(object):
             new_config, config_mod = load_config(config['args'])
             new_config.update(config)
             self.init(new_config)
-            self.check_dirs()
+            check_dirs(self.config)
 
 
     def init(self, config):
@@ -119,38 +118,41 @@ class MultiProcessMain(object):
 
 
     def _set_alg_config(self):
-        if self.config.get('add_hl_image', False):
-            primitive_network_model = fp_multi_modal_discr_network
+    #     if self.config.get('add_hl_image', False):
+    #         primitive_network_model = fp_multi_modal_discr_network
 
-        elif self.config.get('conditional', False):
-            primitive_network_model = tf_cond_classification_network
+    #     elif self.config.get('conditional', False):
+    #         primitive_network_model = tf_cond_classification_network
 
-        elif self.config.get('discrete_prim', True):
-            primitive_network_model = tf_classification_network
+    #     elif self.config.get('discrete_prim', True):
+    #         primitive_network_model = tf_classification_network
 
-        else:
-            primitive_network_model = tf_network
+    #     else:
+    #         primitive_network_model = tf_network
 
-        if self.config.get('add_cont_image', False):
-            cont_network_model = fp_multi_modal_cont_network
+    #     if self.config.get('add_cont_image', False):
+    #         cont_network_model = fp_multi_modal_cont_network
 
-        elif self.config.get('conditional', False):
-            cont_network_model = tf_cond_classification_network
+    #     elif self.config.get('conditional', False):
+    #         cont_network_model = tf_cond_classification_network
 
-        elif self.config.get('discrete_prim', True):
-            cont_network_model = tf_classification_network
+    #     elif self.config.get('discrete_prim', True):
+    #         cont_network_model = tf_classification_network
 
-        else:
-            cont_network_model = tf_network
+    #     else:
+    #         cont_network_model = tf_network
 
-        if self.config.get('add_image', False):
-            network_model = fp_cont_network
+    #     if self.config.get('add_image', False):
+    #         network_model = fp_cont_network
 
-        else:
-            network_model = tf_network
+    #     else:
+    #         network_model = tf_network
 
         sensor_dims = self.config['agent']['sensor_dims']
         obs_image_data = [IM_ENUM, OVERHEAD_IMAGE_ENUM, LEFT_IMAGE_ENUM, RIGHT_IMAGE_ENUM]
+        add_image = self.config.get('add_image', False)
+        add_hl_image = self.config.get('add_hl_image', False)
+
         self.config['policy_opt'] = {
             'll_policy': self.config.get('ll_policy', ''),
             'hl_policy': self.config.get('hl_policy', ''),
@@ -176,7 +178,8 @@ class MultiProcessMain(object):
                 'output_fn': self.config.get('output_fn', None),
                 'loss_fn': self.config.get('loss_fn', 'precision_mse'),
                 'conv_to_fc': 'fp',
-                'normalize': True,
+                'normalize': not add_image,
+                'build_conv': add_image,
             },
 
             'hl_network_params': {
@@ -199,6 +202,7 @@ class MultiProcessMain(object):
                 'loss_fn': self.config.get('loss_fn', 'nll_loss'),
                 'conv_to_fc': 'fp',
                 'normalize': False,
+                'build_conv': add_hl_image,
             },
     
             'cont_network_params': {
@@ -220,15 +224,12 @@ class MultiProcessMain(object):
                 'output_fn': self.config.get('output_fn', None),
                 'loss_fn': self.config.get('loss_fn', 'precision_mse'),
                 'conv_to_fc': 'fp',
-                'normalize': True,
+                'normalize': False,
+                'build_conv': add_hl_image,
             },
 
             'lr': self.config['lr'],
             'hllr': self.config['hllr'],
-
-            'network_model': network_model,
-            'primitive_network_model': primitive_network_model,
-            'cont_network_model': cont_network_model,
 
             'weight_decay': self.config['weight_decay'],
             'prim_weight_decay': self.config['prim_weight_decay'],
@@ -293,6 +294,7 @@ class MultiProcessMain(object):
 
 
     def start_servers(self):
+        setup_dirs(self.config, self.config['args'])
         n_proc = len(self.processes)
         processes = self.processes
         self.processes = []

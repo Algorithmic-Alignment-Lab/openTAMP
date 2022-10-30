@@ -6,6 +6,7 @@ class FastDataLoader:
         self.dataset = dataset
         self.batch_size = batch_size
         self.shuffle = shuffle
+        self.i = 0
 
 
     def __iter__(self):

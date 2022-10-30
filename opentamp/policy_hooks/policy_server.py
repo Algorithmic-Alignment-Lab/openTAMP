@@ -9,6 +9,7 @@ import os, psutil
 
 import torch
 
+from opentamp.policy_hooks.fast_dataloader import FastDataLoader
 from opentamp.policy_hooks.queued_dataset import QueuedDataset
 from opentamp.policy_hooks.utils.file_utils import LOG_DIR
 from opentamp.policy_hooks.utils.policy_solver_utils import *
@@ -19,6 +20,7 @@ UPDATE_TIME = 60
 
 class PolicyServer(object):
     def __init__(self, hyperparams):
+        self.config = hyperparams
         self.group_id = hyperparams['group_id']
         self.task = hyperparams['scope']
         self.task_list = hyperparams['task_list']
@@ -66,12 +68,16 @@ class PolicyServer(object):
         hyperparams['dCont'] = len(hyperparams['cont_bounds'])
         hyperparams['policy_opt']['hl_network_params']['output_boundaries'] = self.discr_bounds
         hyperparams['policy_opt']['cont_network_params']['output_boundaries'] = self.cont_bounds
+        hyperparams['policy_opt']['weight_dir'] = hyperparams['weight_dir']
         self.policy_opt = hyperparams['policy_opt']['type'](hyperparams['policy_opt'])
         self.policy_opt.lr_schedule = hyperparams['lr_schedule']
         self.lr_schedule = hyperparams['lr_schedule']
 
+        self._compute_idx()
+        self._setup_dataloading()
         self.dataset.policy = self.policy_opt.get_policy(self.task)
         self.dataset.data_buf.policy = self.policy_opt.get_policy(self.task)
+        self.policy_opt.data_loader = self.data_gen
 
         self._setup_log_info()
 
@@ -79,27 +85,27 @@ class PolicyServer(object):
     def _compute_idx(self):
         # List of indices for state (vector) data and image (tensor) data in observation.
         self.x_idx, self.img_idx, i = [], [], 0
-        for sensor in self._hyperparams['ll_network_params']['obs_include']:
-            dim = self._hyperparams['ll_network_params']['sensor_dims'][sensor]
-            if sensor in self._hyperparams['ll_network_params'].get('obs_image_data', []):
+        for sensor in self.config['policy_opt']['ll_network_params']['obs_include']:
+            dim = self.config['policy_opt']['ll_network_params']['sensor_dims'][sensor]
+            if sensor in self.config['policy_opt']['ll_network_params'].get('obs_image_data', []):
                 self.img_idx = self.img_idx + list(range(i, i+dim))
             else:
                 self.x_idx = self.x_idx + list(range(i, i+dim))
             i += dim
 
         self.prim_x_idx, self.prim_img_idx, i = [], [], 0
-        for sensor in self._hyperparams['hl_network_params']['obs_include']:
-            dim = self._hyperparams['hl_network_params']['sensor_dims'][sensor]
-            if sensor in self._hyperparams['hl_network_params'].get('obs_image_data', []):
+        for sensor in self.config['policy_opt']['hl_network_params']['obs_include']:
+            dim = self.config['policy_opt']['hl_network_params']['sensor_dims'][sensor]
+            if sensor in self.config['policy_opt']['hl_network_params'].get('obs_image_data', []):
                 self.prim_img_idx = self.prim_img_idx + list(range(i, i+dim))
             else:
                 self.prim_x_idx = self.prim_x_idx + list(range(i, i+dim))
             i += dim
 
         self.cont_x_idx, self.cont_img_idx, i = [], [], 0
-        for sensor in self._hyperparams['cont_network_params']['obs_include']:
-            dim = self._hyperparams['cont_network_params']['sensor_dims'][sensor]
-            if sensor in self._hyperparams['cont_network_params'].get('obs_image_data', []):
+        for sensor in self.config['policy_opt']['cont_network_params']['obs_include']:
+            dim = self.config['policy_opt']['cont_network_params']['sensor_dims'][sensor]
+            if sensor in self.config['policy_opt']['cont_network_params'].get('obs_image_data', []):
                 self.cont_img_idx = self.cont_img_idx + list(range(i, i+dim))
             else:
                 self.cont_x_idx = self.cont_x_idx + list(range(i, i+dim))
@@ -107,7 +113,7 @@ class PolicyServer(object):
 
 
     def _setup_dataloading(self):
-        x_idx = self.x_dix
+        x_idx = self.x_idx
         if self.task == 'primitive':
             x_idx = self.prim_x_idx
         elif self.task == 'cont':
@@ -221,17 +227,17 @@ class PolicyServer(object):
         while not self.stopped:
             self.iters += 1
             init_t = time.time()
-            self.data_gen.load_data()
+            self.dataset.load_data()
             #if self.task == 'primitive': print('\nTime to get update:', time.time() - init_t, '\n')
             self.policy_opt.update(self.task)
             #if self.task == 'primitive': print('\nTime to run update:', time.time() - init_t, '\n')
             self.n_updates += 1
-            mu, obs, prc = self.data_gen.get_batch()
+            mu, obs, prc = self.dataset.get_batch()
             if len(mu):
                 losses = self.policy_opt.check_validation(mu, obs, prc, task=self.task)
                 self.train_losses['all'].append(losses[0])
                 self.train_losses['aux'].append(losses)
-            mu, obs, prc = self.data_gen.get_batch(val=True)
+            mu, obs, prc = self.dataset.get_batch(val=True)
             if len(mu): 
                 losses = self.policy_opt.check_validation(mu, obs, prc, task=self.task)
                 self.val_losses['all'].append(losses[0])
@@ -249,22 +255,22 @@ class PolicyServer(object):
                     self.policy_opt.cur_dec = min(self.policy_opt.cur_dec, 1e-1)
 
             for lab in ['optimal', 'rollout']:
-                mu, obs, prc = self.data_gen.get_batch(label=lab, val=True)
+                mu, obs, prc = self.dataset.get_batch(label=lab, val=True)
                 if len(mu): self.val_losses[lab].append(self.policy_opt.check_validation(mu, obs, prc, task=self.task)[0])
 
             if not self.iters % write_freq:
                 self.policy_opt.write_shared_weights([self.task])
                 if len(self.continuous_opts) and self.task not in ['cont', 'primitive', 'label']:
                     self.policy_opt.read_shared_weights(['cont'])
-                    self.data_gen.feed_in_policy = self.policy_opt.cont_policy
+                    self.dataset.feed_in_policy = self.policy_opt.cont_policy
 
-                n_train = self.data_gen.get_size()
-                n_val = self.data_gen.get_size(val=True)
+                n_train = self.dataset.get_size()
+                n_val = self.dataset.get_size(val=True)
                 print('Ran', self.iters, 'updates on', self.task, 'with', n_train, 'train and', n_val, 'val')
 
             if self.config['save_data']:
                 if not self.iters % write_freq and self.task in ['cont', 'primitive']:
-                    self.data_gen.write_data(n_data=1024)
+                    self.dataset.write_data(n_data=1024)
 
             if not self.iters % write_freq and len(self.val_losses['all']):
                 with open(self.policy_opt_log, 'a+') as f:
@@ -301,16 +307,16 @@ class PolicyServer(object):
                 }
 
         info['memory'] = psutil.Process(os.getpid()).memory_info().rss / 1024 ** 2
-        info['in_queue_size'] = self.in_queue.qsize()
+        # info['in_queue_size'] = self.in_queue.qsize()
 
-        for key in self.data_gen.data_buf.lens:
-            info['n_train_{}'.format(key)] = self.data_gen.data_buf.lens[key]
+        for key in self.dataset.data_buf.lens:
+            info['n_train_{}'.format(key)] = self.dataset.data_buf.lens[key]
 
         for key in self.policy_opt.buf_sizes:
             if key.find('n_') >= 0:
                  info[key] = self.policy_opt.buf_sizes[key].value
 
-        info['labels'] = list(self.data_gen.data_buf.lens.keys())
+        info['labels'] = list(self.dataset.data_buf.lens.keys())
         if len(self.val_losses['rollout']):
             info['rollout_val_loss'] = np.mean(self.val_losses['rollout'][-10:]),
             info['rollout_val_component_loss'] = np.mean(self.val_losses['rollout'][-10:], axis=0),

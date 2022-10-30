@@ -7,6 +7,7 @@ import queue
 import random
 import sys
 import time
+import torch
 
 from PIL import Image
 import pybullet as P
@@ -161,9 +162,9 @@ class Server(object):
         config = hyperparams['policy_opt']
         opt_cls = config['type']
         config['gpu_id'] = np.random.randint(1,3)
-        config['use_gpu'] = True
+        config['use_gpu'] = torch.cuda.is_available()
         config['weight_dir'] = hyperparams['weight_dir']
-        self.policy_opt = opt_cls(config['policy_opt'])
+        self.policy_opt = opt_cls(config)
         self.weights_to_store = {}
 
 

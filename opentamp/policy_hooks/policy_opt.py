@@ -21,21 +21,21 @@ MODEL_DIR = 'saved_models/'
 class TorchPolicyOpt():
     def __init__(self, hyperparams):
         self.config = hyperparams
-        self.scope = hyperparams.get('scope', None)
-        self.split_nets = hyperparams.get('split_nets', False)
-        self.task_list = list(config['task_list'])
-        self.valid_scopes = ['control'] if not self.split_nets else list(config['task_list'])
+        self.scope = self.config.get('scope', None)
+        self.split_nets = self.config.get('split_nets', False)
+        self.task_list = list(self.config['task_list'])
+        self.valid_scopes = ['control'] if not self.split_nets else list(self.config['task_list'])
         self.torch_iter = 0
-        self.batch_size = self._hyperparams['batch_size']
-        self.load_all = self._hyperparams.get('load_all', False)
-        self.share_buffers = self._hyperparams.get('share_buffer', True)
-        if self._hyperparams.get('share_buffer', True):
-            self.buffers = self._hyperparams['buffers']
-            self.buf_sizes = self._hyperparams['buffer_sizes']
+        self.batch_size = self.config['batch_size']
+        self.load_all = self.config.get('load_all', False)
+        self.share_buffers = self.config.get('share_buffer', True)
+        if self.config.get('share_buffer', True):
+            self.buffers = self.config['buffers']
+            self.buf_sizes = self.config['buffer_sizes']
 
         self._primBounds = hyperparams.get('prim_bounds', [(0,0)])
         self._contBounds = hyperparams.get('cont_bounds', [(0,0)])
-        self._dCtrl = hyperparams.get.get('dU')
+        self._dCtrl = hyperparams.get('dU')
         self._dPrim = max([b[1] for b in self._primBounds])
         self._dCont = max([b[1] for b in self._contBounds])
         self._dO = hyperparams.get('dO', None)
@@ -43,26 +43,26 @@ class TorchPolicyOpt():
         self._dContObs = hyperparams.get('dContObs', None)
 
         self.device = torch.device('cpu')
-        if self._hyperparams['use_gpu'] == 1:
-            gpu_id = self._hyperparams['gpu_id']
+        if self.config['use_gpu'] and torch.cuda.is_available():
+            gpu_id = self.config['gpu_id']
             self.device = torch.device('cuda:{}'.format(gpu_id))
-        self.gpu_fraction = self._hyperparams['gpu_fraction']
-        torch.cuda.set_per_process_memory_fraction(self.gpu_fraction, device=self.device)
+            self.gpu_fraction = self.config['gpu_fraction']
+            torch.cuda.set_per_process_memory_fraction(self.gpu_fraction, device=self.device)
+
         self.init_networks()
         self.init_solvers()
-        self.init_policies()
         self._load_scopes()
 
-        self.weight_dir = self._hyperparams['weight_dir']
+        self.weight_dir = self.config['weight_dir']
         self.last_pkl_t = time.time()
         self.cur_pkl = 0
         self.update_count = 0
         if self.scope in ['primitive', 'cont']:
-            self.update_size = self._hyperparams['prim_update_size']
+            self.update_size = self.config['prim_update_size']
         else:
-            self.update_size = self._hyperparams['update_size']
+            self.update_size = self.config['update_size']
 
-        #self.update_size *= (1 + self._hyperparams.get('permute_hl', 0))
+        #self.update_size *= (1 + self.config.get('permute_hl', 0))
 
         self.train_iters = 0
         self.average_losses = []
@@ -72,7 +72,7 @@ class TorchPolicyOpt():
         self.n_updates = 0
         self.lr_scale = 0.9975
         self.lr_policy = 'fixed'
-        self._hyperparams['iterations'] = MAX_UPDATE_SIZE // self.batch_size + 1
+        self.config['iterations'] = MAX_UPDATE_SIZE // self.batch_size + 1
 
     
     def _load_scopes(self):
@@ -90,9 +90,9 @@ class TorchPolicyOpt():
 
 
     def _set_opt(self, task):
-        opt_cls = self._hyperparams.get('opt_cls', optim.Adam)
+        opt_cls = self.config.get('opt_cls', optim.Adam)
         if type(opt_cls) is str: opt_cls = getattr(optim, opt_cls)
-        lr = self._hyperparams.get('lr', 1e-3)
+        lr = self.config.get('lr', 1e-3)
         self.opts[task] = opt_cls(self.nets[task].parameters(), lr=lr) 
 
 
@@ -125,12 +125,12 @@ class TorchPolicyOpt():
     def update(self, task="control", check_val=False, aux=[]):
         start_t = time.time()
         average_loss = 0
-        for i in range(self._hyperparams['iterations']):
-            x, y, precision = self.data_loader.next()
+        for i in range(self.config['iterations']):
+            x, y, precision = next(self.data_loader)
             train_loss = self.train_step(x, y, precision)
             average_loss += train_loss
             self.tf_iter += 1
-        self.average_losses.append(average_loss / self._hyperparams['iterations'])
+        self.average_losses.append(average_loss / self.config['iterations'])
 
 
     def restore_ckpts(self, label=None):
@@ -262,11 +262,11 @@ class TorchPolicyOpt():
             self.cur_hllr *= self.lr_scale
 
     def select_dims(self, scope):
-        dO = self.dO
+        dO = self._dO
         if scope == 'primitive':
-            dO = self.dPrimObs
+            dO = self._dPrimObs
         if scope == 'cont':
-            dO = self.dContObs
+            dO = self._dContObs
 
         dU = self._dCtrl
         if scope == 'primitive':
@@ -278,11 +278,11 @@ class TorchPolicyOpt():
 
 
     def _init_network(self, scope):
-        config = self._hyperparams['ll_network_params']
+        config = self.config['ll_network_params']
         if 'primitive' == scope:
-            config = self._hyperparams['hl_network_params']
+            config = self.config['hl_network_params']
         elif 'cont' == scope:
-            config = self._hyperparams['cont_network_params']
+            config = self.config['cont_network_params']
 
         dO, dU = self.select_dims(scope)
         config['dim_input'] = dO
@@ -295,7 +295,7 @@ class TorchPolicyOpt():
     def init_networks(self):
         """ Helper method to initialize the tf networks used """
         self.nets = {}
-        scopes = self.valid_scopes if (self.scope is None or self.load_all) else [self.scope]
+        scopes = self.valid_scopes + SCOPE_LIST if (self.scope is None or self.load_all) else [self.scope]
         for scope in scopes:
             self._init_network(scope)
                 
@@ -306,10 +306,10 @@ class TorchPolicyOpt():
     def init_solvers(self):
         """ Helper method to initialize the solver. """
         self.opts = {}
-        self.cur_dec = self._hyperparams['weight_decay']
-        scopes = self.scopes if self.scope is None else [self.scope]
+        self.cur_dec = self.config['weight_decay']
+        scopes = self.valid_scopes + SCOPE_LIST if self.scope is None else [self.scope]
         for scope in scopes:
-            self._set_opt(self.config, scope)
+            self._set_opt(scope)
 
 
     def get_policy(self, task):
