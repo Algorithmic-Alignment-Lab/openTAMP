@@ -187,104 +187,105 @@ class RolloutServer(Server):
         elif self.policy_opt.share_buffers:
             self.policy_opt.read_shared_weights()
 
-        init_t = time.time()
-        self.agent.debug = False
-        prim_opts = self.agent.prob.get_prim_choices(self.agent.task_list)
-        n_targs = list(range(len(prim_opts[OBJ_ENUM])))
-        res = []
-        ns = [self.config['num_targs']]
-        if self.config['curric_thresh'] > 0:
-            ns = list(range(1, self.config['num_targs']+1))
-        n = np.random.choice(ns)
-        s = []
-        x0 = self.agent.x0[0]
-        targets = self.agent.target_vecs[0].copy()
-        for t in range(n, n_targs[-1]):
-            obj_name = prim_opts[OBJ_ENUM][t]
-            targ_name = '{0}_end_target'.format(obj_name)
-            if (targ_name, 'value') in self.agent.target_inds:
-                targets[self.agent.target_inds[targ_name, 'value']] = x0[self.agent.state_inds[obj_name, 'pose']]
+        if self.agent.policies_initialized():
+            init_t = time.time()
+            self.agent.debug = False
+            prim_opts = self.agent.prob.get_prim_choices(self.agent.task_list)
+            n_targs = list(range(len(prim_opts[OBJ_ENUM])))
+            res = []
+            ns = [self.config['num_targs']]
+            if self.config['curric_thresh'] > 0:
+                ns = list(range(1, self.config['num_targs']+1))
+            n = np.random.choice(ns)
+            s = []
+            x0 = self.agent.x0[0]
+            targets = self.agent.target_vecs[0].copy()
+            for t in range(n, n_targs[-1]):
+                obj_name = prim_opts[OBJ_ENUM][t]
+                targ_name = '{0}_end_target'.format(obj_name)
+                if (targ_name, 'value') in self.agent.target_inds:
+                    targets[self.agent.target_inds[targ_name, 'value']] = x0[self.agent.state_inds[obj_name, 'pose']]
 
-        if rlen is None: rlen = self.agent.rlen
-        hor = self.agent.hor
-        nt = 500 # rlen * hor
+            if rlen is None: rlen = self.agent.rlen
+            hor = self.agent.hor
+            nt = 500 # rlen * hor
 
-        goal = self.agent.goal(0, targets)
-        val, path = self.test_run(x0, targets, 20, hl=True, soft=self.config['soft_eval'], eta=eta, lab=-5, hor=25)
-        if goal not in self.suc_per_goal:
-            self.suc_per_goal[goal] = []
-        self.suc_per_goal[goal].append(val)
+            goal = self.agent.goal(0, targets)
+            val, path = self.test_run(x0, targets, 20, hl=True, soft=self.config['soft_eval'], eta=eta, lab=-5, hor=25)
+            if goal not in self.suc_per_goal:
+                self.suc_per_goal[goal] = []
+            self.suc_per_goal[goal].append(val)
 
-        adj_val = val
-        #if not self.adj_eta:
-        #    self.adj_eta = True
-        #    adj_val, adj_path = self.test_run(x0, targets, rlen, hl=True, soft=True, eta=eta, lab=-10)
-        #    self.adj_eta = False
-        end_state = path[-1].end_state
-        true_disp = self.agent.distance_to_goal(end_state, targets) #np.min(np.min([[self.agent.goal_f(0, step.get(STATE_ENUM, t), targets, cont=True) for t in range(step.T)] for step in path]))
-        true_val = np.max(np.max([[1-self.agent.goal_f(0, step.get(STATE_ENUM, t), targets) for t in range(step.T)] for step in path]))
-        subgoal_suc = 1-self.agent.goal_f(0, np.concatenate([s.get(STATE_ENUM) for s in path]), targets)
-        anygoal_suc = 1-self.agent.goal_f(0, np.concatenate([s.get(STATE_ENUM) for s in path]), targets, anywhere=True)
-        subgoal_dist = self.agent.goal_f(0, np.concatenate([s.get(STATE_ENUM) for s in path]), targets, cont=True)
-        ncols = 1. if len(path) >1 and any([len(np.where(sample.col_ts > 0.99)[0]) > 3 for sample in path[:-1]]) else 0. # np.max([np.max(sample.col_ts) for sample in path])
-        plan_suc_rate = np.nan if self.agent.n_plans_run == 0 else float(self.agent.n_plans_suc_run) / float(self.agent.n_plans_run)
-        n_plans = self._hyperparams['policy_opt']['buffer_sizes']['n_plans'].value
-        rew = self.agent.reward()
-        ret = (self.agent._ret + rew * (nt - np.sum([s.T for s in path]))) #/ nt
+            adj_val = val
+            #if not self.adj_eta:
+            #    self.adj_eta = True
+            #    adj_val, adj_path = self.test_run(x0, targets, rlen, hl=True, soft=True, eta=eta, lab=-10)
+            #    self.adj_eta = False
+            end_state = path[-1].end_state
+            true_disp = self.agent.distance_to_goal(end_state, targets) #np.min(np.min([[self.agent.goal_f(0, step.get(STATE_ENUM, t), targets, cont=True) for t in range(step.T)] for step in path]))
+            true_val = np.max(np.max([[1-self.agent.goal_f(0, step.get(STATE_ENUM, t), targets) for t in range(step.T)] for step in path]))
+            subgoal_suc = 1-self.agent.goal_f(0, np.concatenate([s.get(STATE_ENUM) for s in path]), targets)
+            anygoal_suc = 1-self.agent.goal_f(0, np.concatenate([s.get(STATE_ENUM) for s in path]), targets, anywhere=True)
+            subgoal_dist = self.agent.goal_f(0, np.concatenate([s.get(STATE_ENUM) for s in path]), targets, cont=True)
+            ncols = 1. if len(path) >1 and any([len(np.where(sample.col_ts > 0.99)[0]) > 3 for sample in path[:-1]]) else 0. # np.max([np.max(sample.col_ts) for sample in path])
+            plan_suc_rate = np.nan if self.agent.n_plans_run == 0 else float(self.agent.n_plans_suc_run) / float(self.agent.n_plans_run)
+            n_plans = self._hyperparams['policy_opt']['buffer_sizes']['n_plans'].value
+            rew = self.agent.reward()
+            ret = (self.agent._ret + rew * (nt - np.sum([s.T for s in path]))) #/ nt
 
-        s.append((val,
-                  len(path), \
-                  true_disp, \
-                  time.time()-self.start_t, \
-                  self.config['num_objs'], \
-                  true_disp, \
-                  self.policy_opt.buf_sizes['n_data'].value, \
-                  true_val, \
-                  ncols, \
-                  plan_suc_rate, \
-                  n_plans,
-                  subgoal_suc,
-                  subgoal_dist,
-                  anygoal_suc,
-                  time.time()-init_t,
-                  n_plans/(time.time()-self.start_t)))
-        if len(self.postcond_info):
-            s[0] = s[0] + (np.mean(self.postcond_info[-5:]),)
-        else:
-            s[0] = s[0] + (0,)
-        s[0] = s[0] + (adj_val,)
-        s[0] = s[0] + (ret,)
-        s[0] = s[0] + (rew,)
-        #s[0] = s[0] + (-np.log(rew+1e-8),)
-        if ckpt_ind is not None:
-            s[0] = s[0] + (ckpt_ind,)
-        res.append(s[0])
-        if save:
-            if all([s.opt_strength == 0 for s in path]): self.hl_data.append(res)
-            if val > 1-1e-2:
-                print('-----> SUCCESS! Rollout succeeded in test!', goal, self.id)
-            # if self.use_qfunc: self.log_td_error(path)
-            np.save(self.hl_test_log.format('', 'rerun_' if ckpt_ind is not None else ''), np.array(self.hl_data))
+            s.append((val,
+                      len(path), \
+                      true_disp, \
+                      time.time()-self.start_t, \
+                      self.config['num_objs'], \
+                      true_disp, \
+                      self.policy_opt.buf_sizes['n_data'].value, \
+                      true_val, \
+                      ncols, \
+                      plan_suc_rate, \
+                      n_plans,
+                      subgoal_suc,
+                      subgoal_dist,
+                      anygoal_suc,
+                      time.time()-init_t,
+                      n_plans/(time.time()-self.start_t)))
+            if len(self.postcond_info):
+                s[0] = s[0] + (np.mean(self.postcond_info[-5:]),)
+            else:
+                s[0] = s[0] + (0,)
+            s[0] = s[0] + (adj_val,)
+            s[0] = s[0] + (ret,)
+            s[0] = s[0] + (rew,)
+            #s[0] = s[0] + (-np.log(rew+1e-8),)
+            if ckpt_ind is not None:
+                s[0] = s[0] + (ckpt_ind,)
+            res.append(s[0])
+            if save:
+                if all([s.opt_strength == 0 for s in path]): self.hl_data.append(res)
+                if val > 1-1e-2:
+                    print('-----> SUCCESS! Rollout succeeded in test!', goal, self.id)
+                # if self.use_qfunc: self.log_td_error(path)
+                np.save(self.hl_test_log.format('', 'rerun_' if ckpt_ind is not None else ''), np.array(self.hl_data))
 
-        if val < 1:
-            fail_pt = {'time': time.time() - self.start_t,
-                        'no': self.config['num_objs'],
-                        'nt': self.config['num_targs'],
-                        'N': self.policy_opt.N,
-                        'x0': list(x0),
-                        'targets': list(targets),
-                        'goal': list(path[0].get(ONEHOT_GOAL_ENUM, t=0))}
-            with open(self.fail_data_file, 'a+') as f:
-                f.write(str(fail_pt))
-                f.write('\n')
+            if val < 1:
+                fail_pt = {'time': time.time() - self.start_t,
+                            'no': self.config['num_objs'],
+                            'nt': self.config['num_targs'],
+                            'N': self.policy_opt.N,
+                            'x0': list(x0),
+                            'targets': list(targets),
+                            'goal': list(path[0].get(ONEHOT_GOAL_ENUM, t=0))}
+                with open(self.fail_data_file, 'a+') as f:
+                    f.write(str(fail_pt))
+                    f.write('\n')
 
-        opt_path = None
-        if self.render and save_video:
-            print('Saving video...', val)
-            self.save_video(path, val > 0, lab='_{0}'.format(n_plans))
-            if opt_path is not None: self.save_video(opt_path, val > 0, lab='_mp')
-            print('Saved video. Rollout success was: ', val > 0)
-        self.last_hl_test = time.time()
+            opt_path = None
+            if self.render and save_video:
+                print('Saving video...', val)
+                self.save_video(path, val > 0, lab='_{0}'.format(n_plans))
+                if opt_path is not None: self.save_video(opt_path, val > 0, lab='_mp')
+                print('Saved video. Rollout success was: ', val > 0)
+            self.last_hl_test = time.time()
         self.agent._eval_mode = False
         self.agent.debug = True
         return val, path
@@ -321,16 +322,16 @@ class RolloutServer(Server):
             self.send_rollout(node)
 
 
-            for task in self.alg_map:
+            for task in self.agent.task_list:
                 data = self.agent.get_opt_samples(task, clear=True)
                 if len(data) and self.ll_rollout_opt:
                     inv_cov = self.agent.get_inv_cov()
-                    self.alg_map[task]._update_policy_no_cost(data, label='rollout')
+                    self.update_policy(data, label='rollout', task=task, inv_cov=inv_cov)
 
             if self.hl_rollout_opt:
                 self.run_hl_update(label='rollout')
-            self.agent.clear_task_paths()
 
+            self.agent.clear_task_paths()
             if len(cont_samples):
                 self.update_cont_network(cont_samples)
 

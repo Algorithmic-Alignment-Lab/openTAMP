@@ -8,6 +8,7 @@ import numpy as np
 import os, psutil
 
 import torch
+from torch.utils.data import DataLoader as TorchDataLoader
 
 from opentamp.policy_hooks.fast_dataloader import FastDataLoader
 from opentamp.policy_hooks.queued_dataset import QueuedDataset
@@ -69,6 +70,10 @@ class PolicyServer(object):
         hyperparams['policy_opt']['hl_network_params']['output_boundaries'] = self.discr_bounds
         hyperparams['policy_opt']['cont_network_params']['output_boundaries'] = self.cont_bounds
         hyperparams['policy_opt']['weight_dir'] = hyperparams['weight_dir']
+        hyperparams['policy_opt']['dPrimObs'] = self.agent.dPrim
+        hyperparams['policy_opt']['dContObs'] = self.agent.dCont
+        hyperparams['policy_opt']['dO'] = self.agent.dO
+
         self.policy_opt = hyperparams['policy_opt']['type'](hyperparams['policy_opt'])
         self.policy_opt.lr_schedule = hyperparams['lr_schedule']
         self.lr_schedule = hyperparams['lr_schedule']
@@ -172,9 +177,7 @@ class PolicyServer(object):
                                      feed_map=self.agent.center_cont, 
                                      save_dir=self.weight_dir+'/samples/')
         
-        self.data_gen = FastDataLoader(self.dataset, 
-                                       batch_size=self.batch_size, 
-                                       shuffle=True)
+        self.data_gen = TorchDataLoader(self.dataset, batch_size=self.batch_size)
 
 
     def _setup_log_info(self):
@@ -227,7 +230,7 @@ class PolicyServer(object):
         while not self.stopped:
             self.iters += 1
             init_t = time.time()
-            self.dataset.load_data()
+            self.dataset.wait_for_data()
             #if self.task == 'primitive': print('\nTime to get update:', time.time() - init_t, '\n')
             self.policy_opt.update(self.task)
             #if self.task == 'primitive': print('\nTime to run update:', time.time() - init_t, '\n')
@@ -237,6 +240,7 @@ class PolicyServer(object):
                 losses = self.policy_opt.check_validation(mu, obs, prc, task=self.task)
                 self.train_losses['all'].append(losses[0])
                 self.train_losses['aux'].append(losses)
+
             mu, obs, prc = self.dataset.get_batch(val=True)
             if len(mu): 
                 losses = self.policy_opt.check_validation(mu, obs, prc, task=self.task)

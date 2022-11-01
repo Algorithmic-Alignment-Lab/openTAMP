@@ -33,14 +33,14 @@ class TorchPolicyOpt():
             self.buffers = self.config['buffers']
             self.buf_sizes = self.config['buffer_sizes']
 
-        self._primBounds = hyperparams.get('prim_bounds', [(0,0)])
-        self._contBounds = hyperparams.get('cont_bounds', [(0,0)])
-        self._dCtrl = hyperparams.get('dU')
-        self._dPrim = max([b[1] for b in self._primBounds])
-        self._dCont = max([b[1] for b in self._contBounds])
-        self._dO = hyperparams.get('dO', None)
-        self._dPrimObs = hyperparams.get('dPrimObs', None)
-        self._dContObs = hyperparams.get('dContObs', None)
+        self._primBounds = self.config['hl_network_params']['output_boundaries']
+        self._contBounds = self.config['cont_network_params']['output_boundaries']
+        self._dCtrl = self.config.get('dU')
+        self._dPrim = max([b[1] for b in self._primBounds]) if len(self._primBounds) else 0
+        self._dCont = max([b[1] for b in self._contBounds]) if len(self._contBounds) else 0
+        self._dO = self.config.get('dO')
+        self._dPrimObs = self.config.get('dPrimObs')
+        self._dContObs = self.config.get('dContObs')
 
         self.device = torch.device('cpu')
         if self.config['use_gpu'] and torch.cuda.is_available():
@@ -125,11 +125,15 @@ class TorchPolicyOpt():
     def update(self, task="control", check_val=False, aux=[]):
         start_t = time.time()
         average_loss = 0
-        for i in range(self.config['iterations']):
-            x, y, precision = next(self.data_loader)
+        for idx, batch in enumerate(self.data_loader):
+            if idx >= self.config['iterations']:
+                break
+
+            x, y, precision = batch
             train_loss = self.train_step(x, y, precision)
             average_loss += train_loss
             self.tf_iter += 1
+
         self.average_losses.append(average_loss / self.config['iterations'])
 
 
@@ -201,10 +205,16 @@ class TorchPolicyOpt():
 
 
     def serialize_weights(self, scopes=None, save=False):
-        if scopes is None: scopes = self.valid_scopes + SCOPE_LIST
-        models = {scope: self.nets[scope].state_dict() for scope in scopes if scope in self.nets}
-        scales = {task: self.nets[scope].scale.tolist() for scope in scopes if task in self.nets}
-        biases = {task: self.nets[scope].bias.tolist() for scope in scopes if task in self.nets}
+        if scopes is None:
+            all_scopes = self.valid_scopes + SCOPE_LIST
+            ctrl_scopes = self.valid_scopes
+        else:
+            all_scopes = scopes
+            ctrl_scopes = [scope for scope in scopes if scope in self.valid_scopes]
+
+        models = {scope: self.nets[scope].state_dict() for scope in all_scopes if scope in self.nets}
+        scales = {scope: self.nets[scope].scale.tolist() for scope in ctrl_scopes if scope in self.nets}
+        biases = {scope: self.nets[scope].bias.tolist() for scope in ctrl_scopes if scope in self.nets}
 
         scales[''] = []
         biases[''] = []
@@ -328,11 +338,17 @@ class TorchPolicyOpt():
         return policy.is_initialized()
 
 
+    def task_distr(self, prim_obs, eta=1.):
+        return self.nets["primitive"].task_distr(prim_obs, bounds=self._primBounds)
+
+    def cont_task(self, prim_obs, eta=1.):
+        return self.nets["cont"].task_distr(prim_obs, bounds=self._contBounds)
+
     def task_acc(self, obs, tgt_mu, prc, piecewise=False, scalar=True):
         acc = []
         task = 'primitive'
         for n in range(len(obs)):
-            distrs = self.nets[task].task_distr(obs[n])
+            distrs = self.nets[task].task_distr(obs[n], bounds=self._primBounds)
             labels = []
             for bound in self._primBounds:
                 labels.append(tgt_mu[n, bound[0]:bound[1]])
@@ -360,7 +376,7 @@ class TorchPolicyOpt():
     def check_task_error(self, obs, mu):
         err = 0.
         for o in obs:
-            distrs = self.nets['primitive'].task_distr(o)
+            distrs = self.nets['primitive'].task_distr(o, bounds=self._primBounds)
             i = 0
             for d in distrs:
                 ind1 = np.argmax(d)

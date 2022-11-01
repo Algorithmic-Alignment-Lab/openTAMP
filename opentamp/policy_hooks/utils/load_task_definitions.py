@@ -3,12 +3,12 @@ import numpy as np
 
 import opentamp.main as main
 from opentamp.core.parsing import parse_domain_config, parse_problem_config
-from opentamp.pma.hl_solver import FFSolver
+from opentamp.pma.hl_solver import FDSolver
 
 
 def get_hl_solver(domain_fname):
     d_c = main.parse_file_to_dict(domain_fname)
-    return FFSolver(d_c)
+    return FDSolver(d_c)
 
 def plan_from_str(ll_plan_str, prob, domain, env, openrave_bodies, params=None, sess=None, use_tf=False, d_c=None, p_c=None):
     '''Convert a plan string (low level) into a plan object.'''
@@ -16,7 +16,7 @@ def plan_from_str(ll_plan_str, prob, domain, env, openrave_bodies, params=None, 
     if d_c is None:
         d_c = main.parse_file_to_dict(domain_fname)
     domain = parse_domain_config.ParseDomainConfig.parse(d_c)
-    hls = FFSolver(d_c)
+    hls = FDSolver(d_c)
     if p_c is None:
         p_c = main.parse_file_to_dict(prob)
     problem = parse_problem_config.ParseProblemConfig.parse(p_c, domain, env, openrave_bodies, reuse_params=params, use_tf=use_tf, sess=sess, visual=False)

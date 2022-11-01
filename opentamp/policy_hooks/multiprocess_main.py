@@ -247,6 +247,9 @@ class MultiProcessMain(object):
             'gpu_fraction': 0.25,
             'allow_growth': True,
             'split_nets': self.config.get('split_nets', False),
+            'dPrimObs': self.agent.dPrim,
+            'dContObs': self.agent.dCont,
+            'dO': self.agent.dO,
         }
 
 
@@ -294,7 +297,6 @@ class MultiProcessMain(object):
 
 
     def start_servers(self):
-        setup_dirs(self.config, self.config['args'])
         n_proc = len(self.processes)
         processes = self.processes
         self.processes = []
@@ -419,6 +421,7 @@ class MultiProcessMain(object):
 
     def start(self, kill_all=False):
         #self.check_dirs()
+        setup_dirs(self.config, self.config['args'])
         if self.config.get('share_buffer', True):
             self.allocate_shared_buffers(self.config)
             self.allocate_queues(self.config)

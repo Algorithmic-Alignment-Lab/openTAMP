@@ -563,10 +563,13 @@ class FDSolver(FFSolver):
             f.write(abs_prob)
 
         output_path = "%sprob.output"%(fprefix)
+        sas_path = "%s_out.sas"%(fprefix)
         log_file = FDSolver.PDDL_DIR+"/fastdownward.log"
         commands = [FDSolver.FD_EXEC, 
                     "--plan-file", 
-                    output_path] + FDSolver.FD_ARGS
+                    output_path,
+                    "--sas-file",
+                    sas_path] + FDSolver.FD_ARGS
 
         pddl_files = ["%sdom.pddl"%(fprefix), 
                       "%sprob.pddl"%(fprefix)]
@@ -600,7 +603,7 @@ class FDSolver(FFSolver):
         if self.cleanup_files: 
             subprocess.call(["rm", "-f", "%sdom.pddl"%fprefix,
                              "%sprob.pddl"%fprefix,
-                             "%sprob.pddl.soln"%fprefix,
+                             sas_path,
                              soln_path])
 
         if PATCH and plan != Plan.IMPOSSIBLE:

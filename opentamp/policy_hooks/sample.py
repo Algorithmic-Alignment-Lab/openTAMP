@@ -140,6 +140,10 @@ class Sample(object):
                     continue
                 data = (self._data[data_type] if t is None
                         else self._data[data_type][t, :])
+
+                if np.any(np.isnan(data)):
+                    print("Nans in ctrl obs for data_type", data_type)
+
                 self.agent.pack_data_obs(obs, data, data_types=[data_type])
         return obs.copy()
 
@@ -154,6 +158,10 @@ class Sample(object):
                     continue
                 data = (self._data[data_type] if t is None
                         else self._data[data_type][t, :])
+
+                if np.any(np.isnan(data)):
+                    print("Nans in prim obs for data_type", data_type)
+                    
                 self.agent.pack_data_prim_obs(obs, data, data_types=[data_type])
         return obs.copy()
 

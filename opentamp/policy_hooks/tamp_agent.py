@@ -720,7 +720,10 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
                     a, 
                     ref_x0, 
                     act_st, 
-                    ref_traj):
+                    ref_traj,
+                    targets,
+                    rollout,
+                    n_resamples):
 
         set_params_attrs(plan.params, 
                          self.state_inds, 
@@ -746,12 +749,12 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
                                                       st=act_st)
 
         except AttributeError as e:
-            print(('Opt Exception in full solve for', x0, task, plan.actions[a]), e, st, plan.actions)
+            print(('Opt Exception in full solve for', ref_x0, task, plan.actions[a]), e, act_st, plan.actions)
             success = False
 
         except Exception as e:
             traceback.print_exception(*sys.exc_info())
-            print(('Exception in full solve for', x0, task, plan.actions[a]), e, st)
+            print(('Exception in full solve for', ref_x0, task, plan.actions[a]), e, act_st)
             success = False
 
         plan.store_free_attrs(old_free)
@@ -879,7 +882,7 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
                 self._x_delta[:] = sample.get(STATE_HIST_ENUM, t=last_t).reshape(self._x_delta.shape)
 
             else:
-                success = self._run_solver(plan, task, a, ref_x0, act_st, ref_traj)
+                success = self._run_solver(plan, task, a, ref_x0, act_st, ref_traj, targets, rollout, n_resamples)
 
                 if not success:
                     self.n_fail_opt[task] = self.n_fail_opt.get(task, 0) + 1
@@ -1333,7 +1336,7 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
 
 
     def get_inv_cov(self):
-        return None
+        return np.eye(self.dU)
 
 
     def get_random_initial_state_vec(self, config, plans, dX, state_inds, n=1):

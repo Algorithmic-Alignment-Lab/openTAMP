@@ -269,7 +269,7 @@ class Server(object):
         policy = self.policy_opt.get_policy(scope)
         assert policy.is_initialized()
 
-        return policy.act(obs, noise)
+        return policy.act(None, obs, noise)
 
 
     def primitive_call(self, prim_obs, soft=False, eta=1., t=-1, task=None):
@@ -283,6 +283,9 @@ class Server(object):
         for ind, d in enumerate(distrs):
             enum = enums[ind]
             if not np.isscalar(opts[enum]):
+                if np.any(np.isnan(d)):
+                    d = np.ones(len(d)) / len(d)
+
                 p = d / np.sum(d)
                 ind = np.random.choice(list(range(len(d))), p=p)
                 d[ind] += 1e2
@@ -369,7 +372,7 @@ class Server(object):
         raise NotImplementedError()
 
 
-    def update_policy(self, optimal_samples, label='optimal', inv_cov=None):
+    def update_policy(self, optimal_samples, label='optimal', inv_cov=None, task=None):
         dU, dO = self.agent.dU, self.agent.dO
         # Compute target mean, cov, and weight for each sample.
         obs_data, tgt_mu = np.zeros((0, dO)), np.zeros((0, dU))
@@ -380,12 +383,13 @@ class Server(object):
         for sample in optimal_samples:
             prc = np.zeros((1, sample.T, dU, dU))
             wt = np.zeros((sample.T,))
-            traj, pol_info = self.new_traj_distr[m], self.cur[m].pol_info
             for t in range(sample.T):
                 if inv_cov is None:
+                    traj = self.new_traj_distr[m]
                     prc[:, t, :, :] = np.tile(traj.inv_pol_covar[0, :, :], [1, 1, 1])
                 else:
                     prc[:, t, :, :] = np.tile(inv_cov, [1, 1, 1])
+
                 wt[t] = sample.use_ts[t] # self._hyperparams['opt_wt'] * sample.use_ts[t]
 
             tgt_mu = np.concatenate((tgt_mu, sample.get_U()), axis=0)
@@ -395,12 +399,15 @@ class Server(object):
             tgt_wt = np.concatenate((tgt_wt, wt), axis=0)
             tgt_prc = np.concatenate((tgt_prc, prc.reshape(-1, dU, dU)), axis=0)
 
+        if task is None:
+            task = self.task
+
         if len(tgt_mu):
             self.update(obs_data, 
                         tgt_mu, 
                         tgt_prc, 
                         tgt_wt, 
-                        self.task, 
+                        task, 
                         label, 
                         primobs=prim_obs_data, 
                         x=x_data,)
@@ -442,7 +449,7 @@ class Server(object):
             tgt_wt = np.concatenate((tgt_wt, wt))
             obs = sample.get_prim_obs()
             if np.any(np.isnan(obs)):
-                print((obs, sample.task, 'SAMPLE'))
+                print("NAN IN OBS PRIM:", obs, sample.task, 'SAMPLE')
             obs_data = np.concatenate((obs_data, obs))
             prc = np.concatenate([self.agent.get_mask(sample, enum) for enum in self.discrete_opts], axis=-1) # np.tile(np.eye(dP), (sample.T,1,1))
             if not self.config['hl_mask']:
@@ -483,7 +490,7 @@ class Server(object):
             tgt_wt = np.concatenate((tgt_wt, wt))
             obs = sample.get_cont_obs()
             if np.any(np.isnan(obs)):
-                print((obs, sample.task, 'SAMPLE'))
+                print("NAN IN OBS CONT:", obs, sample.task, 'SAMPLE')
             obs_data = np.concatenate((obs_data, obs))
             prc = np.tile(np.eye(dP), (sample.T,1,1))
             tgt_prc = np.concatenate((tgt_prc, prc))

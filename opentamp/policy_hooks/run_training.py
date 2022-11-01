@@ -130,6 +130,7 @@ def main():
         old_vars = vars(old_args)
         for key in old_vars:
             if key not in var_args: var_args[key] = old_vars[key]
+
     if args.hl_retrain:
         sys.path.insert(1, LOG_DIR+args.hl_data)
         exps_info = [['hyp']]
@@ -137,13 +138,13 @@ def main():
     config, config_module = load_config(args)
 
     print('\n\n\n\n\n\nLOADING NEXT EXPERIMENT\n\n\n\n\n\n')
-    old_dir = config['weight_dir']
+    old_dir = config['weight_dir_prefix']
     old_file = config['task_map_file']
     config = {'args': args, 
               'task_map_file': old_file}
     config.update(vars(args))
     config['source'] = args.config
-    config['weight_dir'] = old_dir
+    config['weight_dir_prefix'] = old_dir
     current_id = 0
 
     if args.hl_retrain:

@@ -52,6 +52,9 @@ class TorchNet(nn.Module):
 
 
     def forward(self, nn_input):
+        if type(nn_input) is not torch.Tensor:
+            nn_input = torch.Tensor(nn_input)
+
         if len(self.conv_layers):
             nn_input = self.conv_forward(nn_input)
 
@@ -59,10 +62,15 @@ class TorchNet(nn.Module):
         if self.output_fn is not None:
             nn_output = self.output_fn(nn_output)
 
-        return nn_output
+
+        np_output = nn_output.cpu().detach().numpy()
+        return np_output
 
 
     def conv_forward(self, nn_input):
+        if not len(self.conv_layers):
+            return nn_input
+
         n_pts = nn_input.size()[0]
         state_input = nn_input[:, 0:self.x_idx[-1]+1]
         image_input = nn_input[:, self.x_idx[-1]+1:self.img_idx[-1]+1]
@@ -71,9 +79,11 @@ class TorchNet(nn.Module):
         im_width = self.config['image_width']
         num_channels = self.config['image_channels']
         image_input = torch.view(image_input, [-1, im_width, im_height, num_channels])
-        for conv_layer in self.conv_layers:
+        for conv_layer in self.conv_layers[:-1]:
             image_input = conv_layer(image_input)
             image_input = self.act_fn(image_input)
+
+        image_input = conv_layer(image_input)
 
         if self.conv_to_fc is 'fp':
             image_input = self.compute_fp(image_input)
@@ -83,7 +93,7 @@ class TorchNet(nn.Module):
 
 
     def fc_forward(self, nn_input):
-        for fc_layer in self.fc_layers[-1]:
+        for fc_layer in self.fc_layers[:-1]:
             nn_input = fc_layer(nn_input)
             nn_input = self.act_fn(nn_input)
         return self.fc_layers[-1](nn_input)
@@ -208,7 +218,7 @@ class PolicyNet(TorchNet):
         super().__init__(config=config, device=device)
 
 
-    def act(self, obs, noise=None, eta=1.):
+    def act(self, X, obs, t, noise=None, eta=1.):
 
         if self.scope in ['primitive', 'cont']:
             is_cont = self.scope == 'cont'
@@ -233,18 +243,21 @@ class PolicyNet(TorchNet):
         return act.flatten() if flatten else act
 
 
-    def task_distr(self, obs, eta=1., cont=False):
+    def task_distr(self, obs, bounds, eta=1., cont=False):
         if len(obs.shape) < 2:
             flatten = True
             obs = obs.reshape(1, -1)
 
         vals = self.forward(obs)
-
         res = []
-        for bound in self._contBounds:
-            res.append(vals[:, bound[0]:bound[1]])
+        for bound in bounds:
+            next_val = vals[:, bound[0]:bound[1]]
+            if flatten:
+                next_val = next_val.flatten()
 
-        return res.flatten() if flatten else res
+            res.append(next_val)
+
+        return res
 
 
     def is_initialized(self):

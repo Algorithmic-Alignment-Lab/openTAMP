@@ -134,9 +134,7 @@ class QueuedDataset(TorchDataset):
 
     def gen_items(self, label=None, val=False):
         while True:
-            while self.wait_for_data():
-                time.sleep(0.001)
-            
+            self.wait_for_data()
             yield self.get_batch()
 
 
@@ -150,9 +148,15 @@ class QueuedDataset(TorchDataset):
 
 
     def wait_for_data(self):
+        while self.should_wait_for_data():
+            time.sleep(0.001)
+
+
+    def should_wait_for_data(self):
         cur_n = self.data_buf.get_size()
         if cur_n < self.data_buf.min_buffer:
             self.load_data()
+            
         return cur_n < self.data_buf.min_buffer
 
 

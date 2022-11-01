@@ -1,3 +1,4 @@
+import time
 import torch
 
 
@@ -16,8 +17,11 @@ class FastDataLoader:
 
 
     def __next__(self):
+        self.dataset.wait_for_data()
+
         if self.i >= len(self.dataset) // self.batch_size:
-            raise StopIteration
+            # raise StopIteration
+            self.i = 0
 
         batch = self.dataset.get_batch(slice(self.i, self.i+self.batch_size))
         self.i += self.batch_size

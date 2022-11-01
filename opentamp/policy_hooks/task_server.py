@@ -27,13 +27,10 @@ class TaskServer(Server):
         self.in_queue = self.task_queue
         self.out_queue = self.motion_queue
         self.prob_queue = []
-        self.labelled_dir = self._hyperparams.get('reference_dir', None) + '/'
         self.max_labels = self._hyperparams.get('max_label', -1)
 
 
     def run(self):
-        if self.labelled_dir is not None:
-            self.load_labelled_state()
         while not self.stopped:
             self.find_task_plan()
             time.sleep(0.01)

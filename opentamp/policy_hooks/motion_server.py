@@ -227,16 +227,16 @@ class MotionServer(Server):
             self.refine_plan(node)
 
             inv_cov = self.agent.get_inv_cov()
-            for task in self.alg_map:
+            for task in self.agent.task_list:
                 data = self.agent.get_opt_samples(task, clear=True)
                 opt_samples = [sample for sample in data if not len(sample.source_label) or sample.source_label.find('opt') >= 0]
                 expl_samples = [sample for sample in data if len(sample.source_label) and sample.source_label.find('opt') < 0]
 
                 if len(opt_samples):
-                    self.update_policy(opt_samples, label='optimal', inv_cov=inv_cov)
+                    self.update_policy(opt_samples, label='optimal', inv_cov=inv_cov, task=task)
 
                 if len(expl_samples):
-                    self.update_policy(expl_samples, label='dagger', inv_cov=inv_cov)
+                    self.update_policy(expl_samples, label='dagger', inv_cov=inv_cov, task=task)
 
             self.run_hl_update()
 
