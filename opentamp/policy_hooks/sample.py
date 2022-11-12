@@ -29,7 +29,6 @@ class Sample(object):
         self.dPrimOut = self.agent.dPrimOut
         self.dContOut = self.agent.dContOut
         self.dCont = self.agent.dCont
-        self.dVal = self.agent.dVal
         self.success = 0
         self.opt_suc = 0
         self._postsuc = False
@@ -51,8 +50,6 @@ class Sample(object):
         self._prim_obs.fill(np.nan)
         self._cont_obs = np.empty((self.T, self.dCont))
         self._cont_obs.fill(np.nan)
-        self._val_obs = np.empty((self.T, self.dVal))
-        self._val_obs.fill(np.nan)
         self._meta = np.empty(self.dM)
         self._meta.fill(np.nan)
         self._ref_U = np.zeros((self.T, self.dU), dtype='float32')
@@ -71,7 +68,6 @@ class Sample(object):
             self._data[sensor_name] = sensor_data
             self._X.fill(np.nan)  # Invalidate existing X.
             self._obs.fill(np.nan)  # Invalidate existing obs.
-            self._val_obs.fill(np.nan)  # Invalidate existing obs.
             self._prim_obs.fill(np.nan)  # Invalidate existing obs.
             self._prim_out.fill(np.nan)  # Invalidate existing out.
             self._cont_out.fill(np.nan)  # Invalidate existing out.
@@ -85,7 +81,6 @@ class Sample(object):
             self._data[sensor_name][t, :] = sensor_data
             self._X[t, :].fill(np.nan)
             self._obs[t, :].fill(np.nan)
-            self._val_obs[t, :].fill(np.nan)
             self._prim_obs[t, :].fill(np.nan)
             self._prim_out[t, :].fill(np.nan)
             self._cont_obs[t, :].fill(np.nan)
@@ -119,10 +114,6 @@ class Sample(object):
     def set_prim_obs(self, prim_obs, t=None):
         for data_type in self.agent._prim_obs_data_idx:
             self.set(data_type, prim_obs[self.agent._prim_obs_data_idx[data_type]], t=t)
-
-    def set_val_obs(self, val_obs, t=None):
-        for data_type in self.agent._val_obs_data_idx:
-            self.set(data_type, val_obs[self.agent._val_obs_data_idx[data_type]], t=t)
 
     def get_U(self, t=None):
         """ Get the action. """
@@ -163,6 +154,8 @@ class Sample(object):
                     print("Nans in prim obs for data_type", data_type)
                     
                 self.agent.pack_data_prim_obs(obs, data, data_types=[data_type])
+        if np.any(np.isnan(obs)):
+            print("Still have nans in obs, idxs are", self.agent._prim_obs_idx, self.agent.dPrim)
         return obs.copy()
 
     def get_prim_out(self, t=None):
@@ -206,20 +199,6 @@ class Sample(object):
                         else self._data[data_type][t, :])
                 self.agent.pack_data_cont_out(out, data, data_types=[data_type])
         return out.copy()
-
-    def get_val_obs(self, t=None):
-        """ Get the observation. Put it together if not precomputed. """
-        obs = self._val_obs if t is None else self._val_obs[t, :]
-        if np.any(np.isnan(obs)):
-            for data_type in self._data:
-                if data_type not in self.agent.val_obs_data_types:
-                    continue
-                if data_type in self.agent.meta_data_types:
-                    continue
-                data = (self._data[data_type] if t is None
-                        else self._data[data_type][t, :])
-                self.agent.pack_data_val_obs(obs, data, data_types=[data_type])
-        return obs.copy()
 
     def get_meta(self):
         """ Get the meta data. Put it together if not precomputed. """

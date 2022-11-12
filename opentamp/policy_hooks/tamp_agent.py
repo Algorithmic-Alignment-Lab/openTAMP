@@ -749,12 +749,17 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
                                                       st=act_st)
 
         except AttributeError as e:
-            print(('Opt Exception in full solve for', ref_x0, task, plan.actions[a]), e, act_st, plan.actions)
+            print(('Non-fatal Opt Exception in full solve for', ref_x0, task, plan.actions[a]), e, act_st, plan.actions)
+            success = False
+
+        except ValueError as e:
+            traceback.print_exception(*sys.exc_info())
+            print(('Non-fatal EValue xception in full solve for', ref_x0, task, plan.actions[a]), e, act_st)
             success = False
 
         except Exception as e:
             traceback.print_exception(*sys.exc_info())
-            print(('Exception in full solve for', ref_x0, task, plan.actions[a]), e, act_st)
+            print(('Non-fatal Exception in full solve for', ref_x0, task, plan.actions[a]), e, act_st)
             success = False
 
         plan.store_free_attrs(old_free)

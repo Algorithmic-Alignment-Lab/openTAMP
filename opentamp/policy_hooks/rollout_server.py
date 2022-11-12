@@ -187,6 +187,8 @@ class RolloutServer(Server):
         elif self.policy_opt.share_buffers:
             self.policy_opt.read_shared_weights()
 
+        val = 0
+        path = []
         if self.agent.policies_initialized():
             init_t = time.time()
             self.agent.debug = False
