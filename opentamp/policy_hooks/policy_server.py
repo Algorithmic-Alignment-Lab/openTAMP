@@ -231,6 +231,7 @@ class PolicyServer(object):
             self.iters += 1
             init_t = time.time()
             self.dataset.wait_for_data()
+            self.dataset.load_data()
             #if self.task == 'primitive': print('\nTime to get update:', time.time() - init_t, '\n')
             self.policy_opt.update(self.task)
             #if self.task == 'primitive': print('\nTime to run update:', time.time() - init_t, '\n')

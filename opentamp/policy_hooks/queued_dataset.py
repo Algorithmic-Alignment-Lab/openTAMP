@@ -69,7 +69,7 @@ class QueuedDataset(TorchDataset):
         self.data_buf.write_data(self.save_dir, self.task, n_data)
 
 
-    def pop_queue(self, max_n=10):
+    def pop_queue(self, max_n=50):
         items = []
         i = 0
         while i < max_n and not self.in_queue.empty():
@@ -84,13 +84,13 @@ class QueuedDataset(TorchDataset):
         return items
 
 
-    def load_data(self, val_ratio=0.1):
+    def load_data(self):
         items = self.pop_queue()
         if not len(items): return 0
 
         start_t = time.time()
         for data in items:
-            self.data_buf.update(data, val_ratio=val_ratio)
+            self.data_buf.update(data)
         
         del items
         gc.collect()

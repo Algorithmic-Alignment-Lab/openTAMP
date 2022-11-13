@@ -45,7 +45,7 @@ class DataBuffer(object):
         self.lens = {}
 
 
-    def update(self, data, val_ratio=0.1):
+    def update(self, data):
         obs, mu, prc, wt, aux, primobs, x, task, label = data
         dO = obs.shape[1:]
         dU = mu.shape[1:]
