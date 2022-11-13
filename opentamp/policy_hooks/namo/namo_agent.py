@@ -1442,19 +1442,6 @@ class NAMOSortingAgent(TAMPAgent):
             print(('Encoded {0} as {1} {2}'.format(targets, vecs, self.prob.END_TARGETS)))
         return np.concatenate(vecs)
 
-
-    def get_mask(self, sample, enum):
-        mask = np.ones((sample.T, 1))
-        return mask
-        ind1 = self.task_list.index('moveto')
-        ind2  = self.task_list.index('transfer')
-        for t in range(sample.T):
-            if enum == TARG_ENUM and sample.get(TASK_ENUM, t)[ind2] < 0.5:
-                mask[t, :] = 0.
-            #elif enum == OBJ_ENUM and sample.get(TASK_ENUM, t)[ind1] < 0.5:
-            #    mask[t, :] = 0.
-        return mask
-
     
     def permute_cont_data(self, hl_mu, hl_obs, hl_wt, hl_prc, aux, x):
         prim_choices = self.prob.get_prim_choices(self.task_list)

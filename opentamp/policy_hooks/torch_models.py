@@ -10,13 +10,15 @@ import torch.nn.functional as F
 
 
 def precision_mse(output, y, precision):
-    return torch.matmul(torch.matmul(output, precision), y.transpose())
+    return torch.matmul(torch.matmul((output-y), precision), (output-y).t())
 
 
 class TorchNet(nn.Module):
     def __init__(self, config, device=None):
         nn.Module.__init__(self)
         self.config = config
+        for key in ['obs_include', 'out_include']:
+            self.config[key] = list(set(config[key]))
 
         if device is None: device = torch.device('cpu')
         if type(device) is str: device = torch.device(device)
@@ -62,9 +64,7 @@ class TorchNet(nn.Module):
         if self.output_fn is not None:
             nn_output = self.output_fn(nn_output)
 
-
-        np_output = nn_output.cpu().detach().numpy()
-        return np_output
+        return nn_output
 
 
     def conv_forward(self, nn_input):
@@ -208,6 +208,22 @@ class TorchNet(nn.Module):
         return fp
 
 
+    def compute_loss(self, pred, y, precision=None):
+        if self.use_precision:
+            if len(precision.size()) > len(pred.size()):
+                return torch.mean(self.loss_fn(pred, y, precision))
+            else:
+                pred = pred.long().flatten()
+                y = y.long().flatten()
+                precision = precision.flatten()
+                sum_loss = torch.sum(self.loss_fn(pred, y, reduction='none') * precision)
+                return sum_loss / torch.sum(precision)
+        else:
+            pred = pred.view(-1)
+            y = y.long().flatten()
+            return self.loss_fn(pred, y, reduction='mean')
+
+
 class PolicyNet(TorchNet):
     def __init__(self, config, scope, device=None):
         self.scope = scope
@@ -235,7 +251,8 @@ class PolicyNet(TorchNet):
             obs = obs.copy()
             obs[:, self.x_idx] = obs[:, self.x_idx].dot(self.scale) + self.bias
 
-        act = self.forward(obs)
+        with torch.no_grad():
+            act = self.forward(obs).cpu().detach().numpy()
 
         if noise is not None:
             act += noise
@@ -248,7 +265,9 @@ class PolicyNet(TorchNet):
             flatten = True
             obs = obs.reshape(1, -1)
 
-        vals = self.forward(obs)
+        with torch.no_grad():
+            vals = self.forward(obs).cpu().detach().numpy()
+
         res = []
         for bound in bounds:
             next_val = vals[:, bound[0]:bound[1]]

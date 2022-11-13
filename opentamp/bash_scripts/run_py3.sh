@@ -5,7 +5,7 @@ do
 
 
         python3 -W ignore policy_hooks/run_training.py -c policy_hooks.namo.hyperparams_v94 \
-                                                       -no 2 -llus 5000  -hlus 5000 \
+                                                       -no 1 -llus 500  -hlus 500 \
                                                        -spl -mask -hln 2 -hldim 96 -lldim 64 \
                                                        -retime -vel 0.3 -eta 5 -softev \
                                                        -lr_schedule adaptive \
@@ -14,14 +14,14 @@ do
                                                        -add_noop 2 --permute_hl 1 \
                                                        -expl_wt 10 -expl_eta 4 \
                                                        -col_coeff 0.0 \
-                                                       -motion 18 \
-                                                       -rollout 12 \
-                                                       -task 2 \
+                                                       -motion 5 \
+                                                       -rollout 1 \
+                                                       -task 1 \
                                                        -post -pre \
                                                        -warm 100 \
-                                                       -neg_ratio 0. -opt_ratio 0.3 -dagger_ratio 0.7 \
-                                                       -descr verify_dagger_thrity_opt_seventy_dagger & 
-        sleep 7200 
+                                                       -neg_ratio 0. -opt_ratio 0.7 -dagger_ratio 0.3 \
+                                                       -descr mac_test & 
+        sleep 10800 
         pkill -f run_train -9
         pkill -f ros -9
         sleep 5

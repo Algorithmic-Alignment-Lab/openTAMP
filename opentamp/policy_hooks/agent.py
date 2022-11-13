@@ -207,7 +207,7 @@ class Agent(object, metaclass=abc.ABCMeta):
         for i in range(num_sensor):
             index[axes[i]] = slice(idx[data_types[i]][0],
                                    idx[data_types[i]][-1] + 1)
-        existing_mat[index] = data_to_insert
+        existing_mat[tuple(index)] = data_to_insert
 
 
     def pack_data_obs(self, existing_mat, data_to_insert, data_types,
@@ -249,7 +249,7 @@ class Agent(object, metaclass=abc.ABCMeta):
         for i in range(num_sensor):
             index[axes[i]] = slice(self._obs_data_idx[data_types[i]][0],
                                    self._obs_data_idx[data_types[i]][-1] + 1)
-        existing_mat[index] = data_to_insert
+        existing_mat[tuple(index)] = data_to_insert
 
     def pack_data_prim_obs(self, existing_mat, data_to_insert, data_types,
                       axes=None):
@@ -290,7 +290,7 @@ class Agent(object, metaclass=abc.ABCMeta):
         for i in range(num_sensor):
             index[axes[i]] = slice(self._prim_obs_data_idx[data_types[i]][0],
                                    self._prim_obs_data_idx[data_types[i]][-1] + 1)
-        existing_mat[index] = data_to_insert
+        existing_mat[tuple(index)] = data_to_insert
 
     def pack_data_prim_out(self, existing_mat, data_to_insert, data_types,
                            axes=None):
@@ -331,7 +331,7 @@ class Agent(object, metaclass=abc.ABCMeta):
         for i in range(num_sensor):
             index[axes[i]] = slice(self._prim_out_data_idx[data_types[i]][0],
                                    self._prim_out_data_idx[data_types[i]][-1] + 1)
-        existing_mat[index] = data_to_insert
+        existing_mat[tuple(index)] = data_to_insert
 
     def pack_data_cont_obs(self, existing_mat, data_to_insert, data_types,
                       axes=None):
@@ -362,7 +362,7 @@ class Agent(object, metaclass=abc.ABCMeta):
         for i in range(num_sensor):
             index[axes[i]] = slice(self._cont_obs_data_idx[data_types[i]][0],
                                    self._cont_obs_data_idx[data_types[i]][-1] + 1)
-        existing_mat[index] = data_to_insert
+        existing_mat[tuple(index)] = data_to_insert
 
 
     def pack_data_cont_out(self, existing_mat, data_to_insert, data_types,
@@ -404,7 +404,7 @@ class Agent(object, metaclass=abc.ABCMeta):
         for i in range(num_sensor):
             index[axes[i]] = slice(self._cont_out_data_idx[data_types[i]][0],
                                    self._cont_out_data_idx[data_types[i]][-1] + 1)
-        existing_mat[index] = data_to_insert
+        existing_mat[tuple(index)] = data_to_insert
 
     def pack_data_meta(self, existing_mat, data_to_insert, data_types,
                        axes=None):
@@ -445,7 +445,7 @@ class Agent(object, metaclass=abc.ABCMeta):
         for i in range(num_sensor):
             index[axes[i]] = slice(self._meta_data_idx[data_types[i]][0],
                                    self._meta_data_idx[data_types[i]][-1] + 1)
-        existing_mat[index] = data_to_insert
+        existing_mat[tuple(index)] = data_to_insert
 
     def pack_data_x(self, existing_mat, data_to_insert, data_types, axes=None):
         """
@@ -485,7 +485,7 @@ class Agent(object, metaclass=abc.ABCMeta):
         for i in range(num_sensor):
             index[axes[i]] = slice(self._x_data_idx[data_types[i]][0],
                                    self._x_data_idx[data_types[i]][-1] + 1)
-        existing_mat[index] = data_to_insert
+        existing_mat[tuple(index)] = data_to_insert
 
     def unpack_data_x(self, existing_mat, data_types, axes=None):
         """
@@ -519,4 +519,4 @@ class Agent(object, metaclass=abc.ABCMeta):
         for i in range(num_sensor):
             index[axes[i]] = slice(self._x_data_idx[data_types[i]][0],
                                    self._x_data_idx[data_types[i]][-1] + 1)
-        return existing_mat[index]
+        return existing_mat[tuple(index)]

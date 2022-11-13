@@ -1125,11 +1125,6 @@ class RobotAgent(TAMPAgent):
         return vec
 
 
-    def get_mask(self, sample, enum):
-        mask = np.ones((sample.T, 1))
-        return mask
-
-
     def permute_hl_data(self, hl_mu, hl_obs, hl_wt, hl_prc, aux):
         return hl_mu, hl_obs, hl_wt, hl_prc
 

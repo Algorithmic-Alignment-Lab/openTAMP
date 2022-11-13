@@ -24,7 +24,7 @@ class TorchPolicyOpt():
         self.scope = self.config.get('scope', None)
         self.split_nets = self.config.get('split_nets', False)
         self.task_list = list(self.config['task_list'])
-        self.valid_scopes = ['control'] if not self.split_nets else list(self.config['task_list'])
+        self.ctrl_scopes = ['control'] if not self.split_nets else list(self.config['task_list'])
         self.torch_iter = 0
         self.batch_size = self.config['batch_size']
         self.load_all = self.config.get('load_all', False)
@@ -79,13 +79,13 @@ class TorchPolicyOpt():
         llpol = self.config.get('ll_policy', '')
         hlpol = self.config.get('hl_policy', '')
         contpol = self.config.get('cont_policy', '')
-        scopes = self.valid_scopes + SCOPE_LIST if self.scope is None else [self.scope]
+        scopes = self.ctrl_scopes + SCOPE_LIST if self.scope is None else [self.scope]
         for scope in scopes:
-            if len(llpol) and scope in self.valid_scopes:
+            if len(llpol) and scope in self.ctrl_scopes:
                 self.restore_ckpt(scope, dirname=llpol)
-            if len(hlpol) and scope not in self.valid_scopes:
+            if len(hlpol) and scope not in self.ctrl_scopes:
                 self.restore_ckpt(scope, dirname=hlpol)
-            if len(contpol) and scope not in self.valid_scopes:
+            if len(contpol) and scope not in self.ctrl_scopes:
                 self.restore_ckpt(scope, dirname=contpol)
 
 
@@ -96,29 +96,30 @@ class TorchPolicyOpt():
         self.opts[task] = opt_cls(self.nets[task].parameters(), lr=lr) 
 
 
-    def get_loss(self, task, x, y, precision=None):
+    def get_loss(self, task, x, y, precision=None,):
+        if type(x) is not torch.Tensor:
+            x = torch.Tensor(x)
+
+        if type(y) is not torch.Tensor:
+            y = torch.Tensor(y)
+
+        if type(precision) is not torch.Tensor:
+            precision = torch.Tensor(precision)
+
         model = self.nets[task]
-        target = model(x)
-        if model.use_precision:
-            if precision.size()[-1] > 1:
-                return torch.mean(model.loss_fn(target, y, precision))
-            else:
-                sum_loss = torch.sum(model.loss_fn(pred, y, reduction='none') * precision)
-                return sum_loss / torch.sum(precision)
-        else:
-            return model.loss_fn(target, y, reduction='mean')
+        pred = model(x)
+
+        return model.compute_loss(pred, y, precision)
 
 
     def train_step(self, task, x, y, precision=None):
         if task not in self.opts is None: self._set_opt(task)
         (x, y) = (x.to(self.device), y.to(self.device))
-        model = self.nets[task]
-        pred = model(x)
-        loss = self.get_loss(task, x, y, precision)
 
-        self.opt.zero_grad()
+        self.opts[task].zero_grad()
+        loss = self.get_loss(task, x, y, precision)
         loss.backward()
-        self.opt.step()
+        self.opts[task].step()
         return loss.item()
 
 
@@ -130,16 +131,17 @@ class TorchPolicyOpt():
                 break
 
             x, y, precision = batch
-            train_loss = self.train_step(x, y, precision)
+            train_loss = self.train_step(task, x, y, precision)
             average_loss += train_loss
-            self.tf_iter += 1
+            self.torch_iter += 1
+            self.N += len(batch)
 
         self.average_losses.append(average_loss / self.config['iterations'])
 
 
     def restore_ckpts(self, label=None):
         success = False
-        for scope in self.valid_scopes + SCOPE_LIST:
+        for scope in self.ctrl_scopes + SCOPE_LIST:
             success = success or self.restore_ckpt(scope, label)
         return success
 
@@ -156,8 +158,10 @@ class TorchPolicyOpt():
             model = self.nets[scope]
             save_path = 'saved_models/'+dirname+'/'+scope+'{0}.ckpt'.format(ext)
             model.load_state_dict(torch.load(save_path))
-            self.nets[scope].scale = np.load(MODEL_DIR+dirname+'/'+scope+'_scale{0}.npy'.format(ext))
-            self.nets[scope].bias = np.load(MODEL_DIR+dirname+'/'+scope+'_bias{0}.npy'.format(ext))
+            if scope in self.ctrl_scopes:
+                self.nets[scope].scale = np.load(MODEL_DIR+dirname+'/'+scope+'_scale{0}.npy'.format(ext))
+                self.nets[scope].bias = np.load(MODEL_DIR+dirname+'/'+scope+'_bias{0}.npy'.format(ext))
+                
             self.write_shared_weights([scope])
             print(('Restored', scope, 'from', dirname))
 
@@ -170,7 +174,7 @@ class TorchPolicyOpt():
 
 
     def write_shared_weights(self, scopes=None):
-        if scopes is None: scopes = self.valid_scopes + SCOPE_LIST
+        if scopes is None: scopes = self.ctrl_scopes + SCOPE_LIST
 
         for scope in scopes:
             wts = self.serialize_weights([scope])
@@ -181,7 +185,7 @@ class TorchPolicyOpt():
 
     def read_shared_weights(self, scopes=None):
         if scopes is None:
-            scopes = self.valid_scopes + SCOPE_LIST
+            scopes = self.ctrl_scopes + SCOPE_LIST
 
         for scope in scopes:
             start_t = time.time()
@@ -198,19 +202,19 @@ class TorchPolicyOpt():
                 self.deserialize_weights(wts)
 
             except Exception as e:
-                #traceback.print_exception(*sys.exc_info())
                 if not skip:
+                    traceback.print_exception(*sys.exc_info())
                     print(e)
-                    print('Could not load {0} weights from {1}'.format(scope, self.scope), e)
+                    print('Could not load {0} weights from {1}'.format(scope, self.scope))
 
 
     def serialize_weights(self, scopes=None, save=False):
         if scopes is None:
-            all_scopes = self.valid_scopes + SCOPE_LIST
-            ctrl_scopes = self.valid_scopes
+            all_scopes = self.ctrl_scopes + SCOPE_LIST
+            ctrl_scopes = self.ctrl_scopes
         else:
             all_scopes = scopes
-            ctrl_scopes = [scope for scope in scopes if scope in self.valid_scopes]
+            ctrl_scopes = [scope for scope in scopes if scope in self.ctrl_scopes]
 
         models = {scope: self.nets[scope].state_dict() for scope in all_scopes if scope in self.nets}
         scales = {scope: self.nets[scope].scale.tolist() for scope in ctrl_scopes if scope in self.nets}
@@ -227,8 +231,10 @@ class TorchPolicyOpt():
 
         for scope in scopes:
             self.nets[scope].load_state_dict(models[scope])
-            self.nets[scope].scale = np.array(scales[scope])
-            self.nets[scope].bias = np.array(biases[scope])
+
+            if scope in self.ctrl_scopes:
+                self.nets[scope].scale = np.array(scales[scope])
+                self.nets[scope].bias = np.array(biases[scope])
 
         if save: self.store_scope_weights(scopes=scopes)
 
@@ -244,6 +250,7 @@ class TorchPolicyOpt():
     def store_scope_weights(self, scopes, weight_dir=None, lab=''):
         if weight_dir is None:
             weight_dir = self.weight_dir
+
         for scope in scopes:
             model = self.nets[scope]
             try:
@@ -254,14 +261,15 @@ class TorchPolicyOpt():
                 print('Saving torch model encountered an issue but it will not crash:')
                 traceback.print_exception(*sys.exc_info())
 
-        policy = self.nets[scope]
-        np.save(MODEL_DIR+weight_dir+'/'+scope+'_scale{0}'.format(lab), policy.scale)
-        np.save(MODEL_DIR+weight_dir+'/'+scope+'_bias{0}'.format(lab), policy.bias)
+        if scope in self.ctrl_scopes:
+            policy = self.nets[scope]
+            np.save(MODEL_DIR+weight_dir+'/'+scope+'_scale{0}'.format(lab), policy.scale)
+            np.save(MODEL_DIR+weight_dir+'/'+scope+'_bias{0}'.format(lab), policy.bias)
 
 
     def store_weights(self, weight_dir=None):
         if self.scope is None:
-            self.store_scope_weights(self.valid_scopes+SCOPE_LIST, weight_dir)
+            self.store_scope_weights(self.ctrl_scopes+SCOPE_LIST, weight_dir)
         else:
             self.store_scope_weights([self.scope], weight_dir)
 
@@ -294,9 +302,6 @@ class TorchPolicyOpt():
         elif 'cont' == scope:
             config = self.config['cont_network_params']
 
-        dO, dU = self.select_dims(scope)
-        config['dim_input'] = dO
-        config['dim_output'] = dU
         self.nets[scope] = PolicyNet(config=config,
                                      scope=scope,
                                      device=self.device)
@@ -305,7 +310,7 @@ class TorchPolicyOpt():
     def init_networks(self):
         """ Helper method to initialize the tf networks used """
         self.nets = {}
-        scopes = self.valid_scopes + SCOPE_LIST if (self.scope is None or self.load_all) else [self.scope]
+        scopes = self.ctrl_scopes + SCOPE_LIST if (self.scope is None or self.load_all) else [self.scope]
         for scope in scopes:
             self._init_network(scope)
                 
@@ -317,7 +322,7 @@ class TorchPolicyOpt():
         """ Helper method to initialize the solver. """
         self.opts = {}
         self.cur_dec = self.config['weight_decay']
-        scopes = self.valid_scopes + SCOPE_LIST if self.scope is None else [self.scope]
+        scopes = self.ctrl_scopes + SCOPE_LIST if self.scope is None else [self.scope]
         for scope in scopes:
             self._set_opt(scope)
 
@@ -389,6 +394,6 @@ class TorchPolicyOpt():
 
 
     def check_validation(self, obs, tgt_mu, tgt_prc, task="control"):
-        return self.get_loss(task, obs, tgt_mu, tgt_prc).item()
+        return [self.get_loss(task, obs, tgt_mu, tgt_prc).item()]
 
 

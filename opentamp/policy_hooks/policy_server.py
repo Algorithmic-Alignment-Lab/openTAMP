@@ -304,7 +304,7 @@ class PolicyServer(object):
                 'scope': self.task,
                 'n_updates': self.n_updates,
                 'n_data': self.policy_opt.N,
-                'tf_iter': self.policy_opt.tf_iter,
+                'torch_iter': self.policy_opt.torch_iter,
                 'N': self.policy_opt.N,
                 'reg_val': self.policy_opt.cur_dec,
                 'loss_ratio': self.cur_ratio,

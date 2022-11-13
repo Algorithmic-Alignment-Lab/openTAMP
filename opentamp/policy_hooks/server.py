@@ -251,7 +251,7 @@ class Server(object):
 
 
     def policy_call(self, obs, t, noise, task, opt_s=None):
-        scope = task if task in self.policy_opt.valid_scopes else 'control'
+        scope = task if task in self.policy_opt.ctrl_scopes else 'control'
 
         dO, dU = self.policy_opt._select_dims(scope)
         if noise is None: noise = np.zeros(dU)
@@ -420,7 +420,7 @@ class Server(object):
         dOpts = len(self.agent.discrete_opts)
         ### Compute target mean, cov, and weight for each sample.
         obs_data, tgt_mu = np.zeros((0, dO)), np.zeros((0, dP))
-        tgt_prc, tgt_wt = np.zeros((0, dOpts)), np.zeros((0))
+        tgt_prc, tgt_wt = np.zeros((0, dP)), np.zeros((0))
         tgt_aux = np.zeros((0))
         tgt_x = np.zeros((0, self.agent.dX))
         opts = self.agent.prob.get_prim_choices(self.agent.task_list)
@@ -451,9 +451,10 @@ class Server(object):
             if np.any(np.isnan(obs)):
                 print("NAN IN OBS PRIM:", obs, sample.task, 'SAMPLE')
             obs_data = np.concatenate((obs_data, obs))
-            prc = np.concatenate([self.agent.get_mask(sample, enum) for enum in self.discrete_opts], axis=-1) # np.tile(np.eye(dP), (sample.T,1,1))
-            if not self.config['hl_mask']:
-                prc[:] = 1.
+            # prc = np.concatenate([self.agent.get_mask(sample, enum) for enum in self.discrete_opts], axis=-1)
+            # if not self.config['hl_mask']:
+            #     prc[:] = 1.
+            prc = np.ones((sample.T,dP))
             tgt_prc = np.concatenate((tgt_prc, prc))
 
         if len(tgt_mu):

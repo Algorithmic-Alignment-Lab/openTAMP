@@ -1445,11 +1445,18 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
         self.image_width = old_w
 
 
+    def get_mask(self, sample, enum):
+        mask = np.ones((sample.T, 1))
+        return mask
+
+
     def get_hist_info(self):
         return {}
 
+
     def store_hist_info(self, info):
         return
+
 
     def update_hist_info(self, info):
         return
