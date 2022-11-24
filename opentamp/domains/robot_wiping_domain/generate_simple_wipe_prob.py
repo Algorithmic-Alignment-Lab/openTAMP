@@ -2,7 +2,7 @@ import numpy as np
 
 # SEED = 1234
 NUM_PROBS = 1
-filename = "opentamp/domains/robot_wiping_domain/probs/simple_move_onlytable_prob.prob"
+filename = "opentamp/domains/robot_wiping_domain/probs/simple_prob_sawyer.prob"
 GOAL = "(RobotAt sawyer region_pose3_3)"
 
 

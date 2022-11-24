@@ -79,8 +79,8 @@ env.sim.forward()
 
 # Now, we load the domain and problem files, and also instantiate the
 # solvers.
-domain_fname = os.getcwd() + "/opentamp/domains/robot_wiping_domain/right_wipe_onlytable.domain"
-prob = os.getcwd() + "/opentamp/domains/robot_wiping_domain/probs/simple_move_onlytable_prob.prob"
+domain_fname = os.getcwd() + "/opentamp/domains/robot_wiping_domain/simple_sawyer.domain"
+prob = os.getcwd() + "/opentamp/domains/robot_wiping_domain/probs/simple_prob_sawyer.prob"
 d_c = main.parse_file_to_dict(domain_fname)
 domain = parse_domain_config.ParseDomainConfig.parse(d_c)
 hls = FFSolver(d_c)
