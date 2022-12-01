@@ -19,6 +19,8 @@ from sco_py.expr import *
 
 
 # Constants
+ROBOT = "Panda" # Can be "Sawyer" or "Panda"
+assert ROBOT in ["Sawyer", "Panda"]
 GRIPPER_SIZE = [0.05, 0.12, 0.015]
 TABLE_GEOM = [0.25, 0.40, 0.820]
 TABLE_POS = [0.15, 0.00, 0.00]
@@ -47,7 +49,7 @@ has_render = visual
 # that we will execute plans in.
 env = robosuite.make(
     "Wipe",
-    robots=["Sawyer"],             # load a Sawyer robot
+    robots=[ROBOT],             # load a Sawyer or Panda robot
     controller_configs=controller_config,   # each arm is controlled using OSC
     has_renderer=has_render,                      # on-screen rendering
     render_camera="frontview",              # visualize the "frontview" camera
@@ -79,8 +81,8 @@ env.sim.forward()
 
 # Now, we load the domain and problem files, and also instantiate the
 # solvers.
-domain_fname = os.getcwd() + "/opentamp/domains/robot_wiping_domain/simple_sawyer.domain"
-prob = os.getcwd() + "/opentamp/domains/robot_wiping_domain/probs/simple_prob_sawyer.prob"
+domain_fname = os.getcwd() + "/opentamp/domains/robot_wiping_domain/simple_regions.domain"
+prob = os.getcwd() + f"/opentamp/domains/robot_wiping_domain/probs/simple_prob_{ROBOT.lower()}.prob"
 d_c = main.parse_file_to_dict(domain_fname)
 domain = parse_domain_config.ParseDomainConfig.parse(d_c)
 hls = FFSolver(d_c)
@@ -156,7 +158,7 @@ for dirty_region in dirty_regions:
 goal += ")"
 
 # NOTE: Run the below code to generate the region pose numbers that need to be
-# placed into the generate_onlytable_prob.py file.
+# placed into the generate_simple_wipe_prob.py file.
 
 # for row in range(NUM_ROWS):
 #         for col in range(NUM_COLS):

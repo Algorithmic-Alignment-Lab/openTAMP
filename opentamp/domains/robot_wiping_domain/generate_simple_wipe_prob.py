@@ -1,9 +1,11 @@
 import numpy as np
 
+ROBOT = "Panda" # Can be "Sawyer" or "Panda"
+assert ROBOT in ["Sawyer", "Panda"]
 # SEED = 1234
 NUM_PROBS = 1
-filename = "opentamp/domains/robot_wiping_domain/probs/simple_prob_sawyer.prob"
-GOAL = "(RobotAt sawyer region_pose3_3)"
+filename = f"opentamp/domains/robot_wiping_domain/probs/simple_prob_{ROBOT.lower()}.prob"
+GOAL = f"(RobotAt {ROBOT.lower()} region_pose3_3)"
 
 
 SAWYER_INIT_POSE = [-0.41, 0.0, 0.912]
@@ -163,17 +165,17 @@ region_name_to_jnt_vals = dict([
         1.07584384, -4.09391802]))
 ])
 
-def get_sawyer_pose_str(name, RArm = R_ARM_INIT, G = OPEN_GRIPPER, Pos = SAWYER_INIT_POSE):
+def get_robot_pose_str(pose_name, RArm = R_ARM_INIT, G = OPEN_GRIPPER, Pos = SAWYER_INIT_POSE):
     s = ""
-    s += "(right {} {}), ".format(name, RArm)
-    s += "(right_ee_pos {} {}), ".format(name, EE_POS)
-    s += "(right_ee_rot {} {}), ".format(name, EE_ROT)
-    s += "(right_gripper {} {}), ".format(name, G)
-    s += "(value {} {}), ".format(name, Pos)
-    s += "(rotation {} {}), ".format(name, [0.,0.,0.])
+    s += "(right {} {}), ".format(pose_name, RArm)
+    s += "(right_ee_pos {} {}), ".format(pose_name, EE_POS)
+    s += "(right_ee_rot {} {}), ".format(pose_name, EE_ROT)
+    s += "(right_gripper {} {}), ".format(pose_name, G)
+    s += "(value {} {}), ".format(pose_name, Pos)
+    s += "(rotation {} {}), ".format(pose_name, [0.,0.,0.])
     return s
 
-def get_sawyer_ontable_pose_str(name, ee_pos):
+def get_robot_ontable_pose_str(name, ee_pos):
     s = ""
     s += "(right {} {}), ".format(name, list(region_name_to_jnt_vals[name]))
     s += "(right_ee_pos {} {}), ".format(name, ee_pos)
@@ -184,15 +186,15 @@ def get_sawyer_ontable_pose_str(name, ee_pos):
     return s
 
 
-def get_sawyer_str(name, RArm = R_ARM_INIT, G = OPEN_GRIPPER, Pos = SAWYER_INIT_POSE):
+def get_robot_str(robot_name, RArm = R_ARM_INIT, G = OPEN_GRIPPER, Pos = SAWYER_INIT_POSE):
     s = ""
-    s += "(geom {})".format(name)
-    s += "(right {} {}), ".format(name, RArm)
-    s += "(right_ee_pos {} {}), ".format(name, EE_POS)
-    s += "(right_ee_rot {} {}), ".format(name, EE_ROT)
-    s += "(right_gripper {} {}), ".format(name, G)
-    s += "(pose {} {}), ".format(name, Pos)
-    s += "(rotation {} {}), ".format(name, [0.,0.,0.])
+    s += "(geom {})".format(robot_name)
+    s += "(right {} {}), ".format(robot_name, RArm)
+    s += "(right_ee_pos {} {}), ".format(robot_name, EE_POS)
+    s += "(right_ee_rot {} {}), ".format(robot_name, EE_ROT)
+    s += "(right_gripper {} {}), ".format(robot_name, G)
+    s += "(pose {} {}), ".format(robot_name, Pos)
+    s += "(rotation {} {}), ".format(robot_name, [0.,0.,0.])
     return s
 
 def get_undefined_robot_pose_str(name):
@@ -216,22 +218,23 @@ def main():
 
     s += "# The values after each attribute name are the values that get passed into the __init__ method for that attribute's class defined in the domain configuration.\n"
     s += "Objects: "
-    s += "Sawyer (name sawyer); "
 
-    s += "SawyerPose (name {}); ".format("robot_init_pose")
+    s += "{} (name {}); ".format(ROBOT, ROBOT.lower())
+    s += "{}Pose (name {}); ".format(ROBOT, "robot_init_pose")
+
     for row in range(num_rows):
         for col in range(num_cols):
-            s += "SawyerPose (name {}); ".format(f"region_pose{row}_{col}")
+            s += "{}Pose (name {}); ".format(ROBOT, f"region_pose{row}_{col}")
     s += "Obstacle (name {}); ".format("table_obs")
     s += "Box (name {}) \n\n".format("table")
 
     s += "Init: "
 
-    s += get_sawyer_str('sawyer', R_ARM_INIT, OPEN_GRIPPER, SAWYER_INIT_POSE)
-    s += get_sawyer_pose_str('robot_init_pose', R_ARM_INIT, OPEN_GRIPPER, SAWYER_INIT_POSE)
+    s += get_robot_str(ROBOT.lower(), R_ARM_INIT, OPEN_GRIPPER, SAWYER_INIT_POSE)
+    s += get_robot_pose_str('robot_init_pose', R_ARM_INIT, OPEN_GRIPPER, SAWYER_INIT_POSE)
     for row in range(num_rows):
         for col in range(num_cols):
-            s += get_sawyer_ontable_pose_str(f"region_pose{row}_{col}", xy_ontable_poses[row][col])
+            s += get_robot_ontable_pose_str(f"region_pose{row}_{col}", xy_ontable_poses[row][col])
 
     s += "(geom table {}), ".format(TABLE_GEOM)
     s += "(pose table {}), ".format(TABLE_POS)
@@ -240,18 +243,18 @@ def main():
     s += "(pose table_obs {}), ".format(TABLE_POS)
     s += "(rotation table_obs {}); ".format(TABLE_ROT)
 
-    s += "(RobotAt sawyer robot_init_pose),"
-    s += "(StationaryBase sawyer), "
-    s += "(IsMP sawyer), "
-    s += "(WithinJointLimit sawyer), "
+    s += f"(RobotAt {ROBOT.lower()} robot_init_pose),"
+    s += f"(StationaryBase {ROBOT.lower()}), "
+    s += f"(IsMP {ROBOT.lower()}), "
+    s += f"(WithinJointLimit {ROBOT.lower()}), "
     s += "\n\n"
 
     s += "Goal: {}\n\n".format(GOAL)
 
     s += "Invariants: "
-    s += "(StationaryBase sawyer), "
+    s += f"(StationaryBase {ROBOT.lower()}), "
     s += "(Stationary table), "
-    s += "(WithinJointLimit sawyer), "
+    s += f"(WithinJointLimit {ROBOT.lower()}), "
     for row in range(num_rows):
         for col in range(num_cols):
             if row != 0:
