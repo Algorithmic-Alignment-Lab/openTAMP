@@ -24,6 +24,7 @@ class TorchNet(nn.Module):
         if type(device) is str: device = torch.device(device)
         self.device = device
 
+        self.output_boundaries = config.get("output_boundaries", None)
         self.conv_layers = nn.ModuleList()
         self.fc_layers = nn.ModuleList()
 
@@ -60,11 +61,19 @@ class TorchNet(nn.Module):
         if len(self.conv_layers):
             nn_input = self.conv_forward(nn_input)
 
-        nn_output = self.fc_forward(nn_input)
-        if self.output_fn is not None:
-            nn_output = self.output_fn(nn_output)
+        raw_output = self.fc_forward(nn_input)
+        if self.output_fn:
+            if self.output_boundaries:
+                nn_output = []
+                for (start, end) in self.output_boundaries:
+                    nn_output.append(self.output_fn(raw_output[:, start:end]))
 
-        return nn_output
+                return torch.cat(nn_output, dim=-1)
+
+            else:
+                return self.output_fn(raw_output)
+
+        return raw_output
 
 
     def conv_forward(self, nn_input):
@@ -130,7 +139,7 @@ class TorchNet(nn.Module):
         if type(self.output_fn) is str: self.output_fn = getattr(F, self.output_fn)
 
         self.loss_fn = self.config.get('loss_fn', F.mse_loss)
-        self.use_precision = False
+        self.use_precision = self.config['use_precision']
         if self.loss_fn == 'precision_mse': 
             self.loss_fn = precision_mse
             self.use_precision = True
@@ -208,20 +217,42 @@ class TorchNet(nn.Module):
         return fp
 
 
-    def compute_loss(self, pred, y, precision=None):
+    def _compute_loss_component(self, pred, y, precision=None):
         if self.use_precision:
             if len(precision.size()) > len(pred.size()):
                 return torch.mean(self.loss_fn(pred, y, precision))
             else:
-                pred = pred.long().flatten()
-                y = y.long().flatten()
+                y = torch.argmax(y, dim=-1).flatten()
                 precision = precision.flatten()
                 sum_loss = torch.sum(self.loss_fn(pred, y, reduction='none') * precision)
                 return sum_loss / torch.sum(precision)
         else:
-            pred = pred.view(-1)
-            y = y.long().flatten()
+            pred = pred.flatten()
+            y = y.flatten()
             return self.loss_fn(pred, y, reduction='mean')
+
+    def compute_loss(self, pred, y, precision=None):
+        if self.output_boundaries:
+            cur_loss = None
+            n = 0
+            for ind, (start, end) in enumerate(self.output_boundaries):
+                next_pred = pred[:, start:end]
+                next_y = y[:, start:end]
+
+                if len(precision.size()) > len(pred.size()):
+                    next_precision = precision[:, start:end][:, :, start:end]
+                else:
+                    next_precision = precision[:, ind]
+
+                n += 1
+                if cur_loss is None:
+                    cur_loss = self._compute_loss_component(next_pred, next_y, next_precision)
+                else:
+                    cur_loss += self._compute_loss_component(next_pred, next_y, next_precision)
+                
+            return cur_loss / n
+
+        return self._compute_loss_component(pred, y, precision)
 
 
 class PolicyNet(TorchNet):
@@ -267,6 +298,12 @@ class PolicyNet(TorchNet):
 
         with torch.no_grad():
             vals = self.forward(obs).cpu().detach().numpy()
+            if self.output_fn is F.log_softmax:
+                vals = np.exp(vals)
+            elif self.output_fn is F.softmax:
+                pass
+            else:
+                raise NotImplementedError("Cannot use output fn {} for task prediction!".format(self.output_fn))
 
         res = []
         for bound in bounds:

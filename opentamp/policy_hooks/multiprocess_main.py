@@ -180,6 +180,7 @@ class MultiProcessMain(object):
                 'conv_to_fc': 'fp',
                 'normalize': not add_image,
                 'build_conv': add_image,
+                'use_precision': True,
             },
 
             'hl_network_params': {
@@ -203,6 +204,7 @@ class MultiProcessMain(object):
                 'conv_to_fc': 'fp',
                 'normalize': False,
                 'build_conv': add_hl_image,
+                'use_precision': True,
             },
     
             'cont_network_params': {
@@ -226,6 +228,7 @@ class MultiProcessMain(object):
                 'conv_to_fc': 'fp',
                 'normalize': False,
                 'build_conv': add_hl_image,
+                'use_precision': True,
             },
 
             'lr': self.config['lr'],

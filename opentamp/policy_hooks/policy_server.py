@@ -249,7 +249,7 @@ class PolicyServer(object):
                 self.val_losses['aux'].append(losses)
 
             if self.lr_schedule == 'adaptive':
-                if len(self.train_losses['all']) and len(self.val_losses['all']) and self.policy_opt.cur_dec > 0:
+                if len(self.train_losses['optimal']) and len(self.val_losses['optimal']) and self.policy_opt.cur_dec > 0:
                     ratio = np.mean(self.val_losses['optimal'][-5:]) / np.mean(self.train_losses['optimal'][-5:])
                     self.cur_ratio = ratio
                     if ratio < 1.2:

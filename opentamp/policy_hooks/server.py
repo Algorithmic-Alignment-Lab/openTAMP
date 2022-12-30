@@ -283,7 +283,7 @@ class Server(object):
         for ind, d in enumerate(distrs):
             enum = enums[ind]
             if not np.isscalar(opts[enum]):
-                if np.any(np.isnan(d)):
+                if np.any(np.isnan(d)) or not np.sum(d):
                     d = np.ones(len(d)) / len(d)
 
                 p = d / np.sum(d)
@@ -420,7 +420,7 @@ class Server(object):
         dOpts = len(self.agent.discrete_opts)
         ### Compute target mean, cov, and weight for each sample.
         obs_data, tgt_mu = np.zeros((0, dO)), np.zeros((0, dP))
-        tgt_prc, tgt_wt = np.zeros((0, dP)), np.zeros((0))
+        tgt_prc, tgt_wt = np.zeros((0, len(self.discrete_opts))), np.zeros((0))
         tgt_aux = np.zeros((0))
         tgt_x = np.zeros((0, self.agent.dX))
         opts = self.agent.prob.get_prim_choices(self.agent.task_list)
@@ -451,10 +451,10 @@ class Server(object):
             if np.any(np.isnan(obs)):
                 print("NAN IN OBS PRIM:", obs, sample.task, 'SAMPLE')
             obs_data = np.concatenate((obs_data, obs))
-            # prc = np.concatenate([self.agent.get_mask(sample, enum) for enum in self.discrete_opts], axis=-1)
-            # if not self.config['hl_mask']:
-            #     prc[:] = 1.
-            prc = np.ones((sample.T,dP))
+            prc = np.concatenate([self.agent.get_mask(sample, enum) for enum in self.discrete_opts], axis=-1)
+            if not self.config['hl_mask']:
+                prc[:] = 1.
+            # prc = np.ones((sample.T,dP))
             tgt_prc = np.concatenate((tgt_prc, prc))
 
         if len(tgt_mu):
