@@ -15,7 +15,7 @@ opentamp/robot_info/temp_env_xmls/*
 memory_info.txt
 *.bak
 exp_logs/*
-experiment_logs/*
+opentamp/experiment_logs/*
 .ruby-version
 .vscode
 temp/*
