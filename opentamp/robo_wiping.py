@@ -1,11 +1,9 @@
 import os
 import sys
-import time
 
 import numpy as np
 import pybullet as P
 import robosuite
-import robosuite.utils.transform_utils as robo_T
 from robosuite.controllers import load_controller_config
 from scipy.spatial.transform import Rotation
 
@@ -14,42 +12,22 @@ import main
 from opentamp.core.parsing import parse_domain_config, parse_problem_config
 from opentamp.core.util_classes.openrave_body import *
 from opentamp.core.util_classes.transform_utils import *
-from opentamp.core.util_classes.viewer import PyBulletViewer
-from pma import backtrack_ll_solver_gurobi as bt_ll
 from pma.hl_solver import *
 from pma.pr_graph import *
-from pma.robosuite_solver import RobotSolver
+from pma.robosuite_solver import RobotSolverOSQP
 from sco_py.expr import *
-import random
 
 
-random.seed(23)
+# Constants
+GRIPPER_SIZE = [0.05, 0.12, 0.015]
+TABLE_GEOM = [0.25, 0.40, 0.820]
+TABLE_POS = [0.15, 0.00, 0.00]
+NUM_ROWS = int((TABLE_GEOM[0] * 2) / GRIPPER_SIZE[0])
+NUM_COLS = int((TABLE_GEOM[1] * 2) / GRIPPER_SIZE[1])
 REF_QUAT = np.array([0, 0, -0.7071, -0.7071])
-
-
-def theta_error(cur_quat, next_quat):
-    sign1 = np.sign(cur_quat[np.argmax(np.abs(cur_quat))])
-    sign2 = np.sign(next_quat[np.argmax(np.abs(next_quat))])
-    next_quat = np.array(next_quat)
-    cur_quat = np.array(cur_quat)
-    angle = -(sign1 * sign2) * robo_T.get_orientation_error(
-        sign1 * next_quat, sign2 * cur_quat
-    )
-    return angle
-
-
-# controller_config = load_controller_config(default_controller="OSC_POSE")
-# controller_config = load_controller_config(default_controller="JOINT_VELOCITY")
-# controller_config['control_delta'] = False
-# controller_config['kp'] = 500
-# controller_config['kp'] = [750, 750, 500, 5000, 5000, 5000]
 
 ctrl_mode = "JOINT_POSITION"
 true_mode = "JOINT"
-
-# ctrl_mode = 'OSC_POSE'
-# true_mode = 'IK'
-
 controller_config = load_controller_config(default_controller=ctrl_mode)
 if ctrl_mode.find("JOINT") >= 0:
     controller_config["kp"] = [7500, 6500, 6500, 6500, 6500, 6500, 12000]
@@ -62,10 +40,11 @@ else:
     controller_config["output_max"] = 0.02  # [0.1, 0.1, 0.1, 2, 2, 2]
     controller_config["output_min"] = -0.02  # [-0.1, -0.1, -0.1, -2, -2, -2]
 
-
+# Set visualization variable.
 visual = len(os.environ.get("DISPLAY", "")) > 0
 has_render = visual
-obj_mode = 2
+# Create underlying robosuite environment. This is ultimately the environment
+# that we will execute plans in.
 env = robosuite.make(
     "Wipe",
     robots=["Sawyer"],             # load a Sawyer robot
@@ -84,16 +63,10 @@ env = robosuite.make(
     camera_heights=128,
 )
 obs, _, _, _ = env.step(np.zeros(7)) # Step a null action to 'boot' the environment.
-# wipe_centroid_pose = obs['wipe_centroid']
 
-# Get the locations of all dirt particles
-dirt_locs = np.zeros((env.num_markers, 3))
-for i, marker in enumerate(env.model.mujoco_arena.markers):
-    marker_pos = np.array(env.sim.data.body_xpos[env.sim.model.body_name2id(marker.root_body)])
-    dirt_locs[i,:] = marker_pos
-
-# First, we reset the environment and then manually set the joint positions to their
-# initial positions and all the joint velocities and accelerations to 0.
+# Before commending planning, we reset the environment and then manually set the
+# joint positions to their initial positions and all the joint velocities and
+# accelerations to 0.
 obs = env.reset()
 jnts = env.sim.data.qpos[:7]
 for _ in range(40):
@@ -104,22 +77,58 @@ env.sim.data.qvel[:] = 0
 env.sim.data.qacc[:] = 0
 env.sim.forward()
 
-bt_ll.DEBUG = True
-openrave_bodies = None
+# Now, we load the domain and problem files, and also instantiate the
+# solvers.
 domain_fname = os.getcwd() + "/opentamp/domains/robot_wiping_domain/right_wipe_onlytable.domain"
 prob = os.getcwd() + "/opentamp/domains/robot_wiping_domain/probs/simple_move_onlytable_prob.prob"
 d_c = main.parse_file_to_dict(domain_fname)
 domain = parse_domain_config.ParseDomainConfig.parse(d_c)
 hls = FFSolver(d_c)
 p_c = main.parse_file_to_dict(prob)
-visual = len(os.environ.get('DISPLAY', '')) > 0
 problem = parse_problem_config.ParseProblemConfig.parse(p_c, domain, None, use_tf=True, sess=None, visual=visual)
 params = problem.init_state.params
+# We will use the robot body and table later.
 body_ind = env.mjpy_model.body_name2id("robot0_base")
+table_ind = env.mjpy_model.body_name2id("table")
 
-# Resetting the initial state to specific values
+# Get the locations of all dirt particles.
+# NOTE: Important that this is done after the env.reset() call
+# because this call randomizes all dirt positions.
+dirt_locs = np.zeros((env.num_markers, 3))
+for i, marker in enumerate(env.model.mujoco_arena.markers):
+    marker_pos = np.array(env.sim.data.body_xpos[env.sim.model.body_name2id(marker.root_body)])
+    dirt_locs[i,:] = marker_pos
+
+# Computes the dirty regions set, which contains a tuple (row, col) for every
+# region that is dirty. 
+dirty_regions = set()
+row_step_size = (TABLE_GEOM[0] * 2) / NUM_ROWS
+col_step_size = (TABLE_GEOM[1] * 2) / NUM_COLS
+for xyz_pose in dirt_locs.tolist():
+    x_pos = xyz_pose[0]
+    y_pos = xyz_pose[1]
+    # Compute the distances from all pre-defined regions.
+    distance_dict = {}
+    for row in range(NUM_ROWS):
+        for col in range(NUM_COLS):
+            region_xyz_pose = params[f"region_pose{row}_{col}"].right_ee_pos.squeeze()
+            xy_pose = region_xyz_pose[:-1]
+            dist_to_rowcol = np.linalg.norm(xy_pose - np.array([x_pos, y_pos]))
+            distance_dict[(row, col)] = dist_to_rowcol
+    top_regions = [k for k, _ in sorted(distance_dict.items(), key=lambda item: item[1])]
+    # Add the two closest regions to the dirty-regions list. This is done to be maximally
+    # covering of the dirt and not allow some dirt spots to slip through the cracks.
+    dirty_regions.add(top_regions[0])
+    dirty_regions.add(top_regions[1])
+
+
+# Resetting the initial state of the robot in our internal representation
+# to match the robotsuite sim.
 params["sawyer"].pose[:, 0] = env.sim.data.body_xpos[body_ind]
-
+# NOTE: for the table, we only want to set the (x,y) poses to
+# be equal, because we use a different geometry and thus the
+# height must be different.
+params["table"].pose[:2, 0] = env.sim.data.body_xpos[table_ind][:2]
 jnts = params["sawyer"].geom.jnt_names["right"]
 jnts = ["robot0_" + jnt for jnt in jnts]
 jnt_vals = []
@@ -130,17 +139,35 @@ for jnt in jnts:
     sawyer_inds.append(jnt_ind)
     jnt_vals.append(env.sim.data.qpos[jnt_ind])
 params["sawyer"].right[:, 0] = jnt_vals
+params["robot_init_pose"].right[:, 0] = jnt_vals
+params["robot_init_pose"].value[:, 0] = params["sawyer"].pose[:, 0]
 params["sawyer"].openrave_body.set_pose(params["sawyer"].pose[:, 0])
 params["sawyer"].openrave_body.set_dof({"right": params["sawyer"].right[:, 0]})
 info = params["sawyer"].openrave_body.fwd_kinematics("right")
 params["sawyer"].right_ee_pos[:, 0] = info["pos"]
 params["sawyer"].right_ee_pos[:, 0] = T.quaternion_to_euler(info["quat"], "xyzw")
+# Dynamically set goal to be the set of all dirty regions.
+goal = "(and"
+for dirty_region in dirty_regions:
+    # Regions start at (0,0), so anything with negative numbers
+    # would indicate a bug.
+    assert dirty_region[0] >= 0 and dirty_region[1] >= 0
+    goal += f"(WipedSurface region_pose{dirty_region[0]}_{dirty_region[1]}) "
+goal += ")"
 
+# NOTE: Run the below code to generate the region pose numbers that need to be
+# placed into the generate_onlytable_prob.py file.
 
-goal = "(RobotAt sawyer region_pose5_5)"
-# goal = "(InContactRobotTable sawyer table)"
-# goal = "(WipedSurface sawyer) (InContactRobotTable sawyer table)"
-solver = RobotSolver()
+# for row in range(NUM_ROWS):
+#         for col in range(NUM_COLS):
+#                 xyz_pose = params[f"region_pose{row}_{col}"].right_ee_pos.squeeze()
+#                 quat = np.array([0.0, 1.0, 0.0, 0.0])
+#                 print(f'("region_pose{row}_{col}", np.{repr(params["sawyer"].openrave_body.get_ik_from_pose(xyz_pose, quat, "right"))}),')
+# exit()
+
+# Instantiate the solver.
+solver = RobotSolverOSQP()
+# Run planning to obtain a final plan.
 plan, descr = p_mod_abs(
     hls, solver, domain, problem, goal=goal, debug=True, n_resamples=10
 )
@@ -152,6 +179,8 @@ if plan is None:
     print("Could not find plan; terminating.")
     sys.exit(1)
 
+# Create a list of the commands from the plan that we want to
+# execute in the real simulation.
 sawyer = plan.params["sawyer"]
 cmds = []
 for t in range(plan.horizon):
@@ -161,16 +190,12 @@ for t in range(plan.horizon):
     else:
         pos, euler = sawyer.right_ee_pos[:, t], sawyer.right_ee_rot[:, t]
         quat = np.array(T.euler_to_quaternion(euler, "xyzw"))
-        # angle = robosuite.utils.transform_utils.quat2axisangle(quat)
         rgrip = sawyer.right_gripper[0, t]
         act = np.r_[pos, quat]
-        # act = np.r_[pos, angle, [-rgrip]]
-        # act = np.r_[sawyer.right[:,t], [-rgrip]]
     cmds.append(act)
 
 grip_ind = env.mjpy_model.site_name2id("gripper0_grip_site")
 hand_ind = env.mjpy_model.body_name2id("robot0_right_hand")
-env.reset()
 env.sim.data.qpos[:7] = params["sawyer"].right[:, 0]
 env.sim.data.qacc[:] = 0
 env.sim.data.qvel[:] = 0
@@ -179,15 +204,17 @@ rot_ref = T.euler_to_quaternion(params["sawyer"].right_ee_rot[:, 0], "xyzw")
 
 for _ in range(40):
     env.step(np.zeros(7))
-    env.sim.data.qpos[:7] = params["sawyer"].right[:, 0]
+    env.sim.data.qpos[:7] = params["sawyer"].right[:, 0]  # This will help set the simulator joint sets!
     env.sim.forward()
 
+if has_render:
+    env.render()
 
 nsteps = 60
 cur_ind = 0
-
 tol = 1e-3
 
+# Loop to execute the plan's actions in the simulation.
 true_lb, true_ub = plan.params["sawyer"].geom.get_joint_limits("right")
 factor = (np.array(true_ub) - np.array(true_lb)) / 5
 ref_jnts = env.sim.data.qpos[:7]
@@ -203,23 +230,8 @@ for act in plan.actions:
     oldvel = env.sim.data.qvel[:]
     oldwarm = env.sim.data.qacc_warmstart[:]
     oldctrl = env.sim.data.ctrl[:]
-    # failed_preds = [p for p in failed_preds if (p[1]._rollout or not type(p[1].expr) is EqExpr)]
     print("FAILED:", t, failed_preds, act.name)
     old_state = env.sim.get_state()
-    # env.sim.reset()
-    # env.sim.data.qpos[:7] = plan.params['sawyer'].right[:,t]
-    # env.sim.data.qpos[cereal_ind:cereal_ind+3] = plan.params['cereal'].pose[:,t]
-    # env.sim.data.qpos[cereal_ind+3:cereal_ind+7] = cereal_quat
-    # env.sim.data.qpos[7:9] = grip
-    # env.sim.data.qacc[:] = 0. #oldacc
-    # env.sim.data.qacc_warmstart[:] = 0.#oldwarm
-    # env.sim.data.qvel[:] = 0.
-    # env.sim.data.ctrl[:] = 0.#oldctrl
-    # env.sim.data.qfrc_applied[:] = 0.#oldqfrc
-    # env.sim.data.xfrc_applied[:] = 0.#oldxfrc
-    # env.sim.forward()
-    # env.sim.set_state(old_state)
-    # env.sim.forward()
 
     sawyer = plan.params["sawyer"]
     for t in range(act.active_timesteps[0], act.active_timesteps[1]):
@@ -268,11 +280,6 @@ for act in plan.actions:
                 t,
             )
 
-            # if ee_to_sim_discrepancy[2] > 0.01:
-            #     from IPython import embed; embed()
-
-            # print('\n\n\n')
-
         else:
             targ = base_act[3:7]
             cur = env.sim.data.body_xquat[hand_ind]
@@ -311,13 +318,13 @@ for act in plan.actions:
                         sign * targrot, cur_sign * cur
                     )
                 )
-                # a = np.linalg.norm(angle)
-                # if a > 2*np.pi:
-                #    angle = (a - 2*np.pi)  * angle / a
                 act = np.r_[act[:3], angle, act[-1:]]
-                # act[3:6] -= robosuite.utils.transform_utils.quat2axisangle(cur)
-                # act[:7] = (act[:7] - np.array([env.sim.data.qpos[ind] for ind in sawyer_inds]))
                 obs = env.step(act)
-            print('EE PLAN VS SIM:', env.sim.data.site_xpos[grip_ind]-sawyer.right_ee_pos[:,t], t, env.reward())
         if has_render: env.render()
 plan.params['sawyer'].right[:,t] = env.sim.data.qpos[:7]
+
+# Print out whether the task was successfully completed or not.
+if len(env.wiped_markers) == env.num_markers:
+    print("Task Completed Successfully!")
+else:
+    print(f"Task Failed: Num Missed Markers: {env.num_markers - len(env.wiped_markers)}")
