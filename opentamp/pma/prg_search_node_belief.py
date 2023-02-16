@@ -54,11 +54,11 @@ class LLBeliefSeachNode(LLSearchNode):
                  targets=None,
                  debug=False)
 
-        def plan(self, solver, n_resamples=5, debug=False):
-            pass
+    def plan(self, solver, n_resamples=5, debug=False):
+        pass
 
-        def solved(self):
-            pass
+    def solved(self):
+        pass
 
-        def get_failed_pred(self, forward_only=False, st=0):
-            pass
+    def get_failed_pred(self, forward_only=False, st=0):
+        pass
