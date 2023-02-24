@@ -54,8 +54,14 @@ class LLBeliefSeachNode(LLSearchNode):
                  targets=None,
                  debug=False)
 
-    def plan(self, solver, n_resamples=5, debug=False):
+        self.belief = belief
+
+    def update_belief(self):
         pass
+
+    def plan(self, solver, n_resamples=5, debug=False):
+        self.update_belief()
+        super().plan(solver,n_resamples,debug)
 
     def solved(self):
         pass
