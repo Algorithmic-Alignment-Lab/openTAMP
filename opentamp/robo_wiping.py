@@ -17,6 +17,9 @@ from pma.pr_graph import *
 from pma.robosuite_solver import RobotSolverOSQP
 from sco_py.expr import *
 
+import pdb
+
+from PIL import Image
 
 # Constants
 GRIPPER_SIZE = [0.05, 0.12, 0.015]
@@ -43,6 +46,7 @@ else:
 # Set visualization variable.
 visual = len(os.environ.get("DISPLAY", "")) > 0
 has_render = visual
+print(has_render)
 # Create underlying robosuite environment. This is ultimately the environment
 # that we will execute plans in.
 env = robosuite.make(
@@ -88,6 +92,7 @@ p_c = main.parse_file_to_dict(prob)
 problem = parse_problem_config.ParseProblemConfig.parse(p_c, domain, None, use_tf=True, sess=None, visual=visual)
 params = problem.init_state.params
 # We will use the robot body and table later.
+# pdb.set_trace()
 body_ind = env.mjpy_model.body_name2id("robot0_base")
 table_ind = env.mjpy_model.body_name2id("table")
 
@@ -214,6 +219,11 @@ nsteps = 60
 cur_ind = 0
 tol = 1e-3
 
+# for visualization
+gif_frames = []
+render_interval = 10
+render_t =0
+
 # Loop to execute the plan's actions in the simulation.
 true_lb, true_ub = plan.params["sawyer"].geom.get_joint_limits("right")
 factor = (np.array(true_ub) - np.array(true_lb)) / 5
@@ -268,6 +278,17 @@ for act in plan.actions:
                 act = base_act.copy()
                 act[:7] = targ_jnts - env.sim.data.qpos[:7]
                 obs = env.step(act)
+                # print(obs)
+                if t == 0:
+                    gif_frames.append(
+                            Image.fromarray(
+                                env.sim.render(height=50, width=50, camera_name="frontview")
+                            )
+                    )
+
+                render_t = (render_t+1) % render_interval
+
+                # pdb.set_trace()
             end_jnts = env.sim.data.qpos[:7]
 
             ee_to_sim_discrepancy = (
@@ -320,7 +341,10 @@ for act in plan.actions:
                 )
                 act = np.r_[act[:3], angle, act[-1:]]
                 obs = env.step(act)
+                print(obs)
+        # pdb.set_trace()
         if has_render: env.render()
+        # pdb.set_trace()
 plan.params['sawyer'].right[:,t] = env.sim.data.qpos[:7]
 
 # Print out whether the task was successfully completed or not.
@@ -328,3 +352,9 @@ if len(env.wiped_markers) == env.num_markers:
     print("Task Completed Successfully!")
 else:
     print(f"Task Failed: Num Missed Markers: {env.num_markers - len(env.wiped_markers)}")
+
+gif_frames[0].save("render_planner.gif",
+        save_all=True,
+        append_images=gif_frames[1:],
+        duration=50,
+        loop=0)

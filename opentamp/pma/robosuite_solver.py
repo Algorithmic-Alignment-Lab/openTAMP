@@ -6,7 +6,7 @@ import opentamp.core.util_classes.transform_utils as T
 from opentamp.core.internal_repr.parameter import Object
 from opentamp.core.util_classes.matrix import Vector
 from opentamp.core.util_classes.openrave_body import OpenRAVEBody
-from opentamp.pma import backtrack_ll_solver_OSQP, backtrack_ll_solver_gurobi
+from opentamp.pma import backtrack_ll_solver_OSQP#, backtrack_ll_solver_gurobi
 from sco_py.expr import BoundExpr, QuadExpr
 
 REF_JNTS = np.array([0, -np.pi / 4, 0, np.pi / 4, 0, np.pi / 2, 0])
@@ -458,50 +458,49 @@ def _get_null_obj(robosuite_solver_class, plan, active_ts=None):
     return traj_objs
 
 
-class RobotSolverGurobi(backtrack_ll_solver_gurobi.BacktrackLLSolverGurobi):
-    def get_resample_param(self, a):
-        return _get_resample_param(a)
+#class RobotSolverGurobi(backtrack_ll_solver_gurobi.BacktrackLLSolverGurobi):
+ #   def get_resample_param(self, a):
+ #       return _get_resample_param(a)
+ #   def freeze_rs_param(self, act):
+ #       return _freeze_rs_param(act)
 
-    def freeze_rs_param(self, act):
-        return _freeze_rs_param(act)
+ #   def gripper_pose_upright_sampler(
+  #      self,
+   #     robot,
+    #    arm,
+     #   target_loc,
+      #  gripper_open=True,
+       # ts=(0, 20),
+   # ):
+    #    return _gripper_pose_upright_sampler(robot, arm, target_loc, gripper_open, ts)
 
-    def gripper_pose_upright_sampler(
-        self,
-        robot,
-        arm,
-        target_loc,
-        gripper_open=True,
-        ts=(0, 20),
-    ):
-        return _gripper_pose_upright_sampler(robot, arm, target_loc, gripper_open, ts)
+   # def vertical_gripper_with_obj_pose_sampler(
+    #self,
+     #   robot,
+      #  arm,
+       # obj,
+       # gripper_open=True,
+       # ts=(0, 20),
+       # rand=False,
+       # null_zero=True,
+       # disp=np.array([0, 0, const.GRASP_DIST]),
+   # ):
+    #    return _vertical_gripper_with_obj_pose_sampler(robot, arm, obj, gripper_open, ts, rand, null_zero, disp)
 
-    def vertical_gripper_with_obj_pose_sampler(
-        self,
-        robot,
-        arm,
-        obj,
-        gripper_open=True,
-        ts=(0, 20),
-        rand=False,
-        null_zero=True,
-        disp=np.array([0, 0, const.GRASP_DIST]),
-    ):
-        return _vertical_gripper_with_obj_pose_sampler(robot, arm, obj, gripper_open, ts, rand, null_zero, disp)
+    #def obj_in_gripper(self, ee_pos, targ_rot, obj):
+     #   return _obj_in_gripper(ee_pos, targ_rot, obj)
 
-    def obj_in_gripper(self, ee_pos, targ_rot, obj):
-        return _obj_in_gripper(ee_pos, targ_rot, obj)
+    #def obj_pose_suggester(self, plan, anum, resample_size=20, st=0):
+     #   return _obj_pose_suggester(plan, anum, resample_size, st)
 
-    def obj_pose_suggester(self, plan, anum, resample_size=20, st=0):
-        return _obj_pose_suggester(plan, anum, resample_size, st)
+    #def _cleanup_plan(self, plan, active_ts):
+     #   _cleanup_plan(plan, active_ts)
 
-    def _cleanup_plan(self, plan, active_ts):
-        _cleanup_plan(plan, active_ts)
+   # def _get_trajopt_obj(self, plan, active_ts=None):
+    #    return _get_trajopt_obj(self, plan, active_ts)
 
-    def _get_trajopt_obj(self, plan, active_ts=None):
-        return _get_trajopt_obj(self, plan, active_ts)
-
-    def _get_null_obj(self, plan, active_ts=None):
-        return _get_null_obj(self, plan, active_ts)
+    #def _get_null_obj(self, plan, active_ts=None):
+     #   return _get_null_obj(self, plan, active_ts)
 
 
 class RobotSolverOSQP(backtrack_ll_solver_OSQP.BacktrackLLSolverOSQP):
