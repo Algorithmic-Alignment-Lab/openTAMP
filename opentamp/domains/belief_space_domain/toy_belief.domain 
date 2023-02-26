@@ -1,9 +1,9 @@
 # Trivial belief-space domain, high-level selects target, low level executes this
-# Observe should simply reveal where the goal is
+# ObserveAction concentrates distribution of goal state
 
 Belief: True
 
-Types: Target
+Types: Target, Pointer
 
 # Attribute Import Paths:
 
@@ -11,8 +11,8 @@ Types: Target
 
 Primitive Predicates:
 
-Derived Predicates:
+Derived Predicates: AtTarget, Target, Pointer
 
-Action select_goal 1:
+Action select_goal 1: (?target - Target, ?pointer - Target) () (AtTarget pointer target)
 
-ObserveAction observe 1:
+ObserveAction observe 1: ()
