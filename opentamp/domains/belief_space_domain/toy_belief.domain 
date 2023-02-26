@@ -1,13 +1,18 @@
-# Trivial belief-space domain, high-level selects integer, low-level does continuous approximation of it
+# Trivial belief-space domain, high-level selects target, low level executes this
+# Observe should simply reveal where the goal is
 
-Types:
+Belief: True
 
-Attribute Import Paths:
+Types: Target
 
-Predicates Import Path:
+# Attribute Import Paths:
+
+# Predicates Import Path:
 
 Primitive Predicates:
 
 Derived Predicates:
 
-Action new_quick_movetograsp 1:
+Action select_goal 1:
+
+ObserveAction observe 1:

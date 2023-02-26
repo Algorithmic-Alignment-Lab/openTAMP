@@ -14,9 +14,10 @@ class ParseDomainConfig(object):
     @staticmethod
     def parse(domain_config):
 
-        return Domain(ParseDomainConfig._create_param_schemas(domain_config),
-                      ParseDomainConfig._create_pred_schemas(domain_config),
-                      ParseDomainConfig._create_action_schemas(domain_config))
+            return Domain(ParseDomainConfig._create_param_schemas(domain_config),
+                          ParseDomainConfig._create_pred_schemas(domain_config),
+                          ParseDomainConfig._create_action_schemas(domain_config),
+                          belief="Belief" in domain_config)
 
     @staticmethod
     def _create_param_schemas(domain_config):
