@@ -282,7 +282,7 @@ for act in plan.actions:
                 if t == 0:
                     gif_frames.append(
                             Image.fromarray(
-                                env.sim.render(height=50, width=50, camera_name="frontview")
+                                env.sim.render(height=192, width=192, camera_name="frontview")
                             )
                     )
 
