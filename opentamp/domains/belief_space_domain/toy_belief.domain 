@@ -1,0 +1,13 @@
+# Trivial belief-space domain, high-level selects integer, low-level does continuous approximation of it
+
+Types:
+
+Attribute Import Paths:
+
+Predicates Import Path:
+
+Primitive Predicates:
+
+Derived Predicates:
+
+Action new_quick_movetograsp 1:
