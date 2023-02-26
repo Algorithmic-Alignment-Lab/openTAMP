@@ -279,7 +279,7 @@ for act in plan.actions:
                 act[:7] = targ_jnts - env.sim.data.qpos[:7]
                 obs = env.step(act)
                 # print(obs)
-                if t == 0:
+                if render_t == 0:
                     gif_frames.append(
                             Image.fromarray(
                                 env.sim.render(height=192, width=192, camera_name="frontview")
