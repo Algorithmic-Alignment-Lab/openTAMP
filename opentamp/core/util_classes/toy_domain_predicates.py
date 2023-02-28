@@ -6,7 +6,7 @@ import numpy as np
 from opentamp.core.internal_repr.predicate import Predicate
 
 class PointerAtTarget(Predicate):
-    def __init__(self, name, params, expected_param_types):
+    def __init__(self,  name, params, expected_param_types, env=None, active_range=(0,0), priority = 0):
         super().__init__(name, params, expected_param_types)
 
     def test(self, time, negated=False, tol=None):
@@ -17,7 +17,7 @@ class PointerAtTarget(Predicate):
 
 
 class PointerAtGoal(Predicate):
-    def __init__(self, name, params, expected_param_types):
+    def __init__(self,  name, params, expected_param_types, env=None, active_range=(0,0), priority = 0):
         super().__init__(name, params, expected_param_types)
 
     def test(self, time, negated=False, tol=None):
@@ -28,7 +28,7 @@ class PointerAtGoal(Predicate):
 
 
 class PointerAtPointer(Predicate):
-    def __init__(self, name, params, expected_param_types):
+    def __init__(self,  name, params, expected_param_types, env=None, active_range=(0,0), priority = 0):
         super().__init__(name, params, expected_param_types)
 
     def test(self, time, negated=False, tol=None):
