@@ -13,6 +13,6 @@ Primitive Predicates: value, Goal, Vector1d; value, Target, Vector1d; value, Poi
 
 Derived Predicates: PointerAtTarget, Pointer, Target; PointerAtGoal, Pointer, Goal; PointerAtPointer, Pointer, Pointer
 
-Action select_goal 1: (?target - Target, ?pointer - Pointer) (PointerAtPointer ?pointer ?pointer) (PointerAtTarget ?pointer ?target)
+Action select_goal 1: (?target - Target, ?pointer - Pointer) (PointerAtPointer ?pointer ?pointer) (PointerAtTarget ?pointer ?target) 0:0 1:1
 
 # Action observe 1: (?target - Target, ?pointer - Target) () (BLocated pointer target)
