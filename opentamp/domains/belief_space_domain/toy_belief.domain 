@@ -1,18 +1,18 @@
 # Trivial belief-space domain, high-level selects target, low level executes this
 # ObserveAction concentrates distribution of goal state
 
-Belief: True
+# Belief: True
 
-Types: Target, Pointer
+Types: Goal, Pointer, Target
 
-# Attribute Import Paths:
+Attribute Import Paths: Vector1d opentamp.core.util_classes.matrix
 
-# Predicates Import Path:
+Predicates Import Path: opentamp.core.util_classes.toy_domain_predicates
 
-Primitive Predicates:
+Primitive Predicates: goal, Goal, Vector1d; target, Target, Vector1d; pointer, Pointer, Vector1d;
 
-Derived Predicates: AtTarget, Target, Pointer
+Derived Predicates: PointerAtTarget, Pointer, Target; PointerAtGoal, Pointer, Goal
 
-Action select_goal 1: (?target - Target, ?pointer - Target) () (AtTarget pointer target)
+Action select_goal 1: (?target - Target, ?pointer - Pointer) () (PointerAtTarget pointer target)
 
-ObserveAction observe 1: ()
+# Action observe 1: (?target - Target, ?pointer - Target) () (BLocated pointer target)

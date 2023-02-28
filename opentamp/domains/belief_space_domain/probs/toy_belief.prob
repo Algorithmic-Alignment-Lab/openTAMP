@@ -1,11 +1,12 @@
-# Trivial / sentinel intialization of toy problem
+# Trivial / sentinel initialization of toy problem
+# Goal at 0.5
 
-Belief: True
+# Belief: True
 
-Objects: ;
+Objects: Target (name t1); Pointer (name p1); Goal (name g)
 
-Init:
+Init: (value t1 0), (value p1 0), (value g 0.5)
 
-Goal:
+Goal: (PointerAtGoal p1 g)
 
-Invariants:
+# Invariants:
