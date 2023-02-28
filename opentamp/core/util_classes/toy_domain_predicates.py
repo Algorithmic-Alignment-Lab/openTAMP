@@ -13,7 +13,7 @@ class PointerAtTarget(Predicate):
         if not self.is_concrete():
             return False
 
-        pass
+        return True
 
 
 class PointerAtGoal(Predicate):
@@ -24,4 +24,15 @@ class PointerAtGoal(Predicate):
         if not self.is_concrete():
             return False
 
-        pass
+        return True
+
+
+class PointerAtPointer(Predicate):
+    def __init__(self, name, params, expected_param_types):
+        super().__init__(name, params, expected_param_types)
+
+    def test(self, time, negated=False, tol=None):
+        if not self.is_concrete():
+            return False
+
+        return True
