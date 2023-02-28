@@ -9,7 +9,7 @@ Attribute Import Paths: Vector1d opentamp.core.util_classes.matrix
 
 Predicates Import Path: opentamp.core.util_classes.toy_domain_predicates
 
-Primitive Predicates: goal, Goal, Vector1d; target, Target, Vector1d; pointer, Pointer, Vector1d
+Primitive Predicates: value, Goal, Vector1d; value, Target, Vector1d; value, Pointer, Vector1d
 
 Derived Predicates: PointerAtTarget, Pointer, Target; PointerAtGoal, Pointer, Goal
 
