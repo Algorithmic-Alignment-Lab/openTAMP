@@ -19,7 +19,7 @@ from sco_py.expr import *
 
 # TODO: initialize calls to B.S. planner, add paths to relevant folders
 domain_fname = os.getcwd() + "/opentamp/domains/belief_space_domain/toy_belief.domain"
-prob = os.getcwd() + "/opentamp/domains/belief_space_domain/probs/toy_belief.domain"
+prob = os.getcwd() + "/opentamp/domains/belief_space_domain/probs/toy_belief.prob"
 d_c = main.parse_file_to_dict(domain_fname)
 domain = parse_domain_config.ParseDomainConfig.parse(d_c)
 hls = FFSolver(d_c)
@@ -28,7 +28,7 @@ problem = parse_problem_config.ParseProblemConfig.parse(p_c, domain, None, use_t
 
 hls = FFSolver(d_c)
 solver = RobotSolverOSQP()
-goal = "(PointerAtGoal p1 g)" 
+goal = "(PointerAtGoal p1 g)"
 
 # Run planning to obtain a final plan.
 plan, descr = p_mod_abs(
