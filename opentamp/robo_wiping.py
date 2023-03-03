@@ -6,7 +6,7 @@ import pybullet as P
 import robosuite
 from robosuite.controllers import load_controller_config
 from scipy.spatial.transform import Rotation
-from robosuite.utils.mjmod import CameraModder
+from robosuite.utils.mjmod import LightingModder, CameraModder
 import opentamp.core.util_classes.transform_utils as T
 import main
 from opentamp.core.parsing import parse_domain_config, parse_problem_config
@@ -69,7 +69,7 @@ env = robosuite.make(
 
 obs, _, _, _ = env.step(np.zeros(7)) # Step a null action to 'boot' the environment.
 #insert calls to the modder
-modder = CameraModder(sim=env.sim, random_state=np.random.RandomState(5))
+modder = LightingModder(sim=env.sim, random_state=np.random.RandomState(5))
 #modder = DynamicsModder(sim=env.sim, random_state=np.random.RandomState(5))
 
 # Define function for easy printing
@@ -388,7 +388,7 @@ if len(env.wiped_markers) == env.num_markers:
 else:
     print(f"Task Failed: Num Missed Markers: {env.num_markers - len(env.wiped_markers)}")
 
-gif_frames[0].save("render_planner2.gif",
+gif_frames[0].save("render_planner3.gif",
         save_all=True,
         append_images=gif_frames[1:],
         duration=50,
