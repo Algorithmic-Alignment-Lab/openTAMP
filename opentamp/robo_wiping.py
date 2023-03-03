@@ -6,7 +6,7 @@ import pybullet as P
 import robosuite
 from robosuite.controllers import load_controller_config
 from scipy.spatial.transform import Rotation
-
+from robosuite.utils.mjmod import CameraModder
 import opentamp.core.util_classes.transform_utils as T
 import main
 from opentamp.core.parsing import parse_domain_config, parse_problem_config
@@ -66,8 +66,43 @@ env = robosuite.make(
     camera_widths=128,
     camera_heights=128,
 )
-obs, _, _, _ = env.step(np.zeros(7)) # Step a null action to 'boot' the environment.
 
+obs, _, _, _ = env.step(np.zeros(7)) # Step a null action to 'boot' the environment.
+#insert calls to the modder
+modder = CameraModder(sim=env.sim, random_state=np.random.RandomState(5))
+#modder = DynamicsModder(sim=env.sim, random_state=np.random.RandomState(5))
+
+# Define function for easy printing
+import pdb; pdb.set_trace()
+#cube_body_id = env.sim.model.body_name2id(env.cube.root_body)
+#cube_geom_ids = [env.sim.model.geom_name2id(geom) for geom in env.cube.contact_geoms]
+modder.randomize()
+
+#def print_params():
+ #   print(f"cube mass: {env.sim.model.body_mass[cube_body_id]}")
+  #  print(f"cube frictions: {env.sim.model.geom_friction[cube_geom_ids]}")
+   # print()
+
+# Print out initial parameter values
+#print("INITIAL VALUES")
+#print_params()
+
+# Modify the cube's properties
+#modder.mod(env.cube.root_body, "mass", 5.0)                                # make the cube really heavy
+#for geom_name in env.cube.contact_geoms:
+ #   modder.mod(geom_name, "friction", [2.0, 0.2, 0.04])           # greatly increase the friction
+#modder.update()                                                   # make sure the changes propagate in sim
+
+# Print out modified parameter values
+#print("MODIFIED VALUES")
+#print_params()
+
+# We can also restore defaults (original values) at any time
+#modder.restore_defaults()
+
+# Print out restored initial parameter values
+#print("RESTORED VALUES")
+#print_params()
 # Before commending planning, we reset the environment and then manually set the
 # joint positions to their initial positions and all the joint velocities and
 # accelerations to 0.
@@ -353,7 +388,7 @@ if len(env.wiped_markers) == env.num_markers:
 else:
     print(f"Task Failed: Num Missed Markers: {env.num_markers - len(env.wiped_markers)}")
 
-gif_frames[0].save("render_planner.gif",
+gif_frames[0].save("render_planner2.gif",
         save_all=True,
         append_images=gif_frames[1:],
         duration=50,
