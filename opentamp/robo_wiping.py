@@ -67,7 +67,7 @@ def run_samples():
         camera_widths=128,
         camera_heights=128,
     )
-
+    print(env.num_markers)
     obs, _, _, _ = env.step(np.zeros(7)) # Step a null action to 'boot' the environment.
     #insert calls to the modder
     modder = CameraModder(sim=env.sim, random_state=np.random.RandomState(5))
