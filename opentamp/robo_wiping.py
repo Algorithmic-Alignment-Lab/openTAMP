@@ -29,7 +29,7 @@ NUM_ROWS = int((TABLE_GEOM[0] * 2) / GRIPPER_SIZE[0])
 NUM_COLS = int((TABLE_GEOM[1] * 2) / GRIPPER_SIZE[1])
 REF_QUAT = np.array([0, 0, -0.7071, -0.7071])
 
-def main():
+def run_samples():
     ctrl_mode = "JOINT_POSITION"
     true_mode = "JOINT"
     controller_config = load_controller_config(default_controller=ctrl_mode)
@@ -404,5 +404,5 @@ def main():
 
 difference = []
 for i in range(5):
-    difference.append(main())
+    difference.append(run_samples())
 print(np.mean(np.array(difference)))
