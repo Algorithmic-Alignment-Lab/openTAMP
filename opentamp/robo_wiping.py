@@ -79,9 +79,9 @@ def run_samples():
     #cube_geom_ids = [env.sim.model.geom_name2id(geom) for geom in env.cube.contact_geoms]
     #modder.randomize()
     #position = modder.get_pos('agentview')
-    position = modder.get_pos('birdview')
+    position = modder.get_pos('robot0_eye_in_hand')
 
-    modder.set_pos('birdview', np.array([-0.5, 0.5, 1]))
+    modder.set_pos('robot0_eye_in_hand', np.array([0.2, 1, -1]))
 
 
     #print(position)
