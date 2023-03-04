@@ -6,7 +6,7 @@ import pybullet as P
 import robosuite
 from robosuite.controllers import load_controller_config
 from scipy.spatial.transform import Rotation
-from robosuite.utils.mjmod import LightingModder, CameraModder
+from robosuite.utils.mjmod import DynamicsModder, CameraModder, LightingModder 
 import opentamp.core.util_classes.transform_utils as T
 import main
 from opentamp.core.parsing import parse_domain_config, parse_problem_config
@@ -69,15 +69,21 @@ env = robosuite.make(
 
 obs, _, _, _ = env.step(np.zeros(7)) # Step a null action to 'boot' the environment.
 #insert calls to the modder
-modder = LightingModder(sim=env.sim, random_state=np.random.RandomState(5))
+modder = CameraModder(sim=env.sim, random_state=np.random.RandomState(5))
 #modder = DynamicsModder(sim=env.sim, random_state=np.random.RandomState(5))
 
 # Define function for easy printing
 import pdb; pdb.set_trace()
 #cube_body_id = env.sim.model.body_name2id(env.cube.root_body)
 #cube_geom_ids = [env.sim.model.geom_name2id(geom) for geom in env.cube.contact_geoms]
-modder.randomize()
+#modder.randomize()
+#position = modder.get_pos('agentview')
+position = modder.get_pos('birdview')
 
+modder.set_pos('birdview', np.array([-0.5, 0.5, 1]))
+
+
+#print(position)
 #def print_params():
  #   print(f"cube mass: {env.sim.model.body_mass[cube_body_id]}")
   #  print(f"cube frictions: {env.sim.model.geom_friction[cube_geom_ids]}")
@@ -388,7 +394,7 @@ if len(env.wiped_markers) == env.num_markers:
 else:
     print(f"Task Failed: Num Missed Markers: {env.num_markers - len(env.wiped_markers)}")
 
-gif_frames[0].save("render_planner3.gif",
+gif_frames[0].save("render_planner5.gif",
         save_all=True,
         append_images=gif_frames[1:],
         duration=50,
