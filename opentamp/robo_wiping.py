@@ -74,7 +74,7 @@ def main():
     #modder = DynamicsModder(sim=env.sim, random_state=np.random.RandomState(5))
 
     # Define function for easy printing
-    import pdb; pdb.set_trace()
+    #import pdb; pdb.set_trace()
     #cube_body_id = env.sim.model.body_name2id(env.cube.root_body)
     #cube_geom_ids = [env.sim.model.geom_name2id(geom) for geom in env.cube.contact_geoms]
     #modder.randomize()
