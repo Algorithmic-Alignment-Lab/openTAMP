@@ -70,7 +70,7 @@ def run_samples():
 
     obs, _, _, _ = env.step(np.zeros(7)) # Step a null action to 'boot' the environment.
     #insert calls to the modder
-    modder = CameraModder(sim=env.sim, random_state=np.random.RandomState(5))
+    #modder = CameraModder(sim=env.sim, random_state=np.random.RandomState(5))
     #modder = DynamicsModder(sim=env.sim, random_state=np.random.RandomState(5))
 
     # Define function for easy printing
@@ -79,9 +79,9 @@ def run_samples():
     #cube_geom_ids = [env.sim.model.geom_name2id(geom) for geom in env.cube.contact_geoms]
     #modder.randomize()
     #position = modder.get_pos('agentview')
-    position = modder.get_pos('robot0_eye_in_hand')
+    #position = modder.get_pos('robot0_eye_in_hand')
 
-    modder.set_pos('robot0_eye_in_hand', np.array([0.2, 1, -1]))
+    #modder.set_pos('robot0_eye_in_hand', np.array([0.2, 1, -1]))
 
 
     #print(position)
