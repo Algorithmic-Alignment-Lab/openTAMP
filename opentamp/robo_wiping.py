@@ -264,7 +264,8 @@ tol = 1e-3
 gif_frames = []
 render_interval = 10
 render_t =0
-modder.set_pos('frontview', np.array([100, 200, -200]))
+modder.set_pos('frontview', np.array([100., 200., -200.]))
+env.sim.forward()
 # Loop to execute the plan's actions in the simulation.
 true_lb, true_ub = plan.params["sawyer"].geom.get_joint_limits("right")
 factor = (np.array(true_ub) - np.array(true_lb)) / 5
