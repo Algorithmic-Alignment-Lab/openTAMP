@@ -80,7 +80,7 @@ modder = CameraModder(sim=env.sim, random_state=np.random.RandomState(5))
 #position = modder.get_pos('agentview')
 #position = modder.get_pos('robot0_eye_in_hand')
 
-modder.set_pos('frontview', np.array([100, 200, -200]))
+#modder.set_pos('frontview', np.array([100, 200, -200]))
 
 
 #print(position)
@@ -264,7 +264,7 @@ tol = 1e-3
 gif_frames = []
 render_interval = 10
 render_t =0
-
+modder.set_pos('frontview', np.array([100, 200, -200]))
 # Loop to execute the plan's actions in the simulation.
 true_lb, true_ub = plan.params["sawyer"].geom.get_joint_limits("right")
 factor = (np.array(true_ub) - np.array(true_lb)) / 5
@@ -394,7 +394,7 @@ if len(env.wiped_markers) == env.num_markers:
 else:
     print(f"Task Failed: Num Missed Markers: {env.num_markers - len(env.wiped_markers)}")
 
-gif_frames[0].save("render_planner5.gif",
+gif_frames[0].save("render_planner6.gif",
         save_all=True,
         append_images=gif_frames[1:],
         duration=50,
