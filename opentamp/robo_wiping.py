@@ -65,6 +65,7 @@ env = robosuite.make(
     initialization_noise={'magnitude': 0., 'type': 'gaussian'},
     camera_widths=128,
     camera_heights=128,
+    hard_reset = False,
 )
 print(env.num_markers)
 obs, _, _, _ = env.step(np.zeros(7)) # Step a null action to 'boot' the environment.
