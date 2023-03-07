@@ -3,10 +3,10 @@
 
 # Belief: True
 
-Objects: Target (name t1); Pointer (name p1); Goal (name g)
+Objects: Location (name p1loc); Pointer (name p1); Location (name g)
 
-Init: (value t1 undefined), (value p1 [0]), (value g [0.5]); (PointerAtPointer p1 p1)
+Init: (value p1loc undefined), (value p1 [0]), (value g [0.5]);
 
-Goal: (PointerAtGoal p1 g)
+Goal: (PointerAtLocation p1 g)
 
 # Invariants:

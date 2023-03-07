@@ -9,10 +9,10 @@ Attribute Import Paths: Vector1d opentamp.core.util_classes.matrix
 
 Predicates Import Path: opentamp.core.util_classes.toy_domain_predicates
 
-Primitive Predicates: value, Goal, Vector1d; value, Target, Vector1d; value, Pointer, Vector1d
+Primitive Predicates: value, Goal, Vector1d; value, Location, Vector1d; value, Pointer, Vector1d
 
-Derived Predicates: PointerAtTarget, Pointer, Target; PointerAtGoal, Pointer, Goal; PointerAtPointer, Pointer, Pointer
+Derived Predicates: PointerAtLocation, Pointer, Location; AlwaysTrue
 
-Action select_goal 1: (?target - Target, ?pointer - Pointer) (PointerAtPointer ?pointer ?pointer) (PointerAtTarget ?pointer ?target) 0:0 1:0
+Action select_goal 1: (?location - Location, ?pointer - Pointer) (AlwaysTrue) (and (PointerAtLocation ?pointer ?location)) 0:0 1:0
 
 # Action observe 1: (?target - Target, ?pointer - Target) () (BLocated pointer target)
