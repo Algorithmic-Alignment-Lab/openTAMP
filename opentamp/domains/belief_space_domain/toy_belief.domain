@@ -11,8 +11,8 @@ Predicates Import Path: opentamp.core.util_classes.toy_domain_predicates
 
 Primitive Predicates: value, Location, Vector1d; value, Pointer, Vector1d
 
-Derived Predicates: PointerAtLocation, Pointer, Location; AlwaysTrue
+Derived Predicates: PointerAtLocation, Pointer, Location; AlwaysTrue, Pointer
 
-Action select_goal 1: (?location - Location, ?pointer - Pointer) (AlwaysTrue) (and (PointerAtLocation ?pointer ?location)) 0:0 1:0
+Action select_goal 1: (?location - Location, ?pointer - Pointer) (AlwaysTrue pointer) (and (PointerAtLocation ?pointer ?location)) 0:0 1:0
 
 # Action observe 1: (?target - Target, ?pointer - Target) () (BLocated pointer target)
