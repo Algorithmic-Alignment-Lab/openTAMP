@@ -37,3 +37,9 @@ plan, descr = p_mod_abs(
 
 # for now, just prints plan (doesn't try to enact plan, no replanning)
 print(plan)
+
+# TODO: implement replan logic when belief-space implemented
+
+# TODO: BCheckSuccess (first pass implement, gets at needed subroutines)
+
+# TODO: observation model details (how will observe actions look *concretely*?)
