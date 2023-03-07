@@ -28,7 +28,7 @@ problem = parse_problem_config.ParseProblemConfig.parse(p_c, domain, None, use_t
 
 hls = FFSolver(d_c)
 solver = RobotSolverOSQP()
-goal = "(PointerAtGoal p1 g)"
+goal = "(PointerAtLocation p1 g)"
 
 # Run planning to obtain a final plan.
 plan, descr = p_mod_abs(
