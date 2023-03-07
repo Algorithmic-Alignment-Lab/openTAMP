@@ -5,7 +5,7 @@
 
 Objects: Location (name p1loc); Pointer (name p1); Location (name g)
 
-Init: (value p1loc undefined), (value p1 [0]), (value g [0.5]);
+Init: (value p1loc undefined), (value p1 [0]), (value g [0.5]); (AlwaysTrue p1)
 
 Goal: (PointerAtLocation p1 g)
 
