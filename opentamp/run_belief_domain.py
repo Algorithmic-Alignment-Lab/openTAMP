@@ -20,19 +20,20 @@ from sco_py.expr import *
 # TODO: initialize calls to B.S. planner, add paths to relevant folders
 domain_fname = os.getcwd() + "/opentamp/domains/belief_space_domain/toy_belief.domain"
 prob = os.getcwd() + "/opentamp/domains/belief_space_domain/probs/toy_belief.prob"
+
+# configuring task plan
 d_c = main.parse_file_to_dict(domain_fname)
 domain = parse_domain_config.ParseDomainConfig.parse(d_c)
 hls = FFSolver(d_c)
+
+# configuing motion plan
 p_c = main.parse_file_to_dict(prob)
 problem = parse_problem_config.ParseProblemConfig.parse(p_c, domain, None, use_tf=True, sess=None, visual=False)
-
-hls = FFSolver(d_c)
 solver = RobotSolverOSQP()
-goal = "(PointerAtLocation p1 g)"
 
 # Run planning to obtain a final plan.
 plan, descr = p_mod_abs(
-    hls, solver, domain, problem, goal=goal, debug=True, n_resamples=10
+    hls, solver, domain, problem, debug=True, n_resamples=10
 )
 
 # for now, just prints plan (doesn't try to enact plan, no replanning)
