@@ -35,7 +35,9 @@ class PointerAtLocation(Predicate):
         if not self.is_concrete():
             return False
 
-        return True
+        values = [getattr(param, 'value') for param in self.params]
+
+        return np.abs(values[0] - values[1]) < 0.01
 
 class AlwaysTrue(Predicate):
     def __init__(self,  name, params, expected_param_types, env=None, active_range=(0,0), priority = 0):
