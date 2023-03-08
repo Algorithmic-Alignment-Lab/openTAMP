@@ -35,7 +35,8 @@ solver = RobotSolverOSQP()
 
 # Run planning to obtain a final plan.
 plan, descr = p_mod_abs(
-    hls, solver, domain, problem, debug=False, n_resamples=1000
+    hls, solver, domain, problem,
+    goal="(PointerAtLocation p1 g)", debug=False, n_resamples=1000
 )
 
 # for now, just prints plan (doesn't try to enact plan, no replanning)
