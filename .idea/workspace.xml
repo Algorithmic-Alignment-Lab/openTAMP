@@ -5,7 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/pma/backtrack_ll_solver_OSQP.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/pma/backtrack_ll_solver_OSQP.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -221,14 +222,7 @@
       <workItem from="1677614173333" duration="3000" />
       <workItem from="1677963474745" duration="389000" />
       <workItem from="1678128438681" duration="728000" />
-      <workItem from="1678227806695" duration="12587000" />
-    </task>
-    <task id="LOCAL-00001" summary="add belief-space API for search node">
-      <created>1676402939015</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1676402939015</updated>
+      <workItem from="1678227806695" duration="13011000" />
     </task>
     <task id="LOCAL-00002" summary="add signature methods to override from IBSP paper">
       <created>1676577224220</created>
@@ -559,7 +553,21 @@
       <option name="project" value="LOCAL" />
       <updated>1678248755155</updated>
     </task>
-    <option name="localTasksCounter" value="49" />
+    <task id="LOCAL-00049" summary="switch to backtrack solver OSQP">
+      <created>1678248815522</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1678248815522</updated>
+    </task>
+    <task id="LOCAL-00050" summary="switch to backtrack solver OSQP (debug import)">
+      <created>1678248845390</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1678248845391</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -588,8 +596,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="debug fixed problem statements 3" />
-    <MESSAGE value="debug fixed problem statements 4" />
     <MESSAGE value="debug 6" />
     <MESSAGE value="debug 7" />
     <MESSAGE value="debug 8" />
@@ -613,7 +619,9 @@
     <MESSAGE value="add pdb statement at predicate" />
     <MESSAGE value="add debug flag to predicates" />
     <MESSAGE value="change low level optimizer type" />
-    <option name="LAST_COMMIT_MESSAGE" value="change low level optimizer type" />
+    <MESSAGE value="switch to backtrack solver OSQP" />
+    <MESSAGE value="switch to backtrack solver OSQP (debug import)" />
+    <option name="LAST_COMMIT_MESSAGE" value="switch to backtrack solver OSQP (debug import)" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/openTAMP$run_training.coverage" NAME="run_training Coverage Results" MODIFIED="1673532741418" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/opentamp/policy_hooks" />
