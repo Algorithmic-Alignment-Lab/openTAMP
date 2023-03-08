@@ -14,7 +14,7 @@ from opentamp.core.util_classes.openrave_body import *
 from opentamp.core.util_classes.transform_utils import *
 from pma.hl_solver import *
 from pma.pr_graph import *
-from pma.ll_solver_OSQP import BacktrackLLSolverOSQP
+from pma.backtrack_ll_solver_OSQP import BacktrackLLSolverOSQP
 from sco_py.expr import *
 
 # TODO: initialize calls to B.S. planner, add paths to relevant folders
