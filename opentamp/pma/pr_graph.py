@@ -32,6 +32,7 @@ def p_mod_abs(
         return None, "Goal is already satisfied. No planning done."
 
     abs_prob = hl_solver.translate_problem(problem, initial, goal)
+    import pdb; pdb.set_trace()
     n0 = HLSearchNode(
         abs_prob,
         domain,
