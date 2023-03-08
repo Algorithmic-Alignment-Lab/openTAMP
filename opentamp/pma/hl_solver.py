@@ -183,9 +183,9 @@ class FFSolver(HLSolver):
                 dom_str += "?var%d - %s "%(i, param)
             dom_str += ")\n"
         dom_str += ")\n\n"
-        import pdb; pdb.set_trace()
         for key in list(domain_config.keys()):
             if key.startswith("Action"):
+                import pdb; pdb.set_trace()
                 count, inds = 0, [0]
                 for i, token in enumerate(domain_config[key]):
                     if token == "(":
