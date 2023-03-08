@@ -1,0 +1,586 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/openTAMP.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2023-02-07,_9_50_a_m__[Changes]/shelved.patch" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2023-02-07__9_50_a_m___Changes_.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2023-02-14,_8_47_a_m__[Changes]/shelved.patch" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2023-02-14__8_47_a_m___Changes_.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/pma/hl_solver.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/pma/hl_solver.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="learn_policies" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/opentamp/pma/prg_search_node.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/opentamp/pma/pr_graph.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/opentamp/domains/__init__.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/opentamp/domains/belief_space_domain/generate_belief_prob.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/opentamp/core/parsing/parse_problem_config.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/opentamp/core/parsing/parse_domain_config.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/opentamp/domains/robot_block_stacking/probs/stack_3_blocks.prob" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/opentamp/robo_wiping.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/opentamp/domains/robot_wiping_domain/generate_wiping_domain.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/opentamp/domains/robot_block_stacking/generate_block_prob.py" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2K0ZE2RPJ9xOnA6bOLgDUVjmZ1Q" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RunManager" selected="Python tests.pytest for stable.test_run">
+    <configuration name="robo_wiping" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="openTAMP" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/opentamp" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/opentamp/robo_wiping.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="run_training_spawn" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="openTAMP" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/opentamp/policy_hooks" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/opentamp/policy_hooks/run_training_spawn.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="eval_baselines.sh" type="ShConfigurationType" temporary="true">
+      <option name="SCRIPT_TEXT" value="" />
+      <option name="INDEPENDENT_SCRIPT_PATH" value="true" />
+      <option name="SCRIPT_PATH" value="$PROJECT_DIR$/opentamp/bash_scripts/eval_baselines.sh" />
+      <option name="SCRIPT_OPTIONS" value="" />
+      <option name="INDEPENDENT_SCRIPT_WORKING_DIRECTORY" value="true" />
+      <option name="SCRIPT_WORKING_DIRECTORY" value="$PROJECT_DIR$/opentamp/bash_scripts" />
+      <option name="INDEPENDENT_INTERPRETER_PATH" value="true" />
+      <option name="INTERPRETER_PATH" value="/bin/zsh" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="EXECUTE_IN_TERMINAL" value="true" />
+      <option name="EXECUTE_SCRIPT_FILE" value="true" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="run_baselines.sh" type="ShConfigurationType" temporary="true">
+      <option name="SCRIPT_TEXT" value="" />
+      <option name="INDEPENDENT_SCRIPT_PATH" value="true" />
+      <option name="SCRIPT_PATH" value="$PROJECT_DIR$/opentamp/bash_scripts/run_baselines.sh" />
+      <option name="SCRIPT_OPTIONS" value="" />
+      <option name="INDEPENDENT_SCRIPT_WORKING_DIRECTORY" value="true" />
+      <option name="SCRIPT_WORKING_DIRECTORY" value="$PROJECT_DIR$/opentamp/bash_scripts" />
+      <option name="INDEPENDENT_INTERPRETER_PATH" value="true" />
+      <option name="INTERPRETER_PATH" value="/bin/zsh" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="EXECUTE_IN_TERMINAL" value="true" />
+      <option name="EXECUTE_SCRIPT_FILE" value="true" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="pytest for stable.test_run" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+      <module name="openTAMP" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/opentamp/policy_hooks/baselines" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_parameters" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;stable.test_run&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Shell Script.run_baselines.sh" />
+        <item itemvalue="Shell Script.eval_baselines.sh" />
+        <item itemvalue="Python tests.pytest for stable.test_run" />
+        <item itemvalue="Python.run_training_spawn" />
+        <item itemvalue="Python.robo_wiping" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="" />
+      <created>1673113346483</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1673113346483</updated>
+      <workItem from="1673371397067" duration="507000" />
+      <workItem from="1673375212763" duration="4104000" />
+      <workItem from="1673391954333" duration="1727000" />
+      <workItem from="1673471601742" duration="2276000" />
+      <workItem from="1673533909258" duration="352000" />
+      <workItem from="1673534407692" duration="122000" />
+      <workItem from="1673534542778" duration="1657000" />
+      <workItem from="1673536298515" duration="1340000" />
+      <workItem from="1673538643363" duration="8345000" />
+      <workItem from="1673644394600" duration="4024000" />
+      <workItem from="1674073211601" duration="3747000" />
+      <workItem from="1674237932116" duration="657000" />
+      <workItem from="1674401188919" duration="163000" />
+      <workItem from="1674504096293" duration="2659000" />
+      <workItem from="1674568001620" duration="1233000" />
+      <workItem from="1674596512614" duration="112000" />
+      <workItem from="1674596806682" duration="333000" />
+      <workItem from="1674597957993" duration="363000" />
+      <workItem from="1674600300860" duration="101000" />
+      <workItem from="1674601086188" duration="190000" />
+      <workItem from="1674619173257" duration="95000" />
+      <workItem from="1674629195395" duration="644000" />
+      <workItem from="1675023079161" duration="14060000" />
+      <workItem from="1675193688288" duration="3232000" />
+      <workItem from="1675536662492" duration="4876000" />
+      <workItem from="1675780859088" duration="14015000" />
+      <workItem from="1675870419567" duration="610000" />
+      <workItem from="1675871067094" duration="13814000" />
+      <workItem from="1676259272804" duration="1827000" />
+      <workItem from="1676382621612" duration="824000" />
+      <workItem from="1676383640602" duration="6377000" />
+      <workItem from="1676404062690" duration="2288000" />
+      <workItem from="1676442019854" duration="1000" />
+      <workItem from="1676563925477" duration="734000" />
+      <workItem from="1676573111674" duration="5103000" />
+      <workItem from="1677016787667" duration="2487000" />
+      <workItem from="1677098897823" duration="5106000" />
+      <workItem from="1677132989042" duration="16000" />
+      <workItem from="1677195280725" duration="7007000" />
+      <workItem from="1677247980296" duration="6197000" />
+      <workItem from="1677365895990" duration="651000" />
+      <workItem from="1677426515468" duration="397000" />
+      <workItem from="1677435286499" duration="5019000" />
+      <workItem from="1677525509512" duration="17475000" />
+      <workItem from="1677614173333" duration="3000" />
+      <workItem from="1677963474745" duration="389000" />
+      <workItem from="1678128438681" duration="728000" />
+      <workItem from="1678227806695" duration="11065000" />
+    </task>
+    <task id="LOCAL-00001" summary="add belief-space API for search node">
+      <created>1676402939015</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1676402939015</updated>
+    </task>
+    <task id="LOCAL-00002" summary="add signature methods to override from IBSP paper">
+      <created>1676577224220</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1676577224220</updated>
+    </task>
+    <task id="LOCAL-00003" summary="debug signatures">
+      <created>1676577326342</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1676577326342</updated>
+    </task>
+    <task id="LOCAL-00004" summary="add signatures for belief-space problems">
+      <created>1677208782268</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1677208782268</updated>
+    </task>
+    <task id="LOCAL-00005" summary="add skeleton of script to run belief-space planner">
+      <created>1677448257500</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1677448257500</updated>
+    </task>
+    <task id="LOCAL-00006" summary="add skeleton for toy belief space problem">
+      <created>1677449116551</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1677449116551</updated>
+    </task>
+    <task id="LOCAL-00007" summary="add support for &quot;Belief&quot; keyword in domain + problem files">
+      <created>1677450338410</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1677450338410</updated>
+    </task>
+    <task id="LOCAL-00008" summary="refine toy_belief skeletons">
+      <created>1677454143320</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1677454143320</updated>
+    </task>
+    <task id="LOCAL-00009" summary="complete skeletons for fuyll-observed toy domain">
+      <created>1677603380211</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1677603380211</updated>
+    </task>
+    <task id="LOCAL-00010" summary="debug domain file">
+      <created>1677604078925</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1677604078925</updated>
+    </task>
+    <task id="LOCAL-00011" summary="rename domain file (remove whitespace)">
+      <created>1677604358272</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1677604358272</updated>
+    </task>
+    <task id="LOCAL-00012" summary="add value to domain file">
+      <created>1677604566215</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1677604566215</updated>
+    </task>
+    <task id="LOCAL-00013" summary="add vacuous forall conditions">
+      <created>1677604725753</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1677604725753</updated>
+    </task>
+    <task id="LOCAL-00014" summary="add vacuous predicate, and return types on predicate">
+      <created>1677605152135</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1677605152135</updated>
+    </task>
+    <task id="LOCAL-00015" summary="add timesteps for an action">
+      <created>1677605679174</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1677605679174</updated>
+    </task>
+    <task id="LOCAL-00016" summary="debug to read problem file">
+      <created>1677605740285</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1677605740285</updated>
+    </task>
+    <task id="LOCAL-00017" summary="debug to add initialization of derived predicates">
+      <created>1677607672732</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1677607672732</updated>
+    </task>
+    <task id="LOCAL-00018" summary="add braces for initialization of values">
+      <created>1677607755437</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1677607755437</updated>
+    </task>
+    <task id="LOCAL-00019" summary="add arguments to domain predicates">
+      <created>1677608057001</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1677608057001</updated>
+    </task>
+    <task id="LOCAL-00020" summary="change timestep logic">
+      <created>1678228927045</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1678228927045</updated>
+    </task>
+    <task id="LOCAL-00021" summary="unify types">
+      <created>1678231061943</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1678231061943</updated>
+    </task>
+    <task id="LOCAL-00022" summary="debug fixed problem statements">
+      <created>1678231210735</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1678231210735</updated>
+    </task>
+    <task id="LOCAL-00023" summary="debug fixed problem statements 2">
+      <created>1678231264585</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1678231264585</updated>
+    </task>
+    <task id="LOCAL-00024" summary="debug fixed problem statements 3">
+      <created>1678231335761</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1678231335761</updated>
+    </task>
+    <task id="LOCAL-00025" summary="debug fixed problem statements 4">
+      <created>1678231411519</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1678231411519</updated>
+    </task>
+    <task id="LOCAL-00026" summary="debug 6">
+      <created>1678231664025</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1678231664025</updated>
+    </task>
+    <task id="LOCAL-00027" summary="debug 7">
+      <created>1678231750963</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1678231750963</updated>
+    </task>
+    <task id="LOCAL-00028" summary="debug 8">
+      <created>1678232447848</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1678232447848</updated>
+    </task>
+    <task id="LOCAL-00029" summary="debug 9">
+      <created>1678232539737</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1678232539737</updated>
+    </task>
+    <task id="LOCAL-00030" summary="debug 10">
+      <created>1678232561996</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1678232561996</updated>
+    </task>
+    <task id="LOCAL-00031" summary="modify at-location logic to be non-trivial">
+      <created>1678241740956</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1678241740956</updated>
+    </task>
+    <task id="LOCAL-00032" summary="debug contract logic">
+      <created>1678242033656</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1678242033656</updated>
+    </task>
+    <task id="LOCAL-00033" summary="changing range for values">
+      <created>1678243359443</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1678243359443</updated>
+    </task>
+    <task id="LOCAL-00034" summary="add vectors back in">
+      <created>1678243411629</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1678243411629</updated>
+    </task>
+    <task id="LOCAL-00035" summary="add predicates">
+      <created>1678243522062</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1678243522062</updated>
+    </task>
+    <task id="LOCAL-00036" summary="debug modify timesteps">
+      <created>1678243881311</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1678243881311</updated>
+    </task>
+    <task id="LOCAL-00037" summary="add print statements">
+      <created>1678244122146</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1678244122146</updated>
+    </task>
+    <task id="LOCAL-00038" summary="add breakpoint in abstract plan">
+      <created>1678245086182</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1678245086182</updated>
+    </task>
+    <task id="LOCAL-00039" summary="add goal string back in">
+      <created>1678245476629</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1678245476629</updated>
+    </task>
+    <task id="LOCAL-00040" summary="add breakpoint in the domain translation">
+      <created>1678247008028</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1678247008028</updated>
+    </task>
+    <task id="LOCAL-00041" summary="move breakpoint to action">
+      <created>1678247121044</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1678247121044</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ID_ORDER">
+      <list>
+        <option value="Default.Root" />
+        <option value="Default.Author" />
+        <option value="Default.Date" />
+        <option value="Default.Subject" />
+        <option value="Space.CommitStatus" />
+      </list>
+    </option>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="debug to add initialization of derived predicates" />
+    <MESSAGE value="add braces for initialization of values" />
+    <MESSAGE value="add arguments to domain predicates" />
+    <MESSAGE value="change timestep logic" />
+    <MESSAGE value="unify types" />
+    <MESSAGE value="debug fixed problem statements" />
+    <MESSAGE value="debug fixed problem statements 2" />
+    <MESSAGE value="debug fixed problem statements 3" />
+    <MESSAGE value="debug fixed problem statements 4" />
+    <MESSAGE value="debug 6" />
+    <MESSAGE value="debug 7" />
+    <MESSAGE value="debug 8" />
+    <MESSAGE value="debug 9" />
+    <MESSAGE value="debug 10" />
+    <MESSAGE value="modify at-location logic to be non-trivial" />
+    <MESSAGE value="debug contract logic" />
+    <MESSAGE value="changing range for values" />
+    <MESSAGE value="add vectors back in" />
+    <MESSAGE value="add predicates" />
+    <MESSAGE value="debug modify timesteps" />
+    <MESSAGE value="add print statements" />
+    <MESSAGE value="add breakpoint in abstract plan" />
+    <MESSAGE value="add goal string back in" />
+    <MESSAGE value="add breakpoint in the domain translation" />
+    <MESSAGE value="move breakpoint to action" />
+    <option name="LAST_COMMIT_MESSAGE" value="move breakpoint to action" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/openTAMP$run_training.coverage" NAME="run_training Coverage Results" MODIFIED="1673532741418" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/opentamp/policy_hooks" />
+    <SUITE FILE_PATH="coverage/openTAMP$run_training_spawn.coverage" NAME="run_training_spawn Coverage Results" MODIFIED="1673536731789" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/opentamp/policy_hooks" />
+    <SUITE FILE_PATH="coverage/openTAMP$main.coverage" NAME="main Coverage Results" MODIFIED="1673535735154" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/opentamp" />
+    <SUITE FILE_PATH="coverage/openTAMP$pytest_for_stable_test_run.coverage" NAME="pytest for stable.test_run Coverage Results" MODIFIED="1675174799623" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/opentamp/policy_hooks/baselines" />
+    <SUITE FILE_PATH="coverage/openTAMP$robo_wiping.coverage" NAME="robo_wiping Coverage Results" MODIFIED="1674067411055" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/opentamp" />
+  </component>
+</project>

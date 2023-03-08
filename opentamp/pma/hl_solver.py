@@ -185,8 +185,8 @@ class FFSolver(HLSolver):
         dom_str += ")\n\n"
         for key in list(domain_config.keys()):
             if key.startswith("Action"):
-                import pdb; pdb.set_trace()
                 count, inds = 0, [0]
+                import pdb; pdb.set_trace()
                 for i, token in enumerate(domain_config[key]):
                     if token == "(":
                         count += 1
@@ -194,6 +194,7 @@ class FFSolver(HLSolver):
                         count -= 1
                         if count == 0:
                             inds.append(i+1)
+                import pdb; pdb.set_trace()
                 params = domain_config[key][inds[0]:inds[1]].strip()
                 pre = domain_config[key][inds[1]:inds[2]].strip()
                 eff = domain_config[key][inds[2]:inds[3]].strip()
