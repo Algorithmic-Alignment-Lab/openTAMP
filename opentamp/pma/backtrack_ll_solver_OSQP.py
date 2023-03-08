@@ -124,8 +124,8 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
     def freeze_rs_param(self, act):
         return True
 
-    def get_resample_param(self, a):
-        return a.params[0]
+    # def get_resample_param(self, a):
+    #     return a.params[0]
 
     def backtrack_solve(self, plan, callback=None, verbose=False, n_resamples=5):
         success = self._backtrack_solve(
