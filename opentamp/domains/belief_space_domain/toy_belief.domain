@@ -3,7 +3,7 @@
 
 # Belief: True
 
-Types: Pointer, Location, Goal
+Types: Pointer, Location
 
 Attribute Import Paths: Vector1d opentamp.core.util_classes.matrix
 
