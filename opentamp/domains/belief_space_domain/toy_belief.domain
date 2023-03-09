@@ -11,8 +11,8 @@ Predicates Import Path: opentamp.core.util_classes.toy_domain_predicates
 
 Primitive Predicates: value, Location, Gaussian; value, Pointer, Vector1d
 
-Derived Predicates: BPointerAtLocation, Pointer, Location; Uncertain, Location; AlwaysTrue, Pointer
+Derived Predicates: MLPointerAtLocation, Pointer, Location; Uncertain, Location; AlwaysTrue, Pointer
 
-Action select_goal 1: (?location - Location, ?pointer - Pointer) (and (not Uncertain ?location)) (and (BPointerAtLocation ?pointer ?location) (not Uncertain ?location)) 0:0 1:0
+Action select_goal 1: (?location - Location, ?pointer - Pointer) (and (not Uncertain ?location)) (and (MLPointerAtLocation ?pointer ?location) (not Uncertain ?location)) 0:0 1:0
 
 Action observe 5: (?location - Location, ?pointer - Pointer) (and (AlwaysTrue ?pointer)) (and (not Uncertain ?location)) 0:0 5:0

@@ -5,10 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/opentamp/core/util_classes/distributions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/core/util_classes/toy_domain_predicates.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/util_classes/toy_domain_predicates.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/probs/toy_belief.prob" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/probs/toy_belief.prob" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/toy_belief.domain" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/toy_belief.domain" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -234,14 +230,7 @@
       <workItem from="1677963474745" duration="389000" />
       <workItem from="1678128438681" duration="728000" />
       <workItem from="1678227806695" duration="19222000" />
-      <workItem from="1678381360760" duration="2361000" />
-    </task>
-    <task id="LOCAL-00016" summary="debug to read problem file">
-      <created>1677605740285</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1677605740285</updated>
+      <workItem from="1678381360760" duration="2514000" />
     </task>
     <task id="LOCAL-00017" summary="debug to add initialization of derived predicates">
       <created>1677607672732</created>
@@ -579,7 +568,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678327052180</updated>
     </task>
-    <option name="localTasksCounter" value="65" />
+    <task id="LOCAL-00065" summary="add distribution class, Gaussian implemented as subcase">
+      <created>1678384002938</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1678384002938</updated>
+    </task>
+    <option name="localTasksCounter" value="66" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -638,7 +634,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add breakpoint in the domain translation" />
     <MESSAGE value="move breakpoint to action" />
     <MESSAGE value="add new breakpoint" />
     <MESSAGE value="add single-element ands for domain file" />
@@ -663,7 +658,8 @@
     <MESSAGE value="add ToySolver stochastic logic" />
     <MESSAGE value="add ToySolver stochastic logic 2" />
     <MESSAGE value="add ToySolver stochastic logic 3" />
-    <option name="LAST_COMMIT_MESSAGE" value="add ToySolver stochastic logic 3" />
+    <MESSAGE value="add distribution class, Gaussian implemented as subcase" />
+    <option name="LAST_COMMIT_MESSAGE" value="add distribution class, Gaussian implemented as subcase" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/openTAMP$run_training.coverage" NAME="run_training Coverage Results" MODIFIED="1673532741418" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/opentamp/policy_hooks" />
