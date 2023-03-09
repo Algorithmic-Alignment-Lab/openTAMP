@@ -3,9 +3,9 @@
 
 # Belief: True
 
-Objects: Location (name g); Pointer (name p1);
+Objects: BLocation (name g); Pointer (name p1);
 
-Init: (value p1 [0.0]), (value g [5.0]); (AlwaysTrue p1)
+Init: (value p1 [0.0]), (value g [5.0, ]); (AlwaysTrue p1)
 
 Goal: (PointerAtLocation p1 g)
 

@@ -5,12 +5,14 @@
 
 Types: Pointer, Location
 
-Attribute Import Paths: Vector1d opentamp.core.util_classes.matrix
+Attribute Import Paths: Vector1d opentamp.core.util_classes.matrix, Gaussian opentamp.core.util_classes.distributions
 
 Predicates Import Path: opentamp.core.util_classes.toy_domain_predicates
 
-Primitive Predicates: value, Location, Vector1d; value, Pointer, Vector1d
+Primitive Predicates: value, Location, Gaussian; value, Pointer, Vector1d
 
-Derived Predicates: PointerAtLocation, Pointer, Location; AlwaysTrue, Pointer
+Derived Predicates: BPointerAtLocation, Pointer, Location; Uncertain, Location; AlwaysTrue, Pointer
 
-Action select_goal 1: (?location - Location, ?pointer - Pointer) (and (AlwaysTrue ?pointer)) (and (PointerAtLocation ?pointer ?location)) 0:0 1:0
+Action select_goal 1: (?location - Location, ?pointer - Pointer) (and (not Uncertain ?location)) (and (BPointerAtLocation ?pointer ?location) (not Uncertain ?location)) 0:0 1:0
+
+Action observe 5: (?location - Location, ?pointer - Pointer) (and (AlwaysTrue ?pointer)) (and (not Uncertain ?location)) 0:0 5:0
