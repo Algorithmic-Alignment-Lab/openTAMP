@@ -4,7 +4,7 @@ import numpy as np
 
 class ToySolver():
     def __init__(self, sigma):
-        self.sigma = 0
+        self.sigma = sigma
 
     # used for the ToyDomain demo, just randomize around the proposed location
     # with variation sigma
