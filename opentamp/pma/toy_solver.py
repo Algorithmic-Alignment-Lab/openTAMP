@@ -16,5 +16,5 @@ class ToySolver():
         st=0,
         debug=False
     ):
-        print(plan)
+        print(plan.actions)
         return True
