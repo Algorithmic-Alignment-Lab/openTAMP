@@ -72,9 +72,9 @@ class MLPointerAtLocation(Predicate):
 
         value_vec = [getattr(param, 'value') for param in self.params]  # these are now individually Gaussians
         if negated:
-            return np.abs(value_vec[0].mean - value_vec[1].item()) >= 0.01
+            return np.abs(value_vec[0].item() - value_vec[1].mean) >= 0.01
         else:
-            return np.abs(value_vec[0].mean - value_vec[1].item()) < 0.01
+            return np.abs(value_vec[0].item() - value_vec[1].mean) < 0.01
 
 
 class Uncertain(Predicate):
