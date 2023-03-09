@@ -16,5 +16,5 @@ class ToySolver():
         st=0,
         debug=False
     ):
-        print(plan.actions)
+        import pdb; pdb.set_trace()
         return True

@@ -389,7 +389,6 @@ class FFSolver(HLSolver):
                     except KeyError:
                         raise ProblemConfigException("Parameter '%s' for predicate type '%s' not defined in domain file."%(n, p_name))
                 try:
-                    import pdb; pdb.set_trace()
                     init_pred = domain.pred_schemas[p_name].pred_class(name="initpred%d"%i,
                                                                         params=p_objs,
                                                                         expected_param_types=domain.pred_schemas[p_name].expected_params,
