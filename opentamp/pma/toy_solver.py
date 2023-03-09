@@ -18,6 +18,6 @@ class ToySolver():
     ):
         import pdb; pdb.set_trace()
 
-        print(plan.actions[0].params['location'].value.item())
+        print(plan.actions[0].params[0].value.item())
 
         return True
