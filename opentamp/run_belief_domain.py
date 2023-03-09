@@ -31,7 +31,7 @@ hls = FFSolver(d_c)
 p_c = main.parse_file_to_dict(prob)
 problem = parse_problem_config.ParseProblemConfig.parse(p_c, domain, None, use_tf=True, sess=None, visual=False)
 print(problem)
-solver = TrivialSolver()
+solver = ToySolver()
 
 # Run planning to obtain a final plan.
 plan, descr = p_mod_abs(

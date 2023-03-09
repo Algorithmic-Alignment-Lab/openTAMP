@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/opentamp/pma/toy_solver.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
-    </list>
+    <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -223,14 +219,7 @@
       <workItem from="1677614173333" duration="3000" />
       <workItem from="1677963474745" duration="389000" />
       <workItem from="1678128438681" duration="728000" />
-      <workItem from="1678227806695" duration="19049000" />
-    </task>
-    <task id="LOCAL-00004" summary="add signatures for belief-space problems">
-      <created>1677208782268</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1677208782268</updated>
+      <workItem from="1678227806695" duration="19113000" />
     </task>
     <task id="LOCAL-00005" summary="add skeleton of script to run belief-space planner">
       <created>1677448257500</created>
@@ -568,7 +557,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678249900233</updated>
     </task>
-    <option name="localTasksCounter" value="53" />
+    <task id="LOCAL-00053" summary="add ToySolver for low level optimization">
+      <created>1678320680721</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1678320680721</updated>
+    </task>
+    <option name="localTasksCounter" value="54" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -597,7 +593,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="debug 8" />
     <MESSAGE value="debug 9" />
     <MESSAGE value="debug 10" />
     <MESSAGE value="modify at-location logic to be non-trivial" />
@@ -622,7 +617,8 @@
     <MESSAGE value="switch to backtrack solver OSQP (debug import)" />
     <MESSAGE value="add get_resample_params method" />
     <MESSAGE value="robot solver OSQP attempt" />
-    <option name="LAST_COMMIT_MESSAGE" value="robot solver OSQP attempt" />
+    <MESSAGE value="add ToySolver for low level optimization" />
+    <option name="LAST_COMMIT_MESSAGE" value="add ToySolver for low level optimization" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/openTAMP$run_training.coverage" NAME="run_training Coverage Results" MODIFIED="1673532741418" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/opentamp/policy_hooks" />
