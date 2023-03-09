@@ -1,10 +1,13 @@
 # from opentamp.pma.backtrack_ll_solver_OSQP import *
 
+import numpy as np
+
 class ToySolver():
     def __init__(self, sigma):
         self.sigma = 0
 
-    # used for the ToyDomain demo
+    # used for the ToyDomain demo, just randomize around the proposed location
+    # with variation sigma
     def _backtrack_solve(self,
         plan,
         callback=None,
@@ -16,8 +19,10 @@ class ToySolver():
         st=0,
         debug=False
     ):
-        import pdb; pdb.set_trace()
+        for act in plan.actions:
+            mean_location = act.params[0].value.item()
+            set_location = np.random.normal(loc=mean_location, scale=self.sigma)
+            if np.abs(set_location - mean_location) < 0.01:
+                return True
 
-        print(plan.actions[0].params[0].value.item())
-
-        return True
+        return False
