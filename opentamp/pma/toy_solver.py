@@ -17,4 +17,7 @@ class ToySolver():
         debug=False
     ):
         import pdb; pdb.set_trace()
+
+        print(plan.actions[0].params['location'].value.item())
+
         return True
