@@ -5,9 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/probs/toy_belief.prob" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/probs/toy_belief.prob" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/toy_belief.domain" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/toy_belief.domain" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -232,14 +230,7 @@
       <workItem from="1677963474745" duration="389000" />
       <workItem from="1678128438681" duration="728000" />
       <workItem from="1678227806695" duration="19222000" />
-      <workItem from="1678381360760" duration="3275000" />
-    </task>
-    <task id="LOCAL-00021" summary="unify types">
-      <created>1678231061943</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1678231061943</updated>
+      <workItem from="1678381360760" duration="3380000" />
     </task>
     <task id="LOCAL-00022" summary="debug fixed problem statements">
       <created>1678231210735</created>
@@ -577,7 +568,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678384478550</updated>
     </task>
-    <option name="localTasksCounter" value="70" />
+    <task id="LOCAL-00070" summary="debug belief-space specification 5">
+      <created>1678384898149</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1678384898149</updated>
+    </task>
+    <option name="localTasksCounter" value="71" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -636,7 +634,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="remove pdb statements 2" />
     <MESSAGE value="add pdb statement at predicate" />
     <MESSAGE value="add debug flag to predicates" />
     <MESSAGE value="change low level optimizer type" />
@@ -661,7 +658,8 @@
     <MESSAGE value="debug belief-space specification 2" />
     <MESSAGE value="debug belief-space specification 3" />
     <MESSAGE value="debug belief-space specification 4" />
-    <option name="LAST_COMMIT_MESSAGE" value="debug belief-space specification 4" />
+    <MESSAGE value="debug belief-space specification 5" />
+    <option name="LAST_COMMIT_MESSAGE" value="debug belief-space specification 5" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/openTAMP$run_training.coverage" NAME="run_training Coverage Results" MODIFIED="1673532741418" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/opentamp/policy_hooks" />
