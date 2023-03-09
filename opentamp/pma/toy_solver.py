@@ -5,7 +5,7 @@ class ToySolver():
         self.sigma = 0
 
     # used for the ToyDomain demo
-    def _backtrack_solver(self,
+    def _backtrack_solve(self,
         plan,
         callback=None,
         anum=0,
