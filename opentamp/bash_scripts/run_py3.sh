@@ -1,5 +1,5 @@
-for N in 1 2 3 4 5
-do
+#for N in 1 2 3 4 5
+#do
     for S in third
     do
 
@@ -15,6 +15,7 @@ do
                                                        -expl_wt 10 -expl_eta 4 \
                                                        -col_coeff 0.0 \
                                                        -motion 5 \
+                                                       -n_gpu 2 \
                                                        -rollout 1 \
                                                        -task 1 \
                                                        -post -pre \
@@ -28,5 +29,5 @@ do
 
 
     done
-done
+#done
 
