@@ -15,7 +15,7 @@ python3 -W ignore policy_hooks/run_training.py -c policy_hooks.namo.hyperparams_
                                                 -expl_wt 10 -expl_eta 4 \
                                                 -col_coeff 0.0 \
                                                 -motion 5 \
-                                                -n_gpu 2 \
+                                                -n_gpu 1 \
                                                 -rollout 1 \
                                                 -task 1 \
                                                 -post -pre \
