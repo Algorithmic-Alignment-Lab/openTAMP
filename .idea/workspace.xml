@@ -235,14 +235,7 @@
       <workItem from="1678420010008" duration="107000" />
       <workItem from="1678458570464" duration="541000" />
       <workItem from="1678480682621" duration="1280000" />
-      <workItem from="1678756141992" duration="5982000" />
-    </task>
-    <task id="LOCAL-00041" summary="move breakpoint to action">
-      <created>1678247121044</created>
-      <option name="number" value="00041" />
-      <option name="presentableId" value="LOCAL-00041" />
-      <option name="project" value="LOCAL" />
-      <updated>1678247121044</updated>
+      <workItem from="1678756141992" duration="6094000" />
     </task>
     <task id="LOCAL-00042" summary="add new breakpoint">
       <created>1678247285539</created>
@@ -580,7 +573,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678763661604</updated>
     </task>
-    <option name="localTasksCounter" value="90" />
+    <task id="LOCAL-00090" summary="debug param specification">
+      <created>1678763723547</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1678763723547</updated>
+    </task>
+    <option name="localTasksCounter" value="91" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -639,7 +639,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add ToySolver stochastic logic 3" />
     <MESSAGE value="add distribution class, Gaussian implemented as subcase" />
     <MESSAGE value="debug belief-space specification" />
     <MESSAGE value="debug belief-space specification 2" />
@@ -664,7 +663,8 @@
     <MESSAGE value="remove negation (ablation) 4" />
     <MESSAGE value="debug negation / refactor to ExprPredicate" />
     <MESSAGE value="replace uncertain test logic with trivial" />
-    <option name="LAST_COMMIT_MESSAGE" value="replace uncertain test logic with trivial" />
+    <MESSAGE value="debug param specification" />
+    <option name="LAST_COMMIT_MESSAGE" value="debug param specification" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/openTAMP$run_training.coverage" NAME="run_training Coverage Results" MODIFIED="1673532741418" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/opentamp/policy_hooks" />
