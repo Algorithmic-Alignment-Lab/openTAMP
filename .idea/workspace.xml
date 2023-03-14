@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="" />
+    <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/opentamp/core/util_classes/common_predicates.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/util_classes/common_predicates.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -233,14 +235,7 @@
       <workItem from="1678420010008" duration="107000" />
       <workItem from="1678458570464" duration="541000" />
       <workItem from="1678480682621" duration="1280000" />
-      <workItem from="1678756141992" duration="7688000" />
-    </task>
-    <task id="LOCAL-00049" summary="switch to backtrack solver OSQP">
-      <created>1678248815522</created>
-      <option name="number" value="00049" />
-      <option name="presentableId" value="LOCAL-00049" />
-      <option name="project" value="LOCAL" />
-      <updated>1678248815522</updated>
+      <workItem from="1678756141992" duration="7917000" />
     </task>
     <task id="LOCAL-00050" summary="switch to backtrack solver OSQP (debug import)">
       <created>1678248845390</created>
@@ -578,7 +573,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678765335168</updated>
     </task>
-    <option name="localTasksCounter" value="98" />
+    <task id="LOCAL-00098" summary="alter attr_inds constructor">
+      <created>1678765439204</created>
+      <option name="number" value="00098" />
+      <option name="presentableId" value="LOCAL-00098" />
+      <option name="project" value="LOCAL" />
+      <updated>1678765439205</updated>
+    </task>
+    <option name="localTasksCounter" value="99" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -637,7 +639,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="debug belief-space specification 6" />
     <MESSAGE value="debug belief-space specification 7" />
     <MESSAGE value="add uncertain as a goal" />
     <MESSAGE value="add uncertain as a goal 2" />
@@ -662,7 +663,8 @@
     <MESSAGE value="debug attr_inds constructor" />
     <MESSAGE value="add affine expression" />
     <MESSAGE value="remove call in constructor" />
-    <option name="LAST_COMMIT_MESSAGE" value="remove call in constructor" />
+    <MESSAGE value="alter attr_inds constructor" />
+    <option name="LAST_COMMIT_MESSAGE" value="alter attr_inds constructor" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/openTAMP$run_training.coverage" NAME="run_training Coverage Results" MODIFIED="1673532741418" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/opentamp/policy_hooks" />
