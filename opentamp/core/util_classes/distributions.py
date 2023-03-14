@@ -20,4 +20,5 @@ class Gaussian(Distribution):
             vec = eval(vec)
         obj = torch.distributions.normal.Normal(torch.tensor([vec[0]]), torch.tensor([vec[1]]))
         assert len(vec) == 2  # only two parameters expected
+        print(obj)
         return obj

@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/core/util_classes/toy_domain_predicates.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/util_classes/toy_domain_predicates.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/core/util_classes/distributions.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/util_classes/distributions.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -231,14 +231,12 @@
       <workItem from="1677963474745" duration="389000" />
       <workItem from="1678128438681" duration="728000" />
       <workItem from="1678227806695" duration="19222000" />
-      <workItem from="1678381360760" duration="4220000" />
-    </task>
-    <task id="LOCAL-00028" summary="debug 8">
-      <created>1678232447848</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1678232447848</updated>
+      <workItem from="1678381360760" duration="5110000" />
+      <workItem from="1678393235762" duration="570000" />
+      <workItem from="1678420010008" duration="107000" />
+      <workItem from="1678458570464" duration="541000" />
+      <workItem from="1678480682621" duration="1280000" />
+      <workItem from="1678756141992" duration="103000" />
     </task>
     <task id="LOCAL-00029" summary="debug 9">
       <created>1678232539737</created>
@@ -576,7 +574,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678385766824</updated>
     </task>
-    <option name="localTasksCounter" value="77" />
+    <task id="LOCAL-00077" summary="debug predicate logic">
+      <created>1678385884597</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1678385884597</updated>
+    </task>
+    <option name="localTasksCounter" value="78" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -635,7 +640,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="robot solver OSQP attempt" />
     <MESSAGE value="add ToySolver for low level optimization" />
     <MESSAGE value="debug ToySolver call" />
     <MESSAGE value="debug ToySolver call 2" />
@@ -660,7 +664,8 @@
     <MESSAGE value="add uncertain as a goal 2" />
     <MESSAGE value="add uncertain as a goal 3" />
     <MESSAGE value="add uncertain as a goal 4" />
-    <option name="LAST_COMMIT_MESSAGE" value="add uncertain as a goal 4" />
+    <MESSAGE value="debug predicate logic" />
+    <option name="LAST_COMMIT_MESSAGE" value="debug predicate logic" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/openTAMP$run_training.coverage" NAME="run_training Coverage Results" MODIFIED="1673532741418" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/opentamp/policy_hooks" />
