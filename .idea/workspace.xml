@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opentamp/core/util_classes/toy_domain_predicates.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/util_classes/toy_domain_predicates.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -236,14 +235,7 @@
       <workItem from="1678420010008" duration="107000" />
       <workItem from="1678458570464" duration="541000" />
       <workItem from="1678480682621" duration="1280000" />
-      <workItem from="1678756141992" duration="5924000" />
-    </task>
-    <task id="LOCAL-00040" summary="add breakpoint in the domain translation">
-      <created>1678247008028</created>
-      <option name="number" value="00040" />
-      <option name="presentableId" value="LOCAL-00040" />
-      <option name="project" value="LOCAL" />
-      <updated>1678247008028</updated>
+      <workItem from="1678756141992" duration="5982000" />
     </task>
     <task id="LOCAL-00041" summary="move breakpoint to action">
       <created>1678247121044</created>
@@ -581,7 +573,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678763507998</updated>
     </task>
-    <option name="localTasksCounter" value="89" />
+    <task id="LOCAL-00089" summary="replace uncertain test logic with trivial">
+      <created>1678763661604</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1678763661604</updated>
+    </task>
+    <option name="localTasksCounter" value="90" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -640,7 +639,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add ToySolver stochastic logic 2" />
     <MESSAGE value="add ToySolver stochastic logic 3" />
     <MESSAGE value="add distribution class, Gaussian implemented as subcase" />
     <MESSAGE value="debug belief-space specification" />
@@ -665,7 +663,8 @@
     <MESSAGE value="remove negation (ablation) 3" />
     <MESSAGE value="remove negation (ablation) 4" />
     <MESSAGE value="debug negation / refactor to ExprPredicate" />
-    <option name="LAST_COMMIT_MESSAGE" value="debug negation / refactor to ExprPredicate" />
+    <MESSAGE value="replace uncertain test logic with trivial" />
+    <option name="LAST_COMMIT_MESSAGE" value="replace uncertain test logic with trivial" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/openTAMP$run_training.coverage" NAME="run_training Coverage Results" MODIFIED="1673532741418" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/opentamp/policy_hooks" />
