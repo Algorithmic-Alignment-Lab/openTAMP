@@ -111,7 +111,7 @@ class UncertainTest(Predicate):
         value_vec = [getattr(param, 'value') for param in self.params]  # these are now individually Gaussians
 
         # placeholder in debugging
-        return False
+        return True
 
 
 class AlwaysTrue(Predicate):
