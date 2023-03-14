@@ -7,7 +7,6 @@
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opentamp/core/util_classes/toy_domain_predicates.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/util_classes/toy_domain_predicates.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/probs/toy_belief.prob" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/probs/toy_belief.prob" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/toy_belief.domain" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/toy_belief.domain" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -238,14 +237,7 @@
       <workItem from="1678420010008" duration="107000" />
       <workItem from="1678458570464" duration="541000" />
       <workItem from="1678480682621" duration="1280000" />
-      <workItem from="1678756141992" duration="426000" />
-    </task>
-    <task id="LOCAL-00030" summary="debug 10">
-      <created>1678232561996</created>
-      <option name="number" value="00030" />
-      <option name="presentableId" value="LOCAL-00030" />
-      <option name="project" value="LOCAL" />
-      <updated>1678232561996</updated>
+      <workItem from="1678756141992" duration="503000" />
     </task>
     <task id="LOCAL-00031" summary="modify at-location logic to be non-trivial">
       <created>1678241740956</created>
@@ -583,7 +575,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678756259383</updated>
     </task>
-    <option name="localTasksCounter" value="79" />
+    <task id="LOCAL-00079" summary="remove stochastic logic for debugging">
+      <created>1678756579544</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1678756579544</updated>
+    </task>
+    <option name="localTasksCounter" value="80" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -642,7 +641,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="debug ToySolver call" />
     <MESSAGE value="debug ToySolver call 2" />
     <MESSAGE value="debug _backtrack_solve call" />
     <MESSAGE value="add test print statement" />
@@ -667,7 +665,8 @@
     <MESSAGE value="add uncertain as a goal 4" />
     <MESSAGE value="debug predicate logic" />
     <MESSAGE value="add printouts for distribution objects" />
-    <option name="LAST_COMMIT_MESSAGE" value="add printouts for distribution objects" />
+    <MESSAGE value="remove stochastic logic for debugging" />
+    <option name="LAST_COMMIT_MESSAGE" value="remove stochastic logic for debugging" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/openTAMP$run_training.coverage" NAME="run_training Coverage Results" MODIFIED="1673532741418" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/opentamp/policy_hooks" />

@@ -97,7 +97,7 @@ class Uncertain(Predicate):
             return value_vec[0].variance >= 0.05
 
 
-class Uncertain(Predicate):
+class UncertainTest(Predicate):
     def __init__(self,  name, params, expected_param_types, env=None, active_range=(0,0), priority = 0, debug=False):
         super().__init__(name, params, expected_param_types)
 
