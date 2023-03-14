@@ -46,7 +46,7 @@ class PointerAtLocation(ExprPredicate):
             (params[1], ["value", np.array([0], dtype='int32')])
         ])
 
-        print([len(a) for a in attr_inds])
+        print([a for a in attr_inds.values()])
 
         e = EqExpr(getattr(params[0], 'value'), getattr(params[1], 'value'))
 
