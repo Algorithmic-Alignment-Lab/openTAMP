@@ -55,7 +55,7 @@ class ExprPredicate(Predicate):
         debug=False,
     ):
         """
-        attr2inds is a dictionary that maps each parameter name to a
+        attr_inds is a dictionary that maps each parameter name to a
         list of (attr, active_inds) pairs. This defines the mapping
         from the primitive predicates of the params to the inputs to
         expr

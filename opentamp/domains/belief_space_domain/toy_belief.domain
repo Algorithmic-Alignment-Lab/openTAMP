@@ -13,6 +13,6 @@ Primitive Predicates: value, Location, Vector1d; value, Pointer, Vector1d
 
 Derived Predicates: PointerAtLocation, Pointer, Location; UncertainTest, Location; AlwaysTrue, Pointer
 
-Action select_location 1: (?location - Location, ?pointer - Pointer) (and (UncertainTest ?location)) (and (PointerAtLocation ?pointer ?location) (UncertainTest ?location)) 0:0 0:1 1:0
+Action select_location 1: (?location - Location, ?pointer - Pointer) (and (not (UncertainTest ?location))) (and (PointerAtLocation ?pointer ?location) (not (UncertainTest ?location))) 0:0 0:1 1:0
 
-Action observe 5: (?location - Location, ?pointer - Pointer) (and (AlwaysTrue ?pointer)) (and (UncertainTest ?location)) 0:0 5:4
+Action observe 5: (?location - Location, ?pointer - Pointer) (and (AlwaysTrue ?pointer)) (and (not (UncertainTest ?location))) 0:0 5:4

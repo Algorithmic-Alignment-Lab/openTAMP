@@ -15,7 +15,7 @@ from opentamp.core.util_classes.transform_utils import *
 from pma.hl_solver import *
 from pma.pr_graph import *
 from pma.toy_solver import ToySolver
-from sco_py.expr import *
+from sco_py.expr import Expr, AffExpr, EqExpr, LEqExpr
 
 # TODO: initialize calls to B.S. planner, add paths to relevant folders
 domain_fname = os.getcwd() + "/opentamp/domains/belief_space_domain/toy_belief.domain"
