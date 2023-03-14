@@ -25,4 +25,4 @@ class ToySolver():
             if np.abs(set_location - mean_location) < 0.01:
                 return True
 
-        return True
+        return False

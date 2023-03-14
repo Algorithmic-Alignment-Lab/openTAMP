@@ -235,14 +235,7 @@
       <workItem from="1678420010008" duration="107000" />
       <workItem from="1678458570464" duration="541000" />
       <workItem from="1678480682621" duration="1280000" />
-      <workItem from="1678756141992" duration="1470000" />
-    </task>
-    <task id="LOCAL-00037" summary="add print statements">
-      <created>1678244122146</created>
-      <option name="number" value="00037" />
-      <option name="presentableId" value="LOCAL-00037" />
-      <option name="project" value="LOCAL" />
-      <updated>1678244122146</updated>
+      <workItem from="1678756141992" duration="1586000" />
     </task>
     <task id="LOCAL-00038" summary="add breakpoint in abstract plan">
       <created>1678245086182</created>
@@ -580,7 +573,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678757594191</updated>
     </task>
-    <option name="localTasksCounter" value="86" />
+    <task id="LOCAL-00086" summary="remove negation (ablation) 3">
+      <created>1678757675694</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1678757675694</updated>
+    </task>
+    <option name="localTasksCounter" value="87" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
