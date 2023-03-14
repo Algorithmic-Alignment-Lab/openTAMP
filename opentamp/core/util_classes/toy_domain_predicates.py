@@ -30,7 +30,13 @@ from opentamp.core.internal_repr.predicate import Predicate
 class PointerAtLocation(Predicate):
     def __init__(self,  name, params, expected_param_types, env=None, active_range=(0,0), priority = 0, debug=False):
         super().__init__(name, params, expected_param_types)
+        self.hl_info = False
         self.hl_ignore = False
+        self.hl_include = False
+        self.tf_vars = []
+        self._rollout = False
+        self._nonrollout = False
+        self._init_include = True
 
     def hl_test(self, time, negated=False, tol=None):
         return self.test(time, negated, tol)
@@ -63,7 +69,13 @@ class PointerAtLocation(Predicate):
 class MLPointerAtLocation(Predicate):
     def __init__(self,  name, params, expected_param_types, env=None, active_range=(0,0), priority = 0, debug=False):
         super().__init__(name, params, expected_param_types)
+        self.hl_info = False
         self.hl_ignore = False
+        self.hl_include = False
+        self.tf_vars = []
+        self._rollout = False
+        self._nonrollout = False
+        self._init_include = True
 
     def hl_test(self, time, negated=False, tol=None):
         return self.test(time, negated, tol)
@@ -82,7 +94,13 @@ class MLPointerAtLocation(Predicate):
 class Uncertain(Predicate):
     def __init__(self,  name, params, expected_param_types, env=None, active_range=(0,0), priority = 0, debug=False):
         super().__init__(name, params, expected_param_types)
+        self.hl_info = False
         self.hl_ignore = False
+        self.hl_include = False
+        self.tf_vars = []
+        self._rollout = False
+        self._nonrollout = False
+        self._init_include = True
 
     def hl_test(self, time, negated=False, tol=None):
         return self.test(time, negated, tol)
@@ -103,7 +121,13 @@ class Uncertain(Predicate):
 class UncertainTest(Predicate):
     def __init__(self,  name, params, expected_param_types, env=None, active_range=(0,0), priority = 0, debug=False):
         super().__init__(name, params, expected_param_types)
+        self.hl_info = False
         self.hl_ignore = False
+        self.hl_include = False
+        self.tf_vars = []
+        self._rollout = False
+        self._nonrollout = False
+        self._init_include = True
 
     def hl_test(self, time, negated=False, tol=None):
         return self.test(time, negated, tol)
@@ -121,7 +145,13 @@ class UncertainTest(Predicate):
 class AlwaysTrue(Predicate):
     def __init__(self,  name, params, expected_param_types, env=None, active_range=(0,0), priority = 0, debug=False):
         super().__init__(name, params, expected_param_types)
+        self.hl_info = False
         self.hl_ignore = False
+        self.hl_include = False
+        self.tf_vars = []
+        self._rollout = False
+        self._nonrollout = False
+        self._init_include = True
 
     def hl_test(self, time, negated=False, tol=None):
         return self.test(time, negated, tol)
