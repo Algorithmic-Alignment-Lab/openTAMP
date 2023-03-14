@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/opentamp/core/util_classes/toy_domain_predicates.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/util_classes/toy_domain_predicates.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/pma/toy_solver.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/pma/toy_solver.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -235,14 +235,7 @@
       <workItem from="1678420010008" duration="107000" />
       <workItem from="1678458570464" duration="541000" />
       <workItem from="1678480682621" duration="1280000" />
-      <workItem from="1678756141992" duration="1389000" />
-    </task>
-    <task id="LOCAL-00036" summary="debug modify timesteps">
-      <created>1678243881311</created>
-      <option name="number" value="00036" />
-      <option name="presentableId" value="LOCAL-00036" />
-      <option name="project" value="LOCAL" />
-      <updated>1678243881311</updated>
+      <workItem from="1678756141992" duration="1470000" />
     </task>
     <task id="LOCAL-00037" summary="add print statements">
       <created>1678244122146</created>
@@ -580,7 +573,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678757532057</updated>
     </task>
-    <option name="localTasksCounter" value="85" />
+    <task id="LOCAL-00085" summary="remove negation (ablation) 3">
+      <created>1678757594191</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1678757594191</updated>
+    </task>
+    <option name="localTasksCounter" value="86" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -639,7 +639,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="debug goal removal 3" />
     <MESSAGE value="debug goal removal 4" />
     <MESSAGE value="add ToySolver stochastic logic" />
     <MESSAGE value="add ToySolver stochastic logic 2" />
@@ -664,7 +663,8 @@
     <MESSAGE value="remove stochastic logic for debugging 4" />
     <MESSAGE value="remove negation (ablation)" />
     <MESSAGE value="remove negation (ablation) 2" />
-    <option name="LAST_COMMIT_MESSAGE" value="remove negation (ablation) 2" />
+    <MESSAGE value="remove negation (ablation) 3" />
+    <option name="LAST_COMMIT_MESSAGE" value="remove negation (ablation) 3" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/openTAMP$run_training.coverage" NAME="run_training Coverage Results" MODIFIED="1673532741418" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/opentamp/policy_hooks" />
