@@ -42,11 +42,9 @@ class PointerAtLocation(ExprPredicate):
         debug=False,
     ):
         attr_inds = OrderedDict([
-            (params[0], ["value", np.array([0], dtype='int32')]),
-            (params[1], ["value", np.array([0], dtype='int32')])
+            (params[0], [("value", np.array([0], dtype='int32'))]),
+            (params[1], [("value", np.array([0], dtype='int32'))])
         ])
-
-        print([a for a in attr_inds.values()])
 
         e = EqExpr(getattr(params[0], 'value'), getattr(params[1], 'value'))
 

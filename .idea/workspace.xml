@@ -236,14 +236,7 @@
       <workItem from="1678420010008" duration="107000" />
       <workItem from="1678458570464" duration="541000" />
       <workItem from="1678480682621" duration="1280000" />
-      <workItem from="1678756141992" duration="6826000" />
-    </task>
-    <task id="LOCAL-00045" summary="remove pdb statements 2">
-      <created>1678247801867</created>
-      <option name="number" value="00045" />
-      <option name="presentableId" value="LOCAL-00045" />
-      <option name="project" value="LOCAL" />
-      <updated>1678247801867</updated>
+      <workItem from="1678756141992" duration="7066000" />
     </task>
     <task id="LOCAL-00046" summary="add pdb statement at predicate">
       <created>1678248114106</created>
@@ -581,7 +574,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678764484303</updated>
     </task>
-    <option name="localTasksCounter" value="94" />
+    <task id="LOCAL-00094" summary="add print for debug 2">
+      <created>1678764556514</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1678764556514</updated>
+    </task>
+    <option name="localTasksCounter" value="95" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
