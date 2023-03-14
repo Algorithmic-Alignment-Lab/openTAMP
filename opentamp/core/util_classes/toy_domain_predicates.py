@@ -97,6 +97,22 @@ class Uncertain(Predicate):
             return value_vec[0].variance >= 0.05
 
 
+class Uncertain(Predicate):
+    def __init__(self,  name, params, expected_param_types, env=None, active_range=(0,0), priority = 0, debug=False):
+        super().__init__(name, params, expected_param_types)
+
+    def hl_test(self, time, negated=False, tol=None):
+        return self.test(time, negated, tol)
+
+    def test(self, time, negated=False, tol=None):
+        if not self.is_concrete():
+            return False
+
+        value_vec = [getattr(param, 'value') for param in self.params]  # these are now individually Gaussians
+
+        # placeholder in debugging
+        return False
+
 
 class AlwaysTrue(Predicate):
     def __init__(self,  name, params, expected_param_types, env=None, active_range=(0,0), priority = 0, debug=False):
