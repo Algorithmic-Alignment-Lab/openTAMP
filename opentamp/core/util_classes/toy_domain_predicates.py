@@ -114,7 +114,7 @@ class PointerAtLocation(ExprPredicate):
 #             return value_vec[0].variance >= 0.05
 
 
-class UncertainTest(Predicate):
+class UncertainTest(ExprPredicate):
     def __init__(
         self,
         name,
@@ -125,17 +125,18 @@ class UncertainTest(Predicate):
         priority=0,
         debug=False,
     ):
-        super().__init__(name, params, expected_param_types)
+        attr_inds = OrderedDict([
+            (params[0], [("value", np.array([0], dtype='int32'))]),
+        ])
 
-    def test(self, time, negated=False, tol=None):
-        if not self.is_concrete():
-            return False
+        aff_expr = AffExpr(np.array([[0]]), np.array([0])) # trivial constraint
+        e = EqExpr(aff_expr, np.array([0]))
 
-        return True
+        super().__init__(name, e, attr_inds, params, expected_param_types)
 
 
 # used for vacuous preconditions
-class AlwaysTrue(Predicate):
+class AlwaysTrue(ExprPredicate):
     def __init__(
         self,
         name,
@@ -146,10 +147,11 @@ class AlwaysTrue(Predicate):
         priority=0,
         debug=False,
     ):
-        super().__init__(name, params, expected_param_types)
+        attr_inds = OrderedDict([
+            (params[0], [("value", np.array([0], dtype='int32'))]),
+        ])
 
-    def test(self, time, negated=False, tol=None):
-        if not self.is_concrete():
-            return False
+        aff_expr = AffExpr(np.array([[0]]), np.array([0])) # trivial constraint
+        e = EqExpr(aff_expr, np.array([0]))
 
-        return True
+        super().__init__(name, e, attr_inds, params, expected_param_types)
