@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opentamp/core/util_classes/toy_domain_predicates.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/util_classes/toy_domain_predicates.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -235,14 +236,7 @@
       <workItem from="1678420010008" duration="107000" />
       <workItem from="1678458570464" duration="541000" />
       <workItem from="1678480682621" duration="1280000" />
-      <workItem from="1678756141992" duration="6094000" />
-    </task>
-    <task id="LOCAL-00042" summary="add new breakpoint">
-      <created>1678247285539</created>
-      <option name="number" value="00042" />
-      <option name="presentableId" value="LOCAL-00042" />
-      <option name="project" value="LOCAL" />
-      <updated>1678247285539</updated>
+      <workItem from="1678756141992" duration="6678000" />
     </task>
     <task id="LOCAL-00043" summary="add single-element ands for domain file">
       <created>1678247647686</created>
@@ -580,7 +574,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678763723547</updated>
     </task>
-    <option name="localTasksCounter" value="91" />
+    <task id="LOCAL-00091" summary="remove item()">
+      <created>1678763818376</created>
+      <option name="number" value="00091" />
+      <option name="presentableId" value="LOCAL-00091" />
+      <option name="project" value="LOCAL" />
+      <updated>1678763818376</updated>
+    </task>
+    <option name="localTasksCounter" value="92" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -639,7 +640,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add distribution class, Gaussian implemented as subcase" />
     <MESSAGE value="debug belief-space specification" />
     <MESSAGE value="debug belief-space specification 2" />
     <MESSAGE value="debug belief-space specification 3" />
@@ -664,7 +664,8 @@
     <MESSAGE value="debug negation / refactor to ExprPredicate" />
     <MESSAGE value="replace uncertain test logic with trivial" />
     <MESSAGE value="debug param specification" />
-    <option name="LAST_COMMIT_MESSAGE" value="debug param specification" />
+    <MESSAGE value="remove item()" />
+    <option name="LAST_COMMIT_MESSAGE" value="remove item()" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/openTAMP$run_training.coverage" NAME="run_training Coverage Results" MODIFIED="1673532741418" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/opentamp/policy_hooks" />
