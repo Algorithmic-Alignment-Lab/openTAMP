@@ -46,7 +46,8 @@ class PointerAtLocation(ExprPredicate):
             (params[1], [("value", np.array([0], dtype='int32'))])
         ])
 
-        e = EqExpr(getattr(params[0], 'value'), getattr(params[1], 'value'))
+        aff_expr = AffExpr(np.array([[1]]), np.array([0]))  # identity affine transform
+        e = EqExpr(aff_expr(getattr(params[0], 'value')), getattr(params[1], 'value'))
 
         super().__init__(name, e, attr_inds, params, expected_param_types)
 
