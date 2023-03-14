@@ -108,7 +108,7 @@ class UncertainTest(Predicate):
         if not self.is_concrete():
             return False
 
-        value_vec = [getattr(param, 'value') for param in self.params]  # these are now individually Gaussians
+        value_vec = [getattr(param, 'value') for param in self.params]  # NOT individually Gaussians
 
         # placeholder in debugging
         return True
