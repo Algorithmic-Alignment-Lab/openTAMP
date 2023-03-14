@@ -113,7 +113,7 @@ class PointerAtLocation(ExprPredicate):
 #             return value_vec[0].variance >= 0.05
 
 
-class UncertainTest(ExprPredicate):
+class UncertainTest(Predicate):
     def __init__(
         self,
         name,
@@ -124,15 +124,13 @@ class UncertainTest(ExprPredicate):
         priority=0,
         debug=False,
     ):
-        super().__init__()
+        super().__init__(name, params, expected_param_types)
 
-        attr_inds = OrderedDict([
-            (params[0], ["value", np.array([0], dtype='int32')]),
-        ])
+    def test(self, time, negated=False, tol=None):
+        if not self.is_concrete():
+            return False
 
-        e = EqExpr(getattr(params[0], 'value').item(), getattr(params[0], 'value')[1].item())
-
-        super().__init__(name, e, attr_inds, params, expected_param_types)
+        return True
 
 
 # used for vacuous preconditions
