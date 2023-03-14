@@ -40,7 +40,7 @@ plan, descr = p_mod_abs(
 )
 
 # for now, just prints plan (doesn't try to enact plan, no replanning)
-print(plan)
+print(plan.actions)
 print(descr)
 
 # TODO: implement replan logic when belief-space implemented
