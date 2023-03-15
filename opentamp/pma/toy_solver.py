@@ -24,6 +24,7 @@ class ToySolver():
             for act in plan.actions:
                 if act.name == 'select_location':
                     print('enter solver')
+                    print(act.preds)
                     mean_location = act.params[0].value[0].item()
                     set_location = act.params[1].value.item()
                     if np.abs(set_location - mean_location) < 0.01:
