@@ -21,9 +21,11 @@ class ToySolver():
     ):
         # for now, just verifies if the actions are done
         for act in plan.actions:
-            mean_location = act.params[0].value.item()
-            set_location = np.random.normal(loc=mean_location, scale=self.sigma)
-            if np.abs(set_location - mean_location) < 0.01:
-                return True
+            print(act.name)
+            if act.name == '':
+                mean_location = act.params[0].value.item()
+                set_location = np.random.normal(loc=mean_location, scale=self.sigma)
+                if np.abs(set_location - mean_location) < 0.01:
+                    return True
 
         return False
