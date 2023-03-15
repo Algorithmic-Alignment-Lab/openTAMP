@@ -19,13 +19,13 @@ class ToySolver():
         st=0,
         debug=False
     ):
-        # for now, just verifies if the actions are done
-        for act in plan.actions:
-            print(act.name)
-            if act.name == '':
-                mean_location = act.params[0].value.item()
-                set_location = np.random.normal(loc=mean_location, scale=self.sigma)
-                if np.abs(set_location - mean_location) < 0.01:
-                    return True
+        if plan:
+            # for now, just verifies if the actions are done
+            for act in plan.actions:
+                if act.name == 'select_location':
+                    mean_location = act.params[0].value[0].item()
+                    set_location = act.params[1].value.item()
+                    if np.abs(set_location - mean_location) < 0.01:
+                        return True
 
         return False
