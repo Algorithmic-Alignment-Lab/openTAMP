@@ -237,14 +237,7 @@
       <workItem from="1678458570464" duration="541000" />
       <workItem from="1678480682621" duration="1280000" />
       <workItem from="1678756141992" duration="8637000" />
-      <workItem from="1678823516726" duration="5325000" />
-    </task>
-    <task id="LOCAL-00059" summary="debug goal removal 2">
-      <created>1678324910165</created>
-      <option name="number" value="00059" />
-      <option name="presentableId" value="LOCAL-00059" />
-      <option name="project" value="LOCAL" />
-      <updated>1678324910165</updated>
+      <workItem from="1678823516726" duration="5449000" />
     </task>
     <task id="LOCAL-00060" summary="debug goal removal 3">
       <created>1678324991224</created>
@@ -582,7 +575,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678901960229</updated>
     </task>
-    <option name="localTasksCounter" value="108" />
+    <task id="LOCAL-00108" summary="UncertainTest">
+      <created>1678902308682</created>
+      <option name="number" value="00108" />
+      <option name="presentableId" value="LOCAL-00108" />
+      <option name="project" value="LOCAL" />
+      <updated>1678902308682</updated>
+    </task>
+    <option name="localTasksCounter" value="109" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -641,7 +641,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="remove stochastic logic for debugging 2" />
     <MESSAGE value="remove stochastic logic for debugging 3" />
     <MESSAGE value="remove stochastic logic for debugging 4" />
     <MESSAGE value="remove negation (ablation)" />
@@ -666,7 +665,8 @@
     <MESSAGE value="debug import" />
     <MESSAGE value="flip sign on uncertain" />
     <MESSAGE value="remove UncertainTest calls" />
-    <option name="LAST_COMMIT_MESSAGE" value="remove UncertainTest calls" />
+    <MESSAGE value="UncertainTest" />
+    <option name="LAST_COMMIT_MESSAGE" value="UncertainTest" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/openTAMP$run_training.coverage" NAME="run_training Coverage Results" MODIFIED="1673532741418" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/opentamp/policy_hooks" />

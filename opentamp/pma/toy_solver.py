@@ -20,9 +20,10 @@ class ToySolver():
         debug=False
     ):
         if plan:
-            # for now, just verifies if the actions are done
+            # for now, just verifies if a select location
             for act in plan.actions:
                 if act.name == 'select_location':
+                    print('enter solver')
                     mean_location = act.params[0].value[0].item()
                     set_location = act.params[1].value.item()
                     if np.abs(set_location - mean_location) < 0.01:
