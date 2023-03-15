@@ -106,8 +106,8 @@ class Uncertain(ExprPredicate):
         ])
 
         self.sigma = sigma # the baseline amount of uncertainty
-        aff_expr = AffExpr(np.array([[1]]), np.array([0]))  # trivial constraint
-        e = LEqExpr(aff_expr, np.array([self.sigma]))
+        aff_expr = AffExpr(np.array([[-1]]), np.array([0]))  # trivial constraint
+        e = LEqExpr(aff_expr, np.array([-self.sigma]))
 
         super().__init__(name, e, attr_inds, params, expected_param_types)
 
