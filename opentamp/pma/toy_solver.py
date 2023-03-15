@@ -19,6 +19,7 @@ class ToySolver():
         st=0,
         debug=False
     ):
+        # for now, just verifies if the actions are done
         for act in plan.actions:
             mean_location = act.params[0].value.item()
             set_location = np.random.normal(loc=mean_location, scale=self.sigma)

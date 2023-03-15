@@ -4,10 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
+    <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="uncertainty as 2D vector implement">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/core/util_classes/common_predicates.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/util_classes/common_predicates.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opentamp/core/util_classes/toy_domain_predicates.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/util_classes/toy_domain_predicates.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/probs/toy_belief.prob" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/probs/toy_belief.prob" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/toy_belief.domain" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/toy_belief.domain" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/pma/toy_solver.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/pma/toy_solver.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -237,21 +239,8 @@
       <workItem from="1678420010008" duration="107000" />
       <workItem from="1678458570464" duration="541000" />
       <workItem from="1678480682621" duration="1280000" />
-      <workItem from="1678756141992" duration="8451000" />
-    </task>
-    <task id="LOCAL-00052" summary="robot solver OSQP attempt">
-      <created>1678249900233</created>
-      <option name="number" value="00052" />
-      <option name="presentableId" value="LOCAL-00052" />
-      <option name="project" value="LOCAL" />
-      <updated>1678249900233</updated>
-    </task>
-    <task id="LOCAL-00053" summary="add ToySolver for low level optimization">
-      <created>1678320680721</created>
-      <option name="number" value="00053" />
-      <option name="presentableId" value="LOCAL-00053" />
-      <option name="project" value="LOCAL" />
-      <updated>1678320680721</updated>
+      <workItem from="1678756141992" duration="8637000" />
+      <workItem from="1678823516726" duration="2343000" />
     </task>
     <task id="LOCAL-00054" summary="debug ToySolver call">
       <created>1678320742860</created>
@@ -582,7 +571,21 @@
       <option name="project" value="LOCAL" />
       <updated>1678765888788</updated>
     </task>
-    <option name="localTasksCounter" value="101" />
+    <task id="LOCAL-00101" summary="modified vacuous methods in terms of ExprPredicate">
+      <created>1678766221578</created>
+      <option name="number" value="00101" />
+      <option name="presentableId" value="LOCAL-00101" />
+      <option name="project" value="LOCAL" />
+      <updated>1678766221578</updated>
+    </task>
+    <task id="LOCAL-00102" summary="print to see action list from planner">
+      <created>1678766310448</created>
+      <option name="number" value="00102" />
+      <option name="presentableId" value="LOCAL-00102" />
+      <option name="project" value="LOCAL" />
+      <updated>1678766310448</updated>
+    </task>
+    <option name="localTasksCounter" value="103" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -641,8 +644,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add uncertain as a goal 2" />
-    <MESSAGE value="add uncertain as a goal 3" />
     <MESSAGE value="add uncertain as a goal 4" />
     <MESSAGE value="debug predicate logic" />
     <MESSAGE value="add printouts for distribution objects" />
@@ -666,7 +667,9 @@
     <MESSAGE value="alter attr_inds constructor" />
     <MESSAGE value="add print statement" />
     <MESSAGE value="modify constraints to affine" />
-    <option name="LAST_COMMIT_MESSAGE" value="modify constraints to affine" />
+    <MESSAGE value="modified vacuous methods in terms of ExprPredicate" />
+    <MESSAGE value="print to see action list from planner" />
+    <option name="LAST_COMMIT_MESSAGE" value="print to see action list from planner" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/openTAMP$run_training.coverage" NAME="run_training Coverage Results" MODIFIED="1673532741418" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/opentamp/policy_hooks" />

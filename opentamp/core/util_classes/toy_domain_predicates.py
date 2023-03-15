@@ -88,7 +88,31 @@ class PointerAtLocation(ExprPredicate):
     #         return np.abs(value_vec[0].item() - value_vec[1].mean) < 0.01
 
 
-# class Uncertain(ExprPredicate):
+class Uncertain(ExprPredicate):
+    def __init__(
+        self,
+        name,
+        params,
+        expected_param_types,
+        env=None,
+        active_range=(0, 0),
+        priority=0,
+        debug=False,
+        sigma=0.1
+    ):
+        # variance is sufficiently small
+        attr_inds = OrderedDict([
+            (params[0], [("value", np.array([1], dtype='int32'))]),
+        ])
+
+        self.sigma = sigma # the baseline amount of uncertainty
+        aff_expr = AffExpr(np.array([[1]]), np.array([0]))  # trivial constraint
+        e = LEqExpr(aff_expr, np.array([self.sigma]))
+
+        super().__init__(name, e, attr_inds, params, expected_param_types)
+
+
+# class UncertainTest(ExprPredicate):
 #     def __init__(
 #         self,
 #         name,
@@ -99,40 +123,14 @@ class PointerAtLocation(ExprPredicate):
 #         priority=0,
 #         debug=False,
 #     ):
-#         super().__init__()
+#         attr_inds = OrderedDict([
+#             (params[0], [("value", np.array([0], dtype='int32'))]),
+#         ])
 #
-#     def test(self, time, negated=False, tol=None):
-#         if not self.is_concrete():
-#             return False
+#         aff_expr = AffExpr(np.array([[0]]), np.array([0])) # trivial constraint
+#         e = EqExpr(aff_expr, np.array([0]))
 #
-#         value_vec = [getattr(param, 'value') for param in self.params]  # these are now individually Gaussians
-#
-#         # only expecting one argument here: implement uncertainty logic
-#         if negated:
-#             return value_vec[0].variance < 0.05
-#         else:
-#             return value_vec[0].variance >= 0.05
-
-
-class UncertainTest(ExprPredicate):
-    def __init__(
-        self,
-        name,
-        params,
-        expected_param_types,
-        env=None,
-        active_range=(0, 0),
-        priority=0,
-        debug=False,
-    ):
-        attr_inds = OrderedDict([
-            (params[0], [("value", np.array([0], dtype='int32'))]),
-        ])
-
-        aff_expr = AffExpr(np.array([[0]]), np.array([0])) # trivial constraint
-        e = EqExpr(aff_expr, np.array([0]))
-
-        super().__init__(name, e, attr_inds, params, expected_param_types)
+#         super().__init__(name, e, attr_inds, params, expected_param_types)
 
 
 # used for vacuous preconditions
