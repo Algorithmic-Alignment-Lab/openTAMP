@@ -161,7 +161,7 @@ class Server(object):
     def init_policy_opt(self, hyperparams):
         config = hyperparams['policy_opt']
         opt_cls = config['type']
-        config['gpu_id'] = np.random.randint(1,3)
+        config['gpu_id'] = np.random.randint(0,2)
         config['use_gpu'] = torch.cuda.is_available()
         config['weight_dir'] = hyperparams['weight_dir']
         self.policy_opt = opt_cls(config)
