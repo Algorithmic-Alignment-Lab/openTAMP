@@ -25,6 +25,7 @@ class ToySolver():
                 if act.name == 'select_location':
                     print('enter solver')
                     print(act.preds)
+                    print(act.active_timesteps)
                     mean_location = act.params[0].value[0].item()
                     set_location = act.params[1].value.item()
                     if np.abs(set_location - mean_location) < 0.01:
