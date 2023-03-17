@@ -67,6 +67,7 @@ env = robosuite.make(
     camera_heights=128,
     hard_reset = False,
 )
+env = DomainRandomizationWrapper(env)
 print(env.num_markers)
 obs, _, _, _ = env.step(np.zeros(7)) # Step a null action to 'boot' the environment.
 #insert calls to the modder
