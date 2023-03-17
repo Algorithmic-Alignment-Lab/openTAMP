@@ -7,6 +7,7 @@ import robosuite
 from robosuite.controllers import load_controller_config
 from scipy.spatial.transform import Rotation
 from robosuite.utils.mjmod import DynamicsModder, CameraModder, LightingModder 
+from robosuite.wrappers import DomainRandomizationWrapper
 import opentamp.core.util_classes.transform_utils as T
 import main
 from opentamp.core.parsing import parse_domain_config, parse_problem_config
