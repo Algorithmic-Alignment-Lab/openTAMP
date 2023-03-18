@@ -68,12 +68,12 @@ env = robosuite.make(
     camera_heights=128,
     hard_reset = False,
 )
-env = DomainRandomizationWrapper(env)
+env = DomainRandomizationWrapper(env,randomize_every_n_steps=0, randomize_on_reset=True)
 print(env.num_markers)
 obs, _, _, _ = env.step(np.zeros(7)) # Step a null action to 'boot' the environment.
 #insert calls to the modder
-modder = CameraModder(sim=env.sim, random_state=np.random.RandomState(5))
-#modder = DynamicsModder(sim=env.sim, random_state=np.random.RandomState(5))
+#modder = CameraModder(sim=env.env.sim, random_state=np.random.RandomState(5))
+#modder = DynamicsModder(sim=env.env.sim, random_state=np.random.RandomState(5))
 
 # Define function for easy printing
 #import pdb; pdb.set_trace()
@@ -116,14 +116,14 @@ modder = CameraModder(sim=env.sim, random_state=np.random.RandomState(5))
 # joint positions to their initial positions and all the joint velocities and
 # accelerations to 0.
 obs = env.reset()
-jnts = env.sim.data.qpos[:7]
+jnts = env.env.sim.data.qpos[:7]
 for _ in range(40):
     env.step(np.zeros(7))
-    env.sim.data.qpos[:7] = jnts
-    env.sim.forward()
-env.sim.data.qvel[:] = 0
-env.sim.data.qacc[:] = 0
-env.sim.forward()
+    env.env.sim.data.qpos[:7] = jnts
+    env.env.sim.forward()
+env.env.sim.data.qvel[:] = 0
+env.env.sim.data.qacc[:] = 0
+env.env.sim.forward()
 
 # Now, we load the domain and problem files, and also instantiate the
 # solvers.
@@ -137,15 +137,15 @@ problem = parse_problem_config.ParseProblemConfig.parse(p_c, domain, None, use_t
 params = problem.init_state.params
 # We will use the robot body and table later.
 # pdb.set_trace()
-body_ind = env.mjpy_model.body_name2id("robot0_base")
-table_ind = env.mjpy_model.body_name2id("table")
+body_ind = env.env.mjpy_model.body_name2id("robot0_base")
+table_ind = env.env.mjpy_model.body_name2id("table")
 
 # Get the locations of all dirt particles.
 # NOTE: Important that this is done after the env.reset() call
 # because this call randomizes all dirt positions.
 dirt_locs = np.zeros((env.num_markers, 3))
 for i, marker in enumerate(env.model.mujoco_arena.markers):
-    marker_pos = np.array(env.sim.data.body_xpos[env.sim.model.body_name2id(marker.root_body)])
+    marker_pos = np.array(env.env.sim.data.body_xpos[env.env.sim.model.body_name2id(marker.root_body)])
     dirt_locs[i,:] = marker_pos
 
 # Computes the dirty regions set, which contains a tuple (row, col) for every
@@ -173,20 +173,20 @@ for xyz_pose in dirt_locs.tolist():
 
 # Resetting the initial state of the robot in our internal representation
 # to match the robotsuite sim.
-params["sawyer"].pose[:, 0] = env.sim.data.body_xpos[body_ind]
+params["sawyer"].pose[:, 0] = env.env.sim.data.body_xpos[body_ind]
 # NOTE: for the table, we only want to set the (x,y) poses to
 # be equal, because we use a different geometry and thus the
 # height must be different.
-params["table"].pose[:2, 0] = env.sim.data.body_xpos[table_ind][:2]
+params["table"].pose[:2, 0] = env.env.sim.data.body_xpos[table_ind][:2]
 jnts = params["sawyer"].geom.jnt_names["right"]
 jnts = ["robot0_" + jnt for jnt in jnts]
 jnt_vals = []
 sawyer_inds = []
 for jnt in jnts:
-    jnt_adr = env.mjpy_model.joint_name2id(jnt)
-    jnt_ind = env.mjpy_model.jnt_qposadr[jnt_adr]
+    jnt_adr = env.env.mjpy_model.joint_name2id(jnt)
+    jnt_ind = env.env.mjpy_model.jnt_qposadr[jnt_adr]
     sawyer_inds.append(jnt_ind)
-    jnt_vals.append(env.sim.data.qpos[jnt_ind])
+    jnt_vals.append(env.env.sim.data.qpos[jnt_ind])
 params["sawyer"].right[:, 0] = jnt_vals
 params["robot_init_pose"].right[:, 0] = jnt_vals
 params["robot_init_pose"].value[:, 0] = params["sawyer"].pose[:, 0]
@@ -243,18 +243,18 @@ for t in range(plan.horizon):
         act = np.r_[pos, quat]
     cmds.append(act)
 
-grip_ind = env.mjpy_model.site_name2id("gripper0_grip_site")
-hand_ind = env.mjpy_model.body_name2id("robot0_right_hand")
-env.sim.data.qpos[:7] = params["sawyer"].right[:, 0]
-env.sim.data.qacc[:] = 0
-env.sim.data.qvel[:] = 0
-env.sim.forward()
+grip_ind = env.env.mjpy_model.site_name2id("gripper0_grip_site")
+hand_ind = env.env.mjpy_model.body_name2id("robot0_right_hand")
+env.env.sim.data.qpos[:7] = params["sawyer"].right[:, 0]
+env.env.sim.data.qacc[:] = 0
+env.env.sim.data.qvel[:] = 0
+env.env.sim.forward()
 rot_ref = T.euler_to_quaternion(params["sawyer"].right_ee_rot[:, 0], "xyzw")
 
 for _ in range(40):
     env.step(np.zeros(7))
-    env.sim.data.qpos[:7] = params["sawyer"].right[:, 0]  # This will help set the simulator joint sets!
-    env.sim.forward()
+    env.env.sim.data.qpos[:7] = params["sawyer"].right[:, 0]  # This will help set the simulator joint sets!
+    env.env.sim.forward()
 
 if has_render:
     env.render()
@@ -268,34 +268,34 @@ gif_frames = []
 render_interval = 10
 render_t =0
 #modder.set_pos('frontview', np.array([100., 200., -200.]))
-env.sim.forward()
+env.env.sim.forward()
 # Loop to execute the plan's actions in the simulation.
 true_lb, true_ub = plan.params["sawyer"].geom.get_joint_limits("right")
 factor = (np.array(true_ub) - np.array(true_lb)) / 5
-ref_jnts = env.sim.data.qpos[:7]
+ref_jnts = env.env.sim.data.qpos[:7]
 ref_jnts = np.array([0, -np.pi / 4, 0, np.pi / 4, 0, np.pi / 2, 0])
 for act in plan.actions:
     t = act.active_timesteps[0]
-    plan.params["sawyer"].right[:, t] = env.sim.data.qpos[:7]
-    grip = env.sim.data.qpos[7:9].copy()
+    plan.params["sawyer"].right[:, t] = env.env.sim.data.qpos[:7]
+    grip = env.env.sim.data.qpos[7:9].copy()
     failed_preds = plan.get_failed_preds(active_ts=(t, t), priority=3, tol=tol)
-    oldqfrc = env.sim.data.qfrc_applied[:]
-    oldxfrc = env.sim.data.xfrc_applied[:]
-    oldacc = env.sim.data.qacc[:]
-    oldvel = env.sim.data.qvel[:]
-    oldwarm = env.sim.data.qacc_warmstart[:]
-    oldctrl = env.sim.data.ctrl[:]
+    oldqfrc = env.env.sim.data.qfrc_applied[:]
+    oldxfrc = env.env.sim.data.xfrc_applied[:]
+    oldacc = env.env.sim.data.qacc[:]
+    oldvel = env.env.sim.data.qvel[:]
+    oldwarm = env.env.sim.data.qacc_warmstart[:]
+    oldctrl = env.env.sim.data.ctrl[:]
     print("FAILED:", t, failed_preds, act.name)
-    old_state = env.sim.get_state()
+    old_state = env.env.sim.get_state()
 
     sawyer = plan.params["sawyer"]
     for t in range(act.active_timesteps[0], act.active_timesteps[1]):
         base_act = cmds[cur_ind]
         cur_ind += 1
         print("TIME:", t)
-        init_jnts = env.sim.data.qpos[:7]
+        init_jnts = env.env.sim.data.qpos[:7]
         if ctrl_mode.find("JOINT") >= 0 and true_mode.find("JOINT") < 0:
-            cur_jnts = env.sim.data.qpos[:7]
+            cur_jnts = env.env.sim.data.qpos[:7]
             if t < plan.horizon:
                 targ_pos, targ_rot = (
                     sawyer.right_ee_pos[:, t + 1],
@@ -306,8 +306,8 @@ for act in plan.actions:
                     sawyer.right_ee_pos[:, t],
                     sawyer.right_ee_rot[:, t],
                 )
-            lb = env.sim.data.qpos[:7] - factor
-            ub = env.sim.data.qpos[:7] + factor
+            lb = env.env.sim.data.qpos[:7] - factor
+            ub = env.env.sim.data.qpos[:7] + factor
             sawyer.openrave_body.set_dof({"right": np.zeros(7)})
             sawyer.openrave_body.set_dof({"right": ref_jnts})
 
@@ -318,26 +318,26 @@ for act in plan.actions:
 
         true_act = base_act.copy()
         if ctrl_mode.find("JOINT") >= 0:
-            targ_jnts = base_act[:7]  # + env.sim.data.qpos[:7]
+            targ_jnts = base_act[:7]  # + env.env.sim.data.qpos[:7]
             for n in range(nsteps):
                 act = base_act.copy()
-                act[:7] = targ_jnts - env.sim.data.qpos[:7]
+                act[:7] = targ_jnts - env.env.sim.data.qpos[:7]
                 obs = env.step(act)
                 # print(obs)
                 if render_t == 0:
                     gif_frames.append(
                             Image.fromarray(
-                                env.sim.render(height=192, width=192, camera_name="frontview")
+                                env.env.sim.render(height=192, width=192, camera_name="frontview")
                             )
                     )
 
                 render_t = (render_t+1) % render_interval
 
                 # pdb.set_trace()
-            end_jnts = env.sim.data.qpos[:7]
+            end_jnts = env.env.sim.data.qpos[:7]
 
             ee_to_sim_discrepancy = (
-                env.sim.data.site_xpos[grip_ind] - sawyer.right_ee_pos[:, t]
+                env.env.sim.data.site_xpos[grip_ind] - sawyer.right_ee_pos[:, t]
             )
 
             print(
@@ -348,7 +348,7 @@ for act in plan.actions:
 
         else:
             targ = base_act[3:7]
-            cur = env.sim.data.body_xquat[hand_ind]
+            cur = env.env.sim.data.body_xquat[hand_ind]
             cur = np.array([cur[1], cur[2], cur[3], cur[0]])
             truerot = Rotation.from_quat(targ)
             currot = Rotation.from_quat(cur)
@@ -359,9 +359,9 @@ for act in plan.actions:
             # print('TARGETS:', targ, targrot)
             for n in range(nsteps):
                 act = base_act.copy()
-                act[:3] -= env.sim.data.site_xpos[grip_ind]
+                act[:3] -= env.env.sim.data.site_xpos[grip_ind]
                 # act[:3] *= 1e2
-                cur = env.sim.data.body_xquat[hand_ind]
+                cur = env.env.sim.data.body_xquat[hand_ind]
                 cur = np.array([cur[1], cur[2], cur[3], cur[0]])
                 # targ = act[3:7]
                 sign = np.sign(targ[np.argmax(np.abs(targrot))])
@@ -390,7 +390,7 @@ for act in plan.actions:
         # pdb.set_trace()
         if has_render: env.render()
         # pdb.set_trace()
-plan.params['sawyer'].right[:,t] = env.sim.data.qpos[:7]
+plan.params['sawyer'].right[:,t] = env.env.sim.data.qpos[:7]
 
 # Print out whether the task was successfully completed or not.
 if len(env.wiped_markers) == env.num_markers:
