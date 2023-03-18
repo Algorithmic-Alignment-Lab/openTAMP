@@ -68,7 +68,7 @@ env = robosuite.make(
     camera_heights=128,
     hard_reset = False,
 )
-#env = DomainRandomizationWrapper(env,randomize_every_n_steps=0, randomize_on_reset=True)
+env = DomainRandomizationWrapper(env,randomize_every_n_steps=0, randomize_on_reset=True)
 print(env.num_markers)
 obs, _, _, _ = env.step(np.zeros(7)) # Step a null action to 'boot' the environment.
 #insert calls to the modder
@@ -220,7 +220,7 @@ solver = RobotSolverOSQP()
 plan, descr = p_mod_abs(
     hls, solver, domain, problem, goal=goal, debug=True, n_resamples=10
 )
-env = DomainRandomizationWrapper(env,randomize_every_n_steps=0, randomize_on_reset=True)
+
 if len(sys.argv) > 1 and sys.argv[1] == "end":
     sys.exit(0)
 
