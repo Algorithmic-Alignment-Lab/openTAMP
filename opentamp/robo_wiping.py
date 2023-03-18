@@ -68,7 +68,7 @@ env = robosuite.make(
     camera_heights=128,
     hard_reset = False,
 )
-env = DomainRandomizationWrapper(env,randomize_every_n_steps=0, randomize_on_reset=True)
+env = DomainRandomizationWrapper(env,randomize_every_n_steps=0, randomize_on_reset=True )
 print(env.num_markers)
 obs, _, _, _ = env.step(np.zeros(7)) # Step a null action to 'boot' the environment.
 #insert calls to the modder
@@ -386,7 +386,7 @@ for act in plan.actions:
                 )
                 act = np.r_[act[:3], angle, act[-1:]]
                 obs = env.step(act)
-                print(obs)
+                #print(obs)
         # pdb.set_trace()
         if has_render: env.render()
         # pdb.set_trace()
