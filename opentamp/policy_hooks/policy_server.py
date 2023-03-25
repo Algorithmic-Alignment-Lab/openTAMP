@@ -227,6 +227,7 @@ class PolicyServer(object):
     def run(self):
         self.iters = 0
         write_freq = 50
+        print(self.policy_opt)
         while not self.stopped:
             self.iters += 1
             init_t = time.time()
