@@ -297,7 +297,6 @@ class RolloutServer(Server):
         step = 0
         self.agent.hl_pol = False
         while not self.stopped:
-            print("rollout")
             step += 1
             cont_samples = self.agent.get_cont_samples()
             if self._n_plans <= self.ff_iters:
