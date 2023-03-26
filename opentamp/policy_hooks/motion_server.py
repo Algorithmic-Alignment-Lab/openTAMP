@@ -217,7 +217,7 @@ class MotionServer(Server):
     def run(self):
         step = 0
         while not self.stopped:
-            print("hello")
+            
             node = self.pop_queue(self.in_queue)
             if node is None:
                 time.sleep(0.01)
