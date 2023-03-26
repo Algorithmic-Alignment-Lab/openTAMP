@@ -32,7 +32,6 @@ class TaskServer(Server):
 
     def run(self):
         while not self.stopped:
-            print("task")
             self.find_task_plan()
             time.sleep(0.01)
 

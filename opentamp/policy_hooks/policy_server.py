@@ -230,7 +230,7 @@ class PolicyServer(object):
         print(self.policy_opt)
         
         while not self.stopped:
-            print("hi")
+            print("policys")
             self.iters += 1
             init_t = time.time()
             self.dataset.wait_for_data()
