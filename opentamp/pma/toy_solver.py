@@ -6,7 +6,7 @@ from sco_py.sco_osqp.variable import Variable
 from pma.backtrack_ll_solver_OSQP import BacktrackLLSolverOSQP
 
 import numpy as np
-import torch as
+import torch
 
 class ToySolver(BacktrackLLSolverOSQP):
     def __init__(self, sigma):
