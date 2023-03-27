@@ -54,6 +54,8 @@ def p_mod_abs(
                     print("Found impossible plan")
                 continue
 
+            print(c_plan.actions)
+
             c = LLSearchNode(plan=c_plan, 
                              domain=domain,
                              prob=n.concr_prob, 
