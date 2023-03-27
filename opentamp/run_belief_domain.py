@@ -25,13 +25,11 @@ prob = os.getcwd() + "/opentamp/domains/belief_space_domain/probs/toy_belief.pro
 # configuring task plan
 d_c = main.parse_file_to_dict(domain_fname)
 domain = parse_domain_config.ParseDomainConfig.parse(d_c)
-print(domain)
 hls = FFSolver(d_c)
 
 # configuing motion plan
 p_c = main.parse_file_to_dict(prob)
 problem = parse_problem_config.ParseProblemConfig.parse(p_c, domain, None, use_tf=True, sess=None, visual=False)
-print(problem)
 solver = ToySolver()
 
 # Run planning to obtain a final plan.
@@ -40,8 +38,9 @@ plan, descr = p_mod_abs(
     goal=None, debug=False, n_resamples=10
 )
 
-# for now, just prints plan (doesn't try to enact plan, no replanning)
-print(plan.actions)
+if plan is not None:
+    print(plan.actions)
+
 print(descr)
 
 # TODO: implement replan logic when belief-space implemented
