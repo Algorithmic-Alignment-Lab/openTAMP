@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/toy_belief.domain" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/toy_belief.domain" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/pma/toy_solver.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/pma/toy_solver.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -237,14 +239,11 @@
       <workItem from="1678480682621" duration="1280000" />
       <workItem from="1678756141992" duration="8637000" />
       <workItem from="1678823516726" duration="9182000" />
-      <workItem from="1678972167633" duration="603000" />
-    </task>
-    <task id="LOCAL-00064" summary="add ToySolver stochastic logic 3">
-      <created>1678327052180</created>
-      <option name="number" value="00064" />
-      <option name="presentableId" value="LOCAL-00064" />
-      <option name="project" value="LOCAL" />
-      <updated>1678327052180</updated>
+      <workItem from="1678972167633" duration="9072000" />
+      <workItem from="1679500496784" duration="701000" />
+      <workItem from="1679781082571" duration="1356000" />
+      <workItem from="1679856976642" duration="401000" />
+      <workItem from="1679939472416" duration="964000" />
     </task>
     <task id="LOCAL-00065" summary="add distribution class, Gaussian implemented as subcase">
       <created>1678384002938</created>
@@ -582,7 +581,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678973888850</updated>
     </task>
-    <option name="localTasksCounter" value="113" />
+    <task id="LOCAL-00113" summary="alter the timesteps">
+      <created>1678973956415</created>
+      <option name="number" value="00113" />
+      <option name="presentableId" value="LOCAL-00113" />
+      <option name="project" value="LOCAL" />
+      <updated>1678973956416</updated>
+    </task>
+    <option name="localTasksCounter" value="114" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -641,7 +647,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="remove negation (ablation) 3" />
     <MESSAGE value="remove negation (ablation) 4" />
     <MESSAGE value="debug negation / refactor to ExprPredicate" />
     <MESSAGE value="replace uncertain test logic with trivial" />
@@ -666,7 +671,19 @@
     <MESSAGE value="add print predicates" />
     <MESSAGE value="add print for timesteps" />
     <MESSAGE value="just print, no logic for solver" />
-    <option name="LAST_COMMIT_MESSAGE" value="just print, no logic for solver" />
+    <MESSAGE value="alter the timesteps" />
+    <option name="LAST_COMMIT_MESSAGE" value="alter the timesteps" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/openTAMP$run_training.coverage" NAME="run_training Coverage Results" MODIFIED="1673532741418" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/opentamp/policy_hooks" />

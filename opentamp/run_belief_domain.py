@@ -14,7 +14,8 @@ from opentamp.core.util_classes.openrave_body import *
 from opentamp.core.util_classes.transform_utils import *
 from pma.hl_solver import *
 from pma.pr_graph import *
-from pma.toy_solver import ToySolver
+# from pma.toy_solver import ToySolver
+from pma.backtrack_ll_solver_OSQP import BacktrackLLSolverOSQP
 from sco_py.expr import Expr, AffExpr, EqExpr, LEqExpr
 
 # TODO: initialize calls to B.S. planner, add paths to relevant folders
@@ -31,7 +32,7 @@ hls = FFSolver(d_c)
 p_c = main.parse_file_to_dict(prob)
 problem = parse_problem_config.ParseProblemConfig.parse(p_c, domain, None, use_tf=True, sess=None, visual=False)
 print(problem)
-solver = ToySolver(sigma=0.1)
+solver = BacktrackLLSolverOSQP()
 
 # Run planning to obtain a final plan.
 plan, descr = p_mod_abs(
