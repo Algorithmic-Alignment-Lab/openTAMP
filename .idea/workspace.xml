@@ -243,14 +243,7 @@
       <workItem from="1679500496784" duration="701000" />
       <workItem from="1679781082571" duration="1356000" />
       <workItem from="1679856976642" duration="401000" />
-      <workItem from="1679939472416" duration="964000" />
-    </task>
-    <task id="LOCAL-00065" summary="add distribution class, Gaussian implemented as subcase">
-      <created>1678384002938</created>
-      <option name="number" value="00065" />
-      <option name="presentableId" value="LOCAL-00065" />
-      <option name="project" value="LOCAL" />
-      <updated>1678384002938</updated>
+      <workItem from="1679939472416" duration="3916000" />
     </task>
     <task id="LOCAL-00066" summary="debug belief-space specification">
       <created>1678384146340</created>
@@ -588,7 +581,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678973956416</updated>
     </task>
-    <option name="localTasksCounter" value="114" />
+    <task id="LOCAL-00114" summary="add backtracking solver for robotics">
+      <created>1679944556719</created>
+      <option name="number" value="00114" />
+      <option name="presentableId" value="LOCAL-00114" />
+      <option name="project" value="LOCAL" />
+      <updated>1679944556720</updated>
+    </task>
+    <option name="localTasksCounter" value="115" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -647,7 +647,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="remove negation (ablation) 4" />
     <MESSAGE value="debug negation / refactor to ExprPredicate" />
     <MESSAGE value="replace uncertain test logic with trivial" />
     <MESSAGE value="debug param specification" />
@@ -672,7 +671,8 @@
     <MESSAGE value="add print for timesteps" />
     <MESSAGE value="just print, no logic for solver" />
     <MESSAGE value="alter the timesteps" />
-    <option name="LAST_COMMIT_MESSAGE" value="alter the timesteps" />
+    <MESSAGE value="add backtracking solver for robotics" />
+    <option name="LAST_COMMIT_MESSAGE" value="add backtracking solver for robotics" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
