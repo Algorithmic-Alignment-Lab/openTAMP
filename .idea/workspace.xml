@@ -5,7 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/opentamp/pma/toy_solver.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/pma/toy_solver.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/pma/backtrack_ll_solver_OSQP.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/pma/backtrack_ll_solver_OSQP.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -242,21 +243,7 @@
       <workItem from="1679781082571" duration="1356000" />
       <workItem from="1679856976642" duration="401000" />
       <workItem from="1679939472416" duration="9462000" />
-      <workItem from="1680013094386" duration="9187000" />
-    </task>
-    <task id="LOCAL-00090" summary="debug param specification">
-      <created>1678763723547</created>
-      <option name="number" value="00090" />
-      <option name="presentableId" value="LOCAL-00090" />
-      <option name="project" value="LOCAL" />
-      <updated>1678763723547</updated>
-    </task>
-    <task id="LOCAL-00091" summary="remove item()">
-      <created>1678763818376</created>
-      <option name="number" value="00091" />
-      <option name="presentableId" value="LOCAL-00091" />
-      <option name="project" value="LOCAL" />
-      <updated>1678763818376</updated>
+      <workItem from="1680013094386" duration="9365000" />
     </task>
     <task id="LOCAL-00092" summary="add print for debug">
       <created>1678764412994</created>
@@ -587,7 +574,21 @@
       <option name="project" value="LOCAL" />
       <updated>1680032516549</updated>
     </task>
-    <option name="localTasksCounter" value="139" />
+    <task id="LOCAL-00139" summary="add print">
+      <created>1680032559193</created>
+      <option name="number" value="00139" />
+      <option name="presentableId" value="LOCAL-00139" />
+      <option name="project" value="LOCAL" />
+      <updated>1680032559193</updated>
+    </task>
+    <task id="LOCAL-00140" summary="add print">
+      <created>1680032605679</created>
+      <option name="number" value="00140" />
+      <option name="presentableId" value="LOCAL-00140" />
+      <option name="project" value="LOCAL" />
+      <updated>1680032605679</updated>
+    </task>
+    <option name="localTasksCounter" value="141" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -646,7 +647,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add backtracking solver for robotics" />
     <MESSAGE value="revert to ToySolver with dummy overrides" />
     <MESSAGE value="alter prints" />
     <MESSAGE value="modify value to pose" />
@@ -671,7 +671,8 @@
     <MESSAGE value="add object pose suggester" />
     <MESSAGE value="debug object pose suggester" />
     <MESSAGE value="debug get_resample_param" />
-    <option name="LAST_COMMIT_MESSAGE" value="debug get_resample_param" />
+    <MESSAGE value="add print" />
+    <option name="LAST_COMMIT_MESSAGE" value="add print" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
