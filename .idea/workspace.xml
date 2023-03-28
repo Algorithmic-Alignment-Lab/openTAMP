@@ -5,6 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/core/util_classes/common_predicates.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/util_classes/common_predicates.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opentamp/core/util_classes/toy_domain_predicates.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/util_classes/toy_domain_predicates.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -242,14 +244,7 @@
       <workItem from="1679781082571" duration="1356000" />
       <workItem from="1679856976642" duration="401000" />
       <workItem from="1679939472416" duration="9462000" />
-      <workItem from="1680013094386" duration="2317000" />
-    </task>
-    <task id="LOCAL-00077" summary="debug predicate logic">
-      <created>1678385884597</created>
-      <option name="number" value="00077" />
-      <option name="presentableId" value="LOCAL-00077" />
-      <option name="project" value="LOCAL" />
-      <updated>1678385884597</updated>
+      <workItem from="1680013094386" duration="2515000" />
     </task>
     <task id="LOCAL-00078" summary="add printouts for distribution objects">
       <created>1678756259382</created>
@@ -587,7 +582,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680019627595</updated>
     </task>
-    <option name="localTasksCounter" value="126" />
+    <task id="LOCAL-00126" summary="swap param order">
+      <created>1680019728625</created>
+      <option name="number" value="00126" />
+      <option name="presentableId" value="LOCAL-00126" />
+      <option name="project" value="LOCAL" />
+      <updated>1680019728625</updated>
+    </task>
+    <option name="localTasksCounter" value="127" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -646,7 +648,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="modify constraints to affine" />
     <MESSAGE value="modified vacuous methods in terms of ExprPredicate" />
     <MESSAGE value="print to see action list from planner" />
     <MESSAGE value="represent Gaussian as 2D vector" />
@@ -671,7 +672,8 @@
     <MESSAGE value="further prints" />
     <MESSAGE value="add pose print for goal" />
     <MESSAGE value="more prints for debugging" />
-    <option name="LAST_COMMIT_MESSAGE" value="more prints for debugging" />
+    <MESSAGE value="swap param order" />
+    <option name="LAST_COMMIT_MESSAGE" value="swap param order" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

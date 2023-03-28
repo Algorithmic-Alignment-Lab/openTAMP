@@ -42,8 +42,8 @@ class PointerAtLocation(ExprPredicate):
         debug=False,
     ):
         attr_inds = OrderedDict([
-            (params[1], [("pose", np.array([0], dtype='int32'))]),
-            (params[0], [("value", np.array([0], dtype='int32'))])
+            (params[0], [("pose", np.array([0], dtype='int32'))]),
+            (params[1], [("value", np.array([0], dtype='int32'))])
         ])
 
         aff_expr = AffExpr(np.array([[1, -1]]), np.array([0]))  # takes the difference between the input
