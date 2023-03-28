@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/pma/backtrack_ll_solver_OSQP.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/pma/backtrack_ll_solver_OSQP.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/toy_belief.domain" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/toy_belief.domain" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -243,14 +243,7 @@
       <workItem from="1679781082571" duration="1356000" />
       <workItem from="1679856976642" duration="401000" />
       <workItem from="1679939472416" duration="9462000" />
-      <workItem from="1680013094386" duration="9365000" />
-    </task>
-    <task id="LOCAL-00092" summary="add print for debug">
-      <created>1678764412994</created>
-      <option name="number" value="00092" />
-      <option name="presentableId" value="LOCAL-00092" />
-      <option name="project" value="LOCAL" />
-      <updated>1678764412994</updated>
+      <workItem from="1680013094386" duration="9744000" />
     </task>
     <task id="LOCAL-00093" summary="add print for debug 2">
       <created>1678764484303</created>
@@ -588,7 +581,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680032605679</updated>
     </task>
-    <option name="localTasksCounter" value="141" />
+    <task id="LOCAL-00141" summary="add pdb call">
+      <created>1680032745568</created>
+      <option name="number" value="00141" />
+      <option name="presentableId" value="LOCAL-00141" />
+      <option name="project" value="LOCAL" />
+      <updated>1680032745568</updated>
+    </task>
+    <option name="localTasksCounter" value="142" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -647,7 +647,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="revert to ToySolver with dummy overrides" />
     <MESSAGE value="alter prints" />
     <MESSAGE value="modify value to pose" />
     <MESSAGE value="modify environment predicates" />
@@ -672,7 +671,8 @@
     <MESSAGE value="debug object pose suggester" />
     <MESSAGE value="debug get_resample_param" />
     <MESSAGE value="add print" />
-    <option name="LAST_COMMIT_MESSAGE" value="add print" />
+    <MESSAGE value="add pdb call" />
+    <option name="LAST_COMMIT_MESSAGE" value="add pdb call" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
