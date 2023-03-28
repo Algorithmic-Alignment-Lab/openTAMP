@@ -133,7 +133,7 @@ class AngleViewingWall(ExprPredicate):
             sigma=0.1
     ):
         attr_inds = OrderedDict([
-            (params[0], [("pose", np.array([1], dtype='int32'))]),
+            (params[0], [("pose", np.array([0], dtype='int32'))]),
         ])
 
         aff_expr = AffExpr(np.array([[-1],[1]]), np.array([[0],[0]]))  # trivial constraint
@@ -159,7 +159,7 @@ class CoordInView(ExprPredicate):
             sigma=0.1
     ):
         attr_inds = OrderedDict([
-            (params[0], [("pose", np.array([1], dtype='int32'))]),
+            (params[0], [("pose", np.array([0], dtype='int32'))]),
         ])
 
         g = params[1].value
