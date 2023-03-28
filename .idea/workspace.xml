@@ -243,14 +243,7 @@
       <workItem from="1679781082571" duration="1356000" />
       <workItem from="1679856976642" duration="401000" />
       <workItem from="1679939472416" duration="9462000" />
-      <workItem from="1680013094386" duration="10645000" />
-    </task>
-    <task id="LOCAL-00096" summary="add affine expression">
-      <created>1678765176020</created>
-      <option name="number" value="00096" />
-      <option name="presentableId" value="LOCAL-00096" />
-      <option name="project" value="LOCAL" />
-      <updated>1678765176020</updated>
+      <workItem from="1680013094386" duration="10710000" />
     </task>
     <task id="LOCAL-00097" summary="remove call in constructor">
       <created>1678765335168</created>
@@ -588,7 +581,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680033837200</updated>
     </task>
-    <option name="localTasksCounter" value="145" />
+    <task id="LOCAL-00145" summary="mod solver">
+      <created>1680034072353</created>
+      <option name="number" value="00145" />
+      <option name="presentableId" value="LOCAL-00145" />
+      <option name="project" value="LOCAL" />
+      <updated>1680034072353</updated>
+    </task>
+    <option name="localTasksCounter" value="146" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -647,7 +647,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="debug AlwaysTrue" />
     <MESSAGE value="timestep update" />
     <MESSAGE value="add prints to variables in optimization" />
     <MESSAGE value="print attributes of params" />
@@ -672,7 +671,8 @@
     <MESSAGE value="modify timesteps in domain" />
     <MESSAGE value="modify obj_pose_suggester" />
     <MESSAGE value="debug obj_pose_suggester" />
-    <option name="LAST_COMMIT_MESSAGE" value="debug obj_pose_suggester" />
+    <MESSAGE value="mod solver" />
+    <option name="LAST_COMMIT_MESSAGE" value="mod solver" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
