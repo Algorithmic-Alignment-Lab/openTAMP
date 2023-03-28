@@ -9,10 +9,10 @@ Attribute Import Paths: Vector1d opentamp.core.util_classes.matrix, Vector2d ope
 
 Predicates Import Path: opentamp.core.util_classes.toy_domain_predicates
 
-Primitive Predicates: value, Location, Vector2d; value, Pointer, Vector1d
+Primitive Predicates: value, Location, Vector1d; pose, Pointer, Vector1d
 
-Derived Predicates: PointerAtLocation, Pointer, Location; Uncertain, Location; AlwaysTrue, Pointer
+Derived Predicates: PointerAtLocation, Pointer, Location; AlwaysTrue, Pointer
 
-Action select_location 1: (?location - Location, ?pointer - Pointer) (and (not (Uncertain ?location))) (and (PointerAtLocation ?pointer ?location) (not (Uncertain ?location))) 0:0 0:1 1:1
+Action select_location 1: (?location - Location, ?pointer - Pointer) (and (AlwaysTrue ?pointer)) (and (PointerAtLocation ?pointer ?location)) 0:0 0:1 1:1
 
-Action observe 5: (?location - Location, ?pointer - Pointer) (and (AlwaysTrue ?pointer)) (and (not (Uncertain ?location))) 0:0 4:4
+# Action observe 5: (?location - Location, ?pointer - Pointer) (and (AlwaysTrue ?pointer)) (and (not (Uncertain ?location))) 0:0 4:4
