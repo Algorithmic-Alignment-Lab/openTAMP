@@ -242,14 +242,7 @@
       <workItem from="1679781082571" duration="1356000" />
       <workItem from="1679856976642" duration="401000" />
       <workItem from="1679939472416" duration="9462000" />
-      <workItem from="1680013094386" duration="14501000" />
-    </task>
-    <task id="LOCAL-00106" summary="remove UncertainTest calls">
-      <created>1678843233344</created>
-      <option name="number" value="00106" />
-      <option name="presentableId" value="LOCAL-00106" />
-      <option name="project" value="LOCAL" />
-      <updated>1678843233344</updated>
+      <workItem from="1680013094386" duration="14522000" />
     </task>
     <task id="LOCAL-00107" summary="remove UncertainTest calls">
       <created>1678901960229</created>
@@ -587,7 +580,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680039345413</updated>
     </task>
-    <option name="localTasksCounter" value="155" />
+    <task id="LOCAL-00155" summary="debug camera specification 2">
+      <created>1680039519777</created>
+      <option name="number" value="00155" />
+      <option name="presentableId" value="LOCAL-00155" />
+      <option name="project" value="LOCAL" />
+      <updated>1680039519777</updated>
+    </task>
+    <option name="localTasksCounter" value="156" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -646,7 +646,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fix print" />
     <MESSAGE value="timestep altera" />
     <MESSAGE value="more prints" />
     <MESSAGE value="remove some prints from the predicates" />
@@ -671,7 +670,8 @@
     <MESSAGE value="initial push for camera" />
     <MESSAGE value="add in camera logic" />
     <MESSAGE value="debug camera specification" />
-    <option name="LAST_COMMIT_MESSAGE" value="debug camera specification" />
+    <MESSAGE value="debug camera specification 2" />
+    <option name="LAST_COMMIT_MESSAGE" value="debug camera specification 2" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
