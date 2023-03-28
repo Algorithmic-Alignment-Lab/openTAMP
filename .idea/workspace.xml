@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/pma/namo_solver_OSQP.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/pma/namo_solver_OSQP.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opentamp/pma/toy_solver.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/pma/toy_solver.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -243,14 +244,7 @@
       <workItem from="1679781082571" duration="1356000" />
       <workItem from="1679856976642" duration="401000" />
       <workItem from="1679939472416" duration="9462000" />
-      <workItem from="1680013094386" duration="8655000" />
-    </task>
-    <task id="LOCAL-00086" summary="remove negation (ablation) 3">
-      <created>1678757675694</created>
-      <option name="number" value="00086" />
-      <option name="presentableId" value="LOCAL-00086" />
-      <option name="project" value="LOCAL" />
-      <updated>1678757675694</updated>
+      <workItem from="1680013094386" duration="9030000" />
     </task>
     <task id="LOCAL-00087" summary="remove negation (ablation) 4">
       <created>1678758196700</created>
@@ -588,7 +582,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680024921135</updated>
     </task>
-    <option name="localTasksCounter" value="135" />
+    <task id="LOCAL-00135" summary="modify resample param">
+      <created>1680032031610</created>
+      <option name="number" value="00135" />
+      <option name="presentableId" value="LOCAL-00135" />
+      <option name="project" value="LOCAL" />
+      <updated>1680032031610</updated>
+    </task>
+    <option name="localTasksCounter" value="136" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -647,7 +648,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add print predicates" />
     <MESSAGE value="add print for timesteps" />
     <MESSAGE value="just print, no logic for solver" />
     <MESSAGE value="alter the timesteps" />
@@ -672,7 +672,8 @@
     <MESSAGE value="add more prints" />
     <MESSAGE value="change the initial problem to go from 1 to 2" />
     <MESSAGE value="modify the input vectors" />
-    <option name="LAST_COMMIT_MESSAGE" value="modify the input vectors" />
+    <MESSAGE value="modify resample param" />
+    <option name="LAST_COMMIT_MESSAGE" value="modify resample param" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
