@@ -13,5 +13,5 @@ class ToySolver(BacktrackLLSolverOSQP):
         return a.params[1]
 
     def obj_pose_suggester(self, plan, anum, resample_size=1, st=0):
-        print({"pose": plan.params['p1'].pose})
-        return [{"pose": plan.params['p1'].pose}]
+        print({"value": plan.params['v'].value})
+        return [{"value": plan.params['v'].value}]
