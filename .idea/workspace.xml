@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opentamp/core/util_classes/toy_domain_predicates.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/util_classes/toy_domain_predicates.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -243,14 +244,7 @@
       <workItem from="1679856976642" duration="401000" />
       <workItem from="1679939472416" duration="9462000" />
       <workItem from="1680013094386" duration="15879000" />
-      <workItem from="1680044352576" duration="2181000" />
-    </task>
-    <task id="LOCAL-00127" summary="fix print">
-      <created>1680019968024</created>
-      <option name="number" value="00127" />
-      <option name="presentableId" value="LOCAL-00127" />
-      <option name="project" value="LOCAL" />
-      <updated>1680019968025</updated>
+      <workItem from="1680044352576" duration="2398000" />
     </task>
     <task id="LOCAL-00128" summary="timestep altera">
       <created>1680020153981</created>
@@ -588,7 +582,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680046605059</updated>
     </task>
-    <option name="localTasksCounter" value="176" />
+    <task id="LOCAL-00176" summary="replace with pdb calls">
+      <created>1680046728206</created>
+      <option name="number" value="00176" />
+      <option name="presentableId" value="LOCAL-00176" />
+      <option name="project" value="LOCAL" />
+      <updated>1680046728206</updated>
+    </task>
+    <option name="localTasksCounter" value="177" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -647,7 +648,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="nan for pose suggestion" />
     <MESSAGE value="debug nan for pose suggestion" />
     <MESSAGE value="initial push for camera" />
     <MESSAGE value="add in camera logic" />
@@ -672,7 +672,8 @@
     <MESSAGE value="debug timesteps" />
     <MESSAGE value="add MANY prints" />
     <MESSAGE value="replace MANY prints" />
-    <option name="LAST_COMMIT_MESSAGE" value="replace MANY prints" />
+    <MESSAGE value="replace with pdb calls" />
+    <option name="LAST_COMMIT_MESSAGE" value="replace with pdb calls" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

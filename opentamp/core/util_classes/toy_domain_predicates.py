@@ -137,13 +137,11 @@ class AngleViewingWall(ExprPredicate):
         ])
 
         aff_expr = AffExpr(np.array([[-1],[1]]), np.array([[0],[0]]))  # trivial constraint
-        wu = params[1].value
-        wd = params[2].value
-        d = params[3].value
+        wu = params[1].value.item()
+        wd = params[2].value.item()
+        d = params[3].value.item()
 
         e = LEqExpr(aff_expr, np.array([[-np.arctan(d/wu)], [np.pi - np.arctan(d/wd)]]))
-
-        import pdb; pdb.set_trace()
 
         super().__init__(name, e, attr_inds, params, expected_param_types)
 
@@ -164,14 +162,12 @@ class CoordInView(ExprPredicate):
             (params[0], [("pose", np.array([0], dtype='int32'))]),
         ])
 
-        g = params[1].value
-        d = params[2].value
-        r = params[3].value
+        g = params[1].value.item()
+        d = params[2].value.item()
+        r = params[3].value.item()
 
         aff_expr = AffExpr(np.array([[-1],[1]]), np.array([[0],[0]]))  # trivial constraint
         e = LEqExpr(aff_expr, np.array([[-np.pi/2 + np.pi * r/2 + np.arctan(g/d)], [np.pi/2 + np.pi*r/2 - np.arctan(g/d)]]))
-
-        import pdb; pdb.set_trace()
 
         super().__init__(name, e, attr_inds, params, expected_param_types)
 
