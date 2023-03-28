@@ -209,7 +209,7 @@ class AlwaysTrue(ExprPredicate):
             (params[0], [("pose", np.array([0], dtype='int32'))]),
         ])
 
-        aff_expr = AffExpr(np.array([[0]]), np.array([0])) # trivial constraint
+        aff_expr = AffExpr(np.array([[0]]), np.array([0]))  # trivial constraint
         e = EqExpr(aff_expr, np.array([0]))
 
         super().__init__(name, e, attr_inds, params, expected_param_types)

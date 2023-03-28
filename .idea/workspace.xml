@@ -5,7 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/core/util_classes/toy_domain_predicates.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/util_classes/toy_domain_predicates.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/probs/toy_belief.prob" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/probs/toy_belief.prob" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/toy_belief.domain" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/toy_belief.domain" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -242,14 +245,7 @@
       <workItem from="1679781082571" duration="1356000" />
       <workItem from="1679856976642" duration="401000" />
       <workItem from="1679939472416" duration="9462000" />
-      <workItem from="1680013094386" duration="14522000" />
-    </task>
-    <task id="LOCAL-00107" summary="remove UncertainTest calls">
-      <created>1678901960229</created>
-      <option name="number" value="00107" />
-      <option name="presentableId" value="LOCAL-00107" />
-      <option name="project" value="LOCAL" />
-      <updated>1678901960229</updated>
+      <workItem from="1680013094386" duration="14617000" />
     </task>
     <task id="LOCAL-00108" summary="UncertainTest">
       <created>1678902308682</created>
@@ -587,7 +583,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680039519777</updated>
     </task>
-    <option name="localTasksCounter" value="156" />
+    <task id="LOCAL-00156" summary="debug camera specification 3">
+      <created>1680039545184</created>
+      <option name="number" value="00156" />
+      <option name="presentableId" value="LOCAL-00156" />
+      <option name="project" value="LOCAL" />
+      <updated>1680039545184</updated>
+    </task>
+    <option name="localTasksCounter" value="157" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -646,7 +649,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="timestep altera" />
     <MESSAGE value="more prints" />
     <MESSAGE value="remove some prints from the predicates" />
     <MESSAGE value="add init_free_attrs print" />
@@ -671,7 +673,8 @@
     <MESSAGE value="add in camera logic" />
     <MESSAGE value="debug camera specification" />
     <MESSAGE value="debug camera specification 2" />
-    <option name="LAST_COMMIT_MESSAGE" value="debug camera specification 2" />
+    <MESSAGE value="debug camera specification 3" />
+    <option name="LAST_COMMIT_MESSAGE" value="debug camera specification 3" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
