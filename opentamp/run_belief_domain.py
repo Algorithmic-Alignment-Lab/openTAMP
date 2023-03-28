@@ -40,8 +40,10 @@ plan, descr = p_mod_abs(
 
 if plan is not None:
     print(plan.actions)
-    print(plan.params['p1'].attrs)
-    print(plan.params['g'].attrs)
+    print(plan.params['p1'].pose)
+    print(plan.params['p1']._free_attrs)
+    print(plan.params['g'].value)
+    print(plan.params['p1']._free_attrs)
 
 print(descr)
 

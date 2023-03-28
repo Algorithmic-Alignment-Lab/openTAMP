@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -243,14 +242,7 @@
       <workItem from="1679781082571" duration="1356000" />
       <workItem from="1679856976642" duration="401000" />
       <workItem from="1679939472416" duration="9462000" />
-      <workItem from="1680013094386" duration="1389000" />
-    </task>
-    <task id="LOCAL-00073" summary="add uncertain as a goal">
-      <created>1678385155139</created>
-      <option name="number" value="00073" />
-      <option name="presentableId" value="LOCAL-00073" />
-      <option name="project" value="LOCAL" />
-      <updated>1678385155139</updated>
+      <workItem from="1680013094386" duration="1473000" />
     </task>
     <task id="LOCAL-00074" summary="add uncertain as a goal 2">
       <created>1678385371472</created>
@@ -588,7 +580,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680017138147</updated>
     </task>
-    <option name="localTasksCounter" value="122" />
+    <task id="LOCAL-00122" summary="print attributes of params">
+      <created>1680018777994</created>
+      <option name="number" value="00122" />
+      <option name="presentableId" value="LOCAL-00122" />
+      <option name="project" value="LOCAL" />
+      <updated>1680018777994</updated>
+    </task>
+    <option name="localTasksCounter" value="123" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -647,7 +646,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add affine expression" />
     <MESSAGE value="remove call in constructor" />
     <MESSAGE value="alter attr_inds constructor" />
     <MESSAGE value="add print statement" />
@@ -672,7 +670,8 @@
     <MESSAGE value="debug AlwaysTrue" />
     <MESSAGE value="timestep update" />
     <MESSAGE value="add prints to variables in optimization" />
-    <option name="LAST_COMMIT_MESSAGE" value="add prints to variables in optimization" />
+    <MESSAGE value="print attributes of params" />
+    <option name="LAST_COMMIT_MESSAGE" value="print attributes of params" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
