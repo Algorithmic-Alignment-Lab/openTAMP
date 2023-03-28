@@ -143,8 +143,7 @@ class AngleViewingWall(ExprPredicate):
 
         e = LEqExpr(aff_expr, np.array([[-np.arctan(d/wu)], [np.pi - np.arctan(d/wd)]]))
 
-        print(-np.arctan(d/wu))
-        print(np.pi - np.arctan(d/wd))
+        import pdb; pdb.set_trace()
 
         super().__init__(name, e, attr_inds, params, expected_param_types)
 
@@ -172,8 +171,7 @@ class CoordInView(ExprPredicate):
         aff_expr = AffExpr(np.array([[-1],[1]]), np.array([[0],[0]]))  # trivial constraint
         e = LEqExpr(aff_expr, np.array([[-np.pi/2 + np.pi * r/2 + np.arctan(g/d)], [np.pi/2 + np.pi*r/2 - np.arctan(g/d)]]))
 
-        print(-np.pi/2 + np.pi * r/2 + np.arctan(g/d))
-        print(np.pi/2 + np.pi*r/2 - np.arctan(g/d))
+        import pdb; pdb.set_trace()
 
         super().__init__(name, e, attr_inds, params, expected_param_types)
 
