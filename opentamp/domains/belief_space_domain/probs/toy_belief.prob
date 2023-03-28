@@ -4,6 +4,6 @@
 
 Objects: Location (name g); Pointer (name p1);
 
-Init: (pose p1 [0.0]), (value g [1.0]); (AlwaysTrue p1)
+Init: (pose p1 [1.0]), (value g [2.0]); (AlwaysTrue p1)
 
 Goal: (PointerAtLocation p1 g)
