@@ -6,7 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/core/util_classes/toy_domain_predicates.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/util_classes/toy_domain_predicates.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/probs/toy_belief.prob" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/probs/toy_belief.prob" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/pma/toy_solver.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/pma/toy_solver.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -244,14 +245,7 @@
       <workItem from="1679856976642" duration="401000" />
       <workItem from="1679939472416" duration="9462000" />
       <workItem from="1680013094386" duration="15879000" />
-      <workItem from="1680044352576" duration="94000" />
-    </task>
-    <task id="LOCAL-00119" summary="debug AlwaysTrue">
-      <created>1679971705573</created>
-      <option name="number" value="00119" />
-      <option name="presentableId" value="LOCAL-00119" />
-      <option name="project" value="LOCAL" />
-      <updated>1679971705573</updated>
+      <workItem from="1680044352576" duration="700000" />
     </task>
     <task id="LOCAL-00120" summary="timestep update">
       <created>1679971959172</created>
@@ -589,7 +583,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680040788874</updated>
     </task>
-    <option name="localTasksCounter" value="168" />
+    <task id="LOCAL-00168" summary="flip sign in constraint">
+      <created>1680044461990</created>
+      <option name="number" value="00168" />
+      <option name="presentableId" value="LOCAL-00168" />
+      <option name="project" value="LOCAL" />
+      <updated>1680044461990</updated>
+    </task>
+    <option name="localTasksCounter" value="169" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -648,7 +649,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add pdb call" />
     <MESSAGE value="modify timesteps in domain" />
     <MESSAGE value="modify obj_pose_suggester" />
     <MESSAGE value="debug obj_pose_suggester" />
@@ -673,7 +673,8 @@
     <MESSAGE value="add somewhat helpful pose suggestion" />
     <MESSAGE value="add exact pose suggestion" />
     <MESSAGE value="change width in constraints" />
-    <option name="LAST_COMMIT_MESSAGE" value="change width in constraints" />
+    <MESSAGE value="flip sign in constraint" />
+    <option name="LAST_COMMIT_MESSAGE" value="flip sign in constraint" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
