@@ -10,6 +10,7 @@ import torch
 
 class ToySolver(BacktrackLLSolverOSQP):
     def get_resample_param(self, a):
+        print(a.params)
         print(a.params[1])
         return a.params[1]
 
