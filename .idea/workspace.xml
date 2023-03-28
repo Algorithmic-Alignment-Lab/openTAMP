@@ -6,8 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/core/util_classes/toy_domain_predicates.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/util_classes/toy_domain_predicates.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/probs/toy_belief.prob" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/probs/toy_belief.prob" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/pma/toy_solver.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/pma/toy_solver.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -244,14 +243,7 @@
       <workItem from="1679781082571" duration="1356000" />
       <workItem from="1679856976642" duration="401000" />
       <workItem from="1679939472416" duration="9462000" />
-      <workItem from="1680013094386" duration="5564000" />
-    </task>
-    <task id="LOCAL-00085" summary="remove negation (ablation) 3">
-      <created>1678757594191</created>
-      <option name="number" value="00085" />
-      <option name="presentableId" value="LOCAL-00085" />
-      <option name="project" value="LOCAL" />
-      <updated>1678757594191</updated>
+      <workItem from="1680013094386" duration="8655000" />
     </task>
     <task id="LOCAL-00086" summary="remove negation (ablation) 3">
       <created>1678757675694</created>
@@ -589,7 +581,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680024310594</updated>
     </task>
-    <option name="localTasksCounter" value="134" />
+    <task id="LOCAL-00134" summary="modify the input vectors">
+      <created>1680024921135</created>
+      <option name="number" value="00134" />
+      <option name="presentableId" value="LOCAL-00134" />
+      <option name="project" value="LOCAL" />
+      <updated>1680024921135</updated>
+    </task>
+    <option name="localTasksCounter" value="135" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -648,7 +647,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add prints" />
     <MESSAGE value="add print predicates" />
     <MESSAGE value="add print for timesteps" />
     <MESSAGE value="just print, no logic for solver" />
@@ -673,7 +671,8 @@
     <MESSAGE value="add init_free_attrs print" />
     <MESSAGE value="add more prints" />
     <MESSAGE value="change the initial problem to go from 1 to 2" />
-    <option name="LAST_COMMIT_MESSAGE" value="change the initial problem to go from 1 to 2" />
+    <MESSAGE value="modify the input vectors" />
+    <option name="LAST_COMMIT_MESSAGE" value="modify the input vectors" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
