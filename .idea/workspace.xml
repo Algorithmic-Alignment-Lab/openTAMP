@@ -243,14 +243,7 @@
       <workItem from="1679781082571" duration="1356000" />
       <workItem from="1679856976642" duration="401000" />
       <workItem from="1679939472416" duration="9462000" />
-      <workItem from="1680013094386" duration="11014000" />
-    </task>
-    <task id="LOCAL-00100" summary="modify constraints to affine">
-      <created>1678765888788</created>
-      <option name="number" value="00100" />
-      <option name="presentableId" value="LOCAL-00100" />
-      <option name="project" value="LOCAL" />
-      <updated>1678765888788</updated>
+      <workItem from="1680013094386" duration="11641000" />
     </task>
     <task id="LOCAL-00101" summary="modified vacuous methods in terms of ExprPredicate">
       <created>1678766221578</created>
@@ -588,7 +581,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680034257058</updated>
     </task>
-    <option name="localTasksCounter" value="149" />
+    <task id="LOCAL-00149" summary="give g hint value for pose suggester">
+      <created>1680034447320</created>
+      <option name="number" value="00149" />
+      <option name="presentableId" value="LOCAL-00149" />
+      <option name="project" value="LOCAL" />
+      <updated>1680034447320</updated>
+    </task>
+    <option name="localTasksCounter" value="150" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -647,7 +647,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add prints to variables in optimization" />
     <MESSAGE value="print attributes of params" />
     <MESSAGE value="further prints" />
     <MESSAGE value="add pose print for goal" />
@@ -672,7 +671,8 @@
     <MESSAGE value="mod solver" />
     <MESSAGE value="debug pose" />
     <MESSAGE value="add print" />
-    <option name="LAST_COMMIT_MESSAGE" value="add print" />
+    <MESSAGE value="give g hint value for pose suggester" />
+    <option name="LAST_COMMIT_MESSAGE" value="give g hint value for pose suggester" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
