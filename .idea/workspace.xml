@@ -243,14 +243,7 @@
       <workItem from="1679781082571" duration="1356000" />
       <workItem from="1679856976642" duration="401000" />
       <workItem from="1679939472416" duration="9462000" />
-      <workItem from="1680013094386" duration="1005000" />
-    </task>
-    <task id="LOCAL-00072" summary="debug belief-space specification 7">
-      <created>1678385112296</created>
-      <option name="number" value="00072" />
-      <option name="presentableId" value="LOCAL-00072" />
-      <option name="project" value="LOCAL" />
-      <updated>1678385112296</updated>
+      <workItem from="1680013094386" duration="1389000" />
     </task>
     <task id="LOCAL-00073" summary="add uncertain as a goal">
       <created>1678385155139</created>
@@ -588,7 +581,14 @@
       <option name="project" value="LOCAL" />
       <updated>1679971959172</updated>
     </task>
-    <option name="localTasksCounter" value="121" />
+    <task id="LOCAL-00121" summary="add prints to variables in optimization">
+      <created>1680017138147</created>
+      <option name="number" value="00121" />
+      <option name="presentableId" value="LOCAL-00121" />
+      <option name="project" value="LOCAL" />
+      <updated>1680017138147</updated>
+    </task>
+    <option name="localTasksCounter" value="122" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -647,7 +647,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="debug attr_inds constructor" />
     <MESSAGE value="add affine expression" />
     <MESSAGE value="remove call in constructor" />
     <MESSAGE value="alter attr_inds constructor" />
@@ -672,7 +671,8 @@
     <MESSAGE value="modify environment predicates" />
     <MESSAGE value="debug AlwaysTrue" />
     <MESSAGE value="timestep update" />
-    <option name="LAST_COMMIT_MESSAGE" value="timestep update" />
+    <MESSAGE value="add prints to variables in optimization" />
+    <option name="LAST_COMMIT_MESSAGE" value="add prints to variables in optimization" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
