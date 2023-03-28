@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="" />
+    <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/pma/backtrack_ll_solver_OSQP.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/pma/backtrack_ll_solver_OSQP.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -240,14 +243,7 @@
       <workItem from="1679781082571" duration="1356000" />
       <workItem from="1679856976642" duration="401000" />
       <workItem from="1679939472416" duration="9462000" />
-      <workItem from="1680013094386" duration="3711000" />
-    </task>
-    <task id="LOCAL-00081" summary="remove stochastic logic for debugging 3">
-      <created>1678756699333</created>
-      <option name="number" value="00081" />
-      <option name="presentableId" value="LOCAL-00081" />
-      <option name="project" value="LOCAL" />
-      <updated>1678756699333</updated>
+      <workItem from="1680013094386" duration="4130000" />
     </task>
     <task id="LOCAL-00082" summary="remove stochastic logic for debugging 4">
       <created>1678756770161</created>
@@ -585,7 +581,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680021161288</updated>
     </task>
-    <option name="localTasksCounter" value="130" />
+    <task id="LOCAL-00130" summary="remove some prints from the predicates">
+      <created>1680021623421</created>
+      <option name="number" value="00130" />
+      <option name="presentableId" value="LOCAL-00130" />
+      <option name="project" value="LOCAL" />
+      <updated>1680021623421</updated>
+    </task>
+    <option name="localTasksCounter" value="131" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -644,7 +647,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="debug import" />
     <MESSAGE value="flip sign on uncertain" />
     <MESSAGE value="remove UncertainTest calls" />
     <MESSAGE value="UncertainTest" />
@@ -669,7 +671,8 @@
     <MESSAGE value="fix print" />
     <MESSAGE value="timestep altera" />
     <MESSAGE value="more prints" />
-    <option name="LAST_COMMIT_MESSAGE" value="more prints" />
+    <MESSAGE value="remove some prints from the predicates" />
+    <option name="LAST_COMMIT_MESSAGE" value="remove some prints from the predicates" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

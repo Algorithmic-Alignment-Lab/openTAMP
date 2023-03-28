@@ -160,6 +160,7 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
         rs_param = self.get_resample_param(a)
         success = False
         init_free_attrs = plan.get_free_attrs()
+        print(init_free_attrs)
         for param in list(plan.params.values()):
             if param.is_symbol():
                 continue
