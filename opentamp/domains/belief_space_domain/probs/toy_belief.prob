@@ -6,4 +6,4 @@ Objects: CameraAngle (name theta); PointCoord (name g); WallUp (name wu); WallDo
 
 Init: (pose theta [[0.0]]), (value g [[0.5]]), (value wu [[1.0]]), (value wd [[1.0]]), (value d [[1.0]]), (value rw [[0.1]]); (AlwaysTrue theta)
 
-Goal: (and (AngleViewingWall theta wu wd d) (CoordInView theta g d rw))
+Goal: (AngleViewingWall theta wu wd d), (CoordInView theta g d rw)
