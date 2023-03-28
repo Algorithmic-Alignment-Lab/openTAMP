@@ -242,14 +242,7 @@
       <workItem from="1679781082571" duration="1356000" />
       <workItem from="1679856976642" duration="401000" />
       <workItem from="1679939472416" duration="9462000" />
-      <workItem from="1680013094386" duration="9137000" />
-    </task>
-    <task id="LOCAL-00089" summary="replace uncertain test logic with trivial">
-      <created>1678763661604</created>
-      <option name="number" value="00089" />
-      <option name="presentableId" value="LOCAL-00089" />
-      <option name="project" value="LOCAL" />
-      <updated>1678763661604</updated>
+      <workItem from="1680013094386" duration="9187000" />
     </task>
     <task id="LOCAL-00090" summary="debug param specification">
       <created>1678763723547</created>
@@ -587,7 +580,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680032439719</updated>
     </task>
-    <option name="localTasksCounter" value="138" />
+    <task id="LOCAL-00138" summary="debug get_resample_param">
+      <created>1680032516549</created>
+      <option name="number" value="00138" />
+      <option name="presentableId" value="LOCAL-00138" />
+      <option name="project" value="LOCAL" />
+      <updated>1680032516549</updated>
+    </task>
+    <option name="localTasksCounter" value="139" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -646,7 +646,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="alter the timesteps" />
     <MESSAGE value="add backtracking solver for robotics" />
     <MESSAGE value="revert to ToySolver with dummy overrides" />
     <MESSAGE value="alter prints" />
@@ -671,7 +670,8 @@
     <MESSAGE value="modify resample param" />
     <MESSAGE value="add object pose suggester" />
     <MESSAGE value="debug object pose suggester" />
-    <option name="LAST_COMMIT_MESSAGE" value="debug object pose suggester" />
+    <MESSAGE value="debug get_resample_param" />
+    <option name="LAST_COMMIT_MESSAGE" value="debug get_resample_param" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
