@@ -6,6 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/core/util_classes/toy_domain_predicates.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/util_classes/toy_domain_predicates.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/toy_belief.domain" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/toy_belief.domain" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -243,14 +245,7 @@
       <workItem from="1679781082571" duration="1356000" />
       <workItem from="1679856976642" duration="401000" />
       <workItem from="1679939472416" duration="9462000" />
-      <workItem from="1680013094386" duration="1677000" />
-    </task>
-    <task id="LOCAL-00075" summary="add uncertain as a goal 3">
-      <created>1678385693577</created>
-      <option name="number" value="00075" />
-      <option name="presentableId" value="LOCAL-00075" />
-      <option name="project" value="LOCAL" />
-      <updated>1678385693577</updated>
+      <workItem from="1680013094386" duration="2216000" />
     </task>
     <task id="LOCAL-00076" summary="add uncertain as a goal 4">
       <created>1678385766824</created>
@@ -588,7 +583,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680018856060</updated>
     </task>
-    <option name="localTasksCounter" value="124" />
+    <task id="LOCAL-00124" summary="add pose print for goal">
+      <created>1680019072721</created>
+      <option name="number" value="00124" />
+      <option name="presentableId" value="LOCAL-00124" />
+      <option name="project" value="LOCAL" />
+      <updated>1680019072721</updated>
+    </task>
+    <option name="localTasksCounter" value="125" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -647,7 +649,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="alter attr_inds constructor" />
     <MESSAGE value="add print statement" />
     <MESSAGE value="modify constraints to affine" />
     <MESSAGE value="modified vacuous methods in terms of ExprPredicate" />
@@ -672,7 +673,8 @@
     <MESSAGE value="add prints to variables in optimization" />
     <MESSAGE value="print attributes of params" />
     <MESSAGE value="further prints" />
-    <option name="LAST_COMMIT_MESSAGE" value="further prints" />
+    <MESSAGE value="add pose print for goal" />
+    <option name="LAST_COMMIT_MESSAGE" value="add pose print for goal" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

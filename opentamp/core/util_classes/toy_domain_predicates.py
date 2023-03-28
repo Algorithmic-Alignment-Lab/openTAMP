@@ -46,6 +46,8 @@ class PointerAtLocation(ExprPredicate):
             (params[1], [("value", np.array([0], dtype='int32'))])
         ])
 
+        print(attr_inds)
+
         aff_expr = AffExpr(np.array([[1, -1]]), np.array([0]))  # takes the difference between the input
         e = EqExpr(aff_expr, np.array([0]))
 
