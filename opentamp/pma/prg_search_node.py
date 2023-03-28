@@ -313,7 +313,6 @@ class LLSearchNode(SearchNode):
         return self.curr_plan
 
     def plan(self, solver, n_resamples=5, debug=False):
-        print(self.curr_plan.actions)
         self.curr_plan.freeze_actions(self.curr_plan.start)
         success = solver._backtrack_solve(self.curr_plan, anum=self.curr_plan.start, n_resamples=n_resamples, debug=debug)
         self._solved = success

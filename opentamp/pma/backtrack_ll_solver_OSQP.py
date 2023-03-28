@@ -151,7 +151,6 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
         if anum > amax:
             return True
         a = plan.actions[anum]
-        print(a)
         if DEBUG:
             print(("backtracking Solve on {}".format(a.name)))
         active_ts = a.active_timesteps
@@ -161,7 +160,6 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
         rs_param = self.get_resample_param(a)
         success = False
         init_free_attrs = plan.get_free_attrs()
-        print(init_free_attrs)
         for param in list(plan.params.values()):
             if param.is_symbol():
                 continue
