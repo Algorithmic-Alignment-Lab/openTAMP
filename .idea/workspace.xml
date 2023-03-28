@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opentamp/pma/toy_solver.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/pma/toy_solver.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -242,21 +243,7 @@
       <workItem from="1679781082571" duration="1356000" />
       <workItem from="1679856976642" duration="401000" />
       <workItem from="1679939472416" duration="9462000" />
-      <workItem from="1680013094386" duration="10764000" />
-    </task>
-    <task id="LOCAL-00098" summary="alter attr_inds constructor">
-      <created>1678765439204</created>
-      <option name="number" value="00098" />
-      <option name="presentableId" value="LOCAL-00098" />
-      <option name="project" value="LOCAL" />
-      <updated>1678765439205</updated>
-    </task>
-    <task id="LOCAL-00099" summary="add print statement">
-      <created>1678765677110</created>
-      <option name="number" value="00099" />
-      <option name="presentableId" value="LOCAL-00099" />
-      <option name="project" value="LOCAL" />
-      <updated>1678765677110</updated>
+      <workItem from="1680013094386" duration="11014000" />
     </task>
     <task id="LOCAL-00100" summary="modify constraints to affine">
       <created>1678765888788</created>
@@ -587,7 +574,21 @@
       <option name="project" value="LOCAL" />
       <updated>1680034136434</updated>
     </task>
-    <option name="localTasksCounter" value="147" />
+    <task id="LOCAL-00147" summary="add print">
+      <created>1680034188528</created>
+      <option name="number" value="00147" />
+      <option name="presentableId" value="LOCAL-00147" />
+      <option name="project" value="LOCAL" />
+      <updated>1680034188528</updated>
+    </task>
+    <task id="LOCAL-00148" summary="add print">
+      <created>1680034257058</created>
+      <option name="number" value="00148" />
+      <option name="presentableId" value="LOCAL-00148" />
+      <option name="project" value="LOCAL" />
+      <updated>1680034257058</updated>
+    </task>
+    <option name="localTasksCounter" value="149" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -664,14 +665,14 @@
     <MESSAGE value="add object pose suggester" />
     <MESSAGE value="debug object pose suggester" />
     <MESSAGE value="debug get_resample_param" />
-    <MESSAGE value="add print" />
     <MESSAGE value="add pdb call" />
     <MESSAGE value="modify timesteps in domain" />
     <MESSAGE value="modify obj_pose_suggester" />
     <MESSAGE value="debug obj_pose_suggester" />
     <MESSAGE value="mod solver" />
     <MESSAGE value="debug pose" />
-    <option name="LAST_COMMIT_MESSAGE" value="debug pose" />
+    <MESSAGE value="add print" />
+    <option name="LAST_COMMIT_MESSAGE" value="add print" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
