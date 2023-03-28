@@ -30,6 +30,14 @@ from opentamp.core.util_classes.common_predicates import ExprPredicate
 #         return True
 
 
+class PointerInRange(ExprPredicate):
+    pass
+
+
+class PointerAtTarget(ExprPredicate):
+    pass
+
+
 class PointerAtLocation(ExprPredicate):
     def __init__(
         self,
