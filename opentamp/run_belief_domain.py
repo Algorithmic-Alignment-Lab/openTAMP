@@ -43,6 +43,7 @@ if plan is not None:
     print(plan.params['p1'].pose)
     print(plan.params['p1']._free_attrs)
     print(plan.params['g'].value)
+    print(plan.params['g'].pose)
     print(plan.params['p1']._free_attrs)
 
 print(descr)
