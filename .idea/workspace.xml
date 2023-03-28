@@ -5,8 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/core/util_classes/toy_domain_predicates.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/util_classes/toy_domain_predicates.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/toy_belief.domain" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/toy_belief.domain" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -243,14 +242,7 @@
       <workItem from="1679781082571" duration="1356000" />
       <workItem from="1679856976642" duration="401000" />
       <workItem from="1679939472416" duration="9462000" />
-      <workItem from="1680013094386" duration="14810000" />
-    </task>
-    <task id="LOCAL-00111" summary="add print for timesteps">
-      <created>1678973840728</created>
-      <option name="number" value="00111" />
-      <option name="presentableId" value="LOCAL-00111" />
-      <option name="project" value="LOCAL" />
-      <updated>1678973840729</updated>
+      <workItem from="1680013094386" duration="14867000" />
     </task>
     <task id="LOCAL-00112" summary="just print, no logic for solver">
       <created>1678973888850</created>
@@ -588,7 +580,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680039780562</updated>
     </task>
-    <option name="localTasksCounter" value="160" />
+    <task id="LOCAL-00160" summary="debug camera specification 7">
+      <created>1680039830112</created>
+      <option name="number" value="00160" />
+      <option name="presentableId" value="LOCAL-00160" />
+      <option name="project" value="LOCAL" />
+      <updated>1680039830112</updated>
+    </task>
+    <option name="localTasksCounter" value="161" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -647,7 +646,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add more prints" />
     <MESSAGE value="change the initial problem to go from 1 to 2" />
     <MESSAGE value="modify the input vectors" />
     <MESSAGE value="modify resample param" />
@@ -672,7 +670,8 @@
     <MESSAGE value="debug camera specification 4" />
     <MESSAGE value="debug camera specification 5" />
     <MESSAGE value="debug camera specification 6" />
-    <option name="LAST_COMMIT_MESSAGE" value="debug camera specification 6" />
+    <MESSAGE value="debug camera specification 7" />
+    <option name="LAST_COMMIT_MESSAGE" value="debug camera specification 7" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
