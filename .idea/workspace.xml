@@ -5,9 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/core/util_classes/toy_domain_predicates.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/util_classes/toy_domain_predicates.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/pma/prg_search_node.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/pma/prg_search_node.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/toy_belief.domain" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/toy_belief.domain" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -245,14 +243,7 @@
       <workItem from="1679856976642" duration="401000" />
       <workItem from="1679939472416" duration="9462000" />
       <workItem from="1680013094386" duration="15879000" />
-      <workItem from="1680044352576" duration="1519000" />
-    </task>
-    <task id="LOCAL-00122" summary="print attributes of params">
-      <created>1680018777994</created>
-      <option name="number" value="00122" />
-      <option name="presentableId" value="LOCAL-00122" />
-      <option name="project" value="LOCAL" />
-      <updated>1680018777994</updated>
+      <workItem from="1680044352576" duration="1788000" />
     </task>
     <task id="LOCAL-00123" summary="further prints">
       <created>1680018856060</created>
@@ -590,7 +581,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680045620416</updated>
     </task>
-    <option name="localTasksCounter" value="171" />
+    <task id="LOCAL-00171" summary="add prints">
+      <created>1680046072775</created>
+      <option name="number" value="00171" />
+      <option name="presentableId" value="LOCAL-00171" />
+      <option name="project" value="LOCAL" />
+      <updated>1680046072775</updated>
+    </task>
+    <option name="localTasksCounter" value="172" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -649,7 +647,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="debug obj_pose_suggester" />
     <MESSAGE value="mod solver" />
     <MESSAGE value="debug pose" />
     <MESSAGE value="add print" />
@@ -674,7 +671,8 @@
     <MESSAGE value="flip sign in constraint" />
     <MESSAGE value="give even easier base case" />
     <MESSAGE value="absurd radius" />
-    <option name="LAST_COMMIT_MESSAGE" value="absurd radius" />
+    <MESSAGE value="add prints" />
+    <option name="LAST_COMMIT_MESSAGE" value="add prints" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
