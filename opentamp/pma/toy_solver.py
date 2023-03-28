@@ -10,10 +10,8 @@ import torch
 
 class ToySolver(BacktrackLLSolverOSQP):
     def get_resample_param(self, a):
-        print(a.params)
-        print(a.params[1])
-        return a.params[1]
+        return a.params[0]
 
     def obj_pose_suggester(self, plan, anum, resample_size=1, st=0):
         # return [{"pose": plan.params['g'].value}]
-        return [{"pose": np.array([[np.nan]])}]
+        return [{"pose": np.array([[np.nan]])}]  # for now, does not give any hints

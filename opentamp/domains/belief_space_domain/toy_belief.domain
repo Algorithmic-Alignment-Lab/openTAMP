@@ -3,16 +3,15 @@
 
 # Belief: True
 
-Types: Pointer, Location
+Types: CameraAngle, PointCoord, WallUp, WallDown, WallDist, RayWidth
 
 Attribute Import Paths: Vector1d opentamp.core.util_classes.matrix, Vector2d opentamp.core.util_classes.matrix
 
 Predicates Import Path: opentamp.core.util_classes.toy_domain_predicates
 
-Primitive Predicates: value, Location, Vector1d; pose, Pointer, Vector1d
+Primitive Predicates: pose, CameraAngle, Vector1d; value, PointCoord, Vector1d; value, WallUp, Vector1d; value, WallDown, Vector1d; value, WallDist, Vector1d; value, RayWidth, Vector1d
+Derived Predicates: AngleViewingWall, CameraAngle, WallUp, WallDown, WallDist; CoordInView, CameraAngle, PointCoord, WallDist, RayWidth; AlwaysTrue, Pointer
 
-Derived Predicates: PointerAtLocation, Pointer, Location; AlwaysTrue, Pointer
-
-Action select_location 2: (?location - Location, ?pointer - Pointer) (and (AlwaysTrue ?pointer)) (and (PointerAtLocation ?pointer ?location)) 0:0 1:1
+Action point_camera 2: (?camera_angle - CameraAngle, ?point_coord - PointCoord, ?wall_up - WallUp, ?wall_down - WallDown, ?wall_dist - WallDist, ?ray_width - RayWidth) (and (AlwaysTrue ?pointer)) (and (AngleViewingWall ?camera_angle ?wall_up ?wall_down ?wall_dist) (CoordInView ?camera_angle ?point_coord ?wall_dist ?ray_width)) 0:0 1:1 1:1
 
 # Action observe 5: (?location - Location, ?pointer - Pointer) (and (AlwaysTrue ?pointer)) (and (not (Uncertain ?location))) 0:0 4:4

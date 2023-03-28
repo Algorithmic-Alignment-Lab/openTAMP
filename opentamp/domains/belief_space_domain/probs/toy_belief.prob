@@ -2,8 +2,8 @@
 
 # Belief: True
 
-Objects: Location (name g); Pointer (name p1);
+Objects: CameraAngle (name theta), PointCoord (name g), WallUp (name wu), WallDown (name wd), WallDist (name wdist), RayWidth (name rw)
 
-Init: (pose p1 [[1.0]]), (value g [[2.0]]); (AlwaysTrue p1)
+Init: (pose theta [[0.0]]), (value g [[0.5]]), (value wu [[1.0]]), (value wd [[1.0]]), (value wdist [[1.0]]), (value rw [[0.1]]); (AlwaysTrue p1)
 
-Goal: (PointerAtLocation p1 g)
+Goal: (and (AngleViewingWall ?camera_angle ?wall_up ?wall_down ?wall_dist) (CoordInView ?camera_angle ?point_coord ?wall_dist ?ray_width))
