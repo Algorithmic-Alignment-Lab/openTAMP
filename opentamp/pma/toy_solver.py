@@ -14,4 +14,4 @@ class ToySolver(BacktrackLLSolverOSQP):
 
     def obj_pose_suggester(self, plan, anum, resample_size=1, st=0):
         # return [{"pose": plan.params['g'].value}]
-        return [{"pose": np.array([[1.57079632679]])}]  # for now, does not give any hints
+        return [{"pose": np.array([[np.inf]])}]  # for now, does not give any hints
