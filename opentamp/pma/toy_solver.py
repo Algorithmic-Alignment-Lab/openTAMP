@@ -16,4 +16,4 @@ class ToySolver(BacktrackLLSolverOSQP):
 
     def obj_pose_suggester(self, plan, anum, resample_size=1, st=0):
         # return [{"pose": plan.params['g'].value}]
-        return [{"pose": np.nan}]
+        return [{"pose": np.array([[np.nan]])}]
