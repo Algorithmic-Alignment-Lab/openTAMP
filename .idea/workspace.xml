@@ -6,8 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/probs/toy_belief.prob" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/probs/toy_belief.prob" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/toy_belief.domain" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/toy_belief.domain" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/core/util_classes/toy_domain_predicates.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/util_classes/toy_domain_predicates.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -243,14 +242,7 @@
       <workItem from="1679500496784" duration="701000" />
       <workItem from="1679781082571" duration="1356000" />
       <workItem from="1679856976642" duration="401000" />
-      <workItem from="1679939472416" duration="8278000" />
-    </task>
-    <task id="LOCAL-00068" summary="debug belief-space specification 3">
-      <created>1678384370334</created>
-      <option name="number" value="00068" />
-      <option name="presentableId" value="LOCAL-00068" />
-      <option name="project" value="LOCAL" />
-      <updated>1678384370334</updated>
+      <workItem from="1679939472416" duration="8544000" />
     </task>
     <task id="LOCAL-00069" summary="debug belief-space specification 4">
       <created>1678384478550</created>
@@ -588,7 +580,14 @@
       <option name="project" value="LOCAL" />
       <updated>1679948694146</updated>
     </task>
-    <option name="localTasksCounter" value="117" />
+    <task id="LOCAL-00117" summary="modify value to pose">
+      <created>1679971062834</created>
+      <option name="number" value="00117" />
+      <option name="presentableId" value="LOCAL-00117" />
+      <option name="project" value="LOCAL" />
+      <updated>1679971062834</updated>
+    </task>
+    <option name="localTasksCounter" value="118" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -647,7 +646,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="debug param specification" />
     <MESSAGE value="remove item()" />
     <MESSAGE value="add print for debug" />
     <MESSAGE value="add print for debug 2" />
@@ -672,7 +670,8 @@
     <MESSAGE value="add backtracking solver for robotics" />
     <MESSAGE value="revert to ToySolver with dummy overrides" />
     <MESSAGE value="alter prints" />
-    <option name="LAST_COMMIT_MESSAGE" value="alter prints" />
+    <MESSAGE value="modify value to pose" />
+    <option name="LAST_COMMIT_MESSAGE" value="modify value to pose" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
