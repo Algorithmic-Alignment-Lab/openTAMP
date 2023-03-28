@@ -131,7 +131,6 @@ class ExprPredicate(Predicate):
         return self.x.reshape((self.x_dim, 1))
 
     def hl_test(self, time, negated=False, tol=None):
-        print(self.get_param_vector(time))
         return self.test(time, negated, tol)
 
     # @profile
@@ -146,8 +145,6 @@ class ExprPredicate(Predicate):
         if time < 0:
             raise PredicateException("Out of range time for predicate '%s'." % self)
         try:
-            print(self.get_param_vector(time))
-            print(self.expr.eval(self.get_param_vector(time), tol=tol, negated=negated))
             return self.expr.eval(self.get_param_vector(time), tol=tol, negated=negated)
         except IndexError as err:
             ## this happens with an invalid time
