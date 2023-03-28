@@ -145,8 +145,6 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
         st=0,
         debug=False
     ):
-        import pdb; pdb.set_trace()
-
         if amax is None:
             amax = len(plan.actions) - 1
 
