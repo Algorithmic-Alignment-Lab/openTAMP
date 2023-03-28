@@ -120,6 +120,58 @@ class Uncertain(ExprPredicate):
         super().__init__(name, e, attr_inds, params, expected_param_types)
 
 
+class AngleViewingWall(ExprPredicate):
+    def __init__(
+            self,
+            name,
+            params,
+            expected_param_types,
+            env=None,
+            active_range=(0, 0),
+            priority=0,
+            debug=False,
+            sigma=0.1
+    ):
+        attr_inds = OrderedDict([
+            (params[0], [("pose", np.array([1], dtype='int32'))]),
+        ])
+
+        aff_expr = AffExpr(np.array([[-1],[1]]), np.array([0],[0]))  # trivial constraint
+        wu = params[1].value
+        wd = params[2].value
+        d = params[3].value
+
+        e = LEqExpr(aff_expr, np.array([[-np.arctan(d/wu)], [np.arctan(d/wd)]]))
+
+        super().__init__(name, e, attr_inds, params, expected_param_types)
+
+
+class CoordInView(ExprPredicate):
+    def __init__(
+            self,
+            name,
+            params,
+            expected_param_types,
+            env=None,
+            active_range=(0, 0),
+            priority=0,
+            debug=False,
+            sigma=0.1
+    ):
+        attr_inds = OrderedDict([
+            (params[0], [("pose", np.array([1], dtype='int32'))]),
+        ])
+
+        g = params[1].value
+        d = params[2].value
+        r = params[3].value
+
+        aff_expr = AffExpr(np.array([[-1],[1]]), np.array([0],[0]))  # trivial constraint
+        e = LEqExpr(aff_expr, np.array([[-np.pi/2 +r/2 + np.arctan(g/d)],[np.pi/2 + r/2 - np.arctan(g/d)]]))
+
+        super().__init__(name, e, attr_inds, params, expected_param_types)
+
+
 # class UncertainTest(ExprPredicate):
 #     def __init__(
 #         self,

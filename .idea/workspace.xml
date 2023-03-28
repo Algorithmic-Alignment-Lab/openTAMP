@@ -6,10 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/core/util_classes/toy_domain_predicates.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/util_classes/toy_domain_predicates.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/probs/toy_belief.prob" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/probs/toy_belief.prob" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/toy_belief.domain" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/toy_belief.domain" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/pma/toy_solver.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/pma/toy_solver.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -246,14 +244,7 @@
       <workItem from="1679781082571" duration="1356000" />
       <workItem from="1679856976642" duration="401000" />
       <workItem from="1679939472416" duration="9462000" />
-      <workItem from="1680013094386" duration="13189000" />
-    </task>
-    <task id="LOCAL-00103" summary="represent Gaussian as 2D vector">
-      <created>1678842945111</created>
-      <option name="number" value="00103" />
-      <option name="presentableId" value="LOCAL-00103" />
-      <option name="project" value="LOCAL" />
-      <updated>1678842945111</updated>
+      <workItem from="1680013094386" duration="14225000" />
     </task>
     <task id="LOCAL-00104" summary="debug import">
       <created>1678843092918</created>
@@ -591,7 +582,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680036670329</updated>
     </task>
-    <option name="localTasksCounter" value="152" />
+    <task id="LOCAL-00152" summary="initial push for camera">
+      <created>1680038197145</created>
+      <option name="number" value="00152" />
+      <option name="presentableId" value="LOCAL-00152" />
+      <option name="project" value="LOCAL" />
+      <updated>1680038197145</updated>
+    </task>
+    <option name="localTasksCounter" value="153" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -650,7 +648,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add pose print for goal" />
     <MESSAGE value="more prints for debugging" />
     <MESSAGE value="swap param order" />
     <MESSAGE value="fix print" />
@@ -675,7 +672,8 @@
     <MESSAGE value="give g hint value for pose suggester" />
     <MESSAGE value="nan for pose suggestion" />
     <MESSAGE value="debug nan for pose suggestion" />
-    <option name="LAST_COMMIT_MESSAGE" value="debug nan for pose suggestion" />
+    <MESSAGE value="initial push for camera" />
+    <option name="LAST_COMMIT_MESSAGE" value="initial push for camera" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
