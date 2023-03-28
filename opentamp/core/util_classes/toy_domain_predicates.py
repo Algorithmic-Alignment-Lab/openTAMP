@@ -141,7 +141,7 @@ class AngleViewingWall(ExprPredicate):
         wd = params[2].value
         d = params[3].value
 
-        e = LEqExpr(aff_expr, np.array([[-np.arctan(d/wu)], [np.arctan(d/wd)]]))
+        e = LEqExpr(aff_expr, np.array([[-np.arctan(d/wu)], [np.pi + np.arctan(d/wd)]]))
 
         super().__init__(name, e, attr_inds, params, expected_param_types)
 
