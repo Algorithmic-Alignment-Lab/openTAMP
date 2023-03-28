@@ -242,14 +242,7 @@
       <workItem from="1679500496784" duration="701000" />
       <workItem from="1679781082571" duration="1356000" />
       <workItem from="1679856976642" duration="401000" />
-      <workItem from="1679939472416" duration="8544000" />
-    </task>
-    <task id="LOCAL-00069" summary="debug belief-space specification 4">
-      <created>1678384478550</created>
-      <option name="number" value="00069" />
-      <option name="presentableId" value="LOCAL-00069" />
-      <option name="project" value="LOCAL" />
-      <updated>1678384478550</updated>
+      <workItem from="1679939472416" duration="8848000" />
     </task>
     <task id="LOCAL-00070" summary="debug belief-space specification 5">
       <created>1678384898149</created>
@@ -587,7 +580,14 @@
       <option name="project" value="LOCAL" />
       <updated>1679971062834</updated>
     </task>
-    <option name="localTasksCounter" value="118" />
+    <task id="LOCAL-00118" summary="modify environment predicates">
+      <created>1679971385487</created>
+      <option name="number" value="00118" />
+      <option name="presentableId" value="LOCAL-00118" />
+      <option name="project" value="LOCAL" />
+      <updated>1679971385487</updated>
+    </task>
+    <option name="localTasksCounter" value="119" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -646,7 +646,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="remove item()" />
     <MESSAGE value="add print for debug" />
     <MESSAGE value="add print for debug 2" />
     <MESSAGE value="debug attr_inds constructor" />
@@ -671,7 +670,8 @@
     <MESSAGE value="revert to ToySolver with dummy overrides" />
     <MESSAGE value="alter prints" />
     <MESSAGE value="modify value to pose" />
-    <option name="LAST_COMMIT_MESSAGE" value="modify value to pose" />
+    <MESSAGE value="modify environment predicates" />
+    <option name="LAST_COMMIT_MESSAGE" value="modify environment predicates" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
