@@ -136,6 +136,8 @@ class AngleViewingWall(ExprPredicate):
             (params[0], [("pose", np.array([0], dtype='int32'))]),
         ])
 
+        print(params[0].pose)
+
         aff_expr = AffExpr(np.array([[-1],[1]]), np.array([[0],[0]]))  # trivial constraint
         wu = params[1].value
         wd = params[2].value
@@ -161,6 +163,8 @@ class CoordInView(ExprPredicate):
         attr_inds = OrderedDict([
             (params[0], [("pose", np.array([0], dtype='int32'))]),
         ])
+
+        print(params[0].pose)
 
         g = params[1].value
         d = params[2].value

@@ -88,8 +88,6 @@ class HLSearchNode(SearchNode):
             if len(self.ref_plan.actions) < len(self.prefix):
                 raise IndexError('ref_plan must be compatible with prefix')
 
-            print('reached fill call')
-
             plan_obj.fill(self.ref_plan, 
                           amin=0, 
                           amax=len(self.prefix)-1)
