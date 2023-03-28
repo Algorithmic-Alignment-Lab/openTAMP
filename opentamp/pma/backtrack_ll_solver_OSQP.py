@@ -151,6 +151,7 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
         if anum > amax:
             return True
         a = plan.actions[anum]
+        print(a)
         if DEBUG:
             print(("backtracking Solve on {}".format(a.name)))
         active_ts = a.active_timesteps

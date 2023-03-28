@@ -88,6 +88,8 @@ class HLSearchNode(SearchNode):
             if len(self.ref_plan.actions) < len(self.prefix):
                 raise IndexError('ref_plan must be compatible with prefix')
 
+            print('reached fill call')
+
             plan_obj.fill(self.ref_plan, 
                           amin=0, 
                           amax=len(self.prefix)-1)
@@ -311,6 +313,7 @@ class LLSearchNode(SearchNode):
         return self.curr_plan
 
     def plan(self, solver, n_resamples=5, debug=False):
+        print(self.curr_plan.actions)
         self.curr_plan.freeze_actions(self.curr_plan.start)
         success = solver._backtrack_solve(self.curr_plan, anum=self.curr_plan.start, n_resamples=n_resamples, debug=debug)
         self._solved = success

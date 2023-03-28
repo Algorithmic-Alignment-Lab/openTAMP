@@ -9,8 +9,6 @@ import numpy as np
 import torch
 
 class ToySolver(BacktrackLLSolverOSQP):
-    # used for the ToyDomain demo, just randomize around the proposed location
-    # with variation sigma
     def get_resample_param(self, a):
         return None
 
