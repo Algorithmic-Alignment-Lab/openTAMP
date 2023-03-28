@@ -243,14 +243,7 @@
       <workItem from="1679856976642" duration="401000" />
       <workItem from="1679939472416" duration="9462000" />
       <workItem from="1680013094386" duration="15879000" />
-      <workItem from="1680044352576" duration="1788000" />
-    </task>
-    <task id="LOCAL-00123" summary="further prints">
-      <created>1680018856060</created>
-      <option name="number" value="00123" />
-      <option name="presentableId" value="LOCAL-00123" />
-      <option name="project" value="LOCAL" />
-      <updated>1680018856060</updated>
+      <workItem from="1680044352576" duration="1838000" />
     </task>
     <task id="LOCAL-00124" summary="add pose print for goal">
       <created>1680019072721</created>
@@ -588,7 +581,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680046072775</updated>
     </task>
-    <option name="localTasksCounter" value="172" />
+    <task id="LOCAL-00172" summary="add effect (closed world assumption?)">
+      <created>1680046347131</created>
+      <option name="number" value="00172" />
+      <option name="presentableId" value="LOCAL-00172" />
+      <option name="project" value="LOCAL" />
+      <updated>1680046347131</updated>
+    </task>
+    <option name="localTasksCounter" value="173" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -647,7 +647,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="mod solver" />
     <MESSAGE value="debug pose" />
     <MESSAGE value="add print" />
     <MESSAGE value="give g hint value for pose suggester" />
@@ -672,7 +671,8 @@
     <MESSAGE value="give even easier base case" />
     <MESSAGE value="absurd radius" />
     <MESSAGE value="add prints" />
-    <option name="LAST_COMMIT_MESSAGE" value="add prints" />
+    <MESSAGE value="add effect (closed world assumption?)" />
+    <option name="LAST_COMMIT_MESSAGE" value="add effect (closed world assumption?)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
