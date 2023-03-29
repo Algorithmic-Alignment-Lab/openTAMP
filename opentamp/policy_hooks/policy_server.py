@@ -230,16 +230,19 @@ class PolicyServer(object):
         print(self.policy_opt)
         
         while not self.stopped:
-            print("policys")
             self.iters += 1
             init_t = time.time()
             self.dataset.wait_for_data()
+            print("wait for data")
             self.dataset.load_data()
+            print("load data")
             #if self.task == 'primitive': print('\nTime to get update:', time.time() - init_t, '\n')
             self.policy_opt.update(self.task)
+            print("update")
             #if self.task == 'primitive': print('\nTime to run update:', time.time() - init_t, '\n')
             self.n_updates += 1
             mu, obs, prc = self.dataset.get_batch()
+            print("get batch")
             if len(mu):
                 losses = self.policy_opt.check_validation(mu, obs, prc, task=self.task)
                 self.train_losses['all'].append(losses[0])
