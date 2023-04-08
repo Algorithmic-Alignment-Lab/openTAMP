@@ -255,7 +255,7 @@ class TorchPolicyOpt():
             model = self.nets[scope]
             try:
                 save_path = MODEL_DIR + weight_dir+'/'+scope+'.ckpt'
-                torch.save(the_model.state_dict(), save_path)
+                torch.save(model.state_dict(), save_path)
 
             except:
                 print('Saving torch model encountered an issue but it will not crash:')

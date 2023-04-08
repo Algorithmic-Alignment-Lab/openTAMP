@@ -57,6 +57,7 @@ class TorchNet(nn.Module):
     def forward(self, nn_input):
         if type(nn_input) is not torch.Tensor:
             nn_input = torch.Tensor(nn_input)
+        nn_input.to(self.device)
 
         if len(self.conv_layers):
             nn_input = self.conv_forward(nn_input)
@@ -202,17 +203,18 @@ class TorchNet(nn.Module):
         self.fp_tensors = (x_map, y_map)
 
         # Compute size of output
-        rand_inputs = torch.rand(1, nump_fp, num_rows, num_cols)
+        rand_inputs = torch.rand(1, num_fp, num_rows, num_cols)
         shape = list(self.compute_fp(rand_inputs).shape)
         self.fc_input_dim = functools.reduce(operator.mul, shape)
 
 
     def compute_fp(self, input_layer):
         if self.fp_tensors is None: self._build_fp(input_layer)
+        _, num_fp, num_rows, num_cols = self.conv_output_dim
         features = torch.view(features, [-1, num_rows*num_cols])
         softmax = torch.nn.softmax(features)
-        fp_x = torch.sum(torch.multiply(x_map, softmax), dim=[1], keepdim=True)
-        fp_y = torch.sum(torch.multiply(y_map, softmax), dim=[1], keepdim=True)
+        fp_x = torch.sum(torch.multiply(self.fp_tensors[0], softmax), dim=[1], keepdim=True)
+        fp_y = torch.sum(torch.multiply(self.fp_tensors[1], softmax), dim=[1], keepdim=True)
         fp = torch.view(torch.cat(tensors=[fp_x, fp_y], dim=1), [-1, num_fp*2])
         return fp
 
@@ -232,6 +234,8 @@ class TorchNet(nn.Module):
             return self.loss_fn(pred, y, reduction='mean')
 
     def compute_loss(self, pred, y, precision=None):
+        pred = pred.to(self.device)
+        y = y.to(self.device)
         if self.output_boundaries:
             cur_loss = None
             n = 0
