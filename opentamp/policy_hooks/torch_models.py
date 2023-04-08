@@ -57,6 +57,7 @@ class TorchNet(nn.Module):
     def forward(self, nn_input):
         if type(nn_input) is not torch.Tensor:
             nn_input = torch.Tensor(nn_input)
+        nn_input.to(self.device)
 
         if len(self.conv_layers):
             nn_input = self.conv_forward(nn_input)
@@ -232,6 +233,8 @@ class TorchNet(nn.Module):
             return self.loss_fn(pred, y, reduction='mean')
 
     def compute_loss(self, pred, y, precision=None):
+        pred = pred.to(self.device)
+        y = y.to(self.device)
         if self.output_boundaries:
             cur_loss = None
             n = 0
