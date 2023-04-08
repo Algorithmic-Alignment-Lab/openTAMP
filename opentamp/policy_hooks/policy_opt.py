@@ -114,7 +114,6 @@ class TorchPolicyOpt():
 
     def train_step(self, task, x, y, precision=None):
         if task not in self.opts is None: self._set_opt(task)
-        (x, y) = (x.to(self.device), y.to(self.device))
 
         self.opts[task].zero_grad()
         loss = self.get_loss(task, x, y, precision)
