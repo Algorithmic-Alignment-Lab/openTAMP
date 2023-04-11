@@ -186,22 +186,22 @@ class CoordInView(ExprPredicate):
 
 
 # # used for vacuous preconditions
-# class AlwaysTrue(ExprPredicate):
-#     def __init__(
-#         self,
-#         name,
-#         params,
-#         expected_param_types,
-#         env=None,
-#         active_range=(0, 0),
-#         priority=0,
-#         debug=False,
-#     ):
-#         attr_inds = OrderedDict([
-#             (params[0], [("pose", np.array([0], dtype='int32'))]),
-#         ])
-#
-#         aff_expr = AffExpr(np.array([[0]]), np.array([0]))  # trivial constraint
-#         e = EqExpr(aff_expr, np.array([0]))
-#
-#         super().__init__(name, e, attr_inds, params, expected_param_types)
+class AlwaysTrue(ExprPredicate):
+    def __init__(
+        self,
+        name,
+        params,
+        expected_param_types,
+        env=None,
+        active_range=(0, 0),
+        priority=0,
+        debug=False,
+    ):
+        attr_inds = OrderedDict([
+            (params[0], [("pose", np.array([0], dtype='int32'))]),
+        ])
+
+        aff_expr = AffExpr(np.array([[0]]), np.array([0]))  # trivial constraint
+        e = EqExpr(aff_expr, np.array([0]))
+
+        super().__init__(name, e, attr_inds, params, expected_param_types)
