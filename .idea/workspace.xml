@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="" />
+    <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/toy_belief.domain" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/toy_belief.domain" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/toy_camera.domain" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/toy_camera.domain" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -244,14 +247,7 @@
       <workItem from="1680044352576" duration="7558000" />
       <workItem from="1680331175411" duration="775000" />
       <workItem from="1681148124563" duration="2593000" />
-      <workItem from="1681174734334" duration="10000000" />
-    </task>
-    <task id="LOCAL-00135" summary="modify resample param">
-      <created>1680032031610</created>
-      <option name="number" value="00135" />
-      <option name="presentableId" value="LOCAL-00135" />
-      <option name="project" value="LOCAL" />
-      <updated>1680032031610</updated>
+      <workItem from="1681174734334" duration="10106000" />
     </task>
     <task id="LOCAL-00136" summary="add object pose suggester">
       <created>1680032405571</created>
@@ -589,7 +585,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681185717096</updated>
     </task>
-    <option name="localTasksCounter" value="184" />
+    <task id="LOCAL-00184" summary="add always true back in">
+      <created>1681185917178</created>
+      <option name="number" value="00184" />
+      <option name="presentableId" value="LOCAL-00184" />
+      <option name="project" value="LOCAL" />
+      <updated>1681185917178</updated>
+    </task>
+    <option name="localTasksCounter" value="185" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -648,7 +651,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="debug camera specification 4" />
     <MESSAGE value="debug camera specification 5" />
     <MESSAGE value="debug camera specification 6" />
     <MESSAGE value="debug camera specification 7" />
@@ -673,7 +675,8 @@
     <MESSAGE value="reduce angle" />
     <MESSAGE value="change back to original problem" />
     <MESSAGE value="add belief-space type, add new belief-domain" />
-    <option name="LAST_COMMIT_MESSAGE" value="add belief-space type, add new belief-domain" />
+    <MESSAGE value="add always true back in" />
+    <option name="LAST_COMMIT_MESSAGE" value="add always true back in" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

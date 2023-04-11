@@ -5,11 +5,11 @@
 
 Types: CameraAngle, PointCoord, WallUp, WallDown, WallDist, RayWidth
 
-Attribute Import Paths: Vector1d opentamp.core.util_classes.matrix, Vector2d opentamp.core.util_classes.matrix
+Attribute Import Paths: Vector1d opentamp.core.util_classes.matrix, Vector2d opentamp.core.util_classes.matrix, Belief opentamp.core.util_classes.belief
 
 Predicates Import Path: opentamp.core.util_classes.toy_domain_predicates
 
-Primitive Predicates: pose, CameraAngle, Vector1d; value, PointCoord, Vector1d; value, WallUp, Vector1d; value, WallDown, Vector1d; value, WallDist, Vector1d; value, RayWidth, Vector1d
+Primitive Predicates: pose, CameraAngle, Vector1d; value, PointCoord, Belief; value, WallUp, Vector1d; value, WallDown, Vector1d; value, WallDist, Vector1d; value, RayWidth, Vector1d
 Derived Predicates: AngleViewingWall, CameraAngle, WallUp, WallDown, WallDist; CoordInView, CameraAngle, PointCoord, WallDist, RayWidth; AlwaysTrue, CameraAngle
 
 Action point_camera 2: (?camera_angle - CameraAngle, ?point_coord - PointCoord, ?wall_up - WallUp, ?wall_down - WallDown, ?wall_dist - WallDist, ?ray_width - RayWidth) (and (AlwaysTrue ?camera_angle)) (and (AlwaysTrue ?camera_angle) (AngleViewingWall ?camera_angle ?wall_up ?wall_down ?wall_dist) (CoordInView ?camera_angle ?point_coord ?wall_dist ?ray_width)) 0:0 1:1 1:1 1:1
