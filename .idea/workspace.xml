@@ -5,8 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/opentamp/belief_space_scripts/data.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/opentamp/belief_space_scripts/hmm.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/opentamp/core/util_classes/belief.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/probs/toy_camera.prob" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/toy_camera.domain" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/core/internal_repr/parameter.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/internal_repr/parameter.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/core/util_classes/common_predicates.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/util_classes/common_predicates.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/core/util_classes/distributions.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/opentamp/core/util_classes/toy_domain_predicates.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/util_classes/toy_domain_predicates.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/pma/backtrack_ll_solver_OSQP.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/pma/backtrack_ll_solver_OSQP.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,8 +83,8 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
-  <component name="RunManager" selected="Python tests.pytest for stable.test_run">
-    <configuration name="robo_wiping" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python.hmm">
+    <configuration name="hmm" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="openTAMP" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -82,12 +92,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/opentamp" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/opentamp/belief_space_scripts" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/opentamp/robo_wiping.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/opentamp/belief_space_scripts/hmm.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -167,11 +177,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.hmm" />
         <item itemvalue="Python tests.pytest for stable.test_run" />
         <item itemvalue="Shell Script.run_baselines.sh" />
         <item itemvalue="Shell Script.eval_baselines.sh" />
         <item itemvalue="Python.run_training_spawn" />
-        <item itemvalue="Python.robo_wiping" />
       </list>
     </recent_temporary>
   </component>
@@ -244,42 +254,10 @@
       <workItem from="1679856976642" duration="401000" />
       <workItem from="1679939472416" duration="9462000" />
       <workItem from="1680013094386" duration="15879000" />
-      <workItem from="1680044352576" duration="2398000" />
-    </task>
-    <task id="LOCAL-00128" summary="timestep altera">
-      <created>1680020153981</created>
-      <option name="number" value="00128" />
-      <option name="presentableId" value="LOCAL-00128" />
-      <option name="project" value="LOCAL" />
-      <updated>1680020153981</updated>
-    </task>
-    <task id="LOCAL-00129" summary="more prints">
-      <created>1680021161288</created>
-      <option name="number" value="00129" />
-      <option name="presentableId" value="LOCAL-00129" />
-      <option name="project" value="LOCAL" />
-      <updated>1680021161288</updated>
-    </task>
-    <task id="LOCAL-00130" summary="remove some prints from the predicates">
-      <created>1680021623421</created>
-      <option name="number" value="00130" />
-      <option name="presentableId" value="LOCAL-00130" />
-      <option name="project" value="LOCAL" />
-      <updated>1680021623421</updated>
-    </task>
-    <task id="LOCAL-00131" summary="add init_free_attrs print">
-      <created>1680023011519</created>
-      <option name="number" value="00131" />
-      <option name="presentableId" value="LOCAL-00131" />
-      <option name="project" value="LOCAL" />
-      <updated>1680023011519</updated>
-    </task>
-    <task id="LOCAL-00132" summary="add more prints">
-      <created>1680024199146</created>
-      <option name="number" value="00132" />
-      <option name="presentableId" value="LOCAL-00132" />
-      <option name="project" value="LOCAL" />
-      <updated>1680024199146</updated>
+      <workItem from="1680044352576" duration="7558000" />
+      <workItem from="1680331175411" duration="775000" />
+      <workItem from="1681148124563" duration="2593000" />
+      <workItem from="1681174734334" duration="9551000" />
     </task>
     <task id="LOCAL-00133" summary="change the initial problem to go from 1 to 2">
       <created>1680024310594</created>
@@ -589,7 +567,42 @@
       <option name="project" value="LOCAL" />
       <updated>1680046728206</updated>
     </task>
-    <option name="localTasksCounter" value="177" />
+    <task id="LOCAL-00177" summary="add .item() calls in predicates">
+      <created>1680046947120</created>
+      <option name="number" value="00177" />
+      <option name="presentableId" value="LOCAL-00177" />
+      <option name="project" value="LOCAL" />
+      <updated>1680046947120</updated>
+    </task>
+    <task id="LOCAL-00178" summary="remove help for camera posing">
+      <created>1680046986911</created>
+      <option name="number" value="00178" />
+      <option name="presentableId" value="LOCAL-00178" />
+      <option name="project" value="LOCAL" />
+      <updated>1680046986911</updated>
+    </task>
+    <task id="LOCAL-00179" summary="np.nan vs np.inf">
+      <created>1680047049302</created>
+      <option name="number" value="00179" />
+      <option name="presentableId" value="LOCAL-00179" />
+      <option name="project" value="LOCAL" />
+      <updated>1680047049302</updated>
+    </task>
+    <task id="LOCAL-00180" summary="reduce angle">
+      <created>1680047091591</created>
+      <option name="number" value="00180" />
+      <option name="presentableId" value="LOCAL-00180" />
+      <option name="project" value="LOCAL" />
+      <updated>1680047091591</updated>
+    </task>
+    <task id="LOCAL-00181" summary="change back to original problem">
+      <created>1680047128530</created>
+      <option name="number" value="00181" />
+      <option name="presentableId" value="LOCAL-00181" />
+      <option name="project" value="LOCAL" />
+      <updated>1680047128530</updated>
+    </task>
+    <option name="localTasksCounter" value="182" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -648,11 +661,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="debug nan for pose suggestion" />
-    <MESSAGE value="initial push for camera" />
-    <MESSAGE value="add in camera logic" />
-    <MESSAGE value="debug camera specification" />
-    <MESSAGE value="debug camera specification 2" />
     <MESSAGE value="debug camera specification 3" />
     <MESSAGE value="debug camera specification 4" />
     <MESSAGE value="debug camera specification 5" />
@@ -673,7 +681,12 @@
     <MESSAGE value="add MANY prints" />
     <MESSAGE value="replace MANY prints" />
     <MESSAGE value="replace with pdb calls" />
-    <option name="LAST_COMMIT_MESSAGE" value="replace with pdb calls" />
+    <MESSAGE value="add .item() calls in predicates" />
+    <MESSAGE value="remove help for camera posing" />
+    <MESSAGE value="np.nan vs np.inf" />
+    <MESSAGE value="reduce angle" />
+    <MESSAGE value="change back to original problem" />
+    <option name="LAST_COMMIT_MESSAGE" value="change back to original problem" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -687,6 +700,7 @@
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/openTAMP$hmm.coverage" NAME="hmm Coverage Results" MODIFIED="1681148136786" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/opentamp/belief_space_scripts" />
     <SUITE FILE_PATH="coverage/openTAMP$run_training.coverage" NAME="run_training Coverage Results" MODIFIED="1673532741418" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/opentamp/policy_hooks" />
     <SUITE FILE_PATH="coverage/openTAMP$run_training_spawn.coverage" NAME="run_training_spawn Coverage Results" MODIFIED="1673536731789" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/opentamp/policy_hooks" />
     <SUITE FILE_PATH="coverage/openTAMP$main.coverage" NAME="main Coverage Results" MODIFIED="1673535735154" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/opentamp" />

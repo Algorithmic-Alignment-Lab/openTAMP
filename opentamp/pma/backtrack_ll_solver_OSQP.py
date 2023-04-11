@@ -313,7 +313,7 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
             for a in range(amin, amax + 1):
                 active_ts = plan.actions[a].active_timesteps
                 robot_poses = self.obj_pose_suggester(plan, a, resample_size=1)
-                ind = np.random.randint(len(robot_poses))
+                ind = np.random.randint(len(robot_posƒgetes))
                 rp = robot_poses[ind]
                 for attr, val in list(rp.items()):
                     if rs_param.is_symbol():
