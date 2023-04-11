@@ -5,17 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/opentamp/belief_space_scripts/data.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/opentamp/belief_space_scripts/hmm.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/opentamp/core/util_classes/belief.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/probs/toy_camera.prob" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/toy_camera.domain" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/core/internal_repr/parameter.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/internal_repr/parameter.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/core/util_classes/common_predicates.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/util_classes/common_predicates.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/core/util_classes/distributions.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/core/util_classes/toy_domain_predicates.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/util_classes/toy_domain_predicates.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/pma/backtrack_ll_solver_OSQP.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/pma/backtrack_ll_solver_OSQP.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -257,14 +246,7 @@
       <workItem from="1680044352576" duration="7558000" />
       <workItem from="1680331175411" duration="775000" />
       <workItem from="1681148124563" duration="2593000" />
-      <workItem from="1681174734334" duration="9551000" />
-    </task>
-    <task id="LOCAL-00133" summary="change the initial problem to go from 1 to 2">
-      <created>1680024310594</created>
-      <option name="number" value="00133" />
-      <option name="presentableId" value="LOCAL-00133" />
-      <option name="project" value="LOCAL" />
-      <updated>1680024310594</updated>
+      <workItem from="1681174734334" duration="9810000" />
     </task>
     <task id="LOCAL-00134" summary="modify the input vectors">
       <created>1680024921135</created>
@@ -602,7 +584,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680047128530</updated>
     </task>
-    <option name="localTasksCounter" value="182" />
+    <task id="LOCAL-00182" summary="add belief-space type, add new belief-domain">
+      <created>1681185485056</created>
+      <option name="number" value="00182" />
+      <option name="presentableId" value="LOCAL-00182" />
+      <option name="project" value="LOCAL" />
+      <updated>1681185485056</updated>
+    </task>
+    <option name="localTasksCounter" value="183" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -661,7 +650,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="debug camera specification 3" />
     <MESSAGE value="debug camera specification 4" />
     <MESSAGE value="debug camera specification 5" />
     <MESSAGE value="debug camera specification 6" />
@@ -686,7 +674,8 @@
     <MESSAGE value="np.nan vs np.inf" />
     <MESSAGE value="reduce angle" />
     <MESSAGE value="change back to original problem" />
-    <option name="LAST_COMMIT_MESSAGE" value="change back to original problem" />
+    <MESSAGE value="add belief-space type, add new belief-domain" />
+    <option name="LAST_COMMIT_MESSAGE" value="add belief-space type, add new belief-domain" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
