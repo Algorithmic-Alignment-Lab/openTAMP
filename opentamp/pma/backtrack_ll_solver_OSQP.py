@@ -128,6 +128,9 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
     #     return a.params[0]
 
     def backtrack_solve(self, plan, callback=None, verbose=False, n_resamples=5):
+        # populate belief_space stuff with an initial body of samples
+
+
         success = self._backtrack_solve(
             plan, callback, anum=0, verbose=verbose, n_resamples=n_resamples, 
         )
@@ -189,6 +192,7 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
                         p._free_attrs[attr][:, active_ts[1]] = 0
                         p._free_attrs[attr][:, active_ts[0]] = 0
             self.child_solver = self.__class__()
+
             success = self.child_solver._backtrack_solve(
                 plan,
                 callback=callback,
