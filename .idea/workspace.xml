@@ -6,7 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/core/internal_repr/domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/internal_repr/domain.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opentamp/core/internal_repr/parameter.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/internal_repr/parameter.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/core/internal_repr/problem.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/internal_repr/problem.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -247,14 +249,7 @@
       <workItem from="1680044352576" duration="7558000" />
       <workItem from="1680331175411" duration="775000" />
       <workItem from="1681148124563" duration="2593000" />
-      <workItem from="1681174734334" duration="18478000" />
-    </task>
-    <task id="LOCAL-00139" summary="add print">
-      <created>1680032559193</created>
-      <option name="number" value="00139" />
-      <option name="presentableId" value="LOCAL-00139" />
-      <option name="project" value="LOCAL" />
-      <updated>1680032559193</updated>
+      <workItem from="1681174734334" duration="19537000" />
     </task>
     <task id="LOCAL-00140" summary="add print">
       <created>1680032605679</created>
@@ -592,7 +587,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681318587365</updated>
     </task>
-    <option name="localTasksCounter" value="188" />
+    <task id="LOCAL-00188" summary="remove self.belief call from parameter">
+      <created>1681319622500</created>
+      <option name="number" value="00188" />
+      <option name="presentableId" value="LOCAL-00188" />
+      <option name="project" value="LOCAL" />
+      <updated>1681319622500</updated>
+    </task>
+    <option name="localTasksCounter" value="189" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -651,7 +653,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="debug camera specification 8" />
     <MESSAGE value="remove pdb call" />
     <MESSAGE value="remove prints" />
     <MESSAGE value="add somewhat helpful pose suggestion" />
@@ -676,7 +677,8 @@
     <MESSAGE value="debug types" />
     <MESSAGE value="print param schemas" />
     <MESSAGE value="change back to basic camera domain" />
-    <option name="LAST_COMMIT_MESSAGE" value="change back to basic camera domain" />
+    <MESSAGE value="remove self.belief call from parameter" />
+    <option name="LAST_COMMIT_MESSAGE" value="remove self.belief call from parameter" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

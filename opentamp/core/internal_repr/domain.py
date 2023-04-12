@@ -20,4 +20,3 @@ class Domain(object):
         self.param_schemas = param_schemas
         self.pred_schemas = pred_schemas
         self.action_schemas = action_schemas
-        self.belief = belief

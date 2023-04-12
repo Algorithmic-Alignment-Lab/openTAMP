@@ -20,7 +20,6 @@ class Parameter(object):
         self._free_attrs = {}
         self._saved_free_attrs = {}
         self.attrs = []
-        # self.belief = False
 
         if attr_types is not None:
             self._attr_types = attr_types.copy()
