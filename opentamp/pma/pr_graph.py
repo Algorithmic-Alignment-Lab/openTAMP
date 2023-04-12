@@ -21,6 +21,7 @@ def p_mod_abs(
     problem,
     initial=None,
     goal=None,
+    observation_model=None,
     suggester=None,
     max_iter=25,
     debug=False,
@@ -48,6 +49,7 @@ def p_mod_abs(
         n = Q.get_nowait()[1]
         if n.is_hl_node():
             c_plan = n.plan(hl_solver, debug)
+            c_plan.set_observation_model(observation_model)
             if c_plan == Plan.IMPOSSIBLE:
                 print("IMPOSSIBLE PLAN IN PR GRAPH")
                 if debug:

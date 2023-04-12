@@ -192,9 +192,6 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
                         p._free_attrs[attr][:, active_ts[0]] = 0
             self.child_solver = self.__class__()
 
-            # todo: collect the observation models from filtered
-            plan.filter_beliefs(observation_models)
-
             success = self.child_solver._backtrack_solve(
                 plan,
                 callback=callback,
@@ -295,6 +292,9 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
                                               active_ts = active_ts, verbose=verbose,
                                               force_init=True, init_traj=init_traj)
                 self.child_solver.fixed_objs = []
+
+            # filter beliefs here, after
+            plan.filter_beliefs(rs_params, active_ts)
 
             if success:
                 if recursive_solve():

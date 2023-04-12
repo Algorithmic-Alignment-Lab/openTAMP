@@ -15,11 +15,12 @@ class Plan(object):
     """
     IMPOSSIBLE = "Impossible"
 
-    def __init__(self, params, actions, horizon, env, determine_free=True, sess=None):
+    def __init__(self, params, actions, horizon, env, determine_free=True, observation_model=None, sess=None):
         self.params = params
         self.backup = params
         self.actions = actions
         self.horizon = horizon
+        self.observation_model = observation_model
         self.time = np.zeros((1, horizon))
         self.env = env
         self.initialized = False
@@ -335,6 +336,9 @@ class Plan(object):
         for param in self.params.values():
             param.set_to_time(ts)
 
+    def set_observation_model(self, observation_model):
+        self.observation_model = observation_model
+
     def initialize_beliefs(self):
         for param in self.params:
             if hasattr(param, 'belief'):
@@ -342,8 +346,8 @@ class Plan(object):
                 param.samples = param.belief.gen_sample()
 
     # observation_models is an input dict matching belief parameters to
-    def filter_beliefs(self, observation_models):
+    def filter_beliefs(self, ll_plans, active_ts):
         for param_key, param in enumerate(self.params):
             if hasattr(param, 'belief'):
-                if observation_models[param_key] is not None:
-                    param.belief.filter_likelihood(observation_models[param_key])
+                for act in ll_plans.actions:
+                    param.belief.filter_likelihood(act, )

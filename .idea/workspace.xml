@@ -6,7 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/pma/backtrack_ll_solver_OSQP.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/pma/backtrack_ll_solver_OSQP.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opentamp/pma/pr_graph.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/pma/pr_graph.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -247,14 +250,8 @@
       <workItem from="1680044352576" duration="7558000" />
       <workItem from="1680331175411" duration="775000" />
       <workItem from="1681148124563" duration="2593000" />
-      <workItem from="1681174734334" duration="22445000" />
-    </task>
-    <task id="LOCAL-00143" summary="modify obj_pose_suggester">
-      <created>1680033806358</created>
-      <option name="number" value="00143" />
-      <option name="presentableId" value="LOCAL-00143" />
-      <option name="project" value="LOCAL" />
-      <updated>1680033806358</updated>
+      <workItem from="1681174734334" duration="24758000" />
+      <workItem from="1681332898159" duration="2118000" />
     </task>
     <task id="LOCAL-00144" summary="debug obj_pose_suggester">
       <created>1680033837200</created>
@@ -592,7 +589,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681327998235</updated>
     </task>
-    <option name="localTasksCounter" value="192" />
+    <task id="LOCAL-00192" summary="migrate all initialize belief references to the plan object, not to search node">
+      <created>1681328110771</created>
+      <option name="number" value="00192" />
+      <option name="presentableId" value="LOCAL-00192" />
+      <option name="project" value="LOCAL" />
+      <updated>1681328110771</updated>
+    </task>
+    <option name="localTasksCounter" value="193" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -651,7 +655,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add exact pose suggestion" />
     <MESSAGE value="change width in constraints" />
     <MESSAGE value="flip sign in constraint" />
     <MESSAGE value="give even easier base case" />
@@ -676,7 +679,8 @@
     <MESSAGE value="print list of attrs in the problem file" />
     <MESSAGE value="additionally print state attrs" />
     <MESSAGE value="insert initial signatures for belief_space planning" />
-    <option name="LAST_COMMIT_MESSAGE" value="insert initial signatures for belief_space planning" />
+    <MESSAGE value="migrate all initialize belief references to the plan object, not to search node" />
+    <option name="LAST_COMMIT_MESSAGE" value="migrate all initialize belief references to the plan object, not to search node" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

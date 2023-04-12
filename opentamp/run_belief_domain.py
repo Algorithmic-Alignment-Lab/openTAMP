@@ -35,7 +35,7 @@ solver = ToySolver()
 # Run planning to obtain a final plan.
 plan, descr = p_mod_abs(
     hls, solver, domain, problem,
-    goal=None, debug=False, n_resamples=10
+    goal=None, observation_model=None,debug=False, n_resamples=10
 )
 
 if plan is not None:
