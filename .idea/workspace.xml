@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/core/parsing/parse_domain_config.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/parsing/parse_domain_config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/toy_belief.domain" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/toy_belief.domain" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/pma/backtrack_ll_solver_OSQP.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/pma/backtrack_ll_solver_OSQP.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -249,14 +246,7 @@
       <workItem from="1680044352576" duration="7558000" />
       <workItem from="1680331175411" duration="775000" />
       <workItem from="1681148124563" duration="2593000" />
-      <workItem from="1681174734334" duration="17726000" />
-    </task>
-    <task id="LOCAL-00137" summary="debug object pose suggester">
-      <created>1680032439719</created>
-      <option name="number" value="00137" />
-      <option name="presentableId" value="LOCAL-00137" />
-      <option name="project" value="LOCAL" />
-      <updated>1680032439719</updated>
+      <workItem from="1681174734334" duration="17770000" />
     </task>
     <task id="LOCAL-00138" summary="debug get_resample_param">
       <created>1680032516549</created>
@@ -594,7 +584,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681186018920</updated>
     </task>
-    <option name="localTasksCounter" value="186" />
+    <task id="LOCAL-00186" summary="print param schemas">
+      <created>1681318543306</created>
+      <option name="number" value="00186" />
+      <option name="presentableId" value="LOCAL-00186" />
+      <option name="project" value="LOCAL" />
+      <updated>1681318543306</updated>
+    </task>
+    <option name="localTasksCounter" value="187" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -653,7 +650,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="debug camera specification 6" />
     <MESSAGE value="debug camera specification 7" />
     <MESSAGE value="debug camera specification 8" />
     <MESSAGE value="remove pdb call" />
@@ -678,7 +674,8 @@
     <MESSAGE value="add belief-space type, add new belief-domain" />
     <MESSAGE value="add always true back in" />
     <MESSAGE value="debug types" />
-    <option name="LAST_COMMIT_MESSAGE" value="debug types" />
+    <MESSAGE value="print param schemas" />
+    <option name="LAST_COMMIT_MESSAGE" value="print param schemas" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
