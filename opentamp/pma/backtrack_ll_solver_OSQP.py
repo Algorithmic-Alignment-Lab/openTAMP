@@ -130,7 +130,6 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
     def backtrack_solve(self, plan, callback=None, verbose=False, n_resamples=5):
         # populate belief_space stuff with an initial body of samples
 
-
         success = self._backtrack_solve(
             plan, callback, anum=0, verbose=verbose, n_resamples=n_resamples, 
         )
@@ -193,6 +192,9 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
                         p._free_attrs[attr][:, active_ts[0]] = 0
             self.child_solver = self.__class__()
 
+            # todo: collect the observation models from filtered
+            plan.filter_beliefs(observation_models)
+
             success = self.child_solver._backtrack_solve(
                 plan,
                 callback=callback,
@@ -241,6 +243,7 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
             if not success:
                 ## if planning fails we're done
                 return False
+
             ## no other options, so just return here
             return recursive_solve()
 
@@ -317,7 +320,7 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
             for a in range(amin, amax + 1):
                 active_ts = plan.actions[a].active_timesteps
                 robot_poses = self.obj_pose_suggester(plan, a, resample_size=1)
-                ind = np.random.randint(len(robot_posƒgetes))
+                ind = np.random.randint(len(robot_poses))
                 rp = robot_poses[ind]
                 for attr, val in list(rp.items()):
                     if rs_param.is_symbol():

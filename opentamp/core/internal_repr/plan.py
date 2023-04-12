@@ -334,3 +334,16 @@ class Plan(object):
     def set_to_time(self, ts):
         for param in self.params.values():
             param.set_to_time(ts)
+
+    def initialize_beliefs(self):
+        for param in self.params:
+            if hasattr(param, 'belief'):
+                # add samples by generating from prior
+                param.samples = param.belief.gen_sample()
+
+    # observation_models is an input dict matching belief parameters to
+    def filter_beliefs(self, observation_models):
+        for param_key, param in enumerate(self.params):
+            if hasattr(param, 'belief'):
+                if observation_models[param_key] is not None:
+                    param.belief.filter_likelihood(observation_models[param_key])
