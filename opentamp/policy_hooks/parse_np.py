@@ -30,7 +30,8 @@ for pts in data:
     if len(pt) > 19:
         data_list[-1]['episode reward'] = pt[19]
         # all_data[k][full_exp][cur_dir][cur_dir][-1]['episode reward'] = pt[19]
-df = pd.DataFrame(data_dict, index='time')
+df = pd.DataFrame(data_dict)
+df.set_index('time')
 print(df.head())
 
 #sns.set()
