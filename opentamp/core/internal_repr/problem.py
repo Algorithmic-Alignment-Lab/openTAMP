@@ -18,6 +18,7 @@ class Problem(object):
         self.goal = [p.get_rep() for p in goal_preds]
         self.initial = [p.get_rep() for p in init_state.preds]
         self.sess = sess
+        print('Problem Attrs')
         print(list(self.__dict__.items()))
 
     def goal_test(self):
