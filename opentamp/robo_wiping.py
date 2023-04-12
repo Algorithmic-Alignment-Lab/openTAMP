@@ -70,7 +70,7 @@ def plan_wiping():
         camera_heights=128,
         hard_reset = False,
     )
-    env = DomainRandomizationWrapper(env,randomize_every_n_steps=0, randomize_on_reset=True)
+    env = DomainRandomizationWrapper(env,randomize_every_n_steps=0, randomize_on_reset=True, randomize_dynamics=False)
     print(env.num_markers)
     obs, _, _, _ = env.step(np.zeros(7)) # Step a null action to 'boot' the environment.
     #insert calls to the modder

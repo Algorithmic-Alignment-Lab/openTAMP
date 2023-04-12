@@ -1051,6 +1051,7 @@ def gen_data_plots(xvar, yvar, keywords=[], lab='rollout', inter=1.,
         plot(data, ['description', 'key', 'exp id', 'goal']+xvars+flat_yvar_labs, '{0}_{1}_vs_{1}'.format(prefix, xvar, ylabel), xvars, yvar_labs, separate=separate, keyind=keyind, inter=inter, rolling=rolling, window=window, xlim=xlim, ylim=ylim, fname=fname)
     else:
         #plot(data, ['description', 'key', 'exp id']+xvars+flat_yvar_labs, '{0}_{1}_vs_{1}'.format(prefix, xvar, ylabel), xvars, yvar_labs, separate=separate, keyind=keyind, inter=inter, rolling=rolling, window=window, xlim=xlim, ylim=ylim, fname=fname)
+        print(data.keys())
         plot(data, ['# Objects', 'key', 'exp id']+xvars+flat_yvar_labs, '{0}_{1}_vs_{1}'.format(prefix, xvar, ylabel), xvars, yvar_labs, separate=separate, keyind=keyind, inter=inter, rolling=rolling, window=window, xlim=xlim, ylim=ylim, fname=fname)
 
 if __name__ == '__main__':
@@ -1075,7 +1076,7 @@ if __name__ == '__main__':
     while not terminate:
         if not perpetual:
             terminate = True
-        #gen_data_plots(xvar='time', yvar=['success at end'], keywords=keywords, lab='test', label_vars=['descr'], separate=True, keyind=5, ylabel='succdataloadtargs', exclude=exclude, split_runs=False, include=include, inter=450, window=900, ylim=[(0.,1.), (0.,1.), (0, 1.), (0, 2.)], xlim=[(0, 14000)], fname='endsucc_{}'.format(keywords[0]))
+        gen_data_plots(xvar='time', yvar=['success at end'], keywords=keywords, lab='test', label_vars=['descr'], separate=True, keyind=5, ylabel='succdataloadtargs', exclude=exclude, split_runs=False, include=include, inter=450, window=900, ylim=[(0.,1.), (0.,1.), (0, 1.), (0, 2.)], xlim=[(0, 14000)], fname='endsucc_{}'.format(keywords[0]))
         gen_data_plots(xvar='time', yvar=['episode return', 'episode reward'], keywords=keywords, lab='test', label_vars=['descr'], separate=True, keyind=5, ylabel='succdataloadtargs', exclude=exclude, split_runs=False, include=include, inter=200, window=100, fname='endreturn_{}'.format(keywords[0]))
         gen_data_plots(xvar='time', yvar=['success at end', 'path length'], keywords=keywords, lab='test', label_vars=['descr'], separate=True, keyind=5, ylabel='succdataloadtargs', exclude=exclude, split_runs=False, include=include, inter=600, window=600, xlim=[(0., 4.)], fname='pathlen_{}'.format(keywords[0]))
         gen_data_plots(xvar='time', yvar=['success at end'], keywords=keywords, lab='test', label_vars=['descr'], separate=True, keyind=5, ylabel='succdataloadtargs', exclude=exclude, split_runs=False, include=include, inter=600, window=600, xlim=[(0., 4.)], ylim=[(0.,1.), (0.,1.), (0, 1.), (0, 2.)], fname='endsucc_{}'.format(keywords[0]))
