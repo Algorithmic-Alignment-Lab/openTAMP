@@ -6,10 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/core/util_classes/belief.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/pma/pr_graph.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/pma/pr_graph.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/probs/toy_belief.prob" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/probs/toy_belief.prob" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/toy_belief.domain" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/toy_belief.domain" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -252,14 +250,7 @@
       <workItem from="1681148124563" duration="2593000" />
       <workItem from="1681174734334" duration="24758000" />
       <workItem from="1681332898159" duration="2461000" />
-      <workItem from="1681355523513" duration="8894000" />
-    </task>
-    <task id="LOCAL-00145" summary="mod solver">
-      <created>1680034072353</created>
-      <option name="number" value="00145" />
-      <option name="presentableId" value="LOCAL-00145" />
-      <option name="project" value="LOCAL" />
-      <updated>1680034072353</updated>
+      <workItem from="1681355523513" duration="9113000" />
     </task>
     <task id="LOCAL-00146" summary="debug pose">
       <created>1680034136434</created>
@@ -597,7 +588,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681335294223</updated>
     </task>
-    <option name="localTasksCounter" value="194" />
+    <task id="LOCAL-00194" summary="added first-pass belief inference, modified skeletons + hooks for getting sampling through">
+      <created>1681419562178</created>
+      <option name="number" value="00194" />
+      <option name="presentableId" value="LOCAL-00194" />
+      <option name="project" value="LOCAL" />
+      <updated>1681419562178</updated>
+    </task>
+    <option name="localTasksCounter" value="195" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -656,7 +654,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="flip sign in constraint" />
     <MESSAGE value="give even easier base case" />
     <MESSAGE value="absurd radius" />
     <MESSAGE value="add prints" />
@@ -681,7 +678,8 @@
     <MESSAGE value="insert initial signatures for belief_space planning" />
     <MESSAGE value="migrate all initialize belief references to the plan object, not to search node" />
     <MESSAGE value="debugging the basic signature for belief-state planning" />
-    <option name="LAST_COMMIT_MESSAGE" value="debugging the basic signature for belief-state planning" />
+    <MESSAGE value="added first-pass belief inference, modified skeletons + hooks for getting sampling through" />
+    <option name="LAST_COMMIT_MESSAGE" value="added first-pass belief inference, modified skeletons + hooks for getting sampling through" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
