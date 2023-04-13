@@ -17,6 +17,12 @@ from pma.pr_graph import *
 # from pma.toy_solver import ToySolver
 from pma.toy_solver import ToySolver
 from sco_py.expr import Expr, AffExpr, EqExpr, LEqExpr
+import torch
+
+import pyro
+import pyro.distributions as dist
+import pyro.poutine as poutine
+from pyro.infer import MCMC, NUTS
 
 # TODO: initialize calls to B.S. planner, add paths to relevant folders
 domain_fname = os.getcwd() + "/opentamp/domains/belief_space_domain/toy_camera.domain"
@@ -32,10 +38,20 @@ p_c = main.parse_file_to_dict(prob)
 problem = parse_problem_config.ParseProblemConfig.parse(p_c, domain, None, use_tf=True, sess=None, visual=False)
 solver = ToySolver()
 
+def toy_observation(plan):
+    belief = pyro.sample("belief_dist", dist.Uniform(-1, 1))
+    for i in range(1, len(plan)):
+        if plan[i] is_in_ray:
+            pyro.sample('obs'+str(i), dist.Uniform(plan[i]-dist, plan[i]+dist))
+        else:
+            pyro.sample('obs'+str(i), dist.Uniform(-1, 1)) # no marginal information gotten
+
+    return belief
+
 # Run planning to obtain a final plan.
 plan, descr = p_mod_abs(
     hls, solver, domain, problem,
-    goal=None, observation_model=None,debug=False, n_resamples=10
+    goal=None, observation_model=toy_observation,debug=False, n_resamples=10
 )
 
 if plan is not None:

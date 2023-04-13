@@ -1,5 +1,14 @@
 from .action import Action
 import numpy as np
+import argparse
+import logging
+
+import torch
+
+import pyro
+import pyro.distributions as dist
+import pyro.poutine as poutine
+from pyro.infer import MCMC, NUTS
 
 MAX_PRIORITY = 3
 
@@ -29,6 +38,8 @@ class Plan(object):
         self.sampling_trace = []
         self.hl_preds = []
         self.start = 0
+        self.prior = None
+        self.observation_model = None
         if determine_free:
             self._determine_free_attrs()
 
@@ -339,15 +350,40 @@ class Plan(object):
     def set_observation_model(self, observation_model):
         self.observation_model = observation_model
 
-    def initialize_beliefs(self):
+    # based off of hmm example from pyro docs
+    def gen_samples(self, param, plan):
+        # create unconditional or conditional model, depending
+        if not plan:
+            kernel = NUTS(self.observation_model(plan))
+        else:
+            # create a conditioned model on the plan
+            obs_dict = {'obs_'+str(i): param.value for i in range(len(plan))}
+            conditional_model = poutine.condition(self.observation_model, data=obs_dict)
+            kernel = NUTS(conditional_model(plan))
+
+        # defaults taken from hmm.py script
+        mcmc = MCMC(
+            kernel,
+            num_samples=1000,
+            warmup_steps=1000,
+            num_chains=1,
+        )
+
+        return mcmc.get_samples(plan)
+
+    def initialize_beliefs(self, prior):
+        self.prior = prior
         for param in self.params:
-            if hasattr(param, 'belief'):
+            if hasattr(param, 'samples'):
                 # add samples by generating from prior
-                param.samples = param.belief.gen_sample()
+                param.samples = self.gen_samples(param, None)
+                print(param.samples)
+
 
     # observation_models is an input dict matching belief parameters to
-    def filter_beliefs(self, ll_plans, active_ts):
+    def filter_beliefs(self, ll_plan):
+        # construct a model object, over which we do inference, starting with uniform prior
         for param_key, param in enumerate(self.params):
-            if hasattr(param, 'belief'):
-                for act in ll_plans.actions:
-                    param.belief.filter_likelihood(act, )
+            if hasattr(param, 'samples'):
+                param.samples = self.gen_samples(param, ll_plan)
+                print(param.samples)
