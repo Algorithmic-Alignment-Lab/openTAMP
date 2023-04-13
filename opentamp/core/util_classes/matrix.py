@@ -66,3 +66,15 @@ class ArmPose7d(Vector7d):
     The 7 dimensional arm pose is a 7d vector.
     """
     pass
+
+class DimVectorZeroed(Vector):
+    def __new__(cls, vec):
+        if type(vec) is str:
+            if not vec.endswith(")"):
+                vec += ")"
+            vec = eval(vec)
+        obj = np.zeros(shape=(vec.item(),), dtype=np.float32)
+        # deals with case where obj is zero-dimensional
+        assert len(np.atleast_1d(obj)) == cls.dim
+        obj = obj.reshape((cls.dim, obj.size//cls.dim))
+        return obj
