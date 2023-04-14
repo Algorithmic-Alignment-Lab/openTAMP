@@ -249,14 +249,7 @@
       <workItem from="1681174734334" duration="24758000" />
       <workItem from="1681332898159" duration="2461000" />
       <workItem from="1681355523513" duration="23951000" />
-      <workItem from="1681457796082" duration="1932000" />
-    </task>
-    <task id="LOCAL-00231" summary="type stuff 1">
-      <created>1681446882499</created>
-      <option name="number" value="00231" />
-      <option name="presentableId" value="LOCAL-00231" />
-      <option name="project" value="LOCAL" />
-      <updated>1681446882499</updated>
+      <workItem from="1681457796082" duration="1967000" />
     </task>
     <task id="LOCAL-00232" summary="type stuff 2">
       <created>1681446916647</created>
@@ -594,7 +587,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681488238062</updated>
     </task>
-    <option name="localTasksCounter" value="280" />
+    <task id="LOCAL-00280" summary="debug multi-step 3">
+      <created>1681488297801</created>
+      <option name="number" value="00280" />
+      <option name="presentableId" value="LOCAL-00280" />
+      <option name="project" value="LOCAL" />
+      <updated>1681488297801</updated>
+    </task>
+    <option name="localTasksCounter" value="281" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -653,7 +653,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add belief print debug" />
     <MESSAGE value="print not in ray" />
     <MESSAGE value="remove dash from name" />
     <MESSAGE value="print the command being considered" />
@@ -678,7 +677,8 @@
     <MESSAGE value="add sample multi-step plan as test" />
     <MESSAGE value="debug multi-step" />
     <MESSAGE value="debug multi-step 2" />
-    <option name="LAST_COMMIT_MESSAGE" value="debug multi-step 2" />
+    <MESSAGE value="debug multi-step 3" />
+    <option name="LAST_COMMIT_MESSAGE" value="debug multi-step 3" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
