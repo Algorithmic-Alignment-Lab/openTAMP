@@ -249,21 +249,7 @@
       <workItem from="1681148124563" duration="2593000" />
       <workItem from="1681174734334" duration="24758000" />
       <workItem from="1681332898159" duration="2461000" />
-      <workItem from="1681355523513" duration="19108000" />
-    </task>
-    <task id="LOCAL-00205" summary="add dim attribute">
-      <created>1681438577402</created>
-      <option name="number" value="00205" />
-      <option name="presentableId" value="LOCAL-00205" />
-      <option name="project" value="LOCAL" />
-      <updated>1681438577402</updated>
-    </task>
-    <task id="LOCAL-00206" summary="debug shape issues">
-      <created>1681438692605</created>
-      <option name="number" value="00206" />
-      <option name="presentableId" value="LOCAL-00206" />
-      <option name="project" value="LOCAL" />
-      <updated>1681438692605</updated>
+      <workItem from="1681355523513" duration="19540000" />
     </task>
     <task id="LOCAL-00207" summary="add attribute prints (debugging)">
       <created>1681438849506</created>
@@ -594,7 +580,21 @@
       <option name="project" value="LOCAL" />
       <updated>1681450724671</updated>
     </task>
-    <option name="localTasksCounter" value="254" />
+    <task id="LOCAL-00254" summary="add belief print">
+      <created>1681450881599</created>
+      <option name="number" value="00254" />
+      <option name="presentableId" value="LOCAL-00254" />
+      <option name="project" value="LOCAL" />
+      <updated>1681450881599</updated>
+    </task>
+    <task id="LOCAL-00255" summary="add belief print debug">
+      <created>1681450959603</created>
+      <option name="number" value="00255" />
+      <option name="presentableId" value="LOCAL-00255" />
+      <option name="project" value="LOCAL" />
+      <updated>1681450959603</updated>
+    </task>
+    <option name="localTasksCounter" value="256" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -653,8 +653,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="debug off-by-one error" />
-    <MESSAGE value="item call" />
     <MESSAGE value="type stuff 1" />
     <MESSAGE value="type stuff 2" />
     <MESSAGE value="type stuff 3" />
@@ -678,7 +676,9 @@
     <MESSAGE value="flip order of method (debug)" />
     <MESSAGE value="add more samples" />
     <MESSAGE value="debug in_ray condition" />
-    <option name="LAST_COMMIT_MESSAGE" value="debug in_ray condition" />
+    <MESSAGE value="add belief print" />
+    <MESSAGE value="add belief print debug" />
+    <option name="LAST_COMMIT_MESSAGE" value="add belief print debug" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
