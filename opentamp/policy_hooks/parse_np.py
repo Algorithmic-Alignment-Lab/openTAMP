@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 from plotting import plot
+import matplotlib.pyplot as plt
 
 data = np.load('../experiment_logs/namo_objs1_1/mac_test_2/test_hl_test_log.npy')
 i = 2
@@ -36,3 +37,4 @@ print(df.head())
 
 sns.set()
 sns.relplot(data=df, x="time", y="episode return")
+plt.show()
