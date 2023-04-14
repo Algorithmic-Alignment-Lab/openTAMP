@@ -372,7 +372,7 @@ class Plan(object):
         mcmc.run(plan)
         mcmc.summary(prob=0.95)  # for diagnostics
 
-        return mcmc.get_samples()['belief_dist']
+        return mcmc.get_samples()
 
     def initialize_beliefs(self):
         for param_key, param in self.params.items():

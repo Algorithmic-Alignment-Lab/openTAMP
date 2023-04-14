@@ -7,7 +7,6 @@
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -250,14 +249,7 @@
       <workItem from="1681148124563" duration="2593000" />
       <workItem from="1681174734334" duration="24758000" />
       <workItem from="1681332898159" duration="2461000" />
-      <workItem from="1681355523513" duration="18356000" />
-    </task>
-    <task id="LOCAL-00201" summary="modify file to belief">
-      <created>1681438400182</created>
-      <option name="number" value="00201" />
-      <option name="presentableId" value="LOCAL-00201" />
-      <option name="project" value="LOCAL" />
-      <updated>1681438400182</updated>
+      <workItem from="1681355523513" duration="18456000" />
     </task>
     <task id="LOCAL-00202" summary="modify file to belief 3: DimVectorZeroed">
       <created>1681438449099</created>
@@ -595,7 +587,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681449756940</updated>
     </task>
-    <option name="localTasksCounter" value="250" />
+    <task id="LOCAL-00250" summary="flip order of method">
+      <created>1681450051705</created>
+      <option name="number" value="00250" />
+      <option name="presentableId" value="LOCAL-00250" />
+      <option name="project" value="LOCAL" />
+      <updated>1681450051705</updated>
+    </task>
+    <option name="localTasksCounter" value="251" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -654,7 +653,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add prints" />
     <MESSAGE value="remove sample prints" />
     <MESSAGE value="remove sample prints 2" />
     <MESSAGE value="print plan" />
@@ -679,7 +677,8 @@
     <MESSAGE value="unfuck the ray condition 2" />
     <MESSAGE value="print the control" />
     <MESSAGE value="add get_samples in hmm script" />
-    <option name="LAST_COMMIT_MESSAGE" value="add get_samples in hmm script" />
+    <MESSAGE value="flip order of method" />
+    <option name="LAST_COMMIT_MESSAGE" value="flip order of method" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
