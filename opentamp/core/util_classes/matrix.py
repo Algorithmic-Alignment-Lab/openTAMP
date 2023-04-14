@@ -74,5 +74,6 @@ class DimVectorZeroed(Vector):
                 vec += ")"
             vec = eval(vec)
         obj = np.zeros(shape=(vec,), dtype=np.float32)
+        cls.dim = vec
         # deals with case where obj is zero-dimensional
         return obj
