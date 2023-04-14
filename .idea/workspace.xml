@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -249,14 +248,7 @@
       <workItem from="1681148124563" duration="2593000" />
       <workItem from="1681174734334" duration="24758000" />
       <workItem from="1681332898159" duration="2461000" />
-      <workItem from="1681355523513" duration="15737000" />
-    </task>
-    <task id="LOCAL-00183" summary="add belief-space type, add new belief-domain">
-      <created>1681185717096</created>
-      <option name="number" value="00183" />
-      <option name="presentableId" value="LOCAL-00183" />
-      <option name="project" value="LOCAL" />
-      <updated>1681185717096</updated>
+      <workItem from="1681355523513" duration="15781000" />
     </task>
     <task id="LOCAL-00184" summary="add always true back in">
       <created>1681185917178</created>
@@ -594,7 +586,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681446882499</updated>
     </task>
-    <option name="localTasksCounter" value="232" />
+    <task id="LOCAL-00232" summary="type stuff 2">
+      <created>1681446916647</created>
+      <option name="number" value="00232" />
+      <option name="presentableId" value="LOCAL-00232" />
+      <option name="project" value="LOCAL" />
+      <updated>1681446916647</updated>
+    </task>
+    <option name="localTasksCounter" value="233" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -653,7 +652,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="debug shape issues" />
     <MESSAGE value="add attribute prints (debugging)" />
     <MESSAGE value="update dict iteration" />
     <MESSAGE value="update dict iteration 2" />
@@ -678,7 +676,8 @@
     <MESSAGE value="debug off-by-one error" />
     <MESSAGE value="item call" />
     <MESSAGE value="type stuff 1" />
-    <option name="LAST_COMMIT_MESSAGE" value="type stuff 1" />
+    <MESSAGE value="type stuff 2" />
+    <option name="LAST_COMMIT_MESSAGE" value="type stuff 2" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
