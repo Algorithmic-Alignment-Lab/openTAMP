@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,7 +73,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
-  <component name="RunManager" selected="Python.hmm">
+  <component name="RunManager" selected="Python.run_belief_domain">
     <configuration name="hmm" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="openTAMP" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -96,7 +96,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="run_training_spawn" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="run_belief_domain" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="openTAMP" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -104,12 +104,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/opentamp/policy_hooks" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/opentamp" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/opentamp/policy_hooks/run_training_spawn.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/opentamp/run_belief_domain.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -167,11 +167,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.run_belief_domain" />
         <item itemvalue="Python.hmm" />
         <item itemvalue="Python tests.pytest for stable.test_run" />
         <item itemvalue="Shell Script.run_baselines.sh" />
         <item itemvalue="Shell Script.eval_baselines.sh" />
-        <item itemvalue="Python.run_training_spawn" />
       </list>
     </recent_temporary>
   </component>
@@ -249,14 +249,7 @@
       <workItem from="1681148124563" duration="2593000" />
       <workItem from="1681174734334" duration="24758000" />
       <workItem from="1681332898159" duration="2461000" />
-      <workItem from="1681355523513" duration="19540000" />
-    </task>
-    <task id="LOCAL-00207" summary="add attribute prints (debugging)">
-      <created>1681438849506</created>
-      <option name="number" value="00207" />
-      <option name="presentableId" value="LOCAL-00207" />
-      <option name="project" value="LOCAL" />
-      <updated>1681438849506</updated>
+      <workItem from="1681355523513" duration="19837000" />
     </task>
     <task id="LOCAL-00208" summary="update dict iteration">
       <created>1681439035811</created>
@@ -594,7 +587,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681450959603</updated>
     </task>
-    <option name="localTasksCounter" value="256" />
+    <task id="LOCAL-00256" summary="print not in ray">
+      <created>1681451321281</created>
+      <option name="number" value="00256" />
+      <option name="presentableId" value="LOCAL-00256" />
+      <option name="project" value="LOCAL" />
+      <updated>1681451321281</updated>
+    </task>
+    <option name="localTasksCounter" value="257" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -653,7 +653,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="type stuff 1" />
     <MESSAGE value="type stuff 2" />
     <MESSAGE value="type stuff 3" />
     <MESSAGE value="type stuff 4" />
@@ -678,7 +677,8 @@
     <MESSAGE value="debug in_ray condition" />
     <MESSAGE value="add belief print" />
     <MESSAGE value="add belief print debug" />
-    <option name="LAST_COMMIT_MESSAGE" value="add belief print debug" />
+    <MESSAGE value="print not in ray" />
+    <option name="LAST_COMMIT_MESSAGE" value="print not in ray" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -697,6 +697,7 @@
     <SUITE FILE_PATH="coverage/openTAMP$run_training_spawn.coverage" NAME="run_training_spawn Coverage Results" MODIFIED="1673536731789" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/opentamp/policy_hooks" />
     <SUITE FILE_PATH="coverage/openTAMP$main.coverage" NAME="main Coverage Results" MODIFIED="1673535735154" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/opentamp" />
     <SUITE FILE_PATH="coverage/openTAMP$pytest_for_stable_test_run.coverage" NAME="pytest for stable.test_run Coverage Results" MODIFIED="1678323118471" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/opentamp/policy_hooks/baselines" />
+    <SUITE FILE_PATH="coverage/openTAMP$run_belief_domain.coverage" NAME="run_belief_domain Coverage Results" MODIFIED="1681451500345" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/opentamp" />
     <SUITE FILE_PATH="coverage/openTAMP$robo_wiping.coverage" NAME="robo_wiping Coverage Results" MODIFIED="1674067411055" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/opentamp" />
   </component>
 </project>
