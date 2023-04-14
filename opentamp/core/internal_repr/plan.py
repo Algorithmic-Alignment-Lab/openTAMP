@@ -353,7 +353,7 @@ class Plan(object):
     # based off of hmm example from pyro docs
     def gen_samples(self, param, plan):
         # create unconditional or conditional model, depending
-        if not plan:
+        if plan is None:
             kernel = NUTS(self.observation_model)
         else:
             # create a conditioned model on the plan
