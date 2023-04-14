@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/pma/backtrack_ll_solver_OSQP.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/pma/backtrack_ll_solver_OSQP.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -249,21 +249,7 @@
       <workItem from="1681148124563" duration="2593000" />
       <workItem from="1681174734334" duration="24758000" />
       <workItem from="1681332898159" duration="2461000" />
-      <workItem from="1681355523513" duration="12458000" />
-    </task>
-    <task id="LOCAL-00150" summary="nan for pose suggestion">
-      <created>1680036631145</created>
-      <option name="number" value="00150" />
-      <option name="presentableId" value="LOCAL-00150" />
-      <option name="project" value="LOCAL" />
-      <updated>1680036631145</updated>
-    </task>
-    <task id="LOCAL-00151" summary="debug nan for pose suggestion">
-      <created>1680036670329</created>
-      <option name="number" value="00151" />
-      <option name="presentableId" value="LOCAL-00151" />
-      <option name="project" value="LOCAL" />
-      <updated>1680036670329</updated>
+      <workItem from="1681355523513" duration="12537000" />
     </task>
     <task id="LOCAL-00152" summary="initial push for camera">
       <created>1680038197145</created>
@@ -594,7 +580,21 @@
       <option name="project" value="LOCAL" />
       <updated>1681438233586</updated>
     </task>
-    <option name="localTasksCounter" value="199" />
+    <task id="LOCAL-00199" summary="debug belief space 2">
+      <created>1681438323374</created>
+      <option name="number" value="00199" />
+      <option name="presentableId" value="LOCAL-00199" />
+      <option name="project" value="LOCAL" />
+      <updated>1681438323374</updated>
+    </task>
+    <task id="LOCAL-00200" summary="add check for samples">
+      <created>1681438366436</created>
+      <option name="number" value="00200" />
+      <option name="presentableId" value="LOCAL-00200" />
+      <option name="project" value="LOCAL" />
+      <updated>1681438366436</updated>
+    </task>
+    <option name="localTasksCounter" value="201" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -653,8 +653,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="debug timesteps" />
-    <MESSAGE value="add MANY prints" />
     <MESSAGE value="replace MANY prints" />
     <MESSAGE value="replace with pdb calls" />
     <MESSAGE value="add .item() calls in predicates" />
@@ -678,7 +676,9 @@
     <MESSAGE value="add dim_zero type for samples" />
     <MESSAGE value="add criterion for ray_in_view to the observation model" />
     <MESSAGE value="debug belief space 1" />
-    <option name="LAST_COMMIT_MESSAGE" value="debug belief space 1" />
+    <MESSAGE value="debug belief space 2" />
+    <MESSAGE value="add check for samples" />
+    <option name="LAST_COMMIT_MESSAGE" value="add check for samples" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

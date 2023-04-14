@@ -25,8 +25,8 @@ import pyro.poutine as poutine
 from pyro.infer import MCMC, NUTS
 
 # TODO: initialize calls to B.S. planner, add paths to relevant folders
-domain_fname = os.getcwd() + "/opentamp/domains/belief_space_domain/toy_camera.domain"
-prob = os.getcwd() + "/opentamp/domains/belief_space_domain/probs/toy_camera.prob"
+domain_fname = os.getcwd() + "/opentamp/domains/belief_space_domain/toy_belief.domain"
+prob = os.getcwd() + "/opentamp/domains/belief_space_domain/probs/toy_belief.prob"
 
 # configuring task plan
 d_c = main.parse_file_to_dict(domain_fname)
