@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -249,14 +251,7 @@
       <workItem from="1681174734334" duration="24758000" />
       <workItem from="1681332898159" duration="2461000" />
       <workItem from="1681355523513" duration="23951000" />
-      <workItem from="1681457796082" duration="1967000" />
-    </task>
-    <task id="LOCAL-00232" summary="type stuff 2">
-      <created>1681446916647</created>
-      <option name="number" value="00232" />
-      <option name="presentableId" value="LOCAL-00232" />
-      <option name="project" value="LOCAL" />
-      <updated>1681446916647</updated>
+      <workItem from="1681457796082" duration="2261000" />
     </task>
     <task id="LOCAL-00233" summary="type stuff 3">
       <created>1681446960370</created>
@@ -594,7 +589,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681488297801</updated>
     </task>
-    <option name="localTasksCounter" value="281" />
+    <task id="LOCAL-00281" summary="debug multi-step 4">
+      <created>1681488336076</created>
+      <option name="number" value="00281" />
+      <option name="presentableId" value="LOCAL-00281" />
+      <option name="project" value="LOCAL" />
+      <updated>1681488336076</updated>
+    </task>
+    <option name="localTasksCounter" value="282" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -653,7 +655,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="print not in ray" />
     <MESSAGE value="remove dash from name" />
     <MESSAGE value="print the command being considered" />
     <MESSAGE value="add constant for meme" />
@@ -678,7 +679,8 @@
     <MESSAGE value="debug multi-step" />
     <MESSAGE value="debug multi-step 2" />
     <MESSAGE value="debug multi-step 3" />
-    <option name="LAST_COMMIT_MESSAGE" value="debug multi-step 3" />
+    <MESSAGE value="debug multi-step 4" />
+    <option name="LAST_COMMIT_MESSAGE" value="debug multi-step 4" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
