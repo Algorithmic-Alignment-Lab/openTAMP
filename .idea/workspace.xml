@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -248,21 +249,7 @@
       <workItem from="1681148124563" duration="2593000" />
       <workItem from="1681174734334" duration="24758000" />
       <workItem from="1681332898159" duration="2461000" />
-      <workItem from="1681355523513" duration="17215000" />
-    </task>
-    <task id="LOCAL-00194" summary="added first-pass belief inference, modified skeletons + hooks for getting sampling through">
-      <created>1681419562178</created>
-      <option name="number" value="00194" />
-      <option name="presentableId" value="LOCAL-00194" />
-      <option name="project" value="LOCAL" />
-      <updated>1681419562178</updated>
-    </task>
-    <task id="LOCAL-00195" summary="modify TAMP predicate signatures">
-      <created>1681419657139</created>
-      <option name="number" value="00195" />
-      <option name="presentableId" value="LOCAL-00195" />
-      <option name="project" value="LOCAL" />
-      <updated>1681419657140</updated>
+      <workItem from="1681355523513" duration="17328000" />
     </task>
     <task id="LOCAL-00196" summary="add dim_zero type for samples">
       <created>1681423214155</created>
@@ -593,7 +580,21 @@
       <option name="project" value="LOCAL" />
       <updated>1681448819020</updated>
     </task>
-    <option name="localTasksCounter" value="243" />
+    <task id="LOCAL-00243" summary="increase num_chains to 2">
+      <created>1681448875513</created>
+      <option name="number" value="00243" />
+      <option name="presentableId" value="LOCAL-00243" />
+      <option name="project" value="LOCAL" />
+      <updated>1681448875513</updated>
+    </task>
+    <task id="LOCAL-00244" summary="revert">
+      <created>1681448908881</created>
+      <option name="number" value="00244" />
+      <option name="presentableId" value="LOCAL-00244" />
+      <option name="project" value="LOCAL" />
+      <updated>1681448908881</updated>
+    </task>
+    <option name="localTasksCounter" value="245" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -652,8 +653,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="reshape" />
-    <MESSAGE value="fix prints" />
     <MESSAGE value="fix prints 2" />
     <MESSAGE value="test with perfect observation" />
     <MESSAGE value="print parameter value" />
@@ -677,7 +676,9 @@
     <MESSAGE value="tune down sample count, add stuff" />
     <MESSAGE value="modify conditioned var" />
     <MESSAGE value="increase num_chains" />
-    <option name="LAST_COMMIT_MESSAGE" value="increase num_chains" />
+    <MESSAGE value="increase num_chains to 2" />
+    <MESSAGE value="revert" />
+    <option name="LAST_COMMIT_MESSAGE" value="revert" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
