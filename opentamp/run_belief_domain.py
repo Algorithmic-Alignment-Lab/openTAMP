@@ -55,7 +55,7 @@ def toy_observation(plan):
     for i in range(1, len(plan)):
         # differentially take conditional depending on the ray
         if is_in_ray(plan[i], belief):
-            pyro.sample('obs'+str(i), dist.Uniform(plan[i]-dist, plan[i]+dist))
+            pyro.param('obs'+str(i), 0.5)
         else:
             pyro.sample('obs'+str(i), dist.Uniform(-1, 1)) # no marginal information gotten
 
