@@ -358,6 +358,8 @@ class Plan(object):
         else:
             # create a conditioned model on the plan
             obs_dict = {'obs'+str(i): torch.tensor(param.value.item()) for i in range(len(plan))}
+            for i in range(len(plan)):
+                obs_dict['hit'] = torch.tensor(1.0)
             conditional_model = poutine.condition(self.observation_model, data=obs_dict)
             kernel = NUTS(conditional_model)
 

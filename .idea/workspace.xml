@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -249,14 +250,7 @@
       <workItem from="1681148124563" duration="2593000" />
       <workItem from="1681174734334" duration="24758000" />
       <workItem from="1681332898159" duration="2461000" />
-      <workItem from="1681355523513" duration="22799000" />
-    </task>
-    <task id="LOCAL-00222" summary="print parameter value 2">
-      <created>1681446084928</created>
-      <option name="number" value="00222" />
-      <option name="presentableId" value="LOCAL-00222" />
-      <option name="project" value="LOCAL" />
-      <updated>1681446084928</updated>
+      <workItem from="1681355523513" duration="23172000" />
     </task>
     <task id="LOCAL-00223" summary="print parameter value 3">
       <created>1681446272351</created>
@@ -594,7 +588,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681454473886</updated>
     </task>
-    <option name="localTasksCounter" value="271" />
+    <task id="LOCAL-00271" summary="modify obs logic">
+      <created>1681454724557</created>
+      <option name="number" value="00271" />
+      <option name="presentableId" value="LOCAL-00271" />
+      <option name="project" value="LOCAL" />
+      <updated>1681454724557</updated>
+    </task>
+    <option name="localTasksCounter" value="272" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -653,7 +654,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="unfuck the ray condition" />
     <MESSAGE value="unfuck the ray condition 2" />
     <MESSAGE value="print the control" />
     <MESSAGE value="add get_samples in hmm script" />
@@ -678,7 +678,8 @@
     <MESSAGE value="modify the new observation model 3" />
     <MESSAGE value="decrease the number of steps for speed" />
     <MESSAGE value="modify obs model 2" />
-    <option name="LAST_COMMIT_MESSAGE" value="modify obs model 2" />
+    <MESSAGE value="modify obs logic" />
+    <option name="LAST_COMMIT_MESSAGE" value="modify obs logic" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
