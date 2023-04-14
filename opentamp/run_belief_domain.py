@@ -55,7 +55,7 @@ def toy_observation(plan):
         if is_in_ray(plan[i].pose[0][1+i], belief.item()):
             pyro.sample('obs'+str(i), dist.Uniform(0.49, 0.51))
         else:
-            pyro.sample('obs'+str(i), dist.Uniform(-1, 1))  # no marginal information gotten
+            pyro.sample('obs'+str(i), dist.Uniform(-1, 0))  # no marginal information gotten
 
     return belief
 

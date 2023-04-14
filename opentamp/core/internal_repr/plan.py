@@ -358,14 +358,15 @@ class Plan(object):
         else:
             # create a conditioned model on the plan
             obs_dict = {'obs_'+str(i): param.value for i in range(len(plan))}
+            print(obs_dict)
             conditional_model = poutine.condition(self.observation_model, data=obs_dict)
             kernel = NUTS(conditional_model)
 
         # defaults taken from hmm.py script
         mcmc = MCMC(
             kernel,
-            num_samples=5000,
-            warmup_steps=10000,
+            num_samples=1000,
+            warmup_steps=5000,
             num_chains=1,
         )
 
