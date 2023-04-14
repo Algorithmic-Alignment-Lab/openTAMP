@@ -158,7 +158,7 @@ class CoordInView(ExprPredicate):
         d = params[2].value.item()
         r = params[3].value.item()
 
-        aff_expr = AffExpr(np.array([[-1],[1]]), np.array([[0],[0]]))  # trivial constraint
+        aff_expr = AffExpr(np.array([[-1],[1]]), np.array([[0],[0]]))
         e = LEqExpr(aff_expr, np.array([[-np.pi/2 + np.pi * r/2 + np.arctan(g/d)], [np.pi/2 + np.pi*r/2 - np.arctan(g/d)]]))
 
         super().__init__(name, e, attr_inds, params, expected_param_types)

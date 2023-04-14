@@ -371,8 +371,7 @@ class Plan(object):
 
         return mcmc.get_samples(plan)
 
-    def initialize_beliefs(self, prior):
-        self.prior = prior
+    def initialize_beliefs(self):
         for param in self.params:
             if hasattr(param, 'samples'):
                 # add samples by generating from prior
