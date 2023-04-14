@@ -4,7 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
+    <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="modify the calls">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -248,14 +249,7 @@
       <workItem from="1681148124563" duration="2593000" />
       <workItem from="1681174734334" duration="24758000" />
       <workItem from="1681332898159" duration="2461000" />
-      <workItem from="1681355523513" duration="13773000" />
-    </task>
-    <task id="LOCAL-00166" summary="add exact pose suggestion">
-      <created>1680040616535</created>
-      <option name="number" value="00166" />
-      <option name="presentableId" value="LOCAL-00166" />
-      <option name="project" value="LOCAL" />
-      <updated>1680040616535</updated>
+      <workItem from="1681355523513" duration="13901000" />
     </task>
     <task id="LOCAL-00167" summary="change width in constraints">
       <created>1680040788874</created>
@@ -593,7 +587,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681439600842</updated>
     </task>
-    <option name="localTasksCounter" value="215" />
+    <task id="LOCAL-00215" summary="add param.samples print call">
+      <created>1681439664651</created>
+      <option name="number" value="00215" />
+      <option name="presentableId" value="LOCAL-00215" />
+      <option name="project" value="LOCAL" />
+      <updated>1681439664651</updated>
+    </task>
+    <option name="localTasksCounter" value="216" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -652,7 +653,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="additionally print state attrs" />
     <MESSAGE value="insert initial signatures for belief_space planning" />
     <MESSAGE value="migrate all initialize belief references to the plan object, not to search node" />
     <MESSAGE value="debugging the basic signature for belief-state planning" />
@@ -677,7 +677,8 @@
     <MESSAGE value="add case for belief being none" />
     <MESSAGE value="modify the MCMC calls in get_samples routine" />
     <MESSAGE value="modify the MCMC calls in get_samples routine 2" />
-    <option name="LAST_COMMIT_MESSAGE" value="modify the MCMC calls in get_samples routine 2" />
+    <MESSAGE value="add param.samples print call" />
+    <option name="LAST_COMMIT_MESSAGE" value="add param.samples print call" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

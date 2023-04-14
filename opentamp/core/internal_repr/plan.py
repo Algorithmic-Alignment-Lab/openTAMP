@@ -377,7 +377,8 @@ class Plan(object):
         for param_key, param in self.params.items():
             if hasattr(param, 'samples'):
                 # add samples by generating from prior
-                param.samples = self.gen_samples(param, None)
+                print(param.samples)
+                param.samples = self.gen_samples(param, None)['belief_dist'].detach().numpy()
                 print(param.samples)
 
     # observation_models is an input dict matching belief parameters to
@@ -386,5 +387,5 @@ class Plan(object):
         for param_key, param in self.params.items():
             print(getattr(param, 'samples'))
             if hasattr(param, 'samples'):
-                param.samples = self.gen_samples(param, ll_plan)
+                param.samples = self.gen_samples(param, ll_plan)['belief_dist'].detach().numpy()
                 print(param.samples)
