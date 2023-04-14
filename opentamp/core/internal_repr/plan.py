@@ -369,7 +369,9 @@ class Plan(object):
             num_chains=1,
         )
 
-        return mcmc.get_samples(plan)
+        mcmc.run(plan)
+
+        return mcmc.get_samples()
 
     def initialize_beliefs(self):
         for param_key, param in self.params.items():

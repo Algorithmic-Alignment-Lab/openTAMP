@@ -49,6 +49,8 @@ def toy_observation(plan):
     if not plan:
         return belief
 
+    print(belief)
+
     # start obervations in the first action
     for i in range(1, len(plan)):
         # differentially take conditional depending on the ray
