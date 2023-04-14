@@ -69,6 +69,7 @@ if plan is not None:
     print(plan.actions)
     print(plan.params['theta'].pose)  # track pose through time
     print(plan.params['g'].value)  # track goal through time (not modified)
+    print(plan.params['g'].samples)
 
 print(descr)
 
