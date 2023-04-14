@@ -76,4 +76,5 @@ class DimVectorZeroed(Vector):
         obj = np.zeros(shape=(vec,), dtype=np.float32)
         cls.dim = vec
         # deals with case where obj is zero-dimensional
+        obj = obj.reshape((cls.dim, 1))
         return obj

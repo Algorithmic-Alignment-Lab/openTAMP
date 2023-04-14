@@ -249,14 +249,7 @@
       <workItem from="1681148124563" duration="2593000" />
       <workItem from="1681174734334" duration="24758000" />
       <workItem from="1681332898159" duration="2461000" />
-      <workItem from="1681355523513" duration="12715000" />
-    </task>
-    <task id="LOCAL-00156" summary="debug camera specification 3">
-      <created>1680039545184</created>
-      <option name="number" value="00156" />
-      <option name="presentableId" value="LOCAL-00156" />
-      <option name="project" value="LOCAL" />
-      <updated>1680039545184</updated>
+      <workItem from="1681355523513" duration="12824000" />
     </task>
     <task id="LOCAL-00157" summary="debug camera specification 4">
       <created>1680039641691</created>
@@ -594,7 +587,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681438513026</updated>
     </task>
-    <option name="localTasksCounter" value="205" />
+    <task id="LOCAL-00205" summary="add dim attribute">
+      <created>1681438577402</created>
+      <option name="number" value="00205" />
+      <option name="presentableId" value="LOCAL-00205" />
+      <option name="project" value="LOCAL" />
+      <updated>1681438577402</updated>
+    </task>
+    <option name="localTasksCounter" value="206" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -653,7 +653,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="np.nan vs np.inf" />
     <MESSAGE value="reduce angle" />
     <MESSAGE value="change back to original problem" />
     <MESSAGE value="add belief-space type, add new belief-domain" />
@@ -678,7 +677,8 @@
     <MESSAGE value="modify file to belief 3: DimVectorZeroed" />
     <MESSAGE value="modify file to belief 3: DimVectorZeroed item" />
     <MESSAGE value="modify file to belief 3: DimVectorZeroed dim" />
-    <option name="LAST_COMMIT_MESSAGE" value="modify file to belief 3: DimVectorZeroed dim" />
+    <MESSAGE value="add dim attribute" />
+    <option name="LAST_COMMIT_MESSAGE" value="add dim attribute" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
