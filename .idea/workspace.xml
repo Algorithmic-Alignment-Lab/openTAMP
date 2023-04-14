@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/core/util_classes/toy_domain_predicates.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/util_classes/toy_domain_predicates.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -249,21 +249,7 @@
       <workItem from="1681148124563" duration="2593000" />
       <workItem from="1681174734334" duration="24758000" />
       <workItem from="1681332898159" duration="2461000" />
-      <workItem from="1681355523513" duration="20400000" />
-    </task>
-    <task id="LOCAL-00211" summary="update dict iteration 4: remove prints">
-      <created>1681439206802</created>
-      <option name="number" value="00211" />
-      <option name="presentableId" value="LOCAL-00211" />
-      <option name="project" value="LOCAL" />
-      <updated>1681439206802</updated>
-    </task>
-    <task id="LOCAL-00212" summary="add case for belief being none">
-      <created>1681439254213</created>
-      <option name="number" value="00212" />
-      <option name="presentableId" value="LOCAL-00212" />
-      <option name="project" value="LOCAL" />
-      <updated>1681439254213</updated>
+      <workItem from="1681355523513" duration="20902000" />
     </task>
     <task id="LOCAL-00213" summary="modify the MCMC calls in get_samples routine">
       <created>1681439542664</created>
@@ -594,7 +580,21 @@
       <option name="project" value="LOCAL" />
       <updated>1681452142231</updated>
     </task>
-    <option name="localTasksCounter" value="260" />
+    <task id="LOCAL-00260" summary="undo (add constant for meme)">
+      <created>1681452242934</created>
+      <option name="number" value="00260" />
+      <option name="presentableId" value="LOCAL-00260" />
+      <option name="project" value="LOCAL" />
+      <updated>1681452242934</updated>
+    </task>
+    <task id="LOCAL-00261" summary="remove prints">
+      <created>1681452356261</created>
+      <option name="number" value="00261" />
+      <option name="presentableId" value="LOCAL-00261" />
+      <option name="project" value="LOCAL" />
+      <updated>1681452356261</updated>
+    </task>
+    <option name="localTasksCounter" value="262" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -653,8 +653,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="remove prints" />
-    <MESSAGE value="sample printing" />
     <MESSAGE value="add summary for diagnostics" />
     <MESSAGE value="add samples" />
     <MESSAGE value="update problem file for increased samples" />
@@ -678,7 +676,9 @@
     <MESSAGE value="remove dash from name" />
     <MESSAGE value="print the command being considered" />
     <MESSAGE value="add constant for meme" />
-    <option name="LAST_COMMIT_MESSAGE" value="add constant for meme" />
+    <MESSAGE value="undo (add constant for meme)" />
+    <MESSAGE value="remove prints" />
+    <option name="LAST_COMMIT_MESSAGE" value="remove prints" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
