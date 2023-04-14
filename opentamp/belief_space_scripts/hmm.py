@@ -40,6 +40,7 @@ def main(args):
     )
     mcmc.run(model, data.sigma, data.y)
     mcmc.summary(prob=0.5)
+    print(mcmc.get_samples())
 
 
 if __name__ == "__main__":
