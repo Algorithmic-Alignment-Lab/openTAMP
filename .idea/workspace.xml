@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/core/internal_repr/problem.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/internal_repr/problem.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/core/internal_repr/state.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/internal_repr/state.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -251,14 +248,7 @@
       <workItem from="1681148124563" duration="2593000" />
       <workItem from="1681174734334" duration="24758000" />
       <workItem from="1681332898159" duration="2461000" />
-      <workItem from="1681355523513" duration="13160000" />
-    </task>
-    <task id="LOCAL-00159" summary="debug camera specification 6">
-      <created>1680039780562</created>
-      <option name="number" value="00159" />
-      <option name="presentableId" value="LOCAL-00159" />
-      <option name="project" value="LOCAL" />
-      <updated>1680039780562</updated>
+      <workItem from="1681355523513" duration="13246000" />
     </task>
     <task id="LOCAL-00160" summary="debug camera specification 7">
       <created>1680039830112</created>
@@ -596,7 +586,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681438849506</updated>
     </task>
-    <option name="localTasksCounter" value="208" />
+    <task id="LOCAL-00208" summary="update dict iteration">
+      <created>1681439035811</created>
+      <option name="number" value="00208" />
+      <option name="presentableId" value="LOCAL-00208" />
+      <option name="project" value="LOCAL" />
+      <updated>1681439035811</updated>
+    </task>
+    <option name="localTasksCounter" value="209" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -655,7 +652,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add belief-space type, add new belief-domain" />
     <MESSAGE value="add always true back in" />
     <MESSAGE value="debug types" />
     <MESSAGE value="print param schemas" />
@@ -680,7 +676,8 @@
     <MESSAGE value="add dim attribute" />
     <MESSAGE value="debug shape issues" />
     <MESSAGE value="add attribute prints (debugging)" />
-    <option name="LAST_COMMIT_MESSAGE" value="add attribute prints (debugging)" />
+    <MESSAGE value="update dict iteration" />
+    <option name="LAST_COMMIT_MESSAGE" value="update dict iteration" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
