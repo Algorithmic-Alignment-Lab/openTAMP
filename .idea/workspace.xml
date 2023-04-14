@@ -249,21 +249,8 @@
       <workItem from="1681148124563" duration="2593000" />
       <workItem from="1681174734334" duration="24758000" />
       <workItem from="1681332898159" duration="2461000" />
-      <workItem from="1681355523513" duration="23849000" />
-    </task>
-    <task id="LOCAL-00225" summary="remove sample prints">
-      <created>1681446486855</created>
-      <option name="number" value="00225" />
-      <option name="presentableId" value="LOCAL-00225" />
-      <option name="project" value="LOCAL" />
-      <updated>1681446486855</updated>
-    </task>
-    <task id="LOCAL-00226" summary="remove sample prints 2">
-      <created>1681446548460</created>
-      <option name="number" value="00226" />
-      <option name="presentableId" value="LOCAL-00226" />
-      <option name="project" value="LOCAL" />
-      <updated>1681446548460</updated>
+      <workItem from="1681355523513" duration="23951000" />
+      <workItem from="1681457796082" duration="321000" />
     </task>
     <task id="LOCAL-00227" summary="print plan">
       <created>1681446595810</created>
@@ -594,7 +581,21 @@
       <option name="project" value="LOCAL" />
       <updated>1681455380585</updated>
     </task>
-    <option name="localTasksCounter" value="274" />
+    <task id="LOCAL-00274" summary="super precise belief estimates">
+      <created>1681455795375</created>
+      <option name="number" value="00274" />
+      <option name="presentableId" value="LOCAL-00274" />
+      <option name="project" value="LOCAL" />
+      <updated>1681455795375</updated>
+    </task>
+    <task id="LOCAL-00275" summary="add .item()">
+      <created>1681455808378</created>
+      <option name="number" value="00275" />
+      <option name="presentableId" value="LOCAL-00275" />
+      <option name="project" value="LOCAL" />
+      <updated>1681455808378</updated>
+    </task>
+    <option name="localTasksCounter" value="276" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -653,8 +654,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add get_samples in hmm script" />
-    <MESSAGE value="flip order of method" />
     <MESSAGE value="flip order of method (debug)" />
     <MESSAGE value="add more samples" />
     <MESSAGE value="debug in_ray condition" />
@@ -678,7 +677,9 @@
     <MESSAGE value="modify obs logic" />
     <MESSAGE value="condition on whether or not hit was had too" />
     <MESSAGE value="assuming perfectly solved plan" />
-    <option name="LAST_COMMIT_MESSAGE" value="assuming perfectly solved plan" />
+    <MESSAGE value="super precise belief estimates" />
+    <MESSAGE value="add .item()" />
+    <option name="LAST_COMMIT_MESSAGE" value="add .item()" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
