@@ -250,14 +250,7 @@
       <workItem from="1681148124563" duration="2593000" />
       <workItem from="1681174734334" duration="24758000" />
       <workItem from="1681332898159" duration="2461000" />
-      <workItem from="1681355523513" duration="23172000" />
-    </task>
-    <task id="LOCAL-00223" summary="print parameter value 3">
-      <created>1681446272351</created>
-      <option name="number" value="00223" />
-      <option name="presentableId" value="LOCAL-00223" />
-      <option name="project" value="LOCAL" />
-      <updated>1681446272351</updated>
+      <workItem from="1681355523513" duration="23457000" />
     </task>
     <task id="LOCAL-00224" summary="add prints">
       <created>1681446417052</created>
@@ -595,7 +588,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681454724557</updated>
     </task>
-    <option name="localTasksCounter" value="272" />
+    <task id="LOCAL-00272" summary="condition on whether or not hit was had too">
+      <created>1681455115432</created>
+      <option name="number" value="00272" />
+      <option name="presentableId" value="LOCAL-00272" />
+      <option name="project" value="LOCAL" />
+      <updated>1681455115433</updated>
+    </task>
+    <option name="localTasksCounter" value="273" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -654,7 +654,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="unfuck the ray condition 2" />
     <MESSAGE value="print the control" />
     <MESSAGE value="add get_samples in hmm script" />
     <MESSAGE value="flip order of method" />
@@ -679,7 +678,8 @@
     <MESSAGE value="decrease the number of steps for speed" />
     <MESSAGE value="modify obs model 2" />
     <MESSAGE value="modify obs logic" />
-    <option name="LAST_COMMIT_MESSAGE" value="modify obs logic" />
+    <MESSAGE value="condition on whether or not hit was had too" />
+    <option name="LAST_COMMIT_MESSAGE" value="condition on whether or not hit was had too" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -51,14 +51,12 @@ def toy_observation(plan):
 
     # start obervations in the first action
     obs = torch.torch.empty(len(plan))
-    hit = torch.torch.empty(len(plan))
     for i in range(len(plan)):
         # differentially take conditional depending on the ray
-        if is_in_ray(plan[i].pose[0][1+i], belief.item()):
-            hit[i] = pyro.param('hit'+str(i), 1.0)
+        # plan[i].pose[0][1+i]
+        if is_in_ray(1.10714871779, belief.item()):
             obs[i] = pyro.sample('obs'+str(i), dist.Uniform(belief.item()-0.1, belief.item()+0.1))
         else:
-            hit[i] = pyro.param('hit'+str(i), 0.0)
             obs[i] = pyro.sample('obs'+str(i), dist.Uniform(-1, 1))  # no marginal information gotten
 
     return obs
