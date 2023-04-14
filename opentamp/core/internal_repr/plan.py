@@ -372,8 +372,7 @@ class Plan(object):
         return mcmc.get_samples(plan)
 
     def initialize_beliefs(self):
-        print(self.params)
-        for param in self.params:
+        for param_key, param in self.params:
             print(getattr(param, 'samples'))
             if hasattr(param, 'samples'):
                 # add samples by generating from prior
@@ -383,7 +382,7 @@ class Plan(object):
     def filter_beliefs(self, ll_plan):
         # construct a model object, over which we do inference, starting with uniform prior
         print(self.params)
-        for param_key, param in enumerate(self.params):
+        for param_key, param in self.params:
             print(getattr(param, 'samples'))
             if hasattr(param, 'samples'):
                 param.samples = self.gen_samples(param, ll_plan)

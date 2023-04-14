@@ -12,8 +12,6 @@ class State(object):
         self.preds = set(preds) if preds else set()
         self.timestep = timestep
         self.invariants = set(invariants) if invariants else set()
-        print('State Attrs')
-        print(list(self.__dict__.items()))
 
     def is_concrete(self):
         for p in self.params.values():
