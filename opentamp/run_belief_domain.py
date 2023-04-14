@@ -46,6 +46,8 @@ def is_in_ray(item, belief):
 def toy_observation(plan):
     belief = pyro.sample("belief_dist", dist.Uniform(-1, 1))
 
+    print(plan)
+
     if not plan:
         return belief
 

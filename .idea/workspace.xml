@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -249,14 +248,7 @@
       <workItem from="1681148124563" duration="2593000" />
       <workItem from="1681174734334" duration="24758000" />
       <workItem from="1681332898159" duration="2461000" />
-      <workItem from="1681355523513" duration="15371000" />
-    </task>
-    <task id="LOCAL-00177" summary="add .item() calls in predicates">
-      <created>1680046947120</created>
-      <option name="number" value="00177" />
-      <option name="presentableId" value="LOCAL-00177" />
-      <option name="project" value="LOCAL" />
-      <updated>1680046947120</updated>
+      <workItem from="1681355523513" duration="15418000" />
     </task>
     <task id="LOCAL-00178" summary="remove help for camera posing">
       <created>1680046986911</created>
@@ -594,7 +586,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681446486855</updated>
     </task>
-    <option name="localTasksCounter" value="226" />
+    <task id="LOCAL-00226" summary="remove sample prints 2">
+      <created>1681446548460</created>
+      <option name="number" value="00226" />
+      <option name="presentableId" value="LOCAL-00226" />
+      <option name="project" value="LOCAL" />
+      <updated>1681446548460</updated>
+    </task>
+    <option name="localTasksCounter" value="227" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -653,7 +652,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="modify file to belief" />
     <MESSAGE value="modify file to belief 3: DimVectorZeroed" />
     <MESSAGE value="modify file to belief 3: DimVectorZeroed item" />
     <MESSAGE value="modify file to belief 3: DimVectorZeroed dim" />
@@ -678,7 +676,8 @@
     <MESSAGE value="print parameter value 3" />
     <MESSAGE value="add prints" />
     <MESSAGE value="remove sample prints" />
-    <option name="LAST_COMMIT_MESSAGE" value="remove sample prints" />
+    <MESSAGE value="remove sample prints 2" />
+    <option name="LAST_COMMIT_MESSAGE" value="remove sample prints 2" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
