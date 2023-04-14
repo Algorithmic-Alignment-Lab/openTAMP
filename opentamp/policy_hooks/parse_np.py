@@ -34,5 +34,5 @@ df = pd.DataFrame.from_records(data_list, columns=["time", "episode return"])
 df.set_index('time')
 print(df.head())
 
-#sns.set()
-#sns.relplot()
+sns.set()
+sns.relplot(data=df, x="time", y="episode return")
