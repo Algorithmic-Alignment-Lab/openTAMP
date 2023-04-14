@@ -366,11 +366,11 @@ class Plan(object):
             kernel,
             num_samples=1000,
             warmup_steps=5000,
-            num_chains=1,
+            num_chains=10,
         )
 
         mcmc.run(plan)
-        mcmc.summary(prob=0.95)
+        mcmc.summary(prob=0.95)  # for diagnostics
 
         return mcmc.get_samples()
 
