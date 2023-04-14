@@ -357,7 +357,6 @@ class Plan(object):
             kernel = NUTS(self.observation_model)
         else:
             # create a conditioned model on the plan
-            plan[0].pose = np.array([[0, 1.10714871779, 0.33, 1.7]])  # TODO: REMOVE, TEST PLAN TO CHECK MULTI-STEP
             obs_dict = {'obs'+str(i): torch.tensor(param.value.item()) for i in range(1, plan[0].pose.shape[1]+1)}
             conditional_model = poutine.condition(self.observation_model, data=obs_dict)
             kernel = NUTS(conditional_model)
