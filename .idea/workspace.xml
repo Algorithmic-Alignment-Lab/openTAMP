@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/core/util_classes/matrix.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/util_classes/matrix.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -249,14 +249,7 @@
       <workItem from="1681148124563" duration="2593000" />
       <workItem from="1681174734334" duration="24758000" />
       <workItem from="1681332898159" duration="2461000" />
-      <workItem from="1681355523513" duration="12824000" />
-    </task>
-    <task id="LOCAL-00157" summary="debug camera specification 4">
-      <created>1680039641691</created>
-      <option name="number" value="00157" />
-      <option name="presentableId" value="LOCAL-00157" />
-      <option name="project" value="LOCAL" />
-      <updated>1680039641691</updated>
+      <workItem from="1681355523513" duration="12987000" />
     </task>
     <task id="LOCAL-00158" summary="debug camera specification 5">
       <created>1680039724891</created>
@@ -594,7 +587,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681438577402</updated>
     </task>
-    <option name="localTasksCounter" value="206" />
+    <task id="LOCAL-00206" summary="debug shape issues">
+      <created>1681438692605</created>
+      <option name="number" value="00206" />
+      <option name="presentableId" value="LOCAL-00206" />
+      <option name="project" value="LOCAL" />
+      <updated>1681438692605</updated>
+    </task>
+    <option name="localTasksCounter" value="207" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -653,7 +653,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="reduce angle" />
     <MESSAGE value="change back to original problem" />
     <MESSAGE value="add belief-space type, add new belief-domain" />
     <MESSAGE value="add always true back in" />
@@ -678,7 +677,8 @@
     <MESSAGE value="modify file to belief 3: DimVectorZeroed item" />
     <MESSAGE value="modify file to belief 3: DimVectorZeroed dim" />
     <MESSAGE value="add dim attribute" />
-    <option name="LAST_COMMIT_MESSAGE" value="add dim attribute" />
+    <MESSAGE value="debug shape issues" />
+    <option name="LAST_COMMIT_MESSAGE" value="debug shape issues" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
