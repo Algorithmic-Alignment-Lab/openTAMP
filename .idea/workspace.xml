@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="add some">
+    <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="tune down sample count, add stuff">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -250,14 +249,7 @@
       <workItem from="1681148124563" duration="2593000" />
       <workItem from="1681174734334" duration="24758000" />
       <workItem from="1681332898159" duration="2461000" />
-      <workItem from="1681355523513" duration="16592000" />
-    </task>
-    <task id="LOCAL-00191" summary="insert initial signatures for belief_space planning">
-      <created>1681327998235</created>
-      <option name="number" value="00191" />
-      <option name="presentableId" value="LOCAL-00191" />
-      <option name="project" value="LOCAL" />
-      <updated>1681327998235</updated>
+      <workItem from="1681355523513" duration="16730000" />
     </task>
     <task id="LOCAL-00192" summary="migrate all initialize belief references to the plan object, not to search node">
       <created>1681328110771</created>
@@ -595,7 +587,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681447447729</updated>
     </task>
-    <option name="localTasksCounter" value="240" />
+    <task id="LOCAL-00240" summary="tune down sample count, add stuff">
+      <created>1681447783603</created>
+      <option name="number" value="00240" />
+      <option name="presentableId" value="LOCAL-00240" />
+      <option name="project" value="LOCAL" />
+      <updated>1681447783603</updated>
+    </task>
+    <option name="localTasksCounter" value="241" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -654,7 +653,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="modify the MCMC calls in get_samples routine 2" />
     <MESSAGE value="add param.samples print call" />
     <MESSAGE value="add in param.samples values, modify calls to convert to numpy" />
     <MESSAGE value="reshape" />
@@ -679,7 +677,8 @@
     <MESSAGE value="add summary for diagnostics" />
     <MESSAGE value="add samples" />
     <MESSAGE value="update problem file for increased samples" />
-    <option name="LAST_COMMIT_MESSAGE" value="update problem file for increased samples" />
+    <MESSAGE value="tune down sample count, add stuff" />
+    <option name="LAST_COMMIT_MESSAGE" value="tune down sample count, add stuff" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
