@@ -73,7 +73,7 @@ class DimVectorZeroed(Vector):
             if not vec.endswith(")"):
                 vec += ")"
             vec = eval(vec)
-        obj = np.zeros(shape=(vec.item(),), dtype=np.float32)
+        obj = np.zeros(shape=(vec,), dtype=np.float32)
         # deals with case where obj is zero-dimensional
         assert len(np.atleast_1d(obj)) == cls.dim
         obj = obj.reshape((cls.dim, obj.size//cls.dim))

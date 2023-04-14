@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/toy_belief.domain" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/toy_belief.domain" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/core/util_classes/matrix.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/util_classes/matrix.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -248,14 +248,7 @@
       <workItem from="1681148124563" duration="2593000" />
       <workItem from="1681174734334" duration="24758000" />
       <workItem from="1681332898159" duration="2461000" />
-      <workItem from="1681355523513" duration="12574000" />
-    </task>
-    <task id="LOCAL-00153" summary="add in camera logic">
-      <created>1680039249232</created>
-      <option name="number" value="00153" />
-      <option name="presentableId" value="LOCAL-00153" />
-      <option name="project" value="LOCAL" />
-      <updated>1680039249232</updated>
+      <workItem from="1681355523513" duration="12614000" />
     </task>
     <task id="LOCAL-00154" summary="debug camera specification">
       <created>1680039345413</created>
@@ -593,7 +586,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681438400182</updated>
     </task>
-    <option name="localTasksCounter" value="202" />
+    <task id="LOCAL-00202" summary="modify file to belief 3: DimVectorZeroed">
+      <created>1681438449099</created>
+      <option name="number" value="00202" />
+      <option name="presentableId" value="LOCAL-00202" />
+      <option name="project" value="LOCAL" />
+      <updated>1681438449099</updated>
+    </task>
+    <option name="localTasksCounter" value="203" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -652,7 +652,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="replace with pdb calls" />
     <MESSAGE value="add .item() calls in predicates" />
     <MESSAGE value="remove help for camera posing" />
     <MESSAGE value="np.nan vs np.inf" />
@@ -677,7 +676,8 @@
     <MESSAGE value="debug belief space 2" />
     <MESSAGE value="add check for samples" />
     <MESSAGE value="modify file to belief" />
-    <option name="LAST_COMMIT_MESSAGE" value="modify file to belief" />
+    <MESSAGE value="modify file to belief 3: DimVectorZeroed" />
+    <option name="LAST_COMMIT_MESSAGE" value="modify file to belief 3: DimVectorZeroed" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
