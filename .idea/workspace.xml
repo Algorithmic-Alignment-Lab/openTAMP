@@ -5,7 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -248,14 +249,7 @@
       <workItem from="1681148124563" duration="2593000" />
       <workItem from="1681174734334" duration="24758000" />
       <workItem from="1681332898159" duration="2461000" />
-      <workItem from="1681355523513" duration="13334000" />
-    </task>
-    <task id="LOCAL-00162" summary="remove pdb call">
-      <created>1680039970042</created>
-      <option name="number" value="00162" />
-      <option name="presentableId" value="LOCAL-00162" />
-      <option name="project" value="LOCAL" />
-      <updated>1680039970042</updated>
+      <workItem from="1681355523513" duration="13375000" />
     </task>
     <task id="LOCAL-00163" summary="remove prints">
       <created>1680040164445</created>
@@ -593,7 +587,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681439166514</updated>
     </task>
-    <option name="localTasksCounter" value="211" />
+    <task id="LOCAL-00211" summary="update dict iteration 4: remove prints">
+      <created>1681439206802</created>
+      <option name="number" value="00211" />
+      <option name="presentableId" value="LOCAL-00211" />
+      <option name="project" value="LOCAL" />
+      <updated>1681439206802</updated>
+    </task>
+    <option name="localTasksCounter" value="212" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -652,7 +653,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="print param schemas" />
     <MESSAGE value="change back to basic camera domain" />
     <MESSAGE value="remove self.belief call from parameter" />
     <MESSAGE value="print list of attrs in the problem file" />
@@ -677,7 +677,8 @@
     <MESSAGE value="update dict iteration" />
     <MESSAGE value="update dict iteration 2" />
     <MESSAGE value="update dict iteration 3" />
-    <option name="LAST_COMMIT_MESSAGE" value="update dict iteration 3" />
+    <MESSAGE value="update dict iteration 4: remove prints" />
+    <option name="LAST_COMMIT_MESSAGE" value="update dict iteration 4: remove prints" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
