@@ -40,7 +40,7 @@ solver = ToySolver()
 
 
 def is_in_ray(item, belief):
-    return np.pi/2 - np.pi * 0.1/2 - np.arctan(belief/1.0) <= item <= np.pi/2 + np.pi*0.1/2 - np.arctan(belief/1.0)
+    return np.pi/2 - 0.1/2 - np.arctan(belief/1.0) <= item <= np.pi/2 + 0.1/2 - np.arctan(belief/1.0)
 
 
 def toy_observation(plan):
