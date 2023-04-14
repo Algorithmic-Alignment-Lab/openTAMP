@@ -55,7 +55,7 @@ def toy_observation(plan):
     for i in range(1, len(plan)):
         # differentially take conditional depending on the ray
         if is_in_ray(plan[i], belief):
-            pyro.param('obs'+str(i), 0.5)
+            pyro.sample('obs'+str(i), dist.Uniform(0.49, 0.51))
         else:
             pyro.sample('obs'+str(i), dist.Uniform(-1, 1)) # no marginal information gotten
 
@@ -64,14 +64,13 @@ def toy_observation(plan):
 # Run planning to obtain a final plan.
 plan, descr = p_mod_abs(
     hls, solver, domain, problem,
-    goal=None, observation_model=toy_observation,debug=False, n_resamples=10
+    goal=None, observation_model=toy_observation, debug=False, n_resamples=10
 )
 
 if plan is not None:
     print(plan.actions)
     print(plan.params['theta'].pose)  # track pose through time
     print(plan.params['g'].value)  # track goal through time (not modified)
-    print(plan.params['g'].samples)
 
 print(descr)
 

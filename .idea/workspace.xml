@@ -5,7 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -248,14 +249,7 @@
       <workItem from="1681148124563" duration="2593000" />
       <workItem from="1681174734334" duration="24758000" />
       <workItem from="1681332898159" duration="2461000" />
-      <workItem from="1681355523513" duration="14898000" />
-    </task>
-    <task id="LOCAL-00173" summary="debug timesteps">
-      <created>1680046382805</created>
-      <option name="number" value="00173" />
-      <option name="presentableId" value="LOCAL-00173" />
-      <option name="project" value="LOCAL" />
-      <updated>1680046382806</updated>
+      <workItem from="1681355523513" duration="15095000" />
     </task>
     <task id="LOCAL-00174" summary="add MANY prints">
       <created>1680046476493</created>
@@ -593,7 +587,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681445846132</updated>
     </task>
-    <option name="localTasksCounter" value="222" />
+    <task id="LOCAL-00222" summary="print parameter value 2">
+      <created>1681446084928</created>
+      <option name="number" value="00222" />
+      <option name="presentableId" value="LOCAL-00222" />
+      <option name="project" value="LOCAL" />
+      <updated>1681446084928</updated>
+    </task>
+    <option name="localTasksCounter" value="223" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -652,7 +653,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add criterion for ray_in_view to the observation model" />
     <MESSAGE value="debug belief space 1" />
     <MESSAGE value="debug belief space 2" />
     <MESSAGE value="add check for samples" />
@@ -677,7 +677,8 @@
     <MESSAGE value="fix prints 2" />
     <MESSAGE value="test with perfect observation" />
     <MESSAGE value="print parameter value" />
-    <option name="LAST_COMMIT_MESSAGE" value="print parameter value" />
+    <MESSAGE value="print parameter value 2" />
+    <option name="LAST_COMMIT_MESSAGE" value="print parameter value 2" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
