@@ -248,14 +248,7 @@
       <workItem from="1681148124563" duration="2593000" />
       <workItem from="1681174734334" duration="24758000" />
       <workItem from="1681332898159" duration="2461000" />
-      <workItem from="1681355523513" duration="13291000" />
-    </task>
-    <task id="LOCAL-00161" summary="debug camera specification 8">
-      <created>1680039886710</created>
-      <option name="number" value="00161" />
-      <option name="presentableId" value="LOCAL-00161" />
-      <option name="project" value="LOCAL" />
-      <updated>1680039886710</updated>
+      <workItem from="1681355523513" duration="13334000" />
     </task>
     <task id="LOCAL-00162" summary="remove pdb call">
       <created>1680039970042</created>
@@ -593,7 +586,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681439118951</updated>
     </task>
-    <option name="localTasksCounter" value="210" />
+    <task id="LOCAL-00210" summary="update dict iteration 3">
+      <created>1681439166514</created>
+      <option name="number" value="00210" />
+      <option name="presentableId" value="LOCAL-00210" />
+      <option name="project" value="LOCAL" />
+      <updated>1681439166514</updated>
+    </task>
+    <option name="localTasksCounter" value="211" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -652,7 +652,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="debug types" />
     <MESSAGE value="print param schemas" />
     <MESSAGE value="change back to basic camera domain" />
     <MESSAGE value="remove self.belief call from parameter" />
@@ -677,7 +676,8 @@
     <MESSAGE value="add attribute prints (debugging)" />
     <MESSAGE value="update dict iteration" />
     <MESSAGE value="update dict iteration 2" />
-    <option name="LAST_COMMIT_MESSAGE" value="update dict iteration 2" />
+    <MESSAGE value="update dict iteration 3" />
+    <option name="LAST_COMMIT_MESSAGE" value="update dict iteration 3" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

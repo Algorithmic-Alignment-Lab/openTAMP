@@ -373,7 +373,6 @@ class Plan(object):
 
     def initialize_beliefs(self):
         for param_key, param in self.params.items():
-            print(getattr(param, 'samples'))
             if hasattr(param, 'samples'):
                 # add samples by generating from prior
                 param.samples = self.gen_samples(param, None)
@@ -381,7 +380,6 @@ class Plan(object):
     # observation_models is an input dict matching belief parameters to
     def filter_beliefs(self, ll_plan):
         # construct a model object, over which we do inference, starting with uniform prior
-        print(self.params)
         for param_key, param in self.params.items():
             print(getattr(param, 'samples'))
             if hasattr(param, 'samples'):
