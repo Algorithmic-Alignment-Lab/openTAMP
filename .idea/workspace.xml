@@ -248,14 +248,7 @@
       <workItem from="1681148124563" duration="2593000" />
       <workItem from="1681174734334" duration="24758000" />
       <workItem from="1681332898159" duration="2461000" />
-      <workItem from="1681355523513" duration="13708000" />
-    </task>
-    <task id="LOCAL-00165" summary="add somewhat helpful pose suggestion">
-      <created>1680040377936</created>
-      <option name="number" value="00165" />
-      <option name="presentableId" value="LOCAL-00165" />
-      <option name="project" value="LOCAL" />
-      <updated>1680040377936</updated>
+      <workItem from="1681355523513" duration="13773000" />
     </task>
     <task id="LOCAL-00166" summary="add exact pose suggestion">
       <created>1680040616535</created>
@@ -593,7 +586,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681439542664</updated>
     </task>
-    <option name="localTasksCounter" value="214" />
+    <task id="LOCAL-00214" summary="modify the MCMC calls in get_samples routine 2">
+      <created>1681439600842</created>
+      <option name="number" value="00214" />
+      <option name="presentableId" value="LOCAL-00214" />
+      <option name="project" value="LOCAL" />
+      <updated>1681439600842</updated>
+    </task>
+    <option name="localTasksCounter" value="215" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -652,7 +652,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="print list of attrs in the problem file" />
     <MESSAGE value="additionally print state attrs" />
     <MESSAGE value="insert initial signatures for belief_space planning" />
     <MESSAGE value="migrate all initialize belief references to the plan object, not to search node" />
@@ -677,7 +676,8 @@
     <MESSAGE value="update dict iteration 4: remove prints" />
     <MESSAGE value="add case for belief being none" />
     <MESSAGE value="modify the MCMC calls in get_samples routine" />
-    <option name="LAST_COMMIT_MESSAGE" value="modify the MCMC calls in get_samples routine" />
+    <MESSAGE value="modify the MCMC calls in get_samples routine 2" />
+    <option name="LAST_COMMIT_MESSAGE" value="modify the MCMC calls in get_samples routine 2" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

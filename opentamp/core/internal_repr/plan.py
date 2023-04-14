@@ -378,6 +378,7 @@ class Plan(object):
             if hasattr(param, 'samples'):
                 # add samples by generating from prior
                 param.samples = self.gen_samples(param, None)
+                print(param.samples)
 
     # observation_models is an input dict matching belief parameters to
     def filter_beliefs(self, ll_plan):
