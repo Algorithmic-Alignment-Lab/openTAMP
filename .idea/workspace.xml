@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -250,14 +249,7 @@
       <workItem from="1681148124563" duration="2593000" />
       <workItem from="1681174734334" duration="24758000" />
       <workItem from="1681332898159" duration="2461000" />
-      <workItem from="1681355523513" duration="23457000" />
-    </task>
-    <task id="LOCAL-00224" summary="add prints">
-      <created>1681446417052</created>
-      <option name="number" value="00224" />
-      <option name="presentableId" value="LOCAL-00224" />
-      <option name="project" value="LOCAL" />
-      <updated>1681446417052</updated>
+      <workItem from="1681355523513" duration="23849000" />
     </task>
     <task id="LOCAL-00225" summary="remove sample prints">
       <created>1681446486855</created>
@@ -595,7 +587,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681455115433</updated>
     </task>
-    <option name="localTasksCounter" value="273" />
+    <task id="LOCAL-00273" summary="assuming perfectly solved plan">
+      <created>1681455380585</created>
+      <option name="number" value="00273" />
+      <option name="presentableId" value="LOCAL-00273" />
+      <option name="project" value="LOCAL" />
+      <updated>1681455380585</updated>
+    </task>
+    <option name="localTasksCounter" value="274" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -654,7 +653,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="print the control" />
     <MESSAGE value="add get_samples in hmm script" />
     <MESSAGE value="flip order of method" />
     <MESSAGE value="flip order of method (debug)" />
@@ -679,7 +677,8 @@
     <MESSAGE value="modify obs model 2" />
     <MESSAGE value="modify obs logic" />
     <MESSAGE value="condition on whether or not hit was had too" />
-    <option name="LAST_COMMIT_MESSAGE" value="condition on whether or not hit was had too" />
+    <MESSAGE value="assuming perfectly solved plan" />
+    <option name="LAST_COMMIT_MESSAGE" value="assuming perfectly solved plan" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
