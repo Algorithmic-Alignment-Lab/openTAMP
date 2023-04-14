@@ -378,7 +378,6 @@ class Plan(object):
         for param_key, param in self.params.items():
             if hasattr(param, 'samples'):
                 # add samples by generating from prior
-                print(param.samples)
                 param.samples = self.gen_samples(param, None)['belief_dist'].detach().numpy().reshape((-1, 1))
 
     # observation_models is an input dict matching belief parameters to
@@ -386,5 +385,5 @@ class Plan(object):
         # construct a model object, over which we do inference, starting with uniform prior
         for param_key, param in self.params.items():
             if hasattr(param, 'samples'):
-                print(param.samples)
                 param.samples = self.gen_samples(param, ll_plan)['belief_dist'].detach().numpy().reshape((-1, 1))
+                print(param.samples)
