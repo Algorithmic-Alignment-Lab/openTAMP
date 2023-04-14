@@ -357,7 +357,6 @@ class Plan(object):
             kernel = NUTS(self.observation_model)
         else:
             # create a conditioned model on the plan
-            print(param.value)
             obs_dict = {'obs_'+str(i): param.value for i in range(len(plan))}
             conditional_model = poutine.condition(self.observation_model, data=obs_dict)
             kernel = NUTS(conditional_model)
@@ -386,4 +385,3 @@ class Plan(object):
         for param_key, param in self.params.items():
             if hasattr(param, 'samples'):
                 param.samples = self.gen_samples(param, ll_plan)['belief_dist'].detach().numpy().reshape((-1, 1))
-                print(param.samples)
