@@ -115,15 +115,15 @@ class DataBuffer(object):
 
         self.tasks[label] = []
         if self.to_torch:
-            self.obs[label] = torch.zeros((size,)+dO, dtype=torch.float32)
-            self.mu[label] = torch.zeros((size,)+dU, dtype=torch.float32)
-            self.prc[label] = torch.zeros((size,)+dP, dtype=torch.float32)
-            self.wt[label] = torch.zeros((size,)+dW, dtype=torch.float32)
+            self.obs[label] = torch.zeros((size,)+dO, dtype=torch.float32, device=self.policy.device)
+            self.mu[label] = torch.zeros((size,)+dU, dtype=torch.float32, device=self.policy.device)
+            self.prc[label] = torch.zeros((size,)+dP, dtype=torch.float32, device=self.policy.device)
+            self.wt[label] = torch.zeros((size,)+dW, dtype=torch.float32, device=self.policy.device)
             self.aux[label] = []
             self.primobs[label] = None
             if dPrim is not None:
-                self.primobs[label] = torch.zeros((size,)+dPrim, dtype=torch.float32)
-            self.x[label] = torch.zeros((size,)+dX, dtype=torch.float32)
+                self.primobs[label] = torch.zeros((size,)+dPrim, dtype=torch.float32, device=self.policy.device)
+            self.x[label] = torch.zeros((size,)+dX, dtype=torch.float32, device=self.policy.device)
         else:
             self.obs[label] = np.nan * np.zeros((size,)+dO, dtype=np.float32)
             self.mu[label] = np.nan * np.zeros((size,)+dU, dtype=np.float32)

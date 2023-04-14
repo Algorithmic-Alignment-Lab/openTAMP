@@ -97,17 +97,17 @@ class TorchPolicyOpt():
 
 
     def get_loss(self, task, x, y, precision=None,):
+        model = self.nets[task]
         if type(x) is not torch.Tensor:
-            x = torch.Tensor(x)
+            x = torch.Tensor(x, device=model.device)
 
         if type(y) is not torch.Tensor:
-            y = torch.Tensor(y)
+            y = torch.Tensor(y, device=model.device)
 
         if type(precision) is not torch.Tensor:
-            precision = torch.Tensor(precision)
+            precision = torch.Tensor(precision, device=model.device)
 
-        model = self.nets[task]
-        pred = model(x)
+        pred = model.forward(x)
 
         return model.compute_loss(pred, y, precision)
 
@@ -304,7 +304,7 @@ class TorchPolicyOpt():
         self.nets[scope] = PolicyNet(config=config,
                                      scope=scope,
                                      device=self.device)
-
+        self.nets[scope].to_device(self.device)
 
     def init_networks(self):
         """ Helper method to initialize the tf networks used """

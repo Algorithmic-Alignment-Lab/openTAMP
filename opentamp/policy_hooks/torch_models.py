@@ -109,6 +109,23 @@ class TorchNet(nn.Module):
         return self.fc_layers[-1](nn_input)
 
 
+    def to_device(self, device=None):
+        if device is not None:
+            self.device = device
+
+        for layer in self.fc_layers:
+            layer.to(self.device)
+
+        for layer in self.conv_layers:
+            layer.to(self.device)
+
+        if self.fp_tensors is not None:
+            for tensor in self.fp_tensors:
+                tensor.to(self.device)
+
+        self.to(self.device)
+        
+
     def _compute_idx(self):
         if 'idx' in self.config:
             self.idx = self.config['idx']
