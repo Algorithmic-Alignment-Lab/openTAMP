@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/core/util_classes/toy_domain_predicates.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/util_classes/toy_domain_predicates.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -250,14 +249,7 @@
       <workItem from="1681148124563" duration="2593000" />
       <workItem from="1681174734334" duration="24758000" />
       <workItem from="1681332898159" duration="2461000" />
-      <workItem from="1681355523513" duration="21056000" />
-    </task>
-    <task id="LOCAL-00214" summary="modify the MCMC calls in get_samples routine 2">
-      <created>1681439600842</created>
-      <option name="number" value="00214" />
-      <option name="presentableId" value="LOCAL-00214" />
-      <option name="project" value="LOCAL" />
-      <updated>1681439600842</updated>
+      <workItem from="1681355523513" duration="21488000" />
     </task>
     <task id="LOCAL-00215" summary="add param.samples print call">
       <created>1681439664651</created>
@@ -595,7 +587,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681452737929</updated>
     </task>
-    <option name="localTasksCounter" value="263" />
+    <task id="LOCAL-00263" summary="debug some radians bs 2">
+      <created>1681452890113</created>
+      <option name="number" value="00263" />
+      <option name="presentableId" value="LOCAL-00263" />
+      <option name="project" value="LOCAL" />
+      <updated>1681452890113</updated>
+    </task>
+    <option name="localTasksCounter" value="264" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -654,7 +653,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add samples" />
     <MESSAGE value="update problem file for increased samples" />
     <MESSAGE value="tune down sample count, add stuff" />
     <MESSAGE value="modify conditioned var" />
@@ -679,7 +677,8 @@
     <MESSAGE value="undo (add constant for meme)" />
     <MESSAGE value="remove prints" />
     <MESSAGE value="debug some radians bs" />
-    <option name="LAST_COMMIT_MESSAGE" value="debug some radians bs" />
+    <MESSAGE value="debug some radians bs 2" />
+    <option name="LAST_COMMIT_MESSAGE" value="debug some radians bs 2" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
