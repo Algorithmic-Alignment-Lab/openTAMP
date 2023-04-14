@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -249,14 +249,7 @@
       <workItem from="1681174734334" duration="24758000" />
       <workItem from="1681332898159" duration="2461000" />
       <workItem from="1681355523513" duration="23951000" />
-      <workItem from="1681457796082" duration="1814000" />
-    </task>
-    <task id="LOCAL-00229" summary="debug off-by-one error">
-      <created>1681446730351</created>
-      <option name="number" value="00229" />
-      <option name="presentableId" value="LOCAL-00229" />
-      <option name="project" value="LOCAL" />
-      <updated>1681446730351</updated>
+      <workItem from="1681457796082" duration="1875000" />
     </task>
     <task id="LOCAL-00230" summary="item call">
       <created>1681446785514</created>
@@ -594,7 +587,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681487929810</updated>
     </task>
-    <option name="localTasksCounter" value="278" />
+    <task id="LOCAL-00278" summary="debug multi-step">
+      <created>1681488173396</created>
+      <option name="number" value="00278" />
+      <option name="presentableId" value="LOCAL-00278" />
+      <option name="project" value="LOCAL" />
+      <updated>1681488173396</updated>
+    </task>
+    <option name="localTasksCounter" value="279" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -653,7 +653,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="debug in_ray condition" />
     <MESSAGE value="add belief print" />
     <MESSAGE value="add belief print debug" />
     <MESSAGE value="print not in ray" />
@@ -678,7 +677,8 @@
     <MESSAGE value="add .item()" />
     <MESSAGE value="add dependency back on the planner" />
     <MESSAGE value="add sample multi-step plan as test" />
-    <option name="LAST_COMMIT_MESSAGE" value="add sample multi-step plan as test" />
+    <MESSAGE value="debug multi-step" />
+    <option name="LAST_COMMIT_MESSAGE" value="debug multi-step" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
