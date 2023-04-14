@@ -248,14 +248,7 @@
       <workItem from="1681148124563" duration="2593000" />
       <workItem from="1681174734334" duration="24758000" />
       <workItem from="1681332898159" duration="2461000" />
-      <workItem from="1681355523513" duration="15418000" />
-    </task>
-    <task id="LOCAL-00178" summary="remove help for camera posing">
-      <created>1680046986911</created>
-      <option name="number" value="00178" />
-      <option name="presentableId" value="LOCAL-00178" />
-      <option name="project" value="LOCAL" />
-      <updated>1680046986911</updated>
+      <workItem from="1681355523513" duration="15453000" />
     </task>
     <task id="LOCAL-00179" summary="np.nan vs np.inf">
       <created>1680047049302</created>
@@ -593,7 +586,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681446548460</updated>
     </task>
-    <option name="localTasksCounter" value="227" />
+    <task id="LOCAL-00227" summary="print plan">
+      <created>1681446595810</created>
+      <option name="number" value="00227" />
+      <option name="presentableId" value="LOCAL-00227" />
+      <option name="project" value="LOCAL" />
+      <updated>1681446595810</updated>
+    </task>
+    <option name="localTasksCounter" value="228" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -652,7 +652,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="modify file to belief 3: DimVectorZeroed" />
     <MESSAGE value="modify file to belief 3: DimVectorZeroed item" />
     <MESSAGE value="modify file to belief 3: DimVectorZeroed dim" />
     <MESSAGE value="add dim attribute" />
@@ -677,7 +676,8 @@
     <MESSAGE value="add prints" />
     <MESSAGE value="remove sample prints" />
     <MESSAGE value="remove sample prints 2" />
-    <option name="LAST_COMMIT_MESSAGE" value="remove sample prints 2" />
+    <MESSAGE value="print plan" />
+    <option name="LAST_COMMIT_MESSAGE" value="print plan" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
