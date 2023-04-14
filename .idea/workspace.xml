@@ -5,8 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -249,14 +248,7 @@
       <workItem from="1681148124563" duration="2593000" />
       <workItem from="1681174734334" duration="24758000" />
       <workItem from="1681332898159" duration="2461000" />
-      <workItem from="1681355523513" duration="14640000" />
-    </task>
-    <task id="LOCAL-00171" summary="add prints">
-      <created>1680046072775</created>
-      <option name="number" value="00171" />
-      <option name="presentableId" value="LOCAL-00171" />
-      <option name="project" value="LOCAL" />
-      <updated>1680046072775</updated>
+      <workItem from="1681355523513" duration="14803000" />
     </task>
     <task id="LOCAL-00172" summary="add effect (closed world assumption?)">
       <created>1680046347131</created>
@@ -594,7 +586,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681440069287</updated>
     </task>
-    <option name="localTasksCounter" value="220" />
+    <task id="LOCAL-00220" summary="test with perfect observation">
+      <created>1681445651991</created>
+      <option name="number" value="00220" />
+      <option name="presentableId" value="LOCAL-00220" />
+      <option name="project" value="LOCAL" />
+      <updated>1681445651991</updated>
+    </task>
+    <option name="localTasksCounter" value="221" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -653,7 +652,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="modify TAMP predicate signatures" />
     <MESSAGE value="add dim_zero type for samples" />
     <MESSAGE value="add criterion for ray_in_view to the observation model" />
     <MESSAGE value="debug belief space 1" />
@@ -678,7 +676,8 @@
     <MESSAGE value="reshape" />
     <MESSAGE value="fix prints" />
     <MESSAGE value="fix prints 2" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix prints 2" />
+    <MESSAGE value="test with perfect observation" />
+    <option name="LAST_COMMIT_MESSAGE" value="test with perfect observation" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

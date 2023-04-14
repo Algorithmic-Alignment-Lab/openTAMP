@@ -357,6 +357,7 @@ class Plan(object):
             kernel = NUTS(self.observation_model)
         else:
             # create a conditioned model on the plan
+            print(param.value)
             obs_dict = {'obs_'+str(i): param.value for i in range(len(plan))}
             conditional_model = poutine.condition(self.observation_model, data=obs_dict)
             kernel = NUTS(conditional_model)
