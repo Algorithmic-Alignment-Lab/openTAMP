@@ -249,14 +249,7 @@
       <workItem from="1681148124563" duration="2593000" />
       <workItem from="1681174734334" duration="24758000" />
       <workItem from="1681332898159" duration="2461000" />
-      <workItem from="1681355523513" duration="17839000" />
-    </task>
-    <task id="LOCAL-00198" summary="debug belief space 1">
-      <created>1681438233586</created>
-      <option name="number" value="00198" />
-      <option name="presentableId" value="LOCAL-00198" />
-      <option name="project" value="LOCAL" />
-      <updated>1681438233586</updated>
+      <workItem from="1681355523513" duration="17915000" />
     </task>
     <task id="LOCAL-00199" summary="debug belief space 2">
       <created>1681438323374</created>
@@ -594,7 +587,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681449383346</updated>
     </task>
-    <option name="localTasksCounter" value="247" />
+    <task id="LOCAL-00247" summary="unfuck the ray condition 2">
+      <created>1681449521037</created>
+      <option name="number" value="00247" />
+      <option name="presentableId" value="LOCAL-00247" />
+      <option name="project" value="LOCAL" />
+      <updated>1681449521037</updated>
+    </task>
+    <option name="localTasksCounter" value="248" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -653,7 +653,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="print parameter value" />
     <MESSAGE value="print parameter value 2" />
     <MESSAGE value="print parameter value 3" />
     <MESSAGE value="add prints" />
@@ -678,7 +677,8 @@
     <MESSAGE value="revert" />
     <MESSAGE value="decrease warmup" />
     <MESSAGE value="unfuck the ray condition" />
-    <option name="LAST_COMMIT_MESSAGE" value="unfuck the ray condition" />
+    <MESSAGE value="unfuck the ray condition 2" />
+    <option name="LAST_COMMIT_MESSAGE" value="unfuck the ray condition 2" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
