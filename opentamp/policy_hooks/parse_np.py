@@ -37,6 +37,6 @@ print(df.head())
 
 sns.set()
 rel = sns.relplot(data=df, x="time", y="episode return")
-fig = rel.get_figure()
+fig = rel.fig
 fig.savefig("out.png")
 plt.show()
