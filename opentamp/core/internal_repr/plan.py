@@ -385,7 +385,7 @@ class Plan(object):
     def filter_beliefs(self, ll_plan):
         # construct a model object, over which we do inference, starting with uniform prior
         for param_key, param in self.params.items():
-            print(getattr(param, 'samples'))
             if hasattr(param, 'samples'):
+                print(param.samples)
                 param.samples = self.gen_samples(param, ll_plan)['belief_dist'].detach().numpy().reshape((-1, 1))
                 print(param.samples)
