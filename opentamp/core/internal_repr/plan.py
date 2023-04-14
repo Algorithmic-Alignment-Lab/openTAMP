@@ -366,7 +366,7 @@ class Plan(object):
             kernel,
             num_samples=1000,
             warmup_steps=5000,
-            num_chains=10,
+            num_chains=2,
         )
 
         mcmc.run(plan)
