@@ -36,5 +36,7 @@ df.set_index('time')
 print(df.head())
 
 sns.set()
-sns.relplot(data=df, x="time", y="episode return")
+rel = sns.relplot(data=df, x="time", y="episode return")
+fig = rel.get_figure()
+fig.savefig("out.png")
 plt.show()
