@@ -38,10 +38,17 @@ p_c = main.parse_file_to_dict(prob)
 problem = parse_problem_config.ParseProblemConfig.parse(p_c, domain, None, use_tf=True, sess=None, visual=False)
 solver = ToySolver()
 
+
+def is_in_ray(item, belief):
+    return np.pi/2 + - np.pi * belief/2 + np.arctan(0.5/1.0) <= item <= np.pi/2 + np.pi*belief/2 - np.arctan(0.5/1.0)
+
+
 def toy_observation(plan):
     belief = pyro.sample("belief_dist", dist.Uniform(-1, 1))
+    # start obervations in the first action
     for i in range(1, len(plan)):
-        if plan[i] is_in_ray:
+        # differentially take conditional depending on the ray
+        if is_in_ray(plan[i], belief):
             pyro.sample('obs'+str(i), dist.Uniform(plan[i]-dist, plan[i]+dist))
         else:
             pyro.sample('obs'+str(i), dist.Uniform(-1, 1)) # no marginal information gotten
