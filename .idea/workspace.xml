@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -250,14 +250,7 @@
       <workItem from="1681174734334" duration="24758000" />
       <workItem from="1681332898159" duration="2461000" />
       <workItem from="1681355523513" duration="23951000" />
-      <workItem from="1681457796082" duration="321000" />
-    </task>
-    <task id="LOCAL-00227" summary="print plan">
-      <created>1681446595810</created>
-      <option name="number" value="00227" />
-      <option name="presentableId" value="LOCAL-00227" />
-      <option name="project" value="LOCAL" />
-      <updated>1681446595810</updated>
+      <workItem from="1681457796082" duration="1533000" />
     </task>
     <task id="LOCAL-00228" summary="print plan">
       <created>1681446644824</created>
@@ -595,7 +588,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681455808378</updated>
     </task>
-    <option name="localTasksCounter" value="276" />
+    <task id="LOCAL-00276" summary="add dependency back on the planner">
+      <created>1681463691730</created>
+      <option name="number" value="00276" />
+      <option name="presentableId" value="LOCAL-00276" />
+      <option name="project" value="LOCAL" />
+      <updated>1681463691731</updated>
+    </task>
+    <option name="localTasksCounter" value="277" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -654,7 +654,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="flip order of method (debug)" />
     <MESSAGE value="add more samples" />
     <MESSAGE value="debug in_ray condition" />
     <MESSAGE value="add belief print" />
@@ -679,7 +678,8 @@
     <MESSAGE value="assuming perfectly solved plan" />
     <MESSAGE value="super precise belief estimates" />
     <MESSAGE value="add .item()" />
-    <option name="LAST_COMMIT_MESSAGE" value="add .item()" />
+    <MESSAGE value="add dependency back on the planner" />
+    <option name="LAST_COMMIT_MESSAGE" value="add dependency back on the planner" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
