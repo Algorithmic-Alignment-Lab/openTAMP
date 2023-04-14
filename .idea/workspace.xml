@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" afterDir="false" />
-    </list>
+    <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -249,14 +246,7 @@
       <workItem from="1681148124563" duration="2593000" />
       <workItem from="1681174734334" duration="24758000" />
       <workItem from="1681332898159" duration="2461000" />
-      <workItem from="1681355523513" duration="16202000" />
-    </task>
-    <task id="LOCAL-00189" summary="print list of attrs in the problem file">
-      <created>1681320671605</created>
-      <option name="number" value="00189" />
-      <option name="presentableId" value="LOCAL-00189" />
-      <option name="project" value="LOCAL" />
-      <updated>1681320671605</updated>
+      <workItem from="1681355523513" duration="16261000" />
     </task>
     <task id="LOCAL-00190" summary="additionally print state attrs">
       <created>1681320736034</created>
@@ -594,7 +584,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681447249480</updated>
     </task>
-    <option name="localTasksCounter" value="238" />
+    <task id="LOCAL-00238" summary="add samples">
+      <created>1681447383598</created>
+      <option name="number" value="00238" />
+      <option name="presentableId" value="LOCAL-00238" />
+      <option name="project" value="LOCAL" />
+      <updated>1681447383598</updated>
+    </task>
+    <option name="localTasksCounter" value="239" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -653,7 +650,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add case for belief being none" />
     <MESSAGE value="modify the MCMC calls in get_samples routine" />
     <MESSAGE value="modify the MCMC calls in get_samples routine 2" />
     <MESSAGE value="add param.samples print call" />
@@ -678,7 +674,8 @@
     <MESSAGE value="remove prints" />
     <MESSAGE value="sample printing" />
     <MESSAGE value="add summary for diagnostics" />
-    <option name="LAST_COMMIT_MESSAGE" value="add summary for diagnostics" />
+    <MESSAGE value="add samples" />
+    <option name="LAST_COMMIT_MESSAGE" value="add samples" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
