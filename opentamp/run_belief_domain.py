@@ -40,7 +40,7 @@ solver = ToySolver()
 
 
 def is_in_ray(item, belief):
-    return np.pi/2 - 0.1/2 - np.arctan(belief/1.0) <= item <= np.pi/2 + 0.1/2 - np.arctan(belief/1.0)
+    return np.pi/2 - 0.1 - np.arctan(belief/1.0) <= item <= np.pi/2 + 0.1 - np.arctan(belief/1.0)
 
 
 def toy_observation(plan):
@@ -54,7 +54,7 @@ def toy_observation(plan):
     for i in range(len(plan)):
         # differentially take conditional depending on the ray
         if is_in_ray(plan[i].pose[0][1+i], belief.item()):
-            obs[i] = pyro.sample('obs'+str(i), dist.Normal(belief.item(), 0.001))
+            obs[i] = pyro.sample('obs'+str(i), dist.Normal(belief.item(), 0.1))
         else:
             obs[i] = pyro.sample('obs'+str(i), dist.Uniform(-1, 1))  # no marginal information gotten
 

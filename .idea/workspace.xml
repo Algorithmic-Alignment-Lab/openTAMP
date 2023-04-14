@@ -249,14 +249,7 @@
       <workItem from="1681148124563" duration="2593000" />
       <workItem from="1681174734334" duration="24758000" />
       <workItem from="1681332898159" duration="2461000" />
-      <workItem from="1681355523513" duration="21975000" />
-    </task>
-    <task id="LOCAL-00217" summary="reshape">
-      <created>1681439865063</created>
-      <option name="number" value="00217" />
-      <option name="presentableId" value="LOCAL-00217" />
-      <option name="project" value="LOCAL" />
-      <updated>1681439865063</updated>
+      <workItem from="1681355523513" duration="22121000" />
     </task>
     <task id="LOCAL-00218" summary="fix prints">
       <created>1681439922204</created>
@@ -594,7 +587,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681453647638</updated>
     </task>
-    <option name="localTasksCounter" value="266" />
+    <task id="LOCAL-00266" summary="modify the new observation model">
+      <created>1681453839887</created>
+      <option name="number" value="00266" />
+      <option name="presentableId" value="LOCAL-00266" />
+      <option name="project" value="LOCAL" />
+      <updated>1681453839887</updated>
+    </task>
+    <option name="localTasksCounter" value="267" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -653,7 +653,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="modify conditioned var" />
     <MESSAGE value="increase num_chains" />
     <MESSAGE value="increase num_chains to 2" />
     <MESSAGE value="revert" />
@@ -678,7 +677,8 @@
     <MESSAGE value="debug some radians bs 2" />
     <MESSAGE value="update the observation model" />
     <MESSAGE value="debug the new observation model" />
-    <option name="LAST_COMMIT_MESSAGE" value="debug the new observation model" />
+    <MESSAGE value="modify the new observation model" />
+    <option name="LAST_COMMIT_MESSAGE" value="modify the new observation model" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
