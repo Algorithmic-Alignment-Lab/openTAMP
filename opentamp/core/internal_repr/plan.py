@@ -379,7 +379,6 @@ class Plan(object):
                 # add samples by generating from prior
                 print(param.samples)
                 param.samples = self.gen_samples(param, None)['belief_dist'].detach().numpy().reshape((-1, 1))
-                print(param.samples)
 
     # observation_models is an input dict matching belief parameters to
     def filter_beliefs(self, ll_plan):
@@ -388,4 +387,3 @@ class Plan(object):
             if hasattr(param, 'samples'):
                 print(param.samples)
                 param.samples = self.gen_samples(param, ll_plan)['belief_dist'].detach().numpy().reshape((-1, 1))
-                print(param.samples)

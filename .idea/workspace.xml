@@ -249,14 +249,7 @@
       <workItem from="1681148124563" duration="2593000" />
       <workItem from="1681174734334" duration="24758000" />
       <workItem from="1681332898159" duration="2461000" />
-      <workItem from="1681355523513" duration="14027000" />
-    </task>
-    <task id="LOCAL-00169" summary="give even easier base case">
-      <created>1680045115977</created>
-      <option name="number" value="00169" />
-      <option name="presentableId" value="LOCAL-00169" />
-      <option name="project" value="LOCAL" />
-      <updated>1680045115977</updated>
+      <workItem from="1681355523513" duration="14177000" />
     </task>
     <task id="LOCAL-00170" summary="absurd radius">
       <created>1680045620416</created>
@@ -594,7 +587,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681439865063</updated>
     </task>
-    <option name="localTasksCounter" value="218" />
+    <task id="LOCAL-00218" summary="fix prints">
+      <created>1681439922204</created>
+      <option name="number" value="00218" />
+      <option name="presentableId" value="LOCAL-00218" />
+      <option name="project" value="LOCAL" />
+      <updated>1681439922204</updated>
+    </task>
+    <option name="localTasksCounter" value="219" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -653,7 +653,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="debugging the basic signature for belief-state planning" />
     <MESSAGE value="added first-pass belief inference, modified skeletons + hooks for getting sampling through" />
     <MESSAGE value="modify TAMP predicate signatures" />
     <MESSAGE value="add dim_zero type for samples" />
@@ -678,7 +677,8 @@
     <MESSAGE value="add param.samples print call" />
     <MESSAGE value="add in param.samples values, modify calls to convert to numpy" />
     <MESSAGE value="reshape" />
-    <option name="LAST_COMMIT_MESSAGE" value="reshape" />
+    <MESSAGE value="fix prints" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix prints" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
