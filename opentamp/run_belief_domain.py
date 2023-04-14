@@ -49,8 +49,6 @@ def toy_observation(plan):
     if not plan:
         return belief
 
-    print(belief)
-
     # start obervations in the first action
     for i in range(1, len(plan)):
         # differentially take conditional depending on the ray
@@ -58,8 +56,8 @@ def toy_observation(plan):
             print('in ray!')
             pyro.sample('obs'+str(i), dist.Uniform(0.49, 0.51))
         else:
-            pyro.sample('obs'+str(i), dist.Uniform(-1, 1)) # no marginal information gotten
             print('not in ray!')
+            pyro.sample('obs'+str(i), dist.Uniform(-1, 1)) # no marginal information gotten
 
     return belief
 
