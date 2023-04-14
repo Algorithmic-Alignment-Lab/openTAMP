@@ -53,7 +53,6 @@ def toy_observation(plan):
     obs = torch.torch.empty(len(plan))
     for i in range(len(plan)):
         # differentially take conditional depending on the ray
-        print(plan[i].pose[0][1+i])
         if is_in_ray(plan[i].pose[0][1+i], belief.item()):
             obs[i] = pyro.sample('obs'+str(i), dist.Uniform(0.49, 0.51))
         else:
