@@ -249,14 +249,7 @@
       <workItem from="1681148124563" duration="2593000" />
       <workItem from="1681174734334" duration="24758000" />
       <workItem from="1681332898159" duration="2461000" />
-      <workItem from="1681355523513" duration="16068000" />
-    </task>
-    <task id="LOCAL-00188" summary="remove self.belief call from parameter">
-      <created>1681319622500</created>
-      <option name="number" value="00188" />
-      <option name="presentableId" value="LOCAL-00188" />
-      <option name="project" value="LOCAL" />
-      <updated>1681319622500</updated>
+      <workItem from="1681355523513" duration="16202000" />
     </task>
     <task id="LOCAL-00189" summary="print list of attrs in the problem file">
       <created>1681320671605</created>
@@ -594,7 +587,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681447120418</updated>
     </task>
-    <option name="localTasksCounter" value="237" />
+    <task id="LOCAL-00237" summary="add summary for diagnostics">
+      <created>1681447249480</created>
+      <option name="number" value="00237" />
+      <option name="presentableId" value="LOCAL-00237" />
+      <option name="project" value="LOCAL" />
+      <updated>1681447249480</updated>
+    </task>
+    <option name="localTasksCounter" value="238" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -653,7 +653,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="update dict iteration 4: remove prints" />
     <MESSAGE value="add case for belief being none" />
     <MESSAGE value="modify the MCMC calls in get_samples routine" />
     <MESSAGE value="modify the MCMC calls in get_samples routine 2" />
@@ -678,7 +677,8 @@
     <MESSAGE value="type stuff 4" />
     <MESSAGE value="remove prints" />
     <MESSAGE value="sample printing" />
-    <option name="LAST_COMMIT_MESSAGE" value="sample printing" />
+    <MESSAGE value="add summary for diagnostics" />
+    <option name="LAST_COMMIT_MESSAGE" value="add summary for diagnostics" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

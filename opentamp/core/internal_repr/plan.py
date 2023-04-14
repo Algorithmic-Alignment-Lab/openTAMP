@@ -364,13 +364,13 @@ class Plan(object):
         # defaults taken from hmm.py script
         mcmc = MCMC(
             kernel,
-            num_samples=1000,
-            warmup_steps=1000,
+            num_samples=5000,
+            warmup_steps=10000,
             num_chains=1,
         )
 
         mcmc.run(plan)
-        mcmc.summary(prob=0.9)
+        mcmc.summary(prob=0.95)
 
         return mcmc.get_samples()
 
