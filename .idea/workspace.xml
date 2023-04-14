@@ -5,8 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/toy_belief.domain" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/toy_belief.domain" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -249,14 +248,7 @@
       <workItem from="1681148124563" duration="2593000" />
       <workItem from="1681174734334" duration="24758000" />
       <workItem from="1681332898159" duration="2461000" />
-      <workItem from="1681355523513" duration="12537000" />
-    </task>
-    <task id="LOCAL-00152" summary="initial push for camera">
-      <created>1680038197145</created>
-      <option name="number" value="00152" />
-      <option name="presentableId" value="LOCAL-00152" />
-      <option name="project" value="LOCAL" />
-      <updated>1680038197145</updated>
+      <workItem from="1681355523513" duration="12574000" />
     </task>
     <task id="LOCAL-00153" summary="add in camera logic">
       <created>1680039249232</created>
@@ -594,7 +586,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681438366436</updated>
     </task>
-    <option name="localTasksCounter" value="201" />
+    <task id="LOCAL-00201" summary="modify file to belief">
+      <created>1681438400182</created>
+      <option name="number" value="00201" />
+      <option name="presentableId" value="LOCAL-00201" />
+      <option name="project" value="LOCAL" />
+      <updated>1681438400182</updated>
+    </task>
+    <option name="localTasksCounter" value="202" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -653,7 +652,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="replace MANY prints" />
     <MESSAGE value="replace with pdb calls" />
     <MESSAGE value="add .item() calls in predicates" />
     <MESSAGE value="remove help for camera posing" />
@@ -678,7 +676,8 @@
     <MESSAGE value="debug belief space 1" />
     <MESSAGE value="debug belief space 2" />
     <MESSAGE value="add check for samples" />
-    <option name="LAST_COMMIT_MESSAGE" value="add check for samples" />
+    <MESSAGE value="modify file to belief" />
+    <option name="LAST_COMMIT_MESSAGE" value="modify file to belief" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

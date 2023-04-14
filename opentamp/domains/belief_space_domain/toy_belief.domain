@@ -5,7 +5,7 @@
 
 Types: CameraAngle, PointCoord, WallUp, WallDown, WallDist, RayWidth
 
-Attribute Import Paths: Vector1d opentamp.core.util_classes.matrix, Vector2d opentamp.core.util_classes.matrix, DimShape opentamp.core.util_classes.matrix
+Attribute Import Paths: Vector1d opentamp.core.util_classes.matrix, Vector2d opentamp.core.util_classes.matrix, DimVectorZeroed opentamp.core.util_classes.matrix
 
 Predicates Import Path: opentamp.core.util_classes.toy_domain_predicates
 
