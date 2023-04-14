@@ -370,6 +370,7 @@ class Plan(object):
         )
 
         mcmc.run(plan)
+        mcmc.summary(prob=0.9)
 
         return mcmc.get_samples()
 
