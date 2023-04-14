@@ -249,14 +249,7 @@
       <workItem from="1681148124563" duration="2593000" />
       <workItem from="1681174734334" duration="24758000" />
       <workItem from="1681332898159" duration="2461000" />
-      <workItem from="1681355523513" duration="22570000" />
-    </task>
-    <task id="LOCAL-00221" summary="print parameter value">
-      <created>1681445846132</created>
-      <option name="number" value="00221" />
-      <option name="presentableId" value="LOCAL-00221" />
-      <option name="project" value="LOCAL" />
-      <updated>1681445846132</updated>
+      <workItem from="1681355523513" duration="22799000" />
     </task>
     <task id="LOCAL-00222" summary="print parameter value 2">
       <created>1681446084928</created>
@@ -594,7 +587,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681454332259</updated>
     </task>
-    <option name="localTasksCounter" value="270" />
+    <task id="LOCAL-00270" summary="modify obs model 2">
+      <created>1681454473886</created>
+      <option name="number" value="00270" />
+      <option name="presentableId" value="LOCAL-00270" />
+      <option name="project" value="LOCAL" />
+      <updated>1681454473886</updated>
+    </task>
+    <option name="localTasksCounter" value="271" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -653,7 +653,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="decrease warmup" />
     <MESSAGE value="unfuck the ray condition" />
     <MESSAGE value="unfuck the ray condition 2" />
     <MESSAGE value="print the control" />
@@ -678,7 +677,8 @@
     <MESSAGE value="modify the new observation model 2" />
     <MESSAGE value="modify the new observation model 3" />
     <MESSAGE value="decrease the number of steps for speed" />
-    <option name="LAST_COMMIT_MESSAGE" value="decrease the number of steps for speed" />
+    <MESSAGE value="modify obs model 2" />
+    <option name="LAST_COMMIT_MESSAGE" value="modify obs model 2" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
