@@ -35,12 +35,12 @@ for pts in data:
         
 df = pd.DataFrame.from_records(data_list, columns=["time", "episode reward"])
 df.set_index('time')
-rolling = df[['episode return']].rolling(100, win_type=None, min_periods=1).mean()
-for col in ['episode return']: df[col] = rolling[col]
+rolling = df[['episode reward']].rolling(100, win_type=None, min_periods=1).mean()
+for col in ['eepisode reward']: df[col] = rolling[col]
 print(df.head())
 
 sns.set()
-rel = sns.relplot(data=df, x="time", y="episode return")
+rel = sns.relplot(data=df, x="time", y="episode reward")
 fig = rel.fig
 fig.savefig("out.png")
 plt.show()
