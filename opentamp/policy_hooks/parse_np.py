@@ -36,7 +36,7 @@ for pts in data:
 df = pd.DataFrame.from_records(data_list, columns=["time", "episode reward"])
 df.set_index('time')
 rolling = df[['episode reward']].rolling(100, win_type=None, min_periods=1).mean()
-for col in ['eepisode reward']: df[col] = rolling[col]
+for col in ['episode reward']: df[col] = rolling[col]
 print(df.head())
 
 sns.set()
