@@ -33,14 +33,14 @@ for pts in data:
         # all_data[k][full_exp][cur_dir][cur_dir][-1]['episode reward'] = pt[19]
 
         
-df = pd.DataFrame.from_records(data_list, columns=["time", "episode reward"])
+df = pd.DataFrame.from_records(data_list, columns=["time", "success at end"])
 df.set_index('time')
-rolling = df[['episode reward']].rolling(100, win_type=None, min_periods=1).mean()
-for col in ['episode reward']: df[col] = rolling[col]
+rolling = df[['success at end']].rolling(100, win_type=None, min_periods=1).mean()
+for col in ['success at end']: df[col] = rolling[col]
 print(df.head())
 
 sns.set()
-rel = sns.relplot(data=df, x="time", y="episode reward")
+rel = sns.relplot(data=df, x="time", y="success at end")
 fig = rel.fig
 fig.savefig("out.png")
 plt.show()
