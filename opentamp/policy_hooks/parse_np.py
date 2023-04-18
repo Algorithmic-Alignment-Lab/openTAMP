@@ -33,7 +33,7 @@ for pts in data:
         # all_data[k][full_exp][cur_dir][cur_dir][-1]['episode reward'] = pt[19]
 
         
-df = pd.DataFrame.from_records(data_list, columns=["time", "episode return"])
+df = pd.DataFrame.from_records(data_list, columns=["time", "episode reward"])
 df.set_index('time')
 rolling = df[['episode return']].rolling(100, win_type=None, min_periods=1).mean()
 for col in ['episode return']: df[col] = rolling[col]
