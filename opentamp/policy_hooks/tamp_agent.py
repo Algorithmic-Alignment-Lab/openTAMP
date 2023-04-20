@@ -35,7 +35,7 @@ MAX_TASK_PATHS = 1000
 ROLL_TOL = 1e-3
 
 
-class optimal_pol:
+class OptimalPolicy:
     def __init__(self, dU, action_inds, state_inds, opt_traj):
         self.dU = dU
         self.action_inds = action_inds
@@ -46,7 +46,10 @@ class optimal_pol:
     def act(self, X, O, t, noise=None):
         u = np.zeros(self.dU)
         for param, attr in self.action_inds:
-            u[self.action_inds[param, attr]] = self.opt_traj[t, self.state_inds[param, attr]]
+            if t < len(self.opt_traj) - 1:
+                u[self.action_inds[param, attr]] = self.opt_traj[t + 1, self.state_inds[param, attr]] - X[self.state_inds[param, attr]]
+            else:
+                u[self.action_inds[param, attr]] = self.opt_traj[-1, self.state_inds[param, attr]] - X[self.state_inds[param, attr]]
         return u
 
 
@@ -121,7 +124,7 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
         self.cur_state = self.x0[0]
         self.discrete_prim = self.config.get('discrete_prim', True)
         self.swap = self.config['master_config'].get('swap', False)
-        self.optimal_pol_cls = optimal_pol
+        self.optimal_pol_cls = OptimalPolicy
         self.hist_len = self.config['hist_len']
         self.task_hist_len = self.config['master_config'].get('task_hist_len', 0)
         self._prev_U = np.zeros((self.hist_len, self.dU))
@@ -509,8 +512,33 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
         raise NotImplementedError
 
 
-    def sample_optimal_trajectory(self, state, task, condition, opt_traj=[], traj_mean=[], fixed_targets=[]):
-        raise NotImplementedError('This should be defined in child')
+    def sample_optimal_trajectory(self, state, task, condition, opt_traj, traj_mean=[], targets=[], run_traj=True):
+        if not len(targets):
+            old_targets = self.target_vecs[condition]
+        else:
+            old_targets = self.target_vecs[condition]
+            for tname, attr in self.target_inds:
+                self.targets[condition][tname] = targets[self.target_inds[tname, attr]]
+            self.target_vecs[condition] = targets
+
+        sample = self.sample_task(self.optimal_pol_cls(self.dU, 
+                                                       self.action_inds, 
+                                                       self.state_inds, 
+                                                       opt_traj), 
+                                  condition, 
+                                  state, 
+                                  task, 
+                                  noisy=False, 
+                                  skip_opt=True, 
+                                  hor=len(opt_traj))
+        sample.set_ref_X(sample.get_X())
+        sample.set_ref_U(sample.get_U())
+
+        self.target_vecs[condition] = old_targets
+        for tname, attr in self.target_inds:
+            self.targets[condition][tname] = old_targets[self.target_inds[tname, attr]]
+            
+        return sample
 
 
     def _sample_opt_traj(self, plan, state, task, condition):

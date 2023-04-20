@@ -409,6 +409,25 @@ class Panda(Robot):
                                    'panda0_leftfinger', 'panda0_rightfinger'])
 
 
+class Spot(Robot):
+    """
+    Defines geometry used in the Spot domain.
+    """
+    def __init__(self):
+        self._type = "spot"
+        spot_shape = opentamp.__path__._path[0] + "/robot_info/spot_with_lidar.xml"
+        super(Spot, self).__init__(spot_shape)
+
+        self.jnt_names = {'pos': ['robot_x', 'robot_y'],
+                          'theta': ['robot_theta'],
+                          }
+        self.ee_link_names = {}
+        self.arms = []
+        self.ee_attrs = []
+        self.arm_bnds = {}
+        self.col_link_names = set(['spot'])
+
+
 class HSR(Robot):
     """
     Defines geometry used in the HSR domain.
