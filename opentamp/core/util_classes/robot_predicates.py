@@ -4,6 +4,7 @@ import opentamp.core.util_classes.transform_utils as T
 import opentamp.core.util_classes.common_constants as const
 from opentamp.errors_exceptions import PredicateException
 from opentamp.core.util_classes import robot_sampling
+from opentamp.core.util_classes.torch_funcs import GaussianBump, ThetaDir
 
 from sco_py.expr import Expr, AffExpr, EqExpr, LEqExpr
 
@@ -168,6 +169,36 @@ def compute_arm_rot_jac(arm_joints, robot_body, obj_dir, world_dir, sign=1.):
         arm_jac.append(np.dot(obj_dir, np.cross(axis, sign * world_dir)))
     arm_jac = np.array(arm_jac).reshape((-1, len(arm_joints)))
     return arm_jac
+
+
+def opposite_angle(theta):
+    return ((theta + 2 * np.pi) % (2 * np.pi)) - np.pi
+
+
+def angle_diff(theta1, theta2):
+    diff1 = theta1 - theta2
+    diff2 = opposite_angle(theta1) - opposite_angle(theta2)
+    if np.abs(diff1) < np.abs(diff2):
+        return diff1
+    return diff2
+
+
+def add_angle(theta, delta):
+    return ((theta + np.pi + delta) % (2 * np.pi)) - np.pi
+
+
+def add_to_attr_inds_and_res(t, attr_inds, res, param, attr_name_val_tuples):
+    if param.is_symbol():
+        t = 0
+    for attr_name, val in attr_name_val_tuples:
+        inds = np.where(param._free_attrs[attr_name][:, t])[0]
+        getattr(param, attr_name)[inds, t] = val[inds]
+        if param in attr_inds:
+            res[param].extend(val[inds].flatten().tolist())
+            attr_inds[param].append((attr_name, inds, t))
+        else:
+            res[param] = val[inds].flatten().tolist()
+            attr_inds[param] = [(attr_name, inds, t)]
 
 
 ### BASE CLASSES
@@ -3998,3 +4029,140 @@ class OffDesk(ExprPredicate):
         super(OffDesk, self).__init__(name, e, attr_inds, params, expected_param_types, priority=-2)
         self.spacial_anchor = True
 
+
+class ColObjPred(CollisionPredicate):
+    def __init__(
+        self, name, params, expected_param_types, env=None, coeff=1e3, debug=False
+    ):
+        self._env = env
+        self.hl_ignore = True
+        self.r, self.c = params
+        attr_inds = OrderedDict(
+            [
+                (self.r, [("pose", np.array([0, 1], dtype=np.int))]),
+                (self.c, [("pose", np.array([0, 1], dtype=np.int))]),
+            ]
+        )
+        self._param_to_body = {
+            self.r: self.lazy_spawn_or_body(self.r, self.r.name, self.r.geom),
+            self.c: self.lazy_spawn_or_body(self.c, self.c.name, self.c.geom),
+        }
+
+        self.radius = self.c.geom.radius + 2.5
+        self.torch_func = GaussianBump(radius=self.radius, dim=2)
+
+        self.col_ts = 2
+        self.coeff = coeff
+        self.neg_coeff = self.coeff
+        col_expr = Expr(self.f, self.grad, self.hess)
+        val = np.ones((1, 1))
+        e = EqExpr(col_expr, val)
+
+        neg_val = np.zeros((1, 1))
+        col_expr_neg = Expr(self.f_neg, self.grad_neg, self.hess_neg)
+        self.neg_expr = LEqExpr(col_expr_neg, neg_val)
+
+        super(ColObjPred, self).__init__(
+            name,
+            e,
+            attr_inds,
+            params,
+            expected_param_types,
+            ind0=0,
+            ind1=1,
+            active_range=(0, 1),
+        )
+        self.dsafe = 2.0
+
+
+    def f(self, x):
+        xs = [
+            float(self.col_ts - t) / self.col_ts * x[:4] + float(t) / self.col_ts * x[4:]
+            for t in range(self.col_ts + 1)
+        ]
+        vals = []
+        for i, pt in enumerate(xs):
+            vals.append(self.torch_func.eval_f(pt))
+
+        return self.coeff * np.array([[np.sum(vals)]])
+
+
+    def grad(self, x):
+        xs = [
+            float(self.col_ts - t) / self.col_ts * x[:4] + float(t) / self.col_ts * x[4:]
+            for t in range(self.col_ts + 1)
+        ]
+        vals = []
+        for i, pt in enumerate(xs):
+            curcoeff = float(self.col_ts - i) / self.col_ts
+            v = self.torch_func.eval_grad(pt).reshape((1,-1))
+            vals.append(np.c_[curcoeff * v, (1 - curcoeff) * v])
+        return self.coeff * np.sum(vals, axis=0)
+
+
+    def hess(self, x):
+        xs = [
+            float(self.col_ts - t) / self.col_ts * x[:4] + float(t) / self.col_ts * x[4:]
+            for t in range(self.col_ts + 1)
+        ]
+        vals = []
+        for i, pt in enumerate(xs):
+            curcoeff = float(self.col_ts - i) / self.col_ts
+            v = self.torch_func.eval_hess(pt)
+            new_v = np.r_[
+                np.c_[curcoeff * v, np.zeros((4, 4))],
+                np.c_[np.zeros((4, 4)), (1 - curcoeff) * v],
+            ]
+            vals.append(new_v.reshape((8, 8)))
+        return np.sum(vals, axis=0).reshape((8, 8))
+
+
+    def f_neg(self, x):
+        return self.neg_coeff / self.coeff * self.f(x)
+
+
+    def grad_neg(self, x):
+        return self.neg_coeff / self.coeff * self.grad(x)
+
+
+    def hess_neg(self, x):
+        return self.neg_coeff / self.coeff * self.hess(x)
+
+
+class ThetaDirValid(ExprPredicate):
+    def __init__(
+        self, name, params, expected_param_types, env=None, sess=None, debug=False
+    ):
+        (self.r,) = params
+        for attr in ['forward', 'reverse']:
+            if not hasattr(self, attr):
+                setattr(self, attr, True)
+
+        self.coeff = 1e0
+        attr_inds = OrderedDict([(self.r, [("pose", np.array([0, 1], dtype=np.int)),
+                                           ("theta", np.array([0], dtype=np.int))]),
+                                ])
+
+        self.torch_func = ThetaDir(use_forward=self.forward,
+                                   use_reverse=self.reverse)
+        angle_expr = Expr(self.f, self.grad)
+        e = EqExpr(angle_expr, np.zeros((1, 1)))
+
+        super(ThetaDirValid, self).__init__(
+            name,
+            e,
+            attr_inds,
+            params,
+            expected_param_types,
+            priority=2,
+            active_range=(0, 1),
+        )
+
+
+    def f(self, x):
+        return self.coeff * np.array([[self.torch_func.eval_f(x)]])
+
+
+    def grad(self, x):
+        return self.coeff * self.torch_func.eval_grad(x).reshape((1,-1))
+    

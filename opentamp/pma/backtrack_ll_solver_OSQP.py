@@ -1201,6 +1201,7 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
                     #quad_expr = QuadExpr(
                     #    2 * transfer_coeff * Q, transfer_coeff * A, transfer_coeff * b
                     #
+
                     quad_expr = QuadExpr(2 * transfer_coeff * Q, 
                                          transfer_coeff * A, 
                                          transfer_coeff * b)

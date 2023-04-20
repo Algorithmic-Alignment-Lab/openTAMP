@@ -13,7 +13,7 @@ Types: Robot, RobotPose, CollisionShape
 # Define the class location of each non-standard attribute type used in the above parameter type descriptions.
 
 Attribute Import Paths: Vector1d opentamp.core.util_classes.matrix, Vector2d opentamp.core.util_classes.matrix, Vector3d opentamp.core.util_classes.matrix, ArmPose7d opentamp.core.util_classes.matrix, Table opentamp.core.util_classes.items, Box opentamp.core.util_classes.items, Basket opentamp.core.util_classes.items, Cloth opentamp.core.util_classes.items, Can opentamp.core.util_classes.items"""
-robots = ['Baxter', 'Sawyer']
+robots = ['Baxter', 'Sawyer', 'Spot']
 for robot in robots:
     dom_str += ", {} opentamp.core.util_classes.robots".format(robot)
 
@@ -233,6 +233,7 @@ class Action(object):
 
         return "Action " + self.name + ' ' + str(self.timesteps) + ': ' + self.args + ' ' + cond_str + ' ' + time_str
 
+
 class Move(Action):
     def __init__(self):
         self.name = 'moveto'
@@ -249,11 +250,8 @@ class Move(Action):
                 (Stationary ?obj))', '{}:{}'.format(0, end-1)),
             ('(forall (?obs - Obstacle) (StationaryW ?obs))', '{}:{}'.format(0, end-1)),
             ('(IsMP ?robot)', '{}:{}'.format(0, end-1)),
-            #('(LeftEEValid ?robot)', '{}:{}'.format(1, end-1)),
-            #('(RightEEValid ?robot)', '{}:{}'.format(1, end-1)),
             ('(WithinJointLimit ?robot)', '{}:{}'.format(0, end)),
             ('(forall (?w - Obstacle) (not (RCollides ?robot ?w)))', '{}:{}'.format(1, end-1)),
-            # ('(not (RSelfCollides ?robot))', '0:{}'.format(end)),
         ]
         self.eff = [\
             (' (not (RobotAt ?robot ?start))', '{}:{}'.format(end, end-1)),
@@ -746,3 +744,18 @@ print(right_dom_str)
 f = open(opentamp.__path__._path[0]+'/domains/robot_manipulation_domain/right_grasp.domain', 'w')
 f.write(right_dom_str)
 
+
+actions = [Move()]
+move_dom_str = dom_str
+for action in actions:
+    move_dom_str += '\n\n'
+    print(action.name)
+    move_dom_str += action.to_str()
+
+# removes all the extra spaces
+move_dom_str = move_dom_str.replace('            ', '')
+move_dom_str = move_dom_str.replace('    ', '')
+move_dom_str = move_dom_str.replace('    ', '')
+print(move_dom_str)
+f = open(opentamp.__path__._path[0]+'/domains/robot_manipulation_domain/move_robot.domain', 'w')
+f.write(move_dom_str)
