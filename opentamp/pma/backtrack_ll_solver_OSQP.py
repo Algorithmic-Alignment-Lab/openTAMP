@@ -294,6 +294,7 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
                 self.child_solver.fixed_objs = []
 
             # filter beliefs here
+            print(rs_params)
             plan.filter_beliefs(rs_params[plan.actions[anum].active_timesteps[0]+1:plan.actions[anum].active_timesteps[1]+1, :])
 
             if success:

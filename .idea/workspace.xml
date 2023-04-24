@@ -253,14 +253,7 @@
       <workItem from="1681590541406" duration="1519000" />
       <workItem from="1681761923243" duration="3538000" />
       <workItem from="1682031698331" duration="718000" />
-      <workItem from="1682178958951" duration="6908000" />
-    </task>
-    <task id="LOCAL-00243" summary="increase num_chains to 2">
-      <created>1681448875513</created>
-      <option name="number" value="00243" />
-      <option name="presentableId" value="LOCAL-00243" />
-      <option name="project" value="LOCAL" />
-      <updated>1681448875513</updated>
+      <workItem from="1682178958951" duration="6959000" />
     </task>
     <task id="LOCAL-00244" summary="revert">
       <created>1681448908881</created>
@@ -598,7 +591,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682368914729</updated>
     </task>
-    <option name="localTasksCounter" value="292" />
+    <task id="LOCAL-00292" summary="add multi-action support 1 debug">
+      <created>1682368968665</created>
+      <option name="number" value="00292" />
+      <option name="presentableId" value="LOCAL-00292" />
+      <option name="project" value="LOCAL" />
+      <updated>1682368968665</updated>
+    </task>
+    <option name="localTasksCounter" value="293" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -657,7 +657,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="modify the new observation model 2" />
     <MESSAGE value="modify the new observation model 3" />
     <MESSAGE value="decrease the number of steps for speed" />
     <MESSAGE value="modify obs model 2" />
@@ -682,7 +681,8 @@
     <MESSAGE value="separate out max_likelihood_obs from the max_likelihood_state" />
     <MESSAGE value="debug observation model logic" />
     <MESSAGE value="add multi-action support 1" />
-    <option name="LAST_COMMIT_MESSAGE" value="add multi-action support 1" />
+    <MESSAGE value="add multi-action support 1 debug" />
+    <option name="LAST_COMMIT_MESSAGE" value="add multi-action support 1 debug" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
