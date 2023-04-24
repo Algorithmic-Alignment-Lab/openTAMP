@@ -24,12 +24,13 @@ class Plan(object):
     """
     IMPOSSIBLE = "Impossible"
 
-    def __init__(self, params, actions, horizon, env, determine_free=True, observation_model=None, sess=None):
+    def __init__(self, params, actions, horizon, env, determine_free=True, observation_model=None, max_likelihood_obs = None, sess=None):
         self.params = params
         self.backup = params
         self.actions = actions
         self.horizon = horizon
         self.observation_model = observation_model
+        self.max_likelihood_obs = max_likelihood_obs
         self.time = np.zeros((1, horizon))
         self.env = env
         self.initialized = False
@@ -39,7 +40,6 @@ class Plan(object):
         self.hl_preds = []
         self.start = 0
         self.prior = None
-        self.observation_model = None
         if determine_free:
             self._determine_free_attrs()
 
@@ -350,14 +350,17 @@ class Plan(object):
     def set_observation_model(self, observation_model):
         self.observation_model = observation_model
 
+    def set_max_likelihood_obs(self, max_likelihood_obs):
+        self.max_likelihood_obs = max_likelihood_obs
+
     # based off of hmm example from pyro docs
-    def gen_samples(self, param, plan):
+    def gen_samples(self, plan=None):
         # create unconditional or conditional model, depending
         if plan is None:
             kernel = NUTS(self.observation_model)
         else:
             # create a conditioned model on the plan
-            obs_dict = {'obs'+str(i): torch.tensor(param.value.item()) for i in range(1, plan[0].pose.shape[1]+1)}
+            obs_dict = {'obs'+str(i): torch.tensor(self.max_likelihood_obs) for i in range(1, plan[0].pose.shape[1]+1)}
             conditional_model = poutine.condition(self.observation_model, data=obs_dict)
             kernel = NUTS(conditional_model)
 
@@ -375,14 +378,22 @@ class Plan(object):
         return mcmc.get_samples()
 
     def initialize_beliefs(self):
+        # max-likelihood as parameter here
+
+        new_samples = self.gen_samples()
+
         for param_key, param in self.params.items():
             if hasattr(param, 'samples'):
                 # add samples by generating from prior
-                param.samples = self.gen_samples(param, None)['belief_dist'].detach().numpy().reshape((-1, 1))
+                param.samples = new_samples['belief_'+param.name].detach().numpy().reshape((-1, 1))
 
     # observation_models is an input dict matching belief parameters to
     def filter_beliefs(self, ll_plan):
+        # max-likelihood feeds back on object here
+
+        new_samples = self.gen_samples(ll_plan)
+
         # construct a model object, over which we do inference, starting with uniform prior
         for param_key, param in self.params.items():
             if hasattr(param, 'samples'):
-                param.samples = self.gen_samples(param, ll_plan)['belief_dist'].detach().numpy().reshape((-1, 1))
+                param.samples = new_samples['belief_'+param.name].detach().numpy().reshape((-1, 1))

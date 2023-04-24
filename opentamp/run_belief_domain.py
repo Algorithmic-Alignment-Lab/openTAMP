@@ -24,7 +24,7 @@ import pyro.distributions as dist
 import pyro.poutine as poutine
 from pyro.infer import MCMC, NUTS
 
-# TODO: initialize calls to B.S. planner, add paths to relevant folders
+# TODO: initialize calls to planner, add paths to relevant folders
 domain_fname = os.getcwd() + "/opentamp/domains/belief_space_domain/toy_belief.domain"
 prob = os.getcwd() + "/opentamp/domains/belief_space_domain/probs/toy_belief.prob"
 
@@ -39,18 +39,20 @@ problem = parse_problem_config.ParseProblemConfig.parse(p_c, domain, None, use_t
 solver = ToySolver()
 
 
+# TODO: do this with the implemented geom logic, do belief space in similar way
 def is_in_ray(item, belief):
     return np.pi/2 - 0.1/2 - np.arctan(belief/1.0) <= item <= np.pi/2 + 0.1/2 - np.arctan(belief/1.0) and np.arctan(1) <= item <= np.pi - np.arctan(1)
 
 
+# NOTE: expected names for pyro samples are "belief_"{param-name}
 def toy_observation(plan):
-    belief = pyro.sample("belief_dist", dist.Uniform(-1, 1))
+    belief = pyro.sample("belief_point_coord", dist.Uniform(-1, 1))
 
     if plan is None:
         return belief
 
-    # start obervations in the first action
-    obs = torch.torch.empty(plan[0].pose.shape[1]-1)  # TODO: compute from plan length
+    # start observations in the first action todo: loop this over actions in the plan
+    obs = torch.torch.empty(plan[0].pose.shape[1]-1)
     for a in plan:
         for i in range(1, plan[0].pose.shape[1]):
             # differentially take conditional depending on the ray
@@ -65,7 +67,7 @@ def toy_observation(plan):
 # Run planning to obtain a final plan.
 plan, descr = p_mod_abs(
     hls, solver, domain, problem,
-    goal=None, observation_model=toy_observation, debug=False, n_resamples=10
+    goal=None, observation_model=toy_observation, max_likelihood_obs=0.5, debug=False, n_resamples=10
 )
 
 if plan is not None:

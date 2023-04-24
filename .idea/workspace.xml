@@ -7,6 +7,8 @@
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/pma/pr_graph.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/pma/pr_graph.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -250,14 +252,11 @@
       <workItem from="1681174734334" duration="24758000" />
       <workItem from="1681332898159" duration="2461000" />
       <workItem from="1681355523513" duration="23951000" />
-      <workItem from="1681457796082" duration="2787000" />
-    </task>
-    <task id="LOCAL-00239" summary="update problem file for increased samples">
-      <created>1681447447729</created>
-      <option name="number" value="00239" />
-      <option name="presentableId" value="LOCAL-00239" />
-      <option name="project" value="LOCAL" />
-      <updated>1681447447729</updated>
+      <workItem from="1681457796082" duration="6716000" />
+      <workItem from="1681590541406" duration="1519000" />
+      <workItem from="1681761923243" duration="3538000" />
+      <workItem from="1682031698331" duration="718000" />
+      <workItem from="1682178958951" duration="5414000" />
     </task>
     <task id="LOCAL-00240" summary="tune down sample count, add stuff">
       <created>1681447783603</created>
@@ -595,7 +594,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681489029362</updated>
     </task>
-    <option name="localTasksCounter" value="288" />
+    <task id="LOCAL-00288" summary="check if works in original context">
+      <created>1681489165088</created>
+      <option name="number" value="00288" />
+      <option name="presentableId" value="LOCAL-00288" />
+      <option name="project" value="LOCAL" />
+      <updated>1681489165088</updated>
+    </task>
+    <option name="localTasksCounter" value="289" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -654,7 +660,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="debug some radians bs 2" />
     <MESSAGE value="update the observation model" />
     <MESSAGE value="debug the new observation model" />
     <MESSAGE value="modify the new observation model" />
@@ -679,7 +684,8 @@
     <MESSAGE value="debug multi-step 8" />
     <MESSAGE value="debug multi-step 9" />
     <MESSAGE value="debug multi-step 10" />
-    <option name="LAST_COMMIT_MESSAGE" value="debug multi-step 10" />
+    <MESSAGE value="check if works in original context" />
+    <option name="LAST_COMMIT_MESSAGE" value="check if works in original context" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
