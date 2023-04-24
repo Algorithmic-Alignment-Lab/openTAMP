@@ -294,7 +294,7 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
                 self.child_solver.fixed_objs = []
 
             # filter beliefs here
-            plan.filter_beliefs(rs_param)
+            plan.filter_beliefs(rs_params)
 
             if success:
                 if recursive_solve():
