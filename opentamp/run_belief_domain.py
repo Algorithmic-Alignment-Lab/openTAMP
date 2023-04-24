@@ -46,7 +46,7 @@ def is_in_ray(item, belief):
 
 # NOTE: expected names for pyro samples are "belief_"{param-name}
 def toy_observation(plan):
-    belief = pyro.sample("belief_point_coord", dist.Uniform(-1, 1))
+    belief = pyro.sample("belief_g", dist.Uniform(-1, 1))
 
     if plan is None:
         return belief
