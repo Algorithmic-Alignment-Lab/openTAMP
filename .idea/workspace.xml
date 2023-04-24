@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opentamp/pma/backtrack_ll_solver_OSQP.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/pma/backtrack_ll_solver_OSQP.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -254,14 +253,7 @@
       <workItem from="1681590541406" duration="1519000" />
       <workItem from="1681761923243" duration="3538000" />
       <workItem from="1682031698331" duration="718000" />
-      <workItem from="1682178958951" duration="6792000" />
-    </task>
-    <task id="LOCAL-00242" summary="increase num_chains">
-      <created>1681448819019</created>
-      <option name="number" value="00242" />
-      <option name="presentableId" value="LOCAL-00242" />
-      <option name="project" value="LOCAL" />
-      <updated>1681448819020</updated>
+      <workItem from="1682178958951" duration="6908000" />
     </task>
     <task id="LOCAL-00243" summary="increase num_chains to 2">
       <created>1681448875513</created>
@@ -599,7 +591,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682365440184</updated>
     </task>
-    <option name="localTasksCounter" value="291" />
+    <task id="LOCAL-00291" summary="add multi-action support 1">
+      <created>1682368914729</created>
+      <option name="number" value="00291" />
+      <option name="presentableId" value="LOCAL-00291" />
+      <option name="project" value="LOCAL" />
+      <updated>1682368914729</updated>
+    </task>
+    <option name="localTasksCounter" value="292" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -658,7 +657,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="modify the new observation model" />
     <MESSAGE value="modify the new observation model 2" />
     <MESSAGE value="modify the new observation model 3" />
     <MESSAGE value="decrease the number of steps for speed" />
@@ -683,7 +681,8 @@
     <MESSAGE value="check if works in original context" />
     <MESSAGE value="separate out max_likelihood_obs from the max_likelihood_state" />
     <MESSAGE value="debug observation model logic" />
-    <option name="LAST_COMMIT_MESSAGE" value="debug observation model logic" />
+    <MESSAGE value="add multi-action support 1" />
+    <option name="LAST_COMMIT_MESSAGE" value="add multi-action support 1" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
