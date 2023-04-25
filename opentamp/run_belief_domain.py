@@ -50,11 +50,11 @@ def toy_observation(plan_belief):
     def belief_prog(rs_params):
         # uniformly randomly sample on the seen so far
         print(plan_belief.samples[0])
-        print(plan_belief.samples.size)
+        print(plan_belief.samples.size())
 
         import pdb; pdb.set_trace()
 
-        belief = pyro.sample('belief_global', dist.Empirical(plan_belief.samples, torch.ones(plan_belief.samples.size[0])))
+        belief = pyro.sample('belief_global', dist.Empirical(plan_belief.samples, torch.ones(plan_belief.samples.size()[0])))
 
         print(belief[0])
 
