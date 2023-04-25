@@ -16,8 +16,8 @@ class Belief(object):
 
 class UniformBelief(Belief):
     def __init__(self, shape, low, high):
-        super().__init__(shape)
-        self.dist = dist.Uniform(low, high)  # hard-coded
+        super().__init__(int(shape))
+        self.dist = dist.Uniform(float(low), float(high))  # hard-coded
 
 
 # used for updates (for now: just updates a sample)
