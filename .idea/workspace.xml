@@ -256,14 +256,7 @@
       <workItem from="1682031698331" duration="718000" />
       <workItem from="1682178958951" duration="30918000" />
       <workItem from="1682431124732" duration="198000" />
-      <workItem from="1682431352529" duration="14443000" />
-    </task>
-    <task id="LOCAL-00364" summary="requires_grad checks">
-      <created>1682433410665</created>
-      <option name="number" value="00364" />
-      <option name="presentableId" value="LOCAL-00364" />
-      <option name="project" value="LOCAL" />
-      <updated>1682433410666</updated>
+      <workItem from="1682431352529" duration="14510000" />
     </task>
     <task id="LOCAL-00365" summary="add no_grad">
       <created>1682433786959</created>
@@ -601,7 +594,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682462348691</updated>
     </task>
-    <option name="localTasksCounter" value="413" />
+    <task id="LOCAL-00413" summary="if name is main hack">
+      <created>1682462448190</created>
+      <option name="number" value="00413" />
+      <option name="presentableId" value="LOCAL-00413" />
+      <option name="project" value="LOCAL" />
+      <updated>1682462448190</updated>
+    </task>
+    <option name="localTasksCounter" value="414" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -660,7 +660,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add belief prints" />
     <MESSAGE value="add mean + cov prints" />
     <MESSAGE value="add print" />
     <MESSAGE value="alter view" />
@@ -685,7 +684,8 @@
     <MESSAGE value="500 samples, more warmup-time" />
     <MESSAGE value="multi-chain" />
     <MESSAGE value="decrease chain count" />
-    <option name="LAST_COMMIT_MESSAGE" value="decrease chain count" />
+    <MESSAGE value="if name is main hack" />
+    <option name="LAST_COMMIT_MESSAGE" value="if name is main hack" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
