@@ -256,14 +256,7 @@
       <workItem from="1682031698331" duration="718000" />
       <workItem from="1682178958951" duration="30918000" />
       <workItem from="1682431124732" duration="198000" />
-      <workItem from="1682431352529" duration="1865000" />
-    </task>
-    <task id="LOCAL-00314" summary="print belief shapes">
-      <created>1682390990058</created>
-      <option name="number" value="00314" />
-      <option name="presentableId" value="LOCAL-00314" />
-      <option name="project" value="LOCAL" />
-      <updated>1682390990058</updated>
+      <workItem from="1682431352529" duration="2018000" />
     </task>
     <task id="LOCAL-00315" summary="print belief shapes 2">
       <created>1682391172898</created>
@@ -601,7 +594,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682433087011</updated>
     </task>
-    <option name="localTasksCounter" value="363" />
+    <task id="LOCAL-00363" summary="alter return type to sum().log()">
+      <created>1682433259337</created>
+      <option name="number" value="00363" />
+      <option name="presentableId" value="LOCAL-00363" />
+      <option name="project" value="LOCAL" />
+      <updated>1682433259337</updated>
+    </task>
+    <option name="localTasksCounter" value="364" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -660,7 +660,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Categorical variable" />
     <MESSAGE value="debug ones call" />
     <MESSAGE value="print rs_params" />
     <MESSAGE value="modify calls" />
@@ -685,7 +684,8 @@
     <MESSAGE value="focus prints" />
     <MESSAGE value="log_p call focus" />
     <MESSAGE value="check inf return" />
-    <option name="LAST_COMMIT_MESSAGE" value="check inf return" />
+    <MESSAGE value="alter return type to sum().log()" />
+    <option name="LAST_COMMIT_MESSAGE" value="alter return type to sum().log()" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
