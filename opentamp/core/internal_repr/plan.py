@@ -372,11 +372,11 @@ class Plan(object):
     def sample_mcmc_run(self, rs_params=None):
         # create unconditional or conditional model, depending
         if rs_params is None:
-            kernel = NUTS(self.observation_model(self.joint_belief))
+            kernel = NUTS(self.observation_model(self.joint_belief.copy()))
         else:
             # create a conditioned model on the plan
             obs_dict = {'obs'+str(i): torch.tensor(self.max_likelihood_obs) for i in range(1, rs_params[0].pose.shape[1]+1)}
-            conditional_model = poutine.condition(self.observation_model(self.joint_belief), data=obs_dict)
+            conditional_model = poutine.condition(self.observation_model(self.joint_belief.copy()), data=obs_dict)
             kernel = NUTS(conditional_model)
 
         # defaults taken from hmm.py script
@@ -402,7 +402,7 @@ class Plan(object):
 
         for idx, param in enumerate(self.belief_params):
             # add samples by generating from prior
-            param.belief.samples = samples[idx].detach().numpy().reshape((-1, 1))
+            param.belief.samples = samples[idx].detach().numpy().reshape((1, -1))
 
     # called once per high-level action execution
     def filter_beliefs(self, rs_params):
@@ -414,4 +414,4 @@ class Plan(object):
 
         # construct a model object, over which we do inference, starting with uniform prior
         for param in self.belief_params:
-            param.belief.samples = new_samples['belief_'+param.name].detach().numpy().reshape((-1, 1))
+            param.belief.samples = new_samples['belief_'+param.name].detach().numpy().reshape((1, -1))

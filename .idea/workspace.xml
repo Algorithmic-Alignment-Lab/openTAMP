@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -254,14 +254,7 @@
       <workItem from="1681590541406" duration="1519000" />
       <workItem from="1681761923243" duration="3538000" />
       <workItem from="1682031698331" duration="718000" />
-      <workItem from="1682178958951" duration="24623000" />
-    </task>
-    <task id="LOCAL-00268" summary="modify the new observation model 3">
-      <created>1681454174700</created>
-      <option name="number" value="00268" />
-      <option name="presentableId" value="LOCAL-00268" />
-      <option name="project" value="LOCAL" />
-      <updated>1681454174700</updated>
+      <workItem from="1682178958951" duration="24746000" />
     </task>
     <task id="LOCAL-00269" summary="decrease the number of steps for speed">
       <created>1681454332259</created>
@@ -599,7 +592,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682391210355</updated>
     </task>
-    <option name="localTasksCounter" value="317" />
+    <task id="LOCAL-00317" summary="remove a print">
+      <created>1682391309609</created>
+      <option name="number" value="00317" />
+      <option name="presentableId" value="LOCAL-00317" />
+      <option name="project" value="LOCAL" />
+      <updated>1682391309609</updated>
+    </task>
+    <option name="localTasksCounter" value="318" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -658,7 +658,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add multi-action support 1 debug" />
     <MESSAGE value="add multi-action support 1 print" />
     <MESSAGE value="add multi-action support 2" />
     <MESSAGE value="revert attempt" />
@@ -683,7 +682,8 @@
     <MESSAGE value="print belief shapes" />
     <MESSAGE value="print belief shapes 2" />
     <MESSAGE value="print belief shapes 3" />
-    <option name="LAST_COMMIT_MESSAGE" value="print belief shapes 3" />
+    <MESSAGE value="remove a print" />
+    <option name="LAST_COMMIT_MESSAGE" value="remove a print" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
