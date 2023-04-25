@@ -399,10 +399,7 @@ class Plan(object):
 
         # setting up belief vector, build up aggregate vector
         aggregate_size = sum([bpar.belief.size for bpar in self.belief_params])
-        self.joint_belief = belief_constructor(samples=torch.cat(samples, dim=0).view(-1, 1000, 1), size=aggregate_size)
-
-        print(samples)
-        print(self.joint_belief)
+        self.joint_belief = belief_constructor(samples=torch.cat(samples, dim=0).view(1000, -1), size=aggregate_size)
 
         for idx, param in enumerate(self.belief_params):
             # add samples by generating from prior

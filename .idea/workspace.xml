@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="try Categorical">
+    <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -256,14 +256,7 @@
       <workItem from="1682031698331" duration="718000" />
       <workItem from="1682178958951" duration="30918000" />
       <workItem from="1682431124732" duration="198000" />
-      <workItem from="1682431352529" duration="4130000" />
-    </task>
-    <task id="LOCAL-00322" summary="more prints">
-      <created>1682391865696</created>
-      <option name="number" value="00322" />
-      <option name="presentableId" value="LOCAL-00322" />
-      <option name="project" value="LOCAL" />
-      <updated>1682391865696</updated>
+      <workItem from="1682431352529" duration="4250000" />
     </task>
     <task id="LOCAL-00323" summary="more prints 2">
       <created>1682391949689</created>
@@ -601,7 +594,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682435453181</updated>
     </task>
-    <option name="localTasksCounter" value="371" />
+    <task id="LOCAL-00371" summary="rewrite with probabilities">
+      <created>1682435568026</created>
+      <option name="number" value="00371" />
+      <option name="presentableId" value="LOCAL-00371" />
+      <option name="project" value="LOCAL" />
+      <updated>1682435568026</updated>
+    </task>
+    <option name="localTasksCounter" value="372" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -660,7 +660,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="modify shape, aggregation along second dim" />
     <MESSAGE value="view rewrite" />
     <MESSAGE value="no comma" />
     <MESSAGE value="remove optional args" />
@@ -685,7 +684,8 @@
     <MESSAGE value="pass samples directly" />
     <MESSAGE value="remove b_g" />
     <MESSAGE value="try Categorical" />
-    <option name="LAST_COMMIT_MESSAGE" value="try Categorical" />
+    <MESSAGE value="rewrite with probabilities" />
+    <option name="LAST_COMMIT_MESSAGE" value="rewrite with probabilities" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
