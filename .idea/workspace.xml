@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/opentamp/core/util_classes/custom_dist.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
     </list>
@@ -254,14 +255,9 @@
       <workItem from="1681590541406" duration="1519000" />
       <workItem from="1681761923243" duration="3538000" />
       <workItem from="1682031698331" duration="718000" />
-      <workItem from="1682178958951" duration="30058000" />
-    </task>
-    <task id="LOCAL-00303" summary="remove samples attribute">
-      <created>1682389844246</created>
-      <option name="number" value="00303" />
-      <option name="presentableId" value="LOCAL-00303" />
-      <option name="project" value="LOCAL" />
-      <updated>1682389844247</updated>
+      <workItem from="1682178958951" duration="30918000" />
+      <workItem from="1682431124732" duration="198000" />
+      <workItem from="1682431352529" duration="631000" />
     </task>
     <task id="LOCAL-00304" summary="debug cat dim">
       <created>1682389907374</created>
@@ -599,7 +595,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682397067486</updated>
     </task>
-    <option name="localTasksCounter" value="352" />
+    <task id="LOCAL-00352" summary="print b_g">
+      <created>1682397199863</created>
+      <option name="number" value="00352" />
+      <option name="presentableId" value="LOCAL-00352" />
+      <option name="project" value="LOCAL" />
+      <updated>1682397199863</updated>
+    </task>
+    <option name="localTasksCounter" value="353" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -658,7 +661,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add print" />
     <MESSAGE value="add print 2" />
     <MESSAGE value="add print 3" />
     <MESSAGE value="add pdb thread" />
@@ -683,7 +685,8 @@
     <MESSAGE value="remove optional args" />
     <MESSAGE value="torch fix" />
     <MESSAGE value="item call" />
-    <option name="LAST_COMMIT_MESSAGE" value="item call" />
+    <MESSAGE value="print b_g" />
+    <option name="LAST_COMMIT_MESSAGE" value="print b_g" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

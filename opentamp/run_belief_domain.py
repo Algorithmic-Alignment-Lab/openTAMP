@@ -22,6 +22,7 @@ import copy
 
 import pyro
 import pyro.distributions as dist
+from core.util_classes.custom_dist import CustomDist
 import pyro.poutine as poutine
 from pyro.infer import MCMC, NUTS
 
@@ -55,7 +56,7 @@ def toy_observation(plan_belief):
 
         import pdb; pdb.set_trace()
 
-        b_global = pyro.sample('belief_global', dist.Empirical(plan_belief.samples, torch.ones(1, 1000)))
+        b_global = pyro.sample('belief_global', CustomDist(plan_belief.samples))
 
         print(b_global.item())
 
@@ -73,9 +74,7 @@ def toy_observation(plan_belief):
                 else:
                     obs[i-1] = pyro.sample('obs'+str(i), dist.Uniform(-1, 1))  # no marginal information gotten
 
-        b_g = pyro.param('belief_g', lambda: copy.copy(b_global.item()))  # identical as global sample, since 1-parameter, in others would get subcoordinates
-
-        print(b_g)
+        b_g = pyro.param('belief_g', lambda: copy.copy(b_global))  # identical as global sample, since 1-parameter, in others would get subcoordinate
 
         return obs
     return belief_prog
