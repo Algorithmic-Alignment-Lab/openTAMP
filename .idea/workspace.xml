@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
+    <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="add args">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" afterDir="false" />
     </list>
@@ -256,14 +256,7 @@
       <workItem from="1682031698331" duration="718000" />
       <workItem from="1682178958951" duration="30918000" />
       <workItem from="1682431124732" duration="198000" />
-      <workItem from="1682431352529" duration="5177000" />
-    </task>
-    <task id="LOCAL-00329" summary="add print 3">
-      <created>1682392674363</created>
-      <option name="number" value="00329" />
-      <option name="presentableId" value="LOCAL-00329" />
-      <option name="project" value="LOCAL" />
-      <updated>1682392674363</updated>
+      <workItem from="1682431352529" duration="5325000" />
     </task>
     <task id="LOCAL-00330" summary="add pdb thread">
       <created>1682392692073</created>
@@ -601,7 +594,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682436589046</updated>
     </task>
-    <option name="localTasksCounter" value="378" />
+    <task id="LOCAL-00378" summary="modify model_trace call">
+      <created>1682436628428</created>
+      <option name="number" value="00378" />
+      <option name="presentableId" value="LOCAL-00378" />
+      <option name="project" value="LOCAL" />
+      <updated>1682436628428</updated>
+    </task>
+    <option name="localTasksCounter" value="379" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -660,7 +660,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="try with custom class" />
     <MESSAGE value="alter view" />
     <MESSAGE value="add support" />
     <MESSAGE value="verify data types" />
@@ -685,7 +684,8 @@
     <MESSAGE value="modify param to sample" />
     <MESSAGE value="refactor run_mcmc to work with model trace" />
     <MESSAGE value="check if values can be gotten here" />
-    <option name="LAST_COMMIT_MESSAGE" value="check if values can be gotten here" />
+    <MESSAGE value="modify model_trace call" />
+    <option name="LAST_COMMIT_MESSAGE" value="modify model_trace call" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
