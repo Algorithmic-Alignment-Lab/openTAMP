@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -253,28 +254,7 @@
       <workItem from="1681590541406" duration="1519000" />
       <workItem from="1681761923243" duration="3538000" />
       <workItem from="1682031698331" duration="718000" />
-      <workItem from="1682178958951" duration="25904000" />
-    </task>
-    <task id="LOCAL-00279" summary="debug multi-step 2">
-      <created>1681488238062</created>
-      <option name="number" value="00279" />
-      <option name="presentableId" value="LOCAL-00279" />
-      <option name="project" value="LOCAL" />
-      <updated>1681488238062</updated>
-    </task>
-    <task id="LOCAL-00280" summary="debug multi-step 3">
-      <created>1681488297801</created>
-      <option name="number" value="00280" />
-      <option name="presentableId" value="LOCAL-00280" />
-      <option name="project" value="LOCAL" />
-      <updated>1681488297801</updated>
-    </task>
-    <task id="LOCAL-00281" summary="debug multi-step 4">
-      <created>1681488336076</created>
-      <option name="number" value="00281" />
-      <option name="presentableId" value="LOCAL-00281" />
-      <option name="project" value="LOCAL" />
-      <updated>1681488336076</updated>
+      <workItem from="1682178958951" duration="26396000" />
     </task>
     <task id="LOCAL-00282" summary="debug multi-step 5">
       <created>1681488628668</created>
@@ -598,7 +578,28 @@
       <option name="project" value="LOCAL" />
       <updated>1682392529608</updated>
     </task>
-    <option name="localTasksCounter" value="328" />
+    <task id="LOCAL-00328" summary="add print 2">
+      <created>1682392592509</created>
+      <option name="number" value="00328" />
+      <option name="presentableId" value="LOCAL-00328" />
+      <option name="project" value="LOCAL" />
+      <updated>1682392592509</updated>
+    </task>
+    <task id="LOCAL-00329" summary="add print 3">
+      <created>1682392674363</created>
+      <option name="number" value="00329" />
+      <option name="presentableId" value="LOCAL-00329" />
+      <option name="project" value="LOCAL" />
+      <updated>1682392674363</updated>
+    </task>
+    <task id="LOCAL-00330" summary="add pdb thread">
+      <created>1682392692073</created>
+      <option name="number" value="00330" />
+      <option name="presentableId" value="LOCAL-00330" />
+      <option name="project" value="LOCAL" />
+      <updated>1682392692073</updated>
+    </task>
+    <option name="localTasksCounter" value="331" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -657,9 +658,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="remove samples attribute" />
-    <MESSAGE value="debug cat dim" />
-    <MESSAGE value="add print for debug" />
     <MESSAGE value="add samples call" />
     <MESSAGE value="add keywords" />
     <MESSAGE value="convert from type object" />
@@ -682,7 +680,10 @@
     <MESSAGE value="add copy" />
     <MESSAGE value="debug shaping issues" />
     <MESSAGE value="add print" />
-    <option name="LAST_COMMIT_MESSAGE" value="add print" />
+    <MESSAGE value="add print 2" />
+    <MESSAGE value="add print 3" />
+    <MESSAGE value="add pdb thread" />
+    <option name="LAST_COMMIT_MESSAGE" value="add pdb thread" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

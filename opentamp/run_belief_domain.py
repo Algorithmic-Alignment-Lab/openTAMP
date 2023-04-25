@@ -18,6 +18,7 @@ from pma.pr_graph import *
 from pma.toy_solver import ToySolver
 from sco_py.expr import Expr, AffExpr, EqExpr, LEqExpr
 import torch
+import copy
 
 import pyro
 import pyro.distributions as dist
@@ -71,7 +72,7 @@ def toy_observation(plan_belief):
                 else:
                     obs[i-1] = pyro.sample('obs'+str(i), dist.Uniform(-1, 1))  # no marginal information gotten
 
-        belief_g = pyro.sample('belief_g', lambda: belief)  # identical as global sample, since 1-parameter, in others would get subcoordinates
+        belief_g = pyro.sample('belief_g', lambda: copy.copy(belief))  # identical as global sample, since 1-parameter, in others would get subcoordinates
 
         return obs
     return belief_prog
