@@ -2,6 +2,7 @@ from .action import Action
 import numpy as np
 import argparse
 import logging
+import copy
 
 import torch
 
@@ -372,11 +373,11 @@ class Plan(object):
     def sample_mcmc_run(self, rs_params=None):
         # create unconditional or conditional model, depending
         if rs_params is None:
-            kernel = NUTS(self.observation_model(self.joint_belief))
+            kernel = NUTS(self.observation_model(copy.copy(self.joint_belief)))
         else:
             # create a conditioned model on the plan
             obs_dict = {'obs'+str(i): torch.tensor(self.max_likelihood_obs) for i in range(1, rs_params[0].pose.shape[1]+1)}
-            conditional_model = poutine.condition(self.observation_model(self.joint_belief), data=obs_dict)
+            conditional_model = poutine.condition(self.observation_model(copy.copy(self.joint_belief)), data=obs_dict)
             kernel = NUTS(conditional_model)
 
         # defaults taken from hmm.py script
