@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="" />
+    <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -251,14 +253,7 @@
       <workItem from="1681590541406" duration="1519000" />
       <workItem from="1681761923243" duration="3538000" />
       <workItem from="1682031698331" duration="718000" />
-      <workItem from="1682178958951" duration="23251000" />
-    </task>
-    <task id="LOCAL-00255" summary="add belief print debug">
-      <created>1681450959603</created>
-      <option name="number" value="00255" />
-      <option name="presentableId" value="LOCAL-00255" />
-      <option name="project" value="LOCAL" />
-      <updated>1681450959603</updated>
+      <workItem from="1682178958951" duration="23326000" />
     </task>
     <task id="LOCAL-00256" summary="print not in ray">
       <created>1681451321281</created>
@@ -596,7 +591,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682389844247</updated>
     </task>
-    <option name="localTasksCounter" value="304" />
+    <task id="LOCAL-00304" summary="debug cat dim">
+      <created>1682389907374</created>
+      <option name="number" value="00304" />
+      <option name="presentableId" value="LOCAL-00304" />
+      <option name="project" value="LOCAL" />
+      <updated>1682389907374</updated>
+    </task>
+    <option name="localTasksCounter" value="305" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -655,7 +657,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="debug multi-step 2" />
     <MESSAGE value="debug multi-step 3" />
     <MESSAGE value="debug multi-step 4" />
     <MESSAGE value="debug multi-step 5" />
@@ -680,7 +681,8 @@
     <MESSAGE value="add types" />
     <MESSAGE value="add types 2" />
     <MESSAGE value="remove samples attribute" />
-    <option name="LAST_COMMIT_MESSAGE" value="remove samples attribute" />
+    <MESSAGE value="debug cat dim" />
+    <option name="LAST_COMMIT_MESSAGE" value="debug cat dim" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
