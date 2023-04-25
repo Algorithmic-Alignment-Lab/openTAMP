@@ -372,7 +372,7 @@ class Plan(object):
     # based off of hmm example from pyro docs
     def sample_mcmc_run(self, rs_params):
         # create a conditioned model on the plan
-        obs_dict = {'obs'+str(i): self.max_likelihood_obs for i in range(1, rs_params[0].pose.shape[1]+1)}
+        obs_dict = {'obs'+str(i): torch.tensor(self.max_likelihood_obs) for i in range(1, rs_params[0].pose.shape[1]+1)}
         conditional_model = poutine.condition(self.observation_model, data=obs_dict)
         kernel = NUTS(conditional_model)
 
