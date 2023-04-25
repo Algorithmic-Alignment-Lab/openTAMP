@@ -1,11 +1,13 @@
 import pyro
 from pyro.distributions import Distribution
 import torch
+import torch.distributions.constraints as constraints
 
 
 class CustomDist(Distribution):
     def __init__(self, sample_data):
         self.sample_data = sample_data
+        self.support = constraints.real_vector
 
     def sample(self):
         rand_idx = torch.randint(high=self.sample_data.shape[0], size=(1,))
