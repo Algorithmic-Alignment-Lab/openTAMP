@@ -50,6 +50,7 @@ def toy_observation(plan_belief):
     def belief_prog(rs_params):
         # uniformly randomly sample on the seen so far
         print(plan_belief.samples[0])
+        print(rs_params)
         print(plan_belief.samples.size())
 
         import pdb; pdb.set_trace()

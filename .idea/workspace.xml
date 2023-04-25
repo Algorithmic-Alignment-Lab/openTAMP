@@ -253,14 +253,7 @@
       <workItem from="1681590541406" duration="1519000" />
       <workItem from="1681761923243" duration="3538000" />
       <workItem from="1682031698331" duration="718000" />
-      <workItem from="1682178958951" duration="27456000" />
-    </task>
-    <task id="LOCAL-00290" summary="debug observation model logic">
-      <created>1682365440184</created>
-      <option name="number" value="00290" />
-      <option name="presentableId" value="LOCAL-00290" />
-      <option name="project" value="LOCAL" />
-      <updated>1682365440184</updated>
+      <workItem from="1682178958951" duration="27675000" />
     </task>
     <task id="LOCAL-00291" summary="add multi-action support 1">
       <created>1682368914729</created>
@@ -598,7 +591,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682394178371</updated>
     </task>
-    <option name="localTasksCounter" value="339" />
+    <task id="LOCAL-00339" summary="debug ones call">
+      <created>1682394221511</created>
+      <option name="number" value="00339" />
+      <option name="presentableId" value="LOCAL-00339" />
+      <option name="project" value="LOCAL" />
+      <updated>1682394221511</updated>
+    </task>
+    <option name="localTasksCounter" value="340" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -657,7 +657,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="print belief" />
     <MESSAGE value="print belief shapes" />
     <MESSAGE value="print belief shapes 2" />
     <MESSAGE value="print belief shapes 3" />
@@ -682,7 +681,8 @@
     <MESSAGE value="lambda debug" />
     <MESSAGE value="size debug" />
     <MESSAGE value="Categorical variable" />
-    <option name="LAST_COMMIT_MESSAGE" value="Categorical variable" />
+    <MESSAGE value="debug ones call" />
+    <option name="LAST_COMMIT_MESSAGE" value="debug ones call" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
