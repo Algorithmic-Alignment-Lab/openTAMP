@@ -366,7 +366,7 @@ class Plan(object):
     def sample_priors(self, ):
         prior_samples = []
         for param in self.belief_params:
-            prior_samples.append(param.belief.dist.sample_n(1000))
+            prior_samples.append(param.belief.dist.sample_n(500))
         return prior_samples  # concatenate all sampled tensors
 
     # based off of hmm example from pyro docs
@@ -379,13 +379,14 @@ class Plan(object):
         # defaults taken from hmm.py script
         mcmc = MCMC(
             kernel,
-            num_samples=1000,
-            warmup_steps=1000,
+            num_samples=500,
+            warmup_steps=1500,
             num_chains=1,
         )
 
         mcmc.run(rs_params, self.joint_belief.samples.mean(), self.joint_belief.samples.view((-1,)).cov())
         mcmc.summary(prob=0.95)  # for diagnostics
+
 
         return mcmc.get_samples()
 
@@ -395,11 +396,11 @@ class Plan(object):
 
         # setting up belief vector, build up aggregate vector
         aggregate_size = sum([bpar.belief.size for bpar in self.belief_params])
-        self.joint_belief = belief_constructor(samples=torch.cat(samples, dim=0).reshape(1000, -1), size=aggregate_size)
+        self.joint_belief = belief_constructor(samples=torch.cat(samples, dim=0).reshape(5000, -1), size=aggregate_size)
 
         for idx, param in enumerate(self.belief_params):
             # add samples by generating from prior
-            param.belief.samples = samples[idx].detach().numpy().reshape((-1, 1000))
+            param.belief.samples = samples[idx].detach().numpy().reshape((-1, 500))
 
     # called once per high-level action execution
     def filter_beliefs(self, rs_params):
@@ -420,5 +421,5 @@ class Plan(object):
         running_idx = 0
         for param in self.belief_params:
             param.belief.samples = \
-                global_samples[:, running_idx: running_idx+param.belief.size].detach().numpy().reshape((-1, 1000))  # expecting hooks
+                global_samples[:, running_idx: running_idx+param.belief.size].detach().numpy().reshape((-1, 500))  # expecting hooks
             running_idx += param.belief.size
