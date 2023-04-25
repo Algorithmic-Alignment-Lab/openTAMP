@@ -384,6 +384,8 @@ class Plan(object):
             num_chains=1,
         )
 
+        print(self.joint_belief.samples)
+
         mcmc.run(rs_params, self.joint_belief.samples.mean(), self.joint_belief.samples.cov())
         mcmc.summary(prob=0.95)  # for diagnostics
 
