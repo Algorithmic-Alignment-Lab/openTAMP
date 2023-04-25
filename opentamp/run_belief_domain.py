@@ -26,6 +26,7 @@ from core.util_classes.custom_dist import CustomDist
 import pyro.poutine as poutine
 from pyro.infer import MCMC, NUTS
 
+
 # TODO: do this with the implemented geom logic, do belief space in similar way
 def is_in_ray(item, belief):
     return np.pi/2 - 0.1/2 - np.arctan(belief/1.0) <= item <= np.pi/2 + 0.1/2 - np.arctan(belief/1.0) and np.arctan(1) <= item <= np.pi - np.arctan(1)
@@ -46,12 +47,13 @@ def toy_observation(rs_params, belief_mean, belief_cov):
             # differentially take conditional depending on the ray
             # 1.10714871779
             if is_in_ray(a.pose[0][i], b_global.item()):
-                obs[i - 1] = pyro.sample('obs'+str(i), dist.Uniform(b_global-0.001, b_global+0.001))
+                obs[i - 1] = pyro.sample('obs'+str(i), dist.Uniform(b_global-torch.tensor(0.001), b_global+torch.tensor(0.001)))
             else:
-                obs[i - 1] = pyro.sample('obs'+str(i), dist.Uniform(b_global-1, b_global+1))  # no marginal information gotten
+                obs[i - 1] = pyro.sample('obs'+str(i), dist.Uniform(b_global-torch.tensor(1), b_global+torch.tensor(1)))  # no marginal information gotten
 
     print(obs)
     return obs
+
 
 if __name__ == '__main__':
     # TODO: initialize calls to planner, add paths to relevant folders

@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -255,14 +256,7 @@
       <workItem from="1682031698331" duration="718000" />
       <workItem from="1682178958951" duration="30918000" />
       <workItem from="1682431124732" duration="198000" />
-      <workItem from="1682431352529" duration="14761000" />
-    </task>
-    <task id="LOCAL-00367" summary="undo generator program, add effects">
-      <created>1682434944623</created>
-      <option name="number" value="00367" />
-      <option name="presentableId" value="LOCAL-00367" />
-      <option name="project" value="LOCAL" />
-      <updated>1682434944623</updated>
+      <workItem from="1682431352529" duration="15082000" />
     </task>
     <task id="LOCAL-00368" summary="pass samples directly">
       <created>1682435102220</created>
@@ -600,7 +594,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682462713415</updated>
     </task>
-    <option name="localTasksCounter" value="416" />
+    <task id="LOCAL-00416" summary="remove items from uniform bounds print">
+      <created>1682462764824</created>
+      <option name="number" value="00416" />
+      <option name="presentableId" value="LOCAL-00416" />
+      <option name="project" value="LOCAL" />
+      <updated>1682462764824</updated>
+    </task>
+    <option name="localTasksCounter" value="417" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -659,7 +660,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="alter view" />
     <MESSAGE value="remove intermediate belief_$name, index directly into joint belief" />
     <MESSAGE value="remove size logic, appeal to param.belief.size" />
     <MESSAGE value="shape print" />
@@ -684,7 +684,8 @@
     <MESSAGE value="if name is main hack" />
     <MESSAGE value="move methods outside main" />
     <MESSAGE value="remove items from uniform bounds" />
-    <option name="LAST_COMMIT_MESSAGE" value="remove items from uniform bounds" />
+    <MESSAGE value="remove items from uniform bounds print" />
+    <option name="LAST_COMMIT_MESSAGE" value="remove items from uniform bounds print" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
