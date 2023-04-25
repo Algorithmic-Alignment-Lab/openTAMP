@@ -47,12 +47,12 @@ def is_in_ray(item, belief):
 
 
 # NOTE: expected names for pyro samples are "belief_"{param-name}+""
-def toy_observation(rs_params, plan_belief):
+def toy_observation(rs_params, plan_belief_samples):
     # uniformly randomly sample on the seen so far
 
     import pdb; pdb.set_trace()
 
-    b_global = pyro.sample('belief_global', dist.Empirical(plan_belief.samples.view(1, 1000, -1), torch.ones(1, 1000)))
+    b_global = pyro.sample('belief_global', dist.Empirical(plan_belief_samples.view(1, 1000, -1), torch.ones(1, 1000)))
 
     if rs_params is None:
         return b_global

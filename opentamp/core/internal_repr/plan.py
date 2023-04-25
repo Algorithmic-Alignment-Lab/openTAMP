@@ -388,7 +388,7 @@ class Plan(object):
             num_chains=1,
         )
 
-        mcmc.run(rs_params, self.joint_belief)
+        mcmc.run(rs_params, copy.copy(self.joint_belief.samples))
         mcmc.summary(prob=0.95)  # for diagnostics
 
         return mcmc.get_samples()

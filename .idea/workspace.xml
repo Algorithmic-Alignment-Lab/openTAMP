@@ -7,7 +7,6 @@
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/core/util_classes/custom_dist.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/util_classes/custom_dist.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -258,14 +257,7 @@
       <workItem from="1682031698331" duration="718000" />
       <workItem from="1682178958951" duration="30918000" />
       <workItem from="1682431124732" duration="198000" />
-      <workItem from="1682431352529" duration="3519000" />
-    </task>
-    <task id="LOCAL-00318" summary="add copy statements">
-      <created>1682391445088</created>
-      <option name="number" value="00318" />
-      <option name="presentableId" value="LOCAL-00318" />
-      <option name="project" value="LOCAL" />
-      <updated>1682391445088</updated>
+      <workItem from="1682431352529" duration="3643000" />
     </task>
     <task id="LOCAL-00319" summary="plan belief samples shape">
       <created>1682391522773</created>
@@ -603,7 +595,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682433860678</updated>
     </task>
-    <option name="localTasksCounter" value="367" />
+    <task id="LOCAL-00367" summary="undo generator program, add effects">
+      <created>1682434944623</created>
+      <option name="number" value="00367" />
+      <option name="presentableId" value="LOCAL-00367" />
+      <option name="project" value="LOCAL" />
+      <updated>1682434944623</updated>
+    </task>
+    <option name="localTasksCounter" value="368" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -662,7 +661,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add item calls to everything" />
     <MESSAGE value="modify pyro sample call" />
     <MESSAGE value="one more time with Empirical" />
     <MESSAGE value="modify to shape" />
@@ -687,7 +685,8 @@
     <MESSAGE value="requires_grad checks" />
     <MESSAGE value="add no_grad" />
     <MESSAGE value="more explicitly shape with dist empirical" />
-    <option name="LAST_COMMIT_MESSAGE" value="more explicitly shape with dist empirical" />
+    <MESSAGE value="undo generator program, add effects" />
+    <option name="LAST_COMMIT_MESSAGE" value="undo generator program, add effects" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
