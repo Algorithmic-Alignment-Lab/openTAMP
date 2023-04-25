@@ -253,14 +253,7 @@
       <workItem from="1681590541406" duration="1519000" />
       <workItem from="1681761923243" duration="3538000" />
       <workItem from="1682031698331" duration="718000" />
-      <workItem from="1682178958951" duration="25177000" />
-    </task>
-    <task id="LOCAL-00273" summary="assuming perfectly solved plan">
-      <created>1681455380585</created>
-      <option name="number" value="00273" />
-      <option name="presentableId" value="LOCAL-00273" />
-      <option name="project" value="LOCAL" />
-      <updated>1681455380585</updated>
+      <workItem from="1682178958951" duration="25263000" />
     </task>
     <task id="LOCAL-00274" summary="super precise belief estimates">
       <created>1681455795375</created>
@@ -598,7 +591,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682391760328</updated>
     </task>
-    <option name="localTasksCounter" value="322" />
+    <task id="LOCAL-00322" summary="more prints">
+      <created>1682391865696</created>
+      <option name="number" value="00322" />
+      <option name="presentableId" value="LOCAL-00322" />
+      <option name="project" value="LOCAL" />
+      <updated>1682391865696</updated>
+    </task>
+    <option name="localTasksCounter" value="323" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -657,7 +657,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add beliefs as Geom items," />
     <MESSAGE value="update toy belief" />
     <MESSAGE value="update toy belief 2" />
     <MESSAGE value="update toy belief 3" />
@@ -682,7 +681,8 @@
     <MESSAGE value="plan belief samples shape" />
     <MESSAGE value="reshape returns" />
     <MESSAGE value="as rs_params prints" />
-    <option name="LAST_COMMIT_MESSAGE" value="as rs_params prints" />
+    <MESSAGE value="more prints" />
+    <option name="LAST_COMMIT_MESSAGE" value="more prints" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -53,6 +53,8 @@ def toy_observation(plan_belief):
         print(plan_belief.samples.shape)
         print(len(plan_belief.samples))
         print(belief.shape)
+        print(plan_belief.samples)
+        print(belief)
 
         if rs_params is None:
             return belief
