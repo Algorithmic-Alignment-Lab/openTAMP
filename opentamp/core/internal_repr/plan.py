@@ -366,6 +366,7 @@ class Plan(object):
         prior_samples = []
         for param in self.belief_params:
             prior_samples.append(param.belief.dist.sample_n(1000))
+        print(prior_samples)
         return prior_samples  # concatenate all sampled tensors
 
     # based off of hmm example from pyro docs

@@ -50,7 +50,7 @@ def toy_observation(plan_belief):
         # uniformly randomly sample on the seen so far
         print(plan_belief)
 
-        belief = pyro.sample('belief_global', dist.Empirical(plan_belief.samples, torch.ones(plan_belief.size, len(plan_belief.samples))))
+        belief = pyro.sample('belief_global', dist.Empirical(plan_belief.samples, torch.ones(len(plan_belief.samples))))
 
         if rs_params is None:
             return belief
