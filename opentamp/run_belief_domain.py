@@ -63,7 +63,7 @@ def toy_observation(rs_params, belief_mean, belief_cov):
             if is_in_ray(a.pose[0][i], b_global.item()):
                 obs[i-1] = pyro.sample('obs'+str(i), dist.Uniform(b_global.item()-0.001, b_global.item()+0.001))
             else:
-                obs[i-1] = pyro.sample('obs'+str(i), dist.Uniform(-1, 1))  # no marginal information gotten
+                obs[i-1] = pyro.sample('obs'+str(i), dist.Uniform(b_global.item()-1, b_global.item()+1))  # no marginal information gotten
 
     return obs
 
