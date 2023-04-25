@@ -389,7 +389,7 @@ class Plan(object):
 
         model_trace = poutine.trace(conditional_model).get_trace(rs_params, copy.copy(self.joint_belief.samples))
 
-        print(model_trace)
+        print(model_trace.param_nodes)
         print([model_trace.nodes[name]["value"].unconstrained() for name in model_trace.param_nodes])
 
         return model_trace

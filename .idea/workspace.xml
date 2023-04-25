@@ -4,8 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="add args">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -256,14 +255,7 @@
       <workItem from="1682031698331" duration="718000" />
       <workItem from="1682178958951" duration="30918000" />
       <workItem from="1682431124732" duration="198000" />
-      <workItem from="1682431352529" duration="5325000" />
-    </task>
-    <task id="LOCAL-00330" summary="add pdb thread">
-      <created>1682392692073</created>
-      <option name="number" value="00330" />
-      <option name="presentableId" value="LOCAL-00330" />
-      <option name="project" value="LOCAL" />
-      <updated>1682392692073</updated>
+      <workItem from="1682431352529" duration="5404000" />
     </task>
     <task id="LOCAL-00331" summary="add copy">
       <created>1682393158011</created>
@@ -601,7 +593,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682436628428</updated>
     </task>
-    <option name="localTasksCounter" value="379" />
+    <task id="LOCAL-00379" summary="add args to get_trace">
+      <created>1682436774887</created>
+      <option name="number" value="00379" />
+      <option name="presentableId" value="LOCAL-00379" />
+      <option name="project" value="LOCAL" />
+      <updated>1682436774887</updated>
+    </task>
+    <option name="localTasksCounter" value="380" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -660,7 +659,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="alter view" />
     <MESSAGE value="add support" />
     <MESSAGE value="verify data types" />
     <MESSAGE value="add torch.tensor" />
@@ -685,7 +683,8 @@
     <MESSAGE value="refactor run_mcmc to work with model trace" />
     <MESSAGE value="check if values can be gotten here" />
     <MESSAGE value="modify model_trace call" />
-    <option name="LAST_COMMIT_MESSAGE" value="modify model_trace call" />
+    <MESSAGE value="add args to get_trace" />
+    <option name="LAST_COMMIT_MESSAGE" value="add args to get_trace" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
