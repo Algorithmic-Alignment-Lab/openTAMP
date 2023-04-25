@@ -50,6 +50,9 @@ def is_in_ray(item, belief):
 def toy_observation(rs_params, belief_mean, belief_cov):
     # uniformly randomly sample on the seen beliefs so far
 
+    print(belief_mean)
+    print(belief_cov)
+
     # b_global_idx = pyro.sample('belief_global_idx', dist.Categorical(torch.ones(1000)/1000))
     # b_global = pyro.param('belief_global', plan_belief_samples[b_global_idx])
 
