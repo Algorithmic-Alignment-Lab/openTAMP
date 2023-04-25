@@ -381,7 +381,7 @@ class Plan(object):
             kernel,
             num_samples=500,
             warmup_steps=1500,
-            num_chains=10,
+            num_chains=2,
             mp_context='spawn'
         )
 
