@@ -406,7 +406,7 @@ class Plan(object):
         # max-likelihood feeds back on object here
         global_samples = self.sample_mcmc_run(rs_params)['belief_global']
 
-        if len(global_samples['belief_global'].shape) == 1:
+        if len(global_samples.shape) == 1:
             global_samples = global_samples.unsqueeze(dim=1)
 
         assert len(global_samples.shape) == 2
