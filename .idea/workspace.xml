@@ -5,8 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/core/util_classes/custom_dist.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/util_classes/custom_dist.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -256,14 +255,7 @@
       <workItem from="1682031698331" duration="718000" />
       <workItem from="1682178958951" duration="30918000" />
       <workItem from="1682431124732" duration="198000" />
-      <workItem from="1682431352529" duration="2388000" />
-    </task>
-    <task id="LOCAL-00316" summary="print belief shapes 3">
-      <created>1682391210355</created>
-      <option name="number" value="00316" />
-      <option name="presentableId" value="LOCAL-00316" />
-      <option name="project" value="LOCAL" />
-      <updated>1682391210355</updated>
+      <workItem from="1682431352529" duration="2465000" />
     </task>
     <task id="LOCAL-00317" summary="remove a print">
       <created>1682391309609</created>
@@ -601,7 +593,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682433410666</updated>
     </task>
-    <option name="localTasksCounter" value="365" />
+    <task id="LOCAL-00365" summary="add no_grad">
+      <created>1682433786959</created>
+      <option name="number" value="00365" />
+      <option name="presentableId" value="LOCAL-00365" />
+      <option name="project" value="LOCAL" />
+      <updated>1682433786959</updated>
+    </task>
+    <option name="localTasksCounter" value="366" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -660,7 +659,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="print rs_params" />
     <MESSAGE value="modify calls" />
     <MESSAGE value="add item calls to everything" />
     <MESSAGE value="modify pyro sample call" />
@@ -685,7 +683,8 @@
     <MESSAGE value="check inf return" />
     <MESSAGE value="alter return type to sum().log()" />
     <MESSAGE value="requires_grad checks" />
-    <option name="LAST_COMMIT_MESSAGE" value="requires_grad checks" />
+    <MESSAGE value="add no_grad" />
+    <option name="LAST_COMMIT_MESSAGE" value="add no_grad" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

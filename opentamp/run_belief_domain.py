@@ -53,7 +53,7 @@ def toy_observation(plan_belief):
 
         import pdb; pdb.set_trace()
 
-        b_global = pyro.sample('belief_global', CustomDist(plan_belief.samples.view(1000, -1)))
+        b_global = pyro.sample('belief_global', dist.Empirical(plan_belief.samples.view(1, 1000, -1), torch.ones(1, 1000)))
 
         if rs_params is None:
             return b_global
