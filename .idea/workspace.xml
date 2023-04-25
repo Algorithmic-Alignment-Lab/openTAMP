@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -255,14 +254,7 @@
       <workItem from="1681590541406" duration="1519000" />
       <workItem from="1681761923243" duration="3538000" />
       <workItem from="1682031698331" duration="718000" />
-      <workItem from="1682178958951" duration="25431000" />
-    </task>
-    <task id="LOCAL-00276" summary="add dependency back on the planner">
-      <created>1681463691730</created>
-      <option name="number" value="00276" />
-      <option name="presentableId" value="LOCAL-00276" />
-      <option name="project" value="LOCAL" />
-      <updated>1681463691731</updated>
+      <workItem from="1682178958951" duration="25591000" />
     </task>
     <task id="LOCAL-00277" summary="add sample multi-step plan as test">
       <created>1681487929810</created>
@@ -600,7 +592,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682392006681</updated>
     </task>
-    <option name="localTasksCounter" value="325" />
+    <task id="LOCAL-00325" summary="add copy">
+      <created>1682392118985</created>
+      <option name="number" value="00325" />
+      <option name="presentableId" value="LOCAL-00325" />
+      <option name="project" value="LOCAL" />
+      <updated>1682392118985</updated>
+    </task>
+    <option name="localTasksCounter" value="326" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -659,7 +658,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="update toy belief 3" />
     <MESSAGE value="add types" />
     <MESSAGE value="add types 2" />
     <MESSAGE value="remove samples attribute" />
@@ -684,7 +682,8 @@
     <MESSAGE value="more prints" />
     <MESSAGE value="more prints 2" />
     <MESSAGE value="more prints 3" />
-    <option name="LAST_COMMIT_MESSAGE" value="more prints 3" />
+    <MESSAGE value="add copy" />
+    <option name="LAST_COMMIT_MESSAGE" value="add copy" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

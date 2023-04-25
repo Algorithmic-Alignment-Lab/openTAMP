@@ -48,7 +48,7 @@ def is_in_ray(item, belief):
 def toy_observation(plan_belief):
     def belief_prog(rs_params):
         # uniformly randomly sample on the seen so far
-        belief = pyro.sample('belief_global', dist.Empirical(plan_belief.samples, torch.ones(len(plan_belief.samples))))
+        belief = pyro.sample('belief_global', dist.Empirical(plan_belief.samples, torch.ones(plan_belief.samples.shape[0])))
 
         print(plan_belief.samples.shape)
         print(len(plan_belief.samples))
