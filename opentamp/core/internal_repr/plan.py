@@ -366,7 +366,6 @@ class Plan(object):
         prior_samples = []
         for param in self.belief_params:
             prior_samples.append(param.belief.dist.sample_n(1000))
-        print(prior_samples.shape)
         return prior_samples  # concatenate all sampled tensors
 
     # based off of hmm example from pyro docs
@@ -399,7 +398,7 @@ class Plan(object):
 
         # setting up belief vector, build up aggregate vector
         aggregate_size = sum([bpar.belief.size for bpar in self.belief_params])
-        self.joint_belief = belief_constructor(samples=torch.cat(samples, dim=0), size=aggregate_size)
+        self.joint_belief = belief_constructor(samples=torch.cat(samples, dim=0).view(-1, 1000), size=aggregate_size)
 
         for idx, param in enumerate(self.belief_params):
             # add samples by generating from prior

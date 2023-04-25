@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -253,14 +254,7 @@
       <workItem from="1681590541406" duration="1519000" />
       <workItem from="1681761923243" duration="3538000" />
       <workItem from="1682031698331" duration="718000" />
-      <workItem from="1682178958951" duration="24066000" />
-    </task>
-    <task id="LOCAL-00262" summary="debug some radians bs">
-      <created>1681452737929</created>
-      <option name="number" value="00262" />
-      <option name="presentableId" value="LOCAL-00262" />
-      <option name="project" value="LOCAL" />
-      <updated>1681452737929</updated>
+      <workItem from="1682178958951" duration="24125000" />
     </task>
     <task id="LOCAL-00263" summary="debug some radians bs 2">
       <created>1681452890113</created>
@@ -598,7 +592,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682390725474</updated>
     </task>
-    <option name="localTasksCounter" value="311" />
+    <task id="LOCAL-00311" summary="print prior_samples shape">
+      <created>1682390752688</created>
+      <option name="number" value="00311" />
+      <option name="presentableId" value="LOCAL-00311" />
+      <option name="project" value="LOCAL" />
+      <updated>1682390752688</updated>
+    </task>
+    <option name="localTasksCounter" value="312" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -657,7 +658,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="debug multi-step 9" />
     <MESSAGE value="debug multi-step 10" />
     <MESSAGE value="check if works in original context" />
     <MESSAGE value="separate out max_likelihood_obs from the max_likelihood_state" />
@@ -682,7 +682,8 @@
     <MESSAGE value="convert from type object" />
     <MESSAGE value="size one, samples != size" />
     <MESSAGE value="print prior_samples" />
-    <option name="LAST_COMMIT_MESSAGE" value="print prior_samples" />
+    <MESSAGE value="print prior_samples shape" />
+    <option name="LAST_COMMIT_MESSAGE" value="print prior_samples shape" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
