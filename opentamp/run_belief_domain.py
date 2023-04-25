@@ -45,7 +45,11 @@ def is_in_ray(item, belief):
     return np.pi/2 - 0.1/2 - np.arctan(belief/1.0) <= item <= np.pi/2 + 0.1/2 - np.arctan(belief/1.0) and np.arctan(1) <= item <= np.pi - np.arctan(1)
 
 
-# NOTE: expected names for pyro samples are "belief_"{param-name}+"belief_global"
+def sample_global(plan_belief):
+    return plan_belief.samples[np.random.choice(plan_belief.samples.shape[0])]
+
+
+# NOTE: expected names for pyro samples are "belief_"{param-name}+""
 def toy_observation(plan_belief):
     def belief_prog(rs_params):
         # uniformly randomly sample on the seen so far
@@ -55,13 +59,12 @@ def toy_observation(plan_belief):
 
         import pdb; pdb.set_trace()
 
-        belief_idx = pyro.sample('belief_idx', dist.Categorical(logits=torch.ones(size=(plan_belief.samples.shape[0],))))
-        belief = pyro.param('belief_global', plan_belief.samples[belief_idx.item()].item())
+        b_global = pyro.sample('belief_global', sample_global, plan_belief)
 
-        print(belief[0])
+        print(b_global[0])
 
         if rs_params is None:
-            return belief
+            return b_global
 
         # start observations in the first action todo: loop this over actions in the plan
         obs = torch.torch.empty(rs_params[0].pose.shape[1]-1)
@@ -69,12 +72,12 @@ def toy_observation(plan_belief):
             for i in range(1, rs_params[0].pose.shape[1]):
                 # differentially take conditional depending on the ray
                 # 1.10714871779
-                if is_in_ray(a.pose[0][i], belief.item()):
-                    obs[i-1] = pyro.sample('obs'+str(i), dist.Uniform(belief.item()-0.001, belief.item()+0.001))
+                if is_in_ray(a.pose[0][i], b_global.item()):
+                    obs[i-1] = pyro.sample('obs'+str(i), dist.Uniform(b_global.item()-0.001, b_global.item()+0.001))
                 else:
                     obs[i-1] = pyro.sample('obs'+str(i), dist.Uniform(-1, 1))  # no marginal information gotten
 
-        belief_g = pyro.param('belief_g', lambda: belief.item())  # identical as global sample, since 1-parameter, in others would get subcoordinates
+        b_g = pyro.param('belief_g', lambda: copy.copy(b_global))  # identical as global sample, since 1-parameter, in others would get subcoordinates
 
         return obs
     return belief_prog
