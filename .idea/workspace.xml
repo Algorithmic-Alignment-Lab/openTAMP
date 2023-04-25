@@ -253,14 +253,7 @@
       <workItem from="1681590541406" duration="1519000" />
       <workItem from="1681761923243" duration="3538000" />
       <workItem from="1682031698331" duration="718000" />
-      <workItem from="1682178958951" duration="29251000" />
-    </task>
-    <task id="LOCAL-00299" summary="update toy belief 2">
-      <created>1682389674235</created>
-      <option name="number" value="00299" />
-      <option name="presentableId" value="LOCAL-00299" />
-      <option name="project" value="LOCAL" />
-      <updated>1682389674235</updated>
+      <workItem from="1682178958951" duration="29373000" />
     </task>
     <task id="LOCAL-00300" summary="update toy belief 3">
       <created>1682389707758</created>
@@ -598,7 +591,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682396180368</updated>
     </task>
-    <option name="localTasksCounter" value="348" />
+    <task id="LOCAL-00348" summary="no comma">
+      <created>1682396293804</created>
+      <option name="number" value="00348" />
+      <option name="presentableId" value="LOCAL-00348" />
+      <option name="project" value="LOCAL" />
+      <updated>1682396293804</updated>
+    </task>
+    <option name="localTasksCounter" value="349" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -657,7 +657,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="more prints" />
     <MESSAGE value="more prints 2" />
     <MESSAGE value="more prints 3" />
     <MESSAGE value="debug shaping issues" />
@@ -682,7 +681,8 @@
     <MESSAGE value="modify to shape" />
     <MESSAGE value="modify shape, aggregation along second dim" />
     <MESSAGE value="view rewrite" />
-    <option name="LAST_COMMIT_MESSAGE" value="view rewrite" />
+    <MESSAGE value="no comma" />
+    <option name="LAST_COMMIT_MESSAGE" value="no comma" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
