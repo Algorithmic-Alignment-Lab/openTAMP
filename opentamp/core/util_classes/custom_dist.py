@@ -18,6 +18,8 @@ class CustomDist(Distribution):
         print(x-self.sample_data)
         equalities = torch.norm(x - self.sample_data, p=2) < 0.001
         if equalities.any():  # if is a sample
+            print('non-inf return')
             return -torch.log(torch.tensor(self.sample_data.shape[0]))
         else:
+            print('inf return')
             return -torch.inf
