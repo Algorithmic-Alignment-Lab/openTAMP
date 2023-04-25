@@ -65,7 +65,6 @@ def toy_observation(rs_params, belief_mean, belief_cov):
             else:
                 obs[i-1] = pyro.sample('obs'+str(i), dist.Uniform(b_global.item()-1, b_global.item()+1))  # no marginal information gotten
 
-    print(obs)
     return obs
 
 # Run planning to obtain a final plan.

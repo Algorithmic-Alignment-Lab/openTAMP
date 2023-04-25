@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -257,14 +256,7 @@
       <workItem from="1682031698331" duration="718000" />
       <workItem from="1682178958951" duration="30918000" />
       <workItem from="1682431124732" duration="198000" />
-      <workItem from="1682431352529" duration="12387000" />
-    </task>
-    <task id="LOCAL-00355" summary="add support">
-      <created>1682432452215</created>
-      <option name="number" value="00355" />
-      <option name="presentableId" value="LOCAL-00355" />
-      <option name="project" value="LOCAL" />
-      <updated>1682432452215</updated>
+      <workItem from="1682431352529" duration="12421000" />
     </task>
     <task id="LOCAL-00356" summary="verify data types">
       <created>1682432585375</created>
@@ -602,7 +594,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682460099007</updated>
     </task>
-    <option name="localTasksCounter" value="404" />
+    <task id="LOCAL-00404" summary="prints for conditioning">
+      <created>1682460169887</created>
+      <option name="number" value="00404" />
+      <option name="presentableId" value="LOCAL-00404" />
+      <option name="project" value="LOCAL" />
+      <updated>1682460169887</updated>
+    </task>
+    <option name="localTasksCounter" value="405" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -661,7 +660,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="refactor run_mcmc to work with model trace" />
     <MESSAGE value="check if values can be gotten here" />
     <MESSAGE value="modify model_trace call" />
     <MESSAGE value="add args to get_trace" />
@@ -686,7 +684,8 @@
     <MESSAGE value="print obs (conditioning screwed up?) 2" />
     <MESSAGE value="print reached in_ray, out_ray" />
     <MESSAGE value="remove prints" />
-    <option name="LAST_COMMIT_MESSAGE" value="remove prints" />
+    <MESSAGE value="prints for conditioning" />
+    <option name="LAST_COMMIT_MESSAGE" value="prints for conditioning" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
