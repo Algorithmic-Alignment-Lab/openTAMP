@@ -50,15 +50,10 @@ def is_in_ray(item, belief):
 def toy_observation(plan_belief):
     def belief_prog(rs_params):
         # uniformly randomly sample on the seen so far
-        print(plan_belief.samples[0])
-        print(rs_params)
-        print(plan_belief.samples.size())
 
         import pdb; pdb.set_trace()
 
         b_global = pyro.sample('belief_global', CustomDist(plan_belief.samples.view(1000, -1)))
-
-        print(b_global.item())
 
         if rs_params is None:
             return b_global
