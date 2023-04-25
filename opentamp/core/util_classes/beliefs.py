@@ -23,8 +23,8 @@ class UniformBelief(Belief):
 # used for updates (for now: just updates a sample)
 def belief_constructor(samples=None, size=1):
     class UpdatedBelief(Belief):
-        def __init__(self):
+        def __init__(self, size, samples):
             super().__init__(size)
             self.samples = samples
 
-    return UpdatedBelief
+    return UpdatedBelief(size, samples)

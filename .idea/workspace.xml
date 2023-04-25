@@ -254,14 +254,7 @@
       <workItem from="1681590541406" duration="1519000" />
       <workItem from="1681761923243" duration="3538000" />
       <workItem from="1682031698331" duration="718000" />
-      <workItem from="1682178958951" duration="23690000" />
-    </task>
-    <task id="LOCAL-00258" summary="print the command being considered">
-      <created>1681451852623</created>
-      <option name="number" value="00258" />
-      <option name="presentableId" value="LOCAL-00258" />
-      <option name="project" value="LOCAL" />
-      <updated>1681451852623</updated>
+      <workItem from="1682178958951" duration="23756000" />
     </task>
     <task id="LOCAL-00259" summary="add constant for meme">
       <created>1681452142231</created>
@@ -599,7 +592,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682390256993</updated>
     </task>
-    <option name="localTasksCounter" value="307" />
+    <task id="LOCAL-00307" summary="add keywords">
+      <created>1682390376906</created>
+      <option name="number" value="00307" />
+      <option name="presentableId" value="LOCAL-00307" />
+      <option name="project" value="LOCAL" />
+      <updated>1682390376906</updated>
+    </task>
+    <option name="localTasksCounter" value="308" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -658,7 +658,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="debug multi-step 5" />
     <MESSAGE value="debug multi-step 6" />
     <MESSAGE value="debug multi-step 7" />
     <MESSAGE value="debug multi-step 8" />
@@ -683,7 +682,8 @@
     <MESSAGE value="debug cat dim" />
     <MESSAGE value="add print for debug" />
     <MESSAGE value="add samples call" />
-    <option name="LAST_COMMIT_MESSAGE" value="add samples call" />
+    <MESSAGE value="add keywords" />
+    <option name="LAST_COMMIT_MESSAGE" value="add keywords" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
