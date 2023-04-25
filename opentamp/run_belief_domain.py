@@ -47,15 +47,13 @@ def is_in_ray(item, belief):
 
 
 # NOTE: expected names for pyro samples are "belief_"{param-name}+""
-def toy_observation(rs_params, plan_belief_samples):
-    # uniformly randomly sample on the seen so far
+def toy_observation(rs_params, belief_mean, belief_cov):
+    # uniformly randomly sample on the seen beliefs so far
 
-    b_global_idx = pyro.sample('belief_global_idx', dist.Categorical(torch.ones(1000)/1000))
-    b_global = pyro.param('belief_global', plan_belief_samples[b_global_idx])
+    # b_global_idx = pyro.sample('belief_global_idx', dist.Categorical(torch.ones(1000)/1000))
+    # b_global = pyro.param('belief_global', plan_belief_samples[b_global_idx])
 
-    print(torch.ones(1000)/1000)
-    print(b_global)
-    print(plan_belief_samples)
+    b_global = pyro.sample('belief_global', dist.Normal(belief_mean, belief_cov))
 
     if rs_params is None:
         return b_global

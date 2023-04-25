@@ -10,7 +10,7 @@ import pyro
 import pyro.distributions as dist
 from opentamp.core.util_classes.beliefs import belief_constructor
 import pyro.poutine as poutine
-from pyro.infer import MCMC, NUTS
+from pyro.infer import MCMC, NUTS, HMC
 
 MAX_PRIORITY = 3
 
@@ -384,15 +384,10 @@ class Plan(object):
             num_chains=1,
         )
 
-        mcmc.run(rs_params, copy.copy(self.joint_belief.samples))
+        mcmc.run(rs_params, self.joint_belief.samples.mean(), self.joint_belief.samples.cov())
         mcmc.summary(prob=0.95)  # for diagnostics
 
-        model_trace = poutine.trace(conditional_model).get_trace(rs_params, copy.copy(self.joint_belief.samples))
-
-        print(model_trace.param_nodes)
-        print([model_trace.nodes[name]["value"].unconstrained() for name in model_trace.param_nodes])
-
-        return model_trace
+        return mcmc.get_samples()
 
     def initialize_beliefs(self):
         # max-likelihood as parameter here
