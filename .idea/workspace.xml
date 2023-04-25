@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/core/util_classes/beliefs.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/util_classes/beliefs.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/probs/toy_belief.prob" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/probs/toy_belief.prob" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -254,14 +254,7 @@
       <workItem from="1681590541406" duration="1519000" />
       <workItem from="1681761923243" duration="3538000" />
       <workItem from="1682031698331" duration="718000" />
-      <workItem from="1682178958951" duration="23756000" />
-    </task>
-    <task id="LOCAL-00259" summary="add constant for meme">
-      <created>1681452142231</created>
-      <option name="number" value="00259" />
-      <option name="presentableId" value="LOCAL-00259" />
-      <option name="project" value="LOCAL" />
-      <updated>1681452142231</updated>
+      <workItem from="1682178958951" duration="23830000" />
     </task>
     <task id="LOCAL-00260" summary="undo (add constant for meme)">
       <created>1681452242934</created>
@@ -599,7 +592,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682390376906</updated>
     </task>
-    <option name="localTasksCounter" value="308" />
+    <task id="LOCAL-00308" summary="convert from type object">
+      <created>1682390442718</created>
+      <option name="number" value="00308" />
+      <option name="presentableId" value="LOCAL-00308" />
+      <option name="project" value="LOCAL" />
+      <updated>1682390442718</updated>
+    </task>
+    <option name="localTasksCounter" value="309" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -658,7 +658,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="debug multi-step 6" />
     <MESSAGE value="debug multi-step 7" />
     <MESSAGE value="debug multi-step 8" />
     <MESSAGE value="debug multi-step 9" />
@@ -683,7 +682,8 @@
     <MESSAGE value="add print for debug" />
     <MESSAGE value="add samples call" />
     <MESSAGE value="add keywords" />
-    <option name="LAST_COMMIT_MESSAGE" value="add keywords" />
+    <MESSAGE value="convert from type object" />
+    <option name="LAST_COMMIT_MESSAGE" value="convert from type object" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
