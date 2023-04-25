@@ -5,9 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opentamp/core/util_classes/custom_dist.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/util_classes/custom_dist.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -257,14 +255,7 @@
       <workItem from="1682031698331" duration="718000" />
       <workItem from="1682178958951" duration="30918000" />
       <workItem from="1682431124732" duration="198000" />
-      <workItem from="1682431352529" duration="1547000" />
-    </task>
-    <task id="LOCAL-00311" summary="print prior_samples shape">
-      <created>1682390752688</created>
-      <option name="number" value="00311" />
-      <option name="presentableId" value="LOCAL-00311" />
-      <option name="project" value="LOCAL" />
-      <updated>1682390752688</updated>
+      <workItem from="1682431352529" duration="1610000" />
     </task>
     <task id="LOCAL-00312" summary="modify view on samples">
       <created>1682390816400</created>
@@ -602,7 +593,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682432773362</updated>
     </task>
-    <option name="localTasksCounter" value="360" />
+    <task id="LOCAL-00360" summary="focus prints">
+      <created>1682432940249</created>
+      <option name="number" value="00360" />
+      <option name="presentableId" value="LOCAL-00360" />
+      <option name="project" value="LOCAL" />
+      <updated>1682432940249</updated>
+    </task>
+    <option name="localTasksCounter" value="361" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -661,7 +659,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add lambda expressions" />
     <MESSAGE value="lambda debug" />
     <MESSAGE value="size debug" />
     <MESSAGE value="Categorical variable" />
@@ -686,7 +683,8 @@
     <MESSAGE value="add torch.tensor" />
     <MESSAGE value="add torch.tensor 2" />
     <MESSAGE value="add torch.tensor 3" />
-    <option name="LAST_COMMIT_MESSAGE" value="add torch.tensor 3" />
+    <MESSAGE value="focus prints" />
+    <option name="LAST_COMMIT_MESSAGE" value="focus prints" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

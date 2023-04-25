@@ -15,7 +15,8 @@ class CustomDist(Distribution):
 
     def log_prob(self, x, *args, **kwargs):
         print(x)
-        equalities = torch.norm(x - torch.tensor(self.sample_data), p=2) < 0.001
+        print(x-self.sample_data)
+        equalities = torch.norm(x - self.sample_data, p=2) < 0.001
         if equalities.any():  # if is a sample
             return -torch.log(torch.tensor(self.sample_data.shape[0]))
         else:
