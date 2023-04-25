@@ -255,14 +255,7 @@
       <workItem from="1682031698331" duration="718000" />
       <workItem from="1682178958951" duration="30918000" />
       <workItem from="1682431124732" duration="198000" />
-      <workItem from="1682431352529" duration="14705000" />
-    </task>
-    <task id="LOCAL-00366" summary="more explicitly shape with dist empirical">
-      <created>1682433860678</created>
-      <option name="number" value="00366" />
-      <option name="presentableId" value="LOCAL-00366" />
-      <option name="project" value="LOCAL" />
-      <updated>1682433860678</updated>
+      <workItem from="1682431352529" duration="14761000" />
     </task>
     <task id="LOCAL-00367" summary="undo generator program, add effects">
       <created>1682434944623</created>
@@ -600,7 +593,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682462524121</updated>
     </task>
-    <option name="localTasksCounter" value="415" />
+    <task id="LOCAL-00415" summary="remove items from uniform bounds">
+      <created>1682462713415</created>
+      <option name="number" value="00415" />
+      <option name="presentableId" value="LOCAL-00415" />
+      <option name="project" value="LOCAL" />
+      <updated>1682462713415</updated>
+    </task>
+    <option name="localTasksCounter" value="416" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -659,7 +659,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add print" />
     <MESSAGE value="alter view" />
     <MESSAGE value="remove intermediate belief_$name, index directly into joint belief" />
     <MESSAGE value="remove size logic, appeal to param.belief.size" />
@@ -684,7 +683,8 @@
     <MESSAGE value="decrease chain count" />
     <MESSAGE value="if name is main hack" />
     <MESSAGE value="move methods outside main" />
-    <option name="LAST_COMMIT_MESSAGE" value="move methods outside main" />
+    <MESSAGE value="remove items from uniform bounds" />
+    <option name="LAST_COMMIT_MESSAGE" value="remove items from uniform bounds" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

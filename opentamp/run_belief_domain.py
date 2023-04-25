@@ -50,6 +50,7 @@ def toy_observation(rs_params, belief_mean, belief_cov):
             else:
                 obs[i - 1] = pyro.sample('obs'+str(i), dist.Uniform(b_global-1, b_global+1))  # no marginal information gotten
 
+    print(obs)
     return obs
 
 if __name__ == '__main__':
