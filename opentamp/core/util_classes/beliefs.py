@@ -21,7 +21,7 @@ class UniformBelief(Belief):
 
 
 # used for updates (for now: just updates a sample)
-def belief_constructor(samples, size):
+def belief_constructor(samples=None, size=1):
     class UpdatedBelief(Belief):
         def __init__(self):
             super().__init__(size)
