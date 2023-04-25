@@ -257,14 +257,7 @@
       <workItem from="1682031698331" duration="718000" />
       <workItem from="1682178958951" duration="30918000" />
       <workItem from="1682431124732" duration="198000" />
-      <workItem from="1682431352529" duration="10248000" />
-    </task>
-    <task id="LOCAL-00340" summary="print rs_params">
-      <created>1682394476942</created>
-      <option name="number" value="00340" />
-      <option name="presentableId" value="LOCAL-00340" />
-      <option name="project" value="LOCAL" />
-      <updated>1682394476942</updated>
+      <workItem from="1682431352529" duration="10730000" />
     </task>
     <task id="LOCAL-00341" summary="modify calls">
       <created>1682394687247</created>
@@ -602,7 +595,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682457711676</updated>
     </task>
-    <option name="localTasksCounter" value="389" />
+    <task id="LOCAL-00389" summary="remove prints">
+      <created>1682457765938</created>
+      <option name="number" value="00389" />
+      <option name="presentableId" value="LOCAL-00389" />
+      <option name="project" value="LOCAL" />
+      <updated>1682457765938</updated>
+    </task>
+    <option name="localTasksCounter" value="390" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -661,7 +661,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="requires_grad checks" />
     <MESSAGE value="add no_grad" />
     <MESSAGE value="more explicitly shape with dist empirical" />
     <MESSAGE value="undo generator program, add effects" />
@@ -686,7 +685,8 @@
     <MESSAGE value="add mean + cov prints" />
     <MESSAGE value="add print" />
     <MESSAGE value="alter view" />
-    <option name="LAST_COMMIT_MESSAGE" value="alter view" />
+    <MESSAGE value="remove prints" />
+    <option name="LAST_COMMIT_MESSAGE" value="remove prints" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

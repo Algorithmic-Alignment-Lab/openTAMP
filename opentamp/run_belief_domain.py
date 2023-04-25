@@ -65,8 +65,6 @@ def toy_observation(rs_params, belief_mean, belief_cov):
             else:
                 obs[i-1] = pyro.sample('obs'+str(i), dist.Uniform(-1, 1))  # no marginal information gotten
 
-    b_g = pyro.param('belief_g', lambda: copy.copy(b_global))  # identical as global sample, since 1-parameter, in others would get subcoordinate
-
     return obs
 
 # Run planning to obtain a final plan.
@@ -86,5 +84,3 @@ print(descr)
 # TODO: implement replan logic when belief-space implemented
 
 # TODO: BCheckSuccess (first pass implement, gets at needed subroutines)
-
-# TODO: observation model details (how will observe actions look *concretely*?)

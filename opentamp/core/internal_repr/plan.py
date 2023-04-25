@@ -48,10 +48,10 @@ class Plan(object):
             self._determine_free_attrs()
 
     def build_belief_params(self):
-        random_params = []
+        random_params = {}
         for param_key, param in self.params.items():
             if hasattr(param, 'belief'):
-                random_params.append(param)
+                random_params[param.name] = param.belief.size
         return random_params
 
     @staticmethod
@@ -409,5 +409,7 @@ class Plan(object):
         self.joint_belief = belief_constructor(samples=new_samples['belief_global'], size=self.joint_belief.size)
 
         # construct a model object, over which we do inference, starting with uniform prior
+        running_idx = 0
         for param in self.belief_params:
-            param.belief.samples = new_samples['belief_'+param.name].detach().numpy().reshape((-1, 1000))  # expecting hooks
+            param.belief.samples = new_samples['belief_global'][:, running_idx: running_idx+self.belief_params[param.name]].detach().numpy().reshape((-1, 1000))  # expecting hooks
+            running_idx += self.belief_params[param.name]
