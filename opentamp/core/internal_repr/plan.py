@@ -400,11 +400,11 @@ class Plan(object):
 
         # setting up belief vector, build up aggregate vector
         aggregate_size = sum([bpar.belief.size for bpar in self.belief_params])
-        self.joint_belief = belief_constructor(samples=torch.cat(samples, dim=0).view(1000, -1), size=aggregate_size)
+        self.joint_belief = belief_constructor(samples=torch.cat(samples, dim=0).resize(-1, 1000, 1), size=aggregate_size)
 
         for idx, param in enumerate(self.belief_params):
             # add samples by generating from prior
-            param.belief.samples = samples[idx].detach().numpy().reshape((1000, -1))
+            param.belief.samples = samples[idx].detach().numpy().reshape((-1, 1000))
 
     # called once per high-level action execution
     def filter_beliefs(self, rs_params):
@@ -415,4 +415,4 @@ class Plan(object):
 
         # construct a model object, over which we do inference, starting with uniform prior
         for param in self.belief_params:
-            param.belief.samples = new_samples['belief_'+param.name].detach().numpy().reshape((1000, -1))  # expecting hooks
+            param.belief.samples = new_samples['belief_'+param.name].detach().numpy().reshape((-1, 1000))  # expecting hooks

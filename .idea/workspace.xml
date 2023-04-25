@@ -5,6 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -253,14 +255,7 @@
       <workItem from="1681590541406" duration="1519000" />
       <workItem from="1681761923243" duration="3538000" />
       <workItem from="1682031698331" duration="718000" />
-      <workItem from="1682178958951" duration="28801000" />
-    </task>
-    <task id="LOCAL-00296" summary="revert attempt 2">
-      <created>1682369285153</created>
-      <option name="number" value="00296" />
-      <option name="presentableId" value="LOCAL-00296" />
-      <option name="project" value="LOCAL" />
-      <updated>1682369285153</updated>
+      <workItem from="1682178958951" duration="29102000" />
     </task>
     <task id="LOCAL-00297" summary="add beliefs as Geom items,">
       <created>1682388714838</created>
@@ -598,7 +593,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682395454960</updated>
     </task>
-    <option name="localTasksCounter" value="345" />
+    <task id="LOCAL-00345" summary="modify to shape">
+      <created>1682395676772</created>
+      <option name="number" value="00345" />
+      <option name="presentableId" value="LOCAL-00345" />
+      <option name="project" value="LOCAL" />
+      <updated>1682395676772</updated>
+    </task>
+    <option name="localTasksCounter" value="346" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -657,7 +659,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="plan belief samples shape" />
     <MESSAGE value="reshape returns" />
     <MESSAGE value="as rs_params prints" />
     <MESSAGE value="more prints" />
@@ -682,7 +683,8 @@
     <MESSAGE value="add item calls to everything" />
     <MESSAGE value="modify pyro sample call" />
     <MESSAGE value="one more time with Empirical" />
-    <option name="LAST_COMMIT_MESSAGE" value="one more time with Empirical" />
+    <MESSAGE value="modify to shape" />
+    <option name="LAST_COMMIT_MESSAGE" value="modify to shape" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
