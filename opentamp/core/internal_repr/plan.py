@@ -406,10 +406,13 @@ class Plan(object):
         # max-likelihood feeds back on object here
         new_samples = self.sample_mcmc_run(rs_params)
 
+        print(new_samples.shape)
+
         self.joint_belief = belief_constructor(samples=new_samples['belief_global'], size=self.joint_belief.size)
 
         # construct a model object, over which we do inference, starting with uniform prior
         running_idx = 0
         for param in self.belief_params:
-            param.belief.samples = new_samples['belief_global'][:, running_idx: running_idx+param.belief.size].detach().numpy().reshape((-1, 1000))  # expecting hooks
+            param.belief.samples = \
+                new_samples['belief_global'][:, running_idx: running_idx+param.belief.size].detach().numpy().reshape((-1, 1000))  # expecting hooks
             running_idx += param.belief.size

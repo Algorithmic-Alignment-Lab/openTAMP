@@ -256,14 +256,7 @@
       <workItem from="1682031698331" duration="718000" />
       <workItem from="1682178958951" duration="30918000" />
       <workItem from="1682431124732" duration="198000" />
-      <workItem from="1682431352529" duration="10874000" />
-    </task>
-    <task id="LOCAL-00342" summary="add item calls to everything">
-      <created>1682394836684</created>
-      <option name="number" value="00342" />
-      <option name="presentableId" value="LOCAL-00342" />
-      <option name="project" value="LOCAL" />
-      <updated>1682394836684</updated>
+      <workItem from="1682431352529" duration="11252000" />
     </task>
     <task id="LOCAL-00343" summary="modify pyro sample call">
       <created>1682395253121</created>
@@ -601,7 +594,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682458370501</updated>
     </task>
-    <option name="localTasksCounter" value="391" />
+    <task id="LOCAL-00391" summary="remove size logic, appeal to param.belief.size">
+      <created>1682458516388</created>
+      <option name="number" value="00391" />
+      <option name="presentableId" value="LOCAL-00391" />
+      <option name="project" value="LOCAL" />
+      <updated>1682458516388</updated>
+    </task>
+    <option name="localTasksCounter" value="392" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -660,7 +660,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="more explicitly shape with dist empirical" />
     <MESSAGE value="undo generator program, add effects" />
     <MESSAGE value="pass samples directly" />
     <MESSAGE value="remove b_g" />
@@ -685,7 +684,8 @@
     <MESSAGE value="alter view" />
     <MESSAGE value="remove prints" />
     <MESSAGE value="remove intermediate belief_$name, index directly into joint belief" />
-    <option name="LAST_COMMIT_MESSAGE" value="remove intermediate belief_$name, index directly into joint belief" />
+    <MESSAGE value="remove size logic, appeal to param.belief.size" />
+    <option name="LAST_COMMIT_MESSAGE" value="remove size logic, appeal to param.belief.size" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
