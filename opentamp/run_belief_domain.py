@@ -75,6 +75,8 @@ def toy_observation(plan_belief):
 
         b_g = pyro.param('belief_g', lambda: copy.copy(b_global.item()))  # identical as global sample, since 1-parameter, in others would get subcoordinates
 
+        print(b_g)
+
         return obs
     return belief_prog
 
