@@ -42,6 +42,7 @@ def toy_observation(rs_params, belief_mean, belief_cov):
 
     # start observations in the first action todo: loop this over actions in the plan
     obs = torch.torch.empty(rs_params[0].pose.shape[1]-1)
+    print(obs.shape)
     for a in rs_params:
         for i in range(1, rs_params[0].pose.shape[1]):
             # differentially take conditional depending on the ray
