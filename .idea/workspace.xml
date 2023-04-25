@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -256,14 +255,7 @@
       <workItem from="1682031698331" duration="718000" />
       <workItem from="1682178958951" duration="30918000" />
       <workItem from="1682431124732" duration="198000" />
-      <workItem from="1682431352529" duration="13015000" />
-    </task>
-    <task id="LOCAL-00359" summary="add torch.tensor 3">
-      <created>1682432773362</created>
-      <option name="number" value="00359" />
-      <option name="presentableId" value="LOCAL-00359" />
-      <option name="project" value="LOCAL" />
-      <updated>1682432773362</updated>
+      <workItem from="1682431352529" duration="13064000" />
     </task>
     <task id="LOCAL-00360" summary="focus prints">
       <created>1682432940249</created>
@@ -601,7 +593,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682460468853</updated>
     </task>
-    <option name="localTasksCounter" value="408" />
+    <task id="LOCAL-00408" summary="print tmp_obs">
+      <created>1682460799321</created>
+      <option name="number" value="00408" />
+      <option name="presentableId" value="LOCAL-00408" />
+      <option name="project" value="LOCAL" />
+      <updated>1682460799321</updated>
+    </task>
+    <option name="localTasksCounter" value="409" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -660,7 +659,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="print param nodes" />
     <MESSAGE value="see number of times called" />
     <MESSAGE value="add prints" />
     <MESSAGE value="plan_belief_samples" />
@@ -685,7 +683,8 @@
     <MESSAGE value="remove one print" />
     <MESSAGE value="debug erroneous conditioning" />
     <MESSAGE value="debug erroneous conditioning 2" />
-    <option name="LAST_COMMIT_MESSAGE" value="debug erroneous conditioning 2" />
+    <MESSAGE value="print tmp_obs" />
+    <option name="LAST_COMMIT_MESSAGE" value="print tmp_obs" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
