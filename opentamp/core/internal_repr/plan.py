@@ -404,15 +404,18 @@ class Plan(object):
     # called once per high-level action execution
     def filter_beliefs(self, rs_params):
         # max-likelihood feeds back on object here
-        new_samples = self.sample_mcmc_run(rs_params)
+        global_samples = self.sample_mcmc_run(rs_params)['belief_global']
 
-        print(new_samples['belief_global'].shape)
+        if len(global_samples['belief_global'].shape) == 1:
+            global_samples = global_samples.unsqueeze(dim=1)
 
-        self.joint_belief = belief_constructor(samples=new_samples['belief_global'], size=self.joint_belief.size)
+        assert len(global_samples.shape) == 2
+
+        self.joint_belief = belief_constructor(samples=global_samples, size=self.joint_belief.size)
 
         # construct a model object, over which we do inference, starting with uniform prior
         running_idx = 0
         for param in self.belief_params:
             param.belief.samples = \
-                new_samples['belief_global'][:, running_idx: running_idx+param.belief.size].detach().numpy().reshape((-1, 1000))  # expecting hooks
+                global_samples[:, running_idx: running_idx+param.belief.size].detach().numpy().reshape((-1, 1000))  # expecting hooks
             running_idx += param.belief.size
