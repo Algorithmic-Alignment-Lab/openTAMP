@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opentamp/core/util_classes/custom_dist.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/util_classes/custom_dist.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -255,14 +256,7 @@
       <workItem from="1682031698331" duration="718000" />
       <workItem from="1682178958951" duration="30918000" />
       <workItem from="1682431124732" duration="198000" />
-      <workItem from="1682431352529" duration="1695000" />
-    </task>
-    <task id="LOCAL-00313" summary="print belief">
-      <created>1682390876319</created>
-      <option name="number" value="00313" />
-      <option name="presentableId" value="LOCAL-00313" />
-      <option name="project" value="LOCAL" />
-      <updated>1682390876319</updated>
+      <workItem from="1682431352529" duration="1865000" />
     </task>
     <task id="LOCAL-00314" summary="print belief shapes">
       <created>1682390990058</created>
@@ -600,7 +594,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682433007445</updated>
     </task>
-    <option name="localTasksCounter" value="362" />
+    <task id="LOCAL-00362" summary="check inf return">
+      <created>1682433087011</created>
+      <option name="number" value="00362" />
+      <option name="presentableId" value="LOCAL-00362" />
+      <option name="project" value="LOCAL" />
+      <updated>1682433087011</updated>
+    </task>
+    <option name="localTasksCounter" value="363" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -659,7 +660,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="size debug" />
     <MESSAGE value="Categorical variable" />
     <MESSAGE value="debug ones call" />
     <MESSAGE value="print rs_params" />
@@ -684,7 +684,8 @@
     <MESSAGE value="add torch.tensor 3" />
     <MESSAGE value="focus prints" />
     <MESSAGE value="log_p call focus" />
-    <option name="LAST_COMMIT_MESSAGE" value="log_p call focus" />
+    <MESSAGE value="check inf return" />
+    <option name="LAST_COMMIT_MESSAGE" value="check inf return" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
