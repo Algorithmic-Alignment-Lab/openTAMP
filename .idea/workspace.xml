@@ -255,14 +255,7 @@
       <workItem from="1682031698331" duration="718000" />
       <workItem from="1682178958951" duration="30918000" />
       <workItem from="1682431124732" duration="198000" />
-      <workItem from="1682431352529" duration="1254000" />
-    </task>
-    <task id="LOCAL-00308" summary="convert from type object">
-      <created>1682390442718</created>
-      <option name="number" value="00308" />
-      <option name="presentableId" value="LOCAL-00308" />
-      <option name="project" value="LOCAL" />
-      <updated>1682390442718</updated>
+      <workItem from="1682431352529" duration="1305000" />
     </task>
     <task id="LOCAL-00309" summary="size one, samples != size">
       <created>1682390524413</created>
@@ -600,7 +593,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682432585375</updated>
     </task>
-    <option name="localTasksCounter" value="357" />
+    <task id="LOCAL-00357" summary="add torch.tensor">
+      <created>1682432644817</created>
+      <option name="number" value="00357" />
+      <option name="presentableId" value="LOCAL-00357" />
+      <option name="project" value="LOCAL" />
+      <updated>1682432644817</updated>
+    </task>
+    <option name="localTasksCounter" value="358" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -659,7 +659,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="size not shape" />
     <MESSAGE value="size not shape 2" />
     <MESSAGE value="manual idx selection" />
     <MESSAGE value="add lambda expressions" />
@@ -684,7 +683,8 @@
     <MESSAGE value="alter view" />
     <MESSAGE value="add support" />
     <MESSAGE value="verify data types" />
-    <option name="LAST_COMMIT_MESSAGE" value="verify data types" />
+    <MESSAGE value="add torch.tensor" />
+    <option name="LAST_COMMIT_MESSAGE" value="add torch.tensor" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
