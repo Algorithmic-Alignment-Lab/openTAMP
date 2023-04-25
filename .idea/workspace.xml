@@ -255,14 +255,7 @@
       <workItem from="1682031698331" duration="718000" />
       <workItem from="1682178958951" duration="30918000" />
       <workItem from="1682431124732" duration="198000" />
-      <workItem from="1682431352529" duration="15118000" />
-    </task>
-    <task id="LOCAL-00369" summary="remove b_g">
-      <created>1682435155702</created>
-      <option name="number" value="00369" />
-      <option name="presentableId" value="LOCAL-00369" />
-      <option name="project" value="LOCAL" />
-      <updated>1682435155702</updated>
+      <workItem from="1682431352529" duration="15184000" />
     </task>
     <task id="LOCAL-00370" summary="try Categorical">
       <created>1682435453181</created>
@@ -600,7 +593,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682463139457</updated>
     </task>
-    <option name="localTasksCounter" value="418" />
+    <task id="LOCAL-00418" summary="remove extra prints">
+      <created>1682463170695</created>
+      <option name="number" value="00418" />
+      <option name="presentableId" value="LOCAL-00418" />
+      <option name="project" value="LOCAL" />
+      <updated>1682463170695</updated>
+    </task>
+    <option name="localTasksCounter" value="419" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -659,7 +659,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="remove size logic, appeal to param.belief.size" />
     <MESSAGE value="shape print" />
     <MESSAGE value="shape print fix" />
     <MESSAGE value="add + work with dummy dimension" />
@@ -684,7 +683,8 @@
     <MESSAGE value="remove items from uniform bounds" />
     <MESSAGE value="remove items from uniform bounds print" />
     <MESSAGE value="messing around with item vs. tensor" />
-    <option name="LAST_COMMIT_MESSAGE" value="messing around with item vs. tensor" />
+    <MESSAGE value="remove extra prints" />
+    <option name="LAST_COMMIT_MESSAGE" value="remove extra prints" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

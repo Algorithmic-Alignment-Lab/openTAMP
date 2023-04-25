@@ -47,8 +47,10 @@ def toy_observation(rs_params, belief_mean, belief_cov):
             # differentially take conditional depending on the ray
             # 1.10714871779
             if is_in_ray(a.pose[0][i], b_global.item()):
+                print('is in ray')
                 obs[i - 1] = pyro.sample('obs'+str(i), dist.Uniform(b_global-torch.tensor(0.001), b_global+torch.tensor(0.001)))
             else:
+                print('not in ray')
                 obs[i - 1] = pyro.sample('obs'+str(i), dist.Uniform(b_global-torch.tensor(1), b_global+torch.tensor(1)))  # no marginal information gotten
 
     return obs
