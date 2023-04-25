@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -256,14 +255,7 @@
       <workItem from="1682031698331" duration="718000" />
       <workItem from="1682178958951" duration="30918000" />
       <workItem from="1682431124732" duration="198000" />
-      <workItem from="1682431352529" duration="11252000" />
-    </task>
-    <task id="LOCAL-00343" summary="modify pyro sample call">
-      <created>1682395253121</created>
-      <option name="number" value="00343" />
-      <option name="presentableId" value="LOCAL-00343" />
-      <option name="project" value="LOCAL" />
-      <updated>1682395253121</updated>
+      <workItem from="1682431352529" duration="11293000" />
     </task>
     <task id="LOCAL-00344" summary="one more time with Empirical">
       <created>1682395454960</created>
@@ -601,7 +593,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682458516388</updated>
     </task>
-    <option name="localTasksCounter" value="392" />
+    <task id="LOCAL-00392" summary="shape print">
+      <created>1682458923577</created>
+      <option name="number" value="00392" />
+      <option name="presentableId" value="LOCAL-00392" />
+      <option name="project" value="LOCAL" />
+      <updated>1682458923577</updated>
+    </task>
+    <option name="localTasksCounter" value="393" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -660,7 +659,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="undo generator program, add effects" />
     <MESSAGE value="pass samples directly" />
     <MESSAGE value="remove b_g" />
     <MESSAGE value="try Categorical" />
@@ -685,7 +683,8 @@
     <MESSAGE value="remove prints" />
     <MESSAGE value="remove intermediate belief_$name, index directly into joint belief" />
     <MESSAGE value="remove size logic, appeal to param.belief.size" />
-    <option name="LAST_COMMIT_MESSAGE" value="remove size logic, appeal to param.belief.size" />
+    <MESSAGE value="shape print" />
+    <option name="LAST_COMMIT_MESSAGE" value="shape print" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

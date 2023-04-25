@@ -406,7 +406,7 @@ class Plan(object):
         # max-likelihood feeds back on object here
         new_samples = self.sample_mcmc_run(rs_params)
 
-        print(new_samples.shape)
+        print(new_samples['belief_global'].shape)
 
         self.joint_belief = belief_constructor(samples=new_samples['belief_global'], size=self.joint_belief.size)
 
