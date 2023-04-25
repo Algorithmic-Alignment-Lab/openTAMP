@@ -57,7 +57,7 @@ def toy_observation(plan_belief):
 
         b_global = pyro.sample('belief_global', dist.Empirical(plan_belief.samples, torch.ones(1, 1000)))
 
-        print(b_global[0])
+        print(b_global.item())
 
         if rs_params is None:
             return b_global
@@ -73,7 +73,7 @@ def toy_observation(plan_belief):
                 else:
                     obs[i-1] = pyro.sample('obs'+str(i), dist.Uniform(-1, 1))  # no marginal information gotten
 
-        b_g = pyro.param('belief_g', lambda: copy.copy(b_global))  # identical as global sample, since 1-parameter, in others would get subcoordinates
+        b_g = pyro.param('belief_g', lambda: copy.copy(b_global.item()))  # identical as global sample, since 1-parameter, in others would get subcoordinates
 
         return obs
     return belief_prog
