@@ -53,6 +53,7 @@ def toy_observation(rs_params, plan_belief_samples):
     b_global_idx = pyro.sample('belief_global_idx', dist.Categorical(torch.ones(1000)/1000))
     b_global = pyro.param('belief_global', plan_belief_samples[b_global_idx])
 
+    print(torch.ones(1000)/1000)
     print(b_global)
 
     if rs_params is None:
