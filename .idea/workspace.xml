@@ -7,6 +7,7 @@
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -256,14 +257,7 @@
       <workItem from="1682031698331" duration="718000" />
       <workItem from="1682178958951" duration="30918000" />
       <workItem from="1682431124732" duration="198000" />
-      <workItem from="1682431352529" duration="12026000" />
-    </task>
-    <task id="LOCAL-00349" summary="remove optional args">
-      <created>1682396414254</created>
-      <option name="number" value="00349" />
-      <option name="presentableId" value="LOCAL-00349" />
-      <option name="project" value="LOCAL" />
-      <updated>1682396414254</updated>
+      <workItem from="1682431352529" duration="12112000" />
     </task>
     <task id="LOCAL-00350" summary="torch fix">
       <created>1682396894606</created>
@@ -601,7 +595,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682459747397</updated>
     </task>
-    <option name="localTasksCounter" value="398" />
+    <task id="LOCAL-00398" summary="print sample statistics of the belief">
+      <created>1682459808773</created>
+      <option name="number" value="00398" />
+      <option name="presentableId" value="LOCAL-00398" />
+      <option name="project" value="LOCAL" />
+      <updated>1682459808773</updated>
+    </task>
+    <option name="localTasksCounter" value="399" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -660,7 +661,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="refactor indexing" />
     <MESSAGE value="change view to reshape" />
     <MESSAGE value="remove pdb" />
     <MESSAGE value="modify param to sample" />
@@ -685,7 +685,8 @@
     <MESSAGE value="add + work with dummy dimension" />
     <MESSAGE value="add + work with dummy dimension debug" />
     <MESSAGE value="modify observation model" />
-    <option name="LAST_COMMIT_MESSAGE" value="modify observation model" />
+    <MESSAGE value="print sample statistics of the belief" />
+    <option name="LAST_COMMIT_MESSAGE" value="print sample statistics of the belief" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
