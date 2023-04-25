@@ -381,7 +381,8 @@ class Plan(object):
             kernel,
             num_samples=500,
             warmup_steps=1500,
-            num_chains=1,
+            num_chains=10,
+            mp_context='spawn'
         )
 
         mcmc.run(rs_params, self.joint_belief.samples.mean(), self.joint_belief.samples.view((-1,)).cov())
@@ -396,7 +397,7 @@ class Plan(object):
 
         # setting up belief vector, build up aggregate vector
         aggregate_size = sum([bpar.belief.size for bpar in self.belief_params])
-        self.joint_belief = belief_constructor(samples=torch.cat(samples, dim=0).reshape(5000, -1), size=aggregate_size)
+        self.joint_belief = belief_constructor(samples=torch.cat(samples, dim=0).reshape(500, -1), size=aggregate_size)
 
         for idx, param in enumerate(self.belief_params):
             # add samples by generating from prior

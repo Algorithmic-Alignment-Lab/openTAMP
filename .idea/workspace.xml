@@ -7,7 +7,6 @@
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -257,14 +256,7 @@
       <workItem from="1682031698331" duration="718000" />
       <workItem from="1682178958951" duration="30918000" />
       <workItem from="1682431124732" duration="198000" />
-      <workItem from="1682431352529" duration="13585000" />
-    </task>
-    <task id="LOCAL-00361" summary="log_p call focus">
-      <created>1682433007445</created>
-      <option name="number" value="00361" />
-      <option name="presentableId" value="LOCAL-00361" />
-      <option name="project" value="LOCAL" />
-      <updated>1682433007445</updated>
+      <workItem from="1682431352529" duration="14255000" />
     </task>
     <task id="LOCAL-00362" summary="check inf return">
       <created>1682433087011</created>
@@ -602,7 +594,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682460849231</updated>
     </task>
-    <option name="localTasksCounter" value="410" />
+    <task id="LOCAL-00410" summary="500 samples, more warmup-time">
+      <created>1682461423476</created>
+      <option name="number" value="00410" />
+      <option name="presentableId" value="LOCAL-00410" />
+      <option name="project" value="LOCAL" />
+      <updated>1682461423476</updated>
+    </task>
+    <option name="localTasksCounter" value="411" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -661,7 +660,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add prints" />
     <MESSAGE value="plan_belief_samples" />
     <MESSAGE value="move to Laplace estimate" />
     <MESSAGE value="add belief prints" />
@@ -686,7 +684,8 @@
     <MESSAGE value="debug erroneous conditioning 2" />
     <MESSAGE value="print tmp_obs" />
     <MESSAGE value="test 1" />
-    <option name="LAST_COMMIT_MESSAGE" value="test 1" />
+    <MESSAGE value="500 samples, more warmup-time" />
+    <option name="LAST_COMMIT_MESSAGE" value="500 samples, more warmup-time" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
