@@ -4,6 +4,6 @@
 
 Objects: CameraAngle (name theta); PointCoord (name g); WallUp (name wu); WallDown (name wd); WallDist (name d); RayWidth (name rw);
 
-Init: (pose theta [[0.0]]), (value g [[0.5]]), (belief g 1000 -1, 1), (samples g [[1000]]), (value wu [[1.0]]), (value wd [[1.0]]), (value d [[1.0]]), (value rw [[0.1]]); (AlwaysTrue theta)
+Init: (pose theta [[0.0]]), (value g [[0.5]]), (belief g 1000 -1 1), (samples g [[1000]]), (value wu [[1.0]]), (value wd [[1.0]]), (value d [[1.0]]), (value rw [[0.1]]); (AlwaysTrue theta)
 
 Goal: (AngleViewingWall theta wu wd d), (CoordInView theta g d rw)
