@@ -47,32 +47,30 @@ def is_in_ray(item, belief):
 
 
 # NOTE: expected names for pyro samples are "belief_"{param-name}+""
-def toy_observation(plan_belief):
-    def belief_prog(rs_params):
-        # uniformly randomly sample on the seen so far
+def toy_observation(rs_params, plan_belief):
+    # uniformly randomly sample on the seen so far
 
-        import pdb; pdb.set_trace()
+    import pdb; pdb.set_trace()
 
-        b_global = pyro.sample('belief_global', dist.Empirical(plan_belief.samples.view(1, 1000, -1), torch.ones(1, 1000)))
+    b_global = pyro.sample('belief_global', dist.Empirical(plan_belief.samples.view(1, 1000, -1), torch.ones(1, 1000)))
 
-        if rs_params is None:
-            return b_global
+    if rs_params is None:
+        return b_global
 
-        # start observations in the first action todo: loop this over actions in the plan
-        obs = torch.torch.empty(rs_params[0].pose.shape[1]-1)
-        for a in rs_params:
-            for i in range(1, rs_params[0].pose.shape[1]):
-                # differentially take conditional depending on the ray
-                # 1.10714871779
-                if is_in_ray(a.pose[0][i], b_global.item()):
-                    obs[i-1] = pyro.sample('obs'+str(i), dist.Uniform(b_global.item()-0.001, b_global.item()+0.001))
-                else:
-                    obs[i-1] = pyro.sample('obs'+str(i), dist.Uniform(-1, 1))  # no marginal information gotten
+    # start observations in the first action todo: loop this over actions in the plan
+    obs = torch.torch.empty(rs_params[0].pose.shape[1]-1)
+    for a in rs_params:
+        for i in range(1, rs_params[0].pose.shape[1]):
+            # differentially take conditional depending on the ray
+            # 1.10714871779
+            if is_in_ray(a.pose[0][i], b_global.item()):
+                obs[i-1] = pyro.sample('obs'+str(i), dist.Uniform(b_global.item()-0.001, b_global.item()+0.001))
+            else:
+                obs[i-1] = pyro.sample('obs'+str(i), dist.Uniform(-1, 1))  # no marginal information gotten
 
-        b_g = pyro.param('belief_g', lambda: copy.copy(b_global))  # identical as global sample, since 1-parameter, in others would get subcoordinate
+    b_g = pyro.param('belief_g', lambda: copy.copy(b_global))  # identical as global sample, since 1-parameter, in others would get subcoordinate
 
-        return obs
-    return belief_prog
+    return obs
 
 # Run planning to obtain a final plan.
 plan, descr = p_mod_abs(

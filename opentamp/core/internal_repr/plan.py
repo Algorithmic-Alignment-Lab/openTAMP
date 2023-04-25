@@ -372,13 +372,12 @@ class Plan(object):
     # based off of hmm example from pyro docs
     def sample_mcmc_run(self, rs_params=None):
         # create unconditional or conditional model, depending
-        method = self.observation_model(copy.copy(self.joint_belief))
         if rs_params is None:
-            kernel = NUTS(method)
+            kernel = NUTS(self.observation_model)
         else:
             # create a conditioned model on the plan
             obs_dict = {'obs'+str(i): torch.tensor(self.max_likelihood_obs) for i in range(1, rs_params[0].pose.shape[1]+1)}
-            conditional_model = poutine.condition(method, data=obs_dict)
+            conditional_model = poutine.condition(self.observation_model, data=obs_dict)
             kernel = NUTS(conditional_model)
 
         # defaults taken from hmm.py script
@@ -389,7 +388,7 @@ class Plan(object):
             num_chains=1,
         )
 
-        mcmc.run(rs_params)
+        mcmc.run(rs_params, self.joint_belief)
         mcmc.summary(prob=0.95)  # for diagnostics
 
         return mcmc.get_samples()
@@ -401,6 +400,9 @@ class Plan(object):
         # setting up belief vector, build up aggregate vector
         aggregate_size = sum([bpar.belief.size for bpar in self.belief_params])
         self.joint_belief = belief_constructor(samples=torch.cat(samples, dim=0).view(-1, 1000, 1), size=aggregate_size)
+
+        print(samples)
+        print(self.joint_belief)
 
         for idx, param in enumerate(self.belief_params):
             # add samples by generating from prior
