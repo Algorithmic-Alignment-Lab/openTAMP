@@ -5,7 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -253,21 +254,7 @@
       <workItem from="1681590541406" duration="1519000" />
       <workItem from="1681761923243" duration="3538000" />
       <workItem from="1682031698331" duration="718000" />
-      <workItem from="1682178958951" duration="24191000" />
-    </task>
-    <task id="LOCAL-00264" summary="update the observation model">
-      <created>1681453331752</created>
-      <option name="number" value="00264" />
-      <option name="presentableId" value="LOCAL-00264" />
-      <option name="project" value="LOCAL" />
-      <updated>1681453331752</updated>
-    </task>
-    <task id="LOCAL-00265" summary="debug the new observation model">
-      <created>1681453647638</created>
-      <option name="number" value="00265" />
-      <option name="presentableId" value="LOCAL-00265" />
-      <option name="project" value="LOCAL" />
-      <updated>1681453647638</updated>
+      <workItem from="1682178958951" duration="24485000" />
     </task>
     <task id="LOCAL-00266" summary="modify the new observation model">
       <created>1681453839887</created>
@@ -598,7 +585,21 @@
       <option name="project" value="LOCAL" />
       <updated>1682390816400</updated>
     </task>
-    <option name="localTasksCounter" value="313" />
+    <task id="LOCAL-00313" summary="print belief">
+      <created>1682390876319</created>
+      <option name="number" value="00313" />
+      <option name="presentableId" value="LOCAL-00313" />
+      <option name="project" value="LOCAL" />
+      <updated>1682390876319</updated>
+    </task>
+    <task id="LOCAL-00314" summary="print belief shapes">
+      <created>1682390990058</created>
+      <option name="number" value="00314" />
+      <option name="presentableId" value="LOCAL-00314" />
+      <option name="project" value="LOCAL" />
+      <updated>1682390990058</updated>
+    </task>
+    <option name="localTasksCounter" value="315" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -657,8 +658,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="check if works in original context" />
-    <MESSAGE value="separate out max_likelihood_obs from the max_likelihood_state" />
     <MESSAGE value="debug observation model logic" />
     <MESSAGE value="add multi-action support 1" />
     <MESSAGE value="add multi-action support 1 debug" />
@@ -682,7 +681,9 @@
     <MESSAGE value="print prior_samples" />
     <MESSAGE value="print prior_samples shape" />
     <MESSAGE value="modify view on samples" />
-    <option name="LAST_COMMIT_MESSAGE" value="modify view on samples" />
+    <MESSAGE value="print belief" />
+    <MESSAGE value="print belief shapes" />
+    <option name="LAST_COMMIT_MESSAGE" value="print belief shapes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
