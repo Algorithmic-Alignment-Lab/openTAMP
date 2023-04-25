@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/probs/toy_belief.prob" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/domains/belief_space_domain/probs/toy_belief.prob" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/core/util_classes/beliefs.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/util_classes/beliefs.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -254,14 +254,7 @@
       <workItem from="1681590541406" duration="1519000" />
       <workItem from="1681761923243" duration="3538000" />
       <workItem from="1682031698331" duration="718000" />
-      <workItem from="1682178958951" duration="22919000" />
-    </task>
-    <task id="LOCAL-00249" summary="add get_samples in hmm script">
-      <created>1681449756940</created>
-      <option name="number" value="00249" />
-      <option name="presentableId" value="LOCAL-00249" />
-      <option name="project" value="LOCAL" />
-      <updated>1681449756940</updated>
+      <workItem from="1682178958951" duration="23017000" />
     </task>
     <task id="LOCAL-00250" summary="flip order of method">
       <created>1681450051705</created>
@@ -599,7 +592,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682388714838</updated>
     </task>
-    <option name="localTasksCounter" value="298" />
+    <task id="LOCAL-00298" summary="update toy belief">
+      <created>1682389575981</created>
+      <option name="number" value="00298" />
+      <option name="presentableId" value="LOCAL-00298" />
+      <option name="project" value="LOCAL" />
+      <updated>1682389575981</updated>
+    </task>
+    <option name="localTasksCounter" value="299" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -658,7 +658,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="assuming perfectly solved plan" />
     <MESSAGE value="super precise belief estimates" />
     <MESSAGE value="add .item()" />
     <MESSAGE value="add dependency back on the planner" />
@@ -683,7 +682,8 @@
     <MESSAGE value="revert attempt" />
     <MESSAGE value="revert attempt 2" />
     <MESSAGE value="add beliefs as Geom items," />
-    <option name="LAST_COMMIT_MESSAGE" value="add beliefs as Geom items," />
+    <MESSAGE value="update toy belief" />
+    <option name="LAST_COMMIT_MESSAGE" value="update toy belief" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

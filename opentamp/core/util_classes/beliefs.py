@@ -16,7 +16,7 @@ class Belief(object):
 
 class UniformBelief(Belief):
     def __init__(self, shape, low, high):
-        super().__init__(shape)
+        super().__init__(self, shape)
         self.dist = dist.Uniform((low, high))  # hard-coded
 
 
