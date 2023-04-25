@@ -55,6 +55,7 @@ def toy_observation(rs_params, plan_belief_samples):
 
     print(torch.ones(1000)/1000)
     print(b_global)
+    print(plan_belief_samples)
 
     if rs_params is None:
         return b_global

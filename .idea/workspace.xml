@@ -255,14 +255,7 @@
       <workItem from="1682031698331" duration="718000" />
       <workItem from="1682178958951" duration="30918000" />
       <workItem from="1682431124732" duration="198000" />
-      <workItem from="1682431352529" duration="5518000" />
-    </task>
-    <task id="LOCAL-00333" summary="size not shape 2">
-      <created>1682393564579</created>
-      <option name="number" value="00333" />
-      <option name="presentableId" value="LOCAL-00333" />
-      <option name="project" value="LOCAL" />
-      <updated>1682393564579</updated>
+      <workItem from="1682431352529" duration="5562000" />
     </task>
     <task id="LOCAL-00334" summary="manual idx selection">
       <created>1682393692853</created>
@@ -600,7 +593,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682436927019</updated>
     </task>
-    <option name="localTasksCounter" value="382" />
+    <task id="LOCAL-00382" summary="add prints">
+      <created>1682436967105</created>
+      <option name="number" value="00382" />
+      <option name="presentableId" value="LOCAL-00382" />
+      <option name="project" value="LOCAL" />
+      <updated>1682436967105</updated>
+    </task>
+    <option name="localTasksCounter" value="383" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -659,7 +659,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add torch.tensor" />
     <MESSAGE value="add torch.tensor 2" />
     <MESSAGE value="add torch.tensor 3" />
     <MESSAGE value="focus prints" />
@@ -684,7 +683,8 @@
     <MESSAGE value="add args to get_trace" />
     <MESSAGE value="print param nodes" />
     <MESSAGE value="see number of times called" />
-    <option name="LAST_COMMIT_MESSAGE" value="see number of times called" />
+    <MESSAGE value="add prints" />
+    <option name="LAST_COMMIT_MESSAGE" value="add prints" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
