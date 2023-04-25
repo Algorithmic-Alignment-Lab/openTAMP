@@ -7,7 +7,6 @@
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -257,14 +256,7 @@
       <workItem from="1682031698331" duration="718000" />
       <workItem from="1682178958951" duration="30918000" />
       <workItem from="1682431124732" duration="198000" />
-      <workItem from="1682431352529" duration="5056000" />
-    </task>
-    <task id="LOCAL-00327" summary="add print">
-      <created>1682392529608</created>
-      <option name="number" value="00327" />
-      <option name="presentableId" value="LOCAL-00327" />
-      <option name="project" value="LOCAL" />
-      <updated>1682392529608</updated>
+      <workItem from="1682431352529" duration="5138000" />
     </task>
     <task id="LOCAL-00328" summary="add print 2">
       <created>1682392592509</created>
@@ -602,7 +594,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682435940663</updated>
     </task>
-    <option name="localTasksCounter" value="376" />
+    <task id="LOCAL-00376" summary="refactor run_mcmc to work with model trace">
+      <created>1682436511732</created>
+      <option name="number" value="00376" />
+      <option name="presentableId" value="LOCAL-00376" />
+      <option name="project" value="LOCAL" />
+      <updated>1682436511732</updated>
+    </task>
+    <option name="localTasksCounter" value="377" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -661,7 +660,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="item call" />
     <MESSAGE value="print b_g" />
     <MESSAGE value="try with custom class" />
     <MESSAGE value="alter view" />
@@ -686,7 +684,8 @@
     <MESSAGE value="change view to reshape" />
     <MESSAGE value="remove pdb" />
     <MESSAGE value="modify param to sample" />
-    <option name="LAST_COMMIT_MESSAGE" value="modify param to sample" />
+    <MESSAGE value="refactor run_mcmc to work with model trace" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor run_mcmc to work with model trace" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

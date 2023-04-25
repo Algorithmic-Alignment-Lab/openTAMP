@@ -390,6 +390,7 @@ class Plan(object):
         model_trace = poutine.trace(conditional_model)
 
         print(model_trace)
+        print([model_trace.nodes[name]["value"].unconstrained() for name in model_trace.param_nodes])
 
         return model_trace
 
