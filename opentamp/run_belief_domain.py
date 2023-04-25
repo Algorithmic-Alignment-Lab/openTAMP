@@ -45,7 +45,7 @@ def is_in_ray(item, belief):
     return np.pi/2 - 0.1/2 - np.arctan(belief/1.0) <= item <= np.pi/2 + 0.1/2 - np.arctan(belief/1.0) and np.arctan(1) <= item <= np.pi - np.arctan(1)
 
 
-# NOTE: expected names for pyro samples are "belief_"{param-name}
+# NOTE: expected names for pyro samples are "belief_"{param-name}+"belief_global"
 def toy_observation(plan_belief):
     def belief_prog(rs_params):
         # uniformly randomly sample on the seen so far
