@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -256,21 +256,7 @@
       <workItem from="1682031698331" duration="718000" />
       <workItem from="1682178958951" duration="30918000" />
       <workItem from="1682431124732" duration="198000" />
-      <workItem from="1682431352529" duration="4376000" />
-    </task>
-    <task id="LOCAL-00324" summary="more prints 3">
-      <created>1682392006681</created>
-      <option name="number" value="00324" />
-      <option name="presentableId" value="LOCAL-00324" />
-      <option name="project" value="LOCAL" />
-      <updated>1682392006681</updated>
-    </task>
-    <task id="LOCAL-00325" summary="add copy">
-      <created>1682392118985</created>
-      <option name="number" value="00325" />
-      <option name="presentableId" value="LOCAL-00325" />
-      <option name="project" value="LOCAL" />
-      <updated>1682392118985</updated>
+      <workItem from="1682431352529" duration="4507000" />
     </task>
     <task id="LOCAL-00326" summary="debug shaping issues">
       <created>1682392281444</created>
@@ -601,7 +587,21 @@
       <option name="project" value="LOCAL" />
       <updated>1682435684114</updated>
     </task>
-    <option name="localTasksCounter" value="373" />
+    <task id="LOCAL-00373" summary="change view to reshape">
+      <created>1682435809274</created>
+      <option name="number" value="00373" />
+      <option name="presentableId" value="LOCAL-00373" />
+      <option name="project" value="LOCAL" />
+      <updated>1682435809274</updated>
+    </task>
+    <task id="LOCAL-00374" summary="remove pdb">
+      <created>1682435871681</created>
+      <option name="number" value="00374" />
+      <option name="presentableId" value="LOCAL-00374" />
+      <option name="project" value="LOCAL" />
+      <updated>1682435871681</updated>
+    </task>
+    <option name="localTasksCounter" value="375" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -660,8 +660,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="no comma" />
-    <MESSAGE value="remove optional args" />
     <MESSAGE value="torch fix" />
     <MESSAGE value="item call" />
     <MESSAGE value="print b_g" />
@@ -685,7 +683,9 @@
     <MESSAGE value="try Categorical" />
     <MESSAGE value="rewrite with probabilities" />
     <MESSAGE value="refactor indexing" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor indexing" />
+    <MESSAGE value="change view to reshape" />
+    <MESSAGE value="remove pdb" />
+    <option name="LAST_COMMIT_MESSAGE" value="remove pdb" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
