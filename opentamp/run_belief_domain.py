@@ -45,24 +45,29 @@ def is_in_ray(item, belief):
 
 
 # NOTE: expected names for pyro samples are "belief_"{param-name}
-def toy_observation(plan):
-    belief = pyro.sample("belief_g", dist.Uniform(-1, 1))
+def toy_observation(plan_belief):
+    def belief_prog(rs_params):
+        # uniformly randomly sample on the seen so far
+        belief = pyro.sample('belief_global', dist.Empirical(plan_belief.samples, torch.ones(plan_belief.size, len(plan_belief.samples))))
 
-    if plan is None:
-        return belief
+        if rs_params is None:
+            return belief
 
-    # start observations in the first action todo: loop this over actions in the plan
-    obs = torch.torch.empty(plan[0].pose.shape[1]-1)
-    for a in plan:
-        for i in range(1, plan[0].pose.shape[1]):
-            # differentially take conditional depending on the ray
-            # 1.10714871779
-            if is_in_ray(a.pose[0][i], belief.item()):
-                obs[i-1] = pyro.sample('obs'+str(i), dist.Uniform(belief.item()-0.001, belief.item()+0.001))
-            else:
-                obs[i-1] = pyro.sample('obs'+str(i), dist.Uniform(-1, 1))  # no marginal information gotten
+        # start observations in the first action todo: loop this over actions in the plan
+        obs = torch.torch.empty(rs_params[0].pose.shape[1]-1)
+        for a in rs_params:
+            for i in range(1, rs_params[0].pose.shape[1]):
+                # differentially take conditional depending on the ray
+                # 1.10714871779
+                if is_in_ray(a.pose[0][i], belief.item()):
+                    obs[i-1] = pyro.sample('obs'+str(i), dist.Uniform(belief.item()-0.001, belief.item()+0.001))
+                else:
+                    obs[i-1] = pyro.sample('obs'+str(i), dist.Uniform(-1, 1))  # no marginal information gotten
 
-    return obs
+        belief_g = pyro.sample('belief_g', belief)  # identical as global sample, since 1-parameter, in others would get subcoordinates
+
+        return obs
+    return belief_prog
 
 # Run planning to obtain a final plan.
 plan, descr = p_mod_abs(
@@ -74,7 +79,7 @@ if plan is not None:
     print(plan.actions)
     print(plan.params['theta'].pose)  # track pose through time
     print(plan.params['g'].value)  # track goal through time (not modified)
-    print(plan.params['g'].samples)
+    print(plan.params['g'].belief)
 
 print(descr)
 

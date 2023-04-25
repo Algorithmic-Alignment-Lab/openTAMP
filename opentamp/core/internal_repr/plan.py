@@ -7,6 +7,7 @@ import torch
 
 import pyro
 import pyro.distributions as dist
+from opentamp.core.util_classes.beliefs import belief_constructor
 import pyro.poutine as poutine
 from pyro.infer import MCMC, NUTS
 
@@ -26,11 +27,14 @@ class Plan(object):
 
     def __init__(self, params, actions, horizon, env, determine_free=True, observation_model=None, max_likelihood_obs = None, sess=None):
         self.params = params
+        self.belief_params = self.build_belief_params()  # fix order for random params
         self.backup = params
         self.actions = actions
         self.horizon = horizon
         self.observation_model = observation_model
         self.max_likelihood_obs = max_likelihood_obs
+        self.joint_belief = None  # joint belief
+        self.log_prob_list = []
         self.time = np.zeros((1, horizon))
         self.env = env
         self.initialized = False
@@ -39,10 +43,15 @@ class Plan(object):
         self.sampling_trace = []
         self.hl_preds = []
         self.start = 0
-        self.prior = None
         if determine_free:
             self._determine_free_attrs()
 
+    def build_belief_params(self):
+        random_params = []
+        for param_key, param in self.params.items():
+            if hasattr(param, 'belief'):
+                random_params.append(param)
+        return random_params
 
     @staticmethod
     def create_plan_for_preds(preds, env):
@@ -353,15 +362,21 @@ class Plan(object):
     def set_max_likelihood_obs(self, max_likelihood_obs):
         self.max_likelihood_obs = max_likelihood_obs
 
+    def sample_priors(self, ):
+        prior_samples = []
+        for param in self.belief_params:
+            prior_samples.append(param.belief.dist.sample_n(1000))
+        return prior_samples  # concatenate all sampled tensors
+
     # based off of hmm example from pyro docs
-    def gen_samples(self, plan=None):
+    def sample_mcmc_run(self, rs_params=None):
         # create unconditional or conditional model, depending
-        if plan is None:
-            kernel = NUTS(self.observation_model)
+        if rs_params is None:
+            kernel = NUTS(self.observation_model(self.joint_belief))
         else:
             # create a conditioned model on the plan
-            obs_dict = {'obs'+str(i): torch.tensor(self.max_likelihood_obs) for i in range(1, plan[0].pose.shape[1]+1)}
-            conditional_model = poutine.condition(self.observation_model, data=obs_dict)
+            obs_dict = {'obs'+str(i): torch.tensor(self.max_likelihood_obs) for i in range(1, rs_params[0].pose.shape[1]+1)}
+            conditional_model = poutine.condition(self.observation_model(self.joint_belief), data=obs_dict)
             kernel = NUTS(conditional_model)
 
         # defaults taken from hmm.py script
@@ -372,28 +387,31 @@ class Plan(object):
             num_chains=1,
         )
 
-        mcmc.run(plan)
+        mcmc.run(rs_params)
         mcmc.summary(prob=0.95)  # for diagnostics
 
         return mcmc.get_samples()
 
     def initialize_beliefs(self):
         # max-likelihood as parameter here
+        samples = self.sample_priors()
 
-        new_samples = self.gen_samples()
+        # setting up belief vector, build up aggregate vector
+        aggregate_size = sum([bpar.belief.size for bpar in self.belief_params])
+        self.joint_belief = belief_constructor(torch.cat(samples, dim=2), size=aggregate_size)
 
-        for param_key, param in self.params.items():
-            if hasattr(param, 'samples'):
-                # add samples by generating from prior
-                param.samples = new_samples['belief_'+param.name].detach().numpy().reshape((-1, 1))
+        for idx, param in enumerate(self.belief_params):
+            # add samples by generating from prior
+            param.belief.samples = samples[idx].detach().numpy().reshape((-1, 1))
 
-    # observation_models is an input dict matching belief parameters to
-    def filter_beliefs(self, ll_plan):
+    # called once per high-level action execution
+    def filter_beliefs(self, rs_params):
         # max-likelihood feeds back on object here
 
-        new_samples = self.gen_samples(ll_plan)
+        new_samples = self.sample_mcmc_run(rs_params)
+
+        self.joint_belief = belief_constructor(samples=new_samples['belief_global'], size=self.joint_belief.size)
 
         # construct a model object, over which we do inference, starting with uniform prior
-        for param_key, param in self.params.items():
-            if hasattr(param, 'samples'):
-                param.samples = new_samples['belief_'+param.name].detach().numpy().reshape((-1, 1))
+        for param in self.belief_params:
+            param.belief.samples = new_samples['belief_'+param.name].detach().numpy().reshape((-1, 1))

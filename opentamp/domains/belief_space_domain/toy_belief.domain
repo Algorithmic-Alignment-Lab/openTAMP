@@ -5,11 +5,11 @@
 
 Types: CameraAngle, PointCoord, WallUp, WallDown, WallDist, RayWidth
 
-Attribute Import Paths: Vector1d opentamp.core.util_classes.matrix, Vector2d opentamp.core.util_classes.matrix, DimVectorZeroed opentamp.core.util_classes.matrix
+Attribute Import Paths: Vector1d opentamp.core.util_classes.matrix, Vector2d opentamp.core.util_classes.matrix, UniformBelief opentamp.core.util_classes.beliefs
 
 Predicates Import Path: opentamp.core.util_classes.toy_domain_predicates
 
-Primitive Predicates: pose, CameraAngle, Vector1d; value, PointCoord, Vector1d; samples, PointCoord, DimVectorZeroed; value, WallUp, Vector1d; value, WallDown, Vector1d; value, WallDist, Vector1d; value, RayWidth, Vector1d
+Primitive Predicates: pose, CameraAngle, Vector1d; value, PointCoord, Vector1d; belief, PointCoord, UniformBelief; value, WallUp, Vector1d; value, WallDown, Vector1d; value, WallDist, Vector1d; value, RayWidth, Vector1d
 Derived Predicates: AngleViewingWall, CameraAngle, WallUp, WallDown, WallDist; CoordInView, CameraAngle, PointCoord, WallDist, RayWidth; AlwaysTrue, CameraAngle
 
 # Updated parsing functionality to add optional link of belief-space predicates among primary (used in the hook)
