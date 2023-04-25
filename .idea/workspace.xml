@@ -5,8 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -254,14 +253,7 @@
       <workItem from="1681590541406" duration="1519000" />
       <workItem from="1681761923243" duration="3538000" />
       <workItem from="1682031698331" duration="718000" />
-      <workItem from="1682178958951" duration="24485000" />
-    </task>
-    <task id="LOCAL-00266" summary="modify the new observation model">
-      <created>1681453839887</created>
-      <option name="number" value="00266" />
-      <option name="presentableId" value="LOCAL-00266" />
-      <option name="project" value="LOCAL" />
-      <updated>1681453839887</updated>
+      <workItem from="1682178958951" duration="24525000" />
     </task>
     <task id="LOCAL-00267" summary="modify the new observation model 2">
       <created>1681453981416</created>
@@ -599,7 +591,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682390990058</updated>
     </task>
-    <option name="localTasksCounter" value="315" />
+    <task id="LOCAL-00315" summary="print belief shapes 2">
+      <created>1682391172898</created>
+      <option name="number" value="00315" />
+      <option name="presentableId" value="LOCAL-00315" />
+      <option name="project" value="LOCAL" />
+      <updated>1682391172898</updated>
+    </task>
+    <option name="localTasksCounter" value="316" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -658,7 +657,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="debug observation model logic" />
     <MESSAGE value="add multi-action support 1" />
     <MESSAGE value="add multi-action support 1 debug" />
     <MESSAGE value="add multi-action support 1 print" />
@@ -683,7 +681,8 @@
     <MESSAGE value="modify view on samples" />
     <MESSAGE value="print belief" />
     <MESSAGE value="print belief shapes" />
-    <option name="LAST_COMMIT_MESSAGE" value="print belief shapes" />
+    <MESSAGE value="print belief shapes 2" />
+    <option name="LAST_COMMIT_MESSAGE" value="print belief shapes 2" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

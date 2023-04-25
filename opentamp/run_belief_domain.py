@@ -68,7 +68,7 @@ def toy_observation(plan_belief):
                 else:
                     obs[i-1] = pyro.sample('obs'+str(i), dist.Uniform(-1, 1))  # no marginal information gotten
 
-        belief_g = pyro.sample('belief_g', belief)  # identical as global sample, since 1-parameter, in others would get subcoordinates
+        belief_g = pyro.sample('belief_g', lambda: belief)  # identical as global sample, since 1-parameter, in others would get subcoordinates
 
         return obs
     return belief_prog
