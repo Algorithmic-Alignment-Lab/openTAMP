@@ -370,15 +370,11 @@ class Plan(object):
         return prior_samples  # concatenate all sampled tensors
 
     # based off of hmm example from pyro docs
-    def sample_mcmc_run(self, rs_params=None):
-        # create unconditional or conditional model, depending
-        if rs_params is None:
-            kernel = NUTS(self.observation_model)
-        else:
-            # create a conditioned model on the plan
-            obs_dict = {'obs'+str(i): torch.tensor(self.max_likelihood_obs) for i in range(1, rs_params[0].pose.shape[1]+1)}
-            conditional_model = poutine.condition(self.observation_model, data=obs_dict)
-            kernel = NUTS(conditional_model)
+    def sample_mcmc_run(self, rs_params):
+        # create a conditioned model on the plan
+        obs_dict = {'obs'+str(i): torch.tensor(self.max_likelihood_obs) for i in range(1, rs_params[0].pose.shape[1]+1)}
+        conditional_model = poutine.condition(self.observation_model, data=obs_dict)
+        kernel = NUTS(conditional_model)
 
         # defaults taken from hmm.py script
         mcmc = MCMC(
@@ -391,7 +387,11 @@ class Plan(object):
         mcmc.run(rs_params, copy.copy(self.joint_belief.samples))
         mcmc.summary(prob=0.95)  # for diagnostics
 
-        return mcmc.get_samples()
+        model_trace = poutine.trace(conditional_model)
+
+        print(model_trace)
+
+        return model_trace
 
     def initialize_beliefs(self):
         # max-likelihood as parameter here
