@@ -7,7 +7,6 @@
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -255,14 +254,7 @@
       <workItem from="1681590541406" duration="1519000" />
       <workItem from="1681761923243" duration="3538000" />
       <workItem from="1682031698331" duration="718000" />
-      <workItem from="1682178958951" duration="24834000" />
-    </task>
-    <task id="LOCAL-00270" summary="modify obs model 2">
-      <created>1681454473886</created>
-      <option name="number" value="00270" />
-      <option name="presentableId" value="LOCAL-00270" />
-      <option name="project" value="LOCAL" />
-      <updated>1681454473886</updated>
+      <workItem from="1682178958951" duration="25010000" />
     </task>
     <task id="LOCAL-00271" summary="modify obs logic">
       <created>1681454724557</created>
@@ -600,7 +592,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682391445088</updated>
     </task>
-    <option name="localTasksCounter" value="319" />
+    <task id="LOCAL-00319" summary="plan belief samples shape">
+      <created>1682391522773</created>
+      <option name="number" value="00319" />
+      <option name="presentableId" value="LOCAL-00319" />
+      <option name="project" value="LOCAL" />
+      <updated>1682391522773</updated>
+    </task>
+    <option name="localTasksCounter" value="320" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -659,7 +658,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add multi-action support 2" />
     <MESSAGE value="revert attempt" />
     <MESSAGE value="revert attempt 2" />
     <MESSAGE value="add beliefs as Geom items," />
@@ -684,7 +682,8 @@
     <MESSAGE value="print belief shapes 3" />
     <MESSAGE value="remove a print" />
     <MESSAGE value="add copy statements" />
-    <option name="LAST_COMMIT_MESSAGE" value="add copy statements" />
+    <MESSAGE value="plan belief samples shape" />
+    <option name="LAST_COMMIT_MESSAGE" value="plan belief samples shape" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

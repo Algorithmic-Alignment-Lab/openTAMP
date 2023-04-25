@@ -402,16 +402,15 @@ class Plan(object):
 
         for idx, param in enumerate(self.belief_params):
             # add samples by generating from prior
-            param.belief.samples = samples[idx].detach().numpy().reshape((1, -1))
+            param.belief.samples = samples[idx].detach().numpy().reshape((1000, -1))
 
     # called once per high-level action execution
     def filter_beliefs(self, rs_params):
         # max-likelihood feeds back on object here
-
         new_samples = self.sample_mcmc_run(rs_params)
 
         self.joint_belief = belief_constructor(samples=new_samples['belief_global'], size=self.joint_belief.size)
 
         # construct a model object, over which we do inference, starting with uniform prior
         for param in self.belief_params:
-            param.belief.samples = new_samples['belief_'+param.name].detach().numpy().reshape((1, -1))
+            param.belief.samples = new_samples['belief_'+param.name].detach().numpy().reshape((1000, -1))  # expecting hooks
