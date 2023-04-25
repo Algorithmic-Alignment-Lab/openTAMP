@@ -7,7 +7,6 @@
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -257,14 +256,7 @@
       <workItem from="1682031698331" duration="718000" />
       <workItem from="1682178958951" duration="30918000" />
       <workItem from="1682431124732" duration="198000" />
-      <workItem from="1682431352529" duration="10730000" />
-    </task>
-    <task id="LOCAL-00341" summary="modify calls">
-      <created>1682394687247</created>
-      <option name="number" value="00341" />
-      <option name="presentableId" value="LOCAL-00341" />
-      <option name="project" value="LOCAL" />
-      <updated>1682394687247</updated>
+      <workItem from="1682431352529" duration="10874000" />
     </task>
     <task id="LOCAL-00342" summary="add item calls to everything">
       <created>1682394836684</created>
@@ -602,7 +594,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682457765938</updated>
     </task>
-    <option name="localTasksCounter" value="390" />
+    <task id="LOCAL-00390" summary="remove intermediate belief_$name, index directly into joint belief">
+      <created>1682458370501</created>
+      <option name="number" value="00390" />
+      <option name="presentableId" value="LOCAL-00390" />
+      <option name="project" value="LOCAL" />
+      <updated>1682458370501</updated>
+    </task>
+    <option name="localTasksCounter" value="391" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -661,7 +660,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add no_grad" />
     <MESSAGE value="more explicitly shape with dist empirical" />
     <MESSAGE value="undo generator program, add effects" />
     <MESSAGE value="pass samples directly" />
@@ -686,7 +684,8 @@
     <MESSAGE value="add print" />
     <MESSAGE value="alter view" />
     <MESSAGE value="remove prints" />
-    <option name="LAST_COMMIT_MESSAGE" value="remove prints" />
+    <MESSAGE value="remove intermediate belief_$name, index directly into joint belief" />
+    <option name="LAST_COMMIT_MESSAGE" value="remove intermediate belief_$name, index directly into joint belief" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
