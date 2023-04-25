@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -256,14 +255,7 @@
       <workItem from="1682031698331" duration="718000" />
       <workItem from="1682178958951" duration="30918000" />
       <workItem from="1682431124732" duration="198000" />
-      <workItem from="1682431352529" duration="12215000" />
-    </task>
-    <task id="LOCAL-00352" summary="print b_g">
-      <created>1682397199863</created>
-      <option name="number" value="00352" />
-      <option name="presentableId" value="LOCAL-00352" />
-      <option name="project" value="LOCAL" />
-      <updated>1682397199863</updated>
+      <workItem from="1682431352529" duration="12281000" />
     </task>
     <task id="LOCAL-00353" summary="try with custom class">
       <created>1682432014445</created>
@@ -601,7 +593,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682459933765</updated>
     </task>
-    <option name="localTasksCounter" value="401" />
+    <task id="LOCAL-00401" summary="print obs (conditioning screwed up?) 2">
+      <created>1682459994836</created>
+      <option name="number" value="00401" />
+      <option name="presentableId" value="LOCAL-00401" />
+      <option name="project" value="LOCAL" />
+      <updated>1682459994836</updated>
+    </task>
+    <option name="localTasksCounter" value="402" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -660,7 +659,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="remove pdb" />
     <MESSAGE value="modify param to sample" />
     <MESSAGE value="refactor run_mcmc to work with model trace" />
     <MESSAGE value="check if values can be gotten here" />
@@ -685,7 +683,8 @@
     <MESSAGE value="modify observation model" />
     <MESSAGE value="print sample statistics of the belief" />
     <MESSAGE value="print obs (conditioning screwed up?)" />
-    <option name="LAST_COMMIT_MESSAGE" value="print obs (conditioning screwed up?)" />
+    <MESSAGE value="print obs (conditioning screwed up?) 2" />
+    <option name="LAST_COMMIT_MESSAGE" value="print obs (conditioning screwed up?) 2" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

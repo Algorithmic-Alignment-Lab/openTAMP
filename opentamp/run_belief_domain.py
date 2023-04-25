@@ -60,11 +60,11 @@ def toy_observation(rs_params, belief_mean, belief_cov):
         for i in range(1, rs_params[0].pose.shape[1]):
             # differentially take conditional depending on the ray
             # 1.10714871779
-            print(b_global.item())
-            print(a.pose[0][i])
             if is_in_ray(a.pose[0][i], b_global.item()):
+                print('reached in ray')
                 obs[i-1] = pyro.sample('obs'+str(i), dist.Uniform(b_global.item()-0.001, b_global.item()+0.001))
             else:
+                print('reached out ray')
                 obs[i-1] = pyro.sample('obs'+str(i), dist.Uniform(b_global.item()-1, b_global.item()+1))  # no marginal information gotten
 
     return obs
