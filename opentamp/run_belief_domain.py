@@ -56,7 +56,7 @@ def toy_observation(plan_belief):
 
         import pdb; pdb.set_trace()
 
-        b_global = pyro.sample('belief_global', CustomDist(plan_belief.samples))
+        b_global = pyro.sample('belief_global', CustomDist(plan_belief.samples.view(1000, -1)))
 
         print(b_global.item())
 
