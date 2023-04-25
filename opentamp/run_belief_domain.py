@@ -51,6 +51,8 @@ def toy_observation(plan_belief):
         print(plan_belief.samples[0])
         print(plan_belief.samples.shape)
 
+        import pdb; pdb.set_trace()
+
         belief = pyro.sample('belief_global', dist.Empirical(plan_belief.samples, torch.ones(plan_belief.samples.shape[0])))
 
         print(belief[0])
