@@ -45,10 +45,6 @@ def is_in_ray(item, belief):
     return np.pi/2 - 0.1/2 - np.arctan(belief/1.0) <= item <= np.pi/2 + 0.1/2 - np.arctan(belief/1.0) and np.arctan(1) <= item <= np.pi - np.arctan(1)
 
 
-def sample_global(plan_belief):
-    return plan_belief.samples[np.random.choice(plan_belief.samples.shape[0])]
-
-
 # NOTE: expected names for pyro samples are "belief_"{param-name}+""
 def toy_observation(plan_belief):
     def belief_prog(rs_params):
@@ -59,7 +55,7 @@ def toy_observation(plan_belief):
 
         import pdb; pdb.set_trace()
 
-        b_global = pyro.sample('belief_global', dist.Empirical(plan_belief.samples))
+        b_global = pyro.sample('belief_global', dist.Empirical(plan_belief.samples, torch.ones(1, 1000)))
 
         print(b_global[0])
 
