@@ -7,6 +7,7 @@
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -256,14 +257,7 @@
       <workItem from="1682031698331" duration="718000" />
       <workItem from="1682178958951" duration="30918000" />
       <workItem from="1682431124732" duration="198000" />
-      <workItem from="1682431352529" duration="10197000" />
-    </task>
-    <task id="LOCAL-00339" summary="debug ones call">
-      <created>1682394221511</created>
-      <option name="number" value="00339" />
-      <option name="presentableId" value="LOCAL-00339" />
-      <option name="project" value="LOCAL" />
-      <updated>1682394221511</updated>
+      <workItem from="1682431352529" duration="10248000" />
     </task>
     <task id="LOCAL-00340" summary="print rs_params">
       <created>1682394476942</created>
@@ -601,7 +595,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682457636663</updated>
     </task>
-    <option name="localTasksCounter" value="388" />
+    <task id="LOCAL-00388" summary="alter view">
+      <created>1682457711676</created>
+      <option name="number" value="00388" />
+      <option name="presentableId" value="LOCAL-00388" />
+      <option name="project" value="LOCAL" />
+      <updated>1682457711676</updated>
+    </task>
+    <option name="localTasksCounter" value="389" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -660,7 +661,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="alter return type to sum().log()" />
     <MESSAGE value="requires_grad checks" />
     <MESSAGE value="add no_grad" />
     <MESSAGE value="more explicitly shape with dist empirical" />
@@ -685,7 +685,8 @@
     <MESSAGE value="add belief prints" />
     <MESSAGE value="add mean + cov prints" />
     <MESSAGE value="add print" />
-    <option name="LAST_COMMIT_MESSAGE" value="add print" />
+    <MESSAGE value="alter view" />
+    <option name="LAST_COMMIT_MESSAGE" value="alter view" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
