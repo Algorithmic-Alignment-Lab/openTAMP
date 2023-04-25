@@ -52,6 +52,8 @@ def toy_observation(plan_belief):
 
         belief = pyro.sample('belief_global', dist.Empirical(plan_belief.samples, torch.ones(len(plan_belief.samples))))
 
+        print(belief)
+
         if rs_params is None:
             return belief
 
