@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="move to Laplace estimate">
+    <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -257,14 +256,7 @@
       <workItem from="1682031698331" duration="718000" />
       <workItem from="1682178958951" duration="30918000" />
       <workItem from="1682431124732" duration="198000" />
-      <workItem from="1682431352529" duration="9846000" />
-    </task>
-    <task id="LOCAL-00335" summary="add lambda expressions">
-      <created>1682393744447</created>
-      <option name="number" value="00335" />
-      <option name="presentableId" value="LOCAL-00335" />
-      <option name="project" value="LOCAL" />
-      <updated>1682393744447</updated>
+      <workItem from="1682431352529" duration="10002000" />
     </task>
     <task id="LOCAL-00336" summary="lambda debug">
       <created>1682393788608</created>
@@ -602,7 +594,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682437018651</updated>
     </task>
-    <option name="localTasksCounter" value="384" />
+    <task id="LOCAL-00384" summary="move to Laplace estimate">
+      <created>1682457347735</created>
+      <option name="number" value="00384" />
+      <option name="presentableId" value="LOCAL-00384" />
+      <option name="project" value="LOCAL" />
+      <updated>1682457347735</updated>
+    </task>
+    <option name="localTasksCounter" value="385" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -661,7 +660,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add torch.tensor 3" />
     <MESSAGE value="focus prints" />
     <MESSAGE value="log_p call focus" />
     <MESSAGE value="check inf return" />
@@ -686,7 +684,8 @@
     <MESSAGE value="see number of times called" />
     <MESSAGE value="add prints" />
     <MESSAGE value="plan_belief_samples" />
-    <option name="LAST_COMMIT_MESSAGE" value="plan_belief_samples" />
+    <MESSAGE value="move to Laplace estimate" />
+    <option name="LAST_COMMIT_MESSAGE" value="move to Laplace estimate" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

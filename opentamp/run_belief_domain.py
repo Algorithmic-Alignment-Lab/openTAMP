@@ -55,6 +55,8 @@ def toy_observation(rs_params, belief_mean, belief_cov):
 
     b_global = pyro.sample('belief_global', dist.Normal(belief_mean, belief_cov))
 
+    print(b_global)
+
     if rs_params is None:
         return b_global
 
