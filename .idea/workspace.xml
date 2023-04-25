@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -254,14 +253,7 @@
       <workItem from="1681590541406" duration="1519000" />
       <workItem from="1681761923243" duration="3538000" />
       <workItem from="1682031698331" duration="718000" />
-      <workItem from="1682178958951" duration="24041000" />
-    </task>
-    <task id="LOCAL-00261" summary="remove prints">
-      <created>1681452356261</created>
-      <option name="number" value="00261" />
-      <option name="presentableId" value="LOCAL-00261" />
-      <option name="project" value="LOCAL" />
-      <updated>1681452356261</updated>
+      <workItem from="1682178958951" duration="24066000" />
     </task>
     <task id="LOCAL-00262" summary="debug some radians bs">
       <created>1681452737929</created>
@@ -599,7 +591,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682390524413</updated>
     </task>
-    <option name="localTasksCounter" value="310" />
+    <task id="LOCAL-00310" summary="print prior_samples">
+      <created>1682390725474</created>
+      <option name="number" value="00310" />
+      <option name="presentableId" value="LOCAL-00310" />
+      <option name="project" value="LOCAL" />
+      <updated>1682390725474</updated>
+    </task>
+    <option name="localTasksCounter" value="311" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -658,7 +657,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="debug multi-step 8" />
     <MESSAGE value="debug multi-step 9" />
     <MESSAGE value="debug multi-step 10" />
     <MESSAGE value="check if works in original context" />
@@ -683,7 +681,8 @@
     <MESSAGE value="add keywords" />
     <MESSAGE value="convert from type object" />
     <MESSAGE value="size one, samples != size" />
-    <option name="LAST_COMMIT_MESSAGE" value="size one, samples != size" />
+    <MESSAGE value="print prior_samples" />
+    <option name="LAST_COMMIT_MESSAGE" value="print prior_samples" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
