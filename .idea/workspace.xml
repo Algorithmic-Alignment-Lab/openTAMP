@@ -253,14 +253,7 @@
       <workItem from="1681590541406" duration="1519000" />
       <workItem from="1681761923243" duration="3538000" />
       <workItem from="1682031698331" duration="718000" />
-      <workItem from="1682178958951" duration="23146000" />
-    </task>
-    <task id="LOCAL-00253" summary="debug in_ray condition">
-      <created>1681450724671</created>
-      <option name="number" value="00253" />
-      <option name="presentableId" value="LOCAL-00253" />
-      <option name="project" value="LOCAL" />
-      <updated>1681450724671</updated>
+      <workItem from="1682178958951" duration="23189000" />
     </task>
     <task id="LOCAL-00254" summary="add belief print">
       <created>1681450881599</created>
@@ -598,7 +591,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682389770263</updated>
     </task>
-    <option name="localTasksCounter" value="302" />
+    <task id="LOCAL-00302" summary="add types 2">
+      <created>1682389800861</created>
+      <option name="number" value="00302" />
+      <option name="presentableId" value="LOCAL-00302" />
+      <option name="project" value="LOCAL" />
+      <updated>1682389800862</updated>
+    </task>
+    <option name="localTasksCounter" value="303" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -657,7 +657,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add sample multi-step plan as test" />
     <MESSAGE value="debug multi-step" />
     <MESSAGE value="debug multi-step 2" />
     <MESSAGE value="debug multi-step 3" />
@@ -682,7 +681,8 @@
     <MESSAGE value="update toy belief 2" />
     <MESSAGE value="update toy belief 3" />
     <MESSAGE value="add types" />
-    <option name="LAST_COMMIT_MESSAGE" value="add types" />
+    <MESSAGE value="add types 2" />
+    <option name="LAST_COMMIT_MESSAGE" value="add types 2" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
