@@ -4,7 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
+    <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="try Categorical">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -255,14 +256,7 @@
       <workItem from="1682031698331" duration="718000" />
       <workItem from="1682178958951" duration="30918000" />
       <workItem from="1682431124732" duration="198000" />
-      <workItem from="1682431352529" duration="3735000" />
-    </task>
-    <task id="LOCAL-00320" summary="reshape returns">
-      <created>1682391697611</created>
-      <option name="number" value="00320" />
-      <option name="presentableId" value="LOCAL-00320" />
-      <option name="project" value="LOCAL" />
-      <updated>1682391697611</updated>
+      <workItem from="1682431352529" duration="4022000" />
     </task>
     <task id="LOCAL-00321" summary="as rs_params prints">
       <created>1682391760328</created>
@@ -600,7 +594,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682435102220</updated>
     </task>
-    <option name="localTasksCounter" value="369" />
+    <task id="LOCAL-00369" summary="remove b_g">
+      <created>1682435155702</created>
+      <option name="number" value="00369" />
+      <option name="presentableId" value="LOCAL-00369" />
+      <option name="project" value="LOCAL" />
+      <updated>1682435155702</updated>
+    </task>
+    <option name="localTasksCounter" value="370" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -659,7 +660,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="one more time with Empirical" />
     <MESSAGE value="modify to shape" />
     <MESSAGE value="modify shape, aggregation along second dim" />
     <MESSAGE value="view rewrite" />
@@ -684,7 +684,8 @@
     <MESSAGE value="more explicitly shape with dist empirical" />
     <MESSAGE value="undo generator program, add effects" />
     <MESSAGE value="pass samples directly" />
-    <option name="LAST_COMMIT_MESSAGE" value="pass samples directly" />
+    <MESSAGE value="remove b_g" />
+    <option name="LAST_COMMIT_MESSAGE" value="remove b_g" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

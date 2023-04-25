@@ -52,7 +52,8 @@ def toy_observation(rs_params, plan_belief_samples):
 
     import pdb; pdb.set_trace()
 
-    b_global = pyro.sample('belief_global', dist.Empirical(plan_belief_samples.view(1, 1000, -1), torch.ones(1, 1000)))
+    b_global_idx = pyro.sample('belief_global_idx', dist.Categorical(logits=torch.ones(1000)))
+    b_global = pyro.param('belief_global', plan_belief_samples[b_global_idx])
 
     if rs_params is None:
         return b_global
@@ -68,7 +69,7 @@ def toy_observation(rs_params, plan_belief_samples):
             else:
                 obs[i-1] = pyro.sample('obs'+str(i), dist.Uniform(-1, 1))  # no marginal information gotten
 
-    # b_g = pyro.param('belief_g', lambda: copy.copy(b_global))  # identical as global sample, since 1-parameter, in others would get subcoordinate
+    b_g = pyro.param('belief_g', lambda: copy.copy(b_global))  # identical as global sample, since 1-parameter, in others would get subcoordinate
 
     return obs
 
