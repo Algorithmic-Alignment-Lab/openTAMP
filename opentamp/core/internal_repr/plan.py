@@ -387,7 +387,7 @@ class Plan(object):
         mcmc.run(rs_params, copy.copy(self.joint_belief.samples))
         mcmc.summary(prob=0.95)  # for diagnostics
 
-        model_trace = poutine.trace(conditional_model)
+        model_trace = poutine.trace(conditional_model).get_trace(0.0)
 
         print(model_trace)
         print([model_trace.nodes[name]["value"].unconstrained() for name in model_trace.param_nodes])
