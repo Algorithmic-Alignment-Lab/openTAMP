@@ -5,8 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/core/internal_repr/plan.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -254,14 +253,7 @@
       <workItem from="1681590541406" duration="1519000" />
       <workItem from="1681761923243" duration="3538000" />
       <workItem from="1682031698331" duration="718000" />
-      <workItem from="1682178958951" duration="25010000" />
-    </task>
-    <task id="LOCAL-00271" summary="modify obs logic">
-      <created>1681454724557</created>
-      <option name="number" value="00271" />
-      <option name="presentableId" value="LOCAL-00271" />
-      <option name="project" value="LOCAL" />
-      <updated>1681454724557</updated>
+      <workItem from="1682178958951" duration="25071000" />
     </task>
     <task id="LOCAL-00272" summary="condition on whether or not hit was had too">
       <created>1681455115432</created>
@@ -599,7 +591,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682391522773</updated>
     </task>
-    <option name="localTasksCounter" value="320" />
+    <task id="LOCAL-00320" summary="reshape returns">
+      <created>1682391697611</created>
+      <option name="number" value="00320" />
+      <option name="presentableId" value="LOCAL-00320" />
+      <option name="project" value="LOCAL" />
+      <updated>1682391697611</updated>
+    </task>
+    <option name="localTasksCounter" value="321" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -658,7 +657,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="revert attempt" />
     <MESSAGE value="revert attempt 2" />
     <MESSAGE value="add beliefs as Geom items," />
     <MESSAGE value="update toy belief" />
@@ -683,7 +681,8 @@
     <MESSAGE value="remove a print" />
     <MESSAGE value="add copy statements" />
     <MESSAGE value="plan belief samples shape" />
-    <option name="LAST_COMMIT_MESSAGE" value="plan belief samples shape" />
+    <MESSAGE value="reshape returns" />
+    <option name="LAST_COMMIT_MESSAGE" value="reshape returns" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
