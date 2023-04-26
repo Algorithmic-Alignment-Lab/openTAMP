@@ -415,7 +415,7 @@ class Spot(Robot):
     """
     def __init__(self):
         self._type = "spot"
-        spot_shape = opentamp.__path__._path[0] + "/robot_info/spot_with_lidar.xml"
+        spot_shape = opentamp.__path__._path[0] + "/robot_info/spot_simple.xml"
         super(Spot, self).__init__(spot_shape)
 
         self.jnt_names = {'pos': ['robot_x', 'robot_y'],

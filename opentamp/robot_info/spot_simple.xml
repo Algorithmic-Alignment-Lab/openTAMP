@@ -1,0 +1,24 @@
+<mujoco model="spot_model">
+    <worldbody name="base">
+        <geom name="ground_plane" type="plane" pos="0 0 -0.1" size="20 20 .05" rgba="1. 1. 1. 0.5" friction="1. 1. 1." />
+        <camera name="overhead_camera" pos="0 0.0 25" quat="0.707 0 0 -0.707" />
+        <body name="spot" pos="0 0 1.0">
+            <joint axis="1 0 0" name="robot_x" type="slide" pos="0 0 0" />
+            <joint axis="0 1 0" name="robot_y" type="slide" pos="0 0 0" />
+            <joint axis="0 0 1" name="robot_theta" type="hinge" pos="0 0 0" limited="false"/>
+            <geom name="spot" type="box" size="1 0.3 0.3" mass="5" rgba="0 0 0 1"/>
+
+            <camera name="frontleft_fisheye" pos="0 0 0" quat="1 0 0 0" fovy="45" ipdb="0.68"/>
+            <camera name="frontright_fisheye" pos="0 0 0" quat="1 0 0 0" fovy="45" ipdb="0.68"/>
+            <camera name="left_fisheye" pos="0 0 0" quat="1 0 0 0" fovy="45" ipdb="0.68"/>
+            <camera name="right_fisheye" pos="0 0 0" quat="1 0 0 0" fovy="45" ipdb="0.68"/>
+            <camera name="back_fisheye" pos="0 0 0" quat="1 0 0 0" fovy="45" ipdb="0.68"/>
+        </body>
+    </worldbody>
+
+    <actuator>
+        <velocity kv="500" joint="robot_x" name="robot_x" ctrllimited="true" ctrlrange="-20 20" />
+        <velocity kv="500" joint="robot_y" name="robot_y" ctrllimited="true" ctrlrange="-20 20" />
+        <velocity kv="100" joint="robot_theta" name="robot_theta" ctrllimited="true" ctrlrange="-20 20" />
+    </actuator>
+</mujoco>
