@@ -14,9 +14,10 @@ class ParseDomainConfig(object):
     @staticmethod
     def parse(domain_config):
 
-        return Domain(ParseDomainConfig._create_param_schemas(domain_config),
-                      ParseDomainConfig._create_pred_schemas(domain_config),
-                      ParseDomainConfig._create_action_schemas(domain_config))
+            return Domain(ParseDomainConfig._create_param_schemas(domain_config),
+                          ParseDomainConfig._create_pred_schemas(domain_config),
+                          ParseDomainConfig._create_action_schemas(domain_config),
+                          belief="Belief" in domain_config)
 
     @staticmethod
     def _create_param_schemas(domain_config):
@@ -80,6 +81,9 @@ class ParseDomainConfig(object):
             assert "pose" in attr_dict or "value" in attr_dict
             obj_or_symbol = ParseDomainConfig._dispatch_obj_or_symbol(attr_dict)
             param_schemas[type_name] = ParameterSchema(type_name, getattr(parameter, obj_or_symbol), attr_dict, super_types[type_name])
+
+        print(param_schemas)
+
         return param_schemas
 
     @staticmethod

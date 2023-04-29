@@ -150,7 +150,7 @@ class NAMOSolver_OSQP(backtrack_ll_solver_OSQP.BacktrackLLSolverOSQP):
                 target = act.params[2]
                 radius1 = act.params[0].geom.radius
                 radius2 = act.params[1].geom.radius
-                dist = radisu1 + radius2
+                dist = radius1 + radius2
                 target_pos = target.value - [[0], [dist]]
                 robot_pose.append(
                     {

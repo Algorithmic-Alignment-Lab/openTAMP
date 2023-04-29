@@ -124,7 +124,12 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
     def freeze_rs_param(self, act):
         return True
 
+    # def get_resample_param(self, a):
+    #     return a.params[0]
+
     def backtrack_solve(self, plan, callback=None, verbose=False, n_resamples=5):
+        # populate belief_space stuff with an initial body of samples
+
         success = self._backtrack_solve(
             plan, callback, anum=0, verbose=verbose, n_resamples=n_resamples, 
         )
@@ -186,6 +191,7 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
                         p._free_attrs[attr][:, active_ts[1]] = 0
                         p._free_attrs[attr][:, active_ts[0]] = 0
             self.child_solver = self.__class__()
+
             success = self.child_solver._backtrack_solve(
                 plan,
                 callback=callback,
@@ -234,6 +240,7 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
             if not success:
                 ## if planning fails we're done
                 return False
+
             ## no other options, so just return here
             return recursive_solve()
 
@@ -285,6 +292,10 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
                                               active_ts = active_ts, verbose=verbose,
                                               force_init=True, init_traj=init_traj)
                 self.child_solver.fixed_objs = []
+
+            # filter beliefs here
+            # rs_params_current_act = [rsp for rsp in rs_params]
+            plan.filter_beliefs(rs_params)
 
             if success:
                 if recursive_solve():

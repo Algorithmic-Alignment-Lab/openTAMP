@@ -255,8 +255,9 @@ class TorchNet(nn.Module):
         pred = pred.to(self.device)
         y = y.to(self.device)
         if precision is not None:
+            # precision = precision.to(self.device)
             precision.to(self.device)
-            
+
         if self.output_boundaries:
             cur_loss = None
             n = 0

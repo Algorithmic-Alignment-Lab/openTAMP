@@ -55,7 +55,7 @@ class ExprPredicate(Predicate):
         debug=False,
     ):
         """
-        attr2inds is a dictionary that maps each parameter name to a
+        attr_inds is a dictionary that maps each parameter name to a
         list of (attr, active_inds) pairs. This defines the mapping
         from the primitive predicates of the params to the inputs to
         expr
@@ -173,3 +173,38 @@ class ExprPredicate(Predicate):
 
     def _grad(self, t):
         return self.expr.grad(self.get_param_vector(t))
+
+
+# class BeliefExprPredicate(Predicate):
+#     def __init__(
+#             self,
+#             name,
+#             expr,
+#             attr_inds,
+#             params,
+#             expected_param_types,
+#             env=None,
+#             active_range=(0, 0),
+#             tol=DEFAULT_TOL,
+#             priority=0,
+#             debug=False,
+#     ):
+#         super(BeliefExprPredicate, self).__init__(
+#             name,
+#             expr,
+#             attr_inds,
+#             params,
+#             expected_param_types,
+#             env=None,
+#             active_range=(0, 0),
+#             tol=DEFAULT_TOL,
+#             priority=0,
+#             debug=False,
+#         )
+#
+#         self.belief = None
+#
+#     def refresh_belief(self):
+#
+#
+#     def test(self, time, negated=False, tol = None):

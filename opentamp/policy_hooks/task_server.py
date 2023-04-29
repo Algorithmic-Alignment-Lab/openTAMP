@@ -47,14 +47,18 @@ class TaskServer(Server):
             else:
                 node = self.spawn_problem()
 
-        try:
-            plan_str = self.agent.hl_solver.run_planner(node.abs_prob, 
-                                                        node.domain, 
-                                                        node.prefix, 
-                                                        label='{}_{}'.format(self.id, self.exp_id),)
-        except OSError as e:
-            print('OSError in hl solve:', e)
-            plan_str = Plan.IMPOSSIBLE
+        plan_str = self.agent.hl_solver.run_planner(node.abs_prob, 
+                                                    node.domain, 
+                                                    node.prefix, 
+                                                    label='{}_{}'.format(self.id, self.exp_id),)
+        # try:
+        #     plan_str = self.agent.hl_solver.run_planner(node.abs_prob, 
+        #                                                 node.domain, 
+        #                                                 node.prefix, 
+        #                                                 label='{}_{}'.format(self.id, self.exp_id),)
+        # except OSError as e:
+        #     print('OSError in hl solve:', e)
+        #     plan_str = Plan.IMPOSSIBLE
 
         if plan_str == Plan.IMPOSSIBLE:
             n_plan = self._hyperparams['policy_opt']['buffer_sizes']['n_plan_{}'.format(node.nodetype)]

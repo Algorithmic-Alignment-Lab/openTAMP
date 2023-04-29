@@ -1,5 +1,16 @@
 from .action import Action
 import numpy as np
+import argparse
+import logging
+import copy
+
+import torch
+
+import pyro
+import pyro.distributions as dist
+from opentamp.core.util_classes.beliefs import belief_constructor
+import pyro.poutine as poutine
+from pyro.infer import MCMC, NUTS, HMC
 
 MAX_PRIORITY = 3
 
@@ -15,11 +26,16 @@ class Plan(object):
     """
     IMPOSSIBLE = "Impossible"
 
-    def __init__(self, params, actions, horizon, env, determine_free=True, sess=None):
+    def __init__(self, params, actions, horizon, env, determine_free=True, observation_model=None, max_likelihood_obs = None, sess=None):
         self.params = params
+        self.belief_params = self.build_belief_params()  # fix order for random params
         self.backup = params
         self.actions = actions
         self.horizon = horizon
+        self.observation_model = observation_model
+        self.max_likelihood_obs = max_likelihood_obs
+        self.joint_belief = None  # joint belief
+        self.log_prob_list = []
         self.time = np.zeros((1, horizon))
         self.env = env
         self.initialized = False
@@ -31,6 +47,12 @@ class Plan(object):
         if determine_free:
             self._determine_free_attrs()
 
+    def build_belief_params(self):
+        random_params = []
+        for param_key, param in self.params.items():
+            if hasattr(param, 'belief'):
+                random_params.append(param)
+        return random_params
 
     @staticmethod
     def create_plan_for_preds(preds, env):
@@ -334,3 +356,71 @@ class Plan(object):
     def set_to_time(self, ts):
         for param in self.params.values():
             param.set_to_time(ts)
+
+    def set_observation_model(self, observation_model):
+        self.observation_model = observation_model
+
+    def set_max_likelihood_obs(self, max_likelihood_obs):
+        self.max_likelihood_obs = max_likelihood_obs
+
+    def sample_priors(self, ):
+        prior_samples = []
+        for param in self.belief_params:
+            prior_samples.append(param.belief.dist.sample_n(500))
+        return prior_samples  # concatenate all sampled tensors
+
+    # based off of hmm example from pyro docs
+    def sample_mcmc_run(self, rs_params):
+        # create a conditioned model on the plan
+        obs_dict = {'obs'+str(i): torch.tensor(self.max_likelihood_obs) for i in range(1, rs_params[0].pose.shape[1]+1)}
+        conditional_model = poutine.condition(self.observation_model, data=obs_dict)
+        kernel = NUTS(conditional_model)
+
+        # defaults taken from hmm.py script
+        mcmc = MCMC(
+            kernel,
+            num_samples=500,
+            warmup_steps=1500,
+            num_chains=2,
+            mp_context='spawn'
+        )
+
+        mcmc.run(rs_params, self.joint_belief.samples.mean(), self.joint_belief.samples.view((-1,)).cov())
+        mcmc.summary(prob=0.95)  # for diagnostics
+
+
+        return mcmc.get_samples()
+
+    def initialize_beliefs(self):
+        # max-likelihood as parameter here
+        samples = self.sample_priors()
+
+        # setting up belief vector, build up aggregate vector
+        aggregate_size = sum([bpar.belief.size for bpar in self.belief_params])
+        self.joint_belief = belief_constructor(samples=torch.cat(samples, dim=0).reshape(500, -1), size=aggregate_size)
+
+        for idx, param in enumerate(self.belief_params):
+            # add samples by generating from prior
+            param.belief.samples = samples[idx].detach().numpy().reshape((-1, 500))
+
+    # called once per high-level action execution
+    def filter_beliefs(self, rs_params):
+        # max-likelihood feeds back on object here
+        global_samples = self.sample_mcmc_run(rs_params)['belief_global']
+
+        if len(global_samples.shape) == 1:
+            global_samples = global_samples.unsqueeze(dim=1)
+
+        assert len(global_samples.shape) == 2
+
+        self.joint_belief = belief_constructor(samples=global_samples, size=self.joint_belief.size)
+
+        print(global_samples.mean())
+        print(global_samples.var())
+
+        # construct a model object, over which we do inference, starting with uniform prior
+        running_idx = 0
+        for param in self.belief_params:
+            param.belief.samples = \
+                global_samples[:, running_idx: running_idx+param.belief.size].detach().numpy().reshape((-1, 500))  # expecting hooks
+            running_idx += param.belief.size

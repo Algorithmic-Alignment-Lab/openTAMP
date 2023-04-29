@@ -154,6 +154,9 @@ class MultiProcessMain(object):
         add_image = self.config.get('add_image', False)
         add_hl_image = self.config.get('add_hl_image', False)
 
+        print(self.config.get('ll_policy', ''))
+        print(self.config.get('hl_policy', ''))
+
         self.config['policy_opt'] = {
             'll_policy': self.config.get('ll_policy', ''),
             'hl_policy': self.config.get('hl_policy', ''),

@@ -7,7 +7,7 @@ class Domain(object):
     A single Domain object gets created every time p_mod_abs is run.
     It stores the parameter, predicate, and action schemas (see each of these classes).
     """
-    def __init__(self, param_schemas, pred_schemas, action_schemas):
+    def __init__(self, param_schemas, pred_schemas, action_schemas, belief=None):
         assert isinstance(param_schemas, dict)
         assert isinstance(pred_schemas, dict)
         assert isinstance(action_schemas, dict)

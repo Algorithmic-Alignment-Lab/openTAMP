@@ -21,6 +21,8 @@ def p_mod_abs(
     problem,
     initial=None,
     goal=None,
+    observation_model=None,
+    max_likelihood_obs=None,
     suggester=None,
     max_iter=25,
     debug=False,
@@ -48,13 +50,16 @@ def p_mod_abs(
         n = Q.get_nowait()[1]
         if n.is_hl_node():
             c_plan = n.plan(hl_solver, debug)
+            # initialize belief-space quantities needed for planning
+            c_plan.set_observation_model(observation_model)
+            c_plan.set_max_likelihood_obs(max_likelihood_obs)
             if c_plan == Plan.IMPOSSIBLE:
                 print("IMPOSSIBLE PLAN IN PR GRAPH")
                 if debug:
                     print("Found impossible plan")
                 continue
 
-            c = LLSearchNode(plan=c_plan, 
+            c = LLSearchNode(plan=c_plan,
                              domain=domain,
                              prob=n.concr_prob, 
                              initial=n.concr_prob.initial,
@@ -69,6 +74,7 @@ def p_mod_abs(
             Q.put((c.heuristic(), c))
 
         elif n.is_ll_node():
+            n.curr_plan.initialize_beliefs()  # sample + populate initial particles for belief-state planning
             n.plan(ll_solver, n_resamples=n_resamples, debug=debug)
             if n.solved():
                 print("SOLVED PR GRAPH")
