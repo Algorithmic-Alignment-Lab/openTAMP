@@ -44,7 +44,7 @@ class Server(object):
         if n_gpu == 0:
             gpus = -1
         elif n_gpu == 1:
-            gpu = 0
+            gpus = 0
         else:
             #gpus = str(list(range(1, n_gpu+1)))[1:-1]
             #gpus = str(list(range(0, n_gpu)))[1:-1]
@@ -161,7 +161,7 @@ class Server(object):
     def init_policy_opt(self, hyperparams):
         config = hyperparams['policy_opt']
         opt_cls = config['type']
-        config['gpu_id'] = np.random.randint(1,3)
+        config['gpu_id'] = np.random.randint(0,1)
         config['use_gpu'] = torch.cuda.is_available()
         config['weight_dir'] = hyperparams['weight_dir']
         self.policy_opt = opt_cls(config)

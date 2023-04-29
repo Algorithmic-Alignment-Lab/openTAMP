@@ -457,7 +457,6 @@ def _get_null_obj(robosuite_solver_class, plan, active_ts=None):
     traj_objs.append(bexpr)
     return traj_objs
 
-
 # class RobotSolverGurobi(backtrack_ll_solver_gurobi.BacktrackLLSolverGurobi):
 #     def get_resample_param(self, a):
 #         return _get_resample_param(a)
