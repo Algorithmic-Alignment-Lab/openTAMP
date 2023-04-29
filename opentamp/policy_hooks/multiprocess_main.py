@@ -7,6 +7,7 @@ import pickle
 import psutil
 from queue import PriorityQueue
 import random
+import signal
 import sys
 from threading import Thread
 import time
@@ -425,6 +426,14 @@ class MultiProcessMain(object):
             if p.is_alive(): p.terminate()
 
 
+    def terminate_processes(self):
+        for p in self.processes:
+            if p.is_alive(): p.terminate()
+
+        print("Terminate signal sent to children.")
+        sys.exit(0)
+
+
     def start(self, kill_all=False):
         #self.check_dirs()
         setup_dirs(self.config, self.config['args'])
@@ -432,6 +441,7 @@ class MultiProcessMain(object):
             self.allocate_shared_buffers(self.config)
             self.allocate_queues(self.config)
 
+        signal.signal(signal.SIGINT, lambda sig, frame: self.terminate_processes())
         self.spawn_servers(self.config)
         self.start_servers()
 

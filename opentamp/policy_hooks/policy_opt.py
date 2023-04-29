@@ -97,24 +97,23 @@ class TorchPolicyOpt():
 
 
     def get_loss(self, task, x, y, precision=None,):
+        model = self.nets[task]
         if type(x) is not torch.Tensor:
-            x = torch.Tensor(x)
+            x = torch.Tensor(x, device=model.device)
 
         if type(y) is not torch.Tensor:
-            y = torch.Tensor(y)
+            y = torch.Tensor(y, device=model.device)
 
         if type(precision) is not torch.Tensor:
-            precision = torch.Tensor(precision)
+            precision = torch.Tensor(precision, device=model.device)
 
-        model = self.nets[task]
-        pred = model(x)
+        pred = model.forward(x)
 
         return model.compute_loss(pred, y, precision)
 
 
     def train_step(self, task, x, y, precision=None):
         if task not in self.opts is None: self._set_opt(task)
-        (x, y) = (x.to(self.device), y.to(self.device))
 
         self.opts[task].zero_grad()
         loss = self.get_loss(task, x, y, precision)
@@ -255,7 +254,7 @@ class TorchPolicyOpt():
             model = self.nets[scope]
             try:
                 save_path = MODEL_DIR + weight_dir+'/'+scope+'.ckpt'
-                torch.save(the_model.state_dict(), save_path)
+                torch.save(model.state_dict(), save_path)
 
             except:
                 print('Saving torch model encountered an issue but it will not crash:')
@@ -305,7 +304,7 @@ class TorchPolicyOpt():
         self.nets[scope] = PolicyNet(config=config,
                                      scope=scope,
                                      device=self.device)
-
+        self.nets[scope].to_device(self.device)
 
     def init_networks(self):
         """ Helper method to initialize the tf networks used """

@@ -109,6 +109,23 @@ class TorchNet(nn.Module):
         return self.fc_layers[-1](nn_input)
 
 
+    def to_device(self, device=None):
+        if device is not None:
+            self.device = device
+
+        for layer in self.fc_layers:
+            layer.to(self.device)
+
+        for layer in self.conv_layers:
+            layer.to(self.device)
+
+        if self.fp_tensors is not None:
+            for tensor in self.fp_tensors:
+                tensor.to(self.device)
+
+        self.to(self.device)
+        
+
     def _compute_idx(self):
         if 'idx' in self.config:
             self.idx = self.config['idx']
@@ -203,17 +220,18 @@ class TorchNet(nn.Module):
         self.fp_tensors = (x_map, y_map)
 
         # Compute size of output
-        rand_inputs = torch.rand(1, nump_fp, num_rows, num_cols)
+        rand_inputs = torch.rand(1, num_fp, num_rows, num_cols)
         shape = list(self.compute_fp(rand_inputs).shape)
         self.fc_input_dim = functools.reduce(operator.mul, shape)
 
 
     def compute_fp(self, input_layer):
         if self.fp_tensors is None: self._build_fp(input_layer)
+        _, num_fp, num_rows, num_cols = self.conv_output_dim
         features = torch.view(features, [-1, num_rows*num_cols])
         softmax = torch.nn.softmax(features)
-        fp_x = torch.sum(torch.multiply(x_map, softmax), dim=[1], keepdim=True)
-        fp_y = torch.sum(torch.multiply(y_map, softmax), dim=[1], keepdim=True)
+        fp_x = torch.sum(torch.multiply(self.fp_tensors[0], softmax), dim=[1], keepdim=True)
+        fp_y = torch.sum(torch.multiply(self.fp_tensors[1], softmax), dim=[1], keepdim=True)
         fp = torch.view(torch.cat(tensors=[fp_x, fp_y], dim=1), [-1, num_fp*2])
         return fp
 
@@ -237,7 +255,8 @@ class TorchNet(nn.Module):
         y = y.to(self.device)
         if precision is not None:
             precision = precision.to(self.device)
-            
+            # precision.to(self.device)
+
         if self.output_boundaries:
             cur_loss = None
             n = 0

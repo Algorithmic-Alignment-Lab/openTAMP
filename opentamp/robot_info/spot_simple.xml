@@ -7,7 +7,6 @@
             <joint axis="0 1 0" name="robot_y" type="slide" pos="0 0 0" />
             <joint axis="0 0 1" name="robot_theta" type="hinge" pos="0 0 0" limited="false"/>
             <geom name="spot" type="box" size="1 0.3 0.3" mass="5" rgba="0 0 0 1"/>
-
             <camera name="frontleft_fisheye" pos="0.415 0.035 0.025" quat="0.5225 0.1448 0.8109 -0.2202" fovy="45" ipdb="0.68"/>
             <camera name="frontright_fisheye" pos="0.416 -0.040 0.024" quat="0.5229 -0.1444 0.8087 0.2275" fovy="45" ipdb="0.68"/>
             <camera name="left_fisheye" pos="-0.164 0.110 0.036" quat="0.5958 -0.8031 0.0009 0.0026" fovy="45" ipdb="0.68"/>

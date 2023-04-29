@@ -155,7 +155,7 @@ def main():
 
     elif len(args.test):
         cur_main = MultiProcessMain(config, load_at_spawn=False)
-        cur_main.run_test(m.config)
+        cur_main.run_test(cur_main.config)
 
     else:
         cur_main = MultiProcessMain(config, load_at_spawn=True)
