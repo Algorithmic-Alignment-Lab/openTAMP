@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e3f8f50b-5b4c-47f5-8e99-30fc4f9747e8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opentamp/run_belief_domain.py" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/run_belief_domain.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opentamp/robot_info/spot_simple.xml" beforeDir="false" afterPath="$PROJECT_DIR$/opentamp/robot_info/spot_simple.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -256,14 +256,12 @@
       <workItem from="1682031698331" duration="718000" />
       <workItem from="1682178958951" duration="30918000" />
       <workItem from="1682431124732" duration="198000" />
-      <workItem from="1682431352529" duration="15298000" />
-    </task>
-    <task id="LOCAL-00371" summary="rewrite with probabilities">
-      <created>1682435568026</created>
-      <option name="number" value="00371" />
-      <option name="presentableId" value="LOCAL-00371" />
-      <option name="project" value="LOCAL" />
-      <updated>1682435568026</updated>
+      <workItem from="1682431352529" duration="16743000" />
+      <workItem from="1682641122648" duration="356000" />
+      <workItem from="1682643469426" duration="585000" />
+      <workItem from="1682658937289" duration="9000" />
+      <workItem from="1682695287931" duration="1243000" />
+      <workItem from="1682798465386" duration="505000" />
     </task>
     <task id="LOCAL-00372" summary="refactor indexing">
       <created>1682435684114</created>
@@ -601,7 +599,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682463237626</updated>
     </task>
-    <option name="localTasksCounter" value="420" />
+    <task id="LOCAL-00420" summary="add extra print">
+      <created>1682463354918</created>
+      <option name="number" value="00420" />
+      <option name="presentableId" value="LOCAL-00420" />
+      <option name="project" value="LOCAL" />
+      <updated>1682463354918</updated>
+    </task>
+    <option name="localTasksCounter" value="421" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -660,7 +665,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="shape print fix" />
     <MESSAGE value="add + work with dummy dimension" />
     <MESSAGE value="add + work with dummy dimension debug" />
     <MESSAGE value="modify observation model" />
@@ -685,7 +689,8 @@
     <MESSAGE value="messing around with item vs. tensor" />
     <MESSAGE value="remove extra prints" />
     <MESSAGE value="add extra prints" />
-    <option name="LAST_COMMIT_MESSAGE" value="add extra prints" />
+    <MESSAGE value="add extra print" />
+    <option name="LAST_COMMIT_MESSAGE" value="add extra print" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
