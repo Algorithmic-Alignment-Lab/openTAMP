@@ -295,7 +295,8 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
 
             # filter beliefs here
             # rs_params_current_act = [rsp for rsp in rs_params]
-            plan.filter_beliefs(rs_params)
+            if len(plan.belief_params) > 0:
+                plan.filter_beliefs(rs_params)
 
             if success:
                 if recursive_solve():

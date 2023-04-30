@@ -74,7 +74,8 @@ def p_mod_abs(
             Q.put((c.heuristic(), c))
 
         elif n.is_ll_node():
-            n.curr_plan.initialize_beliefs()  # sample + populate initial particles for belief-state planning
+            if len(n.curr_plan.belief_params) > 0:
+                n.curr_plan.initialize_beliefs()  # sample + populate initial particles for belief-state planning
             n.plan(ll_solver, n_resamples=n_resamples, debug=debug)
             if n.solved():
                 print("SOLVED PR GRAPH")
