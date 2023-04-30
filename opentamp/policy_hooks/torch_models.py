@@ -105,6 +105,7 @@ class TorchNet(nn.Module):
 
     def fc_forward(self, nn_input):
         for fc_layer in self.fc_layers[:-1]:
+            print(nn_input.get_device())
             nn_input = fc_layer(nn_input)
             nn_input = self.act_fn(nn_input)
         return self.fc_layers[-1](nn_input)
