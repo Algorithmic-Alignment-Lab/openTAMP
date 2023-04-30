@@ -15,14 +15,15 @@ def precision_mse(output, y, precision):
 
 class TorchNet(nn.Module):
     def __init__(self, config, device=None):
-        nn.Module.__init__(self)
+        # nn.Module.__init__(self)
+        super(TorchNet, self).__init__()
         self.config = config
         for key in ['obs_include', 'out_include']:
             self.config[key] = list(set(config[key]))
 
         if device is None: device = torch.device('cpu')
         if type(device) is str: device = torch.device(device)
-        self.device = torch.device('cpu') # todo fix
+        self.device = torch.device('cpu')
         self.fp_tensors = None
 
         self.output_boundaries = config.get("output_boundaries", None)
@@ -52,7 +53,7 @@ class TorchNet(nn.Module):
         self._build_fc_layers()
         self._set_nonlin_and_loss()
 
-        self.to(self.device)
+        self.to_device(self.device)
 
 
     def forward(self, nn_input):
@@ -115,15 +116,15 @@ class TorchNet(nn.Module):
         if device is not None:
             self.device = device
 
-        for layer in self.fc_layers:
-            layer.to(self.device)
+        for idx, layer in enumerate(self.fc_layers):
+            self.fc_layers[idx] = layer[idx].to(self.device)
 
-        for layer in self.conv_layers:
-            layer.to(self.device)
+        for idx, conv_layer in enumerate(self.conv_layers):
+            self.conv_layers = conv_layer.to(self.device)
 
         if self.fp_tensors is not None:
-            for tensor in self.fp_tensors:
-                tensor.to(self.device)
+            for idx, tensor in enumerate(self.fp_tensors):
+                self.fp_tensors[idx] = tensor.to(self.device)
 
         self.to(self.device)
         
