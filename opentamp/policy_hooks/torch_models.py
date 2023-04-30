@@ -117,7 +117,7 @@ class TorchNet(nn.Module):
             self.device = device
 
         for idx, layer in enumerate(self.fc_layers):
-            self.fc_layers[idx] = layer[idx].to(self.device)
+            self.fc_layers[idx] = layer.to(self.device)
 
         for idx, conv_layer in enumerate(self.conv_layers):
             self.conv_layers = conv_layer.to(self.device)
