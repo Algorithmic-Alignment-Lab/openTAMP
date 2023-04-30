@@ -53,6 +53,7 @@ class TorchNet(nn.Module):
         self._build_fc_layers()
         self._set_nonlin_and_loss()
 
+        self.to(self.device)
         self.to_device(self.device)
 
 
