@@ -59,7 +59,7 @@ class TorchNet(nn.Module):
     def forward(self, nn_input):
         if type(nn_input) is not torch.Tensor:
             nn_input = torch.Tensor(nn_input)
-        nn_input.to(device=self.device)
+        nn_input = nn_input.to(device=self.device)
 
         if len(self.conv_layers):
             nn_input = self.conv_forward(nn_input)
@@ -106,7 +106,6 @@ class TorchNet(nn.Module):
 
     def fc_forward(self, nn_input):
         for fc_layer in self.fc_layers[:-1]:
-            print(nn_input.get_device())
             nn_input = fc_layer(nn_input)
             nn_input = self.act_fn(nn_input)
         return self.fc_layers[-1](nn_input)
