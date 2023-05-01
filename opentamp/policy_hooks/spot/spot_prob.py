@@ -72,7 +72,7 @@ def get_plans(use_tf=False):
         params = None
     
         for targ_ind, targ in enumerate(prim_options[TARG_ENUM]):
-            next_task_str = copy.deepcopy(tasks[task])
+            next_task_str = copy.deepcopy(tasks[task_ind])
             new_task_str = []
             for step in next_task_str:
                 new_task_str.append(step.format(targ))
