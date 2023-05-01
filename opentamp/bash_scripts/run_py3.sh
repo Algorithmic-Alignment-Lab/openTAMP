@@ -4,7 +4,7 @@
 #do
 
 
-python3 -W ignore policy_hooks/run_training.py -c policy_hooks.spot.spot_hyperparams \
+python3 -W ignore policy_hooks/run_training.py -c policy_hooks.namo.hyperparams_v94 \
                                                 -no 1 -llus 10  -hlus 10 \
                                                 -spl -mask -hln 2 -hldim 96 -lldim 64 \
                                                 -retime -vel 0.3 -eta 5 -softev \
