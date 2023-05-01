@@ -75,6 +75,8 @@ def get_plans(use_tf=False):
             next_task_str = copy.deepcopy(tasks[task_ind])
             new_task_str = []
             for step in next_task_str:
+                print(step)
+                print(targ)
                 new_task_str.append(step.format(targ))
             plan = plan_from_str(new_task_str, prob_file(), domain_file, env, openrave_bodies, params=params, sess=sess, use_tf=use_tf)
 
