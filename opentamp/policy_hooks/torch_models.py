@@ -23,7 +23,7 @@ class TorchNet(nn.Module):
 
         if device is None: device = torch.device('cpu')
         if type(device) is str: device = torch.device(device)
-        self.device = torch.device('cpu')
+        self.device = device
         self.fp_tensors = None
 
         self.output_boundaries = config.get("output_boundaries", None)
