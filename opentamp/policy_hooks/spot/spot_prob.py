@@ -18,6 +18,11 @@ domain_file = opentamp.__path__._path[0] + "/domains/robot_manipulation_domain/m
 mapping_file =  opentamp.__path__._path[0] + "/policy_hooks/robodesk/robot_task_mapping"
 
 N_OBJ = 5
+END_TARGETS =[(0., 5.8), (0., 5.), (0., 4.), (2., 1.5),
+                   (-2., 1.5),
+                   (0.8, 1.5),
+                   (-0.8, 1.5),
+                   (-2.8, 1.5)]
 def prob_file(descr=None):
     return opentamp.__path__._path[0] + "/domains/robot_manipulation_domain/spot_probs/spot_prob_{0}.prob".format(N_OBJ)
 
