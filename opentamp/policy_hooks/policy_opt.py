@@ -73,7 +73,6 @@ class TorchPolicyOpt():
         self.lr_scale = 0.9975
         self.lr_policy = 'fixed'
         self.config['iterations'] = MAX_UPDATE_SIZE // self.batch_size + 1
-
     
     def _load_scopes(self):
         llpol = self.config.get('ll_policy', '')
@@ -254,6 +253,8 @@ class TorchPolicyOpt():
             model = self.nets[scope]
             try:
                 save_path = MODEL_DIR + weight_dir+'/'+scope+'.ckpt'
+                if not os.path.isdir(save_path):
+                    os.mkdir(save_path)
                 torch.save(model.state_dict(), save_path)
 
             except:
