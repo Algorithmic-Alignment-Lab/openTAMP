@@ -263,8 +263,11 @@ class TorchPolicyOpt():
 
         if scope in self.ctrl_scopes:
             policy = self.nets[scope]
-            np.save(MODEL_DIR+weight_dir+'/'+scope+'_scale{0}'.format(lab), policy.scale)
-            np.save(MODEL_DIR+weight_dir+'/'+scope+'_bias{0}'.format(lab), policy.bias)
+            scale_bias_save_dir = MODEL_DIR+weight_dir
+            if not os.path.isdir(save_path):
+                    os.mkdir(save_path)
+            np.save(scale_bias_save_dir+'/'+'_scale{0}'.format(lab), policy.scale)
+            np.save(scale_bias_save_dir+'/'+scope+'_bias{0}'.format(lab), policy.bias)
 
 
     def store_weights(self, weight_dir=None):
