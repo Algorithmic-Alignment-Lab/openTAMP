@@ -73,7 +73,6 @@ class TorchPolicyOpt():
         self.lr_scale = 0.9975
         self.lr_policy = 'fixed'
         self.config['iterations'] = MAX_UPDATE_SIZE // self.batch_size + 1
-
     
     def _load_scopes(self):
         llpol = self.config.get('ll_policy', '')
@@ -176,7 +175,7 @@ class TorchPolicyOpt():
         if scopes is None: scopes = self.ctrl_scopes + SCOPE_LIST
 
         for scope in scopes:
-            wts = self.serialize_weights([scope])
+            wts = self.serialize_weights([scope], save=True)
             with self.buf_sizes[scope].get_lock():
                 self.buf_sizes[scope].value = len(wts)
                 self.buffers[scope][:len(wts)] = wts
@@ -254,6 +253,8 @@ class TorchPolicyOpt():
             model = self.nets[scope]
             try:
                 save_path = MODEL_DIR + weight_dir+'/'+scope+'.ckpt'
+                if not os.path.isdir(MODEL_DIR + weight_dir):
+                    os.mkdir(MODEL_DIR + weight_dir)
                 torch.save(model.state_dict(), save_path)
 
             except:
@@ -262,8 +263,11 @@ class TorchPolicyOpt():
 
         if scope in self.ctrl_scopes:
             policy = self.nets[scope]
-            np.save(MODEL_DIR+weight_dir+'/'+scope+'_scale{0}'.format(lab), policy.scale)
-            np.save(MODEL_DIR+weight_dir+'/'+scope+'_bias{0}'.format(lab), policy.bias)
+            scale_bias_save_dir = MODEL_DIR+weight_dir
+            if not os.path.isdir(scale_bias_save_dir):
+                os.makedirs(scale_bias_save_dir)
+            np.save(scale_bias_save_dir+'/'+'_scale{0}'.format(lab), policy.scale)
+            np.save(scale_bias_save_dir+'/'+scope+'_bias{0}'.format(lab), policy.bias)
 
 
     def store_weights(self, weight_dir=None):
