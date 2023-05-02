@@ -254,7 +254,7 @@ class TorchPolicyOpt():
             try:
                 save_path = MODEL_DIR + weight_dir+'/'+scope+'.ckpt'
                 if not os.path.isdir(save_path):
-                    os.mkdir(save_path)
+                    os.mkdir(MODEL_DIR + weight_dir)
                 torch.save(model.state_dict(), save_path)
 
             except:
