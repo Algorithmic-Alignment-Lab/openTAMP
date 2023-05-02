@@ -27,26 +27,28 @@ def main():
             for n in range(NUM_TARG):
                 s += "SpotPose (name spot_pose_%d); "%(n)
 
-            s += "Robot (name spot); "
+            s += "Spot (name spot); "
             s += "SpotPose (name robot_init_pose); "
             s += "SpotPose (name robot_end_pose) \n\n"
 
             s += "Init: "
             for i in range(NUM_CANS):
-                s += "(geom can%d_init_target 0.3), (value can%d_init_target %s), "%(i, i, list(coords[i]))
-                s += "(geom can%d 0.3), (pose can%d %s), "%(i, i, list(coords[i]))
+                s += "(geom can%d_init_target 0.3), (value can%d_init_target %s), "%(i, i, list(coords[i]) + [0.5])
+                s += "(geom can%d 0.3), (pose can%d %s), "%(i, i, list(coords[i]) + [0.5])
 
             for n in range(NUM_TARG):
-                s += "(geom spot_pose_%d spot), (value spot_pose_%d %s), "%(i, i, [0., 0., 0])
+                s += "(geom spot_pose_%d spot), (value spot_pose_%d %s), (rotation spot_pose_%d %s), "%(i, i, [0., 0., 0], i, [0., 0., 0])
                 s += "(position spot_pose_%d %s), (theta spot_pose_%d %s), "%(i, [0., 0.], i, [0.])
 
-            s += "(geom %s), (pose %s %s), "%("spot", "spot", [0., 0., 0.])
-            s += "(spot position [0., 0.0]), "
-            s += "(spot theta [0.]), "
+            s += "(geom spot spot), (pose %s), (rotation %s), "%([0., 0., 0.], [0., 0., 0.])
+            s += "(position spot [0., 0.]), "
+            s += "(theta spot [0.]), "
             s += "(value %s %s), "%("robot_init_pose", [0., 0., 0.])
+            s += "(rotation %s %s), "%("robot_init_pose", [0., 0., 0.])
             s += "(position %s %s), "%("robot_init_pose", [0., 0.])
             s += "(theta %s %s), "%("robot_init_pose", [0.])
             s += "(value %s %s), "%("robot_end_pose", "undefined")
+            s += "(rotation %s %s), "%("robot_end_pose", "undefined")
             s += "(position %s %s), "%("robot_end_pose", "undefined")
             s += "(theta %s %s), "%("robot_end_pose", "undefined")
             s += "(geom %s %s), "%("robot_init_pose", "spot")
@@ -56,16 +58,15 @@ def main():
                 s += "(At can{} can{}_init_target), ".format(i, i)
                 s += "(Near can{} can{}_init_target), ".format(i, i)
             s += "(RobotAt spot robot_init_pose), "
-            s += "(IsMP spot), "
-            s += "(StationaryW obs0) \n\n"
+            s += "(IsMP spot)\n\n"
 
-            s += "Goal: %s"%GOAL
+            s += "Goal: %s\n\n"%GOAL
 
             s += "Invariants: "
             s += "(StationaryBase spot), "
             s += "\n\n"
             
-            with open(opentamp.__path__._path[0]+filename, "w") as f:
+            with open(opentamp.__path__._path[0]+'/domains/robot_manipulation_domain/'+filename, "w+") as f:
                 f.write(s)
 
 if __name__ == "__main__":
