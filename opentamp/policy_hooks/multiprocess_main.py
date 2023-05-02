@@ -583,6 +583,9 @@ class MultiProcessMain(object):
         hyperparams['id'] = 'test'
         self.allocate_shared_buffers(hyperparams)
         self.allocate_queues(hyperparams)
+        current_id = 0 if hyperparams.get('index', -1) < 0 else c['index']
+        hyperparams['group_id'] = current_id
+        hyperparams['weight_dir'] = hyperparams['weight_dir_prefix']+'_{0}'.format(current_id)
         hyperparams['policy_opt']['share_buffer'] = True
         hyperparams['policy_opt']['buffers'] = hyperparams['buffers']
         hyperparams['policy_opt']['buffer_sizes'] = hyperparams['buffer_sizes']
