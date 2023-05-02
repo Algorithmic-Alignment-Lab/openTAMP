@@ -253,7 +253,7 @@ class TorchPolicyOpt():
             model = self.nets[scope]
             try:
                 save_path = MODEL_DIR + weight_dir+'/'+scope+'.ckpt'
-                if not os.path.isdir(save_path):
+                if not os.path.isdir(MODEL_DIR + weight_dir):
                     os.mkdir(MODEL_DIR + weight_dir)
                 torch.save(model.state_dict(), save_path)
 
