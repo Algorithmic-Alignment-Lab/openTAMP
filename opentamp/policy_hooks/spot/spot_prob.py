@@ -23,6 +23,7 @@ END_TARGETS =[(0., 5.8), (0., 5.), (0., 4.), (2., 1.5),
                    (0.8, 1.5),
                    (-0.8, 1.5),
                    (-2.8, 1.5)]
+
 def prob_file(descr=None):
     return opentamp.__path__._path[0] + "/domains/robot_manipulation_domain/spot_probs/spot_prob_{0}.prob".format(N_OBJ)
 
@@ -72,7 +73,7 @@ def get_plans(use_tf=False):
         params = None
     
         for targ_ind, targ in enumerate(prim_options[TARG_ENUM]):
-            next_task_str = copy.deepcopy(tasks[task_ind])
+            next_task_str = copy.deepcopy(tasks[targ])
             new_task_str = []
             for step in next_task_str:
                 print(step)

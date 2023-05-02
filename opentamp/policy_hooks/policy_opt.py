@@ -176,7 +176,7 @@ class TorchPolicyOpt():
         if scopes is None: scopes = self.ctrl_scopes + SCOPE_LIST
 
         for scope in scopes:
-            wts = self.serialize_weights([scope])
+            wts = self.serialize_weights([scope], save=True)
             with self.buf_sizes[scope].get_lock():
                 self.buf_sizes[scope].value = len(wts)
                 self.buffers[scope][:len(wts)] = wts
