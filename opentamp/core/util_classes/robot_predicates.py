@@ -173,7 +173,7 @@ def compute_arm_rot_jac(arm_joints, robot_body, obj_dir, world_dir, sign=1.):
     arm_jac = np.array(arm_jac).reshape((-1, len(arm_joints)))
     return arm_jac
 
-def compute_pos_jac(pos_joints, robot_body, pos):
+def compute_pos_jnt_jac(pos_joints, robot_body, pos):
     pos_jac = []
     for jnt_id in pos_joints:
         info = p.getJointInfo(robot_body.body_id, jnt_id)
@@ -186,8 +186,7 @@ def compute_pos_jac(pos_joints, robot_body, pos):
     pos_jac = np.array(pos_jac).T
     return pos_jac
 
-
-def compute_arm_rot_jac(rot_joints, robot_body):
+def compute_rot_jnt_jac(rot_joints, robot_body):
     rot_jac = []
     for jnt_id in rot_joints:
         info = p.getJointInfo(robot_body.body_id, jnt_id)
