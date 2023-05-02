@@ -15,7 +15,7 @@ import opentamp.policy_hooks.utils.policy_solver_utils as utils
 
 
 domain_file = opentamp.__path__._path[0] + "/domains/robot_manipulation_domain/move_robot.domain"
-mapping_file =  opentamp.__path__._path[0] + "/policy_hooks/robodesk/robot_task_mapping"
+mapping_file = opentamp.__path__._path[0] + "/policy_hooks/spot/spot_tasks"
 
 N_OBJ = 5
 END_TARGETS =[(0., 5.8), (0., 5.), (0., 4.), (2., 1.5),
@@ -59,7 +59,7 @@ def get_vector(config):
 
 
 def get_plans(use_tf=False):
-    tasks = ['0: MOVE_TO SPOT INIT_TARGET {0}']
+    tasks = {'MOVE_TO': '0: MOVE_TO SPOT INIT_TARGET {0}'}
     task_ids = sorted(list(get_tasks(mapping_file).keys()))
     prim_options = get_prim_choices()
     plans = {}
@@ -75,8 +75,6 @@ def get_plans(use_tf=False):
             next_task_str = copy.deepcopy(tasks[task_ind])
             new_task_str = []
             for step in next_task_str:
-                print(step)
-                print(targ)
                 new_task_str.append(step.format(targ))
             plan = plan_from_str(new_task_str, prob_file(), domain_file, env, openrave_bodies, params=params, sess=sess, use_tf=use_tf)
 

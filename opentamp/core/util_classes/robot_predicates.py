@@ -138,6 +138,9 @@ def parse_robot_collision(c, robot, robot_body, obj_body, col_links=[], obj_link
     if robot_jac.shape[-1] != n_jnts:
         robot_jac = robot_jac[:,6:]
         robot_ang_jac = robot_ang_jac[6:]
+        assert robot_jac.shape[-1] == n_jnts
+        assert robot_ang_jac.shape[-1] == n_jnts
+        
     return distance, normal, linkRobot, linkObj, ptRobot, ptObj, robot_jac, robot_ang_jac
 
 def compute_arm_pos_jac(arm_joints, robot_body, pos):
@@ -170,6 +173,31 @@ def compute_arm_rot_jac(arm_joints, robot_body, obj_dir, world_dir, sign=1.):
     arm_jac = np.array(arm_jac).reshape((-1, len(arm_joints)))
     return arm_jac
 
+def compute_pos_jac(pos_joints, robot_body, pos):
+    pos_jac = []
+    for jnt_id in pos_joints:
+        info = p.getJointInfo(robot_body.body_id, jnt_id)
+        axis = info[13]
+        jnt_state = p.getLinkState(robot_body.body_id, jnt_id)
+        quat = jnt_state[1]
+        mat = T.quat2mat(quat)
+        axis = mat.dot(axis)
+        pos_jac.append(axis)
+    pos_jac = np.array(pos_jac).T
+    return pos_jac
+
+
+def compute_arm_rot_jac(rot_joints, robot_body):
+    rot_jac = []
+    for jnt_id in rot_joints:
+        info = p.getJointInfo(robot_body.body_id, jnt_id)
+        axis = info[13]
+        quat = p.getLinkState(robot_body.body_id, jnt_id)[1]
+        mat = T.quat2mat(quat)
+        axis = mat.dot(axis)
+        rot_jac.append(axis)
+    rot_jac = np.array(rot_jac).reshape((-1, len(rot_joints)))
+    return rot_jac
 
 def opposite_angle(theta):
     return ((theta + 2 * np.pi) % (2 * np.pi)) - np.pi
@@ -553,16 +581,26 @@ class CollisionPredicate(RobotPredicate):
         link_pair_to_col = {}
         sign = 1
         base_jac = np.eye(3)
-        base_jac[:,2] = 0 
+        base_jac[2,2] = 0 
         for c in collisions:
             # Identify the collision points
             col_info = parse_robot_collision(c, robot, robot_body, obj_body, col_links)
             if col_info is None: continue
             distance, normal, linkRobot, linkObj, ptRobot, ptObj, robot_jac, robot_ang_jac = col_info 
             grad = np.zeros((1, self.attr_dim))
+
             for arm in robot.geom.arms:
                 inds = robot.geom.get_free_inds(arm)
                 grad[:, self.attr_map[robot, arm]] = np.dot(sign * normal, robot_jac[:,inds])
+            
+            for pos_jnt in robot.geom.pos_jnts:
+                inds = robot.geom.get_free_inds(pos_jnt)
+                grad[:, self.attr_map[robot, pos_jnt]] = np.dot(sign * normal, robot_jac[:,inds])
+            
+            for rot_jnt in robot.geom.rot_jnts:
+                inds = robot.geom.get_free_inds(rot_jnt)
+                grad[:, self.attr_map[robot, rot_jnt]] = np.dot(sign * normal, robot_jac[:,inds])
+
             grad[:, self.attr_map[robot, 'pose']] = np.dot(sign*normal, base_jac)
             col_vec =  -sign*normal
 
