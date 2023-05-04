@@ -80,10 +80,10 @@ class Robot(object):
         return self.arm_inds[arm]
 
     def get_pos_jnt_inds(self, pos_jnt):
-        return self.arm_inds[pos_jnt]
+        return self.pos_jnt_inds[pos_jnt]
 
     def get_rot_jnt_inds(self, rot_jnt):
-        return self.arm_inds[rot_jnt]
+        return self.rot_jnt_inds[rot_jnt]
 
     def get_free_inds(self, key=None):
         if key is None:
@@ -276,7 +276,7 @@ class Robot(object):
         for rot_jnt in self.rot_jnts:
             jnt_names = self.jnt_names[rot_jnt]
             self.dof_map[rot_jnt] = [self.jnt_to_id[jnt] for jnt in jnt_names]
-            self.pos_jnt_inds[rot_jnt] = [self.jnt_to_id[jnt] for jnt in jnt_names]
+            self.rot_jnt_inds[rot_jnt] = [self.jnt_to_id[jnt] for jnt in jnt_names]
             self.jnt_limits[rot_jnt] = (np.array([self.bounds[jnt][0] for jnt in jnt_names]), np.array([self.bounds[jnt][1] for jnt in jnt_names]))
 
         self.col_links = set([self.link_to_id[name] for name in self.col_link_names])
@@ -470,6 +470,12 @@ class Spot(Robot):
         self.arm_bnds = {}
         self.col_link_names = set(['spot'])
 
+    def get_base_limit(self):
+        return np.array([-10, -10, -5*np.pi]), np.array([10, 10, 5*np.pi])
+    
+    def get_base_move_limit(self):
+        return np.array([0.5, 0.5, np.pi/4])
+    
 
 class HSR(Robot):
     """

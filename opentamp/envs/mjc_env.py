@@ -448,7 +448,7 @@ class MJCEnv(Env):
                     old_pos = self.physics.data.qpos[adr:adr+3]
                     self.physics.data.qpos[adr:adr+3] = pos
                 self._type_cache[name] = 'joint'
-            except Exception as e:
+            except Exception as err:
                 item_type = 'body'
 
         if item_type == 'body':

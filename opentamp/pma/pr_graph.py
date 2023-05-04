@@ -50,15 +50,15 @@ def p_mod_abs(
         n = Q.get_nowait()[1]
         if n.is_hl_node():
             c_plan = n.plan(hl_solver, debug)
-            # initialize belief-space quantities needed for planning
-            c_plan.set_observation_model(observation_model)
-            c_plan.set_max_likelihood_obs(max_likelihood_obs)
             if c_plan == Plan.IMPOSSIBLE:
                 print("IMPOSSIBLE PLAN IN PR GRAPH")
                 if debug:
                     print("Found impossible plan")
                 continue
 
+            # initialize belief-space quantities needed for planning
+            c_plan.set_observation_model(observation_model)
+            c_plan.set_max_likelihood_obs(max_likelihood_obs)
             c = LLSearchNode(plan=c_plan,
                              domain=domain,
                              prob=n.concr_prob, 

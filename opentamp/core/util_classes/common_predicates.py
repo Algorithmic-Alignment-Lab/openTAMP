@@ -24,13 +24,13 @@ def get_param_vector_helper(pred, res_arr, startind, t, attr_inds):
     for p in pred.attr_inds:
         for attr, ind_arr in pred.attr_inds[p]:
             n_vals = len(ind_arr)
+            inds = pred.attr_map[p, attr] + startind
             if p.is_symbol():
-                res_arr[i : i + n_vals] = getattr(p, attr)[ind_arr, 0]
+                # res_arr[i : i + n_vals] = getattr(p, attr)[ind_arr, 0]
+                res_arr[inds] = getattr(p, attr)[ind_arr, 0]
             else:
-                try:
-                    res_arr[i : i + n_vals] = getattr(p, attr)[ind_arr, t]
-                except AttributeError:
-                    import ipdb; ipdb.set_trace()
+                # res_arr[i : i + n_vals] = getattr(p, attr)[ind_arr, t]
+                res_arr[inds] = getattr(p, attr)[ind_arr, t]
             i += n_vals
     return i
 
@@ -77,14 +77,7 @@ class ExprPredicate(Predicate):
             for p_attrs in list(attr_inds.values())
             for (_, active_inds) in p_attrs
         )
-
-        self.attr_map = {}
-        cur_ind = 0
-        for p in attr_inds:
-            for attr, inds in attr_inds[p]:
-                ninds = len(inds)
-                self.attr_map[p, attr] = np.array(range(cur_ind, cur_ind + ninds))
-                cur_ind += ninds
+        self.set_attr_map(attr_inds)
 
         start, end = active_range
         self.x_dim *= end + 1 - start
@@ -96,6 +89,15 @@ class ExprPredicate(Predicate):
         self._rollout = False
         self._nonrollout = False
         self._init_include = True
+
+    def set_attr_map(self, attr_inds):
+        self.attr_map = {}
+        cur_ind = 0
+        for p in attr_inds:
+            for attr, inds in attr_inds[p]:
+                ninds = len(inds)
+                self.attr_map[p, attr] = np.array(range(cur_ind, cur_ind + ninds))
+                cur_ind += ninds
 
     # @profile
     def lazy_spawn_or_body(self, param, name, geom):

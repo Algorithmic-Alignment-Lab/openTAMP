@@ -220,7 +220,6 @@ def robot_obj_pose_suggester(plan, anum, resample_size=20, st=0):
     robot_body.set_pose(robot.pose[:,st], robot.rotation[:,st])
     obj = act.params[1]
     targ = act.params[2]
-    obj_geom = obj.geom if hasattr(obj, 'geom') else targ.geom
     st, et = act.active_timesteps
     for param in plan.params.values():
         if hasattr(param, 'openrave_body') and param.openrave_body is not None:
@@ -277,6 +276,7 @@ def robot_obj_pose_suggester(plan, anum, resample_size=20, st=0):
                 pose[attr] = getattr(target_pose, attr).copy()
 
         elif arm:
+            obj_geom = obj.geom if hasattr(obj, 'geom') else targ.geom
             pose.update(vertical_gripper(a_name, robot, arm, obj, obj_geom, gripper_open, 
                                          (st, et), rand=(rand or (i>0)), null_zero=zero_null, rel_pos=rel_pos, disp=disp))
 

@@ -357,7 +357,9 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
         if callback is not None:
             viewer = callback()
 
+        highest_priority = -2
         for priority in self.solve_priorities:
+            highest_priority = priority
             if DEBUG: print('solving at priority', priority)
 
             for attempt in range(max(1, n_resamples)):
@@ -392,7 +394,7 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
 
         if DEBUG:
             print("FAILED PREDICATES")
-            print((plan.get_failed_preds(active_ts=active_ts, tol=1e-3), active_ts))
+            print((plan.get_failed_preds(active_ts=active_ts, priority=highest_priority, tol=1e-3), active_ts))
 
         self._cleanup_plan(plan, active_ts)
 
