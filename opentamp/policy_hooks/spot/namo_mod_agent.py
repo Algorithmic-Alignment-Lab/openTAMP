@@ -131,7 +131,8 @@ class NAMOModAgent(NAMOSortingAgent):
             'timestep': 0.002,
             'image_dimensions': (hyperparams['image_width'], hyperparams['image_height']),
             'step_mult': 5e0,
-            'act_jnts': ['robot_x', 'robot_y', 'robot_theta', 'right_finger_joint', 'left_finger_joint']
+            # 'act_jnts': ['robot_x', 'robot_y', 'robot_theta', 'right_finger_joint', 'left_finger_joint']
+            'act_jnts': ['robot_x', 'robot_y', 'robot_theta']
         }
 
         self.main_camera_id = 0
@@ -569,7 +570,8 @@ class NAMOModAgent(NAMOSortingAgent):
         grip = x[self.state_inds['pr2', 'gripper']][0]
         theta = x[self.state_inds['pr2', 'theta']][0]
         self.mjc_env.set_user_data('vel', 0.)
-        self.mjc_env.set_joints({'robot_x': xval, 'robot_y': yval, 'left_finger_joint': grip, 'right_finger_joint': grip, 'robot_theta': theta}, forward=False)
+        # self.mjc_env.set_joints({'robot_x': xval, 'robot_y': yval, 'left_finger_joint': grip, 'right_finger_joint': grip, 'robot_theta': theta}, forward=False)
+        self.mjc_env.set_joints({'robot_x': xval, 'robot_y': yval, 'robot_theta': theta}, forward=False)
         for param_name, attr in self.state_inds:
             if param_name == 'pr2': continue
             if attr == 'pose':
