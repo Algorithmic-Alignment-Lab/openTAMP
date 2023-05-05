@@ -72,9 +72,7 @@ for i in range(len(possible_can_locs)):
 
 
 def prob_file(descr=None):
-    if descr is None:
-        descr = 'grip_prob_{0}_{1}end_{2}aux'.format(NUM_OBJS, len(END_TARGETS), n_aux)
-    return opentamp.__path__._path[0] + "/domains/namo_domain/namo_probs/{0}.prob".format(descr)
+    return opentamp.__path__._path[0] + "/domains/belief_space_domains/probs/namo_mod.prob"
 
 
 def get_prim_choices(task_list=None):
