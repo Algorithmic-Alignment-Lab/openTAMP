@@ -10,10 +10,11 @@ import numpy as np
 import opentamp
 import opentamp.policy_hooks.utils.policy_solver_utils as utils
 from opentamp.core.util_classes.namo_grip_predicates import ATTRMAP
-# from opentamp.pma.namo_grip_solver import NAMOSolverOSQP as NAMOSolver
+from opentamp.pma.namo_grip_solver import NAMOSolverOSQP as NAMOSolver
 # from opentamp.policy_hooks.namo.grip_agent import NAMOGripAgent
-from opentamp.pma.spot_solver import SpotSolverOSQP as SpotSolver
-from opentamp.policy_hooks.spot.spot_agent import SpotAgent
+# from opentamp.pma.spot_solver import SpotSolverOSQP as SpotSolver
+# from opentamp.policy_hooks.spot.spot_agent import SpotAgent
+from opentamp.policy_hooks.spot.namo_mod_agent import NAMOModAgent
 
 #import opentamp.policy_hooks.namo.sorting_prob_11 as prob
 import opentamp.policy_hooks.spot.namo_mod_prob as prob
@@ -64,9 +65,9 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
         'num_objs': no,
         'num_targs': nt,
         'attr_map': ATTRMAP,
-        'agent_type': SpotAgent,
-        'mp_solver_type': SpotSolver,
-        'll_solver_type': SpotSolver,
+        'agent_type': NAMOModAgent,
+        'mp_solver_type': NAMOSolver,
+        'll_solver_type': NAMOSolver,
         'n_dirs': N_DIRS,
 
         'state_include': [utils.STATE_ENUM],

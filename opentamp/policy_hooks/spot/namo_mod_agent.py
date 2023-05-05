@@ -100,7 +100,7 @@ class optimal_pol:
         return u
 
 
-class NAMOGripAgent(NAMOSortingAgent):
+class NAMOModAgent(NAMOSortingAgent):
     def __init__(self, hyperparams):
         super(NAMOSortingAgent, self).__init__(hyperparams)
 
