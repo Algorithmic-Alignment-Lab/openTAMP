@@ -96,6 +96,17 @@ for r in robots:
         attrs.append(('{}_ee_rot'.format(arm), 'Vector3d'))
         pose_attrs.append(('{}_ee_pos'.format(arm), 'Vector3d'))
         pose_attrs.append(('{}_ee_rot'.format(arm), 'Vector3d'))
+
+    for pos_jnt in r_geom.pos_jnts:
+        njnts = len(r_geom.jnt_names[pos_jnt])
+        attrs.append((pos_jnt, 'Vector{}d'.format(njnts)))
+        pose_attrs.append((pos_jnt, 'Vector{}d'.format(njnts)))
+
+    for rot_jnt in r_geom.rot_jnts:
+        njnts = len(r_geom.jnt_names[rot_jnt])
+        attrs.append((rot_jnt, 'Vector{}d'.format(njnts)))
+        pose_attrs.append((rot_jnt, 'Vector{}d'.format(njnts)))
+
     pp.add(r, attrs)
     pp.add(r+"Pose", pose_attrs)
 

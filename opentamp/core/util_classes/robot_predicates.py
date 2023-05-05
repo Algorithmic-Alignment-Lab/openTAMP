@@ -36,8 +36,10 @@ def init_robot_pred(pred, robot, params=[], robot_poses=[], attrs={}):
     base_dim += 3 if not len(attrs[robot]) or 'rotation' in attrs[robot] else 0
     arm_dims = sum([len(r_geom.jnt_names[arm]) for arm in r_geom.arms if not len(attrs[robot]) or arm in attrs[robot]])
     gripper_dims = sum([r_geom.gripper_dim(arm) for arm in r_geom.arms if not len(attrs[robot]) or r_geom.ee_link_names[arm] in attrs[robot]])
+    pos_jnt_dims = sum([len(r_geom.jnt_names[pos_jnt]) for pos_jnt in r_geom.pos_jnts if not len(attrs[robot]) or pos_jnt in attrs[robot]])
+    rot_jnt_dims = sum([len(r_geom.jnt_names[rot_jnt]) for rot_jnt in r_geom.rot_jnts if not len(attrs[robot]) or rot_jnt in attrs[robot]])
     ee_dims = sum([3 for attr in r_geom.ee_attrs if not len(attrs[robot]) or attr in attrs[robot]])
-    cur_attr_dim = base_dim + arm_dims + gripper_dims + ee_dims
+    cur_attr_dim = base_dim + arm_dims + gripper_dims + ee_dims + pos_jnt_dims + rot_jnt_dims
     cur_attr_dim *= 1 + len(robot_poses)
     robot_inds = []
 
@@ -73,6 +75,7 @@ def init_robot_pred(pred, robot, params=[], robot_poses=[], attrs={}):
             cur_attr_dim += len(inds)
     pred.attr_inds = attr_inds
     pred.attr_dim = cur_attr_dim
+    pred.set_attr_map(attr_inds)
     return pred.attr_inds, pred.attr_dim
 
 def parse_collision(c, obj_body, obstr_body, held_links=[], obs_links=[]):
@@ -138,6 +141,9 @@ def parse_robot_collision(c, robot, robot_body, obj_body, col_links=[], obj_link
     if robot_jac.shape[-1] != n_jnts:
         robot_jac = robot_jac[:,6:]
         robot_ang_jac = robot_ang_jac[6:]
+        assert robot_jac.shape[-1] == n_jnts
+        assert robot_ang_jac.shape[-1] == n_jnts
+        
     return distance, normal, linkRobot, linkObj, ptRobot, ptObj, robot_jac, robot_ang_jac
 
 def compute_arm_pos_jac(arm_joints, robot_body, pos):
@@ -170,6 +176,30 @@ def compute_arm_rot_jac(arm_joints, robot_body, obj_dir, world_dir, sign=1.):
     arm_jac = np.array(arm_jac).reshape((-1, len(arm_joints)))
     return arm_jac
 
+def compute_pos_jnt_jac(pos_joints, robot_body, pos):
+    pos_jac = []
+    for jnt_id in pos_joints:
+        info = p.getJointInfo(robot_body.body_id, jnt_id)
+        axis = info[13]
+        jnt_state = p.getLinkState(robot_body.body_id, jnt_id)
+        quat = jnt_state[1]
+        mat = T.quat2mat(quat)
+        axis = mat.dot(axis)
+        pos_jac.append(axis)
+    pos_jac = np.array(pos_jac).T
+    return pos_jac
+
+def compute_rot_jnt_jac(rot_joints, robot_body):
+    rot_jac = []
+    for jnt_id in rot_joints:
+        info = p.getJointInfo(robot_body.body_id, jnt_id)
+        axis = info[13]
+        quat = p.getLinkState(robot_body.body_id, jnt_id)[1]
+        mat = T.quat2mat(quat)
+        axis = mat.dot(axis)
+        rot_jac.append(axis)
+    rot_jac = np.array(rot_jac).reshape((-1, len(rot_joints)))
+    return rot_jac
 
 def opposite_angle(theta):
     return ((theta + 2 * np.pi) % (2 * np.pi)) - np.pi
@@ -285,13 +315,15 @@ class RobotPredicate(ExprPredicate):
         geom = robot_body._geom
         dof_map = geom.dof_map
         if ee_only:
-            dof_inds = np.concatenate([dof_map[arm] for arm in geom.arms])
             lb = np.zeros(3) 
             ub = np.zeros(3) 
         else:
-            dof_inds = np.concatenate([dof_map[arm] for arm in geom.arms])
-            lb = np.zeros(6+sum([len(dof_map[arm]) for arm in geom.arms])+sum([geom.gripper_dim(arm) for arm in geom.arms]))
-            ub = np.zeros(6+sum([len(dof_map[arm]) for arm in geom.arms])+sum([geom.gripper_dim(arm) for arm in geom.arms]))
+            n_entries = 6 + sum([len(dof_map[arm]) for arm in geom.arms]) + \
+                            sum([geom.gripper_dim(arm) for arm in geom.arms]) + \
+                            sum([len(dof_map[pos_jnt]) for pos_jnt in geom.pos_jnts]) + \
+                            sum([len(dof_map[rot_jnt]) for rot_jnt in geom.rot_jnts])
+            lb = np.zeros(n_entries)
+            ub = np.zeros(n_entries)
 
         if delta:
             base_move = geom.get_base_move_limit()
@@ -299,31 +331,87 @@ class RobotPredicate(ExprPredicate):
         else:
             base_move = geom.get_base_limit()
         
-        cur_ind = 0
-        for attr, inds in self.attr_inds[self.robot]:
-            ninds = len(inds)
+        for attr, _ in self.attr_inds[self.robot]:
+            inds = self.attr_map[self.robot, attr]
             if attr == 'pose':
-                lb[cur_ind:cur_ind+ninds] = base_move[0]
-                ub[cur_ind:cur_ind+ninds] = base_move[1]
+                lb[inds] = base_move[0]
+                ub[inds] = base_move[1]
+
             elif attr == 'rotation':
-                lb[cur_ind:cur_ind+ninds] = -4 * np.pi
-                ub[cur_ind:cur_ind+ninds] = 4 * np.pi
+                lb[inds] = -4 * np.pi
+                ub[inds] = 4 * np.pi
+
             elif attr in geom.arms:
                 arm_lb, arm_ub = geom.get_joint_limits(attr)
-                lb[cur_ind:cur_ind+ninds] = arm_lb
-                ub[cur_ind:cur_ind+ninds] = arm_ub
+                lb[inds] = arm_lb
+                ub[inds] = arm_ub
+
+            elif attr in geom.pos_jnts:
+                if delta:
+                    lb[inds] = -0.25 * geom.get_joint_move_factor()
+                    ub[inds] = 0.25 * geom.get_joint_move_factor()
+                else:
+                    lb[inds] = geom.jnt_limits[attr][0]
+                    ub[inds] = geom.jnt_limits[attr][1]
+
+
+            elif attr in geom.rot_jnts:
+                if delta:
+                    lb[inds] = -np.pi / 8 * geom.get_joint_move_factor()
+                    ub[inds] = np.pi / 8 * geom.get_joint_move_factor()
+                else:
+                    lb[inds] = geom.jnt_limits[attr][0]
+                    ub[inds] = geom.jnt_limits[attr][1]
+
             elif attr in geom.ee_link_names.values():
                 if delta:
                     gripper_lb, gripper_ub = -10, 10
                 else:
                     gripper_lb = -1 # geom.get_gripper_closed_val()
                     gripper_ub = 1 # geom.get_gripper_open_val()
-                lb[cur_ind:cur_ind+ninds] = gripper_lb
-                ub[cur_ind:cur_ind+ninds] = gripper_ub
+                lb[inds] = gripper_lb
+                ub[inds] = gripper_ub
+
             elif ee_only:
-                lb[cur_ind:cur_ind+ninds] = self.lb * geom.get_joint_move_factor()
-                ub[cur_ind:cur_ind+ninds] = self.ub * geom.get_joint_move_factor()
-            cur_ind += ninds
+                lb[inds] = self.lb * geom.get_joint_move_factor()
+                ub[inds] = self.ub * geom.get_joint_move_factor()
+
+        unbouned_inds = np.where(lb > ub)
+        if len(unbouned_inds):
+            lb[unbouned_inds] = -1e3
+            ub[unbouned_inds] = 1e3
+
+        # cur_ind = 0
+        # for attr, inds in self.attr_inds[self.robot]:
+        #     ninds = len(inds)
+        #     if attr == 'pose':
+        #         lb[cur_ind:cur_ind+ninds] = base_move[0]
+        #         ub[cur_ind:cur_ind+ninds] = base_move[1]
+        #     elif attr == 'rotation':
+        #         lb[cur_ind:cur_ind+ninds] = -4 * np.pi
+        #         ub[cur_ind:cur_ind+ninds] = 4 * np.pi
+        #     elif attr in geom.arms:
+        #         arm_lb, arm_ub = geom.get_joint_limits(attr)
+        #         lb[cur_ind:cur_ind+ninds] = arm_lb
+        #         ub[cur_ind:cur_ind+ninds] = arm_ub
+        #     elif attr in geom.pos_jnts:
+        #         lb[cur_ind:cur_ind+ninds] = base_move[0]
+        #         ub[cur_ind:cur_ind+ninds] = base_move[1]
+        #     elif attr in geom.rot_jnts:
+        #         lb[cur_ind:cur_ind+ninds] = -2 * np.pi
+        #         ub[cur_ind:cur_ind+ninds] = 2 * np.pi
+        #     elif attr in geom.ee_link_names.values():
+        #         if delta:
+        #             gripper_lb, gripper_ub = -10, 10
+        #         else:
+        #             gripper_lb = -1 # geom.get_gripper_closed_val()
+        #             gripper_ub = 1 # geom.get_gripper_open_val()
+        #         lb[cur_ind:cur_ind+ninds] = gripper_lb
+        #         ub[cur_ind:cur_ind+ninds] = gripper_ub
+        #     elif ee_only:
+        #         lb[cur_ind:cur_ind+ninds] = self.lb * geom.get_joint_move_factor()
+        #         ub[cur_ind:cur_ind+ninds] = self.ub * geom.get_joint_move_factor()
+        #     cur_ind += ninds
         '''
         inds = geom.dof_inds['pose']
         lb[inds] = base_move[0]
@@ -437,8 +525,8 @@ class CollisionPredicate(RobotPredicate):
     #@profile
     def robot_obj_collision(self, x):
         # Parse the pose value
-        if np.any(np.isnan(x)):
-            x[np.isnan(x)] = 0.
+        # if np.any(np.isnan(x)):
+        #     x[np.isnan(x)] = 0.
         self._plot_handles = []
         flattened = tuple(x.flatten())
         # cache prevents plotting
@@ -553,16 +641,26 @@ class CollisionPredicate(RobotPredicate):
         link_pair_to_col = {}
         sign = 1
         base_jac = np.eye(3)
-        base_jac[:,2] = 0 
+        base_jac[2,2] = 0 
         for c in collisions:
             # Identify the collision points
             col_info = parse_robot_collision(c, robot, robot_body, obj_body, col_links)
             if col_info is None: continue
             distance, normal, linkRobot, linkObj, ptRobot, ptObj, robot_jac, robot_ang_jac = col_info 
             grad = np.zeros((1, self.attr_dim))
+
             for arm in robot.geom.arms:
                 inds = robot.geom.get_free_inds(arm)
                 grad[:, self.attr_map[robot, arm]] = np.dot(sign * normal, robot_jac[:,inds])
+            
+            for pos_jnt in robot.geom.pos_jnts:
+                inds = robot.geom.get_free_inds(pos_jnt)
+                grad[:, self.attr_map[robot, pos_jnt]] = np.dot(sign * normal, robot_jac[:,inds])
+            
+            for rot_jnt in robot.geom.rot_jnts:
+                inds = robot.geom.get_free_inds(rot_jnt)
+                grad[:, self.attr_map[robot, rot_jnt]] = np.dot(sign * normal, robot_jac[:,inds])
+
             grad[:, self.attr_map[robot, 'pose']] = np.dot(sign*normal, base_jac)
             col_vec =  -sign*normal
 
@@ -1505,11 +1603,10 @@ class IsMP(RobotPredicate):
     def __init__(self, name, params, expected_param_types, env=None, debug=False):
         self._env = env
         self.robot, = params
-        attrs = self.robot.geom.arms + self.robot.geom.grippers + ['pose', 'rotation']
+        attrs = self.robot.geom.arms + self.robot.geom.grippers + self.robot.geom.pos_jnts + self.robot.geom.rot_jnts + ['pose', 'rotation']
         attr_inds, attr_dim = init_robot_pred(self, self.robot, [], attrs={self.robot: attrs})
         ## constraints  |x_t - x_{t+1}| < dmove
         ## ==> x_t - x_{t+1} < dmove, -x_t + x_{t+a} < dmove
-        attr_inds = self.attr_inds
         self._param_to_body = {self.robot: self.lazy_spawn_or_body(self.robot, self.robot.name, self.robot.geom)}
 
         A, b, val = self.setup_mov_limit_check(delta=True)
@@ -1563,7 +1660,7 @@ class WithinJointLimit(RobotPredicate):
     def __init__(self, name, params, expected_param_types, env=None, debug=False):
         self._env = env
         self.robot, = params
-        attrs = self.robot.geom.arms + ["pose", "rotation"] + self.robot.geom.grippers
+        attrs = self.robot.geom.arms + ["pose", "rotation"] + self.robot.geom.grippers + self.robot.geom.pos_jnts + self.robot.geom.rot_jnts
         attr_inds, attr_dim = init_robot_pred(self, self.robot, attrs={self.robot: attrs})
 
         self._param_to_body = {self.robot: self.lazy_spawn_or_body(self.robot, self.robot.name, self.robot.geom)}
@@ -3247,7 +3344,9 @@ class Obstructs(CollisionPredicate):
         self.coeff = -const.OBSTRUCTS_COEFF
         self.neg_coeff = const.OBSTRUCTS_COEFF
 
-        attrs = {self.robot: self.robot.geom.arms + self.robot.geom.grippers + ['pose', 'rotation']}
+        attrs = {self.robot: self.robot.geom.arms + self.robot.geom.grippers + \
+                             ['pose', 'rotation'] + self.robot.geom.pos_jnts + self.robot.geom.rot_jnts}
+
         attr_inds, attr_dim = init_robot_pred(self, self.robot, [self.obstacle], attrs=attrs)
         self._param_to_body = {self.robot: self.lazy_spawn_or_body(self.robot, self.robot.name, self.robot.geom),
                                self.obstacle: self.lazy_spawn_or_body(self.obstacle, self.obstacle.name, self.obstacle.geom)}
@@ -3476,7 +3575,8 @@ class RCollides(CollisionPredicate):
 
         self.coeff = -const.RCOLLIDE_COEFF
         self.neg_coeff = const.RCOLLIDE_COEFF
-        attrs = {self.robot: self.robot.geom.arms + self.robot.geom.grippers + ['pose', 'rotation'], \
+        attrs = {self.robot: self.robot.geom.arms + self.robot.geom.grippers + \
+                             ['pose', 'rotation'] + self.robot.geom.pos_jnts + self.robot.geom.rot_jnts, \
                  self.obstacle: ['pose', 'rotation']}
 
         if 'door' in self.obstacle.geom.get_types():

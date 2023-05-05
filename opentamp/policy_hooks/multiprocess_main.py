@@ -76,8 +76,9 @@ class MultiProcessMain(object):
             self.pol_list = ('control',) if not config['args'].split_nets else tuple(get_tasks(task_file).keys())
             new_config, config_mod = load_config(config['args'])
             new_config.update(config)
-            self.init(new_config)
+            setup_dirs(self.config, self.config['args'])
             check_dirs(self.config)
+            self.init(new_config)
 
 
     def init(self, config):

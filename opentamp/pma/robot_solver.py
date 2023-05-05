@@ -220,7 +220,6 @@ def robot_obj_pose_suggester(plan, anum, resample_size=20, st=0):
     robot_body.set_pose(robot.pose[:,st], robot.rotation[:,st])
     obj = act.params[1]
     targ = act.params[2]
-    obj_geom = obj.geom if hasattr(obj, 'geom') else targ.geom
     st, et = act.active_timesteps
     for param in plan.params.values():
         if hasattr(param, 'openrave_body') and param.openrave_body is not None:
@@ -236,10 +235,16 @@ def robot_obj_pose_suggester(plan, anum, resample_size=20, st=0):
                     param.openrave_body.set_pose(param.pose[:,st])
 
     a_name = act.name.lower()
-    arm = robot.geom.arms[0]
-    if a_name.find('left') >= 0: arm = 'left'
-    if a_name.find('right') >= 0: arm = 'right'
-    gripper_open = robot_gripper_open(a_name)
+
+    arm = None
+    if a_name.find('left') >= 0: 
+        arm = 'left'
+
+    if a_name.find('right') >= 0: 
+        arm = 'right'
+
+    if arm:
+        gripper_open = robot_gripper_open(a_name)
 
     rel_pos = True
     disp = np.array([0., 0., const.GRASP_DIST])
@@ -262,42 +267,53 @@ def robot_obj_pose_suggester(plan, anum, resample_size=20, st=0):
     rand = False
     ### Sample poses
     for i in range(resample_size):
-        pose = vertical_gripper(a_name, robot, arm, obj, obj_geom, gripper_open, (st, et), rand=(rand or (i>0)), null_zero=zero_null, rel_pos=rel_pos, disp=disp)
+        pose = {}
 
-        targ_pos = pose['{}_ee_pos'.format(arm)]
-        targ_rot = convert_orn(robot, arm, pose['{}_ee_rot'.format(arm)].flatten(), to_robot=False)
-        targ_rot = T.quaternion_to_euler(targ_rot, 'xyzw')
+        if a_name == 'moveto':
+            target_pose = act.params[2]
+            pose['pose'] = target_pose.value.copy()
+            for attr in ['rotation'] + robot.geom.arms + robot.geom.pos_jnts + robot.geom.rot_jnts + robot.geom.grippers:
+                pose[attr] = getattr(target_pose, attr).copy()
 
-        if a_name.find('move') < 0 and \
-            (a_name.find('grasp') >= 0 or \
-            a_name.find('lift') >= 0):
-            obj = act.params[1]
-            targ = act.params[2]
-            pose = {robot: pose, obj: obj_in_gripper(targ_pos, targ_rot, obj)}
+        elif arm:
+            obj_geom = obj.geom if hasattr(obj, 'geom') else targ.geom
+            pose.update(vertical_gripper(a_name, robot, arm, obj, obj_geom, gripper_open, 
+                                         (st, et), rand=(rand or (i>0)), null_zero=zero_null, rel_pos=rel_pos, disp=disp))
 
-        if a_name.find('move') >= 0 and \
-           (a_name.find('put') >= 0 or \
-            a_name.find('place') >= 0):
-            obj = act.params[2]
-            targ = act.params[1]
-            if hasattr(targ, 'geom') and 'door' in targ.geom.get_types():
-                targ_rot = targ.geom.in_orn
-            pose = {robot: pose, obj: obj_in_gripper(targ_pos, targ_rot, obj)}
-            obj = act.params[1]
-            targ = act.params[2]
+            targ_pos = pose['{}_ee_pos'.format(arm)]
+            targ_rot = convert_orn(robot, arm, pose['{}_ee_rot'.format(arm)].flatten(), to_robot=False)
+            targ_rot = T.quaternion_to_euler(targ_rot, 'xyzw')
 
-        if a_name.find('slide') >= 0:
-            door = act.params[1]
-            is_open = a_name.find('open') >= 0
-            door_pose = door_val(door, is_open, st)
-            pose = {robot: pose, door: door_pose}
+            if a_name.find('move') < 0 and \
+                (a_name.find('grasp') >= 0 or \
+                a_name.find('lift') >= 0):
+                obj = act.params[1]
+                targ = act.params[2]
+                pose = {robot: pose, obj: obj_in_gripper(targ_pos, targ_rot, obj)}
 
-        # if a_name.find('place_in_door') >= 0:
-        #     door = act.params[1]
-        #     obj = act.params[2]
-        #     obj_pose = {'pose': (door.pose[:, st] + np.array(door.geom.in_pos)).reshape((3,1)),
-        #                'rotation': np.array(door.geom.in_orn).reshape((3,1))}
-        #     pose = {robot: pose, obj: obj_pose}
+            if a_name.find('move') >= 0 and \
+            (a_name.find('put') >= 0 or \
+                a_name.find('place') >= 0):
+                obj = act.params[2]
+                targ = act.params[1]
+                if hasattr(targ, 'geom') and 'door' in targ.geom.get_types():
+                    targ_rot = targ.geom.in_orn
+                pose = {robot: pose, obj: obj_in_gripper(targ_pos, targ_rot, obj)}
+                obj = act.params[1]
+                targ = act.params[2]
+
+            if a_name.find('slide') >= 0:
+                door = act.params[1]
+                is_open = a_name.find('open') >= 0
+                door_pose = door_val(door, is_open, st)
+                pose = {robot: pose, door: door_pose}
+
+            # if a_name.find('place_in_door') >= 0:
+            #     door = act.params[1]
+            #     obj = act.params[2]
+            #     obj_pose = {'pose': (door.pose[:, st] + np.array(door.geom.in_pos)).reshape((3,1)),
+            #                'rotation': np.array(door.geom.in_orn).reshape((3,1))}
+            #     pose = {robot: pose, obj: obj_pose}
 
         if pose is None: break
         robot_pose.append(pose)

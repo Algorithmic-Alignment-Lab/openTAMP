@@ -1,0 +1,9 @@
+{
+    'move_to': [
+        '0: MOVE_TO SPOT ROBOT_INIT_POSE {0}'
+    ],
+
+};
+
+{
+}

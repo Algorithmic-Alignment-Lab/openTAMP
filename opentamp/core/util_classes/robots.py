@@ -19,6 +19,8 @@ class Robot(object):
         self.file_type = 'urdf'
         self.initialized = False
         self.arms = []
+        self.pos_jnts = []
+        self.rot_jnts = []
         self.grippers = []
         self.ee_attrs = []
         self.id = -1
@@ -41,6 +43,16 @@ class Robot(object):
             gripper_dim = 1
             robot_map.append((gripper, np.array(range(gripper_dim), dtype=np.int)))
             robot_pose_map.append((gripper, np.array(range(gripper_dim), dtype=np.int)))
+
+        for pos_jnt in self.pos_jnts:
+            dim = len(self.jnt_names[pos_jnt])
+            robot_map.append((pos_jnt, np.array(range(dim), dtype=np.int)))
+            robot_pose_map.append((pos_jnt, np.array(range(dim), dtype=np.int)))
+
+        for rot_jnt in self.rot_jnts:
+            dim = len(self.jnt_names[rot_jnt])
+            robot_map.append((rot_jnt, np.array(range(dim), dtype=np.int)))
+            robot_pose_map.append((rot_jnt, np.array(range(dim), dtype=np.int)))
 
         base = self.get_base_move_limit().flatten()
         robot_map.append(('pose', np.array(range(len(base)),dtype=np.int))) 
@@ -67,10 +79,25 @@ class Robot(object):
     def get_arm_inds(self, arm):
         return self.arm_inds[arm]
 
-    def get_free_inds(self, arm=None):
-        if arm is None:
+    def get_pos_jnt_inds(self, pos_jnt):
+        return self.pos_jnt_inds[pos_jnt]
+
+    def get_rot_jnt_inds(self, rot_jnt):
+        return self.rot_jnt_inds[rot_jnt]
+
+    def get_free_inds(self, key=None):
+        if key is None:
             return list(sorted(self.free_joints.keys()))
-        inds = self.get_arm_inds(arm)
+        
+        if key in self.arms:
+            inds = self.get_arm_inds(key)
+        elif key in self.pos_jnts:
+            inds = self.get_pos_jnt_inds(key)
+        elif key in self.rot_jnts:
+            inds = self.get_rot_jnt_inds(key)
+        else:
+            raise ValueError(f'Invalid inds key {key}')
+
         return [self.free_joints[ind] for ind in inds]
 
     def get_free_jnts(self):
@@ -182,6 +209,8 @@ class Robot(object):
         self.dof_map = {}
         self.arm_inds = {}
         self.gripper_inds = {}
+        self.pos_jnt_inds = {}
+        self.rot_jnt_inds = {}
         self.ee_links = {}
         self.jnt_limits = {}
         self.free_joints = {}
@@ -237,6 +266,18 @@ class Robot(object):
             self.dof_map[gripper] = [self.jnt_to_id[jnt] for jnt in jnt_names]
             self.gripper_inds[gripper] = [self.jnt_to_id[jnt] for jnt in jnt_names]
             self.jnt_limits[gripper] = (np.array([self.bounds[jnt][0] for jnt in jnt_names]), np.array([self.bounds[jnt][1] for jnt in jnt_names]))
+
+        for pos_jnt in self.pos_jnts:
+            jnt_names = self.jnt_names[pos_jnt]
+            self.dof_map[pos_jnt] = [self.jnt_to_id[jnt] for jnt in jnt_names]
+            self.pos_jnt_inds[pos_jnt] = [self.jnt_to_id[jnt] for jnt in jnt_names]
+            self.jnt_limits[pos_jnt] = (np.array([self.bounds[jnt][0] for jnt in jnt_names]), np.array([self.bounds[jnt][1] for jnt in jnt_names]))
+
+        for rot_jnt in self.rot_jnts:
+            jnt_names = self.jnt_names[rot_jnt]
+            self.dof_map[rot_jnt] = [self.jnt_to_id[jnt] for jnt in jnt_names]
+            self.rot_jnt_inds[rot_jnt] = [self.jnt_to_id[jnt] for jnt in jnt_names]
+            self.jnt_limits[rot_jnt] = (np.array([self.bounds[jnt][0] for jnt in jnt_names]), np.array([self.bounds[jnt][1] for jnt in jnt_names]))
 
         self.col_links = set([self.link_to_id[name] for name in self.col_link_names])
         self._init_attr_map()
@@ -418,15 +459,23 @@ class Spot(Robot):
         spot_shape = opentamp.__path__._path[0] + "/robot_info/spot_simple.xml"
         super(Spot, self).__init__(spot_shape)
 
-        self.jnt_names = {'pos': ['robot_x', 'robot_y'],
+        self.jnt_names = {'position': ['robot_x', 'robot_y'],
                           'theta': ['robot_theta'],
                           }
+        self.pos_jnts = ['position']
+        self.rot_jnts = ['theta']
         self.ee_link_names = {}
         self.arms = []
         self.ee_attrs = []
         self.arm_bnds = {}
         self.col_link_names = set(['spot'])
 
+    def get_base_limit(self):
+        return np.array([-10, -10, -5*np.pi]), np.array([10, 10, 5*np.pi])
+    
+    def get_base_move_limit(self):
+        return np.array([0.5, 0.5, np.pi/4])
+    
 
 class HSR(Robot):
     """
