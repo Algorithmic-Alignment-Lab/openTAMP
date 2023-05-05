@@ -72,7 +72,7 @@ for i in range(len(possible_can_locs)):
 
 
 def prob_file(descr=None):
-    return opentamp.__path__._path[0] + "/domains/belief_space_domains/probs/namo_mod.prob"
+    return opentamp.__path__._path[0] + "/domains/belief_space_domain/probs/namo_mod.prob"
 
 
 def get_prim_choices(task_list=None):
