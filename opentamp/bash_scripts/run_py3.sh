@@ -21,6 +21,7 @@ python3 -W ignore policy_hooks/run_training.py -c policy_hooks.namo.hyperparams_
                                                 -post -pre \
                                                 -warm 100 \
                                                 -neg_ratio 0. -opt_ratio 0.7 -dagger_ratio 0.3 \
+                                                -test "namo_objs1_1/mac_test_49" \
                                                 -descr mac_test & 
 sleep 10800 
 pkill -f run_train -9
