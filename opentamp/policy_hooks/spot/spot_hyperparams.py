@@ -16,7 +16,7 @@ from opentamp.pma.spot_solver import SpotSolverOSQP as SpotSolver
 from opentamp.policy_hooks.spot.spot_agent import SpotAgent
 
 #import opentamp.policy_hooks.namo.sorting_prob_11 as prob
-import opentamp.policy_hooks.spot.spot_prob as prob
+import opentamp.policy_hooks.spot.namo_mod_prob as prob
 from opentamp.policy_hooks.utils.file_utils import LOG_DIR
 
 BASE_DIR = opentamp.__path__._path[0] +  '/policy_hooks/'
