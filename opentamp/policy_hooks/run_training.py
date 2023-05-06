@@ -195,7 +195,7 @@ def argsparser():
     # General setup
     parser.add_argument('-c', '--config', type=str, default='config')
     parser.add_argument('-test', '--test', type=str, default='')
-    parser.add_argument('-sandbox', '--sandbox', type='store_true')
+    parser.add_argument('-sandbox', '--sandbox', action='store_true', default=False)
     parser.add_argument('-no', '--nobjs', type=int, default=1)
     parser.add_argument('-nt', '--ntargs', type=int, default=1)
     parser.add_argument('-motion', '--num_motion', type=int, default=16)
