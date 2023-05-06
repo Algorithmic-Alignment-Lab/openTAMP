@@ -12,9 +12,9 @@ import opentamp.policy_hooks.utils.policy_solver_utils as utils
 from opentamp.core.util_classes.namo_grip_predicates import ATTRMAP
 from opentamp.pma.namo_grip_solver import NAMOSolverOSQP as NAMOSolver
 # from opentamp.policy_hooks.namo.grip_agent import NAMOGripAgent
-# from opentamp.pma.spot_solver import SpotSolverOSQP as SpotSolver
-# from opentamp.policy_hooks.spot.spot_agent import SpotAgent
-from opentamp.policy_hooks.spot.namo_mod_agent import NAMOModAgent
+from opentamp.pma.spot_solver import SpotSolverOSQP as SpotSolver
+from opentamp.policy_hooks.spot.spot_agent import SpotAgent
+# from opentamp.policy_hooks.spot.namo_mod_agent import NAMOModAgent
 
 #import opentamp.policy_hooks.namo.sorting_prob_11 as prob
 import opentamp.policy_hooks.spot.namo_mod_prob as prob

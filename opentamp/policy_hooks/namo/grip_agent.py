@@ -58,7 +58,7 @@ LIDAR_DIST = 2.
 DSAFE = 5e-1
 MAX_STEP = max(1.5*dmove, 1)
 LOCAL_FRAME = True
-NAMO_XML = opentamp.__path__[0] + '/robot_info/lidar_namo.xml'
+NAMO_XML = opentamp.__path__[0] + '/robot_info/lidar_spot_imit.xml'
 
 
 class optimal_pol:
@@ -876,22 +876,22 @@ class NAMOGripAgent(NAMOSortingAgent):
 
 
     def goal(self, cond, targets=None):
-        if self.goal_type == 'moveto':
-            assert ('can1', 'pose') not in self.state_inds
-            return '(NearGraspAngle  pr2 can0) '
-        if targets is None:
-            targets = self.target_vecs[cond]
-        prim_choices = self.prob.get_prim_choices(self.task_list)
-        goal = ''
-        for i, obj in enumerate(prim_choices[OBJ_ENUM]):
-            targ = targets[self.target_inds['{0}_end_target'.format(obj), 'value']]
-            targ_labels = self.targ_labels if not self._eval_mode else self.alt_targ_labels
-            for ind in targ_labels:
-                if np.all(np.abs(targ - targ_labels[ind]) < NEAR_TOL):
-                    goal += '(Near {0} end_target_{1}) '.format(obj, ind)
-                    break
-        return goal
-
+        # if self.goal_type == 'moveto':
+        #     assert ('can1', 'pose') not in self.state_inds
+        #     return '(NearGraspAngle  pr2 can0) '
+        # if targets is None:
+        #     targets = self.target_vecs[cond]
+        # prim_choices = self.prob.get_prim_choices(self.task_list)
+        # goal = ''
+        # for i, obj in enumerate(prim_choices[OBJ_ENUM]):
+        #     targ = targets[self.target_inds['{0}_end_target'.format(obj), 'value']]
+        #     targ_labels = self.targ_labels if not self._eval_mode else self.alt_targ_labels
+        #     for ind in targ_labels:
+        #         if np.all(np.abs(targ - targ_labels[ind]) < NEAR_TOL):
+        #             goal += '(Near {0} end_target_{1}) '.format(obj, ind)
+        #             break
+        # return goal
+        return '(NearGraspAngle  pr2 can0) '
 
     def get_annotated_image(self, s, t, cam_id=None):
         if cam_id is None: cam_id = self.camera_id

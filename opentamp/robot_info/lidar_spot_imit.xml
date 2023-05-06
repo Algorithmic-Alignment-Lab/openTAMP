@@ -1,0 +1,57 @@
+<mujoco model="pr2_model">
+    <worldbody name="base">
+        <geom name="ground_plane" type="plane" pos="0 0 -0.1" size="20 20 .05" rgba="1. 1. 1. 0.5" friction="1. 1. 1." />
+        <camera name="overhead_camera" pos="0 0.0 25" quat="0.707 0 0 -0.707" />
+        <body name="pr2" pos="0 0 0.5">
+            <joint axis="1 0 0" name="robot_x" type="slide" pos="0 0 0" />
+            <joint axis="0 1 0" name="robot_y" type="slide" pos="0 0 0" />
+            <site name="body_1" pos="0.3 0 0" zaxis="1 0 0" />
+            <site name="body_2" pos="0.276 0.195 -0.3" zaxis="0.924 0.0585 0" />
+            <site name="body_3" pos="0.212 0.212 -0.3" zaxis="0.707 0.707 0" />
+            <site name="body_4" pos="0.195 0.276 -0.3" zaxis="0.0585 0.924 0" />
+
+            <site name="body_5" pos="0 0.3 -0.3" zaxis="0 1 0"/>
+            <site name="body_6" pos="-0.195 0.276 -0.30" zaxis="-0.0585 0.924 0"/>
+            <site name="body_7" pos="-0.212 0.212 -0.30" zaxis="-0.707 0.707 0"/>
+            <site name="body_8" pos="-0.276 0.195 -0.30" zaxis="-0.924 0.0585 0"/>
+
+            <site name="body_9" pos="-0.3 0 -0.3" zaxis="-1 0 0"/>
+            <site name="body_10" pos="-0.276 -0.195 -0.30" zaxis="-0.924 -0.0585 0"/>
+            <site name="body_11" pos="-0.212 -0.212 -0.30" zaxis="-0.707 -0.707 0"/>
+            <site name="body_12" pos="-0.195 -0.276 -0.30" zaxis="-0.0585 -0.924 0"/>
+
+            <site name="body_13" pos="0 -0.3 -0.3" zaxis="0 -1 0"/>
+            <site name="body_14" pos="0.195 -0.276 -0.3" zaxis="0.0585 -0.924 0"/>
+            <site name="body_15" pos="0.212 -0.212 -0.3" zaxis="0.707 -0.707 0"/>
+            <site name="body_16" pos="0.276 -0.195 -0.3" zaxis="0.924 -0.0585 0"/>
+
+            <site name="body_17" pos="0 1.1 -0.3" zaxis="0 1 0"/>
+        </body>
+    </worldbody>
+
+    <actuator>
+        <velocity kv="500" joint="robot_x" name="robot_x" ctrllimited="true" ctrlrange="-20 20" />
+        <velocity kv="500" joint="robot_y" name="robot_y" ctrllimited="true" ctrlrange="-20 20" />
+        <velocity kv="100" joint="robot_theta" name="robot_theta" ctrllimited="true" ctrlrange="-20 20" />
+    </actuator>
+
+    <sensor>
+        <rangefinder name="lidar_1" site="body_1" cutoff="2.5" />
+        <rangefinder name="lidar_2" site="body_2" cutoff="2.5" />
+        <rangefinder name="lidar_3" site="body_3" cutoff="2.5" />
+        <rangefinder name="lidar_4" site="body_4" cutoff="4.5" />
+        <rangefinder name="lidar_5" site="body_5" cutoff="2.5" />
+        <rangefinder name="lidar_6" site="body_6" cutoff="2.6" />
+        <rangefinder name="lidar_7" site="body_7" cutoff="2.5" />
+        <rangefinder name="lidar_8" site="body_8" cutoff="2.5" />
+        <rangefinder name="lidar_9" site="body_9" cutoff="2.5" />
+        <rangefinder name="lidar_10" site="body_10" cutoff="2.5" />
+        <rangefinder name="lidar_11" site="body_11" cutoff="2.5" />
+        <rangefinder name="lidar_12" site="body_12" cutoff="2.5" />
+        <rangefinder name="lidar_13" site="body_13" cutoff="2.5" />
+        <rangefinder name="lidar_14" site="body_14" cutoff="2.5" />
+        <rangefinder name="lidar_15" site="body_15" cutoff="2.5" />
+        <rangefinder name="lidar_16" site="body_16" cutoff="2.5" />
+        <rangefinder name="far_forward" site="body_17" cutoff="2.5" />
+    </sensor>
+</mujoco>
