@@ -160,6 +160,12 @@ def main():
         cur_main = MultiProcessMain(config, load_at_spawn=False)
         cur_main.run_test(cur_main.config)
 
+    elif args.sandbox:
+        cur_main = MultiProcessMain(config, load_at_spawn=True)
+        cur_main.monitor = False # If true, m will wait to finish before moving on
+        cur_main.group_id = current_id
+        print(config['agent'])
+    
     else:
         cur_main = MultiProcessMain(config, load_at_spawn=True)
         cur_main.monitor = False # If true, m will wait to finish before moving on
@@ -189,6 +195,7 @@ def argsparser():
     # General setup
     parser.add_argument('-c', '--config', type=str, default='config')
     parser.add_argument('-test', '--test', type=str, default='')
+    parser.add_argument('-sandbox', '--sandbox', type='store_true')
     parser.add_argument('-no', '--nobjs', type=int, default=1)
     parser.add_argument('-nt', '--ntargs', type=int, default=1)
     parser.add_argument('-motion', '--num_motion', type=int, default=16)
