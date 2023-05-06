@@ -161,10 +161,10 @@ def main():
         cur_main.run_test(cur_main.config)
 
     elif args.sandbox:
-        cur_main = MultiProcessMain(config, load_at_spawn=True)
+        cur_main = MultiProcessMain(config, load_at_spawn=False)
         cur_main.monitor = False # If true, m will wait to finish before moving on
         cur_main.group_id = current_id
-        cur_main.init(config)
+        # cur_main.init(config)
         print(config['agent'])
     
     else:
