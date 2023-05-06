@@ -164,7 +164,7 @@ def main():
         cur_main = MultiProcessMain(config, load_at_spawn=True)
         cur_main.monitor = False # If true, m will wait to finish before moving on
         cur_main.group_id = current_id
-        cur_main.init()
+        cur_main.init(config)
         print(config['agent'])
     
     else:
