@@ -12,7 +12,7 @@ import time
 from opentamp.policy_hooks.multiprocess_main import MultiProcessMain
 from opentamp.policy_hooks.utils.file_utils import LOG_DIR, load_config
 # from ..policy_hooks.run_training import argsparser
-from ..policy_hooks.rollout_server import RolloutServer
+from policy_hooks.rollout_server import RolloutServer
 
 # load args and hyperparams file automatically from the saved rollouts
 with open(LOG_DIR+'namo_objs1_1/mac_test_49'+'/args.pkl', 'rb') as f:
