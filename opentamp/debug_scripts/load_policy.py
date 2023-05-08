@@ -18,7 +18,7 @@ from policy_hooks.utils.policy_solver_utils import *
 
 
 # load args and hyperparams file automatically from the saved rollouts
-with open(LOG_DIR+'namo_objs1_1/mac_test_49'+'/args.pkl', 'rb') as f:
+with open(LOG_DIR+'namo_objs1_1/test_crash_save_14'+'/args.pkl', 'rb') as f:
     args = pickle.load(f)
 
 exps = None
@@ -69,7 +69,7 @@ config = {'args': args,
 config.update(vars(args))
 config['source'] = args.config
 config['weight_dir_prefix'] = old_dir
-current_id = 49
+current_id = 14
 config['group_id'] = current_id
 config['weight_dir'] = config['weight_dir_prefix']+'_{0}'.format(current_id)
 
@@ -118,7 +118,7 @@ for t in range(n, n_targs[-1]):
         targets[server.agent.target_inds[targ_name, 'value']] = x0[server.agent.state_inds[obj_name, 'pose']]
 
 # if rlen is None: rlen = server.agent.rlen
-hor = server.agent.hor
+# hor = server.agent.hor
 # nt = 500 # rlen * hor
 
 goal = server.agent.goal(0, targets)
