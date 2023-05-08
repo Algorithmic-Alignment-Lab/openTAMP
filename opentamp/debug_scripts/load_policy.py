@@ -136,10 +136,36 @@ for t in range(n, n_targs[-1]):
 # nt = 500 # rlen * hor
 
 goal = server.agent.goal(0, targets)
-val, path = server.test_run(x0, targets, 20, hl=True, soft=server.config['soft_eval'], eta=None, lab=-5, hor=25)
-if goal not in server.suc_per_goal:
-    server.suc_per_goal[goal] = []
-server.suc_per_goal[goal].append(val)
+# val, path = server.test_run(x0, targets, 20, hl=True, soft=server.config['soft_eval'], eta=None, lab=-5, hor=25)
+# if goal not in server.suc_per_goal:
+#     server.suc_per_goal[goal] = []
+# server.suc_per_goal[goal].append(val)
+
+state = server.agent.x0[0]
+print(state)
+max_t = 20
+eta=None
+def task_f(sample, t, curtask):
+    return server.get_task(sample.get_X(t=t), sample.targets, curtask, soft)
+server.agent.reset_to_state(state)
+path = []
+val = 0
+nout = len(server.agent._hyperparams['prim_out_include'])
+l = None
+t = 0
+if eta is not None: server.eta = eta 
+old_eta = server.eta
+debug = np.random.uniform() < 0.1
+while t < max_t and val < 1-1e-2 and server.agent.feasible_state(state, targets):
+    l = server.get_task(state, targets, l, False)
+task_name = server.task_list[l[0]]
+pol = server.agent.policies[task_name]
+s = server.agent.sample_task(pol, 0, state, l, noisy=False, task_f=task_f, skip_opt=True, hor=server.agent.hor, policies=server.agent.policies)
+val = 1 - server.agent.goal_f(0, s.get_X(s.T-1), targets)
+t += 1
+state = s.end_state # s.get_X(s.T-1)
+print(state)
+
 #print(targets)
 #print(goal)
 #print(val)
