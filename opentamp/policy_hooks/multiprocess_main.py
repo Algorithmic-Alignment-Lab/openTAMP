@@ -155,8 +155,6 @@ class MultiProcessMain(object):
         add_image = self.config.get('add_image', False)
         add_hl_image = self.config.get('add_hl_image', False)
 
-        print(self.config.get('ll_policy', ''))
-        print(self.config.get('hl_policy', ''))
 
         self.config['policy_opt'] = {
             'll_policy': self.config.get('ll_policy', ''),
@@ -598,7 +596,6 @@ class MultiProcessMain(object):
         ind = 0
 
         no = hyperparams['num_objs']
-        print(server.agent.task_list, server.task_list)
         n_vids = 20
         for test_run in range(hyperparams['num_tests']):
             print('RUN:', test_run)
