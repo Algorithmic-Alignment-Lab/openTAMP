@@ -73,4 +73,24 @@ config['group_id'] = current_id
 config['weight_dir'] = config['weight_dir_prefix']+'_{0}'.format(current_id)
 
 mp_main = MultiProcessMain(config, load_at_spawn=False)
-mp_main.run_test(mp_main.config)
+
+config['run_mcts_rollouts'] = False
+config['run_alg_updates'] = False
+config['run_hl_test'] = True
+config['check_precond'] = False
+config['share_buffers'] = False
+config['load_render'] = True
+#hyperparams['agent']['image_height']  = 256
+#hyperparams['agent']['image_width']  = 256
+descr = config.get('descr', '')
+# hyperparams['weight_dir'] = hyperparams['weight_dir'].replace('exp_id0', 'rerun_{0}'.format(descr))
+config['id'] = 'test'
+mp_main.allocate_shared_buffers(hyperparams)
+mp_main.allocate_queues(hyperparams)
+config['policy_opt']['share_buffer'] = True
+config['policy_opt']['buffers'] = hyperparams['buffers']
+config['policy_opt']['buffer_sizes'] = hyperparams['buffer_sizes']
+server = RolloutServer(hyperparams)
+print(server)
+
+# mp_main.run_test(mp_main.config)
