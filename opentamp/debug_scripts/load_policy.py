@@ -92,6 +92,36 @@ mp_main.config['policy_opt']['buffers'] = mp_main.config['buffers']
 mp_main.config['policy_opt']['buffer_sizes'] = mp_main.config['buffer_sizes']
 server = RolloutServer(mp_main.config)
 
-print(server)
+server.set_policies()
+server.agent.replace_cond(0)
+server.agent.reset(0)
+server.agent._eval_mode = True
+server.policy_opt.restore_ckpts(ckpt_ind)
+
+init_t = time.time()
+server.agent.debug = False
+prim_opts = server.agent.prob.get_prim_choices(server.agent.task_list)
+n_targs = list(range(len(prim_opts[OBJ_ENUM])))
+res = []
+ns = [server.config['num_targs']]
+if server.config['curric_thresh'] > 0:
+    ns = list(range(1, server.config['num_targs']+1))
+n = np.random.choice(ns)
+s = []
+x0 = server.agent.x0[0]
+targets = server.agent.target_vecs[0].copy()
+for t in range(n, n_targs[-1]):
+    obj_name = prim_opts[OBJ_ENUM][t]
+    targ_name = '{0}_end_target'.format(obj_name)
+    if (targ_name, 'value') in server.agent.target_inds:
+        targets[server.agent.target_inds[targ_name, 'value']] = x0[server.agent.state_inds[obj_name, 'pose']]
+
+if rlen is None: rlen = server.agent.rlen
+hor = server.agent.hor
+nt = 500 # rlen * hor
+
+goal = server.agent.goal(0, targets)
+print(targets)
+print(goal)
 
 # mp_main.run_test(mp_main.config)
