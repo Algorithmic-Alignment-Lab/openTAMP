@@ -13,6 +13,8 @@ from opentamp.policy_hooks.multiprocess_main import MultiProcessMain
 from opentamp.policy_hooks.utils.file_utils import LOG_DIR, load_config
 # from ..policy_hooks.run_training import argsparser
 from policy_hooks.rollout_server import RolloutServer
+from policy_hooks.multiprocess_main import MultiProcessMain
+
 
 # load args and hyperparams file automatically from the saved rollouts
 with open(LOG_DIR+'namo_objs1_1/mac_test_49'+'/args.pkl', 'rb') as f:
@@ -68,23 +70,5 @@ config['source'] = args.config
 config['weight_dir_prefix'] = old_dir
 current_id = 0
 
-config['run_mcts_rollouts'] = False
-config['run_alg_updates'] = False
-config['run_hl_test'] = True
-config['check_precond'] = False
-config['share_buffers'] = False
-config['load_render'] = True
-#hyperparams['agent']['image_height']  = 256
-#hyperparams['agent']['image_width']  = 256
-descr = config.get('descr', '')
-# hyperparams['weight_dir'] = hyperparams['weight_dir'].replace('exp_id0', 'rerun_{0}'.format(descr))
-config['id'] = 'test'
-self.allocate_shared_buffers(config)
-self.allocate_queues(config)
-config['policy_opt']['share_buffer'] = True
-config['policy_opt']['buffers'] = config['buffers']
-config['policy_opt']['buffer_sizes'] = config['buffer_sizes']
-
-
-server = RolloutServer(config)
-print(server)
+mp_main = MultiProcessMain(config, load_at_spawn=False)
+print(mp_main)
