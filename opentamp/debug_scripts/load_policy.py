@@ -111,11 +111,23 @@ n = np.random.choice(ns)
 s = []
 x0 = server.agent.x0[0]
 targets = server.agent.target_vecs[0].copy()
+print(server.agent.mjc_env.get_item_pos('pr2'))
+print(server.agent.mjc_env.get_item_pos('can0'))
+print(server.agent.mjc_env.physics.data.xpos)
+print(server.agent.mjc_env.physics.model.name2id('pr2', 'body'))
+print(server.agent.mjc_env.physics.model.name2id('can0', 'body'))
+print(server.agent.policies)
+
+# server.agent.mjc_env.set_item_pos('pr2', np.array([0.0, 0.0, 0.5]))
+# server.agent.mjc_env.set_item_pos('can0', np.array([1.0, 0.0, 0.5]))
+
+print('Worked!')
+
 for t in range(n, n_targs[-1]):
     obj_name = prim_opts[OBJ_ENUM][t]
     targ_name = '{0}_end_target'.format(obj_name)
-    print(obj_name)
-    print(targ_name)
+    # print(obj_name)
+    # print(targ_name)
     if (targ_name, 'value') in server.agent.target_inds:
         targets[server.agent.target_inds[targ_name, 'value']] = x0[server.agent.state_inds[obj_name, 'pose']]
 
@@ -128,9 +140,12 @@ val, path = server.test_run(x0, targets, 20, hl=True, soft=server.config['soft_e
 if goal not in server.suc_per_goal:
     server.suc_per_goal[goal] = []
 server.suc_per_goal[goal].append(val)
-print(targets)
-print(goal)
-print(val)
-print(path[-1])
+#print(targets)
+#print(goal)
+#print(val)
+#for p in path:
+    #print(p.get_X()[server.agent.state_inds['can0', 'pose']])
+#print(path[-1].get_X()[server.agent.action_inds[]])
+#print(path[-1].agent.action_inds['pr2', 'pose'])
 
 # mp_main.run_test(mp_main.config)
