@@ -146,7 +146,7 @@ print(state)
 max_t = 20
 eta=None
 def task_f(sample, t, curtask):
-    return server.get_task(sample.get_X(t=t), sample.targets, curtask, soft)
+    return server.get_task(sample.get_X(t=t), sample.targets, curtask, False)
 server.agent.reset_to_state(state)
 path = []
 val = 0
