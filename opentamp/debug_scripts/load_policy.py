@@ -85,12 +85,12 @@ config['load_render'] = True
 descr = config.get('descr', '')
 # hyperparams['weight_dir'] = hyperparams['weight_dir'].replace('exp_id0', 'rerun_{0}'.format(descr))
 config['id'] = 'test'
-mp_main.allocate_shared_buffers(hyperparams)
-mp_main.allocate_queues(hyperparams)
+mp_main.allocate_shared_buffers(config)
+mp_main.allocate_queues(config)
 config['policy_opt']['share_buffer'] = True
-config['policy_opt']['buffers'] = hyperparams['buffers']
-config['policy_opt']['buffer_sizes'] = hyperparams['buffer_sizes']
-server = RolloutServer(hyperparams)
+config['policy_opt']['buffers'] = config['buffers']
+config['policy_opt']['buffer_sizes'] = config['buffer_sizes']
+server = RolloutServer(config)
 print(server)
 
 # mp_main.run_test(mp_main.config)
