@@ -121,7 +121,13 @@ hor = server.agent.hor
 nt = 500 # rlen * hor
 
 goal = server.agent.goal(0, targets)
+val, path = server.test_run(x0, targets, 20, hl=True, soft=server.config['soft_eval'], eta=None, lab=-5, hor=25)
+if goal not in server.suc_per_goal:
+    server.suc_per_goal[goal] = []
+server.suc_per_goal[goal].append(val)
 print(targets)
 print(goal)
+print(val)
+print(path)
 
 # mp_main.run_test(mp_main.config)
