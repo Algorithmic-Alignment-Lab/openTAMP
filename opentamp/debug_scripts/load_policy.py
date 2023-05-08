@@ -114,6 +114,8 @@ targets = server.agent.target_vecs[0].copy()
 for t in range(n, n_targs[-1]):
     obj_name = prim_opts[OBJ_ENUM][t]
     targ_name = '{0}_end_target'.format(obj_name)
+    print(obj_name)
+    print(targ_name)
     if (targ_name, 'value') in server.agent.target_inds:
         targets[server.agent.target_inds[targ_name, 'value']] = x0[server.agent.state_inds[obj_name, 'pose']]
 
@@ -129,6 +131,6 @@ server.suc_per_goal[goal].append(val)
 print(targets)
 print(goal)
 print(val)
-print(path)
+print(path[-1])
 
 # mp_main.run_test(mp_main.config)
