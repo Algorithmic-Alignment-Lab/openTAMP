@@ -68,7 +68,7 @@ config = {'args': args,
 config.update(vars(args))
 config['source'] = args.config
 config['weight_dir_prefix'] = old_dir
-current_id = 0
+current_id = 49
 config['group_id'] = current_id
 config['weight_dir'] = config['weight_dir_prefix']+'_{0}'.format(current_id)
 
