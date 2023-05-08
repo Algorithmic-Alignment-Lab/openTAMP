@@ -67,5 +67,24 @@ config.update(vars(args))
 config['source'] = args.config
 config['weight_dir_prefix'] = old_dir
 current_id = 0
+
+hyperparams['run_mcts_rollouts'] = False
+hyperparams['run_alg_updates'] = False
+hyperparams['run_hl_test'] = True
+hyperparams['check_precond'] = False
+hyperparams['share_buffers'] = False
+hyperparams['load_render'] = True
+#hyperparams['agent']['image_height']  = 256
+#hyperparams['agent']['image_width']  = 256
+descr = hyperparams.get('descr', '')
+# hyperparams['weight_dir'] = hyperparams['weight_dir'].replace('exp_id0', 'rerun_{0}'.format(descr))
+hyperparams['id'] = 'test'
+self.allocate_shared_buffers(hyperparams)
+self.allocate_queues(hyperparams)
+hyperparams['policy_opt']['share_buffer'] = True
+hyperparams['policy_opt']['buffers'] = hyperparams['buffers']
+hyperparams['policy_opt']['buffer_sizes'] = hyperparams['buffer_sizes']
+
+
 server = RolloutServer(config)
 print(server)
