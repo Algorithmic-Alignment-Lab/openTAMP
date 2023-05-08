@@ -14,6 +14,7 @@ from opentamp.policy_hooks.utils.file_utils import LOG_DIR, load_config
 # from ..policy_hooks.run_training import argsparser
 from policy_hooks.rollout_server import RolloutServer
 from policy_hooks.multiprocess_main import MultiProcessMain
+from policy_hooks.utils.policy_solver_utils import *
 
 
 # load args and hyperparams file automatically from the saved rollouts
@@ -96,7 +97,7 @@ server.set_policies()
 server.agent.replace_cond(0)
 server.agent.reset(0)
 server.agent._eval_mode = True
-server.policy_opt.restore_ckpts(ckpt_ind)
+server.policy_opt.restore_ckpts(None)
 
 init_t = time.time()
 server.agent.debug = False
