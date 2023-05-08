@@ -69,7 +69,8 @@ config.update(vars(args))
 config['source'] = args.config
 config['weight_dir_prefix'] = old_dir
 current_id = 0
+config['group_id'] = current_id
 config['weight_dir'] = config['weight_dir_prefix']+'_{0}'.format(current_id)
 
 mp_main = MultiProcessMain(config, load_at_spawn=False)
-print(mp_main)
+mp_main.run_test(mp_main.config)
