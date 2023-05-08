@@ -91,6 +91,7 @@ mp_main.config['policy_opt']['share_buffer'] = True
 mp_main.config['policy_opt']['buffers'] = mp_main.config['buffers']
 mp_main.config['policy_opt']['buffer_sizes'] = mp_main.config['buffer_sizes']
 server = RolloutServer(mp_main.config)
+
 print(server)
 
 # mp_main.run_test(mp_main.config)
