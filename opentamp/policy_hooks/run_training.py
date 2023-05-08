@@ -154,7 +154,8 @@ def main():
         cur_main.hl_only_retrain()
 
     elif len(args.test):
-        current_id = 0 if config.get('index', -1) < 0 else config['index']
+        # current_id = 0 if config.get('index', -1) < 0 else config['index']
+        current_id = 49  # TODO for experiment only
         config['group_id'] = current_id
         config['weight_dir'] = config['weight_dir_prefix']+'_{0}'.format(current_id)
         cur_main = MultiProcessMain(config, load_at_spawn=False)
