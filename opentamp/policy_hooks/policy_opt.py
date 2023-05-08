@@ -261,13 +261,13 @@ class TorchPolicyOpt():
             #     print('Saving torch model encountered an issue but it will not crash:')
             #     traceback.print_exception(*sys.exc_info())
 
-        if scope in self.ctrl_scopes:
-            policy = self.nets[scope]
-            scale_bias_save_dir = MODEL_DIR+weight_dir
-            if not os.path.isdir(scale_bias_save_dir):
-                os.makedirs(scale_bias_save_dir)
-            np.save(scale_bias_save_dir+'/'+'_scale{0}'.format(lab), policy.scale)
-            np.save(scale_bias_save_dir+'/'+scope+'_bias{0}'.format(lab), policy.bias)
+            if scope in self.ctrl_scopes:
+                policy = self.nets[scope]
+                scale_bias_save_dir = MODEL_DIR+weight_dir
+                if not os.path.isdir(scale_bias_save_dir):
+                    os.makedirs(scale_bias_save_dir)
+                np.save(scale_bias_save_dir+'/'+scope+'_scale{0}'.format(lab), policy.scale)
+                np.save(scale_bias_save_dir+'/'+scope+'_bias{0}'.format(lab), policy.bias)
 
 
     def store_weights(self, weight_dir=None):
