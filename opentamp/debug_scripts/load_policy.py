@@ -15,7 +15,7 @@ from opentamp.policy_hooks.utils.file_utils import LOG_DIR, load_config
 from policy_hooks.rollout_server import RolloutServer
 from policy_hooks.multiprocess_main import MultiProcessMain
 from policy_hooks.utils.policy_solver_utils import *
-
+from policy_hooks.sample import Sample
 
 # load args and hyperparams file automatically from the saved rollouts
 with open(LOG_DIR+'namo_objs1_1/test_crash_save_14'+'/args.pkl', 'rb') as f:
@@ -111,12 +111,12 @@ n = np.random.choice(ns)
 s = []
 x0 = server.agent.x0[0]
 targets = server.agent.target_vecs[0].copy()
-print(server.agent.mjc_env.get_item_pos('pr2'))
-print(server.agent.mjc_env.get_item_pos('can0'))
-print(server.agent.mjc_env.physics.data.xpos)
-print(server.agent.mjc_env.physics.model.name2id('pr2', 'body'))
-print(server.agent.mjc_env.physics.model.name2id('can0', 'body'))
-print(server.agent.policies)
+# print(server.agent.mjc_env.get_item_pos('pr2'))
+# print(server.agent.mjc_env.get_item_pos('can0'))
+# print(server.agent.mjc_env.physics.data.xpos)
+# print(server.agent.mjc_env.physics.model.name2id('pr2', 'body'))
+# print(server.agent.mjc_env.physics.model.name2id('can0', 'body'))
+# print(server.agent.policies)
 
 # server.agent.mjc_env.set_item_pos('pr2', np.array([0.0, 0.0, 0.5]))
 # server.agent.mjc_env.set_item_pos('can0', np.array([1.0, 0.0, 0.5]))
@@ -143,7 +143,7 @@ goal = server.agent.goal(0, targets)
 
 state = server.agent.x0[0]
 print(state)
-max_t = 20
+max_t = 1
 eta=None
 def task_f(sample, t, curtask):
     return server.get_task(sample.get_X(t=t), sample.targets, curtask, False)
@@ -160,7 +160,20 @@ while t < max_t and val < 1-1e-2 and server.agent.feasible_state(state, targets)
     l = server.get_task(state, targets, l, False)
     task_name = server.task_list[l[0]]
     pol = server.agent.policies[task_name]
-    s = server.agent.sample_task(pol, 0, state, l, noisy=False, task_f=task_f, skip_opt=True, hor=server.agent.hor, policies=server.agent.policies)
+    sample = Sample(server.agent)
+    sample.init_t = 0
+    col_ts = np.zeros(server.agent.T)
+    prim_choices = server.agent.prob.get_prim_choices(server.agent.task_list)
+    sample.targets = server.agent.target_vecs[0].copy()
+    n_steps = 0
+    end_state = None
+    cur_state = server.agent.get_state() # x0
+    sample.task = l
+    
+    server.agent.fill_sample(0, sample, cur_state.copy(), 0, l, fill_obs=True)
+    
+    U_full = server.agent.policy.act(cur_state.copy(), sample.get_obs(t=t).copy(), t, np.zeros((server.agent.dU,)))
+    print(U_full)
     val = 1 - server.agent.goal_f(0, s.get_X(s.T-1), targets)
     t += 1
     state = s.end_state # s.get_X(s.T-1)
