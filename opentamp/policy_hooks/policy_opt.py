@@ -251,15 +251,14 @@ class TorchPolicyOpt():
 
         for scope in scopes:
             model = self.nets[scope]
-            # try:
-            save_path = MODEL_DIR + weight_dir+'/'+scope+'.ckpt'
-            if not os.path.isdir(MODEL_DIR + weight_dir):
-                os.mkdir(MODEL_DIR + weight_dir)
-            torch.save(model.state_dict(), save_path)
-
-            # except:
-            #     print('Saving torch model encountered an issue but it will not crash:')
-            #     traceback.print_exception(*sys.exc_info())
+            try:
+                save_path = MODEL_DIR + weight_dir+'/'+scope+'.ckpt'
+                if not os.path.isdir(MODEL_DIR + weight_dir):
+                    os.mkdir(MODEL_DIR + weight_dir)
+                torch.save(model.state_dict(), save_path)
+            except:
+                print('Saving torch model encountered an issue but it will not crash:')
+                traceback.print_exception(*sys.exc_info())
 
             if scope in self.ctrl_scopes:
                 policy = self.nets[scope]
