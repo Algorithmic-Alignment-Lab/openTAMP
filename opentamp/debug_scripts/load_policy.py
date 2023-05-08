@@ -117,9 +117,9 @@ for t in range(n, n_targs[-1]):
     if (targ_name, 'value') in server.agent.target_inds:
         targets[server.agent.target_inds[targ_name, 'value']] = x0[server.agent.state_inds[obj_name, 'pose']]
 
-if rlen is None: rlen = server.agent.rlen
+# if rlen is None: rlen = server.agent.rlen
 hor = server.agent.hor
-nt = 500 # rlen * hor
+# nt = 500 # rlen * hor
 
 goal = server.agent.goal(0, targets)
 val, path = server.test_run(x0, targets, 20, hl=True, soft=server.config['soft_eval'], eta=None, lab=-5, hor=25)
