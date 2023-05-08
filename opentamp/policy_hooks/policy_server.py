@@ -228,7 +228,7 @@ class PolicyServer(object):
         self.iters = 0
         write_freq = 50
         print(self.policy_opt)
-        
+     'left_depth'   
         while not self.stopped:
             self.iters += 1
             init_t = time.time()

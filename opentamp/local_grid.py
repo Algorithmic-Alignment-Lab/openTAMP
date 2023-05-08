@@ -1,25 +1,17 @@
 import pickle
 import numpy as np
 import cv2
-file = open('depth_image.obj', 'rb')
+file = open('local_grid.obj', 'rb')
 data = pickle.load(file)
 file.close()
 
-b = np.frombuffer(data[0].shot.image.data, dtype=np.uint16)
-cv_depth = b.reshape(data[0].shot.image.rows,
-                                data[0].shot.image.cols)
-#safe
-#threshold = 1000
-#if not np.any((cv_depth < threshold) and (cv_depth > 0 )):
-    #execute policy
+b = np.frombuffer(data, dtype=np.uint16)
+grid = b.reshape(data.rows, data.cols)
 
-
-#np.set_printoptions(threshold=np.inf)
-#print(cv_depth)
 
 
 # Visual is a JPEG
-cv_visual = cv2.imdecode(np.frombuffer(data[0].shot.image.data, dtype=np.uint8), -1)
+cv_visual = cv2.imdecode(np.frombuffer(data.shot.image.data, dtype=np.uint8), -1)
 
  # cv2.applyColorMap() only supports 8-bit; convert from 16-bit to 8-bit and do scaling
 min_val = np.min(cv_depth)
