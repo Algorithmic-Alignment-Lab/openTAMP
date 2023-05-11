@@ -4,7 +4,7 @@ import seaborn as sns
 from plotting import plot
 import matplotlib.pyplot as plt
 
-data = np.load('../experiment_logs/namo_objs1_1/mac_test_2/test_hl_test_log.npy')
+data = np.load('../experiment_logs/namo_objs1_1/4_grasps_7_possible_1/hl_test_rerun_log.npy')
 i = 2
 data_dict = {}
 data_list = []
@@ -42,5 +42,5 @@ print(df.head())
 sns.set()
 rel = sns.relplot(data=df, x="time", y="success anywhere")
 fig = rel.fig
-fig.savefig("out1.png")
+fig.savefig("out2.png")
 plt.show()
