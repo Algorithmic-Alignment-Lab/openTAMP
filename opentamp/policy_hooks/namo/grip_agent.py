@@ -149,8 +149,6 @@ class NAMOGripAgent(NAMOSortingAgent):
             targ_color = cur_color[:3] + [1.] # [0.75] # [0.25]
             #items.append({'name': '{0}_end_target'.format(name), 'type': 'box', 'is_fixed': True, 'pos': (0, 0, 1.5), 'dimensions': (0.45, 0.45, 0.045), 'rgba': tuple(targ_color), 'mass': 1.})
             items.append({'name': '{0}_end_target'.format(name), 'type': 'box', 'is_fixed': True, 'pos': (0, 0, 1.5), 'dimensions': (0.35, 0.35, 0.045), 'rgba': tuple(targ_color), 'mass': 1.})
-<<<<<<< Updated upstream
-=======
 
         self.extra_cans = 5
         for n in range(self.extra_cans):
@@ -158,7 +156,6 @@ class NAMOGripAgent(NAMOSortingAgent):
             y = np.random.uniform(-5, 5)
             items.append({'name': 'distractor_{}'.format(n), 'type': 'cylinder', 'is_fixed': False, 'pos': (x, y, 0.5), 'dimensions': (0.3, 0.2), 'rgba': tuple(cur_color), 'mass': 40.})
             
->>>>>>> Stashed changes
 
         for i in range(len(wall_dims)):
             dim, next_trans = wall_dims[i]
@@ -591,13 +588,10 @@ class NAMOGripAgent(NAMOSortingAgent):
                 if param_name.find('can') >= 0:
                     targ = self.target_vecs[0][self.target_inds['{0}_end_target'.format(param_name), 'value']]
                     self.mjc_env.set_item_pos('{0}_end_target'.format(param_name), np.r_[targ, -0.15], forward=False)
-<<<<<<< Updated upstream
-=======
         for n in range(self.extra_cans):
             pos = np.random.uniform([-5.0, -5.0], [5.0, 5.0])
             self.mjc_env.set_item_pos('distractor_{}'.format(n), np.r_[pos, 0.5], forward=False)
 
->>>>>>> Stashed changes
         self.mjc_env.physics.data.qvel[:] = 0.
         self.mjc_env.physics.forward()
 
@@ -896,7 +890,6 @@ class NAMOGripAgent(NAMOSortingAgent):
 
 
     def goal(self, cond, targets=None):
-<<<<<<< Updated upstream
         # if self.goal_type == 'moveto':
         #     assert ('can1', 'pose') not in self.state_inds
         #     return '(NearGraspAngle  pr2 can0) '
@@ -912,8 +905,6 @@ class NAMOGripAgent(NAMOSortingAgent):
         #             goal += '(Near {0} end_target_{1}) '.format(obj, ind)
         #             break
         # return goal
-        return '(NearGraspAngle  pr2 can0) '
-=======
         # obj = 'can0'
         # targ = targets[self.target_inds['{0}_end_target'.format(obj), 'value']]
         # for ind in self.targ_labels:
@@ -934,8 +925,6 @@ class NAMOGripAgent(NAMOSortingAgent):
                     goal += '(Near {0} end_target_{1}) '.format(obj, ind)
                     break
         return goal
-
->>>>>>> Stashed changes
 
     def get_annotated_image(self, s, t, cam_id=None):
         if cam_id is None: cam_id = self.camera_id
