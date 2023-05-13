@@ -42,5 +42,5 @@ print(df.head())
 sns.set()
 rel = sns.relplot(data=df, x="time", y="success anywhere")
 fig = rel.fig
-fig.savefig("out2.png")
+fig.savefig("out3.png")
 plt.show()
