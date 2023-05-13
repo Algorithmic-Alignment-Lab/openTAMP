@@ -2,7 +2,7 @@ for N in 1 2 3 4 5
 do
 
 
-	python3.6 -W ignore policy_hooks/run_training.py -c policy_hooks.robosuite.pick_hyp \
+	python -W ignore policy_hooks/run_training.py -c policy_hooks.robosuite.pick_hyp \
                                                        -no 2 -llus 3000  -hlus 6000 \
                                                        -ff 1. -mask -hln 2 -lln 2 -hldim 64 -lldim 64 \
                                                        -eta 5 \
