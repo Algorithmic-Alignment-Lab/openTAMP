@@ -114,7 +114,7 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
         'curric_thresh': -1,
         'n_thresh': -1,
         'expand_process': False,
-        'descr': '{0}_grasps_{1}_possible'.format(N_GRASPS, len(prob.END_TARGETS)+prob.n_aux),
+        'descr': 'namo_train_problem',
         'her': False,
         'prim_decay': 0.95,
         'prim_first_wt': 1e1,

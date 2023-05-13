@@ -150,7 +150,7 @@ class NAMOGripAgent(NAMOSortingAgent):
             #items.append({'name': '{0}_end_target'.format(name), 'type': 'box', 'is_fixed': True, 'pos': (0, 0, 1.5), 'dimensions': (0.45, 0.45, 0.045), 'rgba': tuple(targ_color), 'mass': 1.})
             items.append({'name': '{0}_end_target'.format(name), 'type': 'box', 'is_fixed': True, 'pos': (0, 0, 1.5), 'dimensions': (0.35, 0.35, 0.045), 'rgba': tuple(targ_color), 'mass': 1.})
 
-        self.extra_cans = 5
+        self.extra_cans = 2
         for n in range(self.extra_cans):
             x = np.random.uniform(-5, 5)
             y = np.random.uniform(-5, 5)
@@ -538,7 +538,7 @@ class NAMOGripAgent(NAMOSortingAgent):
             if MJC_SENSOR_ENUM in self._hyperparams['obs_include']:
                 plan = list(self.plans.values())[0]
                 sensor_vals = self.mjc_env.get_sensors()
-                noise_scale = 0.1 # Set this differently for train & test
+                noise_scale = 0.05 # Set this differently for train & test
                 sensor_vals += np.random.normal(0, noise_scale, sensor_vals.shape)
                 sample.set(MJC_SENSOR_ENUM, sensor_vals, t)
 

@@ -4,8 +4,8 @@ import seaborn as sns
 from plotting import plot
 import matplotlib.pyplot as plt
 
-data = np.load('../experiment_logs/namo_objs1_1/4_grasps_7_possible_1/hl_test_rerun_log.npy')
-i = 2
+data = np.load('../experiment_logs/namo_objs1_1/olivia_train_5/moretest_hl_test_log.npy')
+i =5
 data_dict = {}
 data_list = []
 for pts in data:

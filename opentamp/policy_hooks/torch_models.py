@@ -324,6 +324,10 @@ class PolicyNet(TorchNet):
             flatten = True
             obs = obs.reshape(1, -1)
 
+        if type(bounds) is float:
+            eta = bounds
+            bounds = self.config['prim_bounds']
+
         with torch.no_grad():
             vals = self.forward(obs).cpu().detach().numpy()
             if self.output_fn is F.log_softmax:
