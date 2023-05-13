@@ -304,6 +304,7 @@ class TorchPolicyOpt():
         elif 'cont' == scope:
             config = self.config['cont_network_params']
 
+        config['prim_bounds'] = self._primBounds
         self.nets[scope] = PolicyNet(config=config,
                                      scope=scope,
                                      device=self.device)

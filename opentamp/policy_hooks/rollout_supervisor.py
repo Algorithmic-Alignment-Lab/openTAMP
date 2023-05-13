@@ -262,7 +262,7 @@ class RolloutSupervisor():
 
     def primitive_call(self, prim_obs, soft=False, eta=1., t=-1, task=None, adj_eta=False):
         if adj_eta: eta *= self.agent.eta_scale
-        distrs = self.policy_opt.nets['primitive'].task_distr(prim_obs, eta)
+        distrs = self.policy_opt.nets['primitive'].task_distr(prim_obs, bounds=self.policy_opt._primBounds, eta=eta)
         if not soft: return distrs
 
         out = []

@@ -310,9 +310,6 @@ class RolloutServer(Server):
                 n_plans = self._hyperparams['policy_opt']['buffer_sizes']['n_plans'].value
                 save_video = self.id.find('test') >= 0
                 val, path = self.test_hl(save_video=save_video)
-                if self._n_plans >= self.ff_iters:
-                    self.send_to_label(path, val > 0)
-
             if self.run_hl_test: continue
             if self._n_plans < self.ff_iters: continue
 
@@ -344,8 +341,6 @@ class RolloutServer(Server):
         x0 = node.x0
         targets = node.targets
         val, path = self.rollout_supervisor.rollout(x0, targets, node)
-        if self._n_plans >= self.ff_iters:
-            self.send_to_label(path, val > 0)
 
         if self.id.find('r0') >= 0:
             self.save_video(path, val > 0, lab='_rollout')
