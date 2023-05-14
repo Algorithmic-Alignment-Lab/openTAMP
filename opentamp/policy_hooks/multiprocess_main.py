@@ -39,7 +39,7 @@ def spawn_server(cls, hyperparams, load_at_spawn=False):
         new_config.update(hyperparams)
         hyperparams = new_config
         if 'main' not in hyperparams:
-            hyperparams['main'] = MultiProcessMain(hyperparams)
+            hyperparams['main'] = MultiProcessMain(hyperparams, load_at_spawn=True)
 
         hyperparams['main'].init(hyperparams)
         hyperparams['policy_opt']['share_buffer'] = True
@@ -120,36 +120,6 @@ class MultiProcessMain(object):
 
 
     def _set_alg_config(self):
-    #     if self.config.get('add_hl_image', False):
-    #         primitive_network_model = fp_multi_modal_discr_network
-
-    #     elif self.config.get('conditional', False):
-    #         primitive_network_model = tf_cond_classification_network
-
-    #     elif self.config.get('discrete_prim', True):
-    #         primitive_network_model = tf_classification_network
-
-    #     else:
-    #         primitive_network_model = tf_network
-
-    #     if self.config.get('add_cont_image', False):
-    #         cont_network_model = fp_multi_modal_cont_network
-
-    #     elif self.config.get('conditional', False):
-    #         cont_network_model = tf_cond_classification_network
-
-    #     elif self.config.get('discrete_prim', True):
-    #         cont_network_model = tf_classification_network
-
-    #     else:
-    #         cont_network_model = tf_network
-
-    #     if self.config.get('add_image', False):
-    #         network_model = fp_cont_network
-
-    #     else:
-    #         network_model = tf_network
-
         sensor_dims = self.config['agent']['sensor_dims']
         obs_image_data = [IM_ENUM, OVERHEAD_IMAGE_ENUM, LEFT_IMAGE_ENUM, RIGHT_IMAGE_ENUM]
         add_image = self.config.get('add_image', False)

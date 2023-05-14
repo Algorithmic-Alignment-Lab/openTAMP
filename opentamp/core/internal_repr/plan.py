@@ -415,8 +415,8 @@ class Plan(object):
 
         self.joint_belief = belief_constructor(samples=global_samples, size=self.joint_belief.size)
 
-        print(global_samples.mean())
-        print(global_samples.var())
+        # print(global_samples.mean())
+        # print(global_samples.var())
 
         # construct a model object, over which we do inference, starting with uniform prior
         running_idx = 0
