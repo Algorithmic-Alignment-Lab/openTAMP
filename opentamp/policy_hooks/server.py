@@ -274,7 +274,8 @@ class Server(object):
 
     def primitive_call(self, prim_obs, soft=False, eta=1., t=-1, task=None):
         if self.adj_eta: eta *= self.agent.eta_scale
-        distrs = self.policy_opt.task_distr(prim_obs, bounds=self.policy_opt._primBounds, eta=eta)
+        # distrs = self.policy_opt.task_distr(prim_obs, bounds=self.policy_opt._primBounds, eta=eta)
+        distrs = self.policy_opt.task_distr(prim_obs, eta=eta)
         if not soft: return distrs
 
         out = []
