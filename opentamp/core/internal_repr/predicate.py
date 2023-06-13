@@ -41,7 +41,6 @@ class Predicate(object):
                     raise ParamValidationException("Parameter type validation failed for predicate '%s'."%self)
         except Exception as e:
             print(e)
-            import ipdb; ipdb.set_trace()
 
     def check_pred_violation(self, t, negated=False, tol=1e-3):
         expr = self.get_expr(negated=negated)

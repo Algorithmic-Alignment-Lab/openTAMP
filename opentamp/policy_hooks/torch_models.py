@@ -297,7 +297,7 @@ class PolicyNet(TorchNet):
 
         if self.scope in ['primitive', 'cont']:
             is_cont = self.scope == 'cont'
-            return self.task_distr(obs, eta, is_cont)
+            return self.task_distr(obs, self.config['prim_bounds'], eta, is_cont)
 
         if len(np.shape(obs)) == 1:
             flatten = True
