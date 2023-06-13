@@ -2,3 +2,6 @@
 	path = opentamp/task_planners/downward
     url = https://github.com/aibasel/downward.git
     ignore = all
+[submodule "opentamp/gps"]
+	path = opentamp/gps
+	url = https://github.com/cbfinn/gps.git
