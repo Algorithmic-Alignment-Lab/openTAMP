@@ -5,7 +5,6 @@ from plotting import plot
 import matplotlib.pyplot as plt
 
 data = open('../experiment_logs/namo_objs1_1/olivia_train_6/rollout_logs/MotionServer12_verbose.txt', "r")
-data2 = open('../experiment_logs/namo_objs1_1/olivia_train_6/policy_control_log.txt, "r")
 data = eval(data).read().split("\n\n")
 values = []
 
@@ -17,6 +16,8 @@ for each_list in data:
     #if i['value'] == 1.0:
     #list of dictionaries
 #    opt_success = data['opt_success']
+
+data2 = open('../experiment_logs/namo_objs1_1/olivia_train_6/policy_control_log.txt, "r")
 
 
 #training and val loss need to be going down
