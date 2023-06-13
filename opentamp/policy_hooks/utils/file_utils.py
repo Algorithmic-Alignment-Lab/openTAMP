@@ -14,6 +14,7 @@ MODEL_DIR = 'torch_saved/'
 
 def load_config(args, config=None, reload_module=None):
     config_file = args.config
+    config_file = 'opentamp.' + config_file
     if reload_module is not None:
         config_module = reload_module
         imp.reload(config_module)

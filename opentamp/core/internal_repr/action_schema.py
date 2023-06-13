@@ -19,3 +19,5 @@ class ActionSchema(object):
         self.universally_quantified_params = universally_quantified_params
         self.exclude_params = exclude_params
         self.preds = preds
+        print('ACTION SCHEMA CONSTRUCTOR')
+        print(exclude_params)

@@ -30,7 +30,7 @@ from opentamp.core.util_classes.viewer import OpenRAVEViewer
 from opentamp.policy_hooks.agent import Agent
 from opentamp.policy_hooks.sample import Sample
 from opentamp.policy_hooks.utils.policy_solver_utils import *
-import policy_hooks.utils.policy_solver_utils as utils
+import opentamp.policy_hooks.utils.policy_solver_utils as utils
 from opentamp.policy_hooks.utils.tamp_eval_funcs import *
 # from opentamp.policy_hooks.namo.sorting_prob_4 import *
 from opentamp.policy_hooks.tamp_agent import TAMPAgent

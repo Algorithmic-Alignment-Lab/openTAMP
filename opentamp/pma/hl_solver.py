@@ -361,6 +361,9 @@ class FFSolver(HLSolver):
         Return:
             list of actions to plan over (List(internal_repr/action))
         """
+        print('SPAWN ACTIONS')
+        print(domain.action_schemas['move_to_grasp_right'].params)
+        print(domain.action_schemas['move_to_grasp_right'].exclude_params)
         actions = []
         curr_h = 0
         hl_state = HLState(concr_prob.init_state.preds)
@@ -429,6 +432,11 @@ class FFSolver(HLSolver):
                             val.append(bindings[a])
                     else:
                         # handle universally quantified params by creating a valuation for each possibility
+                        print('HL SOLVER')
+                        print(a_schema.params)
+                        print(a)
+                        print(a_schema.exclude_params)
+                        print(bindings)
                         excl = [bindings[e][0] for e in bindings if e in a_schema.exclude_params[a]]
                         p_type = a_schema.universally_quantified_params[a]
                         bound_names = [bindings[key][0] for key in bindings]

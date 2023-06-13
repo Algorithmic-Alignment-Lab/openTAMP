@@ -9,21 +9,21 @@ import os.path
 
 import numpy as np
 
-from gps.algorithm.policy.lin_gauss_init import init_lqr, init_pd
+# from gps.algorithm.policy.lin_gauss_init import init_lqr, init_pd
 
-from opentamp.policy_hooks.algorithm_impgps import AlgorithmIMPGPS
-from opentamp.policy_hooks.multi_head_policy_opt_tf import MultiHeadPolicyOptTf
+# from opentamp.policy_hooks.algorithm_impgps import AlgorithmIMPGPS
+# from opentamp.policy_hooks.multi_head_policy_opt_tf import MultiHeadPolicyOptTf
 import policy_hooks.utils.policy_solver_utils as utils
-from opentamp.policy_hooks.traj_opt_pi2 import TrajOptPI2
+# from opentamp.policy_hooks.traj_opt_pi2 import TrajOptPI2
 from opentamp.core.util_classes.namo_grip_predicates import ATTRMAP
 import policy_hooks.robosuite.jnt_pick_prob as prob
 prob.NUM_OBJS = NUM_OBJS
 prob.NUM_TARGS = NUM_TARGS
-from opentamp.policy_hooks.policy_mp_prior_gmm import PolicyMPPriorGMM
-from opentamp.policy_hooks.policy_prior_gmm import PolicyPriorGMM
+# from opentamp.policy_hooks.policy_mp_prior_gmm import PolicyMPPriorGMM
+# from opentamp.policy_hooks.policy_prior_gmm import PolicyPriorGMM
 
 from opentamp.policy_hooks.robosuite.robot_agent import RobotAgent
-from pma.robosuite_solver import RobotSolver
+from pma.robosuite_solver import RobotSolverOSQP
 
 BASE_DIR = os.getcwd() + '/policy_hooks/'
 EXP_DIR = BASE_DIR + 'experiments/'
@@ -54,113 +54,113 @@ common = {
     'conditions': NUM_CONDS,
 }
 
-algorithm = {
-    'type': AlgorithmIMPGPS,
-    'conditions': common['conditions'],
-    'policy_sample_mode': 'add',
-    'sample_on_policy': True,
-    'iterations': 1e3, #5e4,
-    'max_ent_traj': 0.0,
-    'fit_dynamics': False,
-    'stochastic_conditions': True,
-    'policy_inf_coeff': 1e2,
-    'policy_out_coeff': 1e1,
-    'kl_step': 1.,
-    'min_step_mult': 0.05,
-    'max_step_mult': 5.0,
-    'sample_ts_prob': 1.0,
-    'opt_wt': OPT_WT_MULT,
-    'fail_value': 50,
-    'use_centroids': True,
-    'n_traj_centers': N_TRAJ_CENTERS,
-    'num_samples': N_SAMPLES,
-    'mp_opt': True,
-    'her': False,
-    'rollout_opt': False,
-}
+# algorithm = {
+#     # 'type': AlgorithmIMPGPS,
+#     'conditions': common['conditions'],
+#     'policy_sample_mode': 'add',
+#     'sample_on_policy': True,
+#     'iterations': 1e3, #5e4,
+#     'max_ent_traj': 0.0,
+#     'fit_dynamics': False,
+#     'stochastic_conditions': True,
+#     'policy_inf_coeff': 1e2,
+#     'policy_out_coeff': 1e1,
+#     'kl_step': 1.,
+#     'min_step_mult': 0.05,
+#     'max_step_mult': 5.0,
+#     'sample_ts_prob': 1.0,
+#     'opt_wt': OPT_WT_MULT,
+#     'fail_value': 50,
+#     'use_centroids': True,
+#     'n_traj_centers': N_TRAJ_CENTERS,
+#     'num_samples': N_SAMPLES,
+#     'mp_opt': True,
+#     'her': False,
+#     'rollout_opt': False,
+# }
 
-algorithm['init_traj_distr'] = {
-    'type': init_pd,
-    'init_var': 0.01,
-    'pos_gains': 0.00,
-}
+# algorithm['init_traj_distr'] = {
+#     # 'type': init_pd,
+#     'init_var': 0.01,
+#     'pos_gains': 0.00,
+# }
 
-algorithm['traj_opt'] = {
-    'type': TrajOptPI2,
-    'kl_threshold': 1.,
-    'covariance_damping': 0.00,
-    'min_temperature': 1e-3,
-}
+# algorithm['traj_opt'] = {
+#     # 'type': TrajOptPI2,
+#     'kl_threshold': 1.,
+#     'covariance_damping': 0.00,
+#     'min_temperature': 1e-3,
+# }
+
+# # algorithm['policy_prior'] = {
+# #     'type': PolicyPrior,
+# # }
+
+# # algorithm = {
+# #     'type': AlgorithmMDGPS,
+# #     'conditions': common['conditions'],
+# #     'iterations': 10,
+# #     'kl_step': 0.1,
+# #     'min_step_mult': 0.5,
+# #     'max_step_mult': 3.0,
+# #     'policy_sample_mode': 'replace',
+# # }
+
+# # algorithm['init_traj_distr'] = {
+# #     'type': init_pd,
+# #     'pos_gains':  1e-5,
+# # }
+
+# # algorithm['init_traj_distr'] = {
+# #     'type': init_lqr,
+# #     'init_var': 0.001,
+# #     'stiffness': 10.0,
+# #     'stiffness_vel': 0.5,
+# #     'final_weight': 5.0,
+# # }
+
+# # algorithm = {
+# #     'type': AlgorithmTrajOptPILQR,
+# #     'conditions': common['conditions'],
+# #     'iterations': 20,
+# #     'step_rule': 'res_percent',
+# #     'step_rule_res_ratio_dec': 0.2,
+# #     'step_rule_res_ratio_inc': 0.05,
+# #     'kl_step': np.linspace(0.6, 0.2, 100),
+# # }
+
+# # algorithm['dynamics'] = {
+# #     'type': DynamicsLRPrior,
+# #     'regularization': 1e-6,
+# #     'prior': {
+# #         'type': DynamicsPriorGMM,
+# #         'max_clusters': 20,
+# #         'min_samples_per_cluster': 60,
+# #         'max_samples': 30,
+# #     },
+# # }
+
+# # algorithm['traj_opt'] = {
+# #     'type': TrajOptPILQR,
+# # }
+
+# # algorithm['traj_opt'] = {
+# #     'type': TrajOptLQRPython,
+# # }
 
 # algorithm['policy_prior'] = {
-#     'type': PolicyPrior,
+#     # 'type': PolicyPriorGMM,
+#     'max_clusters': 20,
+#     'min_samples_per_cluster': 40,
+#     'max_samples': 50,
 # }
 
-# algorithm = {
-#     'type': AlgorithmMDGPS,
-#     'conditions': common['conditions'],
-#     'iterations': 10,
-#     'kl_step': 0.1,
-#     'min_step_mult': 0.5,
-#     'max_step_mult': 3.0,
-#     'policy_sample_mode': 'replace',
+# algorithm['mp_policy_prior'] = {
+#     # 'type': PolicyMPPriorGMM,
+#     'max_clusters': 20,
+#     'min_samples_per_cluster': 40,
+#     'max_samples': 50,
 # }
-
-# algorithm['init_traj_distr'] = {
-#     'type': init_pd,
-#     'pos_gains':  1e-5,
-# }
-
-# algorithm['init_traj_distr'] = {
-#     'type': init_lqr,
-#     'init_var': 0.001,
-#     'stiffness': 10.0,
-#     'stiffness_vel': 0.5,
-#     'final_weight': 5.0,
-# }
-
-# algorithm = {
-#     'type': AlgorithmTrajOptPILQR,
-#     'conditions': common['conditions'],
-#     'iterations': 20,
-#     'step_rule': 'res_percent',
-#     'step_rule_res_ratio_dec': 0.2,
-#     'step_rule_res_ratio_inc': 0.05,
-#     'kl_step': np.linspace(0.6, 0.2, 100),
-# }
-
-# algorithm['dynamics'] = {
-#     'type': DynamicsLRPrior,
-#     'regularization': 1e-6,
-#     'prior': {
-#         'type': DynamicsPriorGMM,
-#         'max_clusters': 20,
-#         'min_samples_per_cluster': 60,
-#         'max_samples': 30,
-#     },
-# }
-
-# algorithm['traj_opt'] = {
-#     'type': TrajOptPILQR,
-# }
-
-# algorithm['traj_opt'] = {
-#     'type': TrajOptLQRPython,
-# }
-
-algorithm['policy_prior'] = {
-    'type': PolicyPriorGMM,
-    'max_clusters': 20,
-    'min_samples_per_cluster': 40,
-    'max_samples': 50,
-}
-
-algorithm['mp_policy_prior'] = {
-    'type': PolicyMPPriorGMM,
-    'max_clusters': 20,
-    'min_samples_per_cluster': 40,
-    'max_samples': 50,
-}
 
 def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
     cost_wp_mult = np.ones((3 + 2 * NUM_OBJS))
@@ -173,16 +173,16 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
     prob.n_aux = 0
     config = {
         'gui_on': False,
-        'iterations': algorithm['iterations'],
+        # 'iterations': algorithm['iterations'],
         'verbose_trials': 1,
         'verbose_policy_trials': 1,
         'common': common,
-        'algorithm': algorithm,
-        'num_samples': algorithm['num_samples'],
+        # 'algorithm': algorithm,
+        # 'num_samples': algorithm['num_samples'],
         'num_distilled_samples': 0,
         'num_conds': NUM_CONDS,
         'mode': 'position',
-        'stochastic_conditions': algorithm['stochastic_conditions'],
+        # 'stochastic_conditions': algorithm['stochastic_conditions'],
         'policy_coeff': 1e0,
         'sample_on_policy': True,
         'hist_len': 3,
@@ -190,8 +190,8 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
         'num_rollouts': 10,
         'max_tree_depth': 5 + no*2,
         'branching_factor': 4,
-        'opt_wt': algorithm['opt_wt'],
-        'fail_value': algorithm['fail_value'],
+        # 'opt_wt': algorithm['opt_wt'],
+        # 'fail_value': algorithm['fail_value'],
         'lr': 1e-3,
         'solver_type': 'adam', #'rmsprop',
         'cost_wp_mult': cost_wp_mult,
@@ -207,7 +207,7 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
         'dim_hidden': [32, 32],
         'prim_dim_hidden': [32],
         'val_dim_hidden': [32],
-        'n_traj_centers': algorithm['n_traj_centers'],
+        # 'n_traj_centers': algorithm['n_traj_centers'],
         'traj_opt_steps': NUM_TRAJ_OPT_STEPS,
         'pretrain_steps': NUM_PRETRAIN_STEPS,
         'pretrain_traj_opt_steps': NUM_PRETRAIN_TRAJ_OPT_STEPS,
@@ -219,8 +219,8 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
         'n_rollout_servers': N_ROLLOUT_SERVERS,
         'n_alg_servers': N_ALG_SERVERS,
         'base_weight_dir': 'sawyer_',
-        'policy_out_coeff': algorithm['policy_out_coeff'],
-        'policy_inf_coeff': algorithm['policy_inf_coeff'],
+        # 'policy_out_coeff': algorithm['policy_out_coeff'],
+        # 'policy_inf_coeff': algorithm['policy_inf_coeff'],
         'max_sample_queue': 5e2,
         'max_opt_sample_queue': 10,
         'task_map_file': prob.mapping_file,
@@ -231,8 +231,8 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
         'num_targs': nt,
         'attr_map': ATTRMAP,
         'agent_type': RobotAgent,
-        'mp_solver_type': RobotSolver,
-        'll_solver_type': RobotSolver,
+        'mp_solver_type': RobotSolverOSQP,
+        'll_solver_type': RobotSolverOSQP,
         'update_size': 2000,
         'prim_update_size': 5000,
         'val_update_size': 1000,

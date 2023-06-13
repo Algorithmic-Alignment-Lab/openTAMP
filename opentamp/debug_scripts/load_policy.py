@@ -156,28 +156,27 @@ t = 0
 if eta is not None: server.eta = eta 
 old_eta = server.eta
 debug = np.random.uniform() < 0.1
-while t < max_t and val < 1-1e-2 and server.agent.feasible_state(state, targets):
-    l = server.get_task(state, targets, l, False)
-    task_name = server.task_list[l[0]]
-    pol = server.agent.policies[task_name]
-    sample = Sample(server.agent)
-    sample.init_t = 0
-    col_ts = np.zeros(server.agent.T)
-    prim_choices = server.agent.prob.get_prim_choices(server.agent.task_list)
-    sample.targets = server.agent.target_vecs[0].copy()
-    n_steps = 0
-    end_state = None
-    cur_state = server.agent.get_state() # x0
-    sample.task = l
-    
-    server.agent.fill_sample(0, sample, cur_state.copy(), 0, l, fill_obs=True)
-    
-    U_full = server.agent.policy.act(cur_state.copy(), sample.get_obs(t=t).copy(), t, np.zeros((server.agent.dU,)))
-    print(U_full)
-    val = 1 - server.agent.goal_f(0, s.get_X(s.T-1), targets)
-    t += 1
-    state = s.end_state # s.get_X(s.T-1)
-    print(state)
+# while t < max_t and val < 1-1e-2 and server.agent.feasible_state(state, targets):
+l = server.get_task(state, targets, l, False)
+task_name = server.task_list[l[0]]
+pol = server.agent.policies[task_name]
+sample = Sample(server.agent)
+sample.init_t = 0
+col_ts = np.zeros(server.agent.T)
+prim_choices = server.agent.prob.get_prim_choices(server.agent.task_list)
+sample.targets = server.agent.target_vecs[0].copy()
+n_steps = 0
+end_state = None
+cur_state = server.agent.get_state() # x0
+sample.task = l
+
+server.agent.fill_sample(0, sample, cur_state.copy(), 0, l, fill_obs=True)
+
+U_full = pol.act(cur_state.copy(), sample.get_obs(t=t).copy(), t, np.zeros((server.agent.dU,)))
+print(U_full)
+server.agent.run_policy_step(U_full, state)
+t += 1
+
 
 #print(targets)
 #print(goal)
