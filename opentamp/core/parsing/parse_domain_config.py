@@ -168,9 +168,19 @@ class ParseDomainConfig(object):
                         if not m:
                             break
                         pred = pred[m.span()[1]:-1].strip()
+                        # print('Pred')
+                        # print(pred)
                         g = re.match("\((.*?)\)(.*)", pred).groups()
+                        # print('g')
+                        # print(g)
                         v = g[0].split("/")
+                        # print('v')
+                        # print(v)
                         loop_var_name, loop_var_type = list(map(str.strip, v[0].split("-")))
+                        # print('Loop Var Name')
+                        # print(loop_var_name)
+                        # print('Loop Var Type')
+                        # print(loop_var_type)
                         pred = g[1].strip()
                         # if this dummy variable name is already used, then change the name
                         unique_loop_var_name = loop_var_name
@@ -205,6 +215,7 @@ class ParseDomainConfig(object):
                     preds.append({"type": pred_type, "hl_info": hl_info, "args": args, "negated": negated,
                                   "active_timesteps": all_active_timesteps[i], "ind": i})
                 action_schemas[a_name] = ActionSchema(a_name, int(horizon), params, univ_params, preds, excl_params)
+
         return action_schemas
 
     @staticmethod

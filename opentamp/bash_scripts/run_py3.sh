@@ -4,7 +4,8 @@
 #do
 
 
-python3 -W ignore policy_hooks/run_training.py -c policy_hooks.namo.hyperparams_v94 \
+python3 -W ignore policy_hooks/run_training.py -c policy_hooks.robosuite.jnt_pick_hyp \
+# python3 -W ignore policy_hooks/run_training.py -c policy_hooks.namo.hyperparams_v94 \
                                                 -no 1 -llus 100  -hlus 100 \
                                                 -spl -mask -hln 2 -hldim 64 -lldim 64 \
                                                 -retime -vel 0.3 -eta 5 -softev \
