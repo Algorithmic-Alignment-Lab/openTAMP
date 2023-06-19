@@ -66,7 +66,7 @@ class MultiProcessMain(object):
         self.monitor = True
         self.cpu_use = []
         self.config = config
-        load_at_spawn = True 
+        load_at_spawn = False 
         if load_at_spawn:
             task_file = config.get('task_map_file', '')
             self.pol_list = ('control',) if not config['args'].split_nets else tuple(get_tasks(task_file).keys())
