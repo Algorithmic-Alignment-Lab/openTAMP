@@ -25,6 +25,7 @@ USE_PERTURB = False
 OPT_MCTS_FEEDBACK = True
 N_GRASPS = 4
 FIX_TARGETS = False
+# FIX_TARGETS = True
 
 CONST_TARGETS = False
 CONST_ORDER = False
@@ -89,9 +90,12 @@ def get_vector(config):
     }
     #for i in range(n_aux):
     #    target_vector_include['aux_target_{0}'.format(i)] = ['value']
-    if FIX_TARGETS:
-        for i in range(len(END_TARGETS)):
-            target_vector_include['end_target_{0}'.format(i)] = ['value']
+    
+    # if FIX_TARGETS:
+    #     for i in range(len(END_TARGETS)):
+    #         target_vector_include['end_target_{0}'.format(i)] = ['value']
+
+    print(target_vector_include)
 
     return state_vector_include, action_vector_include, target_vector_include
 
@@ -229,5 +233,6 @@ def get_plans(use_tf=False):
                             if not hasattr(param, 'openrave_body') or param.openrave_body is None:
                                 param.openrave_body = OpenRAVEBody(env, param.name, param.geom)
                             openrave_bodies[param.name] = param.openrave_body
+
     return plans, openrave_bodies, env
 
