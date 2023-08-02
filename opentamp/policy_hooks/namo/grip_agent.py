@@ -32,6 +32,15 @@ from opentamp.policy_hooks.namo.namo_agent import NAMOSortingAgent
 
 bt_ll_OSQP.INIT_TRAJ_COEFF = 1e-2
 
+OBSTACLES = [
+    (5.0, 5.0, 0.0),
+    (-5.0, 5.0, 0.0),
+    (4.0, 0.0, 0.0),
+    (-4.0, 0.0, 0.0),
+    (6.0, 1.0, 0.0), 
+    (-4.0, -2.0, 0.0)
+]
+
 HUMAN_TARGS = [
                 (9.0, 0.),
                 (9.0, 2.0),
@@ -149,6 +158,15 @@ class NAMOGripAgent(NAMOSortingAgent):
             targ_color = cur_color[:3] + [1.] # [0.75] # [0.25]
             #items.append({'name': '{0}_end_target'.format(name), 'type': 'box', 'is_fixed': True, 'pos': (0, 0, 1.5), 'dimensions': (0.45, 0.45, 0.045), 'rgba': tuple(targ_color), 'mass': 1.})
             items.append({'name': '{0}_end_target'.format(name), 'type': 'box', 'is_fixed': True, 'pos': (0, 0, 1.5), 'dimensions': (0.35, 0.35, 0.045), 'rgba': tuple(targ_color), 'mass': 1.})
+
+        for i in range(len(OBSTACLES)):
+            items.append({'name': 'obstacle{}'.format(i),
+                          'type': 'cylinder',
+                          'is_fixed': True,
+                          'pos': OBSTACLES[i],
+                          'dimensions': [0.3, 0.2],
+                          'mass': 10,
+                          'rgba': (.8, 0.5, .75, 1.)})
 
         for i in range(len(wall_dims)):
             dim, next_trans = wall_dims[i]
