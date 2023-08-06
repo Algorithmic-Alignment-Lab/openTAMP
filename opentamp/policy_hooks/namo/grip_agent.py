@@ -33,7 +33,7 @@ from opentamp.policy_hooks.namo.namo_agent import NAMOSortingAgent
 bt_ll_OSQP.INIT_TRAJ_COEFF = 1e-2
 
 OBSTACLES = [
-    (5.0, 5.0, 0.0),
+    # (5.0, 5.0, 0.0),
     (-5.0, 5.0, 0.0),
     (4.0, 0.0, 0.0),
     (-4.0, 0.0, 0.0),
@@ -160,7 +160,7 @@ class NAMOGripAgent(NAMOSortingAgent):
             items.append({'name': '{0}_end_target'.format(name), 'type': 'box', 'is_fixed': True, 'pos': (0, 0, 1.5), 'dimensions': (0.35, 0.35, 0.045), 'rgba': tuple(targ_color), 'mass': 1.})
 
         for i in range(len(OBSTACLES)):
-            items.append({'name': 'obstacle{}'.format(i),
+            items.append({'name': 'obstacle{}'.format(i+1), # ultra janky
                           'type': 'cylinder',
                           'is_fixed': True,
                           'pos': OBSTACLES[i],

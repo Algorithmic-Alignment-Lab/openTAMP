@@ -19,7 +19,7 @@ import opentamp.policy_hooks.utils.policy_solver_utils as utils
 NO_COL = True
 NUM_OBJS = 4
 NUM_TARGS = 4
-N_HUMAN = 0#6
+N_HUMAN = 0 # 6
 SORT_CLOSET = False
 USE_PERTURB = False
 OPT_MCTS_FEEDBACK = True
@@ -73,7 +73,8 @@ for i in range(len(possible_can_locs)):
 
 def prob_file(descr=None):
     if descr is None:
-        descr = 'grip_prob_{0}_{1}end_{2}aux'.format(NUM_OBJS, len(END_TARGETS), n_aux)
+        descr = "add_obstacle"
+        # descr = 'grip_prob_{0}_{1}end_{2}aux'.format(NUM_OBJS, len(END_TARGETS), n_aux)
     return opentamp.__path__._path[0] + "/domains/namo_domain/namo_probs/{0}.prob".format(descr)
 
 
@@ -229,6 +230,7 @@ def get_plans(use_tf=False):
                     new_task_str.append(step.format(obj, '', ''))
                 plan = plan_from_str(new_task_str, prob_file(), domain_file, env, openrave_bodies, params=params, sess=sess, use_tf=use_tf)
                 params = plan.params
+                print(params)
                 if env is None:
                     env = plan.env
                     for param in list(plan.params.values()):
@@ -314,9 +316,4 @@ def setup(hyperparams):
         items.append({'name': 'wall{0}'.format(i), 'type': 'box', 'is_fixed': True, 'pos': pos, 'dimensions': next_dim, 'rgba': (0.2, 0.2, 0.2, 1)})
 
     generate_xml(BASE_XML, ENV_XML, include_files=config['include_files'], include_items=config['include_items'])
-
-
-
-
-
 
