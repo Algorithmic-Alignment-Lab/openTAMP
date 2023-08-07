@@ -37,8 +37,8 @@ OBSTACLES = [
     (-5.0, 5.0, 0.0),
     (4.0, 0.0, 0.0),
     (-4.0, 0.0, 0.0),
-    (6.0, 1.0, 0.0), 
-    (-4.0, -2.0, 0.0)
+    # (6.0, 1.0, 0.0), 
+    # (-4.0, -2.0, 0.0)
 ]
 
 HUMAN_TARGS = [
@@ -118,6 +118,8 @@ class NAMOGripAgent(NAMOSortingAgent):
         for plan in list(self.plans.values()):
             for t in range(plan.horizon):
                 plan.params['obs0'].pose[:,t] = plan.params['obs0'].pose[:,0]
+                plan.params['obs1'].pose[:,t] = plan.params['obs1'].pose[:,0]
+                plan.params['obs2'].pose[:,t] = plan.params['obs2'].pose[:,0]
 
         self.check_col = hyperparams['master_config'].get('check_col', True)
         self.robot_height = 1
