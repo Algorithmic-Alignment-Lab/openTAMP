@@ -22,6 +22,21 @@ from opentamp.policy_hooks.server import *
 from opentamp.policy_hooks.search_node import *
 
 
+# imports for SPOT
+import argparse
+import os
+import sys
+import time
+
+from bosdyn.client.robot_command import RobotCommandBuilder, RobotCommandClient
+from bosdyn.client.estop import EstopClient, EstopEndpoint, EstopKeepAlive
+from bosdyn.client.lease import LeaseClient, LeaseKeepAlive
+from bosdyn.client.power import PowerClient
+from bosdyn.client import ResponseError, RpcError, create_standard_sdk
+from bosdyn.client.robot_state import RobotStateClient
+import bosdyn.client.util
+
+
 ROLL_PRIORITY = 5
 
 class RolloutServer(Server):
@@ -213,7 +228,7 @@ class RolloutServer(Server):
             nt = 500 # rlen * hor
 
             goal = self.agent.goal(0, targets)
-            val, path = self.test_run(x0, targets, 20, hl=True, soft=self.config['soft_eval'], eta=eta, lab=-5, hor=25)
+            val, path = self.test_run(x0, targets, max_t=20, hl=True, soft=self.config['soft_eval'], eta=eta, lab=-5, hor=25)
             if goal not in self.suc_per_goal:
                 self.suc_per_goal[goal] = []
             self.suc_per_goal[goal].append(val)
@@ -293,6 +308,48 @@ class RolloutServer(Server):
         return val, path
 
 
+    def deploy(self, rlen=None, save=True, ckpt_ind=None,
+                restore=False, debug=False, save_fail=False,
+                save_video=False, eta=None):
+        if ckpt_ind is not None:
+            print(('Rolling out for index', ckpt_ind))
+
+        self.set_policies()
+        self.agent._eval_mode = True
+        if restore:
+            self.policy_opt.restore_ckpts(ckpt_ind)
+        elif self.policy_opt.share_buffers:
+            self.policy_opt.read_shared_weights()
+
+        if self.agent.policies_initialized():
+            print('SUCCESSFULLY INITIALIZED POLICIES')
+            init_t = time.time()
+            self.agent.debug = False
+            prim_opts = self.agent.prob.get_prim_choices(self.agent.task_list)
+            n_targs = list(range(len(prim_opts[OBJ_ENUM])))
+            res = []
+            ns = [self.config['num_targs']]
+            if self.config['curric_thresh'] > 0:
+                ns = list(range(1, self.config['num_targs']+1))
+            n = np.random.choice(ns)
+            s = []
+            x0 = self.agent.x0[0]
+            targets = self.agent.target_vecs[0].copy()
+            for t in range(n, n_targs[-1]):
+                obj_name = prim_opts[OBJ_ENUM][t]
+                targ_name = '{0}_end_target'.format(obj_name)
+                if (targ_name, 'value') in self.agent.target_inds:
+                    targets[self.agent.target_inds[targ_name, 'value']] = x0[self.agent.state_inds[obj_name, 'pose']]
+
+            if rlen is None: rlen = self.agent.rlen
+            hor = self.agent.hor
+            nt = 500 # rlen * hor
+
+            goal = self.agent.goal(0, targets)
+            val, path = self.deploy_run(x0, targets, 20, hl=True, soft=self.config['soft_eval'], eta=eta, lab=-5, hor=25)
+        # print(path[-1].get_obs().shape)
+        print('REACHED END')
+
     def run(self):
         step = 0
         self.agent.hl_pol = False
@@ -370,7 +427,93 @@ class RolloutServer(Server):
         self.postcond_info.extend(self.rollout_supervisor.postcond_info)
         self.rollout_supervisor.reset()
         self.init_supervisor()
-       
+    
+    def robot_deploy_setup(self):
+        sdk = create_standard_sdk('spot')
+        robot = sdk.create_robot('192.168.80.3')
+
+        bosdyn.client.util.authenticate(robot)
+        robot.start_time_sync(1.0)
+        robot.time_sync.wait_for_sync()
+
+        # Lease logic
+        lease_client = robot.ensure_client(LeaseClient.default_service_name)
+        lease_client.take()
+
+        # ESTOP logic
+        estop_client = robot.ensure_client(EstopClient.default_service_name)
+        estop_endpoint = EstopEndpoint(estop_client, 'GNClient', 9.0)
+
+        # robot clients
+        robot_state_client = robot.ensure_client(RobotStateClient.default_service_name)
+        robot_command_client = robot.ensure_client(RobotCommandClient.default_service_name)
+        power_client = robot.ensure_client(PowerClient.default_service_name)
+
+        return robot, robot_command_client, estop_endpoint, robot_state_client, power_client
+
+
+    def deploy_run(self, state, targets, max_t=1, hl=False, soft=False, check_cost=True, eta=None, lab=0, hor=30):
+        def task_f(sample, t, curtask):
+            return self.get_task(sample.get_X(t=t), sample.targets, curtask, soft)
+        self.agent.reset_to_state(state)
+        # deploy_setup = self.robot_deploy_setup()
+        path = []
+        val = 0
+        nout = len(self.agent._hyperparams['prim_out_include'])
+        l = None
+        t = 0
+        if eta is not None: self.eta = eta 
+        old_eta = self.eta
+        debug = np.random.uniform() < 0.1
+        max_t=1
+        while t < max_t and val < 1-1e-2 and self.agent.feasible_state(state, targets):
+            # l = self.get_task(state, targets, l, soft)
+            # TODO SOURCE THE TASK SELECTION ENTIRELY FROM THE STATE
+
+            # modify where the task comes from
+
+            # if l is None: break
+            # task_name = self.task_list[l[0]]
+            # print(task_name)
+            pol = self.agent.policies['moveto']  # hardcode for now
+
+            theta = 0  # maintain rotation through the sim
+            sensor = np.ones(shape=(69,)) * 2.5  # beyond detection threshold
+            task = np.array([1, 0, 0])  # just motion for now...
+            theta_vec = np.array([-np.sin(theta), np.cos(theta)])
+            end_pose = np.array([0., 10.])  # goal hardcoded for now
+
+            # add execution loop here
+            for _ in range(0, 250):
+                state = np.concatenate((sensor, task, end_pose, theta_vec))
+
+                u = pol.act(None, state, None, [0, 0, 0, 0])
+                # print(u[0], u[1], u[3])  # x, y, theta from gripper policy'
+                rot_matrix = np.array([[np.cos(theta), -np.sin(theta)], [np.sin(theta), np.cos(theta)]])
+                pos_offset = rot_matrix.dot(np.array([u[0], u[1]])) # simplified, do them in sequence
+                end_pose -= pos_offset.reshape((2,))
+                theta += u[3]
+                theta_vec = np.array([-np.sin(theta), np.cos(theta)])
+                print(end_pose)
+
+
+                # vel = 1
+                # cmd = RobotCommandBuilder.synchro_velocity_command(v_x=vel*u[1], v_y=vel*u[0], v_rot=vel*u[3])
+                # deploy_setup[1].robot_command(command=cmd, end_time_secs=time.time() + 1.0)
+                # time.sleep(5)
+
+
+            # s = self.agent.sample_task(pol, 0, state, l, noisy=False, task_f=task_f, skip_opt=True, hor=hor, policies=self.agent.policies)
+            # val = 1 - self.agent.goal_f(0, s.get_X(s.T-1), targets)
+            t += 1
+            # state = s.end_state # s.get_X(s.T-1)
+            # path.append(s)
+        self.eta = old_eta
+        self.log_path(path, lab)
+        # print('Full Path From Deploy-Run')
+        # print([samp.get_obs() for samp in path])
+        return val, path
+
 
     def test_run(self, state, targets, max_t=20, hl=False, soft=False, check_cost=True, eta=None, lab=0, hor=30):
         def task_f(sample, t, curtask):
