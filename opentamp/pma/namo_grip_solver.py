@@ -111,6 +111,16 @@ def namo_obj_pose_suggester(plan, anum, resample_size=1, st=0):
                     "theta": np.array([[target_rot]]),
                 }
             )
+        elif act.name == 'move':
+            can = act.params[1]
+            can_pose = np.array([[can.pose[0,0]], [can.pose[1,0]]])
+            can_rot = -np.arctan2(can.pose[0,0] - oldx, can.pose[1,0] - oldy)
+            robot_pose.append(
+                {
+                    "pose": can_pose,
+                    "theta": np.array([[can_rot]])
+                }
+            )
         else:
             raise NotImplementedError
 
