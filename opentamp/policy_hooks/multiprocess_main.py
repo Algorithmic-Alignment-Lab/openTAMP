@@ -538,7 +538,7 @@ class MultiProcessMain(object):
         hl_retrain.retrain(server, hl_dir, ll_dir)
 
 
-    def run_test(self, hyperparams):
+    def run_test(self, hyperparams, deploy=False):
         hyperparams['run_mcts_rollouts'] = False
         hyperparams['run_alg_updates'] = False
         hyperparams['run_hl_test'] = True
@@ -567,12 +567,22 @@ class MultiProcessMain(object):
 
         no = hyperparams['num_objs']
         n_vids = 20
-        for test_run in range(hyperparams['num_tests']):
-            print('RUN:', test_run)
+
+        print('CHECKING WEIGHT DIR')
+        print(hyperparams['weight_dir'])
+
+        if deploy:
             server.agent.replace_cond(0)
             server.agent.reset(0)
-            server.test_hl(save=True, restore=True, save_video=False, save_fail=False)
-        server.check_hl_statistics()
+            server.deploy(save=True, restore=True, save_video=False, save_fail=False)
+        
+        else:
+            for test_run in range(20):
+                print('RUN:', test_run)
+                server.agent.replace_cond(0)
+                server.agent.reset(0)
+                server.test_hl(save=True, restore=True, save_video=True, save_fail=False)
+            server.check_hl_statistics()
         '''
         while server.policy_opt.restore_ckpts(ind):
             for _ in range(50):
@@ -581,4 +591,3 @@ class MultiProcessMain(object):
             ind += 1
         '''
         sys.exit(0)
-

@@ -110,18 +110,21 @@ def main():
     exps_info = exps
     n_objs = args.nobjs if args.nobjs > 0 else None
     n_targs = args.nobjs if args.nobjs > 0 else None
-    #n_targs = args.ntargs if args.ntargs > 0 else None
-    if len(args.test):
-        sys.path.insert(1, LOG_DIR+args.test)
+    #n_targs = args.ntargs if args.ntargs > 0 else None]
+    if len(args.test) or len(args.deploy):
+        assert not (len(args.test) and len(args.deploy))
+        load_args = args.test if len(args.test) else args.deploy
+        sys.path.insert(1, LOG_DIR+load_args)
         exps_info = [['hyp']]
         old_args = args
-        with open(LOG_DIR+args.test+'/args.pkl', 'rb') as f:
+        with open(LOG_DIR+load_args+'/args.pkl', 'rb') as f:
             args = pickle.load(f)
         args.soft_eval = old_args.soft_eval
         args.test = old_args.test
+        args.deploy = old_args.deploy
         args.use_switch = old_args.use_switch
-        args.ll_policy = args.test
-        args.hl_policy = args.test
+        args.ll_policy = load_args
+        args.hl_policy = load_args
         args.load_render = old_args.load_render
         args.eta = old_args.eta
         args.descr = old_args.descr
@@ -153,13 +156,12 @@ def main():
         cur_main.group_id = current_id
         cur_main.hl_only_retrain()
 
-    elif len(args.test):
-        # current_id = 0 if config.get('index', -1) < 0 else config['index']
-        current_id = 49  # TODO for experiment only
+    elif len(args.test) or len(args.deploy):
+        current_id = 0 if config.get('index', -1) < 0 else config['index']
         config['group_id'] = current_id
         config['weight_dir'] = config['weight_dir_prefix']+'_{0}'.format(current_id)
         cur_main = MultiProcessMain(config, load_at_spawn=False)
-        cur_main.run_test(cur_main.config)
+        cur_main.run_test(cur_main.config, deploy=len(args.deploy))
 
     elif args.sandbox:
         cur_main = MultiProcessMain(config, load_at_spawn=False)
@@ -197,6 +199,7 @@ def argsparser():
     # General setup
     parser.add_argument('-c', '--config', type=str, default='config')
     parser.add_argument('-test', '--test', type=str, default='')
+    parser.add_argument('-deploy', '--deploy', type=str, default='') 
     parser.add_argument('-sandbox', '--sandbox', action='store_true', default=False)
     parser.add_argument('-no', '--nobjs', type=int, default=1)
     parser.add_argument('-nt', '--ntargs', type=int, default=1)
