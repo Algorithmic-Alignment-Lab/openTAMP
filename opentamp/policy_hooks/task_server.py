@@ -34,6 +34,8 @@ class TaskServer(Server):
         while not self.stopped:
             self.find_task_plan()
             time.sleep(0.01)
+            if self.debug_mode:
+                break # stop iteration after one loop
 
 
     def find_task_plan(self):
@@ -75,7 +77,7 @@ class TaskServer(Server):
                 f.write(str(info))
 
             return
-
+ 
         new_node = LLSearchNode(plan_str, 
                                 prob=node.concr_prob, 
                                 domain=node.domain,
@@ -96,6 +98,10 @@ class TaskServer(Server):
             if visual: self.agent.add_viewer()
             bt_ll.DEBUG = True
             plan = new_node.gen_plan(self.agent.hl_solver, self.agent.openrave_bodies, self.agent.ll_solver)
+            if 'observation_model' in self._hyperparams.keys():
+                plan.set_observation_model(self._hyperparams['observation_model'])
+                plan.set_max_likelihood_obs(self._hyperparams['max_likelihood_obs'])            
+
             success, opt_suc, path, info = self.agent.backtrack_solve(plan, anum=0, x0=node.x0, targets=node.targets, permute=False, label='seq')
             #if not success or not opt_suc:
             #    import ipdb; ipdb.set_trace()

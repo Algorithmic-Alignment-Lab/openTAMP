@@ -80,6 +80,8 @@ class MultiProcessMain(object):
             check_dirs(self.config)
             self.init(new_config)
 
+        self.debug_servers = []
+
 
     def init(self, config):
         self.config = config
@@ -271,6 +273,12 @@ class MultiProcessMain(object):
         self.threads = []
         self.create_servers(config)
 
+    # single-threaded deployment of servers
+    def start_servers_debug(self):
+        while True:
+            for server in self.debug_servers:
+                server.run()
+
 
     def start_servers(self):
         n_proc = len(self.processes)
@@ -308,6 +316,26 @@ class MultiProcessMain(object):
             t.daemon = True
             self.threads.append(t)
             return t
+        
+    def create_server_debug(self, server_cls, hyperparams):
+        # if debug, there would not be a spawn -- need to load here
+        new_config, config_mod = load_config(hyperparams['args'])
+        new_config.update(hyperparams)
+        hyperparams = new_config
+        if 'main' not in hyperparams:
+            hyperparams['main'] = MultiProcessMain(hyperparams, load_at_spawn=True)
+
+        hyperparams['main'].init(hyperparams)
+        hyperparams['policy_opt']['share_buffer'] = True
+        hyperparams['policy_opt']['buffers'] = hyperparams['buffers']
+        hyperparams['policy_opt']['buffer_sizes'] = hyperparams['buffer_sizes']
+
+        if server_cls is PolicyServer \
+        and hyperparams['scope'] is 'cont' \
+        and not len(hyperparams['cont_bounds']):
+            return
+        
+        self.debug_servers.append(server_cls(hyperparams))
 
 
     def create_pol_servers(self, hyperparams):
@@ -339,18 +367,27 @@ class MultiProcessMain(object):
         hyperparams['view'] = hyperparams['view_policy']
         hyperparams['load_render'] = hyperparams['load_render'] or hyperparams['view_policy']
         hyperparams['check_precond'] = False
-        self.create_server(RolloutServer, copy.copy(hyperparams))
+        if hyperparams['debug']:
+            self.create_server_debug(RolloutServer, copy.copy(hyperparams))
+        else:
+            self.create_server(RolloutServer, copy.copy(hyperparams))
 
         hyperparams['id'] = 'moretest'
         hyperparams['view'] = False
-        self.create_server(RolloutServer, copy.copy(hyperparams))
+        if hyperparams['debug']:
+            self.create_server_debug(RolloutServer, copy.copy(hyperparams))
+        else:
+            self.create_server(RolloutServer, copy.copy(hyperparams))
 
         for n in range(hyperparams['num_test']):
             hyperparams['id'] = 'server_test_{}'.format(n)
             hyperparams['view'] = False 
             hyperparams['load_render'] = hyperparams['load_render'] or hyperparams['view_policy']
             hyperparams['check_precond'] = False
-            self.create_server(RolloutServer, copy.copy(hyperparams))
+            if hyperparams['debug']:
+                self.create_server_debug(RolloutServer, copy.copy(hyperparams))
+            else:
+                self.create_server(RolloutServer, copy.copy(hyperparams))
 
         hyperparams['run_hl_test'] = False
 
@@ -358,8 +395,12 @@ class MultiProcessMain(object):
     def _create_server(self, hyperparams, cls, idx):
         hyperparams = copy.copy(hyperparams)
         hyperparams['id'] = cls.__name__ + str(idx)
-        p = self.create_server(cls, hyperparams)
-        return p
+        if hyperparams['debug']:
+            self.create_server_debug(cls, hyperparams)
+        else:
+            self.create_server(cls, hyperparams)
+
+        # return p
 
 
     def kill_processes(self):
@@ -410,12 +451,19 @@ class MultiProcessMain(object):
             self.allocate_shared_buffers(self.config)
             self.allocate_queues(self.config)
 
+
         signal.signal(signal.SIGINT, lambda sig, frame: self.terminate_processes())
         self.spawn_servers(self.config)
-        self.start_servers()
 
-        if self.monitor:
-            self.watch_processes(kill_all)
+
+        if self.config['debug']:
+            self.start_servers_debug()  # iterates in single thread
+
+        else:
+            self.start_servers()
+
+            if self.monitor:
+                self.watch_processes(kill_all)
 
 
     # def expand_rollout_servers(self):

@@ -72,6 +72,12 @@ class MotionServer(Server):
                       self.agent.ll_solver)
 
         plan = node.curr_plan
+        # belief-space planning hook
+        if 'observation_model' in self._hyperparams.keys():
+            plan.set_observation_model(self._hyperparams['observation_model'])
+            plan.set_max_likelihood_obs(self._hyperparams['max_likelihood_obs'])
+            plan.initialize_beliefs()
+
         if type(plan) is str: return plan
         if not len(plan.actions): return plan
 
@@ -217,10 +223,12 @@ class MotionServer(Server):
     def run(self):
         step = 0
         while not self.stopped:
-            
             node = self.pop_queue(self.in_queue)
             if node is None:
                 time.sleep(0.01)
+                if self.debug_mode:
+                    break # stop iteration after one loop
+
                 continue
 
             self.set_policies()
@@ -246,6 +254,9 @@ class MotionServer(Server):
                 self.update_cont_network(cont_samples)
 
             step += 1
+
+            if self.debug_mode:
+                break # stop iteration after one loop
 
 
     def _log_solve_info(self, path, success, node, plan):
@@ -364,7 +375,7 @@ class MotionServer(Server):
         for key in self.fail_rollout_infos:
             info[key] = self.fail_rollout_infos[key]
 
-        wind = 10
+        wind = 100
         for key in self.avgs:
             if len(self.avgs[key]):
                 info[key+'_avg'] = np.mean(self.avgs[key][-wind:])
@@ -377,9 +388,9 @@ class MotionServer(Server):
             if len(self.opt_rollout_info[key]):
                 info[key] = np.mean(self.opt_rollout_info[key][-wind:])
 
-        if len(self.init_costs): info['mp initial costs'] = np.mean(self.init_costs[-10:])
-        if len(self.rolled_costs): info['mp rolled out costs'] = np.mean(self.rolled_costs[-10:])
-        if len(self.final_costs): info['mp optimized costs'] = np.mean(self.final_costs[-10:])
+        if len(self.init_costs): info['mp initial costs'] = np.mean(self.init_costs[-wind:])
+        if len(self.rolled_costs): info['mp rolled out costs'] = np.mean(self.rolled_costs[-wind:])
+        if len(self.final_costs): info['mp optimized costs'] = np.mean(self.final_costs[-wind:])
         return info #self.log_infos
 
 

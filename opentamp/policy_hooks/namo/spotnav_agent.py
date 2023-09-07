@@ -32,6 +32,16 @@ from opentamp.policy_hooks.namo.namo_agent import NAMOSortingAgent
 
 bt_ll_OSQP.INIT_TRAJ_COEFF = 1e-2
 
+OBSTACLES = [
+    # (5.0, 5.0, 0.0),
+    # (-5.0, 5.0, 0.0),
+    # (4.0, 0.0, 0.0),
+    # (-4.0, 0.0, 0.0),
+    # (6.0, 1.0, 0.0), 
+    # (-4.0, -2.0, 0.0)
+]
+
+
 HUMAN_TARGS = [
                 (9.0, 0.),
                 (9.0, 2.0),
@@ -156,6 +166,15 @@ class SpotNavAgent(NAMOSortingAgent):
             next_dim = dim # [dim[1], dim[0], dim[2]]
             pos = next_trans[:3,3] # [next_trans[1,3], next_trans[0,3], next_trans[2,3]]
             items.append({'name': 'wall{0}'.format(i), 'type': 'box', 'is_fixed': True, 'pos': pos, 'dimensions': next_dim, 'rgba': (0.2, 0.2, 0.2, 1)})
+
+        for i in range(len(OBSTACLES)):
+            items.append({'name': 'obs{}'.format(i+1), # ultra janky
+                          'type': 'cylinder',
+                          'is_fixed': True,
+                          'pos': OBSTACLES[i],
+                          'dimensions': [0.3, 0.2],
+                          'mass': 10,
+                          'rgba': (.8, 0.5, .75, 1.)})
 
         self.humans = {}
         self.human_trajs = {}
@@ -890,45 +909,52 @@ class SpotNavAgent(NAMOSortingAgent):
         #         if np.all(np.abs(targ - targ_labels[ind]) < NEAR_TOL):
         #             goal += '(Near {0} end_target_{1}) '.format(obj, ind)
         #             break
-        return '(RobotNear pr2 can0) '
+        return '(RobotAtTarget pr2 can0_end_target) '
     
     # get distance of robot to Can
     def goal_f(self, condition, state, targets=None, cont=False, anywhere=False, tol=0.4):
-        if targets is None:
-            targets = self.target_vecs[condition]
-        cost = self.prob.NUM_OBJS
-        alldisp = 0
-        plan = list(self.plans.values())[0]
-        no = self._hyperparams['num_objs']
+        # if targets is None:
+        #     targets = self.target_vecs[condition]
+        # cost = self.prob.NUM_OBJS
+        # alldisp = 0
+        # plan = list(self.plans.values())[0]
+        # no = self._hyperparams['num_objs']
+        # if len(np.shape(state)) < 2:
+        #     state = [state]
+        # for param in list(plan.params.values()):
+        #     if param._type == 'Target' and param.name != 'can0_init_':
+        #         # if anywhere:
+        #         #     vals = [targets[self.target_inds[key, 'value']] for key, _ in self.target_inds if key.find('end_target') >= 0]
+        #         # else:
+        #         #     vals = [targets[self.target_inds['{0}_end_target'.format(param.name), 'value']]]
+        #         # dist = np.inf 
+        #         # disp = None
+        #         # for x in state:
+        #         #     if self.goal_type == 'moveto':
+        #         #         vals = [x[self.state_inds['pr2', 'pose']]]
+        #         #     for val in vals:
+        #         #         curdisp = x[self.state_inds[param.name, 'pose']] - val
+        #         #         curdist = np.linalg.norm(curdisp)
+        #         #         if curdist < dist:
+        #         #             disp = curdisp
+        #         #             dist = curdist
+        #         # # np.sum((state[self.state_inds[param.name, 'pose']] - self.targets[condition]['{0}_end_target'.format(param.name)])**2)
+        #         # # cost -= 1 if dist < 0.3 else 0
+        #         # alldisp += curdist # np.linalg.norm(disp)
+        #         for x in state:
+        #             disp = x[self.state_inds['pr2', 'pose']] - self.targets[self.target_inds['end_target_0']]
+        #         cost -= 1 if np.all(np.abs(disp) < tol) else 0
+
+        # if cont: return alldisp / float(no)
+        # # return cost / float(self.prob.NUM_OBJS)
+        # return 1. if cost > 0 else 0.
         if len(np.shape(state)) < 2:
             state = [state]
-        for param in list(plan.params.values()):
-            if param._type == 'Can':
-                # if anywhere:
-                #     vals = [targets[self.target_inds[key, 'value']] for key, _ in self.target_inds if key.find('end_target') >= 0]
-                # else:
-                #     vals = [targets[self.target_inds['{0}_end_target'.format(param.name), 'value']]]
-                # dist = np.inf 
-                # disp = None
-                # for x in state:
-                #     if self.goal_type == 'moveto':
-                #         vals = [x[self.state_inds['pr2', 'pose']]]
-                #     for val in vals:
-                #         curdisp = x[self.state_inds[param.name, 'pose']] - val
-                #         curdist = np.linalg.norm(curdisp)
-                #         if curdist < dist:
-                #             disp = curdisp
-                #             dist = curdist
-                # # np.sum((state[self.state_inds[param.name, 'pose']] - self.targets[condition]['{0}_end_target'.format(param.name)])**2)
-                # # cost -= 1 if dist < 0.3 else 0
-                # alldisp += curdist # np.linalg.norm(disp)
-                for x in state:
-                    disp = x[self.state_inds['pr2', 'pose']] - x[self.state_inds['can0', 'pose']]
-                cost -= 1 if np.all(np.abs(disp) < tol) else 0
 
-        if cont: return alldisp / float(no)
-        # return cost / float(self.prob.NUM_OBJS)
-        return 1. if cost > 0 else 0.
+        for x in state:
+            disp = x[self.state_inds['pr2', 'pose']] - self.targets[0]['can0_end_target']
+
+        return 1. if np.any(np.abs(disp) >= tol) else 0
 
 
 

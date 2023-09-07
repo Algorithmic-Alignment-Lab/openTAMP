@@ -29,6 +29,7 @@ class Server(object):
         self._hyperparams = hyperparams
         self.config = hyperparams
         self.group_id = hyperparams['group_id']
+        self.debug_mode = hyperparams['debug']
 
         self.start_t = hyperparams['start_t']
         self.seed = int((1e2*time.time()) % 1000.)

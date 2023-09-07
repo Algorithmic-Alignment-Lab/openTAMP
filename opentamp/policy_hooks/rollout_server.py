@@ -360,15 +360,24 @@ class RolloutServer(Server):
                 n_plans = self._hyperparams['policy_opt']['buffer_sizes']['n_plans']
                 self._n_plans = n_plans.value
 
-            if self.run_hl_test or time.time() - self.last_hl_test > 120:
+            # make it so not running constantly!
+            if self.run_hl_test and time.time() - self.last_hl_test > 120:
                 self.agent._eval_mode = True
                 self.agent.replace_cond(0)
                 self.agent.reset(0)
                 n_plans = self._hyperparams['policy_opt']['buffer_sizes']['n_plans'].value
                 save_video = self.id.find('test') >= 0
                 val, path = self.test_hl(save_video=save_video)
-            if self.run_hl_test: continue
-            if self._n_plans < self.ff_iters: continue
+            if self.run_hl_test: 
+                if self.debug_mode:
+                    break # stop iteration after one loop
+
+                continue
+            if self._n_plans < self.ff_iters: 
+                if self.debug_mode:
+                    break # stop iteration after one loop
+
+                continue
 
             self.set_policies()
             node = self.pop_queue(self.rollout_queue)
@@ -392,6 +401,9 @@ class RolloutServer(Server):
                 self.update_cont_network(cont_samples)
 
             self.write_log()
+
+            if self.debug_mode:
+                break # stop iteration after one loop
 
 
     def send_rollout(self, node):
@@ -475,17 +487,17 @@ class RolloutServer(Server):
             # if l is None: break
             # task_name = self.task_list[l[0]]
             # print(task_name)
-            pol = self.agent.policies['moveto']  # hardcode for now
+            pol = self.agent.policies['move']  # hardcode for now
 
             theta = 0  # maintain rotation through the sim
-            sensor = np.ones(shape=(69,)) * 2.5  # beyond detection threshold
+            # sensor = np.ones(shape=(69,)) * 2.5  # beyond detection threshold
             task = np.array([1, 0, 0])  # just motion for now...
             theta_vec = np.array([-np.sin(theta), np.cos(theta)])
             end_pose = np.array([0., 10.])  # goal hardcoded for now
 
             # add execution loop here
             for _ in range(0, 250):
-                state = np.concatenate((sensor, task, end_pose, theta_vec))
+                state = np.concatenate((task, end_pose, theta_vec))
 
                 u = pol.act(None, state, None, [0, 0, 0, 0])
                 # print(u[0], u[1], u[3])  # x, y, theta from gripper policy'
@@ -562,7 +574,7 @@ class RolloutServer(Server):
                 'time': time.time() - self.start_t,
                 }
 
-        wind = 10
+        wind = 100
         self.check_failed_likelihoods()
         info['dagger_success'] = np.mean(self.postcond_info[-wind:]) if len(self.postcond_info) else 0.
         for key in self.fail_types:

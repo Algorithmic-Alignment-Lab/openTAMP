@@ -113,8 +113,8 @@ def namo_obj_pose_suggester(plan, anum, resample_size=1, st=0):
             )
         elif act.name == 'move':
             can = act.params[1]
-            can_pose = np.array([[can.pose[0,0]], [can.pose[1,0]]])
-            can_rot = -np.arctan2(can.pose[0,0] - oldx, can.pose[1,0] - oldy)
+            can_pose = np.array([[can.value[0,0]], [can.value[1,0]]])
+            can_rot = -np.arctan2(can.value[0,0] - oldx, can.value[1,0] - oldy)
             robot_pose.append(
                 {
                     "pose": can_pose,

@@ -83,6 +83,7 @@ class PolicyServer(object):
         self.dataset.policy = self.policy_opt.get_policy(self.task)
         self.dataset.data_buf.policy = self.policy_opt.get_policy(self.task)
         self.policy_opt.data_loader = self.data_gen
+        self.debug_mode = hyperparams['debug']
 
         self._setup_log_info()
 
@@ -227,7 +228,6 @@ class PolicyServer(object):
     def run(self):
         self.iters = 0
         write_freq = 50
-        print(self.policy_opt)
         
         while not self.stopped:
             self.iters += 1
@@ -285,6 +285,10 @@ class PolicyServer(object):
                     pp_info = pprint.pformat(info, depth=60)
                     f.write(str(pp_info))
                     f.write('\n\n')
+            
+            if self.debug_mode:
+                break # stop iteration after one loop
+            
             #if self.task == 'primitive': print('\nTime to finish update:', time.time() - init_t, '\n')
 
 
