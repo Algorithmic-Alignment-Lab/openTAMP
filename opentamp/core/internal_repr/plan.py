@@ -44,15 +44,18 @@ class Plan(object):
         self.sampling_trace = []
         self.hl_preds = []
         self.start = 0
+        self.num_belief_samples = 100
+        self.num_warmup_steps = 100
+        self.num_chains = 1 # only supported option for now, daemon issue
         if determine_free:
             self._determine_free_attrs()
 
     def build_belief_params(self):
-        random_params = []
+        belief_params = []
         for param_key, param in self.params.items():
             if hasattr(param, 'belief'):
-                random_params.append(param)
-        return random_params
+                belief_params.append(param)
+        return belief_params
 
     @staticmethod
     def create_plan_for_preds(preds, env):
@@ -379,15 +382,13 @@ class Plan(object):
         # defaults taken from hmm.py script
         mcmc = MCMC(
             kernel,
-            num_samples=500,
-            warmup_steps=1500,
-            num_chains=2,
-            mp_context='spawn'
+            num_samples=self.num_belief_samples,
+            warmup_steps=self.num_warmup_steps,
+            num_chains=self.num_chains
         )
 
         mcmc.run(rs_params, self.joint_belief.samples.mean(), self.joint_belief.samples.view((-1,)).cov())
         mcmc.summary(prob=0.95)  # for diagnostics
-
 
         return mcmc.get_samples()
 
@@ -397,11 +398,11 @@ class Plan(object):
 
         # setting up belief vector, build up aggregate vector
         aggregate_size = sum([bpar.belief.size for bpar in self.belief_params])
-        self.joint_belief = belief_constructor(samples=torch.cat(samples, dim=0).reshape(500, -1), size=aggregate_size)
+        self.joint_belief = belief_constructor(samples=torch.cat(samples, dim=0).reshape(self.num_belief_samples, -1), size=aggregate_size)
 
         for idx, param in enumerate(self.belief_params):
             # add samples by generating from prior
-            param.belief.samples = samples[idx].detach().numpy().reshape((-1, 500))
+            param.belief.samples = samples[idx].detach().numpy().reshape((-1, self.num_belief_samples))
 
     # called once per high-level action execution
     def filter_beliefs(self, rs_params):
@@ -415,12 +416,9 @@ class Plan(object):
 
         self.joint_belief = belief_constructor(samples=global_samples, size=self.joint_belief.size)
 
-        # print(global_samples.mean())
-        # print(global_samples.var())
-
         # construct a model object, over which we do inference, starting with uniform prior
         running_idx = 0
         for param in self.belief_params:
             param.belief.samples = \
-                global_samples[:, running_idx: running_idx+param.belief.size].detach().numpy().reshape((-1, 500))  # expecting hooks
+                global_samples[:, running_idx: running_idx+param.belief.size].detach().numpy().reshape((-1, self.num_belief_samples))  # expecting hooks
             running_idx += param.belief.size
