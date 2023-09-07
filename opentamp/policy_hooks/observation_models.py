@@ -1,6 +1,10 @@
-## set of methods taking forward samples
-
+## set of methods taking forward samples for observation
 import torch
+import pyro
+import pyro.distributions as dist
+from opentamp.core.util_classes.custom_dist import CustomDist
+import pyro.poutine as poutine
+from pyro.infer import MCMC, NUTS
 
 def toy_observation(rs_params, belief_mean, belief_cov):
     # LaPlace estimate: todo SVI if needed
@@ -27,6 +31,6 @@ def toy_observation(rs_params, belief_mean, belief_cov):
 
 def dummy_obs(rs_params, belief_mean, belief_cov):
     # start observations in the first action todo: loop this over actions in the plan
-    obs = torch.torch.zeros(rs_params[0].pose.shape[1]-1)
+    b_global = pyro.sample('belief_global', dist.Normal(belief_mean, belief_cov))
 
-    return obs
+    return b_global
