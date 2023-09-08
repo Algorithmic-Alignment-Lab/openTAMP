@@ -286,7 +286,8 @@ class TorchNet(nn.Module):
 class PolicyNet(TorchNet):
     def __init__(self, config, scope, device=None):
         self.scope = scope
-        self.normalize = config.get('normalize', False)
+        # self.normalize = config.get('normalize', False)
+        self.normalize = False
         self.scale = None
         self.bias = None
 

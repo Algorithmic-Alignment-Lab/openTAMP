@@ -139,11 +139,10 @@ class PolicyServer(object):
             self.in_queue = self.config['ll_queue'][self.task]
 
         self.batch_size = self.config['batch_size']
-        normalize = False
-        # if self.task in ['cont', 'primitive', 'label']:
-        #     normalize = False
-        # else:
-        #     normalize = IM_ENUM not in self.config['obs_include']
+        if self.task in ['cont', 'primitive', 'label']:
+            normalize = False
+        else:
+            normalize = IM_ENUM not in self.config['obs_include']
 
         feed_prob = self.config['end_to_end_prob']
         in_inds, out_inds = None, None
