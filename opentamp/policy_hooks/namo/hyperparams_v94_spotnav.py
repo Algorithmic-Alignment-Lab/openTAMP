@@ -64,8 +64,8 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
         'agent_type': SpotNavAgent,
         'mp_solver_type': NAMOSolver,
         'll_solver_type': NAMOSolver,
-        'observation_model': dummy_obs,
-        'max_likelihood_obs': 0.5,
+        # 'observation_model': dummy_obs,
+        # 'max_likelihood_obs': 0.5,
         'goal_type': 'moveto', 
         'n_dirs': N_DIRS,
 
@@ -73,7 +73,7 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
 
         # remove the sensor
         'obs_include': [#utils.LIDAR_ENUM,
-                        # utils.MJC_SENSOR_ENUM,
+                        utils.MJC_SENSOR_ENUM,
                         utils.TASK_ENUM,
                         utils.END_POSE_ENUM,
                         #utils.EE_ENUM,
