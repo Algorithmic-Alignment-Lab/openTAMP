@@ -6,6 +6,7 @@
 *.log
 *.swp
 experiments/
+saved_models/
 tf_saved/
 backup/*
 opentamp/pddl_files/*
