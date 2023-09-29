@@ -11,8 +11,8 @@ import opentamp
 import opentamp.policy_hooks.utils.policy_solver_utils as utils
 from opentamp.core.util_classes.namo_grip_predicates import ATTRMAP
 from opentamp.pma.namo_grip_solver import NAMOSolverOSQP as NAMOSolver
-from opentamp.policy_hooks.namo.grip_agent import NAMOGripAgent
-import opentamp.policy_hooks.namo.sorting_prob_11 as prob
+from opentamp.policy_hooks.namo.belief_grip_agent import NAMOGripAgent
+import opentamp.policy_hooks.namo.belief_grip_prob as prob
 from opentamp.policy_hooks.utils.file_utils import LOG_DIR
 from opentamp.policy_hooks.observation_models import *
 
@@ -44,7 +44,7 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
     prob.N_GRASPS = N_GRASPS
     prob.FIX_TARGETS = True
 
-    prob.domain_file = opentamp.__path__._path[0] + "/domains/namo_domain/namo_current_holgrip.domain"
+    prob.domain_file = opentamp.__path__._path[0] + "/domains/belief_space_domain/belief_grip.domain"
     prob.END_TARGETS = prob.END_TARGETS[:8]
     prob.n_aux = 0
     config = {
@@ -64,8 +64,8 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
         'agent_type': NAMOGripAgent,
         'mp_solver_type': NAMOSolver,
         'll_solver_type': NAMOSolver,
-        'observation_model': dummy_obs,
-        'max_likelihood_obs': 0.5,
+        # 'observation_model': dummy_obs,
+        # 'max_likelihood_obs': 0.5,
         'n_dirs': N_DIRS,
 
         'state_include': [utils.STATE_ENUM],
@@ -73,6 +73,7 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
         'obs_include': [#utils.LIDAR_ENUM,
                         utils.MJC_SENSOR_ENUM,
                         utils.TASK_ENUM,
+                        utils.TARG_ENUM,
                         utils.END_POSE_ENUM,
                         #utils.EE_ENUM,
                         #utils.VEL_ENUM,

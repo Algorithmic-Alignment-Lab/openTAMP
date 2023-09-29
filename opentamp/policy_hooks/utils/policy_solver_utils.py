@@ -197,9 +197,8 @@ def get_state_action_inds(plan, robot_name, attr_map, x_params={}, u_params={}):
         cur_u_ind = u_inds[-1] + 1
         params_to_u_inds[(robot_name, attr)] = u_inds
     '''
-
     for param_name in x_params:
-        if param_name not in plan.params: continue
+        # if param_name not in plan.params: continue
         param = plan.params[param_name]
         #param_attr_map = attr_map[param._type]
         for attr in x_params[param_name]:
@@ -209,7 +208,7 @@ def get_state_action_inds(plan, robot_name, attr_map, x_params={}, u_params={}):
             params_to_x_inds[(param.name, attr)] = inds
 
     for param_name in u_params:
-        if param_name not in plan.params: continue
+        # if param_name not in plan.params: continue
         param = plan.params[param_name]
         #param_attr_map = attr_map[param._type]
         for attr in u_params[param_name]:

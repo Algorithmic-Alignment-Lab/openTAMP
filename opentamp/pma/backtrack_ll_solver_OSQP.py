@@ -128,8 +128,6 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
     #     return a.params[0]
 
     def backtrack_solve(self, plan, callback=None, verbose=False, n_resamples=5):
-        # populate belief_space stuff with an initial body of samples
-
         success = self._backtrack_solve(
             plan, callback, anum=0, verbose=verbose, n_resamples=n_resamples, 
         )
@@ -167,7 +165,6 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
                 continue
             for attr in param._free_attrs:
                 param._free_attrs[attr][:, active_ts[0]] = 0.0
-
         def recursive_solve():
             ## don't optimize over any params that are already set
             old_params_free = {}
@@ -217,7 +214,6 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
                             attr
                         ]
             return success
-
         ### if there is no parameter to resample or some part of rs_param is fixed, then go ahead optimize over this action
         if (
             rs_param is None
@@ -243,7 +239,6 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
 
             ## no other options, so just return here
             return recursive_solve()
-
         ### so that this won't be optimized over
         rs_params = rs_param if type(rs_param) is list else [rs_param]
         free_attrs = {}
@@ -303,6 +298,7 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
                     break
                 else:
                     success = False
+
 
         for param in free_attrs:
             param._free_attrs = free_attrs[param]

@@ -771,7 +771,7 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
         try:
             success = self.ll_solver._backtrack_solve(plan, 
                                                       anum=a, 
-                                                      amax=a, 
+                                                      amax=a,
                                                       n_resamples=n_resamples, 
                                                       init_traj=ref_traj, 
                                                       st=act_st)
@@ -815,7 +815,7 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
                         hist_info=None,
                         opt_backtrack=False,):
 
-        # Handle to make PR Graph integration easier
+        # Handle to make PR Graph integration easier 
         a = anum
         bad_rollout = []
         info = {'to_render': []}
@@ -963,7 +963,7 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
                 path.extend(next_path)
 
                 if not next_path[-1]._postsuc and not used_rollout:
-                    # Secnario: 
+                    # Scenario: 
                     # -> the action didn't reach post conditions
                     # -> and the previous sample tracked an optimal traj
                     # then the optimizer failed and we can return
@@ -971,7 +971,7 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
                     return False, True, path, info
 
                 elif not next_path[-1]._postsuc and used_rollout:
-                    # Secnario: 
+                    # Scenario: 
                     # -> the action didn't reach post conditions
                     # -> and the previous sample didn't track an optimal traj
                     # then we can note we should not have rolled out at that time
@@ -1063,6 +1063,8 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
         if hist_info is not None:
             self.store_hist_info(hist_info)
 
+        breakpoint()
+
         cur_len = len(path)
         if self.retime:
             vel = self.master_config.get('velocity', 0.3)
@@ -1119,6 +1121,8 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
         end_s = path[-1]
         end_s.task_end = True
         cost = self.postcond_cost(end_s, task, end_s.T-1, debug=False, x0=base_x0, tol=1e-3)
+
+        breakpoint()
 
         for ind, s in enumerate(path):
             s.opt_strength = 1.

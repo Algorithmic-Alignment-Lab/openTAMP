@@ -33,6 +33,15 @@ class MJCEnv(Env):
 
     def __init__(self, mode='end_effector', obs_include=[], items=[], include_files=[], include_items=[], im_dims=(DEFAULT_CAM_WIDTH, DEFAULT_CAM_HEIGHT), sim_freq=25, timestep=0.002, max_iter=250, mult=3e2, view=False, load_render=True, act_jnts=[], xmlid='0'):
         assert mode in CTRL_MODES, 'Env mode must be one of {0}'.format(CTRL_MODES)
+        print('MJCENV constructor')
+        # print(load_render)
+        # print(obs_include)
+        # print(items)
+        # print(include_files)
+        # print(include_items)
+        # print(im_dims)
+        # print(view)
+        view = True
         self.ctrl_mode = mode
         self.active = True
 
@@ -53,7 +62,7 @@ class MJCEnv(Env):
         self._cached_images = {}
         self._last_rendered_state = (None, None)
 
-        self.im_wid, self.im_height = im_dims
+        self.im_wid, self.im_height = 256, 256
         self.items = items
         self._item_map = {item[0]: item for item in items}
         self.include_files = include_files
@@ -101,7 +110,7 @@ class MJCEnv(Env):
         items = config.get("items", [])
         include_files = config.get("include_files", [])
         include_items = config.get("include_items", [])
-        im_dims = config.get("image_dimensions", (DEFAULT_CAM_WIDTH, DEFAULT_CAM_HEIGHT))
+        im_dims = (config.get("image_width", DEFAULT_CAM_WIDTH), config.get("image_height", DEFAULT_CAM_HEIGHT))
         sim_freq = config.get("sim_freq", 25)
         ts = config.get("mjc_timestep", 0.002)
         mult = config.get("step_mult", 3e2)
@@ -418,7 +427,6 @@ class MJCEnv(Env):
                 self._type_cache[name] = 'body'
             except Exception as e:
                 item_ind = -1
-    
         assert not np.any(np.isnan(pos))
         return pos
 
@@ -665,6 +673,14 @@ class MJCEnv(Env):
                 pixels = self._cached_images[(camera_id, height, width)]
 
         if pixels is None:
+            # print('MJC ENV RENDER')
+            # print(height)
+            # print(width)
+            # print(camera_id)
+            # print(overlays)
+            # print(depth)
+            # print(scene_option)
+
             pixels = self.physics.render(height, width, camera_id, overlays, depth, scene_option)
 
             if self._cache_rendering: self._cached_images[(camera_id, height, width)] = pixels

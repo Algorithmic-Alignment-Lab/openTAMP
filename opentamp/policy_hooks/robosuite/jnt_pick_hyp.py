@@ -13,17 +13,17 @@ import numpy as np
 
 # from opentamp.policy_hooks.algorithm_impgps import AlgorithmIMPGPS
 # from opentamp.policy_hooks.multi_head_policy_opt_tf import MultiHeadPolicyOptTf
-import policy_hooks.utils.policy_solver_utils as utils
+import opentamp.policy_hooks.utils.policy_solver_utils as utils
 # from opentamp.policy_hooks.traj_opt_pi2 import TrajOptPI2
 from opentamp.core.util_classes.namo_grip_predicates import ATTRMAP
-import policy_hooks.robosuite.jnt_pick_prob as prob
+import opentamp.policy_hooks.robosuite.jnt_pick_prob as prob
 prob.NUM_OBJS = NUM_OBJS
 prob.NUM_TARGS = NUM_TARGS
 # from opentamp.policy_hooks.policy_mp_prior_gmm import PolicyMPPriorGMM
 # from opentamp.policy_hooks.policy_prior_gmm import PolicyPriorGMM
 
 from opentamp.policy_hooks.robosuite.robot_agent import RobotAgent
-from pma.robosuite_solver import RobotSolverOSQP
+from opentamp.pma.robosuite_solver import RobotSolverOSQP
 
 BASE_DIR = os.getcwd() + '/policy_hooks/'
 EXP_DIR = BASE_DIR + 'experiments/'
@@ -266,9 +266,9 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
                         # utils.DONE_ENUM,
                         ],
         'prim_obs_include': [
-                             # utils.DONE_ENUM,
-                             # utils.STATE_ENUM,
-                             #utils.GOAL_ENUM,
+                            #  utils.DONE_ENUM,
+                            #  utils.STATE_ENUM,
+                            #  utils.GOAL_ENUM,
                              utils.ONEHOT_GOAL_ENUM,
                              ],
         'val_obs_include': [utils.ONEHOT_GOAL_ENUM,

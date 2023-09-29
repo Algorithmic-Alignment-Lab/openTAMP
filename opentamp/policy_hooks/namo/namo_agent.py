@@ -946,7 +946,7 @@ class NAMOSortingAgent(TAMPAgent):
                     vals = [targets[self.target_inds[key, 'value']] for key, _ in self.target_inds if key.find('end_target') >= 0]
                 else:
                     vals = [targets[self.target_inds['{0}_end_target'.format(param.name), 'value']]]
-                dist = np.inf
+                dist = np.inf 
                 disp = None
                 for x in state:
                     if self.goal_type == 'moveto':

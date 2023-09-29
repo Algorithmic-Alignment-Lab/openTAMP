@@ -2,22 +2,44 @@ NUM_OBJS = 1
 NUM_TARGS = 1
 
 from datetime import datetime
-import os
+import ow
 import os.path
 
 import numpy as np
 
 import opentamp
 import opentamp.policy_hooks.utils.policy_solver_utils as utils
-from opentamp.core.util_classes.namo_grip_predicates import ATTRMAP
+# from opentamp.core.util_classes.namo_grip_predicates import ATTRMAP
 from opentamp.pma.namo_grip_solver import NAMOSolverOSQP as NAMOSolver
 # from opentamp.policy_hooks.namo.grip_agent import NAMOGripAgent
 from opentamp.pma.spot_solver import SpotSolverOSQP as SpotSolver
 from opentamp.policy_hooks.spot.spot_agent import SpotAgent
 # from opentamp.policy_hooks.spot.namo_mod_agent import NAMOModAgent
 
+ATTRMAP = {
+    "Robot": (
+        ("pose", np.array(list(range(2)), dtype=np.int)),
+        ("gripper", np.array(list(range(1)), dtype=np.int)),
+        ("theta", np.array(list(range(1)), dtype=np.int)),
+        ("vel", np.array(list(range(1)), dtype=np.int)),
+        ("acc", np.array(list(range(1)), dtype=np.int)),
+    ),
+    "Can": (("pose", np.array(list(range(2)), dtype=np.int)),),
+    "Target": (("value", np.array(list(range(2)), dtype=np.int)),),
+    "RobotPose": (
+        ("value", np.array(list(range(2)), dtype=np.int)),
+        ("theta", np.array(list(range(1)), dtype=np.int)),
+        ("gripper", np.array(list(range(1)), dtype=np.int)),
+        ("vel", np.array(list(range(1)), dtype=np.int)),
+        ("acc", np.array(list(range(1)), dtype=np.int)),
+    ),
+    "Obstacle": (("pose", np.array(list(range(2)), dtype=np.int)),),
+    "Grasp": (("value", np.array(list(range(2)), dtype=np.int)),),
+    "Rotation": (("value", np.array(list(range(1)), dtype=np.int)),),
+}
+
 #import opentamp.policy_hooks.namo.sorting_prob_11 as prob
-import opentamp.policy_hooks.spot.namo_mod_prob as prob
+import opentamp.policy_hooks.spot.spot_prob as prob
 from opentamp.policy_hooks.utils.file_utils import LOG_DIR
 
 BASE_DIR = opentamp.__path__._path[0] +  '/policy_hooks/'
@@ -48,7 +70,7 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
     prob.N_GRASPS = N_GRASPS
     prob.FIX_TARGETS = True
 
-    prob.domain_file = opentamp.__path__._path[0] + "/domains/belief_space_domain/namo_mod.domain"
+    prob.domain_file = opentamp.__path__._path[0] + "/domains/spot_domain/spot_move.domain"
     prob.END_TARGETS = prob.END_TARGETS[:8]
     prob.n_aux = 0
     config = {
@@ -60,12 +82,12 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
         'task_map_file': prob.mapping_file,
         'prob': prob,
         'get_vector': prob.get_vector,
-        'robot_name': 'pr2',
+        'robot_name': 'spot',
         'obj_type': 'can',
         'num_objs': no,
         'num_targs': nt,
         'attr_map': ATTRMAP,
-        'agent_type': NAMOModAgent,
+        'agent_type': SpotAgent,
         'mp_solver_type': NAMOSolver,
         'll_solver_type': NAMOSolver,
         'n_dirs': N_DIRS,

@@ -43,7 +43,7 @@ LIDAR_DIST = 2.
 DSAFE = 5e-1
 MAX_STEP = 1.0
 LOCAL_FRAME = True
-SPOT_XML = opentamp.__path__[0] + '/robot_info/spot_with_lidar.xml'
+SPOT_XML = opentamp.__path__[0] + '/robot_info/lidar_spot_imit.xml'
 
 
 
@@ -73,25 +73,25 @@ class SpotAgent(TAMPAgent):
 
         items = config['include_items']
         prim_options = self.prob.get_prim_choices(self.task_list)
-        for name in prim_options[OBJ_ENUM]:
-            if name =='spot': continue
-            cur_color = colors.pop(0)
-            items.append({'name': name, 'type': 'cylinder', 'is_fixed': False, 'pos': (0, 0, 0.5), 'dimensions': (0.3, 0.2), 'rgba': tuple(cur_color), 'mass': 40.})
-            targ_color = cur_color[:3] + [1.]
-            items.append({'name': '{0}_end_target'.format(name), 'type': 'box', 'is_fixed': True, 'pos': (0, 0, 1.5), 'dimensions': (0.35, 0.35, 0.045), 'rgba': tuple(targ_color), 'mass': 1.})
+        # for name in prim_options[OBJ_ENUM]:
+        #     if name =='spot': continue
+        #     cur_color = colors.pop(0)
+        #     items.append({'name': name, 'type': 'cylinder', 'is_fixed': False, 'pos': (0, 0, 0.5), 'dimensions': (0.3, 0.2), 'rgba': tuple(cur_color), 'mass': 40.})
+        #     targ_color = cur_color[:3] + [1.]
+        #     items.append({'name': '{0}_end_target'.format(name), 'type': 'box', 'is_fixed': True, 'pos': (0, 0, 1.5), 'dimensions': (0.35, 0.35, 0.045), 'rgba': tuple(targ_color), 'mass': 1.})
 
-        self.humans = {}
-        self.human_trajs = {}
-        for human_id in range(self.prob.N_HUMAN):
-            self.humans['human{}'.format(human_id)] = HUMAN_TARGS[np.random.randint(len(HUMAN_TARGS))]
-            self.human_trajs['human{}'.format(human_id)] = np.zeros(2) 
-            items.append({'name': 'human{}'.format(human_id),
-                          'type': 'cylinder',
-                          'is_fixed': False,
-                          'pos': [0., 0., 0.],
-                          'dimensions': [0.3, 0.2],
-                          'mass': 10,
-                          'rgba': (1., 1., 1., 1.)})
+        # self.humans = {}
+        # self.human_trajs = {}
+        # for human_id in range(self.prob.N_HUMAN):
+        #     self.humans['human{}'.format(human_id)] = HUMAN_TARGS[np.random.randint(len(HUMAN_TARGS))]
+        #     self.human_trajs['human{}'.format(human_id)] = np.zeros(2) 
+        #     items.append({'name': 'human{}'.format(human_id),
+        #                   'type': 'cylinder',
+        #                   'is_fixed': False,
+        #                   'pos': [0., 0., 0.],
+        #                   'dimensions': [0.3, 0.2],
+        #                   'mass': 10,
+        #                   'rgba': (1., 1., 1., 1.)})
 
         no = self._hyperparams['num_objs']
         nt = self._hyperparams['num_targs']
@@ -108,9 +108,6 @@ class SpotAgent(TAMPAgent):
 
     def run_policy_step(self, u, x):
         self.mjc_env.step(u)
-
-
-
 
         if not self._feasible:
             return False, 0
@@ -438,8 +435,10 @@ class SpotAgent(TAMPAgent):
 
         self.x0[cond] = self.init_vecs[cond][:self.symbolic_bound]
         self.target_vecs[cond] = np.zeros((self.target_dim,))
-        for target_name in self.targets[cond]:
-            self.target_vecs[cond][self.target_inds[target_name, 'value']] = self.targets[cond][target_name]
+        # print(self.targets)
+        # print(self.target_vecs)
+        # for target_name in self.targets[cond]:
+        #     self.target_vecs[cond][self.target_inds[target_name, 'value']] = self.targets[cond][target_name]
 
 
 
@@ -459,6 +458,9 @@ class SpotAgent(TAMPAgent):
                     goal += '(Near {0} end_target_{1}) '.format(obj, ind)
                     break
         return goal
+
+    def goal_f(self, condition, state, targets=None, cont=False):
+        return 1.0 # TEMPLATE
 
 
     def get_annotated_image(self, s, t, cam_id=None):

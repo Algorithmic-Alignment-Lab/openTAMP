@@ -35,9 +35,11 @@ class Predicate(object):
     def validate_params(self, expected_param_types):
         try:
             if len(self.params) != len(expected_param_types):
+                breakpoint()
                 raise ParamValidationException("Parameter type validation failed for predicate '%s'."%self)
             for i, p in enumerate(self.params):
                 if expected_param_types[i] not in p.get_type(True):
+                    breakpoint()
                     raise ParamValidationException("Parameter type validation failed for predicate '%s'."%self)
         except Exception as e:
             print(e)

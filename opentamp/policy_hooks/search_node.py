@@ -191,6 +191,7 @@ class LLSearchNode(SearchNode):
 
     def gen_plan(self, hl_solver, bodies, ll_solver):
         self.curr_plan = hl_solver.get_plan(self.plan_str, self.domain, self.concr_prob, self.initial)
+
         if type(self.curr_plan) is str: return
         if not len(self.curr_plan.actions):
             print('Search node found bad plan for', self.initial, self.plan_str, self.concr_prob.goal)

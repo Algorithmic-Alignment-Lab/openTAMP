@@ -14,7 +14,7 @@ from opentamp.policy_hooks.utils.policy_solver_utils import *
 import opentamp.policy_hooks.utils.policy_solver_utils as utils
 
 
-domain_file = opentamp.__path__._path[0] + "/domains/robot_manipulation_domain/move_robot.domain"
+domain_file = opentamp.__path__._path[0] + "/domains/spot_domain/move_robot.domain"
 mapping_file = opentamp.__path__._path[0] + "/policy_hooks/spot/spot_tasks"
 
 N_OBJ = 5
@@ -25,7 +25,8 @@ END_TARGETS =[(0., 5.8), (0., 5.), (0., 4.), (2., 1.5),
                    (-2.8, 1.5)]
 
 def prob_file(descr=None):
-    return opentamp.__path__._path[0] + "/domains/robot_manipulation_domain/spot_probs/spot_prob_{0}.prob".format(N_OBJ)
+    # return opentamp.__path__._path[0] + "/domains/robot_manipulation_domain/spot_probs/spot_prob_{0}.prob".format(N_OBJ)
+    return opentamp.__path__._path[0] + "/domains/spot_domain/spot_probs/spot_nav_simple.prob"
 
 
 def get_prim_choices(task_list=None):
@@ -35,20 +36,20 @@ def get_prim_choices(task_list=None):
     else:
         out[utils.TASK_ENUM] = sorted(list(task_list))
 
-    out[utils.TARG_ENUM] = ['target1', 'target2']
+    out[utils.TARG_ENUM] = ['ROBOT_INIT_POSE', 'ROBOT_END_POSE']
     return out
 
 
 def get_vector(config):
     state_vector_include = {
-        'spot': ['robot_x', 'robot_y', 'robot_theta']
+        'spot': ['pose', 'rotation', 'position', 'theta']
     }
 
     for obj in range(N_OBJ):
         state_vector_include['obj{0}'.format(obj)] = ['pose']
 
     action_vector_include = {
-        'spot': ['robot_x', 'robot_y', 'robot_theta']
+        'spot': ['pose', 'rotation', 'position', 'theta']
     }
 
     target_vector_include = {
@@ -60,7 +61,7 @@ def get_vector(config):
 
 
 def get_plans(use_tf=False):
-    tasks = {'MOVE_TO': '0: MOVE_TO SPOT INIT_TARGET {0}'}
+    tasks = {'move_to': ['0: MOVE_TO SPOT ROBOT_INIT_POSE {0}']}
     task_ids = sorted(list(get_tasks(mapping_file).keys()))
     prim_options = get_prim_choices()
     plans = {}
@@ -70,10 +71,9 @@ def get_plans(use_tf=False):
     sess = None
 
     for task_ind, task in enumerate(task_ids):
-        params = None
-    
+        params = None        
         for targ_ind, targ in enumerate(prim_options[TARG_ENUM]):
-            next_task_str = copy.deepcopy(tasks[targ])
+            next_task_str = copy.deepcopy(tasks[task])
             new_task_str = []
             for step in next_task_str:
                 new_task_str.append(step.format(targ))
@@ -87,6 +87,10 @@ def get_plans(use_tf=False):
                         if not hasattr(param, 'openrave_body') or param.openrave_body is None:
                             param.openrave_body = OpenRAVEBody(env, param.name, param.geom)
                         openrave_bodies[param.name] = param.openrave_body
+            
+            for j in range(len(prim_options[utils.TARG_ENUM])):
+                    plans[(task_ids.index(task), i, j)] = plan
+
     return plans, openrave_bodies, env
 
 

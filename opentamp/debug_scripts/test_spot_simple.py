@@ -25,7 +25,7 @@ prob_gen.NUM_TARG = N_TARGS
 prob_gen.domain_file = opentamp.__path__._path[0] + "/domains/robot_manipulation_domain/move_robot.domain"
 bt_ll_osqp.DEBUG = True
 bt_ll_osqp.COL_COEFF = 0.005
-visual = True # len(os.environ.get('DISPLAY', '')) > 0
+visual = False # len(os.environ.get('DISPLAY', '')) > 0
 d_c = main.parse_file_to_dict(prob_gen.domain_file)
 domain = parse_domain_config.ParseDomainConfig.parse(d_c)
 prob_file = opentamp.__path__._path[0] + "/domains/robot_manipulation_domain/spot_probs/spot_prob_{}obj_{}targ.prob".format(N_OBJS, N_TARGS)
@@ -61,6 +61,9 @@ if USE_FF:
 else:
     hls = FDSolver(d_c)
     
+print(domain)
+print(problem)
+
 plan, descr = p_mod_abs(hls, solver, domain, problem, goal=goal, debug=True, n_resamples=5)
 
 if plan is None:
@@ -110,4 +113,4 @@ for t in range(plan.horizon-1):
     env.step(ctrl_vec, mode='velocity')
     if visual:
         env.render(camera_id=0, height=128, width=128, view=True)
-    import ipdb; ipdb.set_trace()
+    # import ipdb; ipdb.set_trace()
