@@ -44,7 +44,8 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
     prob.N_GRASPS = N_GRASPS
     prob.FIX_TARGETS = True
 
-    prob.domain_file = opentamp.__path__._path[0] + "/domains/namo_domain/namo_purenav.domain"
+    prob.meta_file = opentamp.__path__._path[0] + "/new_specs/test/namo_purenav_meta.json"
+    prob.acts_file = opentamp.__path__._path[0] + "/new_specs/test/namo_purenav_acts.json"
     prob.END_TARGETS = prob.END_TARGETS[:8]
     prob.n_aux = 0
     config = {

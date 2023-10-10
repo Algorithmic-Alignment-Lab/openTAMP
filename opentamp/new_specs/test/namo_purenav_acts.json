@@ -1,0 +1,57 @@
+{
+    "move": {
+        "params": [
+            ["?robot", "Robot"],
+            ["?target", "Target"]
+        ],
+        "horizon": 20,
+        "pre": [
+            {
+            "forall": ["?w", "Obstacle"],
+            "pred": {
+                "type": "StationaryW",
+                "args": ["?w"],
+                "active_timesteps": [0, 18]
+            }
+            },
+            {
+                "forall": ["?c", "Can"],
+                "pred": {
+                    "type": "Stationary",
+                    "args": ["?c"],
+                    "active_timesteps": [0, 18]
+                }
+            },
+            {
+                "type": "IsMP",
+                "args": ["?robot"],
+                "active_timesteps": [0, 18]
+            },
+            {
+                "forall": ["?w", "Obstacle"],
+                "pred": {
+                    "type": "~RCollides",
+                    "args": ["?robot", "?w"],
+                    "active_timesteps": [1, 17]
+                }
+            }
+        ],
+        "eff": [
+            {
+                "type": "RobotAtTarget",
+                "args": ["?robot", "?target"],
+                "active_timesteps": [19, 19]
+            },
+            {
+                "type": "StationaryRot",
+                "args": ["?robot"],
+                "active_timesteps": [15, 18]
+            },
+            {
+                "type": "ForThetaDirValid",
+                "args": ["?robot"],
+                "active_timesteps": [15, 18]
+            }
+        ]
+    }
+}

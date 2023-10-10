@@ -147,7 +147,7 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
             self.ll_solver = self._hyperparams['mp_solver_type'](self._hyperparams)
 
         self.traj_smooth = self.master_config['traj_smooth']
-        self.hl_solver = get_hl_solver(self.prob.domain_file)
+        self.hl_solver = get_hl_solver(self.prob.meta_file, self.prob.acts_file)
         self.hl_pol = False
         self.prim_choices = self._hyperparams['prob'].get_prim_choices(self.task_list)
         opts = self._hyperparams['prob'].get_prim_choices(self.task_list)
@@ -1063,8 +1063,6 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
         if hist_info is not None:
             self.store_hist_info(hist_info)
 
-        breakpoint()
-
         cur_len = len(path)
         if self.retime:
             vel = self.master_config.get('velocity', 0.3)
@@ -1121,8 +1119,6 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
         end_s = path[-1]
         end_s.task_end = True
         cost = self.postcond_cost(end_s, task, end_s.T-1, debug=False, x0=base_x0, tol=1e-3)
-
-        breakpoint()
 
         for ind, s in enumerate(path):
             s.opt_strength = 1.

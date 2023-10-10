@@ -5,21 +5,26 @@ import opentamp.main as main
 from opentamp.core.parsing import parse_domain_config, parse_problem_config
 from opentamp.pma.hl_solver import FDSolver
 
+import json
 
-def get_hl_solver(domain_fname):
-    d_c = main.parse_file_to_dict(domain_fname)
-    return FDSolver(d_c)
+def get_hl_solver(meta_fp, acts_fp):
+    f_m = open(meta_fp)
+    f_a = open(acts_fp)
+    m_c = json.load(f_m)
+    a_c = json.load(f_a)
+    return FDSolver(m_c, a_c)
 
-def plan_from_str(ll_plan_str, prob, domain, env, openrave_bodies, params=None, sess=None, use_tf=False, d_c=None, p_c=None):
+def plan_from_str(ll_plan_str, prob_fp, meta_fp, acts_fp, env, openrave_bodies, params=None, sess=None, use_tf=False, d_c=None, p_c=None):
     '''Convert a plan string (low level) into a plan object.'''
-    domain_fname = domain
-    if d_c is None:
-        d_c = main.parse_file_to_dict(domain_fname)
-    domain = parse_domain_config.ParseDomainConfig.parse(d_c)
-    hls = FDSolver(d_c)
-    if p_c is None:
-        p_c = main.parse_file_to_dict(prob)
+    f_m = open(meta_fp)
+    f_a = open(acts_fp)
+    f_p = open(prob_fp)
+    m_c = json.load(f_m)
+    a_c = json.load(f_a)
+    p_c = json.load(f_p)
+    domain = parse_domain_config.ParseDomainConfig.parse(m_c, a_c)
     problem = parse_problem_config.ParseProblemConfig.parse(p_c, domain, env, openrave_bodies, reuse_params=params, use_tf=use_tf, sess=sess, visual=False)
+    hls = FDSolver(m_c, a_c) 
     plan = hls.get_plan(ll_plan_str, domain, problem, reuse_params=params)
     #plan = hls.get_plan(ll_plan_str, domain, problem)
     plan.d_c = d_c

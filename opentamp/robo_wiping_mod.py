@@ -19,7 +19,7 @@ from pma.robosuite_solver import RobotSolverOSQP
 from sco_py.expr import *
 import matplotlib.pyplot as plt
 
-import pdb
+# import pdb
 
 from PIL import Image
 

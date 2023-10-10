@@ -1,0 +1,94 @@
+{
+    "types": ["Can", "Target", "RobotPose", "Robot", "Grasp", "Obstacle", "Rotation"],
+    "attribute_imports": {
+        "opentamp.core.util_classes.items": ["RedCircle", "BlueCircle", "GreenCircle", "Wall"],
+        "opentamp.core.util_classes.matrix": ["Vector1d", "Vector2d"],
+        "opentamp.core.util_classes.robots": ["NAMO"]
+    },
+    "predicates_import_path": "opentamp.core.util_classes.namo_grip_predicates",
+    "type_attrs": {
+        "Can": {
+            "geom": "RedCircle",
+            "pose": "Vector2d"
+        },
+        "Target": {
+            "geom": "BlueCircle",
+            "value": "Vector2d"
+        },
+        "RobotPose": {
+            "value": "Vector2d",
+            "gripper": "Vector1d",
+            "geom": "BlueCircle",
+            "theta": "Vector1d",
+            "vel": "Vector1d",
+            "acc": "Vector1d"
+        },
+        "Robot": {
+            "pose": "Vector2d",
+            "gripper": "Vector1d",
+            "geom": "NAMO",
+            "theta": "Vector1d",
+            "vel": "Vector1d",
+            "acc": "Vector1d"
+        },
+        "Grasp": {
+            "value": "Vector2d"
+        },
+        "Obstacle": {
+            "geom": "Wall",
+            "pose": "Vector2d"
+        },
+        "Rotation": {
+            "value": "Vector1d"
+        }
+    },
+    "predicates": {
+        "At": ["Can", "Target"],
+        "AtInit": ["Can", "Target"],
+        "RobotAt": ["Robot", "RobotPose"],
+        "RobotAtTarget": ["Robot", "Target"],
+        "Obstructs": ["Robot", "Can", "Can", "Can"],
+        "ObstructsHolding": ["Robot", "Target", "Target", "Can", "Can"],
+        "WideObstructsHolding": ["Robot", "Target", "Target", "Can", "Can"],
+        "StationaryRot": ["Robot"],
+        "RobotStationary": ["Robot"],
+        "StationaryNEq": ["Can", "Can"],
+        "IsMP": ["Robot"],
+        "StationaryW": ["Obstacle"], 
+        "Stationary": ["Can"],
+        "Collides": ["Can", "Obstacle"],
+        "RCollides": ["Robot", "Obstacle"],
+        "Near": ["Can", "Target"],
+        "RobotAtGrasp": ["Robot", "Can", "Grasp"],
+        "RobotWithinReach": ["Robot", "Target"],
+        "RobotNear": ["Robot", "Can"],
+        "RobotNearGrasp":["Robot", "Can", "Grasp"],
+        "RobotWithinBounds": ["Robot"],
+        "WideObstructs": ["Robot", "Can", "Can", "Can"],
+        "AtNEq": ["Can", "Can", "Target"],
+        "PoseCollides": ["RobotPose", "Obstacle"],
+        "TargetCollides": ["Target", "Obstacle"],
+        "TargetGraspCollides": ["Target", "Obstacle", "Grasp"],
+        "TargetCanGraspCollides": ["Target", "Can", "Grasp"],
+        "CanGraspCollides": ["Can", "Obstacle", "Grasp"],
+        "HLPoseUsed": ["RobotPose"],
+        "HLAtGrasp": ["Robot", "Can", "Grasp"],
+        "RobotPoseAtGrasp": ["RobotPose", "Target", "Grasp"],
+        "HLPoseAtGrasp": ["RobotPose", "Target", "Grasp"],
+        "RobotRetreat": ["Robot", "Grasp"],
+        "RobotApproach": ["Robot", "Grasp"],
+        "LinearRetreat": ["Robot"],
+        "LinearApproach": ["Robot"],
+        "InGraspAngle": ["Robot", "Can"],
+        "NearGraspAngle": ["Robot", "Can"],
+        "TargNearGraspAngle": ["Robot", "Target"],
+        "AroundGraspAngle": ["Robot", "Can"],
+        "ThetaDirValid": ["Robot"],
+        "ForThetaDirValid": ["Robot"],
+        "RevThetaDirValid": ["Robot"],
+        "ScalarVelValid": ["Robot"],
+        "HLGraspFailed": ["Can"],
+        "HLTransferFailed": ["Can", "Target"],
+        "HLPlaceFailed": ["Target"]
+    }
+}

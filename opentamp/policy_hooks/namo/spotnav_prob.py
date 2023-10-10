@@ -29,7 +29,9 @@ FIX_TARGETS = True
 CONST_TARGETS = False
 CONST_ORDER = False
 
-domain_file = opentamp.__path__._path[0] + "/domains/namo_domain/namo_purenav.domain"
+# domain_file = opentamp.__path__._path[0] + "/domains/namo_domain/namo_purenav.domain"
+meta_file = opentamp.__path__._path[0] + "/new_specs/test/namo_purenav_meta.json"
+acts_file = opentamp.__path__._path[0] + "/new_specs/test/namo_purenav_acts.json"
 mapping_file = "policy_hooks/namo/spotnav_task_mapping"  # todo alter
 
 # domain_file = opentamp.__path__._path[0] + "/domains/robot_manipulation_domain/move_robot.domain"
@@ -79,7 +81,7 @@ def prob_file(descr=None):
     # if descr is None:
     #     descr = 'grip_prob_{0}_{1}end_{2}aux'.format(NUM_OBJS, len(END_TARGETS), n_aux)
     # return opentamp.__path__._path[0] + "/domains/namo_domain/namo_probs/{0}.prob".format(descr)
-    return opentamp.__path__._path[0] + "/domains/namo_domain/namo_probs/purenav.prob"
+    return opentamp.__path__._path[0] + "/new_specs/test/namo_purenav_prob.json"
 
 
 def get_prim_choices(task_list=None):
@@ -232,7 +234,7 @@ def get_plans(use_tf=False):
                 new_task_str = []
                 for step in next_task_str:
                     new_task_str.append(step.format(obj, '', ''))
-                plan = plan_from_str(new_task_str, prob_file(), domain_file, env, openrave_bodies, params=params, sess=sess, use_tf=use_tf)
+                plan = plan_from_str(new_task_str, prob_file(), meta_file, acts_file, env, openrave_bodies, params=params, sess=sess, use_tf=use_tf)
                 params = plan.params
                 if env is None:
                     env = plan.env

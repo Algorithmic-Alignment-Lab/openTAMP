@@ -30,11 +30,14 @@ class Parameter(object):
         if attrs is not None:
             for attr_name, arg in list(attrs.items()):
                 self.attrs.append(attr_name)
-                if "undefined" in arg:
+                if arg == "undefined":
                     setattr(self, attr_name, "undefined")
+                elif arg == "":
+                    # case where the type takes no argument, e.g. Robot Geoms
+                    setattr(self, attr_name, attr_types[attr_name]())
                 else:
                     try:
-                        setattr(self, attr_name, attr_types[attr_name](*arg))
+                        setattr(self, attr_name, attr_types[attr_name](arg))
                     except KeyError:
                         name = attrs["name"][0]
                         raise DomainConfigException("Attribute '{}' for {} '{}' not defined in domain file.".format(attr_name, type(self).__name__, name))

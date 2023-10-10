@@ -359,7 +359,8 @@ class MultiProcessMain(object):
             self._create_server(hyperparams, TaskServer, start_idx+n)
 
         for n in range(hyperparams['num_rollout']):
-            self._create_server(hyperparams, RolloutServer, start_idx+n)
+            if not hyperparams['plan_only']:
+                self._create_server(hyperparams, RolloutServer, start_idx+n)
 
         hyperparams = copy.copy(hyperparams)
         hyperparams['run_hl_test'] = True
@@ -369,14 +370,14 @@ class MultiProcessMain(object):
         hyperparams['check_precond'] = False
         if hyperparams['debug']:
             self.create_server_debug(RolloutServer, copy.copy(hyperparams))
-        else:
+        elif not hyperparams['plan_only']:
             self.create_server(RolloutServer, copy.copy(hyperparams))
 
         hyperparams['id'] = 'moretest'
         hyperparams['view'] = False
         if hyperparams['debug']:
             self.create_server_debug(RolloutServer, copy.copy(hyperparams))
-        else:
+        elif not hyperparams['plan_only']:
             self.create_server(RolloutServer, copy.copy(hyperparams))
 
         for n in range(hyperparams['num_test']):
@@ -386,7 +387,7 @@ class MultiProcessMain(object):
             hyperparams['check_precond'] = False
             if hyperparams['debug']:
                 self.create_server_debug(RolloutServer, copy.copy(hyperparams))
-            else:
+            elif not hyperparams['plan_only']:
                 self.create_server(RolloutServer, copy.copy(hyperparams))
 
         hyperparams['run_hl_test'] = False
@@ -395,7 +396,7 @@ class MultiProcessMain(object):
     def _create_server(self, hyperparams, cls, idx):
         hyperparams = copy.copy(hyperparams)
         hyperparams['id'] = cls.__name__ + str(idx)
-        if hyperparams['debug']:
+        if hyperparams['debug'] or hyperparams['plan_only']:
             self.create_server_debug(cls, hyperparams)
         else:
             self.create_server(cls, hyperparams)
@@ -456,7 +457,7 @@ class MultiProcessMain(object):
         self.spawn_servers(self.config)
 
 
-        if self.config['debug']:
+        if self.config['debug'] or self.config['plan_only']:
             self.start_servers_debug()  # iterates in single thread
 
         else:

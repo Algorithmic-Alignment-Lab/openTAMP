@@ -19,6 +19,7 @@ from pma.toy_solver import ToySolver
 from sco_py.expr import Expr, AffExpr, EqExpr, LEqExpr
 import torch
 import copy
+# from opentamp.policy_hooks.utils.load_task_definitions import *
 
 import pyro
 import pyro.distributions as dist
@@ -48,10 +49,8 @@ def toy_observation(rs_params, belief_mean, belief_cov):
             # differentially take conditional depending on the ray
             # 1.10714871779
             if is_in_ray(a.pose[0][i], b_global.item()):
-                print('is in ray')
                 obs[i - 1] = pyro.sample('obs'+str(i), dist.Uniform(b_global-torch.tensor(0.001), b_global+torch.tensor(0.001)))
             else:
-                print('not in ray')
                 obs[i - 1] = pyro.sample('obs'+str(i), dist.Uniform(b_global-torch.tensor(1), b_global+torch.tensor(1)))  # no marginal information gotten
 
     return obs
@@ -59,17 +58,19 @@ def toy_observation(rs_params, belief_mean, belief_cov):
 
 if __name__ == '__main__':
     # TODO: initialize calls to planner, add paths to relevant folders
-    domain_fname = os.getcwd() + "/opentamp/domains/belief_space_domain/toy_belief.domain"
-    prob = os.getcwd() + "/opentamp/domains/belief_space_domain/probs/toy_belief.prob"
+    domain_fname = os.getcwd() + "/opentamp/domains/belief_space_domain/toy_camera.domain"
+    prob = os.getcwd() + "/opentamp/domains/belief_space_domain/probs/toy_camera.prob"
 
     # configuring task plan
     d_c = main.parse_file_to_dict(domain_fname)
+    p_c = main.parse_file_to_dict(prob)
     domain = parse_domain_config.ParseDomainConfig.parse(d_c)
-    hls = FFSolver(d_c)
+    problem = parse_problem_config.ParseProblemConfig.parse(p_c, domain, None, use_tf=True, sess=None, visual=False)
+
+    # configuring hl_solver    
+    hls = FDSolver(d_c)
 
     # configuing motion plan
-    p_c = main.parse_file_to_dict(prob)
-    problem = parse_problem_config.ParseProblemConfig.parse(p_c, domain, None, use_tf=True, sess=None, visual=False)
     solver = ToySolver()
 
     # Run planning to obtain a final plan.

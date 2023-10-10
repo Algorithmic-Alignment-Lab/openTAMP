@@ -10,7 +10,7 @@ python3 -W ignore policy_hooks/run_training.py -c policy_hooks.namo.hyperparams_
                                                 -spl -mask -hln 2 -hldim 256 -lldim 256 \
                                                 -retime -vel 0.3 -eta 5 -softev \
                                                 -lr_schedule adaptive \
-						                        -imwidth 256 -imheight 256 \
+                                                -imwidth 256 -imheight 256 \
                                                 -obs_del -hist_len 2 -prim_first_wt 20 -lr 0.0002 \
                                                 -hllr 0.001 -lldec 0.0001 -hldec 0.0004 \
                                                 -add_noop 2 --permute_hl 1 \

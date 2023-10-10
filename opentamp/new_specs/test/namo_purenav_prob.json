@@ -1,0 +1,159 @@
+{
+    "init_objs": [
+        {
+            "name": "can0_init_target",
+            "type": "Target",
+            "geom": 0.3,
+            "value": [-3, -3]
+        },
+        {
+            "name": "can0",
+            "type": "Can",
+            "geom": 0.3,
+            "pose": [-3, -3]
+        },
+        {
+            "name": "can0_end_target",
+            "type": "Target",
+            "geom": 0.3,
+            "value": [-3, -3]
+        },
+        {
+            "name": "end_target_0",
+            "type": "Target",
+            "geom": 0.3,
+            "value": [-3, -3]
+        },
+        {
+            "name": "end_target_1",
+            "type": "Target",
+            "geom": 0.3,
+            "value": [-5, -5]
+        },
+        {
+            "name": "end_target_2",
+            "type": "Target",
+            "geom": 0.3,
+            "value": [4, -4]
+        },
+        {
+            "name": "end_target_3",
+            "type": "Target",
+            "geom": 0.3,
+            "value": [-1, 0]
+        },
+        {
+            "name": "end_target_4",
+            "type": "Target",
+            "geom": 0.3,
+            "value": [-4, 1]
+        },
+        {
+            "name": "end_target_5",
+            "type": "Target",
+            "geom": 0.3,
+            "value": [-5, 3]
+        },
+        {
+            "name": "end_target_6",
+            "type": "Target",
+            "geom": 0.3,
+            "value": [-1, 1]
+        },
+        {
+            "name": "pr2",
+            "type": "Robot",
+            "pose": [0, 0],
+            "gripper": [-0.1],
+            "theta": [0.0],
+            "vel": [0.0],
+            "acc": [0.0],
+            "geom": ""
+        },
+        {
+            "name": "grasp0",
+            "type": "Grasp",
+            "value": [0, -0.651]
+        },
+        {
+            "name": "grasp1",
+            "type": "Grasp",
+            "value": [0, -0.651]
+        },
+        {
+            "name": "grasp2",
+            "type": "Grasp",
+            "value": [0, -0.651]
+        },
+        {
+            "name": "grasp3",
+            "type": "Grasp",
+            "value": [0, -0.651]
+        },
+        {
+            "name": "robot_init_pose",
+            "type": "RobotPose",
+            "geom": 0.3,
+            "value": [0.0, 0.0],
+            "theta": [0.0],
+            "gripper": "undefined",
+            "vel": "undefined",
+            "acc": "undefined"
+        },
+        {
+            "name": "robot_end_pose",
+            "type": "RobotPose",
+            "geom": 0.3,
+            "value": "undefined",
+            "theta": "undefined",
+            "vel": "undefined",
+            "acc": "undefined"
+        },
+        {
+            "name": "obs0",
+            "type": "Obstacle",
+            "pose": [-3.5, 0],
+            "geom": "closet"
+        }
+    ],
+    "init_preds": [
+        {
+            "type": "At",
+            "args": ["can0", "can0_init_target"]
+        },
+        {
+            "type": "AtInit",
+            "args": ["can0", "can0_init_target"]
+        },
+        {
+            "type": "At",
+            "args": ["can0", "can0_end_target"]
+        },
+        {
+            "type": "Near",
+            "args": ["can0", "can0_init_target"]
+        },
+        {
+            "type": "RobotAt",
+            "args": ["pr2", "robot_init_pose"]
+        },
+        {
+            "type": "IsMP",
+            "args": ["pr2"]
+        },
+        {
+            "type": "StationaryW",
+            "args": ["obs0"]
+        },
+        {
+            "type": "Stationary",
+            "args": ["can0"]
+        }
+    ],
+    "goals": [
+        {
+            "type": "RobotAtTarget",
+            "args": ["pr2", "can0_init_target"]
+        }
+    ]
+}
