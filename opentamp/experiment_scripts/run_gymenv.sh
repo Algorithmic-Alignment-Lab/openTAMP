@@ -5,7 +5,7 @@
 
 #python3 -W ignore policy_hooks/run_training.py -c policy_hooks.robosuite.jnt_pick_hyp \
 
-python3 -W ignore policy_hooks/run_training.py -c policy_hooks.namo.hyperparams_v94_spotnav \
+python3 -W ignore policy_hooks/run_training.py -c policy_hooks.namo.new_env_hyperparam \
                                                 -no 1 -llus 100  -hlus 100 \
                                                 -spl -mask -hln 2 -hldim 256 -lldim 256 \
                                                 -retime -vel 0.3 -eta 5 -softev \
@@ -16,14 +16,14 @@ python3 -W ignore policy_hooks/run_training.py -c policy_hooks.namo.hyperparams_
                                                 -add_noop 2 --permute_hl 1 \
                                                 -expl_wt 10 -expl_eta 4 \
                                                 -col_coeff 0.0 \
-                                                -motion 5 \
+                                                -motion 1 \
                                                 -n_gpu 0 \
-                                                -rollout 1 \
+                                                -rollout 0 \
                                                 -task 1 \
                                                 -post -pre \
-                                                -warm 1 \
+                                                -warm 100 \
                                                 -neg_ratio 0. -opt_ratio 0.9 -dagger_ratio 0.1 \
-						-descr spotnav_test_totarg_addtargobs \
+						-descr pointer_test \
 						-debug
 
 # sleep 1800 

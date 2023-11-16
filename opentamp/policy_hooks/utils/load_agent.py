@@ -21,6 +21,8 @@ import opentamp.policy_hooks.utils.policy_solver_utils as utils
 from opentamp.policy_hooks.sample import Sample
 from opentamp.policy_hooks.utils.load_task_definitions import *
 
+from opentamp.core.util_classes.openrave_body import OpenRAVEBody
+
 
 def load_agent(config):
     prob = config['prob']
@@ -41,20 +43,40 @@ def load_agent(config):
     task_breaks = []
     goal_states = []
 
+    domain, problem, hl_solver = get_planner_objs(config['meta_file'], config['acts_file'], config['prob_file'])
+
     plans, openrave_bodies, env = prob.get_plans()
     state_vector_include, action_vector_include, target_vector_include = config['get_vector'](config)
     print(state_vector_include)
-    dX, state_inds, dU, action_inds, symbolic_bound = utils.get_state_action_inds(list(plans.values())[0], 
-                                                                                  config['robot_name'], 
-                                                                                  config['attr_map'], 
-                                                                                  state_vector_include, 
-                                                                                  action_vector_include)
-    target_dim, target_inds = utils.get_target_inds(list(plans.values())[0], 
-                                                    config['attr_map'], 
-                                                    target_vector_include)
+    
+    if plans:
+        # using nonvacuous get_plans method
+        dX, state_inds, dU, action_inds, symbolic_bound = utils.get_state_action_inds(list(plans.values())[0], 
+                                                                                config['robot_name'], 
+                                                                                config['attr_map'], 
+                                                                                state_vector_include, 
+                                                                                action_vector_include)
+        target_dim, target_inds = utils.get_target_inds(list(plans.values())[0], 
+                                                config['attr_map'], 
+                                                target_vector_include)
+    else:
+        horizon = max([act.horizon for act in domain.action_schemas.values()])
+        params = hl_solver._spawn_plan_params(problem, horizon)
 
+        _, openrave_bodies, _ = prob.get_plans(params=params)
+
+        # using vacuous get_plans method
+        dX, state_inds, dU, action_inds, symbolic_bound = utils.get_state_action_inds_from_params(params, 
+                                                                                config['robot_name'], 
+                                                                                config['attr_map'], 
+                                                                                state_vector_include, 
+                                                                                action_vector_include)
+        target_dim, target_inds = utils.get_target_inds_from_params(params, 
+                                                config['attr_map'], 
+                                                target_vector_include)
+        
+    
     x0, targets = prob.get_random_initial_state_vec(config, False, dX, state_inds, 0)
-
 
     im_h = config.get('image_height', utils.IM_H)
     im_w = config.get('image_width', utils.IM_W)
@@ -62,14 +84,16 @@ def load_agent(config):
     config['image_height'] = im_h
     config['image_width'] = im_w
     config['image_channels'] = im_c
-    for plan in list(plans.values()):
-        plan.state_inds = state_inds
-        plan.action_inds = action_inds
-        plan.dX = dX
-        plan.dU = dU
-        plan.symbolic_bound = symbolic_bound
-        plan.target_dim = target_dim
-        plan.target_inds = target_inds
+    config['domain'] = domain
+    config['problem'] = problem
+    # for plan in list(plans.values()):
+    #     plan.state_inds = state_inds
+    #     plan.action_inds = action_inds
+    #     plan.dX = dX
+    #     plan.dU = dU
+    #     plan.symbolic_bound = symbolic_bound
+    #     plan.target_dim = target_dim
+    #     plan.target_inds = target_inds
 
     sensor_dims = {
         utils.DONE_ENUM: 1,
@@ -191,7 +215,7 @@ def load_agent(config):
         'x0': x0,
         'targets': targets,
         'task_list': task_list,
-        'plans': plans,
+        # 'plans': plans,
         'task_breaks': task_breaks,
         'task_encoding': task_encoding,
         'state_inds': state_inds,
@@ -230,6 +254,9 @@ def load_agent(config):
         'robot_name': config['robot_name'],
         'split_nets': config.get('split_nets', True),
         'master_config': config,
+        'gym_env_type': config.get('gym_env_type', None),
+        'domain': domain,
+        'problem': problem
     }
 
     agent_config['agent_load'] = True

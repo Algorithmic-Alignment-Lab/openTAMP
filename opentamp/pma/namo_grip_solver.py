@@ -29,11 +29,11 @@ def namo_obj_pose_suggester(plan, anum, resample_size=1, st=0):
         act, next_act = plan.actions[anum], None
 
     robot = plan.params["pr2"]
-    robot_body = robot.openrave_body
+    # robot_body = robot.openrave_body
     start_ts, end_ts = act.active_timesteps
     start_ts = max(st, start_ts)
     old_pose = robot.pose[:, start_ts].reshape((2, 1))
-    robot_body.set_pose(old_pose[:, 0])
+    # robot_body.set_pose(old_pose[:, 0])
     oldx, oldy = old_pose.flatten()
     old_rot = robot.theta[0, start_ts]
     for i in range(resample_size):

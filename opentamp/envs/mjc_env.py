@@ -673,14 +673,6 @@ class MJCEnv(Env):
                 pixels = self._cached_images[(camera_id, height, width)]
 
         if pixels is None:
-            # print('MJC ENV RENDER')
-            # print(height)
-            # print(width)
-            # print(camera_id)
-            # print(overlays)
-            # print(depth)
-            # print(scene_option)
-
             pixels = self.physics.render(height, width, camera_id, overlays, depth, scene_option)
 
             if self._cache_rendering: self._cached_images[(camera_id, height, width)] = pixels

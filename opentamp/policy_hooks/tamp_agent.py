@@ -20,6 +20,7 @@ import opentamp.pma.backtrack_ll_solver_OSQP as bt_ll
 from opentamp.pma.pr_graph import *
 import pybullet as p
 
+from opentamp.core.util_classes.openrave_body import OpenRAVEBody
 from opentamp.policy_hooks.agent import Agent
 from opentamp.policy_hooks.sample import Sample
 from opentamp.policy_hooks.sample_list import SampleList
@@ -117,6 +118,7 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
         self.goal_type = self.master_config.get('goal_type', 'default')
         for condition in range(len(self.x0)):
             target_vec = np.zeros((self.target_dim,))
+            # TODO -- FIX TARGET LOGIC
             for target_name in self.targets[condition]:
                 if (target_name, 'value') in self.target_inds:
                     target_vec[self.target_inds[target_name, 'value']] = self.targets[condition][target_name]
@@ -133,9 +135,9 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
 
 
     def _setup_traj_opt(self):
-        plans, openrave_bodies, env = self.prob.get_plans()
+        plans, _, env = self.prob.get_plans()
         self.plans = plans
-        self.openrave_bodies = openrave_bodies
+        self.openrave_bodies = self._hyperparams['openrave_bodies']
         self.env = env
         self.plans_list = list(self.plans.values())
 
@@ -147,7 +149,7 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
             self.ll_solver = self._hyperparams['mp_solver_type'](self._hyperparams)
 
         self.traj_smooth = self.master_config['traj_smooth']
-        self.hl_solver = get_hl_solver(self.prob.meta_file, self.prob.acts_file)
+        self.hl_solver = get_hl_solver(self.master_config['meta_file'], self.master_config['acts_file'])
         self.hl_pol = False
         self.prim_choices = self._hyperparams['prob'].get_prim_choices(self.task_list)
         opts = self._hyperparams['prob'].get_prim_choices(self.task_list)
@@ -275,6 +277,7 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
 
 
     def animate_sample(self, sample):
+        breakpoint()
         if hasattr(self, 'mjc_env'):
             for t in range(sample.T):
                 mp_state = sample.get(STATE_ENUM, t)
@@ -312,6 +315,7 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
 
 
     def draw_sample_ts(self, sample, t):
+        breakpoint()
         if self.viewer is None: return
         plan = self.plans_list[0]
         for p in list(plan.params.values()):
@@ -365,15 +369,15 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
 
 
     def _sample_task(self, policy, condition, state, task, use_prim_obs=False, save_global=False, verbose=False, use_base_t=True, noisy=True, fixed_obj=True, task_f=None, hor=None, policies=None):
-        x0 = state[self._x_data_idx[STATE_ENUM]].copy()
-        task = tuple(task)
-        onehot_task = tuple([val for val in task if np.isscalar(val)])
-        plan = self.plans[onehot_task] if onehot_task in self.plans else self.plans[task[0]]
+        # x0 = state[self._x_data_idx[STATE_ENUM]].copy()
+        # task = tuple(task)
+        # onehot_task = tuple([val for val in task if np.isscalar(val)])
+        # plan = self.plans[onehot_task] if onehot_task in self.plans else self.plans[task[0]]
 
-        if hor is None:
-            hor = plan.horizon if task_f is None else max([p.horizon for p in list(self.plans.values())])
+        # if hor is None:
+        #     hor = plan.horizon if task_f is None else max([p.horizon for p in list(self.plans.values())])
 
-        self.T = hor
+        self.T = self.hor
         sample = Sample(self)
         sample.init_t = 0
         col_ts = np.zeros(self.T)
@@ -578,65 +582,68 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
     def postcond_cost(self, sample, task=None, t=None, debug=False, tol=1e-3, x0=None):
         if t is None: t = sample.T-1
         if task is None: task = tuple(sample.get(FACTOREDTASK_ENUM, t=t))
+        # active_ts = (-1, -1) for postcond verification
         return self.cost_f(sample.get_X(t), task, sample.condition, active_ts=(-1, -1), targets=sample.targets, debug=debug, tol=tol, x0=x0)
 
 
     def precond_cost(self, sample, task=None, t=0, tol=1e-3, x0=None, debug=False):
         if task is None: task = tuple(sample.get(FACTOREDTASK_ENUM, t=t))
+        # active_ts = (0,0) for precond verification
         return self.cost_f(sample.get_X(t), task, sample.condition, active_ts=(0, 0), targets=sample.targets, tol=tol, x0=x0, debug=debug)
 
 
     def get_hl_info(self, state=None, targets=None, cond=0, plan=None, act=0):
-        if targets is None: targets = self.target_vecs[cond].copy()
+    #     if targets is None: targets = self.target_vecs[cond].copy()
 
-        initial = []
-        plans = [plan]
-        preds = []
-        if plan is None:
-            plans, reps = [], []
-            for plan in self.plans.values():
-                if str(plan.actions[0]) in reps: continue
-                reps.append(str(plan.actions[0]))
-                plans.append(plan)
+    #     initial = []
+    #     plans = [plan]
+    #     preds = []
+    #     if plan is None:
+    #         plans, reps = [], []
+    #         for plan in self.plans.values():
+    #             if str(plan.actions[0]) in reps: continue
+    #             reps.append(str(plan.actions[0]))
+    #             plans.append(plan)
 
-        st = plans[0].actions[act].active_timesteps[0]
+    #     st = plans[0].actions[act].active_timesteps[0]
 
-        for plan in plans:
-            for pname, aname in self.state_inds:
-                if plan.params[pname].is_symbol():
-                    continue
+    #     for plan in plans:
+    #         for pname, aname in self.state_inds:
+    #             if plan.params[pname].is_symbol():
+    #                 continue
 
-                if state is not None:
-                    val = state[self.state_inds[pname, aname]]
-                    getattr(plan.params[pname], aname)[:,st] = val
+    #             if state is not None:
+    #                 val = state[self.state_inds[pname, aname]]
+    #                 getattr(plan.params[pname], aname)[:,st] = val
 
-                init_t = '{0}_init_target'.format(pname)
-                if init_t in plan.params:
-                    if st == 0:
-                        pose = plan.params[pname].pose[:,st]
-                        plan.params[init_t].value[:,0] = pose
+    #             init_t = '{0}_init_target'.format(pname)
+    #             if init_t in plan.params:
+    #                 if st == 0:
+    #                     pose = plan.params[pname].pose[:,st]
+    #                     plan.params[init_t].value[:,0] = pose
 
-                    at_pred = '(At {0} {1}) '.format(pname, init_t)
-                    near_pred = '(Near {0} {1}) '.format(pname, init_t)
-                    if at_pred not in initial:
-                        initial.append(at_pred)
+    #                 at_pred = '(At {0} {1}) '.format(pname, init_t)
+    #                 near_pred = '(Near {0} {1}) '.format(pname, init_t)
+    #                 if at_pred not in initial:
+    #                     initial.append(at_pred)
 
-                    if near_pred not in initial:
-                        initial.append(near_pred)
+    #                 if near_pred not in initial:
+    #                     initial.append(near_pred)
 
-            for pname, aname in self.target_inds:
-                if pname in plan.params:
-                    val = targets[self.target_inds[pname, aname]]
-                    getattr(plan.params[pname], aname)[:,0] = val
+    #         for pname, aname in self.target_inds:
+    #             if pname in plan.params:
+    #                 val = targets[self.target_inds[pname, aname]]
+    #                 getattr(plan.params[pname], aname)[:,0] = val
 
-            init_preds = parse_state(plan, [], st, preds)
-            initial.extend([p.get_rep() for p in init_preds])
+    #         init_preds = parse_state(plan, [], st, preds)
+    #         initial.extend([p.get_rep() for p in init_preds])
 
         goal = self.goal(cond, targets)
-        return list(set(initial)), goal
+        return [], goal
+        # return list(set(initial)), goal
 
 
-    def encode_action(self, action, next_act=None):
+    def encode_action(self, action):
         prim_choices = self.prob.get_prim_choices(self.task_list)
         astr = str(action).lower()
         l = [0]
@@ -648,11 +655,12 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
         for enum in prim_choices:
             if enum is TASK_ENUM or not hasattr(prim_choices[enum], '__len__'): continue
             l.append(-1)
-            for act in [action, next_act]:
-                for i, opt in enumerate(prim_choices[enum]):
-                    if opt in [p.name for p in act.params]:
-                        l[-1] = i
-                        break
+            act = action
+            # for act in [action, next_act]:
+            for i, opt in enumerate(prim_choices[enum]):
+                if opt in [p.name for p in act.params]:
+                    l[-1] = i
+                    break
 
                 if l[-1] >= 0:
                     break
@@ -815,7 +823,8 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
                         hist_info=None,
                         opt_backtrack=False,):
 
-        # Handle to make PR Graph integration easier 
+        # Handle to make PR Graph integration easier
+        # Handle integration with Agent class
         a = anum
         bad_rollout = []
         info = {'to_render': []}
@@ -827,21 +836,26 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
         tasks = self.encode_plan(plan)
         used_rollout = False
         x_hist = {}
-
+        
         if targets is None: targets = self.target_vecs[0]
         self.target_vecs[0] = targets
+        # create perm_tasks vs tasks
         perm_tasks, perm_targets, perm = tasks, targets, {}
 
+        # sets the state, target inds, dimensions
         self._set_plan_inds(plan)
+        # if x0 is None, fill it in with the current state ind from plan
         if x0 is None:
             x0 = np.zeros_like(self.x0[0])
             fill_vector(plan.params, self.state_inds, x0, st)
-
+        
+        # populate plan params with ref_x0 state, store initial state for each action
         init_x0 = {}
         init_x0[anum] = x0
         ref_x0 = self.clip_state(x0)
         set_params_attrs(plan.params, self.state_inds, ref_x0, st, plan=plan)
 
+        # initialize a dummy state, for use later
         dummy_sample = Sample(self)
 
         self.reset_to_state(x0)
@@ -850,6 +864,7 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
         else:
             hist_info = self.get_hist_info()
 
+        # iterate through high-level plan
         while a < len(plan.actions):
             success = False
             act_ts = plan.actions[a].active_timesteps
@@ -861,14 +876,15 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
 
             task = tuple(tasks[a])
             perm_task = tuple(perm_tasks[a])
-            policy = self.policies[self.task_list[task[0]]]
 
+            # update state history
             if x_hist.get(a, None) is None:
                 cur_x_hist = self._x_delta.copy()
                 x_hist[a] = cur_x_hist
             else:
                 cur_x_hist = x_hist[a]
 
+            # get the initial state stored, and optionally clip
             if a in init_x0:
                 x0 = init_x0[a]
                 ref_x0 = self.clip_state(x0.copy())
@@ -876,14 +892,17 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
                 x0 = self.get_state()
                 ref_x0 = self.clip_state(x0.copy())
                 init_x0[a] = x0
-
+            
+            # initialize the dummy sample with the current state + targets
             dummy_sample.set(STATE_ENUM, ref_x0, t=0)
             dummy_sample.targets = targets
 
+            # reset to state x0, and store the historical info (currently does nothing)
             self.update_hist_info(hist_info)
             self.reset_to_state(x0)
             self.store_hist_info(hist_info)
 
+            # get precondition cost when executing in the simulator
             pre_cost = self.precond_cost(dummy_sample, task, 0)
             if pre_cost > 1e-4:
                 print('FAILED EXECUTION OF PRECONDITIONS', 
@@ -925,14 +944,14 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
                         print('FAILED, Error IN FAIL CHECK', e)
 
                     if not used_rollout:
-                        # Secnario: 
+                        # Scenario: 
                         # -> the optimizer failed
                         # -> and the previous sample tracked an optimal traj
                         # then the optimizer failed and we can return
                         return False, False, path, info
 
                     else:
-                        # Secnario: 
+                        # Scenario: 
                         # -> the optimizer failed
                         # -> and the previous sample didn't track an optimal traj
                         # then we can note we should not have rolled out at that time
@@ -1025,9 +1044,11 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
                    add_noop=True, 
                    prev_hist=None, 
                    hist_info=None):
+        # create static copy of x0
         x0 = x0.copy()
         static_x0 = x0.copy()
         start_ts = int(start_ts)
+        # initialize misc variables, start + end times, active timesteps
         nzero = self.master_config.get('add_noop', 0)
         path = []
         st, et = plan.actions[anum].active_timesteps
@@ -1039,6 +1060,7 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
             base_x0 = x0
         static_base = base_x0.copy()
 
+        # reverse the permanent tasks key
         st = max(st, start_ts)
         rev_perm = {}
         for key, val in perm.items():
@@ -1052,42 +1074,47 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
         cur_hist = prev_hist.copy() if prev_hist is not None else self._x_delta.copy()
         static_hist = cur_hist.copy()
         for pname, attr in self.state_inds:
+            # populate opt-trajectory, x0, base_x0, and cur_history with static versions of these variables
             if plan.params[pname].is_symbol(): continue
             opt_traj[:,self.state_inds[perm.get(pname, pname), attr]] = getattr(plan.params[pname], attr)[:,st:et+1].T
             x0[self.state_inds[perm.get(pname, pname), attr]] = static_x0[self.state_inds[pname, attr]]
             base_x0[self.state_inds[perm.get(pname, pname), attr]] = static_base[self.state_inds[pname, attr]]
             cur_hist[:, self.state_inds[perm.get(pname, pname), attr]] = static_hist[:, self.state_inds[pname, attr]]
 
+        # fill in _x_delta, historical info, and optioanally reset the sate
         if reset: self.reset_to_state(x0)
         self._x_delta[:] = cur_hist
         if hist_info is not None:
             self.store_hist_info(hist_info)
 
-        cur_len = len(path)
-        if self.retime:
-            vel = self.master_config.get('velocity', 0.3)
-            new_traj = self.retime_traj(opt_traj, vel=vel)
-            if np.any(np.isnan(opt_traj)): print('NAN in opt traj')
-            if np.any(np.isnan(new_traj)): print('NAN in retime')
-            T = et-st+1
-            t = 0
-            ind = 0
-            while t < len(new_traj)-1:
-                traj = new_traj[t:t+T]
-                sample = self.sample_optimal_trajectory(x0, task, 0, traj, targets=targets)
-                path.append(sample)
-                sample.discount = 1.
-                sample.opt_strength = 1.
-                sample.opt_suc = True
-                sample.step = ind
-                sample.task_start = ind == 0
-                sample.task_end = False
-                sample.task = task
-                ind += 1
-                t += T - 1
-                x0 = sample.end_state # sample.get_X(t=sample.T-1)
-                sample.success = 1. - self.goal_f(0, x0, sample.targets)
+        # if self.retime:
+        #     # get velocity
+        #     vel = self.master_config.get('velocity', 0.3)
+        #     # new_traj = self.retime_traj(opt_traj, vel=vel)
+        #     new_traj = opt_traj # fuck retime
+        #     if np.any(np.isnan(opt_traj)): print('NAN in opt traj')
+        #     if np.any(np.isnan(new_traj)): print('NAN in retime')
+        #     T = et-st+1
+        #     t = 0
+        #     ind = 0
+        #     # get a sample of the optimal trajectory 
+        #     while t < len(new_traj)-1:
+        #         traj = new_traj[t:t+T]
+        #         sample = self.sample_optimal_trajectory(x0, task, 0, traj, targets=targets)
+        #         path.append(sample)
+        #         sample.discount = 1.
+        #         sample.opt_strength = 1.
+        #         sample.opt_suc = True
+        #         sample.step = ind
+        #         sample.task_start = ind == 0
+        #         sample.task_end = False
+        #         sample.task = task
+        #         ind += 1
+        #         t += T - 1
+        #         x0 = sample.end_state # sample.get_X(t=sample.T-1)
+        #         sample.success = 1. - self.goal_f(0, x0, sample.targets)
         else:
+            # get a sample of the optimal trajectory 
             sample = self.sample_optimal_trajectory(x0, task, 0, opt_traj, targets=targets)
             path.append(sample)
             sample.discount = 1.
@@ -1103,6 +1130,7 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
         path[-1].set(TASK_DONE_ENUM, np.array([0, 1]), t=path[-1].T-1)
         #path[-1].prim_use_ts[-1] = 0.
         if nzero > 0 and add_noop:
+            # get a sample of the optimal trajectory 
             zero_traj = np.tile(opt_traj[-1], [nzero, 1])
             zero_sample = self.sample_optimal_trajectory(path[-1].end_state, task, 0, zero_traj, targets=targets)
             x0 = zero_sample.end_state # sample.get_X(sample.T-1)
@@ -1111,27 +1139,29 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
             zero_sample.prim_use_ts[:] = np.zeros(len(zero_sample.prim_use_ts))
             zero_sample.step = path[-1].step + 1
             zero_sample.draw = False
-            #zero_sample.success = path[-1].success
+            # zero_sample.success = path[-1].success
             zero_sample.success = 1. - self.goal_f(0, x0, targets)
             zero_sample.set(TASK_DONE_ENUM, np.tile([0,1], (zero_sample.T, 1)))
             zero_sample.task = task
             path.append(zero_sample)
         end_s = path[-1]
         end_s.task_end = True
-        cost = self.postcond_cost(end_s, task, end_s.T-1, debug=False, x0=base_x0, tol=1e-3)
+        # get whether or not postconds were respected in the simulator
+        # cost = self.postcond_cost(end_s, task, end_s.T-1, debug=False, x0=base_x0, tol=1e-3)
 
+        # FOR NOW, UNCONDITIONALLY SAVE TRAJECTORIES
         for ind, s in enumerate(path):
             s.opt_strength = 1.
-            if cost < 1e-5:
-                s._postsuc = True
-                if save: self.optimal_samples[self.task_list[task[0]]].append(s)
-            else:
-                x1 = path[0].get_X(t=0)
-                x2 = path[-1].end_state
-                s._postsuc = False
-                cost = self.postcond_cost(end_s, task, end_s.T-1, debug=(ind==0), x0=base_x0, tol=1e-3)
-                if ind == 0 and save: print('Ran opt path w/postcond failure?', task, plan.actions[anum], self.process_id)
+            s._postsuc = True
+            if save: self.optimal_samples[self.task_list[task[0]]].append(s)
+            # else:
+            #     x1 = path[0].get_X(t=0)
+            #     x2 = path[-1].end_state
+            #     s._postsuc = False
+            #     cost = self.postcond_cost(end_s, task, end_s.T-1, debug=(ind==0), x0=base_x0, tol=1e-3)
+            #     if ind == 0 and save: print('Ran opt path w/postcond failure?', task, plan.actions[anum], self.process_id)
 
+        # update x0 to the updated simulator state
         static_x0 = self.get_state().copy()
         static_hist = self._x_delta.copy()
         for pname, attr in self.state_inds:
@@ -1139,6 +1169,7 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
             x0[self.state_inds[rev_perm.get(pname, pname), attr]] = static_x0[self.state_inds[pname, attr]]
             self._x_delta[:, self.state_inds[rev_perm.get(pname, pname), attr]] = static_hist[:, self.state_inds[pname, attr]]
 
+        # permutation magic? not sure why permutation here... (for better HL policy learning?)
         if len(perm.keys()):
             cur_hist = self._x_delta.copy()
             self.reset_to_state(x0)
@@ -1179,7 +1210,7 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
         xpts = []
         fpts = []
         d = 0
-        for t in range(len(traj)):
+        for t in range(len(traj)-1):
             xpts.append(d)
             fpts.append(traj[t])
             if t < len(traj):
@@ -1190,6 +1221,7 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
         interp = scipy.interpolate.interp1d(xpts, fpts, axis=0)
 
         x = np.linspace(0, d, int(d / vel))
+        breakpoint()
         out = interp(x)
         return out
 
@@ -1209,45 +1241,55 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
             x0[self.state_inds[pname, aname]] = getattr(plan.params[pname], aname)[:,0]
         return x0
 
-
+    # get failed predicates for a given simulator state, with a given task
     def _failed_preds(self, Xs, task, condition, active_ts=None, debug=False, targets=[], tol=1e-3, x0=None):
+        # reshape simulator state
         Xs = Xs.reshape(1, Xs.shape[0])
         Xs = Xs[:, self._x_data_idx[STATE_ENUM]].copy()
         for n in range(len(Xs)):
             Xs[n] = self.clip_state(Xs[n])
-
+        
+        # reshape task
         true_task = task
         task = [val for val in true_task if np.isscalar(val)]
         task = tuple(task)
 
+        # retrieve plan mapping desired val, get active_ts (repated from cost_f?)
         onehot_task = tuple([val for val in task if np.isscalar(val)])
         plan = self.plans[onehot_task] if onehot_task in self.plans else self.plans[task[0]]
         if active_ts[1] == -1:
             active_ts = (plan.horizon-1, plan.horizon-1)
 
+        # use condition to index into targets if no target provided
         if targets is None or not len(targets):
             targets = self.target_vecs[condition]
 
+        # set plan target attributes to those specified in-sim
         for tname, attr in self.target_inds:
             if tname in plan.params:
                 getattr(plan.params[tname], attr)[:,0] = targets[self.target_inds[tname, attr]]
-
+        
+        # for all active timesteps, set plan parameters to state_indices
         for t in range(active_ts[0], active_ts[1]+1):
             set_params_attrs(plan.params, self.state_inds, Xs[t-active_ts[0]], min(plan.horizon-1, t), plan=plan)
 
+        # set an initial state for the plan, if given
         if x0 is not None:
             set_params_attrs(plan.params, self.state_inds, x0, 0, plan=plan)
 
+        # set symbols for the plan, if more are needed than in the general case here
         self.set_symbols(plan, task)
 
         if len(Xs.shape) == 1:
             Xs = Xs.reshape(1, -1)
 
+        # active_timesteps
         if active_ts == None:
             active_ts = (1, plan.horizon-1)
         elif active_ts[0] == -1:
             active_ts = (plan.horizon-1, plan.horizon-1)
 
+        # get the failed predicates from the plan object, having constructed the appropriate number
         failed_preds = plan.get_failed_preds(active_ts=active_ts, priority=3, tol=tol)
         failed_preds = [p for p in failed_preds if ((p[1]._rollout or not type(p[1].expr) is EqExpr) and not p[1]._nonrollout)]
         if debug:
@@ -1255,18 +1297,25 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
         return failed_preds
 
 
+    # get pre- and post-condition success or failure at the sim-level for the 
     def cost_f(self, Xs, task, condition, active_ts=None, debug=False, targets=[], tol=1e-3, x0=None):
+        # condition optionally indexes into the target vector
+        
         true_task = task
         task = [val for val in true_task if np.isscalar(val)]
 
         onehot_task = tuple([val for val in task if np.isscalar(val)])
+        # get stored plan corresponding to the currently executed task
         plan = self.plans[onehot_task] if onehot_task in self.plans else self.plans[task[0]]
+        # get active_ts of current plan
         if active_ts == None:
             active_ts = (1, plan.horizon-1)
         elif active_ts[0] == -1:
             active_ts = (plan.horizon-1, plan.horizon-1)
+        # retrieve the failed predicates (if any) at the current state, on the current task
         failed_preds = self._failed_preds(Xs, task, condition, active_ts=active_ts, debug=debug, targets=targets, tol=tol, x0=x0)
         cost = 0
+        # iterate through failed_preds and check pred filation
         for failed in failed_preds:
             for t in range(active_ts[0], active_ts[1]+1):
                 if t + failed[1].active_range[1] > active_ts[1]:
@@ -1274,6 +1323,7 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
 
                 viol = None
                 try:
+                    # get predicate violations
                     viol = failed[1].check_pred_violation(t, negated=failed[0], tol=1e-3)
                     if viol is not None:
                         cost += np.max(np.abs(viol))
@@ -1286,6 +1336,7 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
                     print(e)
                     cost += 1e1
 
+        # always have a faiure if ANY fail at all
         if len(failed_preds) and cost < 1e-3:
             cost = 1
        
@@ -1302,26 +1353,26 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
         return pol
 
 
-    def get_annotated_image(self, s, t, cam_id=None):
-        if cam_id is None: cam_id = self.camera_id
-        x = s.get_X(t=t)
-        task = s.get(FACTOREDTASK_ENUM, t=t)
-        u = s.get(ACTION_ENUM, t=t)
-        u = str(u.round(2))[1:-1]
-        pos = s.get(END_POSE_ENUM, t=t)
-        pos = str(pos.round(2))[1:-1]
-        textover1 = self.mjc_env.get_text_overlay(body='Task: {0}'.format(task))
-        textover2 = self.mjc_env.get_text_overlay(body='{0}; {1}'.format(u, pos), position='bottom left')
-        self.reset_to_state(x)
-        im = self.mjc_env.render(camera_id=cam_id, height=self.image_height, width=self.image_width, view=False, overlays=(textover1, textover2))
-        return im
+    # def get_annotated_image(self, s, t, cam_id=None):
+    #     if cam_id is None: cam_id = self.camera_id
+    #     x = s.get_X(t=t)
+    #     task = s.get(FACTOREDTASK_ENUM, t=t)
+    #     u = s.get(ACTION_ENUM, t=t)
+    #     u = str(u.round(2))[1:-1]
+    #     pos = s.get(END_POSE_ENUM, t=t)
+    #     pos = str(pos.round(2))[1:-1]
+    #     textover1 = self.mjc_env.get_text_overlay(body='Task: {0}'.format(task))
+    #     textover2 = self.mjc_env.get_text_overlay(body='{0}; {1}'.format(u, pos), position='bottom left')
+    #     self.reset_to_state(x)
+    #     im = self.mjc_env.render(camera_id=cam_id, height=self.image_height, width=self.image_width, view=False, overlays=(textover1, textover2))
+    #     return im
 
 
-    def get_image(self, x, depth=False, cam_id=None):
-        self.reset_to_state(x)
-        if cam_id is None: cam_id = self.camera_id
-        im = self.mjc_env.render(camera_id=cam_id, height=self.image_height, width=self.image_width, view=False, depth=depth)
-        return im
+    # def get_image(self, x, depth=False, cam_id=None):
+    #     self.reset_to_state(x)
+    #     if cam_id is None: cam_id = self.camera_id
+    #     im = self.mjc_env.render(camera_id=cam_id, height=self.image_height, width=self.image_width, view=False, depth=depth)
+    #     return im
 
     
     def compare_tasks(self, t1, t2):

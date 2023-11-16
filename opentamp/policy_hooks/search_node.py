@@ -56,19 +56,19 @@ class HLSearchNode(SearchNode):
         if llnode is not None:
             self._trace.extend(llnode._trace)
 
-    def is_hl_node(self):
-        return True
+    # def is_hl_node(self):
+    #     return True
 
-    def plan(self, solver):
-        plan_obj = solver.solve(self.abs_prob, self.domain, self.concr_prob, self.prefix, label=self.label)
-        if self.ref_plan is not None and type(plan_obj) is not str:
-            if len(self.ref_plan.actions) < len(self.prefix):
-                raise IndexError('ref_plan must be compatible with prefix')
-            plan_obj.fill(self.ref_plan, amin=0, amax=len(self.prefix)-1)
-            plan_obj.start = len(self.prefix)
-            ts = (0, plan_obj.actions[plan_obj.start].active_timesteps[0])
-            if DEBUG: print('PREFIX SUCCESS:', plan_obj.get_failed_preds(active_ts=ts, tol=1e-3))
-        return plan_obj
+    # def plan(self, solver):
+    #     plan_obj = solver.solve(self.abs_prob, self.domain, self.concr_prob, self.prefix, label=self.label)
+    #     if self.ref_plan is not None and type(plan_obj) is not str:
+    #         if len(self.ref_plan.actions) < len(self.prefix):
+    #             raise IndexError('ref_plan must be compatible with prefix')
+    #         plan_obj.fill(self.ref_plan, amin=0, amax=len(self.prefix)-1)
+    #         plan_obj.start = len(self.prefix)
+    #         ts = (0, plan_obj.actions[plan_obj.start].active_timesteps[0])
+    #         if DEBUG: print('PREFIX SUCCESS:', plan_obj.get_failed_preds(active_ts=ts, tol=1e-3))
+    #     return plan_obj
 
 class LLSearchNode(SearchNode):
     def __init__(self, plan_str, domain, prob, initial, priority=1, keep_failed=False, ref_plan=None, x0=None, targets=None, expansions=0, label='', refnode=None, freeze_ts=-1, hl=True, ref_traj=[], nodetype='optimal', env_state=None, info={}):

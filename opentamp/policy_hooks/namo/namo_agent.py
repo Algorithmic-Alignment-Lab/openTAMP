@@ -1217,33 +1217,33 @@ class NAMOSortingAgent(TAMPAgent):
     '''
 
 
-    def sample_optimal_trajectory(self, state, task, condition, opt_traj=[], traj_mean=[], targets=[]):
-        if not len(opt_traj):
-            return self.solve_sample_opt_traj(state, task, condition, traj_mean, targets=targets)
-        if not len(targets):
-            old_targets = self.target_vecs[condition]
-        else:
-            old_targets = self.target_vecs[condition]
-            for tname, attr in self.target_inds:
-                self.targets[condition][tname] = targets[self.target_inds[tname, attr]]
-            self.target_vecs[condition] = targets
+    # def sample_optimal_trajectory(self, state, task, condition, opt_traj=[], traj_mean=[], targets=[]):
+    #     if not len(opt_traj):
+    #         return self.solve_sample_opt_traj(state, task, condition, traj_mean, targets=targets)
+    #     if not len(targets):
+    #         old_targets = self.target_vecs[condition]
+    #     else:
+    #         old_targets = self.target_vecs[condition]
+    #         for tname, attr in self.target_inds:
+    #             self.targets[condition][tname] = targets[self.target_inds[tname, attr]]
+    #         self.target_vecs[condition] = targets
 
-        exclude_targets = []
-        onehot_task = tuple([val for val in task if np.isscalar(val)])
-        plan = self.plans[onehot_task]
-        sample = self.sample_task(optimal_pol(self.dU, self.action_inds, self.state_inds, opt_traj), condition, state, task, noisy=False, skip_opt=True)
-        sample.set_ref_X(sample.get_X())
-        sample.set_ref_U(sample.get_U())
+    #     exclude_targets = []
+    #     onehot_task = tuple([val for val in task if np.isscalar(val)])
+    #     plan = self.plans[onehot_task]
+    #     sample = self.sample_task(optimal_pol(self.dU, self.action_inds, self.state_inds, opt_traj), condition, state, task, noisy=False, skip_opt=True)
+    #     sample.set_ref_X(sample.get_X())
+    #     sample.set_ref_U(sample.get_U())
 
-        # for t in range(sample.T):
-        #     if np.all(np.abs(sample.get(ACTION_ENUM, t=t))) < 1e-3:
-        #         sample.use_ts[t] = 0.
+    #     # for t in range(sample.T):
+    #     #     if np.all(np.abs(sample.get(ACTION_ENUM, t=t))) < 1e-3:
+    #     #         sample.use_ts[t] = 0.
 
-        self.target_vecs[condition] = old_targets
-        for tname, attr in self.target_inds:
-            self.targets[condition][tname] = old_targets[self.target_inds[tname, attr]]
-        # self.optimal_samples[self.task_list[task[0]]].append(sample)
-        return sample
+    #     self.target_vecs[condition] = old_targets
+    #     for tname, attr in self.target_inds:
+    #         self.targets[condition][tname] = old_targets[self.target_inds[tname, attr]]
+    #     # self.optimal_samples[self.task_list[task[0]]].append(sample)
+    #     return sample
 
 
     def get_hl_plan(self, state, condition, failed_preds, plan_id=''):

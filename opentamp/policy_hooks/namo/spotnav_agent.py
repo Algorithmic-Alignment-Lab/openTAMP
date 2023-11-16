@@ -126,7 +126,7 @@ class SpotNavAgent(NAMOSortingAgent):
         self.vel_rat = 0.05
         n_obj = hyperparams['master_config']['num_objs']
         self.rlen = 30
-        self.hor = 15 # 4 * n_obj + 4
+        # self.hor = 15 # 4 * n_obj + 4
         #self.vel_rat = 0.05
         #self.rlen = self.num_objs * len(self.task_list)
         #if self.retime: self.rlen *= 2
@@ -202,91 +202,91 @@ class SpotNavAgent(NAMOSortingAgent):
         self.targ_labels.update({i: self.targets[0]['aux_target_{0}'.format(i-no)] for i in range(no, no+self.prob.n_aux)})
 
 
-    def _sample_task(self, policy, condition, state, task, use_prim_obs=False, save_global=False, verbose=False, use_base_t=True, noisy=True, fixed_obj=True, task_f=None, hor=None, policies=None):
-        x0 = state[self._x_data_idx[STATE_ENUM]].copy()
-        task = tuple(task)
-        onehot_task = tuple([val for val in task if np.isscalar(val)])
-        plan = self.plans[onehot_task] if onehot_task in self.plans else self.plans[task[0]]
+    # def _sample_task(self, policy, condition, state, task, use_prim_obs=False, save_global=False, verbose=False, use_base_t=True, noisy=True, fixed_obj=True, task_f=None, hor=None, policies=None):
+    #     x0 = state[self._x_data_idx[STATE_ENUM]].copy()
+    #     task = tuple(task)
+    #     onehot_task = tuple([val for val in task if np.isscalar(val)])
+    #     plan = self.plans[onehot_task] if onehot_task in self.plans else self.plans[task[0]]
 
-        if hor is None:
-            hor = plan.horizon if task_f is None else max([p.horizon for p in list(self.plans.values())])
+    #     if hor is None:
+    #         hor = plan.horizon if task_f is None else max([p.horizon for p in list(self.plans.values())])
 
-        self.T = hor
-        sample = Sample(self)
-        sample.init_t = 0
-        col_ts = np.zeros(self.T)
-        prim_choices = self.prob.get_prim_choices(self.task_list)
-        sample.targets = self.target_vecs[condition].copy()
-        n_steps = 0
-        end_state = None
-        cur_state = self.get_state() # x0
-        sample.task = task
+    #     self.T = hor
+    #     sample = Sample(self)
+    #     sample.init_t = 0
+    #     col_ts = np.zeros(self.T)
+    #     prim_choices = self.prob.get_prim_choices(self.task_list)
+    #     sample.targets = self.target_vecs[condition].copy()
+    #     n_steps = 0
+    #     end_state = None
+    #     cur_state = self.get_state() # x0
+    #     sample.task = task
 
-        self.fill_sample(condition, sample, cur_state.copy(), 0, task, fill_obs=True)
-        for t in range(0, self.T):
-            noise_full = np.zeros((self.dU,))
-            self.fill_sample(condition, sample, cur_state.copy(), t, task, fill_obs=True)
-            if task_f is not None:
-                prev_task = task
-                task = task_f(sample, t, task)
-                onehot_task = tuple([val for val in task if np.isscalar(val)])
-                self.fill_sample(condition, sample, cur_state, t, task, fill_obs=False)
-                taskname = self.task_list[task[0]]
-                if policies is not None: policy = policies[taskname]
-                self.fill_sample(condition, sample, cur_state.copy(), t, task, fill_obs=False)
+    #     self.fill_sample(condition, sample, cur_state.copy(), 0, task, fill_obs=True)
+    #     for t in range(0, self.T):
+    #         noise_full = np.zeros((self.dU,))
+    #         self.fill_sample(condition, sample, cur_state.copy(), t, task, fill_obs=True)
+    #         if task_f is not None:
+    #             prev_task = task
+    #             task = task_f(sample, t, task)
+    #             onehot_task = tuple([val for val in task if np.isscalar(val)])
+    #             self.fill_sample(condition, sample, cur_state, t, task, fill_obs=False)
+    #             taskname = self.task_list[task[0]]
+    #             if policies is not None: policy = policies[taskname]
+    #             self.fill_sample(condition, sample, cur_state.copy(), t, task, fill_obs=False)
 
-            prev_vals = {}
-            if policies is not None and 'cont' in policies and \
-               len(self.continuous_opts):
-                prev_vals = self.fill_cont(policies['cont'], sample, t)
+    #         prev_vals = {}
+    #         if policies is not None and 'cont' in policies and \
+    #            len(self.continuous_opts):
+    #             prev_vals = self.fill_cont(policies['cont'], sample, t)
 
-            if self.prob.N_HUMAN > 0:
-                self.solve_humans(policy, task)
+    #         if self.prob.N_HUMAN > 0:
+    #             self.solve_humans(policy, task)
 
-            sample.set(NOISE_ENUM, noise_full, t)
+    #         sample.set(NOISE_ENUM, noise_full, t)
 
-            U_full = policy.act(cur_state.copy(), sample.get_obs(t=t).copy(), t, noise_full)
-            sample.set(ACTION_ENUM, U_full.copy(), t)
+    #         U_full = policy.act(cur_state.copy(), sample.get_obs(t=t).copy(), t, noise_full)
+    #         sample.set(ACTION_ENUM, U_full.copy(), t)
 
-            U_nogrip = U_full.copy()
-            for (pname, aname), inds in self.action_inds.items():
-                if aname.find('grip') >= 0: U_nogrip[inds] = 0.
+    #         U_nogrip = U_full.copy()
+    #         for (pname, aname), inds in self.action_inds.items():
+    #             if aname.find('grip') >= 0: U_nogrip[inds] = 0.
 
-            if np.all(np.abs(U_nogrip)) < 1e-3:
-                self._noops += 1
-                self.eta_scale = 1. / np.log(self._noops+2)
-            else:
-                self._noops = 0
-                self.eta_scale = 1.
+    #         if np.all(np.abs(U_nogrip)) < 1e-3:
+    #             self._noops += 1
+    #             self.eta_scale = 1. / np.log(self._noops+2)
+    #         else:
+    #             self._noops = 0
+    #             self.eta_scale = 1.
 
-            for enum, val in prev_vals.items():
-                sample.set(enum, val, t=t)
-            if len(self._prev_U): self._prev_U = np.r_[self._prev_U[1:], [U_full]]
+    #         for enum, val in prev_vals.items():
+    #             sample.set(enum, val, t=t)
+    #         if len(self._prev_U): self._prev_U = np.r_[self._prev_U[1:], [U_full]]
 
-            suc, col = self.run_policy_step(U_full, cur_state)
-            col_ts[t] = col
-            new_state = self.get_state()
+    #         suc, col = self.run_policy_step(U_full, cur_state)
+    #         col_ts[t] = col
+    #         new_state = self.get_state()
 
-            if len(self._x_delta)-1:
-                self._x_delta = np.r_[self._x_delta[1:], [new_state]]
+    #         if len(self._x_delta)-1:
+    #             self._x_delta = np.r_[self._x_delta[1:], [new_state]]
 
-            if len(self._prev_task)-1:
-                self._prev_task = np.r_[self._prev_task[1:], [sample.get_prim_out(t=t)]]
+    #         if len(self._prev_task)-1:
+    #             self._prev_task = np.r_[self._prev_task[1:], [sample.get_prim_out(t=t)]]
 
-            if np.all(np.abs(cur_state - new_state) < 1e-3):
-                sample.use_ts[t] = 0
+    #         if np.all(np.abs(cur_state - new_state) < 1e-3):
+    #             sample.use_ts[t] = 0
 
-            cur_state = new_state
+    #         cur_state = new_state
 
-        sample.end_state = self.get_state()
-        sample.task_cost = self.goal_f(condition, sample.end_state)
-        sample.prim_use_ts[:] = sample.use_ts[:]
-        sample.col_ts = col_ts
+    #     sample.end_state = self.get_state()
+    #     sample.task_cost = self.goal_f(condition, sample.end_state)
+    #     sample.prim_use_ts[:] = sample.use_ts[:]
+    #     sample.col_ts = col_ts
 
-        if len(self.continuous_opts):
-            self.add_cont_sample(sample)
+    #     if len(self.continuous_opts):
+    #         self.add_cont_sample(sample)
 
-        return sample
+    #     return sample
 
 
     def run_policy_step(self, u, x):
@@ -615,65 +615,65 @@ class SpotNavAgent(NAMOSortingAgent):
         return self.mjc_env.render()
 
 
-    def sample_optimal_trajectory(self, state, task, condition, opt_traj=[], traj_mean=[], targets=[], run_traj=True):
-        if not len(opt_traj):
-            return self.solve_sample_opt_traj(state, task, condition, traj_mean, targets=targets)
-        if not len(targets):
-            old_targets = self.target_vecs[condition]
-        else:
-            old_targets = self.target_vecs[condition]
-            for tname, attr in self.target_inds:
-                self.targets[condition][tname] = targets[self.target_inds[tname, attr]]
-            self.target_vecs[condition] = targets
+    # def sample_optimal_trajectory(self, state, task, condition, opt_traj=[], traj_mean=[], targets=[], run_traj=True):
+    #     if not len(opt_traj):
+    #         return self.solve_sample_opt_traj(state, task, condition, traj_mean, targets=targets)
+    #     if not len(targets):
+    #         old_targets = self.target_vecs[condition]
+    #     else:
+    #         old_targets = self.target_vecs[condition]
+    #         for tname, attr in self.target_inds:
+    #             self.targets[condition][tname] = targets[self.target_inds[tname, attr]]
+    #         self.target_vecs[condition] = targets
 
-        exclude_targets = []
-        onehot_task = tuple([val for val in task if np.isscalar(val)])
-        plan = self.plans[onehot_task]
-        if run_traj:
-            sample = self.sample_task(optimal_pol(self.dU, self.action_inds, self.state_inds, opt_traj), condition, state, task, noisy=False, skip_opt=True, hor=len(opt_traj))
-        else:
-            self.T = plan.horizon
-            sample = Sample(self)
-            for t in range(len(opt_traj)-1):
-                pos = opt_traj[t][self.state_inds['pr2', 'pose']]
-                pos_2 = opt_traj[t+1][self.state_inds['pr2', 'pose']]
-                theta = opt_traj[t][self.state_inds['pr2', 'theta']]
-                theta_2 = opt_traj[t+1][self.state_inds['pr2', 'theta']]
-                vel = opt_traj[t+1][self.state_inds['pr2', 'vel']]
-                # grip = opt_traj[t][self.state_inds['pr2', 'gripper']]
-                U = np.zeros(self.dU)
-                # U[self.action_inds['pr2', 'pose']] = pos_2 - pos
-                U[self.action_inds['pr2', 'vel']] = vel
-                U[self.action_inds['pr2', 'theta']] = theta_2 - theta
-                # U[self.action_inds['pr2', 'gripper']] = grip
-                sample.set(ACTION_ENUM, U, t=t)
-                self.reset_to_state(opt_traj[t])
-                self.fill_sample(condition, sample, opt_traj[t], t, task, fill_obs=True, targets=targets)
-            if len(opt_traj)-1 < sample.T:
-                for j in range(len(opt_traj)-1, sample.T):
-                    sample.set(ACTION_ENUM, np.zeros_like(U), t=j)
-                    self.reset_to_state(opt_traj[-1])
-                    self.fill_sample(condition, sample, opt_traj[-1], j, task, fill_obs=True, targets=targets)
-            sample.use_ts[-1] = 0.
-            sample.prim_use_ts[-1] = 0.
-            sample.prim_use_ts[len(opt_traj)-1:] = 0.
-            sample.use_ts[len(opt_traj)-1:] = 0.
-            sample.end_state = opt_traj[-1].copy()
-            sample.set(NOISE_ENUM, np.zeros((sample.T, self.dU)))
-            sample.task_cost = self.goal_f(condition, sample.end_state)
-            sample.col_ts = np.zeros(sample.T)
-        sample.set_ref_X(sample.get_X())
-        sample.set_ref_U(sample.get_U())
+    #     exclude_targets = []
+    #     onehot_task = tuple([val for val in task if np.isscalar(val)])
+    #     plan = self.plans[onehot_task]
+    #     if run_traj:
+    #         sample = self.sample_task(optimal_pol(self.dU, self.action_inds, self.state_inds, opt_traj), condition, state, task, noisy=False, skip_opt=True, hor=len(opt_traj))
+    #     else:
+    #         self.T = plan.horizon
+    #         sample = Sample(self)
+    #         for t in range(len(opt_traj)-1):
+    #             pos = opt_traj[t][self.state_inds['pr2', 'pose']]
+    #             pos_2 = opt_traj[t+1][self.state_inds['pr2', 'pose']]
+    #             theta = opt_traj[t][self.state_inds['pr2', 'theta']]
+    #             theta_2 = opt_traj[t+1][self.state_inds['pr2', 'theta']]
+    #             vel = opt_traj[t+1][self.state_inds['pr2', 'vel']]
+    #             # grip = opt_traj[t][self.state_inds['pr2', 'gripper']]
+    #             U = np.zeros(self.dU)
+    #             # U[self.action_inds['pr2', 'pose']] = pos_2 - pos
+    #             U[self.action_inds['pr2', 'vel']] = vel
+    #             U[self.action_inds['pr2', 'theta']] = theta_2 - theta
+    #             # U[self.action_inds['pr2', 'gripper']] = grip
+    #             sample.set(ACTION_ENUM, U, t=t)
+    #             self.reset_to_state(opt_traj[t])
+    #             self.fill_sample(condition, sample, opt_traj[t], t, task, fill_obs=True, targets=targets)
+    #         if len(opt_traj)-1 < sample.T:
+    #             for j in range(len(opt_traj)-1, sample.T):
+    #                 sample.set(ACTION_ENUM, np.zeros_like(U), t=j)
+    #                 self.reset_to_state(opt_traj[-1])
+    #                 self.fill_sample(condition, sample, opt_traj[-1], j, task, fill_obs=True, targets=targets)
+    #         sample.use_ts[-1] = 0.
+    #         sample.prim_use_ts[-1] = 0.
+    #         sample.prim_use_ts[len(opt_traj)-1:] = 0.
+    #         sample.use_ts[len(opt_traj)-1:] = 0.
+    #         sample.end_state = opt_traj[-1].copy()
+    #         sample.set(NOISE_ENUM, np.zeros((sample.T, self.dU)))
+    #         sample.task_cost = self.goal_f(condition, sample.end_state)
+    #         sample.col_ts = np.zeros(sample.T)
+    #     sample.set_ref_X(sample.get_X())
+    #     sample.set_ref_U(sample.get_U())
 
-        # for t in range(sample.T):
-        #     if np.all(np.abs(sample.get(ACTION_ENUM, t=t))) < 1e-3:
-        #         sample.use_ts[t] = 0.
+    #     # for t in range(sample.T):
+    #     #     if np.all(np.abs(sample.get(ACTION_ENUM, t=t))) < 1e-3:
+    #     #         sample.use_ts[t] = 0.
 
-        self.target_vecs[condition] = old_targets
-        for tname, attr in self.target_inds:
-            self.targets[condition][tname] = old_targets[self.target_inds[tname, attr]]
-        # self.optimal_samples[self.task_list[task[0]]].append(sample)
-        return sample
+    #     self.target_vecs[condition] = old_targets
+    #     for tname, attr in self.target_inds:
+    #         self.targets[condition][tname] = old_targets[self.target_inds[tname, attr]]
+    #     # self.optimal_samples[self.task_list[task[0]]].append(sample)
+    #     return sample
 
 
     # def solve_sample_opt_traj(self, state, task, condition, traj_mean=[], inf_f=None, mp_var=0, targets=[], x_only=False, t_limit=60, n_resamples=5, out_coeff=None, smoothing=False, attr_dict=None):

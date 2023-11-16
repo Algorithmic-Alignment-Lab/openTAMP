@@ -142,12 +142,12 @@ def get_state_action_inds(plan, robot_name, attr_map, x_params={}, u_params={}):
     params_to_x_inds, params_to_u_inds = {}, {}
     cur_x_ind, cur_u_ind = 0, 0
 
-    robot_x_attrs = x_params[robot_name]
-    robot_u_attrs = u_params[robot_name]
-    robot_attr_map = attr_map['Robot']
-    ee_all_attrs = ['ee_pose']
-    ee_pos_attrs = ['ee_left_pos', 'ee_right_pos']
-    ee_rot_attrs = ['ee_left_rot', 'ee_right_rot']
+    # robot_x_attrs = x_params[robot_name]
+    # robot_u_attrs = u_params[robot_name]
+    # robot_attr_map = attr_map['Robot']
+    # ee_all_attrs = ['ee_pose']
+    # ee_pos_attrs = ['ee_left_pos', 'ee_right_pos']
+    # ee_rot_attrs = ['ee_left_rot', 'ee_right_rot']
     '''
     for attr in robot_x_attrs:
         # if attr in ee_pos_attrs:
@@ -217,7 +217,110 @@ def get_state_action_inds(plan, robot_name, attr_map, x_params={}, u_params={}):
             cur_u_ind = inds[-1] + 1
             params_to_u_inds[(param.name, attr)] = inds
 
-    symbolic_boundary = cur_x_ind # Used to differntiate parameters from symbols in the state vector
+    symbolic_boundary = cur_x_ind # Used to differentiate parameters from symbols in the state vector
+
+    '''
+    for param in plan.params.values():
+        if not param.is_symbol(): continue
+        param_attr_map = attr_map[param._type]
+        for attr in param_attr_map:
+            if (param.name, attr[0]) in params_to_x_inds: continue
+            inds = attr[1] + cur_x_ind
+            cur_x_ind = inds[-1] + 1
+            params_to_x_inds[(param.name, attr[0])] = inds
+    '''
+
+    # dX, state index map, dU, (policy) action map
+    return cur_x_ind, params_to_x_inds, cur_u_ind, params_to_u_inds, symbolic_boundary
+
+def get_state_action_inds_from_params(params, robot_name, attr_map, x_params={}, u_params={}):
+    '''
+    Maps the parameters of the plan actions to indices in the policy state and action vectors, and returns the dimensions of those vectors.
+    This mapping should apply to any plan with the given actions. Replaces get_plan_to_policy_mapping.
+    '''
+    # assert all(map(lambda a: a.train_policy, plan.actions))
+    if not len(params):
+        return 0, {}, 0, {}
+
+    params_to_x_inds, params_to_u_inds = {}, {}
+    cur_x_ind, cur_u_ind = 0, 0
+
+    # robot_x_attrs = x_params[robot_name]
+    # robot_u_attrs = u_params[robot_name]
+    # robot_attr_map = attr_map['Robot']
+    # ee_all_attrs = ['ee_pose']
+    # ee_pos_attrs = ['ee_left_pos', 'ee_right_pos']
+    # ee_rot_attrs = ['ee_left_rot', 'ee_right_rot']
+    '''
+    for attr in robot_x_attrs:
+        # if attr in ee_pos_attrs:
+        #     x_inds = np.array([0, 1, 2]) + cur_x_ind
+        #     cur_x_ind = x_inds[-1] + 1
+        #     params_to_x_inds[(robot_name, attr)] = x_inds
+        #     continue
+
+        # if attr in ee_rot_attrs:
+        #     x_inds = np.array([0, 1, 2, 3]) + cur_x_ind
+        #     cur_x_ind = x_inds[-1] + 1
+        #     params_to_x_inds[(robot_name, attr)] = x_inds
+        #     continue
+
+        # if attr in ee_all_attrs:
+        #     x_inds = np.array(range(7)) + cur_x_ind
+        #     cur_x_ind = x_inds[-1] + 1
+        #     params_to_x_inds[(robot_name, attr)] = x_inds
+        #     continue
+        print(robot_attr_map, attr)
+        inds = next(filter(lambda p: p[0]==attr, robot_attr_map))[1]
+        x_inds = inds + cur_x_ind
+        cur_x_ind = x_inds[-1] + 1
+        params_to_x_inds[(robot_name, attr)] = x_inds
+
+    for attr in robot_u_attrs:
+        # if attr in ee_pos_attrs:
+        #     u_inds = np.array([0, 1, 2]) + cur_u_ind
+        #     cur_u_ind = u_inds[-1] + 1
+        #     params_to_u_inds[(robot_name, attr)] = u_inds
+        #     continue
+
+        # if attr in ee_rot_attrs:
+        #     u_inds = np.array([0, 1, 2, 3]) + cur_u_ind
+        #     cur_u_ind = u_inds[-1] + 1
+        #     params_to_u_inds[(robot_name, attr)] = u_inds
+        #     continue
+
+        # if attr in ee_all_attrs:
+        #     u_inds = np.array(range(7)) + cur_u_ind
+        #     cur_u_ind = u_inds[-1] + 1
+        #     params_to_u_inds[(robot_name, attr)] = u_inds
+        #     continue
+
+        inds = next(filter(lambda p: p[0]==attr, robot_attr_map))[1]
+        u_inds = inds + cur_u_ind
+        cur_u_ind = u_inds[-1] + 1
+        params_to_u_inds[(robot_name, attr)] = u_inds
+    '''
+    for param_name in x_params:
+        # if param_name not in plan.params: continue
+        param = params[param_name]
+        #param_attr_map = attr_map[param._type]
+        for attr in x_params[param_name]:
+            if (param_name, attr) in params_to_x_inds: continue
+            inds = np.arange(len(getattr(param, attr)[:,0])) + cur_x_ind
+            cur_x_ind = inds[-1] + 1
+            params_to_x_inds[(param.name, attr)] = inds
+
+    for param_name in u_params:
+        # if param_name not in plan.params: continue
+        param = params[param_name]
+        #param_attr_map = attr_map[param._type]
+        for attr in u_params[param_name]:
+            if (param_name, attr) in params_to_u_inds: continue
+            inds = np.arange(len(getattr(param, attr)[:,0])) + cur_u_ind
+            cur_u_ind = inds[-1] + 1
+            params_to_u_inds[(param.name, attr)] = inds
+
+    symbolic_boundary = cur_x_ind # Used to differentiate parameters from symbols in the state vector
 
     '''
     for param in plan.params.values():
@@ -250,6 +353,26 @@ def get_target_inds(plan, attr_map, include):
             cur_ind = inds[-1] + 1
 
     return cur_ind, target_inds
+
+
+def get_target_inds_from_params(params, attr_map, include):
+    cur_ind = 0
+    target_inds = {}
+    for param_name in include:
+        if param_name in params:
+            param = params[param_name]
+            for attr in include[param_name]:
+                inds = np.arange(len(getattr(param, attr)[:,0])) + cur_ind
+                cur_ind = inds[-1] + 1
+                target_inds[param.name, attr] = inds
+        else:
+            dim = include[param_name] if type(include[param_name]) is int else len(include[param_name])
+            inds = np.arange(dim) + cur_ind
+            target_inds[param_name, 'value'] = inds
+            cur_ind = inds[-1] + 1
+
+    return cur_ind, target_inds
+
 
 def get_plan_to_policy_mapping(plan, robot_name, x_params=[], u_params=[], x_attrs=[], u_attrs=[]):
     '''

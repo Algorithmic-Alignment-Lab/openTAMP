@@ -136,7 +136,7 @@ class ExprPredicate(Predicate):
         return self.test(time, negated, tol)
 
     # @profile
-    def test(self, time, negated=False, tol=None):
+    def test(self, time, negated=False, tol=None):        
         if self.hl_info:
             return True
 

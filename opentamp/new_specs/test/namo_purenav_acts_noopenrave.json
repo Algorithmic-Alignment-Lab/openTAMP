@@ -26,14 +26,6 @@
                 "type": "IsMP",
                 "args": ["?robot"],
                 "active_timesteps": [0, 18]
-            },
-            {
-                "forall": ["?w", "Obstacle"],
-                "pred": {
-                    "type": "~RCollides",
-                    "args": ["?robot", "?w"],
-                    "active_timesteps": [1, 17]
-                }
             }
         ],
         "eff": [

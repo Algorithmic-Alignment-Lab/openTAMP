@@ -12,6 +12,7 @@ from opentamp.core.util_classes.beliefs import belief_constructor
 import pyro.poutine as poutine
 from pyro.infer import MCMC, NUTS, HMC
 
+
 MAX_PRIORITY = 3
 
 class Plan(object):
@@ -26,15 +27,14 @@ class Plan(object):
     """
     IMPOSSIBLE = "Impossible"
 
-    def __init__(self, params, actions, horizon, env, determine_free=True, observation_model=None, max_likelihood_obs = None, sess=None):
+    def __init__(self, params, actions, horizon, env, determine_free=True, observation_model=None, sess=None):
         self.params = params
-        self.belief_params = self.build_belief_params()  # fix order for random params
+        self.belief_params, self.belief_inds = self.build_belief_params()  # fix order for random params
         self.backup = params
         self.actions = actions
         self.horizon = horizon
         self.observation_model = observation_model
-        self.max_likelihood_obs = max_likelihood_obs
-        self.joint_belief = None  # joint belief
+        # self.joint_belief = [None] * self.horizon  # overall belief vectors, over time, to support global observation models
         self.log_prob_list = []
         self.time = np.zeros((1, horizon))
         self.env = env
@@ -46,16 +46,19 @@ class Plan(object):
         self.start = 0
         self.num_belief_samples = 100
         self.num_warmup_steps = 100
-        self.num_chains = 1 # only supported option for now, daemon issue
         if determine_free:
             self._determine_free_attrs()
 
     def build_belief_params(self):
         belief_params = []
+        belief_inds = {}
+        curr_idx = 0
         for param_key, param in self.params.items():
             if hasattr(param, 'belief'):
                 belief_params.append(param)
-        return belief_params
+                belief_inds[param_key] = (curr_idx, curr_idx + param.belief.size)
+                curr_idx += param.belief.size
+        return belief_params, belief_inds
 
     @staticmethod
     def create_plan_for_preds(preds, env):
@@ -192,7 +195,7 @@ class Plan(object):
 
     #@profile
     def get_failed_pred(self, active_ts=None, priority = MAX_PRIORITY, tol=1e-3, incl_negated=True, hl_ignore=False):
-        #just return the first one for now
+        ## just return the first one for now
         t_min = self.horizon+1
         pred = None
         negated = False
@@ -215,6 +218,22 @@ class Plan(object):
                         negated = n
                 if pred is not None:
                     return negated, pred, t_min
+                
+        ## for effects of nondeterministic actions, failure is the final t/s of latest nondeterministic action
+        max_nondet_t = 0
+        for action in self.action:
+            ## if action is nondeterministic and predicate is an effect of this nondeterministic action
+            if action.non_deterministic and \
+                (pred in action.preds and pred.active_range[0] > action.active_timesteps[0]):
+                
+                act_end = action.active_timesteps[1]
+
+                if act_end >= max_nondet_t:
+                    max_nondet_t = act_end
+
+                if max_nondet_t < t_min and (not hl_ignore or not p.hl_ignore):
+                    t_min = action.active_timesteps[1]
+
         return negated, pred, t_min
 
     #@profile
@@ -306,11 +325,11 @@ class Plan(object):
 
     def prefix(self, fail_step):
         """
-            returns string representation of actions prior to faid_step
+            returns string representation of actions prior to fail_step
         """
         pre = []
         for act in self.actions:
-            if act.active_timesteps[1] < fail_step:
+            if act.active_timesteps[1] < fail_step or (act.active_timesteps[0] <= fail_step and act.non_deterministic):
                 act_str = str(act).split()
                 act_str = " ".join(act_str[:2] + act_str[4:]).upper()
                 pre.append(act_str)
@@ -363,62 +382,72 @@ class Plan(object):
     def set_observation_model(self, observation_model):
         self.observation_model = observation_model
 
-    def set_max_likelihood_obs(self, max_likelihood_obs):
-        self.max_likelihood_obs = max_likelihood_obs
+    # def set_max_likelihood_obs(self, max_likelihood_obs):
+    #     self.max_likelihood_obs = max_likelihood_obs
 
-    def sample_priors(self, ):
-        prior_samples = []
-        for param in self.belief_params:
-            prior_samples.append(param.belief.dist.sample_n(500))
-        return prior_samples  # concatenate all sampled tensors
+    # def sample_priors(self):
+    #     prior_samples = []
+    #     for param in self.belief_params:
+    #         prior_samples.append(param.belief.dist.sample_n(self.num_belief_samples * param.belief.size))
+    #     return prior_samples  # all sampled tensors
 
-    # based off of hmm example from pyro docs
-    def sample_mcmc_run(self, rs_params):
-        # create a conditioned model on the plan
-        obs_dict = {'obs'+str(i): torch.tensor(self.max_likelihood_obs) for i in range(1, rs_params[0].pose.shape[1]+1)}
-        conditional_model = poutine.condition(self.observation_model, data=obs_dict)
+    ## based off of hmm example from pyro docs
+    def sample_mcmc_run(self, active_ts, true_goal=None):        
+        ## if not conditioning on sim observations, get a max-likelihood observation as returned by the observation model        
+        obs = self.observation_model(copy.deepcopy(self.params), active_ts, true_goal=true_goal)  # hardcode for now while debugging
+        
+        ## create a model conditioned on the observed data in the course of executing plan
+        conditional_model = poutine.condition(self.observation_model, data=obs)
+
         kernel = NUTS(conditional_model)
 
-        # defaults taken from hmm.py script
         mcmc = MCMC(
             kernel,
             num_samples=self.num_belief_samples,
             warmup_steps=self.num_warmup_steps,
-            num_chains=self.num_chains
+            num_chains=1
         )
 
-        mcmc.run(rs_params, self.joint_belief.samples.mean(), self.joint_belief.samples.view((-1,)).cov())
+        ## run HMC on plan
+        mcmc.run(copy.deepcopy(self.params), active_ts)
         mcmc.summary(prob=0.95)  # for diagnostics
 
         return mcmc.get_samples()
 
-    def initialize_beliefs(self):
-        # max-likelihood as parameter here
-        samples = self.sample_priors()
+    def initialize_obs(self, anum=0, override_obs=None):
+        for param in self.belief_params:
+            if override_obs:
+                param.pose[:, self.actions[anum].active_timesteps[0]] = override_obs[param.name]
+            else:
+                param.pose[:, self.actions[anum].active_timesteps[0]] = self.observation_model(copy.deepcopy(self.params), self.actions[anum].active_timesteps)[param.name]
 
-        # setting up belief vector, build up aggregate vector
-        aggregate_size = sum([bpar.belief.size for bpar in self.belief_params])
-        self.joint_belief = belief_constructor(samples=torch.cat(samples, dim=0).reshape(self.num_belief_samples, -1), size=aggregate_size)
+    ## called once per high-level action execution
+    def filter_beliefs(self, active_ts, true_goal=None):
+        # max-likelihood feeds back on object here        
 
-        for idx, param in enumerate(self.belief_params):
-            # add samples by generating from prior
-            param.belief.samples = samples[idx].detach().numpy().reshape((-1, self.num_belief_samples))
-
-    # called once per high-level action execution
-    def filter_beliefs(self, rs_params):
-        # max-likelihood feeds back on object here
-        global_samples = self.sample_mcmc_run(rs_params)['belief_global']
+        global_samples = self.sample_mcmc_run(active_ts, true_goal=true_goal)['belief_global']
 
         if len(global_samples.shape) == 1:
             global_samples = global_samples.unsqueeze(dim=1)
 
         assert len(global_samples.shape) == 2
+        
+        # TODO convert into
 
-        self.joint_belief = belief_constructor(samples=global_samples, size=self.joint_belief.size)
+        # self.joint_belief = belief_constructor(samples=global_samples, size=self.joint_belief.size)
 
-        # construct a model object, over which we do inference, starting with uniform prior
+        # update all of the param samples objects, as induced from the belief object
         running_idx = 0
         for param in self.belief_params:
-            param.belief.samples = \
-                global_samples[:, running_idx: running_idx+param.belief.size].detach().numpy().reshape((-1, self.num_belief_samples))  # expecting hooks
+            new_samp = torch.cat((param.belief.samples, torch.unsqueeze(global_samples[:, running_idx: running_idx+param.belief.size], 2)), dim=2)
+            param.belief.samples = new_samp
             running_idx += param.belief.size
+
+    ## for now, just propogates same belief until end of action -- later, introduce a self.drift_model, similarly to self.observation_model 
+    ## NOTE: assume can only use up until penultimate belief state in planner for now
+    def rollout_beliefs(self, active_ts):
+        for param in self.belief_params:
+            for _ in range(active_ts[0], active_ts[1]-1):
+                new_samp = torch.cat((param.belief.samples, param.belief.samples[:, :, -1:]), dim=2)
+                param.belief.samples = new_samp
+                running_idx += param.belief.size

@@ -238,6 +238,25 @@ def twostep_f(xs, dist, dim, pts=COL_TS, grad=False, isrobot=False):
         return np.concatenate(res, axis=0)
 
 
+# ensures belief_pose is constant from first step to last
+class ConstantObservation(ExprPredicate):
+    def __init__(self, name, params, expected_param_types, env=None, sess=None, debug=False):
+        ## ConstantObservation Target
+        self.target = params[0]
+        attr_inds = OrderedDict(
+            [
+                (self.target, [("pose", np.array([0, 1], dtype=np.int))])
+            ]
+        )
+
+        A = np.c_[np.eye(2), -np.eye(2)]
+        b = np.zeros((2, 1))
+        val = np.zeros((2, 1))
+        aff_e = AffExpr(A, b)
+        e = EqExpr(aff_e, val)
+        super(ConstantObservation, self).__init__(name, e, attr_inds, params, expected_param_types, active_range=(0, 1), priority=-2)
+
+
 class CollisionPredicate(ExprPredicate):
     def __init__(
         self,
@@ -1115,6 +1134,180 @@ class InClosetObj(ExprPredicate):
         return self.coeff * 2.0 * np.eye(2)
 
 
+class Pointing(ExprPredicate):
+     def __init__(self, name, params, expected_param_types, env=None, sess=None, debug=False):
+        robot, target = params
+        attr_inds = OrderedDict(
+            [(robot, [("pose", np.array([0], dtype=np.int))])]
+        )
+        A = np.ones((1, 1))
+        b = np.zeros((1, 1))
+        aff_e = AffExpr(A, b)
+        e = EqExpr(aff_e, np.array([np.arctan(target.pose[1, 0]/target.pose[0, 0])]))
+        super(Pointing, self).__init__(
+            name, e, attr_inds, params, expected_param_types, priority=-2
+        )
+
+class BPointing(ExprPredicate):
+    def __init__(self, name, params, expected_param_types, env=None, sess=None, debug=False):
+        # NOTE: Below line is for debugging purposes only, should be commented out
+        # and line below should be commented in
+        # self._debug = True
+        # self._debug = debug
+
+        # if self._debug:
+        #     self._env.SetViewer("qtcoin")
+        # self._env = env
+        self.robot, self.target = params
+        attr_inds = OrderedDict(
+            [
+                (self.robot, [("pose", np.array([0], dtype=np.int))]),
+                (self.target, [("pose", np.array([0, 1], dtype=np.int))]),
+            ]
+        )
+        # self._param_to_body = {
+        #     self.rp: self.lazy_spawn_or_body(self.rp, self.rp.name, self.rp.geom),
+        #     self.targ: self.lazy_spawn_or_body(
+        #         self.targ, self.targ.name, self.targ.geom
+        #     ),
+        # }
+
+        # INCONTACT_COEFF = 1e1
+        # define these
+        col_expr = Expr(self.f, grad=self.grad_f)
+        val = np.zeros((1, 1)) # output of fcn should be zero
+        # val = np.zeros((1, 1))
+        e = EqExpr(col_expr, val)
+        super(BPointing, self).__init__(
+            name,
+            e,
+            attr_inds,
+            params,
+            expected_param_types,
+            tol=0.2,
+            debug=debug,
+            priority=-1
+        )
+
+    def f(self, x):
+        diff = np.tan(x[0]) - x[2]/x[1]
+        # return np.array([diff, -diff])
+        return diff
+
+    def grad_f(self, x):
+        grad = np.array([1/np.cos(x[0])**2, -x[2]/(x[1]**2), 1/x[1]]).reshape(1, -1)
+        # return np.array([grad[0], -grad[0]])
+        # breakpoint()
+        return grad
+    
+    # def hess(self, x):
+    #     hessian = np.array([[-2*x[0]/((1+x[0]**2)**2), 0, 0],
+    #                         [0, 2*x[2]/(x[1]**2), -1/(x[1]**2)],
+    #                         [0, -1/(x[1]**2), 0]])
+    #     return hessian
+
+    # def test(self, time, negated=False, tol=1e-3):
+    #     # This test is overwritten so that collisions can be calculated correctly
+    #     if not self.is_concrete():
+    #         return False
+    #     if time < 0:
+    #         traceback.print_exception(*sys.exc_info())
+    #         raise PredicateException("Out of range time for predicate '%s'." % self)
+    #     try:
+    #         result = self.expr.eval(
+    #             self.get_param_vector(time), tol=tol
+    #         )
+    #         return result
+    #     except IndexError:
+    #         traceback.print_exception(*sys.exc_info())
+    #         ## this happens with an invalid time
+    #         raise PredicateException("Out of range time for predicate '%s'." % self)
+
+
+## a stub computing only the
+class CertainPosition(ExprPredicate):
+    def __init__(self, name, params, expected_param_types, env=None, sess=None, debug=False):
+        # NOTE: Below line is for debugging purposes only, should be commented out
+        # and line below should be commented in
+        # self._debug = True
+        # self._debug = debug
+
+        # if self._debug:
+        #     self._env.SetViewer("qtcoin")
+        # self._env = env
+        (self.target,) = params
+        attr_inds = OrderedDict(
+            [(self.target, [("pose", np.array([0, 1], dtype=np.int))])]
+        )
+        # self._param_to_body = {
+        #     self.rp: self.lazy_spawn_or_body(self.rp, self.rp.name, self.rp.geom),
+        #     self.targ: self.lazy_spawn_or_body(
+        #         self.targ, self.targ.name, self.targ.geom
+        #     ),
+        # }
+
+        # INCONTACT_COEFF = 1e1
+        # unused constraints, pass some BS in
+        A = np.zeros((1, 2))
+        b = np.zeros((1,1))
+        dummy_expr = AffExpr(A, b)
+        val = np.zeros((1, 1)) # output of fcn should be zero
+        # val = np.zeros((1, 1))
+        e = EqExpr(dummy_expr, val)
+        super(CertainPosition, self).__init__(
+            name,
+            e,
+            attr_inds,
+            params,
+            expected_param_types,
+            debug=debug,
+            priority=-1
+        )
+
+    def test(self, time, negated=False, tol=None):
+        if negated:
+            return not np.sum(np.std(self.target.belief.samples[:,:,time].numpy(), axis=0)) <= 0.4
+        return np.sum(np.std(self.target.belief.samples[:,:,time].numpy(), axis=0)) <= 0.4
+
+class ConfirmedPosition(ExprPredicate):
+    def __init__(self, name, params, expected_param_types, env=None, sess=None, debug=False):
+        # NOTE: Below line is for debugging purposes only, should be commented out
+        # and line below should be commented in
+        # self._debug = True
+        # self._debug = debug
+
+        # if self._debug:
+        #     self._env.SetViewer("qtcoin")
+        # self._env = env
+        (self.target,) = params
+        attr_inds = OrderedDict(
+            [(self.target, [("pose", np.array([0, 1], dtype=np.int))])]
+        )
+        # self._param_to_body = {
+        #     self.rp: self.lazy_spawn_or_body(self.rp, self.rp.name, self.rp.geom),
+        #     self.targ: self.lazy_spawn_or_body(
+        #         self.targ, self.targ.name, self.targ.geom
+        #     ),
+        # }
+
+        # INCONTACT_COEFF = 1e1
+        # unused constraints, pass some BS in
+        A = np.zeros((1,2))
+        b = np.zeros((1,1))
+        dummy_expr = AffExpr(A, b)
+        val = np.zeros((1, 1)) # output of fcn should be zero
+        # val = np.zeros((1, 1))
+        e = EqExpr(dummy_expr, val)
+        super(ConfirmedPosition, self).__init__(
+            name,
+            e,
+            attr_inds,
+            params,
+            expected_param_types,
+            debug=debug,
+            priority=-1
+        )
+
 class GripperClosed(ExprPredicate):
     def __init__(self, name, params, expected_param_types, env=None, sess=None, debug=False):
         (self.robot,) = params
@@ -1205,10 +1398,10 @@ class InContact(CollisionPredicate):
         }
 
         INCONTACT_COEFF = 1e1
-        f = lambda x: INCONTACT_COEFF * self.distance_from_obj(x)[0]
-        grad = lambda x: INCONTACT_COEFF * self.distance_from_obj(x)[1]
+        self.f = lambda x: INCONTACT_COEFF * self.distance_from_obj(x)[0]
+        self.grad = lambda x: INCONTACT_COEFF * self.distance_from_obj(x)[1]
 
-        col_expr = Expr(f, grad)
+        col_expr = Expr(self.f, self.grad)
         val = np.ones((1, 1)) * dsafe * INCONTACT_COEFF
         # val = np.zeros((1, 1))
         e = EqExpr(col_expr, val)
@@ -1545,6 +1738,7 @@ class RCollides(CollisionPredicate):
                 (self.w, [("pose", np.array([0, 1], dtype=np.int))]),
             ]
         )
+
         self._param_to_body = {
             self.r: self.lazy_spawn_or_body(self.r, self.r.name, self.r.geom),
             self.w: self.lazy_spawn_or_body(self.w, self.w.name, self.w.geom),

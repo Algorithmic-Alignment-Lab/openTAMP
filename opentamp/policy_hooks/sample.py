@@ -141,6 +141,7 @@ class Sample(object):
     def get_prim_obs(self, t=None):
         """ Get the observation. Put it together if not precomputed. """
         obs = self._prim_obs if t is None else self._prim_obs[t, :]
+        breakpoint()
         if np.any(np.isnan(obs)):
             for data_type in self._data:
                 if data_type not in self.agent.prim_obs_data_types:

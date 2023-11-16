@@ -124,6 +124,9 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
         'her': False,
         'prim_decay': 0.95,
         'prim_first_wt': 1e1,
+        'meta_file': opentamp.__path__._path[0] + '/new_specs/test/namo_purenav_meta.json',
+        'acts_file': opentamp.__path__._path[0] + '/new_specs/test/namo_purenav_acts.json',
+        'prob_file': opentamp.__path__._path[0] + '/new_specs/test/namo_purenav_prob.json'
     }
 
     #config['prim_obs_include'].append(utils.EE_ENUM)

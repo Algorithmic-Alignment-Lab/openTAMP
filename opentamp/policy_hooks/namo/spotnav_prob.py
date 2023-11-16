@@ -32,7 +32,8 @@ CONST_ORDER = False
 # domain_file = opentamp.__path__._path[0] + "/domains/namo_domain/namo_purenav.domain"
 meta_file = opentamp.__path__._path[0] + "/new_specs/test/namo_purenav_meta.json"
 acts_file = opentamp.__path__._path[0] + "/new_specs/test/namo_purenav_acts.json"
-mapping_file = "policy_hooks/namo/spotnav_task_mapping"  # todo alter
+prob_file = opentamp.__path__._path[0] + "/new_specs/test/namo_purenav_prob.json"
+mapping_file = "policy_hooks/namo/spotnav_task_mapping"  # TODO alter
 
 # domain_file = opentamp.__path__._path[0] + "/domains/robot_manipulation_domain/move_robot.domain"
 # mapping_file = opentamp.__path__._path[0] + "/policy_hooks/spot/spot_tasks"
@@ -77,11 +78,11 @@ for i in range(len(possible_can_locs)):
     possible_can_locs[i] = tuple(loc)
 
 
-def prob_file(descr=None):
-    # if descr is None:
-    #     descr = 'grip_prob_{0}_{1}end_{2}aux'.format(NUM_OBJS, len(END_TARGETS), n_aux)
-    # return opentamp.__path__._path[0] + "/domains/namo_domain/namo_probs/{0}.prob".format(descr)
-    return opentamp.__path__._path[0] + "/new_specs/test/namo_purenav_prob.json"
+# def prob_file(descr=None):
+#     # if descr is None:
+#     #     descr = 'grip_prob_{0}_{1}end_{2}aux'.format(NUM_OBJS, len(END_TARGETS), n_aux)
+#     # return opentamp.__path__._path[0] + "/domains/namo_domain/namo_probs/{0}.prob".format(descr)
+#     return opentamp.__path__._path[0] + "/new_specs/test/namo_purenav_prob.json"
 
 
 def get_prim_choices(task_list=None):
@@ -206,15 +207,15 @@ def get_random_initial_state_vec(config, plans, dX, state_inds, conditions):
         targ_maps.append(next_map)
     return x0s, targ_maps
 
-def parse_hl_plan(hl_plan):
-    plan = []
-    for i in range(len(hl_plan)):
-        action = hl_plan[i]
-        act_params = action.split()
-        task = act_params[1].lower()
-        next_params = [p.lower() for p in act_params[2:]]
-        plan.append((task, next_params))
-    return plan
+# def parse_hl_plan(hl_plan):
+#     plan = []
+#     for i in range(len(hl_plan)):
+#         action = hl_plan[i]
+#         act_params = action.split()
+#         task = act_params[1].lower()
+#         next_params = [p.lower() for p in act_params[2:]]
+#         plan.append((task, next_params))
+#     return plan
 
 def get_plans(use_tf=False):
     tasks = get_tasks(mapping_file)
@@ -226,6 +227,7 @@ def get_plans(use_tf=False):
     params = None
     sess = None
     st = time.time()
+    # breakpoint()
     for task in task_ids:
         next_task_str = copy.deepcopy(tasks[task])
         if task.find('move') >= 0:
@@ -234,7 +236,8 @@ def get_plans(use_tf=False):
                 new_task_str = []
                 for step in next_task_str:
                     new_task_str.append(step.format(obj, '', ''))
-                plan = plan_from_str(new_task_str, prob_file(), meta_file, acts_file, env, openrave_bodies, params=params, sess=sess, use_tf=use_tf)
+                # breakpoint()
+                plan = plan_from_str(new_task_str, prob_file, meta_file, acts_file, env, openrave_bodies, params=params, sess=sess, use_tf=use_tf)
                 params = plan.params
                 if env is None:
                     env = plan.env
@@ -267,58 +270,58 @@ def get_plans(use_tf=False):
         #                         openrave_bodies[param.name] = param.openrave_body
     return plans, openrave_bodies, env
 
-def get_end_targets(num_cans=NUM_OBJS, num_targs=NUM_OBJS, targs=None, randomize=False, possible_locs=END_TARGETS):
-    raise Exception('Bad method call')
-    target_map = {}
-    inds = list(range(NUM_TARGS)) # np.random.permutation(range(num_targs))
-    for n in range(num_cans):
-        if n > num_targs and targs is not None:
-            target_map['can{0}_end_target'.format(n)] = np.array(targs[n])
-        else:
-            if randomize:
-                ind = inds[n]
-            else:
-                ind = n
+# def get_end_targets(num_cans=NUM_OBJS, num_targs=NUM_OBJS, targs=None, randomize=False, possible_locs=END_TARGETS):
+#     raise Exception('Bad method call')
+#     target_map = {}
+#     inds = list(range(NUM_TARGS)) # np.random.permutation(range(num_targs))
+#     for n in range(num_cans):
+#         if n > num_targs and targs is not None:
+#             target_map['can{0}_end_target'.format(n)] = np.array(targs[n])
+#         else:
+#             if randomize:
+#                 ind = inds[n]
+#             else:
+#                 ind = n
 
-            target_map['can{0}_end_target'.format(n)] = np.array(possible_locs[ind])
+#             target_map['can{0}_end_target'.format(n)] = np.array(possible_locs[ind])
 
-    if SORT_CLOSET:
-        target_map['middle_target'] = np.array([0., 0.])
-        target_map['left_target_1'] = np.array([-1., 0.])
-        target_map['right_target_1'] = np.array([1., 0.])
-        # target_map['left_target_2'] = np.array([-2., 0.])
-        # target_map['right_target_2'] = np.array([2., 0.])
-    return target_map
+#     if SORT_CLOSET:
+#         target_map['middle_target'] = np.array([0., 0.])
+#         target_map['left_target_1'] = np.array([-1., 0.])
+#         target_map['right_target_1'] = np.array([1., 0.])
+#         # target_map['left_target_2'] = np.array([-2., 0.])
+#         # target_map['right_target_2'] = np.array([2., 0.])
+#     return target_map
 
 
-def setup(hyperparams):
-    wall_dims = OpenRAVEBody.get_wall_dims('closet')
-    config = {
-        'obs_include': ['overhead_camera'],
-        'include_files': [],
-        'include_items': [
-            {'name': 'pr2', 'type': 'cylinder', 'is_fixed': False, 'pos': (0, 0, 0.5), 'dimensions': (0.6, 1.), 'rgba': (1, 1, 1, 1)},
-        ],
-        'view': False,
-        'image_dimensions': (hyperparams['image_width'], hyperparams['image_height'])
-    }
+# def setup(hyperparams):
+#     wall_dims = OpenRAVEBody.get_wall_dims('closet')
+#     config = {
+#         'obs_include': ['overhead_camera'],
+#         'include_files': [],
+#         'include_items': [
+#             {'name': 'pr2', 'type': 'cylinder', 'is_fixed': False, 'pos': (0, 0, 0.5), 'dimensions': (0.6, 1.), 'rgba': (1, 1, 1, 1)},
+#         ],
+#         'view': False,
+#         'image_dimensions': (hyperparams['image_width'], hyperparams['image_height'])
+#     }
 
-    self.main_camera_id = 0
-    colors = [[1, 0, 0, 1], [0, 1, 0, 1], [0, 0, 1, 1], [1, 1, 0, 1], [1, 0, 1, 1], [0.5, 0.75, 0.25, 1], [0.75, 0.5, 0, 1], [0.25, 0.25, 0.5, 1], [0.5, 0, 0.25, 1], [0, 0.5, 0.75, 1], [0, 0, 0.5, 1]]
+#     self.main_camera_id = 0
+#     colors = [[1, 0, 0, 1], [0, 1, 0, 1], [0, 0, 1, 1], [1, 1, 0, 1], [1, 0, 1, 1], [0.5, 0.75, 0.25, 1], [0.75, 0.5, 0, 1], [0.25, 0.25, 0.5, 1], [0.5, 0, 0.25, 1], [0, 0.5, 0.75, 1], [0, 0, 0.5, 1]]
 
-    items = config['include_items']
-    prim_options = get_prim_choices()
-    for name in prim_options[OBJ_ENUM]:
-        if name =='pr2': continue
-        cur_color = colors.pop(0)
-        items.append({'name': name, 'type': 'cylinder', 'is_fixed': False, 'pos': (0, 0, 0.5), 'dimensions': (0.4, 1.), 'rgba': tuple(cur_color)})
-        # items.append({'name': '{0}_end_target'.format(name), 'type': 'cylinder', 'is_fixed': False, 'pos': (10, 10, 0.5), 'dimensions': (0.8, 0.2), 'rgba': tuple(cur_color)})
-    for i in range(len(wall_dims)):
-        dim, next_trans = wall_dims[i]
-        next_trans[0,3] -= 3.5
-        next_dim = dim # [dim[1], dim[0], dim[2]]
-        pos = next_trans[:3,3] # [next_trans[1,3], next_trans[0,3], next_trans[2,3]]
-        items.append({'name': 'wall{0}'.format(i), 'type': 'box', 'is_fixed': True, 'pos': pos, 'dimensions': next_dim, 'rgba': (0.2, 0.2, 0.2, 1)})
+#     items = config['include_items']
+#     prim_options = get_prim_choices()
+#     for name in prim_options[OBJ_ENUM]:
+#         if name =='pr2': continue
+#         cur_color = colors.pop(0)
+#         items.append({'name': name, 'type': 'cylinder', 'is_fixed': False, 'pos': (0, 0, 0.5), 'dimensions': (0.4, 1.), 'rgba': tuple(cur_color)})
+#         # items.append({'name': '{0}_end_target'.format(name), 'type': 'cylinder', 'is_fixed': False, 'pos': (10, 10, 0.5), 'dimensions': (0.8, 0.2), 'rgba': tuple(cur_color)})
+#     for i in range(len(wall_dims)):
+#         dim, next_trans = wall_dims[i]
+#         next_trans[0,3] -= 3.5
+#         next_dim = dim # [dim[1], dim[0], dim[2]]
+#         pos = next_trans[:3,3] # [next_trans[1,3], next_trans[0,3], next_trans[2,3]]
+#         items.append({'name': 'wall{0}'.format(i), 'type': 'box', 'is_fixed': True, 'pos': pos, 'dimensions': next_dim, 'rgba': (0.2, 0.2, 0.2, 1)})
 
-    generate_xml(BASE_XML, ENV_XML, include_files=config['include_files'], include_items=config['include_items'])
+#     generate_xml(BASE_XML, ENV_XML, include_files=config['include_files'], include_items=config['include_items'])
 

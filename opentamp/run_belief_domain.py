@@ -28,11 +28,6 @@ import pyro.poutine as poutine
 from pyro.infer import MCMC, NUTS
 
 
-# TODO: do this with the implemented geom logic, do belief space in similar way
-def is_in_ray(item, belief):
-    return np.pi/2 - 0.1/2 - np.arctan(belief/1.0) <= item <= np.pi/2 + 0.1/2 - np.arctan(belief/1.0) and np.arctan(1) <= item <= np.pi - np.arctan(1)
-
-
 # NOTE: expected names for pyro samples are "belief_"{param-name}+""
 def toy_observation(rs_params, belief_mean, belief_cov):
     # LaPlace estimate: todo SVI if needed

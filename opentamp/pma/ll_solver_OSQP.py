@@ -116,14 +116,14 @@ class LLParamOSQP(object):
                 osqp_vars = getattr(self, attr)
                 value = self.get_param_val(attr)
                 free_vars = self.get_free_vars(attr)
-                for index, value in np.ndenumerate(value):
-                    if not free_vars[index] and not np.any(np.isnan(value)):
+                for index, val in np.ndenumerate(value):
+                    if not free_vars[index] and not np.any(np.isnan(val)):
                         linear_eq_cnts_list.append(
                             OSQPLinearConstraint(
                                 np.array([osqp_vars[index]]),
                                 np.array([1]),
-                                np.array([value]),
-                                np.array([value]),
+                                np.array([val]),
+                                np.array([val]),
                             )
                         )
         return linear_eq_cnts_list

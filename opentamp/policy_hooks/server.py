@@ -1,4 +1,4 @@
-import pickle as pickle
+import dill as pickle
 from datetime import datetime
 import numpy as np
 import os, psutil
@@ -110,7 +110,7 @@ class Server(object):
         self.prim_first_wt = hyperparams.get('prim_first_wt', 1.)
         self.explore_wt = hyperparams['explore_wt']
         self.check_prim_t = hyperparams.get('check_prim_t', 1)
-        self.agent.plans, self.agent.openrave_bodies, self.agent.env = self.agent.prob.get_plans(use_tf=True)
+        # self.agent.plans, self.agent.openrave_bodies, self.agent.env = self.agent.prob.get_plans(use_tf=True)
         self.dagger_window = hyperparams['dagger_window']
         self.rollout_opt = hyperparams['rollout_opt']
         task_plans = list(self.agent.plans.values())
@@ -179,11 +179,10 @@ class Server(object):
             x0, targets = self.new_problem()
 
         initial, goal = self.agent.get_hl_info(x0, targets)
-        problem = list(self.agent.plans.values())[0].prob
-        domain = list(self.agent.plans.values())[0].domain
+        problem = self._hyperparams['problem']
+        domain = self._hyperparams['domain']
         problem.goal = goal
         abs_prob = self.agent.hl_solver.translate_problem(problem, goal=goal, initial=initial)
-
         ref_x0 = self.agent.clip_state(x0)
         for pname, attr in self.agent.state_inds:
             p = problem.init_state.params[pname]
@@ -219,12 +218,12 @@ class Server(object):
                                                               self.agent.state_inds, 
                                                               1,)
         x0, targets = x0[0], targets[0]
-        target_vec = np.zeros(self.agent.target_dim)
-        for (tname, attr), inds in self.agent.target_inds.items():
-            if attr != 'value': continue
-            target_vec[inds] = targets[tname]
+        # target_vec = np.zeros(self.agent.target_dim)
+        # for (tname, attr), inds in self.agent.target_inds.items():
+        #     if attr != 'value': continue
+        #     target_vec[inds] = targets[tname]
 
-        return x0, target_vec
+        return x0, None  # removing targets
 
 
     def update(self, obs, mu, prc, wt, task, label, acts=[], ref_acts=[], terminal=[], aux=[], primobs=[], x=[]):
@@ -425,7 +424,6 @@ class Server(object):
         tgt_prc, tgt_wt = np.zeros((0, len(self.discrete_opts))), np.zeros((0))
         tgt_aux = np.zeros((0))
         tgt_x = np.zeros((0, self.agent.dX))
-        opts = self.agent.prob.get_prim_choices(self.agent.task_list)
 
         #if len(samples):
         #    lab = samples[0].source_label
@@ -478,7 +476,6 @@ class Server(object):
         tgt_prc, tgt_wt = np.zeros((0, dP, dP)), np.zeros((0))
         tgt_aux = np.zeros((0))
         tgt_x = np.zeros((0, self.agent.dX))
-        opts = self.agent.prob.get_prim_choices(self.agent.task_list)
 
         for ind, sample in enumerate(samples):
             mu = sample.get_cont_out()

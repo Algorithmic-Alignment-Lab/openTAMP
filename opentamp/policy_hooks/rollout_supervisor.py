@@ -209,7 +209,7 @@ class RolloutSupervisor():
             train_pts.append((s, t, {}, 'rollout_random_switch',))
 
         #train_pts = list(set(train_pts))
-        self.parse_midcond(path)
+        # self.parse_midcond(path)
 
         if val >= 0.999:
             print('Success in rollout. Pre: {} Post: {} Mid: {} Goal: {}'.format(self.check_precond, \
@@ -279,67 +279,68 @@ class RolloutSupervisor():
         return out
 
 
-    def parse_midcond(self, path):
-        if not self.check_midcond: return
-        bad_pt = self.switch_pts[-1]
-        curtask = tuple([val for val in self.cur_tasks[-1] if np.isscalar(val)])
-        plan = self.agent.plans[curtask]
-        st = bad_pt[1]
-        x0 = path[bad_pt[0]].get(STATE_ENUM, st).copy()
-        targets = path[bad_pt[0]].targets
-        traj, steps, _, env_states = self.agent.reverse_retime(path[bad_pt[0]:], (0, plan.horizon-1), label=True, start_t=st)
+    # def parse_midcond(self, path):
+    #     breakpoint()
+    #     if not self.check_midcond: return
+    #     bad_pt = self.switch_pts[-1]
+    #     curtask = tuple([val for val in self.cur_tasks[-1] if np.isscalar(val)])
+    #     plan = self.agent.plans[curtask]
+    #     st = bad_pt[1]
+    #     x0 = path[bad_pt[0]].get(STATE_ENUM, st).copy()
+    #     targets = path[bad_pt[0]].targets
+    #     traj, steps, _, env_states = self.agent.reverse_retime(path[bad_pt[0]:], (0, plan.horizon-1), label=True, start_t=st)
 
-        for t in range(len(traj)-1):
-            t = min(t, plan.horizon-1)
-            set_params_attrs(plan.params, self.agent.state_inds, traj[t], t)
+    #     for t in range(len(traj)-1):
+    #         t = min(t, plan.horizon-1)
+    #         set_params_attrs(plan.params, self.agent.state_inds, traj[t], t)
 
-        set_params_attrs(plan.params, self.agent.state_inds, path[bad_pt[0]].get_X(t=st), 0)
-        self.agent.set_symbols(plan, self.cur_tasks[-1], targets=targets)
-        failed_preds = plan.get_failed_preds(tol=self.tol, active_ts=(0, plan.horizon-1))
-        failed_preds = [p for p in failed_preds if (p[1]._rollout or (not p[1]._nonrollout and type(p[1].expr) is not EqExpr))]
+    #     set_params_attrs(plan.params, self.agent.state_inds, path[bad_pt[0]].get_X(t=st), 0)
+    #     self.agent.set_symbols(plan, self.cur_tasks[-1], targets=targets)
+    #     failed_preds = plan.get_failed_preds(tol=self.tol, active_ts=(0, plan.horizon-1))
+    #     failed_preds = [p for p in failed_preds if (p[1]._rollout or (not p[1]._nonrollout and type(p[1].expr) is not EqExpr))]
 
-        if len(failed_preds):
-            valid_ts = np.ones(plan.horizon)
-            for p in failed_preds:
-                for ts in range(max(0, p[2]+p[1].active_range[0]), \
-                                min(p[2]+p[1].active_range[1], len(valid_ts))+1):
-                    valid_ts[ts] = 0.
+    #     if len(failed_preds):
+    #         valid_ts = np.ones(plan.horizon)
+    #         for p in failed_preds:
+    #             for ts in range(max(0, p[2]+p[1].active_range[0]), \
+    #                             min(p[2]+p[1].active_range[1], len(valid_ts))+1):
+    #                 valid_ts[ts] = 0.
 
-            fail_t = len(valid_ts) - 1
-            while fail_t > 0 and valid_ts[fail_t] == 0:
-                fail_t -= 1
-        else:
-            fail_t = plan.horizon - 1
+    #         fail_t = len(valid_ts) - 1
+    #         while fail_t > 0 and valid_ts[fail_t] == 0:
+    #             fail_t -= 1
+    #     else:
+    #         fail_t = plan.horizon - 1
 
-        fail_t = max(0, fail_t)
-        fail_t = min(fail_t, plan.horizon-3)
-        if len(failed_preds):
-            fail_type = 'rollout_midcondition_failure'
-            if fail_t < len(steps):
-                fail_s = bad_pt[0] + steps[fail_t]
-            else:
-                fail_s = bad_pt[0]
+    #     fail_t = max(0, fail_t)
+    #     fail_t = min(fail_t, plan.horizon-3)
+    #     if len(failed_preds):
+    #         fail_type = 'rollout_midcondition_failure'
+    #         if fail_t < len(steps):
+    #             fail_s = bad_pt[0] + steps[fail_t]
+    #         else:
+    #             fail_s = bad_pt[0]
 
-            print('MID COND:', fail_s, fail_t, bad_pt, failed_preds)
-            initial, goal = self.agent.get_hl_info(x0.copy(), targets)
-            plan.start = 0
-            new_node = LLSearchNode(plan.plan_str, 
-                                    prob=plan.prob, 
-                                    domain=plan.domain,
-                                    initial=plan.prob.initial,
-                                    priority=ROLL_PRIORITY,
-                                    ref_plan=plan,
-                                    targets=targets,
-                                    x0=x0,
-                                    expansions=1,
-                                    label='rollout_midcondition_failure',
-                                    refnode=None,
-                                    freeze_ts=fail_t,
-                                    hl=False,
-                                    ref_traj=traj,
-                                    env_state=env_states,
-                                    nodetype='dagger')
-            self.ll_nodes.append(new_node)
+    #         print('MID COND:', fail_s, fail_t, bad_pt, failed_preds)
+    #         # initial, goal = self.agent.get_hl_info(x0.copy(), targets)
+    #         plan.start = 0
+    #         new_node = LLSearchNode(plan.plan_str, 
+    #                                 prob=plan.prob, 
+    #                                 domain=plan.domain,
+    #                                 initial=plan.prob.initial,
+    #                                 priority=ROLL_PRIORITY,
+    #                                 ref_plan=plan,
+    #                                 targets=targets,
+    #                                 x0=x0,
+    #                                 expansions=1,
+    #                                 label='rollout_midcondition_failure',
+    #                                 refnode=None,
+    #                                 freeze_ts=fail_t,
+    #                                 hl=False,
+    #                                 ref_traj=traj,
+    #                                 env_state=env_states,
+    #                                 nodetype='dagger')
+    #         self.ll_nodes.append(new_node)
 
 
     def parse_train_pts(self, train_pts, path, targets, node):

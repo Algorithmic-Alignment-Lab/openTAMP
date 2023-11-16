@@ -16,7 +16,7 @@ class Action(object):
       respectively
     - active_timesteps (tuple of (start_time, end_time))
     """
-    def __init__(self, step_num, name, active_timesteps, params, preds, train_policy=False, linked_action=None):
+    def __init__(self, step_num, name, active_timesteps, params, preds, train_policy=False, linked_action=None, non_deterministic=False):
         self.step_num = step_num
         self.name = name
         self.active_timesteps = active_timesteps
@@ -24,6 +24,7 @@ class Action(object):
         self.preds = preds
         self.train_policy = train_policy
         self.linked_action = linked_action
+        self.non_deterministic = non_deterministic
 
     def __repr__(self):
         return "%d: %s %s %s"%(self.step_num, self.name, self.active_timesteps, " ".join([p.name for p in self.params]))

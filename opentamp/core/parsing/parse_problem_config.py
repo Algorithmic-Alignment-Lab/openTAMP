@@ -5,6 +5,9 @@ from opentamp.core.util_classes.viewer import PyBulletViewer
 
 from opentamp.core.internal_repr import problem, state
 from opentamp.errors_exceptions import ProblemConfigException
+from opentamp.core.util_classes.matrix import DimVector
+
+import numpy as np
 
 try:
     import tensorflow as tf
@@ -239,6 +242,19 @@ class ParseProblemConfig(object):
                     if obj_name in openrave_bodies:
                         params[obj_name].openrave_body = openrave_bodies[obj_name]
                         params[obj_name].geom = params[obj_name].openrave_body._geom
+                    # add in belief attributes
+                    # if "belief" in domain.param_schemas[obj_type].attr_dict:
+                    #     # add belief_pose vec to optimize over
+                    #     init_vec = params[obj_name].belief.samples
+                    #     setattr(params[obj_name], 'pose', init_vec)
+                    #     params[obj_name].attrs.append('pose')
+                    #     params[obj_name]._attr_types['pose'] = np.ndarray
+                    # if "belief_value" in domain.param_schemas[obj_type].attr_dict:
+                    #     # add belief_pose vec to optimize over
+                    #     init_vec = params[obj_name].belief_value.samples
+                    #     setattr(params[obj_name], 'value', init_vec)
+                    #     params[obj_name].attrs.append('value')
+                    #     params[obj_name]._attr_types['value'] = np.ndarray
                 except KeyError as e:
                     raise ProblemConfigException(
                         "Parameter '%s' not defined in domain file." % obj_name

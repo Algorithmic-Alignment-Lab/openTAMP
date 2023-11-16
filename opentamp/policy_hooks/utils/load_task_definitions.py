@@ -1,6 +1,8 @@
 import copy
 import numpy as np
 
+import opentamp
+
 import opentamp.main as main
 from opentamp.core.parsing import parse_domain_config, parse_problem_config
 from opentamp.pma.hl_solver import FDSolver
@@ -29,6 +31,18 @@ def plan_from_str(ll_plan_str, prob_fp, meta_fp, acts_fp, env, openrave_bodies, 
     #plan = hls.get_plan(ll_plan_str, domain, problem)
     plan.d_c = d_c
     return plan
+
+def get_planner_objs(meta_fp, acts_fp, prob_fp):
+    f_m = open(meta_fp)
+    f_a = open(acts_fp)
+    f_p = open(prob_fp)
+    m_c = json.load(f_m)
+    a_c = json.load(f_a)
+    p_c = json.load(f_p)
+    domain = parse_domain_config.ParseDomainConfig.parse(m_c, a_c)
+    problem = parse_problem_config.ParseProblemConfig.parse(p_c, domain, None, {}, visual=False)
+    hls = FDSolver(m_c, a_c) 
+    return domain, problem, hls
 
 def get_tasks(file_name):
     with open(file_name, 'r+') as f:

@@ -161,11 +161,15 @@ class Object(Parameter):
     """
     def __init__(self, attrs=None, attr_types=None, class_types=[]):
         if attrs is not None:
-            assert "name" in attrs and "_type" in attrs and "pose" in attrs
+            assert "name" in attrs and "_type" in attrs and ("pose" in attrs or "belief" in attrs)
         super(Object, self).__init__(attrs=attrs, attr_types=attr_types, class_types=class_types)
 
     def is_defined(self):
-        return self.pose is not "undefined"
+        if hasattr(self, 'pose'):
+            return self.pose is not "undefined"
+        if hasattr(self, 'belief'):
+            return self.belief is not "undefined"
+        return False
 
     def copy(self, new_horizon, reset_free=False):
         new = Object()

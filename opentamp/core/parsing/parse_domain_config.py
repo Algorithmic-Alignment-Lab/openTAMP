@@ -91,8 +91,8 @@ class ParseDomainConfig(object):
         for t in param_schemas: inherit(t, t)
 
         for type_name, attr_dict in list(param_schemas.items()):
-            assert "pose" in attr_dict or "value" in attr_dict
-            obj_or_symbol = ParseDomainConfig._dispatch_obj_or_symbol(attr_dict)
+            assert ("pose" in attr_dict or "value" in attr_dict) or ("belief" in attr_dict)
+            obj_or_symbol = ParseDomainConfig._dispatch_obj_or_symbol(attr_dict)  # for now, beliefs are objects
             param_schemas[type_name] = ParameterSchema(type_name, getattr(parameter, obj_or_symbol), attr_dict, super_types[type_name])
 
         return param_schemas
@@ -238,11 +238,13 @@ class ParseDomainConfig(object):
                 i += 1
             
             for effect in a_dict['eff']:
-                effect_alt = ParseDomainConfig._process_pred(precond, univ_params, excl_params, 'eff', i)
+                effect_alt = ParseDomainConfig._process_pred(effect, univ_params, excl_params, 'eff', i)
                 predicates.append(effect_alt)
                 i += 1
             
-            action_schemas[a_name] = ActionSchema(a_name, horizon, a_dict['params'], univ_params, predicates, excl_params)
+            non_deterministic = a_dict.get("non_deterministic", False)
+
+            action_schemas[a_name] = ActionSchema(a_name, horizon, a_dict['params'], univ_params, predicates, excl_params, non_deterministic=non_deterministic)
 
         return action_schemas
 
@@ -278,7 +280,7 @@ class ParseDomainConfig(object):
     def _dispatch_obj_or_symbol(attr_dict):
         # decide whether this parameter is an Object or Symbol by looking at whether
         # it has an instance attribute named "pose" or one named "value" in the config file
-        if "pose" in attr_dict:
+        if "pose" in attr_dict or "belief" in attr_dict:
             return "Object"
         elif "value" in attr_dict:
             return "Symbol"

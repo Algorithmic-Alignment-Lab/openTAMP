@@ -12,6 +12,7 @@ from opentamp.core.internal_repr.parameter import Object
 from opentamp.core.util_classes.matrix import Vector
 from opentamp.core.util_classes.openrave_body import OpenRAVEBody
 from opentamp.core.util_classes.viewer import OpenRAVEViewer
+import torch
 
 from .ll_solver_OSQP import LLParamOSQP, LLSolverOSQP
 
@@ -127,7 +128,7 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
     # def get_resample_param(self, a):
     #     return a.params[0]
 
-    def backtrack_solve(self, plan, callback=None, verbose=False, n_resamples=5):
+    def backtrack_solve(self, plan, callback=None, verbose=False, n_resamples=5):        
         success = self._backtrack_solve(
             plan, callback, anum=0, verbose=verbose, n_resamples=n_resamples, 
         )
@@ -160,11 +161,18 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
         rs_param = self.get_resample_param(a)
         success = False
         init_free_attrs = plan.get_free_attrs()
+
+        ## if belief-space plan, rollout beliefs over the next action
+        if len(plan.belief_params) > 0:
+            plan.rollout_beliefs(active_ts)
+
+        # fixes the start of the plan
         for param in list(plan.params.values()):
             if param.is_symbol():
                 continue
             for attr in param._free_attrs:
                 param._free_attrs[attr][:, active_ts[0]] = 0.0
+
         def recursive_solve():
             ## don't optimize over any params that are already set
             old_params_free = {}
@@ -173,10 +181,10 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
                 if p.is_symbol():
                     continue
                     # if p not in a.params: continue
-                    old_params_free[p] = p._free_attrs
-                    p._free_attrs = {}
-                    for attr in list(old_params_free[p].keys()):
-                        p._free_attrs[attr] = np.zeros(old_params_free[p][attr].shape)
+                    # old_params_free[p] = p._free_attrs
+                    # p._free_attrs = {}
+                    # for attr in list(old_params_free[p].keys()):
+                    #     p._free_attrs[attr] = np.zeros(old_params_free[p][attr].shape)
                 else:
                     p_attrs = {}
                     p_attrs_2 = {}
@@ -204,9 +212,9 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
             for p in plan.params.values():
                 if p.is_symbol():
                     continue
-                    if p not in a.params:
-                        continue
-                    p._free_attrs = old_params_free[p]
+                    # if p not in a.params:
+                    #     continue
+                    # p._free_attrs = old_params_free[p]
                 else:
                     for attr in p._free_attrs:
                         p._free_attrs[attr][:, active_ts[1]] = old_params_free[p][attr]
@@ -214,6 +222,9 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
                             attr
                         ]
             return success
+        
+        
+
         ### if there is no parameter to resample or some part of rs_param is fixed, then go ahead optimize over this action
         if (
             rs_param is None
@@ -236,9 +247,22 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
             if not success:
                 ## if planning fails we're done
                 return False
+            
+            ## refine belief if belief-space plan
+            if len(plan.belief_params) > 0:
+                if plan.actions[anum].non_deterministic:
+                    ## perform MCMC to update
+                    plan.filter_beliefs(active_ts)
+                else:
+                    ## just propagate beliefs forward, no inference needed
+                    for param in plan.belief_params:
+                        new_samp = torch.cat((param.belief.samples, param.belief.samples[:, :, -1:]), dim=2)
+                        param.belief.samples = new_samp
+
 
             ## no other options, so just return here
             return recursive_solve()
+        
         ### so that this won't be optimized over
         rs_params = rs_param if type(rs_param) is list else [rs_param]
         free_attrs = {}
@@ -256,7 +280,7 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
                         )
             free_attrs[param] = free
 
-        # sampler_begin
+        # sampler begin
 
         robot_poses = self.obj_pose_suggester(plan, anum, resample_size=1, st=st)
 
@@ -268,6 +292,7 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
             callback_a = None
 
         success = False
+
         for rp in robot_poses:
             if type(rs_param) is not list:
                 rp = {rs_param: rp}
@@ -288,12 +313,20 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
                                               force_init=True, init_traj=init_traj)
                 self.child_solver.fixed_objs = []
 
-            # filter beliefs here
-            # rs_params_current_act = [rsp for rsp in rs_params]
-            if len(plan.belief_params) > 0:
-                plan.filter_beliefs(rs_params)
 
             if success:
+                # filters beliefs in belief-space plan
+                if len(plan.belief_params) > 0:
+                    if plan.actions[anum].non_deterministic:
+                        ## perform MCMC to update
+                        plan.filter_beliefs(active_ts)
+                    else:
+                        ## just propagate beliefs forward, no inference needed
+                        for param in plan.belief_params:
+                            new_samp = torch.cat((param.belief.samples, param.belief.samples[:, :, -1:]), dim=2)
+                            param.belief.samples = new_samp
+ 
+
                 if recursive_solve():
                     break
                 else:
@@ -384,6 +417,7 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
                 
                 if success:
                     break
+            
 
             if not success:
                 break
@@ -496,7 +530,7 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
 
             elif priority == -1:
                 """
-                Solve the optimization problem while enforcing every constraints.
+                Solve the optimization problem at the first and last timestep, while enforcing all constraints.
                 """
                 obj_bexprs.extend(self._get_trajopt_obj(plan, active_ts))
                 self._add_obj_bexprs(obj_bexprs)
@@ -519,7 +553,7 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
                     verbose=verbose,
                 )
                 tol = 1e-3
-
+        
         solv = Solver()
         solv.initial_trust_region_size = initial_trust_region_size
         if smoothing:
@@ -895,7 +929,7 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
         ## for debugging
         ignore_preds = []
         
-        original_priority = priority
+        # original_priority = priority
 
         priority = np.maximum(priority, 0)
 
@@ -956,7 +990,6 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
             active_ts = (0, plan.horizon - 1)
 
         for action in plan.actions:
-            true_start, true_end = action.active_timesteps
             action_start, action_end = action.active_timesteps
             ## only add an action
             if action_start >= active_ts[1]:

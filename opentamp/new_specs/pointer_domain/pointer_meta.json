@@ -1,0 +1,23 @@
+{
+    "types": ["Robot", "Target"],
+    "attribute_imports": {
+        "opentamp.core.util_classes.matrix": ["Vector1d", "Vector2d"],
+        "opentamp.core.util_classes.beliefs": ["IsotropicGaussianBelief"]
+    },
+    "predicates_import_path": "opentamp.core.util_classes.namo_grip_predicates",
+    "type_attrs": {
+        "Target": {
+            "belief": "IsotropicGaussianBelief",
+            "pose": "Vector2d"
+        },
+        "Robot": {
+            "pose": "Vector1d"
+        }
+    },
+    "predicates": {
+        "BPointing": ["Robot", "Target"],
+        "ConstantObservation": ["Target"],
+        "CertainPosition": ["Target"],
+        "ConfirmedPosition": ["Target"]
+    }
+}

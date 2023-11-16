@@ -368,6 +368,7 @@ class RolloutServer(Server):
                 n_plans = self._hyperparams['policy_opt']['buffer_sizes']['n_plans'].value
                 save_video = self.id.find('test') >= 0
                 val, path = self.test_hl(save_video=save_video)
+
             if self.run_hl_test: 
                 if self.debug_mode:
                     break # stop iteration after one loop

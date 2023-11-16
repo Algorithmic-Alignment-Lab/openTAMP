@@ -78,3 +78,15 @@ class DimVectorZeroed(Vector):
         # deals with case where obj is zero-dimensional
         obj = obj.reshape((cls.dim, 1))
         return obj
+
+class DimVector(Vector):
+    def __new__(cls, vec):
+        if type(vec) is str:
+            if not vec.endswith(")"):
+                vec += ")"
+            vec = eval(vec)
+        obj = np.array(vec)
+        cls.dim = vec.shape[0]
+        # deals with case where obj is zero-dimensional
+        obj = obj.reshape((cls.dim, 1))
+        return obj
