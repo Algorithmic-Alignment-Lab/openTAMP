@@ -238,7 +238,8 @@ def twostep_f(xs, dist, dim, pts=COL_TS, grad=False, isrobot=False):
         return np.concatenate(res, axis=0)
 
 
-# ensures belief_pose is constant from first step to last
+## ensures belief_pose is constant from first step to last
+## is an *optimistic* constraint, e.g. expected to not hold under replanned observations
 class ConstantObservation(ExprPredicate):
     def __init__(self, name, params, expected_param_types, env=None, sess=None, debug=False):
         ## ConstantObservation Target
@@ -254,7 +255,7 @@ class ConstantObservation(ExprPredicate):
         val = np.zeros((2, 1))
         aff_e = AffExpr(A, b)
         e = EqExpr(aff_e, val)
-        super(ConstantObservation, self).__init__(name, e, attr_inds, params, expected_param_types, active_range=(0, 1), priority=-2)
+        super(ConstantObservation, self).__init__(name, e, attr_inds, params, expected_param_types, active_range=(0, 1), priority=0)
 
 
 class CollisionPredicate(ExprPredicate):
@@ -1184,9 +1185,9 @@ class BPointing(ExprPredicate):
             attr_inds,
             params,
             expected_param_types,
-            tol=0.2,
+            tol=1e-2,
             debug=debug,
-            priority=-1
+            priority=0
         )
 
     def f(self, x):
@@ -1261,13 +1262,15 @@ class CertainPosition(ExprPredicate):
             params,
             expected_param_types,
             debug=debug,
-            priority=-1
+            priority=1
         )
 
     def test(self, time, negated=False, tol=None):
+        diff_vec = self.target.belief.samples[:,:,time].detach().numpy() - self.target.pose[:,time]
+        
         if negated:
-            return not np.sum(np.std(self.target.belief.samples[:,:,time].numpy(), axis=0)) <= 0.4
-        return np.sum(np.std(self.target.belief.samples[:,:,time].numpy(), axis=0)) <= 0.4
+            return not np.sqrt(np.power(diff_vec, 2)).mean() <= 0.2
+        return np.sqrt(np.power(diff_vec, 2)).mean() <= 0.2
 
 class ConfirmedPosition(ExprPredicate):
     def __init__(self, name, params, expected_param_types, env=None, sess=None, debug=False):

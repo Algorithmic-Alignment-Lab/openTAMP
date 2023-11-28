@@ -44,6 +44,7 @@ class OptimalPolicy:
         self.opt_traj = opt_traj
 
 
+    ## optimal policy taken by default is difference between current state and state along optimal trajectory
     def act(self, X, O, t, noise=None):
         u = np.zeros(self.dU)
         for param, attr in self.action_inds:
@@ -315,7 +316,7 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
 
 
     def draw_sample_ts(self, sample, t):
-        breakpoint()
+        # breakpoint()
         if self.viewer is None: return
         plan = self.plans_list[0]
         for p in list(plan.params.values()):
@@ -376,6 +377,8 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
 
         # if hor is None:
         #     hor = plan.horizon if task_f is None else max([p.horizon for p in list(self.plans.values())])
+
+        # breakpoint()
 
         self.T = self.hor
         sample = Sample(self)
@@ -524,6 +527,8 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
             for tname, attr in self.target_inds:
                 self.targets[condition][tname] = targets[self.target_inds[tname, attr]]
             self.target_vecs[condition] = targets
+
+        # breakpoint()
 
         sample = self.sample_task(self.optimal_pol_cls(self.dU, 
                                                        self.action_inds, 
@@ -1043,7 +1048,7 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
                    base_x0=None, 
                    add_noop=True, 
                    prev_hist=None, 
-                   hist_info=None):
+                   hist_info=None):        
         # create static copy of x0
         x0 = x0.copy()
         static_x0 = x0.copy()
@@ -1066,6 +1071,8 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
         for key, val in perm.items():
             rev_perm[val] = key
 
+        # breakpoint()
+        
         opt_traj = np.zeros((et-st+1, self.symbolic_bound))
         if prev_hist is not None: self._x_delta[:] = prev_hist
 
@@ -1113,18 +1120,19 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
         #         t += T - 1
         #         x0 = sample.end_state # sample.get_X(t=sample.T-1)
         #         sample.success = 1. - self.goal_f(0, x0, sample.targets)
-        else:
-            # get a sample of the optimal trajectory 
-            sample = self.sample_optimal_trajectory(x0, task, 0, opt_traj, targets=targets)
-            path.append(sample)
-            sample.discount = 1.
-            sample.opt_strength = 1.
-            sample.opt_suc = True
-            sample.task_start = True
-            sample.draw = True
-            sample.task = task
-            x0 = sample.end_state # sample.get_X(sample.T-1)
-            sample.success = 1. - self.goal_f(0, x0, targets)
+        # else:
+
+        # get a sample of the optimal trajectory 
+        sample = self.sample_optimal_trajectory(x0, task, 0, opt_traj, targets=targets)
+        path.append(sample)
+        sample.discount = 1.
+        sample.opt_strength = 1.
+        sample.opt_suc = True
+        sample.task_start = True
+        sample.draw = True
+        sample.task = task
+        x0 = sample.end_state # sample.get_X(sample.T-1)
+        sample.success = 1. - self.goal_f(0, x0, targets)
 
         path[-1].task_end = True
         path[-1].set(TASK_DONE_ENUM, np.array([0, 1]), t=path[-1].T-1)
@@ -1146,10 +1154,8 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
             path.append(zero_sample)
         end_s = path[-1]
         end_s.task_end = True
-        # get whether or not postconds were respected in the simulator
-        # cost = self.postcond_cost(end_s, task, end_s.T-1, debug=False, x0=base_x0, tol=1e-3)
 
-        # FOR NOW, UNCONDITIONALLY SAVE TRAJECTORIES
+        ## FOR NOW, UNCONDITIONALLY SAVE TRAJECTORIES
         for ind, s in enumerate(path):
             s.opt_strength = 1.
             s._postsuc = True
@@ -1221,7 +1227,7 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
         interp = scipy.interpolate.interp1d(xpts, fpts, axis=0)
 
         x = np.linspace(0, d, int(d / vel))
-        breakpoint()
+        # breakpoint()
         out = interp(x)
         return out
 

@@ -21,7 +21,7 @@ from opentamp.policy_hooks.server import Server
 from opentamp.policy_hooks.search_node import *
 
 import torch
-
+import matplotlib.pyplot as plt
 
 LOG_DIR = 'experiment_logs/'
 
@@ -75,8 +75,6 @@ class MotionServer(Server):
         
         plan = node.curr_plan
 
-        # breakpoint()
-
         # belief-space planning hook
         if 'observation_model' in self._hyperparams.keys():
             plan.set_observation_model(self._hyperparams['observation_model'])
@@ -94,23 +92,25 @@ class MotionServer(Server):
         plan.start = min(plan.start, len(plan.actions)-1)
         ts = (0, plan.actions[plan.start].active_timesteps[0])
 
-        try:
-            failed_prefix = plan.get_failed_preds(active_ts=ts, tol=1e-3)
-        except Exception as e:
-            failed_prefix = ['ERROR IN FAIL CHECK', e]
+        ## NOTE: we allow for failed prefixes of plans, owing to nondeterminisim from random effects
+        ##  in belief-space plans (more things may fail silently because of this...)
+        # try:
+        #     failed_prefix = plan.get_failed_preds(active_ts=ts, tol=1e-3)
+        # except Exception as e:
+        #     failed_prefix = ['ERROR IN FAIL CHECK', e]
 
-        if len(failed_prefix) and node.hl:
-            print('BAD PREFIX! -->', plan.actions[:plan.start], 'FAILED', failed_prefix, node._trace)
-            plan.start = 0
+        # if len(failed_prefix) and node.hl:
+        #     print('BAD PREFIX! -->', plan.actions[:plan.start], 'FAILED', failed_prefix, node._trace)
+        #     plan.start = 0
 
-        ts = (0, plan.actions[plan.start].active_timesteps[0])
+        # ts = (0, plan.actions[plan.start].active_timesteps[0])
         
         ## TODO populates attribute of start of current update, to the current simulator state...
         # if node.freeze_ts <= 0:
         #     set_params_attrs(plan.params, self.agent.state_inds, node.x0, ts[1])
 
         plan.freeze_actions(plan.start)
-        cur_t = node.freeze_ts if node.freeze_ts >= 0 else 0
+        # cur_t = node.freeze_ts if node.freeze_ts >= 0 else 0
 
         # breakpoint()
 
@@ -118,29 +118,35 @@ class MotionServer(Server):
 
 
     def refine_plan(self, node):
+        # breakpoint()
+        
         start_t = time.time()
         if node is None: return
 
         plan = self.gen_plan(node)
+
         if type(plan) is str or not len(plan.actions): return
 
         cur_t = node.freeze_ts if node.freeze_ts >= 0 else 0
         cur_step = 2
         self.n_plans += 1
 
+        # breakpoint()
+
         while cur_t >= 0:
-            path, opt_success = self.collect_trajectory(plan, node, cur_t)
-            # self.log_node_info(node, success, path)
+            path, refine_success, replan_success = self.collect_trajectory(plan, node, cur_t)
+            self.log_node_info(node, replan_success, path)
             prev_t = cur_t
             cur_t -= cur_step
-            if opt_success and len(path) and path[-1].success: continue
+            if (refine_success and replan_success) and len(path) and path[-1].success: continue
 
             # parse the failed predicates for the plan, and push the change to task queue
-            if not opt_success: self.parse_failed(plan, node, prev_t)
+            if not (refine_success and replan_success): self.parse_failed(plan, node, prev_t, replan_fail=not replan_success)
             while len(plan.get_failed_preds((cur_t, cur_t))) and cur_t > 0:
                 cur_t -= 1
 
             node.freeze_ts = cur_t
+
             plan = self.gen_plan(node)
 
 
@@ -154,7 +160,6 @@ class MotionServer(Server):
         self.agent.store_hist_info(node.info)
         
         init_t = time.time()
-        
         
         # success  = self.agent.ll_solver.backtrack_solve(plan, 
         #                                             anum=plan.start, 
@@ -170,40 +175,77 @@ class MotionServer(Server):
         #                                             verbose=verbose,
         #                                             hist_info=node.info)
         
-        # perform initial planning loop
-        goal = np.array([3.0, 3.0])
+        ## TODO: replace goal instantiation with call to GymAgent
+        goal = {'target1': torch.tensor([3.0, 3.0])}
         
-        ## preprocessing for beliefs vector (used for certainty constraints, e.g.)
+        ## preprocessing for beliefs vector (used for certainty constraints, e.g. )
         if plan.start == 0 and len(plan.belief_params) > 0:
-            plan.initialize_obs()
-
+            # breakpoint()
+            print('Planning on new problem')
+            planned_obs = {}
+            
+            for param in plan.belief_params:
+                planned_obs[param.name] = param.belief.dist.sample()
+                param.pose[:, 0] = planned_obs[param.name].detach().numpy()
+            
+            plan.observation_model.set_active_planned_observations(planned_obs)
+        
+        ## disable optimistic predicates for all actions coming before the start of current planning action
+        for anum in range(plan.start):
+            a = plan.actions[anum]
+            for pred_dict in a.preds:
+                if pred_dict['pred'].optimistic:
+                    ## disable the predicate by using no-eval notation
+                    pred_dict['active_timesteps'] = (pred_dict['active_timesteps'][0], pred_dict['active_timesteps'][0]-1)
+                    pred_dict['pred'].active_range = (pred_dict['pred'].active_range[0], pred_dict['pred'].active_range[0]-1)
+        
+        ## reset observations from the beginning
         for param in plan.belief_params:
             param.belief.samples = param.belief.samples[:, :, :plan.actions[plan.start].active_timesteps[0]+1]
-        
-        success = self.agent.ll_solver._backtrack_solve(plan,
+
+        # ## roll out beliefs from the start of the plan again
+        # if len(plan.belief_params) > 0:
+        #     for anum in range(plan.start):
+        #         active_ts = plan.actions[anum].active_timesteps
+
+        #         plan.rollout_beliefs(active_ts)
+                    
+        #         if plan.actions[anum].non_deterministic:
+        #             ## perform MCMC to update
+        #             goal_at_time = {}
+
+        #             for param in plan.belief_params:
+        #                 goal_at_time[param.name] = torch.tensor(param.pose[:, active_ts[1]-1])
+
+        #             plan.filter_beliefs(active_ts, provided_goal=goal_at_time)
+        #         else:
+        #             ## just propagate beliefs forward, no inference needed
+        #             for param in plan.belief_params:
+        #                 new_samp = torch.cat((param.belief.samples, param.belief.samples[:, :, -1:]), dim=2)
+        #                 param.belief.samples = new_samp
+                
+        refine_success = self.agent.ll_solver._backtrack_solve(plan,
                                                       anum=plan.start,
                                                       n_resamples=5,
                                                       init_traj=node.ref_traj,
                                                       st=cur_t)
-        
 
         ## for belief-space replanning, only refine if indeed belief-space, and 
-        if success and len(plan.belief_params) > 0:
-            ## reset beliefs to initial state
-            ## check correctness, and return success if so
+        replan_success = True
+        if refine_success and len(plan.belief_params) > 0:
+            ## reset beliefs to start of plan
             for param in plan.belief_params:
-                param.belief.samples = param.belief.samples[:,:,:1]
+                param.belief.samples = param.belief.samples[:, :, :plan.actions[plan.start].active_timesteps[0]+1]
 
-            ## filter them forward, under the new obs assumption
-            anum = 0
-            for a in plan.actions:
-                active_ts = a.active_timesteps
-
+            ## filter them forward, under the new assumption for the observation
+            for anum in range(plan.start, len(plan.actions)):                
+                active_ts = plan.actions[anum].active_timesteps
+                
                 plan.rollout_beliefs(active_ts)
                 
                 if plan.actions[anum].non_deterministic:
-                    ## perform MCMC to update
-                    plan.filter_beliefs(active_ts, true_goal=goal)
+                    ## perform MCMC to update, using the goal inferred from at the time
+                    plan.filter_beliefs(active_ts, provided_goal=goal)
                 else:
                     ## just propagate beliefs forward, no inference needed
                     for param in plan.belief_params:
@@ -212,46 +254,92 @@ class MotionServer(Server):
                 anum += 1
             
             ## see if plan with new beliefs is still valid
-            failed_preds = plan.get_failed_preds()
-            if len(failed_preds):
-                success = False
+            ## reset the observation to new sample if *NOT* solved
+            fail_step, fail_pred, _ = node.get_failed_pred()
+            if fail_pred:
+                ## replanning has now failed
+                for anum in range(len(plan.actions)):
+                    a = plan.actions[anum]
+                    new_assumed_goal = {}
 
-        breakpoint()
+                    ## reset the true state planned to be a random one, with consistent index across samples
+                    new_goal_idx = np.random.randint(0, param.belief.samples.shape[0])
+                    if a.active_timesteps[0] <= fail_step and fail_step < a.active_timesteps[1]:
+                        for param in plan.belief_params:
+                            ## set new assumed value for planning to sample from belief -- random choice
+                            new_assumed_goal[param.name] = param.belief.samples[new_goal_idx,:,fail_step]
+                            param.pose[:, fail_step] = new_assumed_goal[param.name]
+                            new_assumed_goal[param.name] = torch.tensor(new_assumed_goal[param.name])
 
+                    ## populate with new goal
+                    plan.observation_model.set_active_planned_observations(new_assumed_goal)
+
+                    for pred_dict in a.preds:
+                        ## disable optimistic actions for planning (ones that can change with random effects)
+                        if (pred_dict['active_timesteps'][0] < fail_step and fail_step <= pred_dict['active_timesteps'][1]) and pred_dict['pred'].optimistic:
+                            ## disable the predicate by using no-eval notation
+                            pred_dict['active_timesteps'] = (pred_dict['active_timesteps'][0], pred_dict['active_timesteps'][0]-1)
+                            pred_dict['pred'].active_range = (pred_dict['pred'].active_range[0], pred_dict['pred'].active_range[0]-1)
+
+                replan_success = False
+
+
+        if replan_success and refine_success:
+            print('Success')
+
+            ## if plan only, invoke a breakpoint and inspect the plan statistics
+            if self.plan_only:
+                ## TODO add a general wrapper here
+                print(plan.params['pr2'].pose)
+                print(plan.params['target1'].pose)
+                print(plan.params['target1'].belief.samples.mean(axis=0))
+                print(plan.params['target1'].belief.samples.std(axis=0))
+                for idx in range(plan.params['target1'].belief.samples.shape[2]):
+                    plt.scatter(plan.params['target1'].belief.samples[:,0,idx], plan.params['target1'].belief.samples[:,1,idx], alpha=0.5)
+                    plt.scatter([3.0], [3.0], alpha=1.0, marker='x')
+                    plt.savefig('samps'+str(idx)+'.pdf')
+                    plt.clf()
+                breakpoint()
+
+
+        # TODO: reactivate when reintegrating RolloutServer + Policy stuff
         path = []
-        a_num = plan.start
-        st = plan.actions[a_num].active_timesteps[0]
-        tasks = self.agent.encode_plan(plan)
 
-        for a_num in range(len(plan.actions)):
-            new_path, x0 = self.agent.run_action(plan, 
-                        a_num, 
-                        x0, 
-                        self.agent.target_vecs[0], 
-                        tasks[a_num], 
-                        st,
-                        reset=True, 
-                        save=True, 
-                        record=True)
-            
-            path.extend(new_path)
+        if not self.plan_only and replan_success:
+            ## populate the sample with the entire plan
+            a_num = 0
+            st = plan.actions[a_num].active_timesteps[0]
+            tasks = self.agent.encode_plan(plan)
 
-        end_t = time.time()
-        for step in path:
-            step.wt = wt
+            for a_num in range(len(plan.actions)):
+                new_path, x0 = self.agent.run_action(plan, 
+                            a_num, 
+                            x0, 
+                            self.agent.target_vecs[0], 
+                            tasks[a_num], 
+                            st,
+                            reset=True, 
+                            save=True, 
+                            record=True)
+                
+                path.extend(new_path)
 
-        if success:
-            self.plan_horizons.append(plan.horizon)
-            self.plan_horizons = self.plan_horizons[-5:]
-            self.plan_times.append(end_t-init_t)
-            self.plan_times = self.plan_times[-5:]
+            end_t = time.time()
+            for step in path:
+                step.wt = wt
+
+            if replan_success:
+                self.plan_horizons.append(plan.horizon)
+                self.plan_horizons = self.plan_horizons[-5:]
+                self.plan_times.append(end_t-init_t)
+                self.plan_times = self.plan_times[-5:]
+
+        ## TODO debug logging
+        # self._log_solve_info(path, replan_success, node, plan)
+        return path, refine_success, replan_success
 
 
-        # self._log_solve_info(path, success, node, plan)
-        return path, success
-
-
-    def parse_failed(self, plan, node, prev_t):
+    def parse_failed(self, plan, node, prev_t, replan_fail=False):
         try:
             fail_step, fail_pred, fail_negated = node.get_failed_pred(st=prev_t)
         except:
@@ -261,7 +349,9 @@ class MotionServer(Server):
             print('WARNING: Failure without failed constr?')
             return
 
+        # NOTE: refines also done if linear constraints fail, owing to replanning
         failed_preds = plan.get_failed_preds((prev_t, fail_step+fail_pred.active_range[1]), priority=-1)
+
         if len(failed_preds):
             print('Refine failed with linear constr. viol.', 
                    node._trace, 
@@ -304,11 +394,12 @@ class MotionServer(Server):
 
     def run(self):
         step = 0
+        # breakpoint()
         while not self.stopped:
             node = self.pop_queue(self.in_queue)
             if node is None:
                 time.sleep(0.01)
-                if self.debug_mode:
+                if self.debug or self.plan_only:
                     break # stop iteration after one loop
 
                 continue
@@ -319,33 +410,31 @@ class MotionServer(Server):
             self.refine_plan(node)
 
             inv_cov = self.agent.get_inv_cov()
-            
-            # TODO reactivate policy server data issuing, not giving prim-obs information for now so rapidly going to shit (idea -- prob file)
+                        
+            if not self.plan_only:
+                ## send LL samples to policy server, if training imitation
+                for task in self.agent.task_list:
+                    data = self.agent.get_opt_samples(task, clear=True)
+                    opt_samples = [sample for sample in data if not len(sample.source_label) or sample.source_label.find('opt') >= 0]
+                    expl_samples = [sample for sample in data if len(sample.source_label) and sample.source_label.find('opt') < 0]
+                    
+                    if len(opt_samples):
+                        self.update_policy(opt_samples, label='optimal', inv_cov=inv_cov, task=task)
 
-            # send LL samples to policy server, if training imitation
-            # for task in self.agent.task_list:
-            #     data = self.agent.get_opt_samples(task, clear=True)
-            #     opt_samples = [sample for sample in data if not len(sample.source_label) or sample.source_label.find('opt') >= 0]
-            #     expl_samples = [sample for sample in data if len(sample.source_label) and sample.source_label.find('opt') < 0]
+                    if len(expl_samples):
+                        self.update_policy(expl_samples, label='dagger', inv_cov=inv_cov, task=task)
+
+                # send HL samples to policy server
+                self.run_hl_update()
                 
-                # add samples TODO DEBUG PRIM OBS ISSUE HERE
-                # if len(opt_samples):
-                #     self.update_policy(opt_samples, label='optimal', inv_cov=inv_cov, task=task)
+                # # add cont sample TODO where does this apply?
+                cont_samples = self.agent.get_cont_samples()
+                if len(cont_samples):
+                    self.update_cont_network(cont_samples)
 
-                # if len(expl_samples):
-                #     self.update_policy(expl_samples, label='dagger', inv_cov=inv_cov, task=task)
+                step += 1
 
-            # send HL samples to policy server
-            # self.run_hl_update()
-            
-            # # add cont sample TODO where does this apply?
-            # cont_samples = self.agent.get_cont_samples()
-            # if len(cont_samples):
-            #     self.update_cont_network(cont_samples)
-
-            # step += 1
-
-            if self.debug_mode:
+            if self.debug or self.plan_only:
                 break # stop iteration after one loop
 
 

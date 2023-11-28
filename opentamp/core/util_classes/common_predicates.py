@@ -53,6 +53,7 @@ class ExprPredicate(Predicate):
         tol=DEFAULT_TOL,
         priority=0,
         debug=False,
+        optimistic=False
     ):
         """
         attr_inds is a dictionary that maps each parameter name to a
@@ -67,6 +68,7 @@ class ExprPredicate(Predicate):
             env=env,
             active_range=active_range,
             priority=priority,
+            optimistic=optimistic
         )
         self.expr = expr
         self.attr_inds = attr_inds

@@ -83,7 +83,8 @@ class PolicyServer(object):
         self.dataset.policy = self.policy_opt.get_policy(self.task)
         self.dataset.data_buf.policy = self.policy_opt.get_policy(self.task)
         self.policy_opt.data_loader = self.data_gen
-        self.debug_mode = hyperparams['debug']
+        self.debug = hyperparams['debug']
+        self.plan_only = hyperparams['plan_only']
 
         self._setup_log_info()
 
@@ -232,7 +233,12 @@ class PolicyServer(object):
         while not self.stopped:
             self.iters += 1
             init_t = time.time()
-            self.dataset.wait_for_data()
+            if self.debug or self.plan_only:
+                if self.dataset.should_wait_for_data():
+                    break
+            else:
+                self.dataset.wait_for_data()
+
             self.dataset.load_data()
             #if self.task == 'primitive': print('\nTime to get update:', time.time() - init_t, '\n')
             self.policy_opt.update(self.task)
@@ -286,7 +292,7 @@ class PolicyServer(object):
                     f.write(str(pp_info))
                     f.write('\n\n')
             
-            if self.debug_mode:
+            if self.debug or self.plan_only:
                 break # stop iteration after one loop
             
             #if self.task == 'primitive': print('\nTime to finish update:', time.time() - init_t, '\n')

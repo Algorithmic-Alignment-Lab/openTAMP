@@ -34,7 +34,7 @@ class TaskServer(Server):
         while not self.stopped:
             self.find_task_plan()
             time.sleep(0.01)
-            if self.debug_mode:
+            if self.debug or self.plan_only:
                 break # stop iteration after one loop
 
 
@@ -108,7 +108,7 @@ class TaskServer(Server):
         #     #    import ipdb; ipdb.set_trace()
         #     new_init = self.agent.hl_solver.apply_action(plan.prob.initial, plan.actions[0])
         #     import ipdb; ipdb.set_trace()
-
+        
         self.push_queue(new_node, self.motion_queue)
 
 

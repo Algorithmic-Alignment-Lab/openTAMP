@@ -8,9 +8,8 @@ import torch
 
 import pyro
 import pyro.distributions as dist
-from opentamp.core.util_classes.beliefs import belief_constructor
 import pyro.poutine as poutine
-from pyro.infer import MCMC, NUTS, HMC
+from pyro.infer import MCMC, NUTS, HMC, Trace_ELBO, TraceEnum_ELBO, SVI
 
 
 MAX_PRIORITY = 3
@@ -45,7 +44,7 @@ class Plan(object):
         self.hl_preds = []
         self.start = 0
         self.num_belief_samples = 100
-        self.num_warmup_steps = 100
+        self.num_warmup_steps = 50
         if determine_free:
             self._determine_free_attrs()
 
@@ -221,7 +220,7 @@ class Plan(object):
                 
         ## for effects of nondeterministic actions, failure is the final t/s of latest nondeterministic action
         max_nondet_t = 0
-        for action in self.action:
+        for action in self.actions:
             ## if action is nondeterministic and predicate is an effect of this nondeterministic action
             if action.non_deterministic and \
                 (pred in action.preds and pred.active_range[0] > action.active_timesteps[0]):
@@ -329,7 +328,7 @@ class Plan(object):
         """
         pre = []
         for act in self.actions:
-            if act.active_timesteps[1] < fail_step or (act.active_timesteps[0] <= fail_step and act.non_deterministic):
+            if act.active_timesteps[1] < fail_step or (act.active_timesteps[1] <= fail_step and act.non_deterministic):
                 act_str = str(act).split()
                 act_str = " ".join(act_str[:2] + act_str[4:]).upper()
                 pre.append(act_str)
@@ -391,55 +390,111 @@ class Plan(object):
     #         prior_samples.append(param.belief.dist.sample_n(self.num_belief_samples * param.belief.size))
     #     return prior_samples  # all sampled tensors
 
+    ## approximates empirical distribution in-dist with beliefs from the prior timestep
+    ## adapted from Pyro tutorial part 1
+    # def fit_estimation(self):
+        # breakpoint()
+
+        # def model(data):
+        #     pyro.sample("belief_samp", dist.Empirical(data, torch.ones((data.shape[0],))))
+        
+        # setup the optimizer
+
+    def construct_current_obs_vec(self):
+        ## find maximal belief_index
+        max_belief_idx = 0
+        for param in self.belief_params:
+            if self.belief_inds[param.name][1] > max_belief_idx:
+                max_belief_idx = self.belief_inds[param.name][1]
+
+        obs_vec = torch.zeros((max_belief_idx,))
+
+        for param in self.belief_params:
+            obs_vec[self.belief_inds[param.name][0]: self.belief_inds[param.name][1]] = self.observation_model.get_active_planned_observations()[param.name]
+        
+        return obs_vec
+
+    def construct_global_belief_vec(self, vals):
+        ## find maximal belief_index
+        max_belief_idx = 0
+        for param in self.belief_params:
+            if self.belief_inds[param.name][1] > max_belief_idx:
+                max_belief_idx = self.belief_inds[param.name][1]
+
+        global_belief_vec = torch.zeros((max_belief_idx,))
+
+        for param in self.belief_params:
+            global_belief_vec[self.belief_inds[param.name][0]: self.belief_inds[param.name][1]] = vals[param.name]
+        
+        return global_belief_vec
+                
+                
     ## based off of hmm example from pyro docs
-    def sample_mcmc_run(self, active_ts, true_goal=None):        
-        ## if not conditioning on sim observations, get a max-likelihood observation as returned by the observation model        
-        obs = self.observation_model(copy.deepcopy(self.params), active_ts, true_goal=true_goal)  # hardcode for now while debugging
+    def sample_mcmc_run(self, active_ts, provided_goal=None):        
+        ## fit a parametric approximation to the current belief state
+        self.observation_model.fit_approximation(copy.deepcopy(self.params))
+
+        ## get random observation through the forward model
+        obs = self.observation_model.forward_model(copy.deepcopy(self.params), active_ts, provided_state=provided_goal)
+
+        
+        # if provided_obs:
+        #     ## get the assumed observation in planning (typically in replans)  
+        #     obs = provided_obs
+        # else:
+        #     ## get the observations assumed to be seen through planning (sampled or MLO)
+        #     obs = self.observation_model.get_active_planned_observations()
+
+        
+        print('Provided goal: ', provided_goal)
+        print('Conditioning on: ', obs)
         
         ## create a model conditioned on the observed data in the course of executing plan
-        conditional_model = poutine.condition(self.observation_model, data=obs)
+        conditional_model = poutine.condition(self.observation_model.forward_model, data=obs)
 
-        kernel = NUTS(conditional_model)
+        ## No-U Turn Sampling kernel
+        kernel = NUTS(conditional_model, full_mass=True)
 
+        ## get a vector of overall observations, as a warmstart for MCMC
+        global_vec = self.construct_global_belief_vec(provided_goal)
+
+        print('Init inference to: ', global_vec)
+
+        ## initialize and run MCMC (conditions on the active observation)
         mcmc = MCMC(
             kernel,
             num_samples=self.num_belief_samples,
             warmup_steps=self.num_warmup_steps,
-            num_chains=1
+            num_chains=1,
+            initial_params={'belief_global': global_vec}
         )
 
-        ## run HMC on plan
         mcmc.run(copy.deepcopy(self.params), active_ts)
         mcmc.summary(prob=0.95)  # for diagnostics
 
         return mcmc.get_samples()
 
-    def initialize_obs(self, anum=0, override_obs=None):
-        for param in self.belief_params:
-            if override_obs:
-                param.pose[:, self.actions[anum].active_timesteps[0]] = override_obs[param.name]
-            else:
-                param.pose[:, self.actions[anum].active_timesteps[0]] = self.observation_model(copy.deepcopy(self.params), self.actions[anum].active_timesteps)[param.name]
+    # def initialize_obs(self, anum=0, override_obs=None):
+    #     for param in self.belief_params:
+    #         if override_obs:
+    #             param.pose[:, step] = override_obs[param.name]
+    #         else:
+    #             param.pose[:, step] = self.observation_model(copy.deepcopy(self.params), self.actions[anum].active_timesteps)[param.name]
 
     ## called once per high-level action execution
-    def filter_beliefs(self, active_ts, true_goal=None):
+    def filter_beliefs(self, active_ts, provided_goal=None):
         # max-likelihood feeds back on object here        
-
-        global_samples = self.sample_mcmc_run(active_ts, true_goal=true_goal)['belief_global']
+        global_samples = self.sample_mcmc_run(active_ts, provided_goal=provided_goal)['belief_global']
 
         if len(global_samples.shape) == 1:
             global_samples = global_samples.unsqueeze(dim=1)
 
         assert len(global_samples.shape) == 2
         
-        # TODO convert into
-
-        # self.joint_belief = belief_constructor(samples=global_samples, size=self.joint_belief.size)
-
         # update all of the param samples objects, as induced from the belief object
         running_idx = 0
         for param in self.belief_params:
-            new_samp = torch.cat((param.belief.samples, torch.unsqueeze(global_samples[:, running_idx: running_idx+param.belief.size], 2)), dim=2)
+            new_samp = torch.cat((param.belief.samples, torch.unsqueeze(global_samples[:, self.belief_inds[param.name][0]:self.belief_inds[param.name][1]], 2)), dim=2)
             param.belief.samples = new_samp
             running_idx += param.belief.size
 

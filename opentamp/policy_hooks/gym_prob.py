@@ -33,19 +33,8 @@ def get_prim_choices(task_list=None):
 
 def get_vector(config):
     # construct state_include, action_include, target_include vectors
-    state_vector_include = {
-        'pr2': ['pose']
-    }
-    
-    action_vector_include = {
-        'pr2': ['pose']
-    }
-
-    target_vector_include = {
-        'target': ['pose']
-    }
-
-    return state_vector_include, action_vector_include, target_vector_include 
+    concr_gym_env = config['gym_env_type']()
+    return concr_gym_env.get_vector()
 
 
 def get_random_initial_state_vec(config, plans, dX, state_inds, conditions):

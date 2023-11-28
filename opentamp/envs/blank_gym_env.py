@@ -23,6 +23,22 @@ class BlankEnvWrapper(BlankEnv):
     def reset_to_state(self, state):
         pass
 
+    def get_vector(self):
+        state_vector_include = {
+        'pr2': ['pose']
+        }
+        
+        action_vector_include = {
+            'pr2': ['pose']
+        }
+
+        target_vector_include = {
+            'target': ['pose']
+        }
+        
+        return state_vector_include, action_vector_include, target_vector_include
+
+
     # reset without affecting the simulator
     def get_random_init_state(self):
         return np.array([0.0]*1)

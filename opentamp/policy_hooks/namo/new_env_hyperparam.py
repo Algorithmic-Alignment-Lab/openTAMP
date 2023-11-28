@@ -64,10 +64,10 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
         'agent_type': GymAgent,
         'mp_solver_type': ToySolver,
         'll_solver_type': ToySolver,
-        'meta_file': opentamp.__path__._path[0] + '/new_specs/pointer_domain_deterministic/pointer_meta.json',
-        'acts_file': opentamp.__path__._path[0] + '/new_specs/pointer_domain_deterministic/pointer_acts.json',
-        'prob_file': opentamp.__path__._path[0] + '/new_specs/pointer_domain_deterministic/pointer_prob.json',
-        'observation_model': pointer_observation,
+        'meta_file': opentamp.__path__._path[0] + '/new_specs/pointer_domain/pointer_meta.json',
+        'acts_file': opentamp.__path__._path[0] + '/new_specs/pointer_domain/pointer_acts.json',
+        'prob_file': opentamp.__path__._path[0] + '/new_specs/pointer_domain/pointer_prob.json',
+        'observation_model': PointerObservationModel(),
         # 'max_likelihood_obs': [2, 2],
         # 'goal_type': 'moveto', 
         'n_dirs': N_DIRS,
@@ -78,6 +78,7 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
         # remove the sensor
         'obs_include': [#utils.LIDAR_ENUM,
                         utils.MJC_SENSOR_ENUM,
+                        utils.ONEHOT_GOAL_ENUM
                         # utils.TASK_ENUM,
                         # utils.END_POSE_ENUM,
                         # #utils.EE_ENUM,
@@ -87,8 +88,8 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
 
         'prim_obs_include': [
                             #  utils.THETA_VEC_ENUM,
-                             #utils.VEL_ENUM,
-                             utils.ONEHOT_GOAL_ENUM,
+                            utils.MJC_SENSOR_ENUM,
+                            utils.ONEHOT_GOAL_ENUM
                              ],
 
         'prim_out_include': list(prob.get_prim_choices().keys()),

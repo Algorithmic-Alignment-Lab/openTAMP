@@ -13,6 +13,7 @@ class GymAgent(TAMPAgent):
     def reset(self, m):
         self.cur_state = self.gym_env.reset()
 
+    ## TODO: verify that this is general?
     def fill_sample(self, cond, sample, mp_state, t, task, fill_obs=False, targets=None):
         sample.set(utils.MJC_SENSOR_ENUM, self.cur_state, t)
         sample.set(utils.STATE_ENUM, self.cur_state, t)
@@ -34,7 +35,7 @@ class GymAgent(TAMPAgent):
     def get_state(self):
         return self.cur_state
 
-    # TODO look up what this actually does
-    # have since removed all instances of this
+    ## TODO look up what this actually does
+    ## NOTE have since removed all instances of this
     def set_symbols(self, plan, task, anum=0, cond=0, targets=None, st=0):
         pass

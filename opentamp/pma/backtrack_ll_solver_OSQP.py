@@ -252,7 +252,7 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
             if len(plan.belief_params) > 0:
                 if plan.actions[anum].non_deterministic:
                     ## perform MCMC to update
-                    plan.filter_beliefs(active_ts)
+                    plan.filter_beliefs(active_ts, provided_goal=plan.observation_model.get_active_planned_observations())
                 else:
                     ## just propagate beliefs forward, no inference needed
                     for param in plan.belief_params:
@@ -319,7 +319,7 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
                 if len(plan.belief_params) > 0:
                     if plan.actions[anum].non_deterministic:
                         ## perform MCMC to update
-                        plan.filter_beliefs(active_ts)
+                        plan.filter_beliefs(active_ts, provided_goal=plan.observation_model.get_active_planned_observations())
                     else:
                         ## just propagate beliefs forward, no inference needed
                         for param in plan.belief_params:

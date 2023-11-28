@@ -163,7 +163,7 @@ class LLSearchNode(SearchNode):
             anum = 0
         else:
             anum, last_action = [(a_ind, a) for a_ind, a in enumerate(self.curr_plan.actions) if a.active_timesteps[0] <= i and a.active_timesteps[1] >= i][0]
-            if self.keep_failed:
+            if self.keep_failed or last_action.non_deterministic:
                 anum += 1
                 last_action = self.curr_plan.actions[anum]
             state_timestep = last_action.active_timesteps[0]
@@ -192,21 +192,25 @@ class LLSearchNode(SearchNode):
     def gen_plan(self, hl_solver, bodies, ll_solver):
         self.curr_plan = hl_solver.get_plan(self.plan_str, self.domain, self.concr_prob, self.initial)
 
+        # breakpoint()
+
         if type(self.curr_plan) is str: return
         if not len(self.curr_plan.actions):
             print('Search node found bad plan for', self.initial, self.plan_str, self.concr_prob.goal)
 
         if self.ref_plan is not None:
             self.curr_plan.start = self.ref_plan.start
-            fill_a = self.ref_plan.start - 1 if self.freeze_ts <= 0 else self.ref_plan.start
+            fill_a = self.ref_plan.start
             if fill_a >= 0:
                 self.curr_plan.fill(self.ref_plan, amax=fill_a)
+
 
             for param in self.curr_plan.params.values():
                 if not param.is_symbol(): continue
                 for attr in param._free_attrs:
                     ref_sym = getattr(self.ref_plan.params[param.name], attr)
                     getattr(param, attr)[:] = ref_sym[:]
+
 
             if self.freeze_ts > 0:
                 self.curr_plan.freeze_ts = self.freeze_ts
@@ -243,7 +247,7 @@ class LLSearchNode(SearchNode):
             anum = self.curr_plan.start
             st = self.curr_plan.actions[anum].active_timesteps[0]
         et = self.curr_plan.horizon - 1
-        failed_pred = self.curr_plan.get_failed_pred(active_ts=(st,et), hl_ignore=True, tol=1e-3)
+        failed_pred = self.curr_plan.get_failed_pred(active_ts=(st,et), hl_ignore=True, tol=1e-2)
         if hasattr(failed_pred[1], 'hl_ignore') and failed_pred[1].hl_ignore:
             return failed_pred[2], None, failed_pred[0]
         return failed_pred[2], failed_pred[1], failed_pred[0]

@@ -205,6 +205,8 @@ def load_agent(config):
     config['prim_dims'] = prim_dims
     config['aux_bounds'] = aux_bounds
 
+    # breakpoint()
+
     config['target_f'] = None # prob.get_next_target
     config['encode_f'] = None # prob.sorting_state_encode
 

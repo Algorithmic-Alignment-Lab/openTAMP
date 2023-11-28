@@ -275,6 +275,7 @@ class MultiProcessMain(object):
 
     # single-threaded deployment of servers
     def start_servers_debug(self):
+        # breakpoint()
         while True:
             for server in self.debug_servers:
                 server.run()
@@ -343,7 +344,10 @@ class MultiProcessMain(object):
             new_hyperparams = copy.copy(hyperparams)
             new_hyperparams['scope'] = task
             new_hyperparams['id'] = task
-            self.create_server(PolicyServer, new_hyperparams)
+            if hyperparams['debug'] and not hyperparams['plan_only']:
+                self.create_server_debug(PolicyServer, new_hyperparams)
+            else:
+                self.create_server(PolicyServer, new_hyperparams)
 
 
     def create_servers(self, hyperparams, start_idx=0):
@@ -358,9 +362,9 @@ class MultiProcessMain(object):
         for n in range(hyperparams['num_task']):
             self._create_server(hyperparams, TaskServer, start_idx+n)
 
-        for n in range(hyperparams['num_rollout']):
-            if not hyperparams['plan_only']:
-                self._create_server(hyperparams, RolloutServer, start_idx+n)
+        # for n in range(hyperparams['num_rollout']):
+        #     if not hyperparams['plan_only']:
+        #         self._create_server(hyperparams, RolloutServer, start_idx+n)
 
         hyperparams = copy.copy(hyperparams)
         hyperparams['run_hl_test'] = True
@@ -368,14 +372,14 @@ class MultiProcessMain(object):
         hyperparams['view'] = hyperparams['view_policy']
         hyperparams['load_render'] = hyperparams['load_render'] or hyperparams['view_policy']
         hyperparams['check_precond'] = False
-        if hyperparams['debug']:
+        if hyperparams['debug'] and not hyperparams['plan_only']:
             self.create_server_debug(RolloutServer, copy.copy(hyperparams))
         elif not hyperparams['plan_only']:
             self.create_server(RolloutServer, copy.copy(hyperparams))
 
         hyperparams['id'] = 'moretest'
         hyperparams['view'] = False
-        if hyperparams['debug']:
+        if hyperparams['debug'] and not hyperparams['plan_only']:
             self.create_server_debug(RolloutServer, copy.copy(hyperparams))
         elif not hyperparams['plan_only']:
             self.create_server(RolloutServer, copy.copy(hyperparams))
@@ -385,7 +389,7 @@ class MultiProcessMain(object):
             hyperparams['view'] = False 
             hyperparams['load_render'] = hyperparams['load_render'] or hyperparams['view_policy']
             hyperparams['check_precond'] = False
-            if hyperparams['debug']:
+            if hyperparams['debug'] and not hyperparams['plan_only']:
                 self.create_server_debug(RolloutServer, copy.copy(hyperparams))
             elif not hyperparams['plan_only']:
                 self.create_server(RolloutServer, copy.copy(hyperparams))
