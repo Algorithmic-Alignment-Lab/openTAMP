@@ -44,14 +44,14 @@ class OptimalPolicy:
         self.opt_traj = opt_traj
 
 
-    ## optimal policy taken by default is difference between current state and state along optimal trajectory
+    ## optimal policy simply emulates the actions taken along the optimal trajectory, as given here
     def act(self, X, O, t, noise=None):
         u = np.zeros(self.dU)
         for param, attr in self.action_inds:
             if t < len(self.opt_traj) - 1:
-                u[self.action_inds[param, attr]] = self.opt_traj[t + 1, self.state_inds[param, attr]] - X[self.state_inds[param, attr]]
+                u[self.action_inds[param, attr]] = self.opt_traj[t + 1, self.action_inds[param, attr]] 
             else:
-                u[self.action_inds[param, attr]] = self.opt_traj[-1, self.state_inds[param, attr]] - X[self.state_inds[param, attr]]
+                u[self.action_inds[param, attr]] = self.opt_traj[-1, self.action_inds[param, attr]]
         return u
 
 
@@ -1071,7 +1071,6 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
         for key, val in perm.items():
             rev_perm[val] = key
 
-        # breakpoint()
         
         opt_traj = np.zeros((et-st+1, self.symbolic_bound))
         if prev_hist is not None: self._x_delta[:] = prev_hist
@@ -1080,15 +1079,19 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
         self.target_vecs[0] = targets
         cur_hist = prev_hist.copy() if prev_hist is not None else self._x_delta.copy()
         static_hist = cur_hist.copy()
-        for pname, attr in self.state_inds:
+        
+        for pname, attr in self.action_inds:
             # populate opt-trajectory, x0, base_x0, and cur_history with static versions of these variables
             if plan.params[pname].is_symbol(): continue
-            opt_traj[:,self.state_inds[perm.get(pname, pname), attr]] = getattr(plan.params[pname], attr)[:,st:et+1].T
+            opt_traj[:,self.action_inds[perm.get(pname, pname), attr]] = getattr(plan.params[pname], attr)[:,st:et+1].T
+        
+        for pname, attr in self.state_inds:
+            if plan.params[pname].is_symbol(): continue
             x0[self.state_inds[perm.get(pname, pname), attr]] = static_x0[self.state_inds[pname, attr]]
             base_x0[self.state_inds[perm.get(pname, pname), attr]] = static_base[self.state_inds[pname, attr]]
             cur_hist[:, self.state_inds[perm.get(pname, pname), attr]] = static_hist[:, self.state_inds[pname, attr]]
 
-        # fill in _x_delta, historical info, and optioanally reset the sate
+        # fill in _x_delta, historical info, and optioanally reset the state
         if reset: self.reset_to_state(x0)
         self._x_delta[:] = cur_hist
         if hist_info is not None:
@@ -1122,7 +1125,7 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
         #         sample.success = 1. - self.goal_f(0, x0, sample.targets)
         # else:
 
-        # get a sample of the optimal trajectory 
+        # get a sample of the optimal trajectory, populate statistics
         sample = self.sample_optimal_trajectory(x0, task, 0, opt_traj, targets=targets)
         path.append(sample)
         sample.discount = 1.
@@ -1155,7 +1158,7 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
         end_s = path[-1]
         end_s.task_end = True
 
-        ## FOR NOW, UNCONDITIONALLY SAVE TRAJECTORIES
+        ## FOR NOW, UNCONDITIONALLY SAVE TRAJECTORIES (ASSUME ALL SUCCEEDED)
         for ind, s in enumerate(path):
             s.opt_strength = 1.
             s._postsuc = True

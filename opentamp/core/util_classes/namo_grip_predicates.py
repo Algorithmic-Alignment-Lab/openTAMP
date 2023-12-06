@@ -1185,7 +1185,7 @@ class BPointing(ExprPredicate):
             attr_inds,
             params,
             expected_param_types,
-            tol=1e-2,
+            tol=5e-2,
             debug=debug,
             priority=0
         )
@@ -1269,8 +1269,8 @@ class CertainPosition(ExprPredicate):
         diff_vec = self.target.belief.samples[:,:,time].detach().numpy() - self.target.pose[:,time]
         
         if negated:
-            return not np.sqrt(np.power(diff_vec, 2)).mean() <= 0.2
-        return np.sqrt(np.power(diff_vec, 2)).mean() <= 0.2
+            return not np.sqrt(np.power(diff_vec, 2)).mean() <= 0.1
+        return np.sqrt(np.power(diff_vec, 2)).mean() <= 0.1
 
 class ConfirmedPosition(ExprPredicate):
     def __init__(self, name, params, expected_param_types, env=None, sess=None, debug=False):

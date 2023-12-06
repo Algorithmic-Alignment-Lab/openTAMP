@@ -16,9 +16,6 @@ from opentamp.policy_hooks.utils.policy_solver_utils import *
 from opentamp.policy_hooks.server import Server
 from opentamp.policy_hooks.search_node import *
 
-
-EXPAND_LIMIT = 10
-
 class TaskServer(Server):
     def __init__(self, hyperparams):
         os.nice(1)
@@ -41,6 +38,12 @@ class TaskServer(Server):
     def find_task_plan(self):
         node = self.pop_queue(self.task_queue)
         if node is None or node.expansions > EXPAND_LIMIT:
+            # if node is None:
+            #     breakpoint()
+            
+            # if node is not None:
+            #     breakpoint()
+            
             if len(self.prob_queue):
                 x, targets = self.prob_queue.pop()
                 node = self.spawn_problem(x, targets)
@@ -77,6 +80,8 @@ class TaskServer(Server):
                 f.write(str(info))
 
             return
+        
+        # breakpoint()
  
         new_node = LLSearchNode(plan_str, 
                                 prob=node.concr_prob, 
@@ -90,7 +95,8 @@ class TaskServer(Server):
                                 label=node.label,
                                 refnode=node,
                                 nodetype=node.nodetype,
-                                info=node.info)
+                                info=node.info,
+                                replan_start=node.replan_start)
 
 
         # if self.config['seq']:

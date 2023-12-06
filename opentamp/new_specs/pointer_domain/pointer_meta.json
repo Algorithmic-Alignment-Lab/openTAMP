@@ -2,12 +2,12 @@
     "types": ["Robot", "Target"],
     "attribute_imports": {
         "opentamp.core.util_classes.matrix": ["Vector1d", "Vector2d"],
-        "opentamp.core.util_classes.beliefs": ["MixedIsotropic2DGaussianPrior"]
+        "opentamp.core.util_classes.beliefs": ["Isotropic2DGaussianPrior"]
     },
     "predicates_import_path": "opentamp.core.util_classes.namo_grip_predicates",
     "type_attrs": {
         "Target": {
-            "belief": "MixedIsotropic2DGaussianPrior",
+            "belief": "Isotropic2DGaussianPrior",
             "pose": "Vector2d"
         },
         "Robot": {

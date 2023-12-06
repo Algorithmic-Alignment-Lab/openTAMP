@@ -11,20 +11,20 @@ python3 -W ignore policy_hooks/run_training.py -c policy_hooks.namo.new_env_hype
                                                 -retime -vel 0.3 -eta 5 -softev \
                                                 -lr_schedule adaptive \
                                                 -imwidth 256 -imheight 256 \
-                                                -obs_del -hist_len 2 -prim_first_wt 20 -lr 0.0002 \
+                                                -hist_len 2 -prim_first_wt 20 -lr 0.0002 \
                                                 -hllr 0.001 -lldec 0.0001 -hldec 0.0004 \
                                                 -add_noop 2 --permute_hl 1 \
                                                 -expl_wt 10 -expl_eta 4 \
                                                 -col_coeff 0.0 \
-                                                -motion 1 \
+                                                -motion 2 \
                                                 -n_gpu 0 \
                                                 -rollout 0 \
-                                                -task 1 \
+                                                -task 2 \
                                                 -post -pre \
                                                 -warm 100 \
                                                 -neg_ratio 0. -opt_ratio 0.9 -dagger_ratio 0.1 \
-						-descr pointer_test_log \
-                                                -plan_only
+						-descr pointer_pilot_w_sim \
+                                                -debug
 
 # sleep 1800 
 # pkill -f run_train -9

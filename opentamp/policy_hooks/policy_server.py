@@ -271,7 +271,7 @@ class PolicyServer(object):
                 mu, obs, prc = self.dataset.get_batch(label=lab, val=True)
                 if len(mu): self.val_losses[lab].append(self.policy_opt.check_validation(mu, obs, prc, task=self.task)[0])
 
-            if not self.iters % write_freq:
+            if not self.iters % write_freq or (self.debug or self.plan_only):
                 self.policy_opt.write_shared_weights([self.task])
                 if len(self.continuous_opts) and self.task not in ['cont', 'primitive', 'label']:
                     self.policy_opt.read_shared_weights(['cont'])
@@ -285,7 +285,7 @@ class PolicyServer(object):
                 if not self.iters % write_freq and self.task in ['cont', 'primitive']:
                     self.dataset.write_data(n_data=1024)
 
-            if not self.iters % write_freq and len(self.val_losses['all']):
+            if (not self.iters % write_freq or (self.debug or self.plan_only)) and len(self.val_losses['all']):
                 with open(self.policy_opt_log, 'a+') as f:
                     info = self.get_log_info()
                     pp_info = pprint.pformat(info, depth=60)

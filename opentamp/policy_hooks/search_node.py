@@ -38,7 +38,7 @@ class SearchNode(object):
         raise NotImplementedError("Override this.")
 
 class HLSearchNode(SearchNode):
-    def __init__(self, abs_prob, domain, concr_prob, priority=0, prefix=None, label='', llnode=None, x0=None, targets=None, expansions=0, nodetype='optimal', info={}):
+    def __init__(self, abs_prob, domain, concr_prob, priority=0, prefix=None, label='', llnode=None, x0=None, targets=None, expansions=0, nodetype='optimal', info={}, replan_start=None):
         self.abs_prob = abs_prob
         self.domain = domain
         self.concr_prob = concr_prob
@@ -55,6 +55,7 @@ class HLSearchNode(SearchNode):
         self.info = info
         if llnode is not None:
             self._trace.extend(llnode._trace)
+        self.replan_start = replan_start
 
     # def is_hl_node(self):
     #     return True
@@ -71,7 +72,7 @@ class HLSearchNode(SearchNode):
     #     return plan_obj
 
 class LLSearchNode(SearchNode):
-    def __init__(self, plan_str, domain, prob, initial, priority=1, keep_failed=False, ref_plan=None, x0=None, targets=None, expansions=0, label='', refnode=None, freeze_ts=-1, hl=True, ref_traj=[], nodetype='optimal', env_state=None, info={}):
+    def __init__(self, plan_str, domain, prob, initial, priority=1, keep_failed=False, ref_plan=None, x0=None, targets=None, expansions=0, label='', refnode=None, freeze_ts=-1, hl=True, ref_traj=[], nodetype='optimal', env_state=None, info={}, replan_start=None):
         self.curr_plan = 'no plan'
         self.plan_str = plan_str
         self.domain = domain
@@ -99,6 +100,7 @@ class LLSearchNode(SearchNode):
         # This is useful if trajectories are rolled out online and you do not wish to perform state resets
         self.keep_failed = keep_failed
         self.expansions = expansions
+        self.replan_start = replan_start
 
 
     def parse_state(self, plan, failed_preds, ts, all_preds=[]):
@@ -247,7 +249,7 @@ class LLSearchNode(SearchNode):
             anum = self.curr_plan.start
             st = self.curr_plan.actions[anum].active_timesteps[0]
         et = self.curr_plan.horizon - 1
-        failed_pred = self.curr_plan.get_failed_pred(active_ts=(st,et), hl_ignore=True, tol=1e-2)
+        failed_pred = self.curr_plan.get_failed_pred(active_ts=(st,et), hl_ignore=True, tol=5e-2)
         if hasattr(failed_pred[1], 'hl_ignore') and failed_pred[1].hl_ignore:
             return failed_pred[2], None, failed_pred[0]
         return failed_pred[2], failed_pred[1], failed_pred[0]

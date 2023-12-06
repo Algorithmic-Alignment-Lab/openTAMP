@@ -73,12 +73,11 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
         'n_dirs': N_DIRS,
         'gym_env_type': BlankEnvWrapper,
 
-        'state_include': [utils.MJC_SENSOR_ENUM],
-
+        'state_include': [utils.STATE_ENUM],
         # remove the sensor
         'obs_include': [#utils.LIDAR_ENUM,
                         utils.MJC_SENSOR_ENUM,
-                        utils.ONEHOT_GOAL_ENUM
+                        # utils.ONEHOT_GOAL_ENUM
                         # utils.TASK_ENUM,
                         # utils.END_POSE_ENUM,
                         # #utils.EE_ENUM,
@@ -89,7 +88,7 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
         'prim_obs_include': [
                             #  utils.THETA_VEC_ENUM,
                             utils.MJC_SENSOR_ENUM,
-                            utils.ONEHOT_GOAL_ENUM
+                            # utils.ONEHOT_GOAL_ENUM
                              ],
 
         'prim_out_include': list(prob.get_prim_choices().keys()),
@@ -98,7 +97,7 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
                 # utils.OBJ_POSE_ENUM: 2,
                 # utils.TARG_POSE_ENUM: 2,
                 # utils.LIDAR_ENUM: N_DIRS,
-                utils.MJC_SENSOR_ENUM: 1,
+                utils.MJC_SENSOR_ENUM: BlankEnvWrapper().observation_space.shape[0],
                 # utils.EE_ENUM: 2,
                 # utils.END_POSE_ENUM: 2,
                 # utils.GRIPPER_ENUM: 1,
@@ -107,7 +106,7 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
                 # utils.THETA_VEC_ENUM: 2,
                 # utils.GRASP_ENUM: N_GRASPS,
                 # utils.GOAL_ENUM: 2*no,
-                utils.ONEHOT_GOAL_ENUM: no*NUM_TARGS,
+                # utils.ONEHOT_GOAL_ENUM: no*NUM_TARGS,
                 # utils.INGRASP_ENUM: no,
                 # utils.TRUETASK_ENUM: 2,
                 # utils.TRUEOBJ_ENUM: no,

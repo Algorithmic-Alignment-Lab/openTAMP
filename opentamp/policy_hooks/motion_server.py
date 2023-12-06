@@ -20,6 +20,7 @@ from opentamp.policy_hooks.utils.policy_solver_utils import *
 from opentamp.policy_hooks.server import Server
 from opentamp.policy_hooks.search_node import *
 
+
 import torch
 import matplotlib.pyplot as plt
 
@@ -135,13 +136,17 @@ class MotionServer(Server):
 
         while cur_t >= 0:
             path, refine_success, replan_success = self.collect_trajectory(plan, node, cur_t)
-            self.log_node_info(node, replan_success, path)
+            
+            ## if plan about to fail since not hitting expansion limit
+            if node.expansions >= EXPAND_LIMIT or (replan_success and refine_success):
+                self.log_node_info(node, replan_success, path)
+            
             prev_t = cur_t
             cur_t -= cur_step
             if (refine_success and replan_success) and len(path) and path[-1].success: continue
 
             # parse the failed predicates for the plan, and push the change to task queue
-            if not (refine_success and replan_success): self.parse_failed(plan, node, prev_t, replan_fail=not replan_success)
+            if not (refine_success and replan_success): self.parse_failed(plan, node, prev_t)
             while len(plan.get_failed_preds((cur_t, cur_t))) and cur_t > 0:
                 cur_t -= 1
 
@@ -176,12 +181,11 @@ class MotionServer(Server):
         #                                             hist_info=node.info)
         
         ## TODO: replace goal instantiation with call to GymAgent
-        goal = {'target1': torch.tensor([3.0, 3.0])}
         
         ## preprocessing for beliefs vector (used for certainty constraints, e.g. )
         if plan.start == 0 and len(plan.belief_params) > 0:
-            # breakpoint()
             print('Planning on new problem')
+            
             planned_obs = {}
             
             for param in plan.belief_params:
@@ -189,7 +193,16 @@ class MotionServer(Server):
                 param.pose[:, 0] = planned_obs[param.name].detach().numpy()
             
             plan.observation_model.set_active_planned_observations(planned_obs)
+
+            node.replan_start = 0
+
+            ## get a true belief state, to plan against in the problem
+            self.agent.gym_env.resample_belief_true()
         
+        ## get the true state of belief variables from sim
+        if len(plan.belief_params) > 0:
+            goal = self.agent.gym_env.belief_true
+
         ## disable optimistic predicates for all actions coming before the start of current planning action
         for anum in range(plan.start):
             a = plan.actions[anum]
@@ -199,30 +212,10 @@ class MotionServer(Server):
                     pred_dict['active_timesteps'] = (pred_dict['active_timesteps'][0], pred_dict['active_timesteps'][0]-1)
                     pred_dict['pred'].active_range = (pred_dict['pred'].active_range[0], pred_dict['pred'].active_range[0]-1)
         
+
         ## reset observations from the beginning
         for param in plan.belief_params:
             param.belief.samples = param.belief.samples[:, :, :plan.actions[plan.start].active_timesteps[0]+1]
-
-        # ## roll out beliefs from the start of the plan again
-        # if len(plan.belief_params) > 0:
-        #     for anum in range(plan.start):
-        #         active_ts = plan.actions[anum].active_timesteps
-
-        #         plan.rollout_beliefs(active_ts)
-                    
-        #         if plan.actions[anum].non_deterministic:
-        #             ## perform MCMC to update
-        #             goal_at_time = {}
-
-        #             for param in plan.belief_params:
-        #                 goal_at_time[param.name] = torch.tensor(param.pose[:, active_ts[1]-1])
-
-        #             plan.filter_beliefs(active_ts, provided_goal=goal_at_time)
-        #         else:
-        #             ## just propagate beliefs forward, no inference needed
-        #             for param in plan.belief_params:
-        #                 new_samp = torch.cat((param.belief.samples, param.belief.samples[:, :, -1:]), dim=2)
-        #                 param.belief.samples = new_samp
                 
         refine_success = self.agent.ll_solver._backtrack_solve(plan,
                                                       anum=plan.start,
@@ -233,12 +226,14 @@ class MotionServer(Server):
         ## for belief-space replanning, only refine if indeed belief-space, and 
         replan_success = True
         if refine_success and len(plan.belief_params) > 0:
+            print('Refining from: ', node.replan_start)    
+
             ## reset beliefs to start of plan
             for param in plan.belief_params:
-                param.belief.samples = param.belief.samples[:, :, :plan.actions[plan.start].active_timesteps[0]+1]
+                param.belief.samples = param.belief.samples[:, :, :plan.actions[node.replan_start].active_timesteps[0]+1]
 
             ## filter them forward, under the new assumption for the observation
-            for anum in range(plan.start, len(plan.actions)):                
+            for anum in range(node.replan_start, len(plan.actions)):
                 active_ts = plan.actions[anum].active_timesteps
                 
                 plan.rollout_beliefs(active_ts)
@@ -267,9 +262,10 @@ class MotionServer(Server):
                     if a.active_timesteps[0] <= fail_step and fail_step < a.active_timesteps[1]:
                         for param in plan.belief_params:
                             ## set new assumed value for planning to sample from belief -- random choice
-                            new_assumed_goal[param.name] = param.belief.samples[new_goal_idx,:,fail_step]
-                            param.pose[:, fail_step] = new_assumed_goal[param.name]
+                            new_assumed_goal[param.name] = param.belief.samples[new_goal_idx,:,a.active_timesteps[0]]
+                            param.pose[:, a.active_timesteps[0]] = new_assumed_goal[param.name]
                             new_assumed_goal[param.name] = torch.tensor(new_assumed_goal[param.name])
+                        node.replan_start = anum
 
                     ## populate with new goal
                     plan.observation_model.set_active_planned_observations(new_assumed_goal)
@@ -305,7 +301,7 @@ class MotionServer(Server):
         # TODO: reactivate when reintegrating RolloutServer + Policy stuff
         path = []
 
-        if not self.plan_only and replan_success:
+        if not self.plan_only and (refine_success and replan_success):
             ## populate the sample with the entire plan
             a_num = 0
             st = plan.actions[a_num].active_timesteps[0]
@@ -314,11 +310,11 @@ class MotionServer(Server):
             for a_num in range(len(plan.actions)):
                 new_path, x0 = self.agent.run_action(plan, 
                             a_num, 
-                            x0, 
+                            x0,
                             self.agent.target_vecs[0], 
                             tasks[a_num], 
                             st,
-                            reset=True, 
+                            reset=True,
                             save=True, 
                             record=True)
                 
@@ -328,7 +324,7 @@ class MotionServer(Server):
             for step in path:
                 step.wt = wt
 
-            if replan_success:
+            if (refine_success and replan_success):
                 self.plan_horizons.append(plan.horizon)
                 self.plan_horizons = self.plan_horizons[-5:]
                 self.plan_times.append(end_t-init_t)
@@ -339,7 +335,7 @@ class MotionServer(Server):
         return path, refine_success, replan_success
 
 
-    def parse_failed(self, plan, node, prev_t, replan_fail=False):
+    def parse_failed(self, plan, node, prev_t):
         try:
             fail_step, fail_pred, fail_negated = node.get_failed_pred(st=prev_t)
         except:
@@ -360,7 +356,7 @@ class MotionServer(Server):
                    len(node.ref_traj), 
                    node.label,)
 
-            return
+            # return ## NOTE: altered return logic here, so all failures hit expansion limit
 
         print('Refine failed:', 
               plan.get_failed_preds((0, fail_step+fail_pred.active_range[1])), 
@@ -376,6 +372,7 @@ class MotionServer(Server):
         n_problem = node.get_problem(fail_step, fail_pred, fail_negated)
         abs_prob = self.agent.hl_solver.translate_problem(n_problem, goal=node.concr_prob.goal)
         prefix = node.curr_plan.prefix(fail_step)
+        # breakpoint()
         hlnode = HLSearchNode(abs_prob,
                              node.domain,
                              n_problem,
@@ -387,7 +384,8 @@ class MotionServer(Server):
                              expansions=node.expansions+1,
                              label=self.id,
                              nodetype=node.nodetype,
-                             info=node.info)
+                             info=node.info, 
+                             replan_start=node.replan_start)
         self.push_queue(hlnode, self.task_queue)
         print(self.id, 'Failed to refine, pushing to task node.')
 
@@ -427,7 +425,7 @@ class MotionServer(Server):
                 # send HL samples to policy server
                 self.run_hl_update()
                 
-                # # add cont sample TODO where does this apply?
+                # add cont sample TODO where does this apply?
                 cont_samples = self.agent.get_cont_samples()
                 if len(cont_samples):
                     self.update_cont_network(cont_samples)

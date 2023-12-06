@@ -78,6 +78,7 @@ GRIP_CMD_ENUM = 72
 RIGHT_VEL_ENUM = 73
 LEFT_VEL_ENUM = 74
 QPOS_ENUM = 75
+BELIEF_GLOBAL_ENUM = 76
 
 OBJ_ENUMS = {}
 for i in range(100):
@@ -128,6 +129,9 @@ POSE = 2
 VEL = 3
 ACC = 4
 JOINT = 5
+
+## Misc Constant
+EXPAND_LIMIT = 20
 
 
 def get_state_action_inds(plan, robot_name, attr_map, x_params={}, u_params={}):
