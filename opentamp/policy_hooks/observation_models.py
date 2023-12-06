@@ -128,25 +128,24 @@ class PointerObservationModel(ObservationModel):
             raise ValueError(site["name"])
 
 
-        def initialize(seed):
-            global global_guide, svi
-            data=params['target1'].belief.samples[:, :, -1]
+        def initialize():
+            # global global_guide, svi
+            # data=params['target1'].belief.samples[:, :, -1]
             pyro.clear_param_store()
-            global_guide = AutoDelta(
-                poutine.block(self.approx_model, expose=["weights", "locs", "scales"]),
-                init_loc_fn=init_loc_fn,
-            )
-            adam_params = {"lr": 0.1, "betas": [0.8, 0.99]}
-            optimizer = pyro.optim.Adam(adam_params)
-
-            svi = SVI(self.approx_model, global_guide, optimizer, loss=TraceEnum_ELBO(max_plate_nesting=1))
-            return svi.loss(self.approx_model, global_guide, data)
-
 
         # Choose the best among 100 random initializations.
-        loss, seed = min((initialize(seed), seed) for seed in range(100))
-        initialize(seed)
+        # loss, seed = min((initialize(seed), seed) for seed in range(100))
+        initialize()
         # print(f"seed = {seed}, initial_loss = {loss}")
+
+        global_guide = AutoDelta(
+            poutine.block(self.approx_model, expose=["weights", "locs", "scales"]),
+            init_loc_fn=init_loc_fn,
+        )
+        adam_params = {"lr": 0.1, "betas": [0.8, 0.99]}
+        optimizer = pyro.optim.Adam(adam_params)
+
+        svi = SVI(self.approx_model, global_guide, optimizer, loss=TraceEnum_ELBO(max_plate_nesting=1))
 
         ## setup the inference algorithm
         nsteps = 1000  ## NOTE: causes strange bugs when run too long (weights concentrate to 1)
