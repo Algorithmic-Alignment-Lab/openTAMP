@@ -61,20 +61,20 @@ class PointerObservationModel(ObservationModel):
     @config_enumerate
     def approx_model(self, data):
         ## Global variable (weight on either cluster)
-        weights = pyro.sample("weights"+str(os.getpid()), dist.Dirichlet(5 * torch.ones(2).to(DEVICE)))
+        weights = pyro.sample("weights"+str(os.getpid()), dist.Dirichlet(5 * torch.ones(2).to(DEVICE))).to(DEVICE)
 
         ## Different Locs and Scales for each
         with pyro.plate("components"+str(os.getpid()), 2):
             ## Uninformative prior on locations
-            locs = pyro.sample("locs"+str(os.getpid()), dist.MultivariateNormal(torch.tensor([3.0, 0.0]).to(DEVICE), 20.0 * torch.eye(2).to(DEVICE)))
-            scales = pyro.sample("scales"+str(os.getpid()), dist.LogNormal(0.0, 10.0))
+            locs = pyro.sample("locs"+str(os.getpid()), dist.MultivariateNormal(torch.tensor([3.0, 0.0]).to(DEVICE), 20.0 * torch.eye(2).to(DEVICE))).to(DEVICE)
+            scales = pyro.sample("scales"+str(os.getpid()), dist.LogNormal(0.0, 10.0)).to(DEVICE)
 
         with pyro.plate("data"+str(os.getpid()), len(data)):
             ## Local variables
-            assignment = pyro.sample("mode_assignment"+str(os.getpid()), dist.Categorical(weights))
-            stack_eye = torch.tile(torch.eye(2).unsqueeze(dim=0), dims=(100, 1, 1))
-            stack_scale = torch.tile(scales[assignment].unsqueeze(dim=1).unsqueeze(dim=2), dims=(1, 2, 2))
-            cov_tensor = stack_eye * stack_scale
+            assignment = pyro.sample("mode_assignment"+str(os.getpid()), dist.Categorical(weights)).to(DEVICE)
+            stack_eye = torch.tile(torch.eye(2).unsqueeze(dim=0), dims=(100, 1, 1)).to(DEVICE)
+            stack_scale = torch.tile(scales[assignment].unsqueeze(dim=1).unsqueeze(dim=2), dims=(1, 2, 2)).to(DEVICE)
+            cov_tensor = (stack_eye * stack_scale).to(DEVICE)
             pyro.sample("belief_global"+str(os.getpid()), dist.MultivariateNormal(locs[assignment], cov_tensor), obs=data.to(DEVICE))
 
     def forward_model(self, params, active_ts, provided_state=None):        
@@ -118,11 +118,11 @@ class PointerObservationModel(ObservationModel):
             data=params['target1'].belief.samples[:, :, -1]
             if site["name"] == "weights"+str(os.getpid()):
                 # Initialize weights to uniform.
-                return torch.ones(2) / 2
+                return (torch.ones(2) / 2).to(DEVICE)
             if site["name"] == "scales"+str(os.getpid()):
-                return torch.ones(2)
+                return torch.ones(2).to(DEVICE)
             if site["name"] == "locs"+str(os.getpid()):
-                return torch.tensor([[3., 3.], [3., -3.]])
+                return torch.tensor([[3., 3.], [3., -3.]]).to(DEVICE)
             raise ValueError(site["name"])
 
 
