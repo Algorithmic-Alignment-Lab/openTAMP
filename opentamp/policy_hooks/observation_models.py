@@ -9,6 +9,7 @@ from pyro.infer.autoguide import AutoDelta
 import numpy as np
 import os
 
+DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 class ObservationModel(object):
     approx_params : None  ## parameters into the parametric approximation for the current belief state
@@ -60,12 +61,12 @@ class PointerObservationModel(ObservationModel):
     @config_enumerate
     def approx_model(self, data):
         ## Global variable (weight on either cluster)
-        weights = pyro.sample("weights"+str(os.getpid()), dist.Dirichlet(5 * torch.ones(2)))
+        weights = pyro.sample("weights"+str(os.getpid()), dist.Dirichlet(5 * torch.ones(2).to(DEVICE)))
 
         ## Different Locs and Scales for each
         with pyro.plate("components"+str(os.getpid()), 2):
             ## Uninformative prior on locations
-            locs = pyro.sample("locs"+str(os.getpid()), dist.MultivariateNormal(torch.tensor([3.0, 0.0]), 20.0 * torch.eye(2)))
+            locs = pyro.sample("locs"+str(os.getpid()), dist.MultivariateNormal(torch.tensor([3.0, 0.0]).to(DEVICE), 20.0 * torch.eye(2).to(DEVICE)))
             scales = pyro.sample("scales"+str(os.getpid()), dist.LogNormal(0.0, 10.0))
 
         with pyro.plate("data"+str(os.getpid()), len(data)):
@@ -74,7 +75,7 @@ class PointerObservationModel(ObservationModel):
             stack_eye = torch.tile(torch.eye(2).unsqueeze(dim=0), dims=(100, 1, 1))
             stack_scale = torch.tile(scales[assignment].unsqueeze(dim=1).unsqueeze(dim=2), dims=(1, 2, 2))
             cov_tensor = stack_eye * stack_scale
-            pyro.sample("belief_global"+str(os.getpid()), dist.MultivariateNormal(locs[assignment], cov_tensor), obs=data)
+            pyro.sample("belief_global"+str(os.getpid()), dist.MultivariateNormal(locs[assignment], cov_tensor), obs=data.to(DEVICE))
 
     def forward_model(self, params, active_ts, provided_state=None):        
         ray_width = np.pi / 4  ## has 45-degree field of view on either side
