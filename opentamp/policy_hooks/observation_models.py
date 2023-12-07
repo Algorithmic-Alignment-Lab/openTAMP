@@ -140,13 +140,13 @@ class PointerObservationModel(ObservationModel):
             poutine.block(self.approx_model, expose=["weights"+str(os.getpid()), "locs"+str(os.getpid()), "scales"+str(os.getpid())]),
             init_loc_fn=init_loc_fn,
         )
-        adam_params = {"lr": 0.1, "betas": [0.8, 0.99]}
+        adam_params = {"lr": 0.01, "betas": [0.99, 0.3]}
         optimizer = pyro.optim.Adam(adam_params)
 
         svi = SVI(self.approx_model, global_guide, optimizer, loss=TraceEnum_ELBO(max_plate_nesting=1))
 
         ## setup the inference algorithm
-        nsteps = 1000  ## NOTE: causes strange bugs when run too long (weights concentrate to 1)
+        nsteps = 200  ## NOTE: causes strange bugs when run too long (weights concentrate to 1)
 
         ## do gradient steps, TODO update with genreal belief signature 
         for i in range(nsteps):

@@ -42,10 +42,10 @@ cat_dist = dist.Categorical(probs=torch.tensor([0.75, 0.25]))
 stack_eye = torch.tile(torch.eye(2).unsqueeze(dim=0), dims=(2, 1, 1))
 stack_scale = torch.tile(torch.tensor([1, 1]).unsqueeze(dim=1).unsqueeze(dim=2), dims=(1, 2, 2))
 cov_tensor = stack_eye * stack_scale
-batched_multivar = dist.MultivariateNormal(loc=torch.tensor([[4., 2.],[3., 0.]]), covariance_matrix=cov_tensor)
+batched_multivar = dist.MultivariateNormal(loc=torch.tensor([[3., 3.],[3., -3.]]), covariance_matrix=cov_tensor)
 mix_dist = dist.MixtureSameFamily(cat_dist, batched_multivar)
 
-data = mix_dist.sample_n(100)
+data = mix_dist.sample_n(200)
 
 def init_loc_fn(site):
     if site["name"] == "weights":
@@ -65,13 +65,13 @@ def model(data):
     ## Different Locs and Scales for each
     with pyro.plate("components", 2):
         ## Uninformative prior on locations
-        locs = pyro.sample("locs", dist.MultivariateNormal(torch.tensor([3.0, 0.0]), 20*torch.eye(2)))
+        locs = pyro.sample("locs", dist.MultivariateNormal(torch.tensor([3.0, 0.0]), 10*torch.eye(2)))
         scales = pyro.sample("scales", dist.LogNormal(0.0, 10.0))
 
     with pyro.plate("data", len(data)):
         ## Local variables
         assignment = pyro.sample("mode_assignment", dist.Categorical(weights))
-        stack_eye = torch.tile(torch.eye(2).unsqueeze(dim=0), dims=(100, 1, 1))
+        stack_eye = torch.tile(torch.eye(2).unsqueeze(dim=0), dims=(200, 1, 1))
         stack_scale = torch.tile(scales[assignment].unsqueeze(dim=1).unsqueeze(dim=2), dims=(1, 2, 2))
         cov_tensor = stack_eye * stack_scale
         pyro.sample("belief_global", dist.MultivariateNormal(locs[assignment], cov_tensor), obs=data)
@@ -82,7 +82,8 @@ def model(data):
 # initialize(seed)
 # print(f"seed = {seed}, initial_loss = {loss}")
 
-adam_params = {"lr": 0.001, "betas": [0.8, 0.99]}
+# adam_params = {"lr": 0.01, "betas": [0.8, 0.99]}
+adam_params = {"lr": 0.01, "betas": [0.99, 0.3]}
 optimizer = pyro.optim.Adam(adam_params)
 guide = AutoDelta(
         poutine.block(model, expose=["weights", "locs", "scales"]),
@@ -92,7 +93,7 @@ guide = AutoDelta(
 svi = SVI(model, guide, optimizer, loss=TraceEnum_ELBO(max_plate_nesting=1))
 
 ## setup the inference algorithm
-nsteps = 1000  ## NOTE: causes strange bugs when run too long (weights concentrate to 1)
+nsteps = 200  ## NOTE: causes strange bugs when run too long (weights concentrate to 1)
 
 ## do gradient steps, TODO update with genreal belief signature 
 for _ in range(nsteps):

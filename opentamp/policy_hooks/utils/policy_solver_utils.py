@@ -131,7 +131,7 @@ ACC = 4
 JOINT = 5
 
 ## Misc Constant
-EXPAND_LIMIT = 20
+EXPAND_LIMIT = 40
 
 
 def get_state_action_inds(plan, robot_name, attr_map, x_params={}, u_params={}):
