@@ -9,7 +9,8 @@ from pyro.infer.autoguide import AutoDelta
 import numpy as np
 import os
 
-DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
+# DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
+DEVICE = 'cpu'
 
 class ObservationModel(object):
     approx_params : None  ## parameters into the parametric approximation for the current belief state
@@ -75,7 +76,7 @@ class PointerObservationModel(ObservationModel):
             stack_eye = torch.tile(torch.eye(2).unsqueeze(dim=0), dims=(100, 1, 1)).to(DEVICE)
             stack_scale = torch.tile(scales[assignment].unsqueeze(dim=1).unsqueeze(dim=2), dims=(1, 2, 2)).to(DEVICE)
             cov_tensor = (stack_eye * stack_scale).to(DEVICE)
-            pyro.sample("belief_global"+str(os.getpid()), dist.MultivariateNormal(locs[assignment], cov_tensor), obs=data.to(DEVICE))
+            pyro.sample("belief_global"+str(os.getpid()), dist.MultivariateNormal(locs[assignment].to(DEVICE), cov_tensor), obs=data.to(DEVICE))
 
     def forward_model(self, params, active_ts, provided_state=None):        
         ray_width = np.pi / 4  ## has 45-degree field of view on either side
@@ -149,10 +150,10 @@ class PointerObservationModel(ObservationModel):
 
         ## do gradient steps, TODO update with genreal belief signature 
         for i in range(nsteps):
-            loss = svi.step(params['target1'].belief.samples[:, :, -1])
+            loss = svi.step(params['target1'].belief.samples[:, :, -1].to(DEVICE))
             # print(global_guide(params['target1'].belief.samples[:, :, -1]))
 
-        pars = global_guide(params['target1'].belief.samples[:, :, -1])
+        pars = global_guide(params['target1'].belief.samples[:, :, -1].to(DEVICE))
         
         new_p = {}
 
