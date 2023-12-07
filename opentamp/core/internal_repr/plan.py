@@ -437,18 +437,18 @@ class Plan(object):
     ## based off of hmm example from pyro docs
     def sample_mcmc_run(self, active_ts, provided_goal=None):                
         ## fit a parametric approximation to the current belief state
-        # mc_lock.acquire()
+        mc_lock.acquire()
 
-        # print('Acquired lock')
+        print('Acquired lock')
         
         self.observation_model.fit_approximation(copy.deepcopy(self.params))
 
         ## get random observation through the forward model
         obs = self.observation_model.forward_model(copy.deepcopy(self.params), active_ts, provided_state=provided_goal)
 
-        # print('Releasing lock')
+        print('Releasing lock')
 
-        # mc_lock.release()
+        mc_lock.release()
         
         # if provided_obs:
         #     ## get the assumed observation in planning (typically in replans)  

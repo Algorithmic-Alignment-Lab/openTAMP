@@ -155,8 +155,6 @@ class PointerObservationModel(ObservationModel):
         
         new_p = {}
 
-        print(pars)
-
         ## need to detach for observation_model to be serializable
         for p in ['weights', 'locs', 'scales']:
             new_p[p] = pars[p+str(os.getpid())].detach()
