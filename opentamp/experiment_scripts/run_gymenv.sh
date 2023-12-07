@@ -18,7 +18,7 @@ python3 -W ignore -m cProfile -o profile_out policy_hooks/run_training.py -c pol
                                                 -col_coeff 0.0 \
                                                 -motion 8 \
                                                 -n_gpu 0 \
-                                                -rollout 0 \
+                                                -rollout 1 \
                                                 -task 1 \
                                                 -post -pre \
                                                 -warm 100 \

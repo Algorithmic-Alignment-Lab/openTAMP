@@ -13,6 +13,7 @@ class BlankEnv(Env):
         self.curr_state = np.array([0.0]*1)
         self.curr_obs = np.array([0.0]*2)
         self.dist = self.assemble_dist()
+        self.resample_belief_true()
 
     def assemble_dist(self):
         weights = torch.tensor([0.5,0.5])

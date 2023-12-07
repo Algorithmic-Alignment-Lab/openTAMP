@@ -33,7 +33,7 @@ import opentamp.policy_hooks.utils.policy_solver_utils as utils
 from opentamp.policy_hooks.utils.file_utils import load_config, check_dirs
 
 
-def spawn_server(cls, hyperparams, load_at_spawn=False):
+def spawn_server(cls, hyperparams, mc_lock, load_at_spawn=False):
     if load_at_spawn:
         new_config, config_mod = load_config(hyperparams['args'])
         new_config.update(hyperparams)
@@ -45,6 +45,7 @@ def spawn_server(cls, hyperparams, load_at_spawn=False):
         hyperparams['policy_opt']['share_buffer'] = True
         hyperparams['policy_opt']['buffers'] = hyperparams['buffers']
         hyperparams['policy_opt']['buffer_sizes'] = hyperparams['buffer_sizes']
+        hyperparams['mc_lock'] = mc_lock
 
         if cls is PolicyServer \
            and hyperparams['scope'] is 'cont' \
@@ -79,8 +80,10 @@ class MultiProcessMain(object):
             setup_dirs(self.config, self.config['args'])
             check_dirs(self.config)
             self.init(new_config)
-
+        
         self.debug_servers = []
+
+        self.mc_lock = mp.Lock()  ## used to block MCMC calls 
 
 
     def init(self, config):
@@ -304,7 +307,7 @@ class MultiProcessMain(object):
             sys.exit(0)
 
         if process:
-            p = Process(target=spawn_server, args=(server_cls, hyperparams, True))
+            p = Process(target=spawn_server, args=(server_cls, hyperparams, self.mc_lock, True))
             p.name = str(server_cls) + '_run_training'
             p.daemon = True
             self.processes.append(p)
@@ -451,6 +454,9 @@ class MultiProcessMain(object):
 
     def start(self, kill_all=False):
         #self.check_dirs()
+
+        self.config['mc_lock'] = mp.Lock()
+
         setup_dirs(self.config, self.config['args'])
         if self.config.get('share_buffer', True):
             self.allocate_shared_buffers(self.config)

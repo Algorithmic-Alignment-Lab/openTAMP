@@ -198,6 +198,8 @@ class MotionServer(Server):
 
             ## get a true belief state, to plan against in the problem
             self.agent.gym_env.resample_belief_true()
+
+            plan.set_mc_lock(self.config['mc_lock'])
         
         ## get the true state of belief variables from sim
         if len(plan.belief_params) > 0:

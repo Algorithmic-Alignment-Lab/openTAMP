@@ -45,6 +45,7 @@ class Plan(object):
         self.start = 0
         self.num_belief_samples = 100
         self.num_warmup_steps = 50
+        self.mc_lock = None
         if determine_free:
             self._determine_free_attrs()
 
@@ -380,7 +381,7 @@ class Plan(object):
 
     def set_observation_model(self, observation_model):
         self.observation_model = observation_model
-
+    
     # def set_max_likelihood_obs(self, max_likelihood_obs):
     #     self.max_likelihood_obs = max_likelihood_obs
 
@@ -428,15 +429,26 @@ class Plan(object):
         
         return global_belief_vec
                 
-                
+    
+    def set_mc_lock(self, lock):
+        global mc_lock
+        mc_lock = lock
+
     ## based off of hmm example from pyro docs
-    def sample_mcmc_run(self, active_ts, provided_goal=None):        
+    def sample_mcmc_run(self, active_ts, provided_goal=None):                
         ## fit a parametric approximation to the current belief state
+        # mc_lock.acquire()
+
+        # print('Acquired lock')
+        
         self.observation_model.fit_approximation(copy.deepcopy(self.params))
 
         ## get random observation through the forward model
         obs = self.observation_model.forward_model(copy.deepcopy(self.params), active_ts, provided_state=provided_goal)
 
+        # print('Releasing lock')
+
+        # mc_lock.release()
         
         # if provided_obs:
         #     ## get the assumed observation in planning (typically in replans)  
@@ -471,7 +483,7 @@ class Plan(object):
 
         mcmc.run(copy.deepcopy(self.params), active_ts)
         mcmc.summary(prob=0.95)  # for diagnostics
-
+        
         return mcmc.get_samples()
 
     # def initialize_obs(self, anum=0, override_obs=None):
@@ -483,6 +495,7 @@ class Plan(object):
 
     ## called once per high-level action execution
     def filter_beliefs(self, active_ts, provided_goal=None):
+
         # max-likelihood feeds back on object here        
         global_samples = self.sample_mcmc_run(active_ts, provided_goal=provided_goal)['belief_global']
 
@@ -497,6 +510,7 @@ class Plan(object):
             new_samp = torch.cat((param.belief.samples, torch.unsqueeze(global_samples[:, self.belief_inds[param.name][0]:self.belief_inds[param.name][1]], 2)), dim=2)
             param.belief.samples = new_samp
             running_idx += param.belief.size
+        
 
     ## for now, just propogates same belief until end of action -- later, introduce a self.drift_model, similarly to self.observation_model 
     ## NOTE: assume can only use up until penultimate belief state in planner for now

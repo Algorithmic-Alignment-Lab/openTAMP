@@ -7,7 +7,7 @@ import pyro.poutine as poutine
 from pyro.infer import MCMC, NUTS, SVI, TraceEnum_ELBO, config_enumerate
 from pyro.infer.autoguide import AutoDelta
 import numpy as np
-
+import os
 
 
 class ObservationModel(object):
@@ -54,27 +54,27 @@ class ObservationModel(object):
 class PointerObservationModel(ObservationModel):
     def __init__(self):
         # uninitialized parameters
-        self.approx_params = {'weights': None, 'locs': None, 'scales': None}
+        self.approx_params = {'weights'+str(os.getpid()): None, 'locs'+str(os.getpid()): None, 'scales'+str(os.getpid()): None}
         self.active_planned_observations = {'target1': torch.empty((2,)).detach()}
     
     @config_enumerate
     def approx_model(self, data):
         ## Global variable (weight on either cluster)
-        weights = pyro.sample("weights", dist.Dirichlet(5 * torch.ones(2)))
+        weights = pyro.sample("weights"+str(os.getpid()), dist.Dirichlet(5 * torch.ones(2)))
 
         ## Different Locs and Scales for each
-        with pyro.plate("components", 2):
+        with pyro.plate("components"+str(os.getpid()), 2):
             ## Uninformative prior on locations
-            locs = pyro.sample("locs", dist.MultivariateNormal(torch.tensor([3.0, 0.0]), 20.0 * torch.eye(2)))
-            scales = pyro.sample("scales", dist.LogNormal(0.0, 10.0))
+            locs = pyro.sample("locs"+str(os.getpid()), dist.MultivariateNormal(torch.tensor([3.0, 0.0]), 20.0 * torch.eye(2)))
+            scales = pyro.sample("scales"+str(os.getpid()), dist.LogNormal(0.0, 10.0))
 
-        with pyro.plate("data", len(data)):
+        with pyro.plate("data"+str(os.getpid()), len(data)):
             ## Local variables
-            assignment = pyro.sample("mode_assignment", dist.Categorical(weights))
+            assignment = pyro.sample("mode_assignment"+str(os.getpid()), dist.Categorical(weights))
             stack_eye = torch.tile(torch.eye(2).unsqueeze(dim=0), dims=(100, 1, 1))
             stack_scale = torch.tile(scales[assignment].unsqueeze(dim=1).unsqueeze(dim=2), dims=(1, 2, 2))
             cov_tensor = stack_eye * stack_scale
-            pyro.sample("belief_global", dist.MultivariateNormal(locs[assignment], cov_tensor), obs=data)
+            pyro.sample("belief_global"+str(os.getpid()), dist.MultivariateNormal(locs[assignment], cov_tensor), obs=data)
 
     def forward_model(self, params, active_ts, provided_state=None):        
         ray_width = np.pi / 4  ## has 45-degree field of view on either side
@@ -112,25 +112,21 @@ class PointerObservationModel(ObservationModel):
         return samps
 
     def fit_approximation(self, params):        
-        ## clear Pyro optimization context, for 
-        pyro.clear_param_store()
- 
         def init_loc_fn(site):
             K=2
             data=params['target1'].belief.samples[:, :, -1]
-            if site["name"] == "weights":
+            if site["name"] == "weights"+str(os.getpid()):
                 # Initialize weights to uniform.
                 return torch.ones(2) / 2
-            if site["name"] == "scales":
+            if site["name"] == "scales"+str(os.getpid()):
                 return torch.ones(2)
-            if site["name"] == "locs":
+            if site["name"] == "locs"+str(os.getpid()):
                 return torch.tensor([[3., 3.], [3., -3.]])
             raise ValueError(site["name"])
 
 
         def initialize():
-            # global global_guide, svi
-            # data=params['target1'].belief.samples[:, :, -1]
+            ## clear Pyro optimization context, for 
             pyro.clear_param_store()
 
         # Choose the best among 100 random initializations.
@@ -139,7 +135,7 @@ class PointerObservationModel(ObservationModel):
         # print(f"seed = {seed}, initial_loss = {loss}")
 
         global_guide = AutoDelta(
-            poutine.block(self.approx_model, expose=["weights", "locs", "scales"]),
+            poutine.block(self.approx_model, expose=["weights"+str(os.getpid()), "locs"+str(os.getpid()), "scales"+str(os.getpid())]),
             init_loc_fn=init_loc_fn,
         )
         adam_params = {"lr": 0.1, "betas": [0.8, 0.99]}
@@ -151,17 +147,21 @@ class PointerObservationModel(ObservationModel):
         nsteps = 1000  ## NOTE: causes strange bugs when run too long (weights concentrate to 1)
 
         ## do gradient steps, TODO update with genreal belief signature 
-        for _ in range(nsteps):
+        for i in range(nsteps):
             loss = svi.step(params['target1'].belief.samples[:, :, -1])
             # print(global_guide(params['target1'].belief.samples[:, :, -1]))
 
         pars = global_guide(params['target1'].belief.samples[:, :, -1])
         
-        ## need to detach for observation_model to be serializable
-        for p in pars:
-            pars[p] = pars[p].detach()
+        new_p = {}
 
-        self.approx_params = pars
+        print(pars)
+
+        ## need to detach for observation_model to be serializable
+        for p in ['weights', 'locs', 'scales']:
+            new_p[p] = pars[p+str(os.getpid())].detach()
+
+        self.approx_params = new_p
 
 
 ## TODO implement one with just clustering, not even using GMM

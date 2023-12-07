@@ -23,6 +23,7 @@ from opentamp.policy_hooks.utils.load_task_definitions import *
 
 from opentamp.core.util_classes.openrave_body import OpenRAVEBody
 
+import multiprocessing as mp
 
 def load_agent(config):
     prob = config['prob']
