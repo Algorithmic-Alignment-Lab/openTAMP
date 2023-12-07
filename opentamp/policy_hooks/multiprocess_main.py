@@ -522,7 +522,7 @@ class MultiProcessMain(object):
         self.queue_manager = QueueManager()
         self.queue_manager.start()
 
-        queue_size = 50
+        queue_size = 20
         train_queue_size = 20
 
         queues = {}
