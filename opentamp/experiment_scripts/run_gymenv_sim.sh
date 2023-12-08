@@ -23,7 +23,8 @@ python3 -W ignore -m cProfile -o profile_out policy_hooks/run_training.py -c pol
                                                 -post -pre \
                                                 -warm 100 \
                                                 -neg_ratio 0. -opt_ratio 0.9 -dagger_ratio 0.1 \
-						-descr pointer_pilot_cprof_smallqueue
+						-descr server_results_pointer \
+                                                -test namo_objs1_1/server_results_pointer_0
 
 # sleep 1800 
 # pkill -f run_train -9
