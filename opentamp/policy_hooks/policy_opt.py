@@ -98,13 +98,19 @@ class TorchPolicyOpt():
     def get_loss(self, task, x, y, precision=None,):
         model = self.nets[task]
         if type(x) is not torch.Tensor:
-            x = torch.Tensor(x, device=model.device)
+            x = torch.tensor(x, device=model.device)
+        else:
+            x = x.to(model.device)
 
         if type(y) is not torch.Tensor:
-            y = torch.Tensor(y, device=model.device)
+            y = torch.tensor(y, device=model.device)
+        else:
+            y = y.to(model.device)
 
         if type(precision) is not torch.Tensor:
-            precision = torch.Tensor(precision, device=model.device)
+            precision = torch.tensor(precision, device=model.device)
+        else:
+            precision = precision.to(model.device)
 
         pred = model.forward(x)
 
