@@ -279,7 +279,7 @@ class TorchNet(nn.Module):
                     cur_loss += self._compute_loss_component(next_pred, next_y, next_precision)
                 
             return cur_loss / n
-
+        
         return self._compute_loss_component(pred, y, precision)
 
 

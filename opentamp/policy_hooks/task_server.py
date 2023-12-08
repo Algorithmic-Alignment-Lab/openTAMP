@@ -49,6 +49,8 @@ class TaskServer(Server):
                 node = self.spawn_problem(x, targets)
                 node.nodetype = 'queued'
                 node.label = 'queued'
+            elif node is None and self.motion_queue.full():
+                return ## don't overwhelm the motion servers, MCMC updates are slow
             else:
                 node = self.spawn_problem()
         
