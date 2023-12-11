@@ -233,8 +233,6 @@ class PolicyServer(object):
         while not self.stopped:
             self.iters += 1
             init_t = time.time()
-            if self.task == 'primitive':
-                breakpoint()
             if self.debug or self.plan_only:
                 if self.dataset.should_wait_for_data():
                     break

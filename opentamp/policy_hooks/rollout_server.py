@@ -165,22 +165,23 @@ class RolloutServer(Server):
 
     def check_hl_statistics(self, xvar=None, thresh=0):
         from tabulate import tabulate
+        ## NOTE -- turned off several of these, will reactivate gradually
         inds = {
-                    'success at end': 0,
+                    'success_probability': 0,
                     'path length': 1,
-                    'optimal rollout success': 9,
-                    'time': 3,
-                    'n data': 6,
-                    'n plans': 10,
-                    'subgoals anywhere': 11,
-                    'subgoals closest dist': 12,
-                    'collision': 8,
-                    'any target': 13,
-                    'smallest tol': 14,
-                    'success anywhere': 7,
+                    # 'optimal rollout success': 9,
+                    # 'time': 3,
+                    # 'n data': 6,
+                    # 'n plans': 10,
+                    # 'subgoals anywhere': 11,
+                    # 'subgoals closest dist': 12,
+                    # 'collision': 8,
+                    # 'any target': 13,
+                    # 'smallest tol': 14,
+                    # 'success anywhere': 7,
                  }
         data = np.array(self.hl_data)
-        print(data)
+        breakpoint()
         mean_data = np.mean(data, axis=0)[0]
         info = []
         headers = ['Statistic', 'Value']
@@ -206,8 +207,20 @@ class RolloutServer(Server):
 
         x0 = self.agent.x0[0]
         
-        val, path = self.test_run(x0, [], max_t=20, hl=True, soft=self.config['soft_eval'], eta=eta, lab=-5, hor=25)
-        self.save_video(path, val > 0, lab='vid')
+        vals = []
+
+        print('Initialized policies: ', self.agent.policies_initialized())
+
+        for _ in range(20):
+            self.agent.gym_env.resample_belief_true()  ## resample at the start of each rollout
+            val, path = self.test_run(x0, [], max_t=20, hl=True, soft=self.config['soft_eval'], eta=eta, lab=-5, hor=25)
+            vals.append(val)
+
+        avg_val = np.mean(np.array(vals))
+        if save:
+            self.hl_data.append([(avg_val, len(path))])  ## update the HL statistics
+            np.save(self.hl_test_log.format('', 'rerun_' if ckpt_ind is not None else ''), np.array(self.hl_data))
+            
         # if self.agent.policies_initialized():
         #     init_t = time.time()
         #     self.agent.debug = False
@@ -310,7 +323,7 @@ class RolloutServer(Server):
         #     self.last_hl_test = time.time()
         # self.agent._eval_mode = False
         # self.agent.debug = True
-        return val, path
+        return avg_val, path
 
 
     def deploy(self, rlen=None, save=True, ckpt_ind=None,

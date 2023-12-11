@@ -282,28 +282,10 @@ class MotionServer(Server):
                 replan_success = False
 
 
-        if replan_success and refine_success:
-            print('Success')
-
-            ## if plan only, invoke a breakpoint and inspect the plan statistics
-            if self.plan_only:
-                ## TODO add a general wrapper here
-                print(plan.params['pr2'].pose)
-                print(plan.params['target1'].pose)
-                print(plan.params['target1'].belief.samples.mean(axis=0))
-                print(plan.params['target1'].belief.samples.std(axis=0))
-                for idx in range(plan.params['target1'].belief.samples.shape[2]):
-                    plt.scatter(plan.params['target1'].belief.samples[:,0,idx], plan.params['target1'].belief.samples[:,1,idx], alpha=0.5)
-                    plt.scatter([3.0], [3.0], alpha=1.0, marker='x')
-                    plt.savefig('samps'+str(idx)+'.pdf')
-                    plt.clf()
-                breakpoint()
-
-
         # TODO: reactivate when reintegrating RolloutServer + Policy stuff
         path = []
 
-        if not self.plan_only and (refine_success and replan_success):
+        if refine_success and replan_success:
             ## populate the sample with the entire plan
             a_num = 0
             st = plan.actions[a_num].active_timesteps[0]
@@ -334,8 +316,25 @@ class MotionServer(Server):
 
             self.agent.add_task_paths([path])  ## add the given history of tasks from this successful rollout
 
-        ## TODO debug logging
-        # self._log_solve_info(path, replan_success, node, plan)
+        if replan_success and refine_success:
+            print('Success')
+
+            ## if plan only, invoke a breakpoint and inspect the plan statistics
+            if self.plan_only:
+                ## TODO add a general wrapper here
+                print(plan.params['pr2'].pose)
+                print(plan.params['target1'].pose)
+                print(plan.params['target1'].belief.samples.mean(axis=0))
+                print(plan.params['target1'].belief.samples.std(axis=0))
+                for idx in range(plan.params['target1'].belief.samples.shape[2]):
+                    plt.scatter(plan.params['target1'].belief.samples[:,0,idx], plan.params['target1'].belief.samples[:,1,idx], alpha=0.5)
+                    plt.scatter([goal['target1'][0]], [goal['target1'][1]], alpha=1.0, marker='x')
+                    plt.savefig('samps'+str(idx)+'.pdf')
+                    plt.clf()
+                self.save_video(path, False, lab='vid_planner')
+            
+            breakpoint()
+
         return path, refine_success, replan_success
 
 

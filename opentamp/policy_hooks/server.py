@@ -641,7 +641,7 @@ class Server(object):
             self.agent.target_vecs[0] = old_vec
         init_t = time.time()
         # TODO: hardcoded individual video name for now
-        imageio.mimsave(LOG_DIR+self._hyperparams['weight_dir']+'/videos/vid.gif', np.array(buf), duration=0.01)
+        imageio.mimsave(LOG_DIR+self._hyperparams['weight_dir']+'/videos/'+lab+'.gif', np.array(buf), duration=0.01)
         # save_video(fname, dname=self._hyperparams['descr'], arr=np.array(buf), savepath=self.video_dir)
         self.agent.image_height = old_h
         self.agent.image_width = old_w
