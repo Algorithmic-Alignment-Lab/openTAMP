@@ -46,7 +46,7 @@ class BlankEnv(Env):
         return self.curr_obs
     
     def render(self, mode='rgb_array'):
-        pass
+        return np.random.randint(0, 256, (256, 256, 3), dtype=np.uint8)
 
     def is_in_ray(self, a_pose, target):
         return np.abs(np.arctan(target[1]/target[0]) - a_pose) <= np.pi / 4

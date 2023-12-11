@@ -28,6 +28,7 @@ def get_prim_choices(task_list=None):
     #     out[utils.TARG_ENUM] += ['end_target_{0}'.format(i)]
     #out[utils.GRASP_ENUM] = ['grasp{0}'.format(i) for i in range(N_GRASPS)]
     #out[utils.ABS_POSE_ENUM] = 2
+    out[utils.TASK_ENUM] =  sorted(list(get_tasks(mapping_file).keys()))
     return out
 
 

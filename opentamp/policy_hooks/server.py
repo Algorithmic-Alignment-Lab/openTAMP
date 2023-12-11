@@ -8,6 +8,7 @@ import random
 import sys
 import time
 import torch
+import imageio
 
 from PIL import Image
 import pybullet as P
@@ -459,7 +460,7 @@ class Server(object):
             tgt_prc = np.concatenate((tgt_prc, prc))
 
         if len(tgt_mu):
-            # print('Sending update to primitive net')
+            print('Sending update to primitive net')
             self.update(obs_data, 
                         tgt_mu, 
                         tgt_prc, 
@@ -515,7 +516,7 @@ class Server(object):
                 # info['prim_obs'] = sample.get_prim_obs().round(3)
                 info['targets'] = {tname: sample.targets[self.agent.target_inds[tname, attr]] for tname, attr in self.agent.target_inds if attr == 'value'}
                 info['opt_success'] = sample.opt_suc
-                info['tasks'] = sample.get(FACTOREDTASK_ENUM)
+                # info['tasks'] = sample.get(FACTOREDTASK_ENUM)
                 #info['goal_pose'] = sample.get(END_POSE_ENUM)
                 info['actions'] = sample.get(ACTION_ENUM)
                 info['end_state'] = sample.end_state
@@ -631,15 +632,17 @@ class Server(object):
             for t in ts_range:
                 ims = []
                 for ind, cam_id in enumerate(cam_ids):
-                    if annotate and ind == 0:
-                        ims.append(self.agent.get_annotated_image(step, t, cam_id=cam_id))
-                    else:
-                        ims.append(self.agent.get_image(step.get_X(t=t), cam_id=cam_id))
+                    # if annotate and ind == 0:
+                    #     ims.append(self.agent.get_annotated_image(step, t, cam_id=cam_id))
+                    # else:
+                    ims.append(self.agent.get_image(step.get_X(t=t), cam_id=cam_id))
                 im = np.concatenate(ims, axis=1)
                 buf.append(im)
             self.agent.target_vecs[0] = old_vec
         init_t = time.time()
-        save_video(fname, dname=self._hyperparams['descr'], arr=np.array(buf), savepath=self.video_dir)
+        # TODO: hardcoded individual video name for now
+        imageio.mimsave(LOG_DIR+self._hyperparams['weight_dir']+'/videos/vid.gif', np.array(buf), duration=0.01)
+        # save_video(fname, dname=self._hyperparams['descr'], arr=np.array(buf), savepath=self.video_dir)
         self.agent.image_height = old_h
         self.agent.image_width = old_w
 

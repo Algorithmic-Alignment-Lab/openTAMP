@@ -26,7 +26,8 @@ def load_config(args, config=None, reload_module=None):
     config['server_id'] = args.server_id if args.server_id != '' else str(random.randint(0,2**32))
     config['descr'] = args.descr if args.descr else config.get('descr', "no_descr")
     dir_name = config['base_weight_dir'] + 'objs{0}_{1}/{2}'.format(config['num_objs'], config['num_targs'], config['descr'])
-    config['weight_dir_prefix'] = dir_name 
+    config['weight_dir_prefix'] = dir_name
+    config['index'] = args.index
 
     return config, config_module
 

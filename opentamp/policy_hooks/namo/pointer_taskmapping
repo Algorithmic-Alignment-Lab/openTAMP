@@ -1,0 +1,19 @@
+{
+    'point_to': [
+        '0: MOVETO PR2 {0} {0}_INIT_TARGET {1}',
+    ],
+
+    'infer_position': [
+        '0: MOVETO PR2 {0} {0}_INIT_TARGET {1}'
+    ],
+    
+    'validate_position': [
+        '0: MOVETO PR2 {0} {0}_INIT_TARGET {1}'
+    ]
+};
+
+{
+    'point_to': 2,
+    'infer_position': 2,
+    'validate_position': 2,
+}

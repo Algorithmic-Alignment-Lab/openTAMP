@@ -111,6 +111,8 @@ def main():
     n_objs = args.nobjs if args.nobjs > 0 else None
     n_targs = args.nobjs if args.nobjs > 0 else None
     #n_targs = args.ntargs if args.ntargs > 0 else None]
+    
+    ## reload old arguments for consistency with the loaded policy, ignoring loaded args
     if len(args.test) or len(args.deploy):
         assert not (len(args.test) and len(args.deploy))
         load_args = args.test if len(args.test) else args.deploy
@@ -157,7 +159,7 @@ def main():
         cur_main.hl_only_retrain()
 
     elif len(args.test) or len(args.deploy):
-        current_id = 0 if config.get('index', -1) < 0 else config['index']
+        current_id = old_args.index
         config['group_id'] = current_id
         config['weight_dir'] = config['weight_dir_prefix']+'_{0}'.format(current_id)
         cur_main = MultiProcessMain(config, load_at_spawn=False)

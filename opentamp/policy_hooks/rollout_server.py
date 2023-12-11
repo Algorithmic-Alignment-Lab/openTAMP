@@ -199,12 +199,15 @@ class RolloutServer(Server):
         self.set_policies()
         self.agent._eval_mode = True
         if restore:
-            self.policy_opt.restore_ckpts(ckpt_ind)
+            did_load = self.policy_opt.restore_ckpts(ckpt_ind)
+            print('Successfully loaded ckpts: ', did_load)
         elif self.policy_opt.share_buffers:
             self.policy_opt.read_shared_weights()
 
-        val = 0
-        path = []
+        x0 = self.agent.x0[0]
+        
+        val, path = self.test_run(x0, [], max_t=20, hl=True, soft=self.config['soft_eval'], eta=eta, lab=-5, hor=25)
+        self.save_video(path, val > 0, lab='vid')
         # if self.agent.policies_initialized():
         #     init_t = time.time()
         #     self.agent.debug = False
@@ -216,7 +219,7 @@ class RolloutServer(Server):
         #         ns = list(range(1, self.config['num_targs']+1))
         #     n = np.random.choice(ns)
         #     s = []
-        #     x0 = self.agent.x0[0]
+        #     
         #     targets = self.agent.target_vecs[0].copy()
         #     for t in range(n, n_targs[-1]):
         #         breakpoint()
@@ -305,8 +308,8 @@ class RolloutServer(Server):
         #         if opt_path is not None: self.save_video(opt_path, val > 0, lab='_mp')
         #         print('Saved video. Rollout success was: ', val > 0)
         #     self.last_hl_test = time.time()
-        self.agent._eval_mode = False
-        self.agent.debug = True
+        # self.agent._eval_mode = False
+        # self.agent.debug = True
         return val, path
 
 

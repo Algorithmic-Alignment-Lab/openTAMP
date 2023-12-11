@@ -187,7 +187,7 @@ def load_agent(config):
             cont_bounds.append((cont_ind, cont_ind+sensor_dims[enum]))
             cont_ind += sensor_dims[enum]
             cont_out.append(enum)
-
+    
     for enum in config['prim_out_include']:
         if enum == utils.TASK_ENUM or enum in options: continue
         prim_bounds.append((prim_ind, prim_ind+sensor_dims[enum]))

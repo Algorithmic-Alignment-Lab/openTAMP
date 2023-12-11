@@ -6,7 +6,7 @@
 #python3 -W ignore policy_hooks/run_training.py -c policy_hooks.robosuite.jnt_pick_hyp \
 
 python3 -W ignore -m cProfile -o profile_out policy_hooks/run_training.py -c policy_hooks.namo.new_env_hyperparam \
-                                                -no 1 -llus 100  -hlus 100 \
+                                                -no 1 -llus 100  -hlus 10 \
                                                 -spl -mask -hln 2 -hldim 256 -lldim 256 \
                                                 -retime -vel 0.3 -eta 5 -softev \
                                                 -lr_schedule adaptive \
@@ -23,8 +23,7 @@ python3 -W ignore -m cProfile -o profile_out policy_hooks/run_training.py -c pol
                                                 -post -pre \
                                                 -warm 100 \
                                                 -neg_ratio 0. -opt_ratio 0.9 -dagger_ratio 0.1 \
-						-descr pointer_pilot_cprof_smallqueue
-
+						-descr pointer_pilot_primpathtest
 # sleep 1800 
 # pkill -f run_train -9
 # pkill -f ros -9

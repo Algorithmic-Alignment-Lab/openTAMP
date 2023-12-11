@@ -1362,26 +1362,27 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
         return pol
 
 
-    # def get_annotated_image(self, s, t, cam_id=None):
-    #     if cam_id is None: cam_id = self.camera_id
-    #     x = s.get_X(t=t)
-    #     task = s.get(FACTOREDTASK_ENUM, t=t)
-    #     u = s.get(ACTION_ENUM, t=t)
-    #     u = str(u.round(2))[1:-1]
-    #     pos = s.get(END_POSE_ENUM, t=t)
-    #     pos = str(pos.round(2))[1:-1]
-    #     textover1 = self.mjc_env.get_text_overlay(body='Task: {0}'.format(task))
-    #     textover2 = self.mjc_env.get_text_overlay(body='{0}; {1}'.format(u, pos), position='bottom left')
-    #     self.reset_to_state(x)
-    #     im = self.mjc_env.render(camera_id=cam_id, height=self.image_height, width=self.image_width, view=False, overlays=(textover1, textover2))
-    #     return im
+    def get_annotated_image(self, s, t, cam_id=None):
+        if cam_id is None: cam_id = self.camera_id
+        x = s.get_X(t=t)
+        # task = s.get(FACTOREDTASK_ENUM, t=t)
+        # u = s.get(ACTION_ENUM, t=t)
+        u = str(u.round(2))[1:-1]
+        # pos = s.get(END_POSE_ENUM, t=t)
+        # pos = str(pos.round(2))[1:-1]
+        # textover1 = self.mjc_env.get_text_overlay(body='Task: {0}'.format(task))
+        # textover2 = self.mjc_env.get_text_overlay(body='{0}; {1}'.format(u, pos), position='bottom left')
+        self.reset_to_state(x)
+        # im = self.mjc_env.render(camera_id=cam_id, height=self.image_height, width=self.image_width, view=False, overlays=(textover1, textover2))
+        im = self.mjc_env.render(camera_id=cam_id, height=self.image_height, width=self.image_width, view=False)
+        return im
 
 
-    # def get_image(self, x, depth=False, cam_id=None):
-    #     self.reset_to_state(x)
-    #     if cam_id is None: cam_id = self.camera_id
-    #     im = self.mjc_env.render(camera_id=cam_id, height=self.image_height, width=self.image_width, view=False, depth=depth)
-    #     return im
+    def get_image(self, x, depth=False, cam_id=None):
+        self.reset_to_state(x)
+        if cam_id is None: cam_id = self.camera_id
+        im = self.mjc_env.render(camera_id=cam_id, height=self.image_height, width=self.image_width, view=False, depth=depth)
+        return im
 
     
     def compare_tasks(self, t1, t2):

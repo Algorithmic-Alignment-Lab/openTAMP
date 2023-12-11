@@ -233,6 +233,8 @@ class PolicyServer(object):
         while not self.stopped:
             self.iters += 1
             init_t = time.time()
+            if self.task == 'primitive':
+                breakpoint()
             if self.debug or self.plan_only:
                 if self.dataset.should_wait_for_data():
                     break
@@ -242,7 +244,7 @@ class PolicyServer(object):
             self.dataset.load_data()
             #if self.task == 'primitive': print('\nTime to get update:', time.time() - init_t, '\n')
             self.policy_opt.update(self.task)
-            #if self.task == 'primitive': print('\nTime to run update:', time.time() - init_t, '\n')
+            # if self.task == 'primitive': print('\nTime to run update:', time.time() - init_t, '\n')
             self.n_updates += 1
             mu, obs, prc = self.dataset.get_batch()
             if len(mu):

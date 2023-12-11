@@ -53,7 +53,7 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
         'base_weight_dir': 'namo_',
         'max_sample_queue': 5e2,
         'max_opt_sample_queue': 10,
-        'task_map_file': "policy_hooks/namo/spotnav_task_mapping",
+        'task_map_file': "policy_hooks/namo/pointer_taskmapping",
         'prob': prob,
         'get_vector': prob.get_vector,
         'robot_name': 'pr2',

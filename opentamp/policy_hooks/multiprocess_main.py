@@ -342,7 +342,7 @@ class MultiProcessMain(object):
         self.debug_servers.append(server_cls(hyperparams))
 
 
-    def create_pol_servers(self, hyperparams):
+    def create_pol_servers(self, hyperparams):        
         for task in self.pol_list+('primitive', 'cont'):
             new_hyperparams = copy.copy(hyperparams)
             new_hyperparams['scope'] = task

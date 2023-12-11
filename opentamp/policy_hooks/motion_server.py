@@ -332,6 +332,8 @@ class MotionServer(Server):
                 self.plan_times.append(end_t-init_t)
                 self.plan_times = self.plan_times[-5:]
 
+            self.agent.add_task_paths([path])  ## add the given history of tasks from this successful rollout
+
         ## TODO debug logging
         # self._log_solve_info(path, replan_success, node, plan)
         return path, refine_success, replan_success
