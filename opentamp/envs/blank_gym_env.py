@@ -18,7 +18,7 @@ class BlankEnv(Env):
     def assemble_dist(self):
         weights = torch.tensor([0.5,0.5])
         locs = torch.tensor([[3., 3.],
-                             [3., 3.]])
+                             [3., -3.]])
         scales = torch.tensor([0.5, 0.5])
         cat_dist = distros.Categorical(probs=weights)
         stack_eye = torch.tile(torch.eye(2).unsqueeze(dim=0), dims=(2, 1, 1))
