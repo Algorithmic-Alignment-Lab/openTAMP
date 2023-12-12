@@ -333,7 +333,7 @@ class MotionServer(Server):
                     plt.clf()
                 self.save_video(path, False, lab='vid_planner')
             
-            breakpoint()
+                breakpoint()
 
         return path, refine_success, replan_success
 

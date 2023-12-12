@@ -181,7 +181,7 @@ class RolloutServer(Server):
                     # 'success anywhere': 7,
                  }
         data = np.array(self.hl_data)
-        breakpoint()
+        # breakpoint()
         mean_data = np.mean(data, axis=0)[0]
         info = []
         headers = ['Statistic', 'Value']
