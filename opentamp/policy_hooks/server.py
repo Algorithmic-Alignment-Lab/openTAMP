@@ -406,12 +406,14 @@ class Server(object):
             task = self.task
 
         if len(tgt_mu):
+            print('Sending update to policy')
+            # breakpoint()
             self.update(obs_data, 
                         tgt_mu, 
                         tgt_prc, 
                         tgt_wt, 
                         task, 
-                        label, 
+                        'optimal', 
                         primobs=prim_obs_data, 
                         x=x_data,)
         else:
@@ -466,7 +468,7 @@ class Server(object):
                         tgt_prc, 
                         tgt_wt, 
                         'primitive', 
-                        samples[0].source_label, 
+                        'optimal', 
                         aux=tgt_aux, 
                         x=tgt_x)
 
@@ -498,8 +500,8 @@ class Server(object):
             tgt_prc = np.concatenate((tgt_prc, prc))
 
         if len(tgt_mu):
-            # print('Sending update to primitive net')
-            self.update(obs_data, tgt_mu, tgt_prc, tgt_wt, 'cont', samples[0].source_label, aux=tgt_aux, x=tgt_x)
+            print('Sending update to cont net')
+            self.update(obs_data, tgt_mu, tgt_prc, tgt_wt, 'cont', 'optimal', aux=tgt_aux, x=tgt_x)
 
 
     def get_path_data(self, path, n_fixed=0, verbose=False):

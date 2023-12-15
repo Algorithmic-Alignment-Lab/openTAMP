@@ -291,6 +291,8 @@ class MotionServer(Server):
             st = plan.actions[a_num].active_timesteps[0]
             tasks = self.agent.encode_plan(plan)
 
+            print(tasks)
+
             for a_num in range(len(plan.actions)):
                 new_path, x0 = self.agent.run_action(plan, 
                             a_num, 

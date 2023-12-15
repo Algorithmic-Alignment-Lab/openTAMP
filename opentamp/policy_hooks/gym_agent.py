@@ -19,7 +19,6 @@ class GymAgent(TAMPAgent):
     def fill_sample(self, cond, sample, mp_state, t, task, fill_obs=False, targets=None):
         sample.set(utils.MJC_SENSOR_ENUM, self.curr_obs, t)
         sample.set(utils.STATE_ENUM, self.curr_state, t)
-        sample.set(utils.TARG_ENUM, task[1], t)
 
     def run_policy_step(self, U_full, curr_state):
         self.curr_obs, _, _, _ = self.gym_env.step(U_full)  # left to internal logic

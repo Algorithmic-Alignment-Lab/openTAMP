@@ -390,6 +390,7 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
         end_state = None
         cur_state = self.get_state() # x0
         sample.task = task
+        sample.set(TASK_ENUM, np.tile(np.array([1. if i==sample.task[0] else 0. for i in range(3)]), (20, 1)))
 
         self.fill_sample(condition, sample, cur_state.copy(), 0, task, fill_obs=True)
         for t in range(0, self.T):
@@ -676,7 +677,6 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
         #     if l[-1] < 0.:
         #         l[-1] = 0.
         
-        l.append(action.params[1].pose[:,0])
 
         return l # tuple(l)
 
@@ -1146,7 +1146,7 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
         path[-1].set(TASK_DONE_ENUM, np.array([0, 1]), t=path[-1].T-1)
         #path[-1].prim_use_ts[-1] = 0.
         if nzero > 0 and add_noop:
-            # get a sample of the optimal trajectory 
+            # get a sample of the zero trajectory 
             zero_traj = np.tile(opt_traj[-1], [nzero, 1])
             zero_sample = self.sample_optimal_trajectory(path[-1].end_state, task, 0, zero_traj, targets=targets)
             x0 = zero_sample.end_state # sample.get_X(sample.T-1)
@@ -1162,6 +1162,17 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
             path.append(zero_sample)
         end_s = path[-1]
         end_s.task_end = True
+
+        ### NOTE: TODO UNHACNK THIS CHANGE (POPIULATING WITH SAMPLE POSES)
+        ## setting the sampled targets through the codebase
+        for t in range(self.T):
+            target_pose = plan.params['target1'].pose[:, st]
+            sample.set(TARG_ENUM, target_pose, t=t)
+
+        ## setting the sampled targets through the codebase
+        for t in range(self.T):
+            target_pose = plan.params['target1'].pose[:, st]
+            zero_sample.set(TARG_ENUM, target_pose, t=t)
 
         ## FOR NOW, UNCONDITIONALLY SAVE TRAJECTORIES (ASSUME ALL SUCCEEDED)
         for ind, s in enumerate(path):

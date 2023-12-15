@@ -239,6 +239,7 @@ class PolicyServer(object):
             else:
                 self.dataset.wait_for_data()
 
+
             self.dataset.load_data()
             #if self.task == 'primitive': print('\nTime to get update:', time.time() - init_t, '\n')
             self.policy_opt.update(self.task)
@@ -275,7 +276,7 @@ class PolicyServer(object):
                 self.policy_opt.write_shared_weights([self.task])
                 if len(self.continuous_opts) and self.task not in ['cont', 'primitive', 'label']:
                     self.policy_opt.read_shared_weights(['cont'])
-                    self.dataset.feed_in_policy = self.policy_opt.cont_policy
+                    self.dataset.feed_in_policy = self.policy_opt.get_policy('cont')
 
                 n_train = self.dataset.get_size()
                 n_val = self.dataset.get_size(val=True)

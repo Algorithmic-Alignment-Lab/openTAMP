@@ -560,6 +560,7 @@ class RolloutServer(Server):
         debug = np.random.uniform() < 0.1
         while t < max_t and self.agent.feasible_state(state, targets):
             l = self.get_task(state, targets, l, soft)
+            # print(l)
             if l is None: break
             task_name = self.task_list[l[0]]
             pol = self.agent.policies[task_name]
