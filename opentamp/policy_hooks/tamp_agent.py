@@ -543,6 +543,9 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
         sample.set_ref_X(sample.get_X())
         sample.set_ref_U(sample.get_U())
 
+        for t in range(sample.T):
+            pass
+
         self.target_vecs[condition] = old_targets
         for tname, attr in self.target_inds:
             self.targets[condition][tname] = old_targets[self.target_inds[tname, attr]]
@@ -657,21 +660,23 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
                 l[0] = i
                 break
 
-        for enum in prim_choices:
-            if enum is TASK_ENUM or not hasattr(prim_choices[enum], '__len__'): continue
-            l.append(-1)
-            act = action
-            # for act in [action, next_act]:
-            for i, opt in enumerate(prim_choices[enum]):
-                if opt in [p.name for p in act.params]:
-                    l[-1] = i
-                    break
+        # for enum in prim_choices:
+        #     if enum is TASK_ENUM or not hasattr(prim_choices[enum], '__len__'): continue
+        #     l.append(-1)
+        #     act = action
+        #     # for act in [action, next_act]:
+        #     for i, opt in enumerate(prim_choices[enum]):
+        #         if opt in [p.name for p in act.params]:
+        #             l[-1] = i
+        #             break
 
-                if l[-1] >= 0:
-                    break
+        #         if l[-1] >= 0:
+        #             break
 
-            if l[-1] < 0.:
-                l[-1] = 0.
+        #     if l[-1] < 0.:
+        #         l[-1] = 0.
+        
+        l.append(action.params[1].pose[:,0])
 
         return l # tuple(l)
 

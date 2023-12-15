@@ -41,7 +41,7 @@ N_GRASPS = 4
 TIME_LIMIT = 14400
 
 def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
-    cost_wp_mult = np.ones((3 + 2 * NUM_OBJS))
+    # cost_wp_mult = np.ones((3 + 2 * NUM_OBJS))
     prob.NUM_OBJS = no
     prob.NUM_TARGS = nt
     prob.N_GRASPS = N_GRASPS
@@ -68,15 +68,14 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
         'acts_file': opentamp.__path__._path[0] + '/new_specs/pointer_domain/pointer_acts.json',
         'prob_file': opentamp.__path__._path[0] + '/new_specs/pointer_domain/pointer_prob.json',
         'observation_model': PointerObservationModel(),
-        # 'max_likelihood_obs': [2, 2],
-        # 'goal_type': 'moveto', 
         'n_dirs': N_DIRS,
         'gym_env_type': BlankEnvWrapper,
 
         'state_include': [utils.STATE_ENUM],
-        # remove the sensor
+
         'obs_include': [#utils.LIDAR_ENUM,
                         utils.MJC_SENSOR_ENUM,
+                        utils.TARG_ENUM,
                         # utils.ONEHOT_GOAL_ENUM
                         # utils.TASK_ENUM,
                         # utils.END_POSE_ENUM,
@@ -95,7 +94,7 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
 
         'sensor_dims': {
                 # utils.OBJ_POSE_ENUM: 2,
-                # utils.TARG_POSE_ENUM: 2,
+                utils.TARG_ENUM: 2,
                 # utils.LIDAR_ENUM: N_DIRS,
                 utils.MJC_SENSOR_ENUM: BlankEnvWrapper().observation_space.shape[0],
                 # utils.EE_ENUM: 2,

@@ -161,7 +161,7 @@ class TorchPolicyOpt():
            
             model = self.nets[scope]
             save_path = 'saved_models/'+dirname+'/'+scope+'{0}.ckpt'.format(ext)
-            model.load_state_dict(torch.load(save_path))
+            model.load_state_dict(torch.load(save_path, map_location=self.device))
             if scope in self.ctrl_scopes:
                 self.nets[scope].scale = np.load(MODEL_DIR+dirname+'/'+scope+'_scale{0}.npy'.format(ext))
                 self.nets[scope].bias = np.load(MODEL_DIR+dirname+'/'+scope+'_bias{0}.npy'.format(ext))
@@ -248,7 +248,7 @@ class TorchPolicyOpt():
             weight_dir = self.weight_dir
         model = self.nets[scope]
         save_path = MODEL_DIR + weight_dir+'/'+scope+'.ckpt'
-        model.load_state_dict(torch.load(save_path))
+        model.load_state_dict(torch.load(save_path, map_location=self.device))
 
 
     def store_scope_weights(self, scopes, weight_dir=None, lab=''):

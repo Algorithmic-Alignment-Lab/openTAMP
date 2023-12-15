@@ -641,9 +641,8 @@ class MultiProcessMain(object):
             server.agent.replace_cond(0)
             server.agent.reset(0)
             val, path = server.test_hl(save=True, restore=True, save_video=True, save_fail=False)
-            # server.agent.save_video(path, str(val > 0), lab='vid_imit')
+            server.save_video(path, str(val > 0), lab='vid_imit')
             server.check_hl_statistics()
-            breakpoint()
         '''
         while server.policy_opt.restore_ckpts(ind):
             for _ in range(50):

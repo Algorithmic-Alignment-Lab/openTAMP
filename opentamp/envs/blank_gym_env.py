@@ -18,7 +18,7 @@ class BlankEnv(Env):
     def assemble_dist(self):
         weights = torch.tensor([0.5,0.5])
         locs = torch.tensor([[3., 3.],
-                             [3., -3.]])
+                             [3., 3.]])
         scales = torch.tensor([0.5, 0.5])
         cat_dist = distros.Categorical(probs=weights)
         stack_eye = torch.tile(torch.eye(2).unsqueeze(dim=0), dims=(2, 1, 1))
@@ -47,26 +47,39 @@ class BlankEnv(Env):
     
     ## NOTE: only rgb_array mode supported, ignores keyword
     def render(self, mode='rgb_array'):
-        def is_in_ray(a_pose, x, y):
-            if x > 0:
-                return np.abs(np.arctan(y/x) - a_pose) <= np.pi/4
-            elif x < 0:
-                return np.abs(np.arctan(y/x) - (a_pose - np.pi)) <= np.pi/4
+        def is_in_ray_vectorized(a_pose, x_coord, y_coord):
+            return np.where(x_coord > 0, 
+                            np.abs(np.arctan(y_coord/x_coord) - a_pose) <= np.pi/4,
+                            np.abs(np.arctan(y_coord/x_coord) - (a_pose - np.pi)) <= np.pi/4)
+            
+        def is_close_to_obj_vectorized(true_loc, x_coord, y_coord):
+            return np.linalg.norm(np.stack((x_coord, y_coord)) - np.tile(true_loc.reshape(-1, 1, 1), (1, 256, 256)), axis=0) <= 0.2
 
         true_loc = self.belief_true['target1'].detach().numpy()
         color_arr = np.ones((256, 256, 3), dtype=np.uint8) * 255
-        # return np.random.randint(0, 256, (256, 256, 3), dtype=np.uint8)
-        for x in range(256):
-            for y in range(256):
-                x_coord = (x-128) * (5/128)
-                y_coord = (y-128) * (5/128)
-                if is_in_ray(self.curr_state, x_coord, y_coord):
-                    color_arr[x, y, 1] = 0
-                    color_arr[x, y, 2] = 0
-                if np.linalg.norm(np.array([x_coord, y_coord]) - true_loc) <= 0.2:
-                    color_arr[x, y, 0] = 0
-                    color_arr[x, y, 1] = 0
+        
+        ## initializing vectorized x_coord and y_coord arrays
+        x_coords = np.tile(np.arange(-5, 5, 5./128.).reshape(-1, 1), (1, 256))
+        y_coords = x_coords.copy().T
 
+        ## coloring in the ray of the pointer
+        color_arr[:,:,1] = np.where(is_in_ray_vectorized(self.curr_state, x_coords, y_coords),
+                                    np.zeros((256, 256), dtype=np.uint8), 
+                                    np.ones((256, 256), dtype=np.uint8) * 255)
+        
+        color_arr[:,:,2] = np.where(is_in_ray_vectorized(self.curr_state, x_coords, y_coords),
+                                    np.zeros((256, 256), dtype=np.uint8), 
+                                    np.ones((256, 256), dtype=np.uint8) * 255)
+        
+        ## coloring in the object
+        color_arr[:,:,0] = np.where(is_close_to_obj_vectorized(true_loc, x_coords, y_coords),
+                                    np.zeros((256, 256), dtype=np.uint8), 
+                                    color_arr[:,:,0])
+        
+        color_arr[:,:,1] = np.where(is_close_to_obj_vectorized(true_loc, x_coords, y_coords),
+                                    np.zeros((256, 256), dtype=np.uint8), 
+                                    color_arr[:,:,1])
+        
         return color_arr
 
     def is_in_ray(self, a_pose, target):
