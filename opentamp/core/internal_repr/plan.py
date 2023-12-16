@@ -428,14 +428,23 @@ class Plan(object):
             global_belief_vec[self.belief_inds[param.name][0]: self.belief_inds[param.name][1]] = vals[param.name]
         
         return global_belief_vec
-                
+    
+    def make_full_prefix_obs(self, past_obs, obs, active_ts):
+        full_prefix_obs = {}
+        for po_ts in past_obs:
+            for b_item in obs.keys():
+                full_prefix_obs[b_item+'.'+str(po_ts[0])] = past_obs[po_ts][b_item]
+        for b_item in obs.keys():
+            full_prefix_obs[b_item+'.'+str(active_ts[0])] = obs[b_item]
+
+        return full_prefix_obs
     
     def set_mc_lock(self, lock):
         global mc_lock
         mc_lock = lock
 
     ## based off of hmm example from pyro docs
-    def sample_mcmc_run(self, active_ts, provided_goal=None):                
+    def sample_mcmc_run(self, active_ts, provided_goal=None, past_obs={}):                
         ## fit a parametric approximation to the current belief state
         mc_lock.acquire()
 
@@ -450,6 +459,10 @@ class Plan(object):
 
         mc_lock.release()
         
+        print('Provided goal: ', provided_goal)
+        print('New observation: ', obs)
+        print('Past observation: ', past_obs)
+
         # if provided_obs:
         #     ## get the assumed observation in planning (typically in replans)  
         #     obs = provided_obs
@@ -457,12 +470,16 @@ class Plan(object):
         #     ## get the observations assumed to be seen through planning (sampled or MLO)
         #     obs = self.observation_model.get_active_planned_observations()
 
+        if past_obs:
+            self.observation_model.set_past_obs(past_obs)
         
-        print('Provided goal: ', provided_goal)
-        print('Conditioning on: ', obs)
-        
+        full_prefix_obs = self.make_full_prefix_obs(past_obs, obs, active_ts)
+
+        ## reset to avoid parameter_share issues
+        pyro.clear_param_store()
+
         ## create a model conditioned on the observed data in the course of executing plan
-        conditional_model = poutine.condition(self.observation_model.forward_model, data=obs)
+        conditional_model = poutine.condition(self.observation_model.forward_model, data=full_prefix_obs)
 
         ## No-U Turn Sampling kernel
         kernel = NUTS(conditional_model, full_mass=True)
@@ -470,7 +487,9 @@ class Plan(object):
         ## get a vector of overall observations, as a warmstart for MCMC
         global_vec = self.construct_global_belief_vec(provided_goal)
 
+        print('Conditioning on: ', full_prefix_obs)
         print('Init inference to: ', global_vec)
+
 
         ## initialize and run MCMC (conditions on the active observation)
         mcmc = MCMC(
@@ -484,7 +503,7 @@ class Plan(object):
         mcmc.run(copy.deepcopy(self.params), active_ts)
         mcmc.summary(prob=0.95)  # for diagnostics
         
-        return mcmc.get_samples()
+        return mcmc.get_samples()['belief_global'], obs
 
     # def initialize_obs(self, anum=0, override_obs=None):
     #     for param in self.belief_params:
@@ -494,10 +513,10 @@ class Plan(object):
     #             param.pose[:, step] = self.observation_model(copy.deepcopy(self.params), self.actions[anum].active_timesteps)[param.name]
 
     ## called once per high-level action execution
-    def filter_beliefs(self, active_ts, provided_goal=None):
+    def filter_beliefs(self, active_ts, provided_goal=None, past_obs={}):
 
         # max-likelihood feeds back on object here        
-        global_samples = self.sample_mcmc_run(active_ts, provided_goal=provided_goal)['belief_global']
+        global_samples, plan_obs = self.sample_mcmc_run(active_ts, provided_goal=provided_goal, past_obs=past_obs)
 
         if len(global_samples.shape) == 1:
             global_samples = global_samples.unsqueeze(dim=1)
@@ -510,6 +529,8 @@ class Plan(object):
             new_samp = torch.cat((param.belief.samples, torch.unsqueeze(global_samples[:, self.belief_inds[param.name][0]:self.belief_inds[param.name][1]], 2)), dim=2)
             param.belief.samples = new_samp
             running_idx += param.belief.size
+
+        return plan_obs
         
 
     ## for now, just propogates same belief until end of action -- later, introduce a self.drift_model, similarly to self.observation_model 
