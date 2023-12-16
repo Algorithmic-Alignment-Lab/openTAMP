@@ -165,23 +165,7 @@ class MotionServer(Server):
         self.agent.store_hist_info(node.info)
         
         init_t = time.time()
-        
-        # success  = self.agent.ll_solver.backtrack_solve(plan, 
-        #                                             anum=plan.start, 
-        #                                             x0=x0,
-        #                                             targets=node.targets,
-        #                                             n_resamples=self._hyperparams['n_resample'], 
-        #                                             rollout=self.rollout_opt, 
-        #                                             traj=node.ref_traj, 
-        #                                             st=cur_t, 
-        #                                             permute=self.permute_hl,
-        #                                             label=node.nodetype,
-        #                                             backup=self.backup,
-        #                                             verbose=verbose,
-        #                                             hist_info=node.info)
-        
-        ## TODO: replace goal instantiation with call to GymAgent
-        
+                
         ## preprocessing for beliefs vector (used for certainty constraints, e.g. )
         if plan.start == 0 and len(plan.belief_params) > 0:
             print('Planning on new problem')
@@ -195,6 +179,9 @@ class MotionServer(Server):
             plan.observation_model.set_active_planned_observations(planned_obs)
 
             node.replan_start = 0
+            node.conditioned_obs = {}
+
+            plan.observation_model.set_past_obs(node.conditioned_obs)
 
             ## get a true belief state, to plan against in the problem
             self.agent.gym_env.resample_belief_true()
@@ -215,24 +202,39 @@ class MotionServer(Server):
                     pred_dict['pred'].active_range = (pred_dict['pred'].active_range[0], pred_dict['pred'].active_range[0]-1)
         
 
-        ## reset observations from the beginning
-        for param in plan.belief_params:
-            param.belief.samples = param.belief.samples[:, :, :plan.actions[plan.start].active_timesteps[0]+1]
-                
+        ## reset beliefs and observations to beginning of refine_start
+        if len(plan.belief_params) > 0:
+            for param in plan.belief_params:
+                param.belief.samples = param.belief.samples[:, :, :plan.actions[plan.start].active_timesteps[0]+1]
+            del_list = []
+            for t in node.conditioned_obs.keys():
+                if t[0] >= plan.actions[node.replan_start].active_timesteps[0]:
+                    del_list.append(t)
+            for t in del_list:
+                del node.conditioned_obs[t]
+        
+
         refine_success = self.agent.ll_solver._backtrack_solve(plan,
                                                       anum=plan.start,
                                                       n_resamples=5,
                                                       init_traj=node.ref_traj,
-                                                      st=cur_t)
-
+                                                      st=cur_t, 
+                                                      conditioned_obs=node.conditioned_obs)
+        
         ## for belief-space replanning, only refine if indeed belief-space, and 
         replan_success = True
         if refine_success and len(plan.belief_params) > 0:
             print('Refining from: ', node.replan_start)    
 
-            ## reset beliefs to start of plan
+            ## reset beliefs and observations to beginning of refine_start
             for param in plan.belief_params:
                 param.belief.samples = param.belief.samples[:, :, :plan.actions[node.replan_start].active_timesteps[0]+1]
+            del_list = []
+            for t in node.conditioned_obs.keys():
+                if t[0] >= plan.actions[node.replan_start].active_timesteps[0]:
+                    del_list.append(t)
+            for t in del_list:
+                del node.conditioned_obs[t]
 
             ## filter them forward, under the new assumption for the observation
             for anum in range(node.replan_start, len(plan.actions)):
@@ -241,8 +243,9 @@ class MotionServer(Server):
                 plan.rollout_beliefs(active_ts)
                 
                 if plan.actions[anum].non_deterministic:
-                    ## perform MCMC to update, using the goal inferred from at the time
-                    plan.filter_beliefs(active_ts, provided_goal=goal)
+                    ## perform MCMC to update, using the goal inferred from at the time, add new observation planned against
+                    obs = plan.filter_beliefs(active_ts, provided_goal=goal, past_obs=node.conditioned_obs)
+                    node.conditioned_obs[plan.actions[anum].active_timesteps] = obs
                 else:
                     ## just propagate beliefs forward, no inference needed
                     for param in plan.belief_params:
@@ -282,7 +285,7 @@ class MotionServer(Server):
                 replan_success = False
 
 
-        # TODO: reactivate when reintegrating RolloutServer + Policy stuff
+        ## path of samples in imitation
         path = []
 
         if refine_success and replan_success:
@@ -377,7 +380,6 @@ class MotionServer(Server):
         n_problem = node.get_problem(fail_step, fail_pred, fail_negated)
         abs_prob = self.agent.hl_solver.translate_problem(n_problem, goal=node.concr_prob.goal)
         prefix = node.curr_plan.prefix(fail_step)
-        # breakpoint()
         hlnode = HLSearchNode(abs_prob,
                              node.domain,
                              n_problem,
@@ -390,14 +392,14 @@ class MotionServer(Server):
                              label=self.id,
                              nodetype=node.nodetype,
                              info=node.info, 
-                             replan_start=node.replan_start)
+                             replan_start=node.replan_start,
+                             conditioned_obs=node.conditioned_obs)
         self.push_queue(hlnode, self.task_queue)
         print(self.id, 'Failed to refine, pushing to task node.')
 
 
     def run(self):
         step = 0
-        # breakpoint()
         while not self.stopped:
             node = self.pop_queue(self.in_queue)
             if node is None:

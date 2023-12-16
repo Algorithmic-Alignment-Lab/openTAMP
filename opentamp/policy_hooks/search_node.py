@@ -38,7 +38,7 @@ class SearchNode(object):
         raise NotImplementedError("Override this.")
 
 class HLSearchNode(SearchNode):
-    def __init__(self, abs_prob, domain, concr_prob, priority=0, prefix=None, label='', llnode=None, x0=None, targets=None, expansions=0, nodetype='optimal', info={}, replan_start=None):
+    def __init__(self, abs_prob, domain, concr_prob, priority=0, prefix=None, label='', llnode=None, x0=None, targets=None, expansions=0, nodetype='optimal', info={}, replan_start=None, conditioned_obs={}):
         self.abs_prob = abs_prob
         self.domain = domain
         self.concr_prob = concr_prob
@@ -56,6 +56,7 @@ class HLSearchNode(SearchNode):
         if llnode is not None:
             self._trace.extend(llnode._trace)
         self.replan_start = replan_start
+        self.conditioned_obs = conditioned_obs
 
     # def is_hl_node(self):
     #     return True
@@ -72,7 +73,7 @@ class HLSearchNode(SearchNode):
     #     return plan_obj
 
 class LLSearchNode(SearchNode):
-    def __init__(self, plan_str, domain, prob, initial, priority=1, keep_failed=False, ref_plan=None, x0=None, targets=None, expansions=0, label='', refnode=None, freeze_ts=-1, hl=True, ref_traj=[], nodetype='optimal', env_state=None, info={}, replan_start=None):
+    def __init__(self, plan_str, domain, prob, initial, priority=1, keep_failed=False, ref_plan=None, x0=None, targets=None, expansions=0, label='', refnode=None, freeze_ts=-1, hl=True, ref_traj=[], nodetype='optimal', env_state=None, info={}, replan_start=None, conditioned_obs={}):
         self.curr_plan = 'no plan'
         self.plan_str = plan_str
         self.domain = domain
@@ -101,6 +102,7 @@ class LLSearchNode(SearchNode):
         self.keep_failed = keep_failed
         self.expansions = expansions
         self.replan_start = replan_start
+        self.conditioned_obs = conditioned_obs
 
 
     def parse_state(self, plan, failed_preds, ts, all_preds=[]):

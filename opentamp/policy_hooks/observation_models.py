@@ -15,6 +15,7 @@ DEVICE = 'cpu'
 class ObservationModel(object):
     approx_params : None  ## parameters into the parametric approximation for the current belief state
     active_planned_observations : None  ## dict of parameter names, mapping to the current observed values
+    past_obs : {} ## dict of past observations to condition on, indexed {timestep: observation}
 
     ## get the observation that is currently active / being planned over
     def get_active_planned_observations(self):
@@ -52,6 +53,9 @@ class ObservationModel(object):
     ## a callable representing the forward model
     def forward_model(self, params, active_ts, provided_state=None):
         raise NotImplementedError
+    
+    def set_past_obs(self, past_obs):
+        self.past_obs = past_obs
 
 class PointerObservationModel(ObservationModel):
     def __init__(self):
@@ -164,8 +168,61 @@ class PointerObservationModel(ObservationModel):
         self.approx_params = new_p
 
 
-## TODO implement one with just clustering, not even using GMM
 class NoVIPointerObservationModel(ObservationModel):
+    def __init__(self):
+        # uninitialized parameters
+        self.approx_params = {'weights'+str(os.getpid()): None, 'locs'+str(os.getpid()): None, 'scales'+str(os.getpid()): None}
+        self.active_planned_observations = {'target1': torch.empty((2,)).detach()}
+        self.past_obs = {}
+    
+    def approx_model(self, data):
+        pass
+
+    def forward_model(self, params, active_ts, provided_state=None):        
+        ray_width = np.pi / 4  ## has 45-degree field of view on either side
+
+        def is_in_ray(a_pose, target):
+            if target[0] >= 0:
+                return np.abs(np.arctan(target[1]/target[0]) - a_pose) <= ray_width
+            else:
+                return np.abs(np.arctan(target[1]/target[0]) - (a_pose - np.pi)) <= ray_width
+        
+        if provided_state is not None:
+            ## overrides the current belief sample with a true state
+            b_global_samp = provided_state['target1']
+        else:
+            ## sample from current Gaussian mixture model
+            b_global_samp = pyro.sample('belief_global', params['target1'].belief.dist)
+        
+        ## sample through strict prefix of current obs
+        for obs_active_ts in self.past_obs:
+            if is_in_ray(params['pr2'].pose[0,obs_active_ts[1]-1], b_global_samp.detach()):
+                ## sample around the true belief, with extremely low variation / error
+                pyro.sample('target1.'+str(obs_active_ts[0]), dist.MultivariateNormal(b_global_samp.float(), 0.01 * torch.eye(2)))
+            else:
+                ## sample from prior dist -- have no additional knowledge, don't read it
+                pyro.sample('target1.'+str(obs_active_ts[0]), dist.MultivariateNormal(torch.zeros((2,)), 0.01 * torch.eye(2)))
+
+        
+        ## get sample for current timestep, record and return
+        samps = {}
+
+        if is_in_ray(params['pr2'].pose[0,active_ts[1]-1], b_global_samp.detach()):
+            ## sample around the true belief, with extremely low variation / error
+            samps['target1'] = pyro.sample('target1.'+str(active_ts[0]), dist.MultivariateNormal(b_global_samp.float(), 0.01 * torch.eye(2)))
+        else:
+            ## sample from prior dist -- have no additional knowledge, don't read it
+            samps['target1'] = pyro.sample('target1.'+str(active_ts[0]), dist.MultivariateNormal(torch.zeros((2,)), 0.01 * torch.eye(2)))
+
+        return samps
+
+    ## noVI in the pointer observation
+    def fit_approximation(self, params):        
+        pass
+
+
+## TODO implement one with just clustering, not even using GMM
+class SampleAvgPointerObservationModel(ObservationModel):
     def __init__(self):
         # uninitialized parameters
         self.approx_params = {'loc': None, 'cov': None}

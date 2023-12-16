@@ -98,7 +98,8 @@ class TaskServer(Server):
                                 refnode=node,
                                 nodetype=node.nodetype,
                                 info=node.info,
-                                replan_start=node.replan_start)
+                                replan_start=node.replan_start,
+                                conditioned_obs=node.conditioned_obs)
 
 
         # if self.config['seq']:

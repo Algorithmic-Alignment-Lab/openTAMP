@@ -710,7 +710,7 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
         return out
 
 
-    def sample_rollout(self, x0, act_st, act_et, task):
+    def sample_rollout(self, x0, act_st, act_et, task, label='dagger'):
         policy = self.policies[self.task_list[task[0]]]
         if not self.policy_initialized(policy): return [], 1.
         hor = 2 * (act_et - act_st)

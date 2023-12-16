@@ -128,9 +128,9 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
     # def get_resample_param(self, a):
     #     return a.params[0]
 
-    def backtrack_solve(self, plan, callback=None, verbose=False, n_resamples=5):        
+    def backtrack_solve(self, plan, callback=None, verbose=False, n_resamples=5, conditioned_obs={}):        
         success = self._backtrack_solve(
-            plan, callback, anum=0, verbose=verbose, n_resamples=n_resamples, 
+            plan, callback, anum=0, verbose=verbose, n_resamples=n_resamples, conditioned_obs=conditioned_obs
         )
         return success
 
@@ -144,7 +144,8 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
         n_resamples=5,
         init_traj=[],
         st=0,
-        debug=False
+        debug=False,
+        conditioned_obs={}
     ):
         if amax is None:
             amax = len(plan.actions) - 1
@@ -206,6 +207,7 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
                 n_resamples=n_resamples,
                 init_traj=init_traj,
                 st=st,
+                conditioned_obs=conditioned_obs
             )
 
             # reset free_attrs
@@ -252,7 +254,8 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
             if len(plan.belief_params) > 0:
                 if plan.actions[anum].non_deterministic:
                     ## perform MCMC to update
-                    plan.filter_beliefs(active_ts, provided_goal=plan.observation_model.get_active_planned_observations())
+                    obs = plan.filter_beliefs(active_ts, provided_goal=plan.observation_model.get_active_planned_observations(), past_obs=conditioned_obs)
+                    conditioned_obs[plan.actions[anum].active_timesteps] = obs
                 else:
                     ## just propagate beliefs forward, no inference needed
                     for param in plan.belief_params:
@@ -319,7 +322,8 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
                 if len(plan.belief_params) > 0:
                     if plan.actions[anum].non_deterministic:
                         ## perform MCMC to update
-                        plan.filter_beliefs(active_ts, provided_goal=plan.observation_model.get_active_planned_observations())
+                        obs = plan.filter_beliefs(active_ts, provided_goal=plan.observation_model.get_active_planned_observations(), past_obs=conditioned_obs)
+                        conditioned_obs[plan.actions[anum].active_timesteps] = obs
                     else:
                         ## just propagate beliefs forward, no inference needed
                         for param in plan.belief_params:
