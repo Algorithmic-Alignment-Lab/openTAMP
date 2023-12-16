@@ -455,9 +455,6 @@ class Plan(object):
         ## get random observation through the forward model
         obs = self.observation_model.forward_model(copy.deepcopy(self.params), active_ts, provided_state=provided_goal)
 
-        print('Releasing lock')
-
-        mc_lock.release()
         
         print('Provided goal: ', provided_goal)
         print('New observation: ', obs)
@@ -469,13 +466,9 @@ class Plan(object):
         # else:
         #     ## get the observations assumed to be seen through planning (sampled or MLO)
         #     obs = self.observation_model.get_active_planned_observations()
-
-        if past_obs:
-            self.observation_model.set_past_obs(past_obs)
         
         full_prefix_obs = self.make_full_prefix_obs(past_obs, obs, active_ts)
 
-        ## reset to avoid parameter_share issues
         pyro.clear_param_store()
 
         ## create a model conditioned on the observed data in the course of executing plan
@@ -500,8 +493,12 @@ class Plan(object):
             initial_params={'belief_global': global_vec}
         )
 
-        mcmc.run(copy.deepcopy(self.params), active_ts)
+        mcmc.run(copy.deepcopy(self.params), active_ts, past_obs=past_obs)
         mcmc.summary(prob=0.95)  # for diagnostics
+
+        print('Releasing lock')
+        mc_lock.release()
+
         
         return mcmc.get_samples()['belief_global'], obs
 
