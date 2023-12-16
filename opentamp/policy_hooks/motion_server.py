@@ -181,8 +181,6 @@ class MotionServer(Server):
             node.replan_start = 0
             node.conditioned_obs = {}
 
-            plan.observation_model.set_past_obs(node.conditioned_obs)
-
             ## get a true belief state, to plan against in the problem
             self.agent.gym_env.resample_belief_true()
 
@@ -208,7 +206,7 @@ class MotionServer(Server):
                 param.belief.samples = param.belief.samples[:, :, :plan.actions[plan.start].active_timesteps[0]+1]
             del_list = []
             for t in node.conditioned_obs.keys():
-                if t[0] >= plan.actions[node.replan_start].active_timesteps[0]:
+                if t[0] >= plan.actions[plan.start].active_timesteps[0]:
                     del_list.append(t)
             for t in del_list:
                 del node.conditioned_obs[t]
@@ -244,6 +242,7 @@ class MotionServer(Server):
                 
                 if plan.actions[anum].non_deterministic:
                     ## perform MCMC to update, using the goal inferred from at the time, add new observation planned against
+                    print(node.conditioned_obs)
                     obs = plan.filter_beliefs(active_ts, provided_goal=goal, past_obs=node.conditioned_obs)
                     node.conditioned_obs[plan.actions[anum].active_timesteps] = obs
                 else:

@@ -54,9 +54,6 @@ class ObservationModel(object):
     def forward_model(self, params, active_ts, provided_state=None):
         raise NotImplementedError
     
-    def set_past_obs(self, past_obs):
-        self.past_obs = past_obs
-
 class PointerObservationModel(ObservationModel):
     def __init__(self):
         # uninitialized parameters
@@ -82,7 +79,7 @@ class PointerObservationModel(ObservationModel):
             cov_tensor = (stack_eye * stack_scale).to(DEVICE)
             pyro.sample("belief_global"+str(os.getpid()), dist.MultivariateNormal(locs[assignment].to(DEVICE), cov_tensor), obs=data.to(DEVICE))
 
-    def forward_model(self, params, active_ts, provided_state=None):        
+    def forward_model(self, params, active_ts, provided_state=None, past_obs={}):        
         ray_width = np.pi / 4  ## has 45-degree field of view on either side
 
         def is_in_ray(a_pose, target):
@@ -173,12 +170,11 @@ class NoVIPointerObservationModel(ObservationModel):
         # uninitialized parameters
         self.approx_params = {'weights'+str(os.getpid()): None, 'locs'+str(os.getpid()): None, 'scales'+str(os.getpid()): None}
         self.active_planned_observations = {'target1': torch.empty((2,)).detach()}
-        self.past_obs = {}
     
     def approx_model(self, data):
         pass
 
-    def forward_model(self, params, active_ts, provided_state=None):        
+    def forward_model(self, params, active_ts, provided_state=None, past_obs={}):        
         ray_width = np.pi / 4  ## has 45-degree field of view on either side
 
         def is_in_ray(a_pose, target):
@@ -195,7 +191,7 @@ class NoVIPointerObservationModel(ObservationModel):
             b_global_samp = pyro.sample('belief_global', params['target1'].belief.dist)
         
         ## sample through strict prefix of current obs
-        for obs_active_ts in self.past_obs:
+        for obs_active_ts in past_obs:
             if is_in_ray(params['pr2'].pose[0,obs_active_ts[1]-1], b_global_samp.detach()):
                 ## sample around the true belief, with extremely low variation / error
                 pyro.sample('target1.'+str(obs_active_ts[0]), dist.MultivariateNormal(b_global_samp.float(), 0.01 * torch.eye(2)))
@@ -228,7 +224,7 @@ class SampleAvgPointerObservationModel(ObservationModel):
         self.approx_params = {'loc': None, 'cov': None}
         self.active_planned_observations = {'target1': torch.empty((2,)).detach()}
 
-    def forward_model(self, params, active_ts, provided_state=None):        
+    def forward_model(self, params, active_ts, provided_state=None, past_obs={}):        
         ray_width = np.pi / 4  ## has 45-degree field of view on either side
 
         def is_in_ray(a_pose, target):
