@@ -244,7 +244,7 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
                 active_ts=active_ts,
                 verbose=verbose,
                 force_init=True,
-                init_traj=init_traj,
+                init_traj=init_traj
             )
             if not success:
                 ## if planning fails we're done

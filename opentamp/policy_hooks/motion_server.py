@@ -76,12 +76,9 @@ class MotionServer(Server):
         
         plan = node.curr_plan
 
-        # belief-space planning hook
+        ##b elief-space planning hook
         if 'observation_model' in self._hyperparams.keys():
-            plan.set_observation_model(self._hyperparams['observation_model'])
-            # TODO: check functionality with these being outdated
-            # plan.set_max_likelihood_obs(self._hyperparams['max_likelihood_obs'])
-            # plan.initialize_beliefs()  
+            plan.set_observation_model(node.observation_model)
 
         if type(plan) is str: return plan
         if not len(plan.actions): return plan
@@ -182,14 +179,17 @@ class MotionServer(Server):
             node.conditioned_obs = {}
 
             ## get a true belief state, to plan against in the problem
-            self.agent.gym_env.resample_belief_true()
+            node.belief_true = self.agent.gym_env.sample_belief_true()
 
             plan.set_mc_lock(self.config['mc_lock'])
         
+        print('Full Conditioned Obs At Start: ', node.conditioned_obs)
+
         ## get the true state of belief variables from sim
         if len(plan.belief_params) > 0:
-            goal = self.agent.gym_env.belief_true
-
+            self.agent.gym_env.set_belief_true(node.belief_true)
+            goal = node.belief_true
+            
         ## disable optimistic predicates for all actions coming before the start of current planning action
         for anum in range(plan.start):
             a = plan.actions[anum]
@@ -211,7 +211,6 @@ class MotionServer(Server):
             for t in del_list:
                 del node.conditioned_obs[t]
         
-
         refine_success = self.agent.ll_solver._backtrack_solve(plan,
                                                       anum=plan.start,
                                                       n_resamples=5,
@@ -330,14 +329,19 @@ class MotionServer(Server):
                 print(plan.params['target1'].pose)
                 print(plan.params['target1'].belief.samples.mean(axis=0))
                 print(plan.params['target1'].belief.samples.std(axis=0))
+                print([self.agent.goal_f(0, s.get_X()[-1, :]) for s in path])
                 for idx in range(plan.params['target1'].belief.samples.shape[2]):
                     plt.scatter(plan.params['target1'].belief.samples[:,0,idx], plan.params['target1'].belief.samples[:,1,idx], alpha=0.5)
                     plt.scatter([goal['target1'][0]], [goal['target1'][1]], alpha=1.0, marker='x')
                     plt.savefig('samps'+str(idx)+'.pdf')
                     plt.clf()
-                self.save_video(path, False, lab='vid_planner')
+                self.save_video(path, True, lab='vid_planner')
             
                 breakpoint()
+
+                raise Exception('Terminating after single plan')
+
+        print('Full Conditioned Obs At Start: ', node.conditioned_obs)
 
         return path, refine_success, replan_success
 
@@ -392,7 +396,9 @@ class MotionServer(Server):
                              nodetype=node.nodetype,
                              info=node.info, 
                              replan_start=node.replan_start,
-                             conditioned_obs=node.conditioned_obs)
+                             conditioned_obs=node.conditioned_obs,
+                             observation_model=node.observation_model,
+                             belief_true=node.belief_true)
         self.push_queue(hlnode, self.task_queue)
         print(self.id, 'Failed to refine, pushing to task node.')
 

@@ -406,7 +406,7 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
                 prev_vals = self.fill_cont(policies['cont'], sample, t)
 
             sample.set(NOISE_ENUM, noise_full, t)
-
+            
             U_full = policy.act(cur_state.copy(), sample.get_obs(t=t).copy(), t, noise_full)
             sample.set(ACTION_ENUM, U_full.copy(), t)
 
@@ -1163,7 +1163,7 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
         end_s = path[-1]
         end_s.task_end = True
 
-        ### NOTE: TODO UNHACNK THIS CHANGE (POPIULATING WITH SAMPLE POSES)
+        ### NOTE: TODO UNHACK THIS CHANGE (POPIULATING WITH SAMPLE POSES)
         ## setting the sampled targets through the codebase
         for t in range(self.T):
             target_pose = plan.params['target1'].pose[:, st]
@@ -1462,7 +1462,7 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
         vals = policy.act(sample.get_X(t=t), sample.get_cont_obs(t=t), t)
         old_vals = {}
         for ind, enum in enumerate(self.continuous_opts):
-            old_vals[enum] = sample.get(enum, t=t).copy()
+            # old_vals[enum] = sample.get(enum, t=t).copy()
             sample.set(enum, vals[ind], t=t)
         return old_vals
 

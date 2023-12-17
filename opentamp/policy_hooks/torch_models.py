@@ -331,7 +331,7 @@ class PolicyNet(TorchNet):
                 vals = np.exp(vals)
             elif self.output_fn is F.softmax:
                 pass
-            else:
+            elif not cont:
                 raise NotImplementedError("Cannot use output fn {} for task prediction!".format(self.output_fn))
 
         res = []

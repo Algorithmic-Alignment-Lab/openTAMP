@@ -67,7 +67,7 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
         'meta_file': opentamp.__path__._path[0] + '/new_specs/pointer_domain/pointer_meta.json',
         'acts_file': opentamp.__path__._path[0] + '/new_specs/pointer_domain/pointer_acts.json',
         'prob_file': opentamp.__path__._path[0] + '/new_specs/pointer_domain/pointer_prob.json',
-        'observation_model': NoVIPointerObservationModel(),
+        'observation_model': NoVIPointerObservationModel,
         'n_dirs': N_DIRS,
         'gym_env_type': BlankEnvWrapper,
 

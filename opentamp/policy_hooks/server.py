@@ -69,15 +69,15 @@ class Server(object):
         self.prob = self.agent.prob
         self.solver.agent = self.agent
         
-        if self.render:
-            self.cur_vid_id = 0
-            if not os.path.isdir(LOG_DIR+hyperparams['weight_dir']+'/videos'):
-                try:
-                    os.makedirs(LOG_DIR+hyperparams['weight_dir']+'/videos')
-                except:
-                    pass
+        # if self.render:
+        self.cur_vid_id = 0
+        if not os.path.isdir(LOG_DIR+hyperparams['weight_dir']+'/videos'):
+            try:
+                os.makedirs(LOG_DIR+hyperparams['weight_dir']+'/videos')
+            except:
+                pass
 
-            self.video_dir = LOG_DIR+hyperparams['weight_dir']+'/videos/'
+        self.video_dir = LOG_DIR+hyperparams['weight_dir']+'/videos/'
 
         self.task_queue = hyperparams['task_queue']
         self.motion_queue = hyperparams['motion_queue']
@@ -350,6 +350,10 @@ class Server(object):
         for task in self.agent.task_list:
             rollout_policies[task] = self.policy_opt.get_policy(task)
 
+        rollout_policies['cont'] = self.policy_opt.get_policy('cont')
+        
+        print(rollout_policies['cont'])
+
         self.agent.policies = rollout_policies
 
 
@@ -602,7 +606,7 @@ class Server(object):
 
 
     def save_video(self, rollout, success=None, ts=None, lab='', annotate=True, st=0):
-        if not self.render: return
+        # if not self.render: return
         init_t = time.time()
         old_h = self.agent.image_height
         old_w = self.agent.image_width
@@ -643,6 +647,7 @@ class Server(object):
             self.agent.target_vecs[0] = old_vec
         init_t = time.time()
         # TODO: hardcoded individual video name for now
+        print('Saving video to: ', LOG_DIR+self._hyperparams['weight_dir']+'/videos/'+lab+'.gif')
         imageio.mimsave(LOG_DIR+self._hyperparams['weight_dir']+'/videos/'+lab+'.gif', np.array(buf), duration=0.01)
         save_video(fname, dname=self._hyperparams['descr'], arr=np.array(buf), savepath=self.video_dir)
         self.agent.image_height = old_h

@@ -53,6 +53,9 @@ class TaskServer(Server):
                 return ## don't overwhelm the motion servers, MCMC updates are slow
             else:
                 node = self.spawn_problem()
+            
+            ## instatiate new observation model calss for new problem
+            node.observation_model = self._hyperparams['observation_model']()
         
         plan_str = self.agent.hl_solver.run_planner(node.abs_prob, 
                                                     node.domain, 
@@ -99,7 +102,9 @@ class TaskServer(Server):
                                 nodetype=node.nodetype,
                                 info=node.info,
                                 replan_start=node.replan_start,
-                                conditioned_obs=node.conditioned_obs)
+                                conditioned_obs=node.conditioned_obs,
+                                observation_model=node.observation_model,
+                                belief_true=node.belief_true)
 
 
         # if self.config['seq']:

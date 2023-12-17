@@ -454,7 +454,6 @@ class Plan(object):
 
         ## get random observation through the forward model
         obs = self.observation_model.forward_model(copy.deepcopy(self.params), active_ts, provided_state=provided_goal)
-
         
         print('Provided goal: ', provided_goal)
         print('New observation: ', obs)
@@ -490,7 +489,8 @@ class Plan(object):
             num_samples=self.num_belief_samples,
             warmup_steps=self.num_warmup_steps,
             num_chains=1,
-            initial_params={'belief_global': global_vec}
+            initial_params={'belief_global': global_vec},
+            disable_progbar=True
         )
 
         mcmc.run(copy.deepcopy(self.params), active_ts, past_obs=past_obs)

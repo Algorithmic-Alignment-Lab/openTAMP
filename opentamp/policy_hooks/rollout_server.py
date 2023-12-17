@@ -211,10 +211,13 @@ class RolloutServer(Server):
 
         print('Initialized policies: ', self.agent.policies_initialized())
 
-        for _ in range(20):
-            self.agent.gym_env.resample_belief_true()  ## resample at the start of each rollout
+        for i in range(20):
+            samp = self.agent.gym_env.sample_belief_true()  ## resample at the start of each rollout
+            self.agent.gym_env.set_belief_true(samp)
             val, path = self.test_run(x0, [], max_t=20, hl=True, soft=self.config['soft_eval'], eta=eta, lab=-5, hor=25)
             vals.append(val)
+            print([s.task for s in path])
+            self.save_video(path, val > 0, lab='vid_imit_'+str(i))
 
         avg_val = np.mean(np.array(vals))
         if save:
@@ -560,7 +563,6 @@ class RolloutServer(Server):
         debug = np.random.uniform() < 0.1
         while t < max_t and self.agent.feasible_state(state, targets):
             l = self.get_task(state, targets, l, soft)
-            # print(l)
             if l is None: break
             task_name = self.task_list[l[0]]
             pol = self.agent.policies[task_name]

@@ -9,11 +9,11 @@ import pyro.distributions as distros
 class BlankEnv(Env):    
     def __init__(self):
         self.action_space = spaces.Box(low=0.0, high=1.0, shape=(1,), dtype='float32')
-        self.observation_space = spaces.Box(low=0.0, high=1.0, shape=(2,), dtype='float32')
+        self.observation_space = spaces.Box(low=0.0, high=1.0, shape=(3,), dtype='float32')
         self.curr_state = np.array([0.0]*1)
-        self.curr_obs = np.array([0.0]*2)
+        self.curr_obs = np.array([0.0]*3)
         self.dist = self.assemble_dist()
-        self.resample_belief_true()
+        self.belief_true = {'target1': torch.tensor([0.0, 0.0])}
 
     def assemble_dist(self):
         weights = torch.tensor([0.5,0.5])
@@ -33,16 +33,18 @@ class BlankEnv(Env):
 
         if self.is_in_ray(action, self.belief_true['target1'].detach().numpy()):
             ## sample around the true belief, with extremely low variation / error
-            self.curr_obs = distros.MultivariateNormal(self.belief_true['target1'], 0.01 * torch.eye(2)).sample().numpy()
+            noisy_obs = distros.MultivariateNormal(self.belief_true['target1'], 0.01 * torch.eye(2)).sample().numpy()
         else:
             ## reject this observation, give zero reading
-            self.curr_obs = distros.MultivariateNormal(torch.zeros((2,)), 0.01 * torch.eye(2)).sample().numpy()
+            noisy_obs = distros.MultivariateNormal(torch.zeros((2,)), 0.01 * torch.eye(2)).sample().numpy()
+
+        self.curr_obs = np.concatenate((self.curr_state, noisy_obs))
 
         return self.curr_obs, 1.0, False, {}
 
     def reset(self):
         self.curr_state = np.array([0.0]*1)
-        self.curr_obs = np.array([0.0]*2)
+        self.curr_obs = np.array([0.0]*3)
         return self.curr_obs
     
     ## NOTE: only rgb_array mode supported, ignores keyword
@@ -86,8 +88,8 @@ class BlankEnv(Env):
         return np.abs(np.arctan(target[1]/target[0]) - a_pose) <= np.pi / 4
 
     ## get random sample to initialize uncertain problem
-    def resample_belief_true(self):
-        self.belief_true = {'target1': self.dist.sample()}
+    def sample_belief_true(self):
+        return {'target1': self.dist.sample()}
 
     def set_belief_true(self, belief_dict):
         self.belief_true = belief_dict
@@ -96,7 +98,7 @@ class BlankEnv(Env):
 class BlankEnvWrapper(BlankEnv):
     def reset_to_state(self, state):
         self.curr_state = state
-        self.curr_obs = np.array([0.0]*2)
+        self.curr_obs = np.array([0.0]*3)
         return self.curr_obs
 
     def get_vector(self):
@@ -123,7 +125,7 @@ class BlankEnvWrapper(BlankEnv):
     def assess_goal(self, condition, state, targets=None, cont=None):
         item_loc = self.belief_true['target1']
         # if pointing directly at the object
-        if np.abs(np.arctan(item_loc[1]/item_loc[0]) - state) <= 0.01:
+        if np.abs(np.arctan(item_loc[1]/item_loc[0]) - state) <= 0.05:
             return 0.0
         else:
             return 1.0
