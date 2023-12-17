@@ -69,15 +69,15 @@ class Server(object):
         self.prob = self.agent.prob
         self.solver.agent = self.agent
         
-        # if self.render:
-        self.cur_vid_id = 0
-        if not os.path.isdir(LOG_DIR+hyperparams['weight_dir']+'/videos'):
-            try:
-                os.makedirs(LOG_DIR+hyperparams['weight_dir']+'/videos')
-            except:
-                pass
+        if self.render:
+            self.cur_vid_id = 0
+            if not os.path.isdir(LOG_DIR+hyperparams['weight_dir']+'/videos'):
+                try:
+                    os.makedirs(LOG_DIR+hyperparams['weight_dir']+'/videos')
+                except:
+                    pass
 
-        self.video_dir = LOG_DIR+hyperparams['weight_dir']+'/videos/'
+            self.video_dir = LOG_DIR+hyperparams['weight_dir']+'/videos/'
 
         self.task_queue = hyperparams['task_queue']
         self.motion_queue = hyperparams['motion_queue']
@@ -606,7 +606,7 @@ class Server(object):
 
 
     def save_video(self, rollout, success=None, ts=None, lab='', annotate=True, st=0):
-        # if not self.render: return
+        if not self.render: return
         init_t = time.time()
         old_h = self.agent.image_height
         old_w = self.agent.image_width
