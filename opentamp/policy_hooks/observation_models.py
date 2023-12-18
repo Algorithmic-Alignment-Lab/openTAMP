@@ -9,8 +9,9 @@ from pyro.infer.autoguide import AutoDelta
 import numpy as np
 import os
 
-# DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
-DEVICE = 'cpu'
+DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
+# DEVICE = 'cpu'
+print('USED DEVICE FOR MCMC INFERENCE IS: ', DEVICE)
 
 class ObservationModel(object):
     approx_params : None  ## parameters into the parametric approximation for the current belief state
@@ -63,21 +64,21 @@ class PointerObservationModel(ObservationModel):
     @config_enumerate
     def approx_model(self, data):
         ## Global variable (weight on either cluster)
-        weights = pyro.sample("weights"+str(os.getpid()), dist.Dirichlet(5 * torch.ones(2).to(DEVICE))).to(DEVICE)
+        weights = pyro.sample("weights"+str(os.getpid()), dist.Dirichlet(5 * torch.ones(2)))
 
         ## Different Locs and Scales for each
         with pyro.plate("components"+str(os.getpid()), 2):
             ## Uninformative prior on locations
-            locs = pyro.sample("locs"+str(os.getpid()), dist.MultivariateNormal(torch.tensor([3.0, 0.0]).to(DEVICE), 20.0 * torch.eye(2).to(DEVICE))).to(DEVICE)
-            scales = pyro.sample("scales"+str(os.getpid()), dist.LogNormal(0.0, 10.0)).to(DEVICE)
+            locs = pyro.sample("locs"+str(os.getpid()), dist.MultivariateNormal(torch.tensor([3.0, 0.0]), 20.0 * torch.eye(2)))
+            scales = pyro.sample("scales"+str(os.getpid()), dist.LogNormal(0.0, 10.0))
 
         with pyro.plate("data"+str(os.getpid()), len(data)):
             ## Local variables
-            assignment = pyro.sample("mode_assignment"+str(os.getpid()), dist.Categorical(weights)).to(DEVICE)
-            stack_eye = torch.tile(torch.eye(2).unsqueeze(dim=0), dims=(100, 1, 1)).to(DEVICE)
-            stack_scale = torch.tile(scales[assignment].unsqueeze(dim=1).unsqueeze(dim=2), dims=(1, 2, 2)).to(DEVICE)
-            cov_tensor = (stack_eye * stack_scale).to(DEVICE)
-            pyro.sample("belief_global"+str(os.getpid()), dist.MultivariateNormal(locs[assignment].to(DEVICE), cov_tensor), obs=data.to(DEVICE))
+            assignment = pyro.sample("mode_assignment"+str(os.getpid()), dist.Categorical(weights))
+            stack_eye = torch.tile(torch.eye(2).unsqueeze(dim=0), dims=(100, 1, 1))
+            stack_scale = torch.tile(scales[assignment].unsqueeze(dim=1).unsqueeze(dim=2), dims=(1, 2, 2))
+            cov_tensor = (stack_eye * stack_scale)
+            pyro.sample("belief_global"+str(os.getpid()), dist.MultivariateNormal(locs[assignment], cov_tensor), obs=data)
 
     def forward_model(self, params, active_ts, provided_state=None, past_obs={}):        
         ray_width = np.pi / 4  ## has 45-degree field of view on either side
@@ -120,11 +121,11 @@ class PointerObservationModel(ObservationModel):
             data=params['target1'].belief.samples[:, :, -1]
             if site["name"] == "weights"+str(os.getpid()):
                 # Initialize weights to uniform.
-                return (torch.ones(2) / 2).to(DEVICE)
+                return (torch.ones(2) / 2)
             if site["name"] == "scales"+str(os.getpid()):
-                return torch.ones(2).to(DEVICE)
+                return torch.ones(2)
             if site["name"] == "locs"+str(os.getpid()):
-                return torch.tensor([[3., 3.], [3., -3.]]).to(DEVICE)
+                return torch.tensor([[3., 3.], [3., -3.]])
             raise ValueError(site["name"])
 
 
@@ -151,10 +152,10 @@ class PointerObservationModel(ObservationModel):
 
         ## do gradient steps, TODO update with genreal belief signature 
         for i in range(nsteps):
-            loss = svi.step(params['target1'].belief.samples[:, :, -1].to(DEVICE))
+            loss = svi.step(params['target1'].belief.samples[:, :, -1])
             # print(global_guide(params['target1'].belief.samples[:, :, -1]))
 
-        pars = global_guide(params['target1'].belief.samples[:, :, -1].to(DEVICE))
+        pars = global_guide(params['target1'].belief.samples[:, :, -1])
         
         new_p = {}
 
@@ -185,19 +186,19 @@ class NoVIPointerObservationModel(ObservationModel):
         
         if provided_state is not None:
             ## overrides the current belief sample with a true state
-            b_global_samp = provided_state['target1']
+            b_global_samp = provided_state['target1'].to(DEVICE)
         else:
             ## sample from current Gaussian mixture model
-            b_global_samp = pyro.sample('belief_global', params['target1'].belief.dist)
+            b_global_samp = pyro.sample('belief_global', params['target1'].belief.dist).to(DEVICE)
         
         ## sample through strict prefix of current obs
         for obs_active_ts in past_obs:
             if is_in_ray(params['pr2'].pose[0,obs_active_ts[1]-1], b_global_samp.detach()):
                 ## sample around the true belief, with extremely low variation / error
-                pyro.sample('target1.'+str(obs_active_ts[0]), dist.MultivariateNormal(b_global_samp.float(), 0.01 * torch.eye(2)))
+                pyro.sample('target1.'+str(obs_active_ts[0]), dist.MultivariateNormal(b_global_samp.float().to(DEVICE), (0.01 * torch.eye(2)).to(DEVICE)))
             else:
                 ## sample from prior dist -- have no additional knowledge, don't read it
-                pyro.sample('target1.'+str(obs_active_ts[0]), dist.MultivariateNormal(torch.zeros((2,)), 0.01 * torch.eye(2)))
+                pyro.sample('target1.'+str(obs_active_ts[0]), dist.MultivariateNormal(torch.zeros((2,)).to(DEVICE), 0.01 * torch.eye(2).to(DEVICE)))
 
         
         ## get sample for current timestep, record and return
@@ -205,10 +206,10 @@ class NoVIPointerObservationModel(ObservationModel):
 
         if is_in_ray(params['pr2'].pose[0,active_ts[1]-1], b_global_samp.detach()):
             ## sample around the true belief, with extremely low variation / error
-            samps['target1'] = pyro.sample('target1.'+str(active_ts[0]), dist.MultivariateNormal(b_global_samp.float(), 0.01 * torch.eye(2)))
+            samps['target1'] = pyro.sample('target1.'+str(active_ts[0]), dist.MultivariateNormal(b_global_samp.float().to(DEVICE), 0.01 * torch.eye(2).to(DEVICE)))
         else:
             ## sample from prior dist -- have no additional knowledge, don't read it
-            samps['target1'] = pyro.sample('target1.'+str(active_ts[0]), dist.MultivariateNormal(torch.zeros((2,)), 0.01 * torch.eye(2)))
+            samps['target1'] = pyro.sample('target1.'+str(active_ts[0]), dist.MultivariateNormal(torch.zeros((2,)).to(DEVICE), 0.01 * torch.eye(2).to(DEVICE)))
 
         return samps
 

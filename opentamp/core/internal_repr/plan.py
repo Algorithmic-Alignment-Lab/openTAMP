@@ -498,7 +498,6 @@ class Plan(object):
 
         # print('Releasing lock')
         # mc_lock.release()
-
         
         return mcmc.get_samples()['belief_global'], obs
 
