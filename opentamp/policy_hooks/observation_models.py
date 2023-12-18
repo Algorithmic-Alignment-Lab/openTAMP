@@ -9,9 +9,9 @@ from pyro.infer.autoguide import AutoDelta
 import numpy as np
 import os
 
-DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
-# DEVICE = 'cpu'
-print('USED DEVICE FOR MCMC INFERENCE IS: ', DEVICE)
+# DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
+DEVICE = 'cpu'
+# print('USED DEVICE FOR MCMC INFERENCE IS: ', DEVICE)
 
 class ObservationModel(object):
     approx_params : None  ## parameters into the parametric approximation for the current belief state
@@ -214,6 +214,10 @@ class NoVIPointerObservationModel(ObservationModel):
         else:
             ## sample from prior dist -- have no additional knowledge, don't read it
             samps['target1'] = pyro.sample('target1.'+str(active_ts[0]), dist.MultivariateNormal(torch.zeros((2,)).to(DEVICE), 0.01 * torch.eye(2).to(DEVICE)))
+
+        # return tensors on CPU for compatib
+        for samp in samps:
+            samps[samp].to('cpu')
 
         return samps
 
