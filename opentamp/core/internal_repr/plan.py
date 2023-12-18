@@ -15,6 +15,7 @@ from pyro.infer import MCMC, NUTS, HMC, Trace_ELBO, TraceEnum_ELBO, SVI
 MAX_PRIORITY = 3
 
 # DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
+DEVICE = 'cpu'
 
 class Plan(object):
     """
