@@ -14,6 +14,9 @@ from pyro.infer import MCMC, NUTS, HMC, Trace_ELBO, TraceEnum_ELBO, SVI
 
 MAX_PRIORITY = 3
 
+DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
+
+
 class Plan(object):
     """
     A plan has the following.
@@ -433,9 +436,9 @@ class Plan(object):
         full_prefix_obs = {}
         for po_ts in past_obs:
             for b_item in obs.keys():
-                full_prefix_obs[b_item+'.'+str(po_ts[0])] = past_obs[po_ts][b_item]
+                full_prefix_obs[b_item+'.'+str(po_ts[0])] = past_obs[po_ts][b_item].to(DEVICE)
         for b_item in obs.keys():
-            full_prefix_obs[b_item+'.'+str(active_ts[0])] = obs[b_item]
+            full_prefix_obs[b_item+'.'+str(active_ts[0])] = obs[b_item].to(DEVICE)
 
         return full_prefix_obs
     

@@ -113,6 +113,10 @@ class PointerObservationModel(ObservationModel):
             ## sample from prior dist -- have no additional knowledge, don't read it
             samps['target1'] = pyro.sample('target1', dist.MultivariateNormal(torch.zeros((2,)), 0.01 * torch.eye(2)))
 
+        # return tensors on CPU for compatib
+        for samp in samps:
+            samps[samp].to('cpu')
+
         return samps
 
     def fit_approximation(self, params):        
@@ -193,7 +197,7 @@ class NoVIPointerObservationModel(ObservationModel):
         
         ## sample through strict prefix of current obs
         for obs_active_ts in past_obs:
-            if is_in_ray(params['pr2'].pose[0,obs_active_ts[1]-1], b_global_samp.detach()):
+            if is_in_ray(params['pr2'].pose[0,obs_active_ts[1]-1], b_global_samp.detach().to('cpu')):
                 ## sample around the true belief, with extremely low variation / error
                 pyro.sample('target1.'+str(obs_active_ts[0]), dist.MultivariateNormal(b_global_samp.float().to(DEVICE), (0.01 * torch.eye(2)).to(DEVICE)))
             else:
@@ -204,7 +208,7 @@ class NoVIPointerObservationModel(ObservationModel):
         ## get sample for current timestep, record and return
         samps = {}
 
-        if is_in_ray(params['pr2'].pose[0,active_ts[1]-1], b_global_samp.detach()):
+        if is_in_ray(params['pr2'].pose[0,active_ts[1]-1], b_global_samp.detach().to('cpu')):
             ## sample around the true belief, with extremely low variation / error
             samps['target1'] = pyro.sample('target1.'+str(active_ts[0]), dist.MultivariateNormal(b_global_samp.float().to(DEVICE), 0.01 * torch.eye(2).to(DEVICE)))
         else:
@@ -213,7 +217,7 @@ class NoVIPointerObservationModel(ObservationModel):
 
         return samps
 
-    ## noVI in the pointer observation
+    ## no VI in the pointer observation
     def fit_approximation(self, params):        
         pass
 
