@@ -16,7 +16,7 @@ python3 -W ignore -m cProfile -o profile_out policy_hooks/run_training.py -c pol
                                                 -add_noop 2 --permute_hl 1 \
                                                 -expl_wt 10 -expl_eta 4 \
                                                 -col_coeff 0.0 \
-                                                -motion 1 \
+                                                -motion 4 \
                                                 -n_gpu 1 \
                                                 -rollout 0 \
                                                 -task 1 \

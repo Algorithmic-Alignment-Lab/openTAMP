@@ -446,9 +446,9 @@ class Plan(object):
     ## based off of hmm example from pyro docs
     def sample_mcmc_run(self, active_ts, provided_goal=None, past_obs={}):                
         ## fit a parametric approximation to the current belief state
-        mc_lock.acquire()
+        # mc_lock.acquire()
 
-        print('Acquired lock')
+        # print('Acquired lock')
         
         self.observation_model.fit_approximation(copy.deepcopy(self.params))
 
@@ -496,8 +496,8 @@ class Plan(object):
         mcmc.run(copy.deepcopy(self.params), active_ts, past_obs=past_obs)
         mcmc.summary(prob=0.95)  # for diagnostics
 
-        print('Releasing lock')
-        mc_lock.release()
+        # print('Releasing lock')
+        # mc_lock.release()
 
         
         return mcmc.get_samples()['belief_global'], obs

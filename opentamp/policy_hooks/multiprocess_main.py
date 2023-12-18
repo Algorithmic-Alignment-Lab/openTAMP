@@ -523,8 +523,8 @@ class MultiProcessMain(object):
         self.queue_manager.start()
 
         ## TODO revert, these be tiny
-        queue_size = 1
-        train_queue_size = 1
+        queue_size = 20
+        train_queue_size = 20
 
         queues = {}
         config['hl_queue'] = Queue(maxsize=train_queue_size)
