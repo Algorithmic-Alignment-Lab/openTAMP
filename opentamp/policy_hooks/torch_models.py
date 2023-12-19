@@ -161,6 +161,7 @@ class TorchNet(nn.Module):
 
         self.loss_fn = self.config.get('loss_fn', F.mse_loss)
         self.use_precision = self.config['use_precision']
+        # self.use_precision = False
         if self.loss_fn == 'precision_mse': 
             self.loss_fn = precision_mse
             self.use_precision = True
@@ -246,8 +247,11 @@ class TorchNet(nn.Module):
             else:
                 y = torch.argmax(y, dim=-1).flatten()
                 precision = precision.flatten()
-                sum_loss = torch.sum(self.loss_fn(pred, y, reduction='none') * precision)
-                return sum_loss / torch.sum(precision)
+                if torch.sum(precision) > 0:
+                    sum_loss = torch.sum(self.loss_fn(pred, y, reduction='none') * precision)
+                    return sum_loss / torch.sum(precision)
+                else:
+                    return torch.mean(self.loss_fn(pred, y, reduction='none'))  ## just average the loss as a behaviour
         else:
             pred = pred.flatten()
             y = y.flatten()
@@ -292,7 +296,6 @@ class PolicyNet(TorchNet):
         self.bias = None
 
         super().__init__(config=config, device=device)
-
 
     def act(self, X, obs, t, noise=None, eta=1.):
 

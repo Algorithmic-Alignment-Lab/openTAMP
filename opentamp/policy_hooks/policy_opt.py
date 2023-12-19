@@ -114,10 +114,16 @@ class TorchPolicyOpt():
 
         pred = model.forward(x)
 
+        if task == 'primitive' and torch.any(torch.isnan(model.compute_loss(pred, y, precision))):
+            breakpoint()
+
         return model.compute_loss(pred, y, precision)
 
 
-    def train_step(self, task, x, y, precision=None):
+    def train_step(self, task, x, y, precision=None):        
+        if precision is not None and torch.sum(precision) <= 0:
+            raise Exception('Found only zeroes in precision, skip this update')
+
         if task not in self.opts is None: self._set_opt(task)
 
         self.opts[task].zero_grad()
@@ -135,10 +141,13 @@ class TorchPolicyOpt():
                 break
 
             x, y, precision = batch
-            train_loss = self.train_step(task, x, y, precision)
-            average_loss += train_loss
-            self.torch_iter += 1
-            self.N += len(batch)
+            try:
+                train_loss = self.train_step(task, x, y, precision)
+                average_loss += train_loss
+                self.torch_iter += 1
+                self.N += len(batch)
+            except:
+                pass  ## train_step can possbily throw error if there is no more, pass to the next batch
 
         self.average_losses.append(average_loss / self.config['iterations'])
 

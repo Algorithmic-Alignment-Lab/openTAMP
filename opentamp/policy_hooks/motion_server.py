@@ -134,7 +134,7 @@ class MotionServer(Server):
         while cur_t >= 0:
             path, refine_success, replan_success = self.collect_trajectory(plan, node, cur_t)
             
-            ## if plan about to fail since not hitting expansion limit
+            ## if plan about to fail since hitting expansion limit
             if node.expansions >= EXPAND_LIMIT or (replan_success and refine_success):
                 self.log_node_info(node, replan_success, path)
             
@@ -303,7 +303,8 @@ class MotionServer(Server):
                             st,
                             reset=True,
                             save=True, 
-                            record=True)
+                            record=True,
+                            hist_info=path)
                 
                 path.extend(new_path)
 

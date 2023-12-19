@@ -5,7 +5,7 @@ from opentamp.policy_hooks.utils.policy_solver_utils import *
 from opentamp.policy_hooks.utils.load_task_definitions import get_tasks, plan_from_str
 
 # random constants, todo deprecate
-mapping_file = "policy_hooks/namo/spotnav_task_mapping"  # TODO alter
+mapping_file = "policy_hooks/namo/pointer_taskmapping"  # TODO alter
 
 END_TARGETS = [(2)]
 n_aux=0
@@ -30,6 +30,7 @@ def get_prim_choices(task_list=None):
     #out[utils.ABS_POSE_ENUM] = 2
     out[utils.TASK_ENUM] = sorted(list(get_tasks(mapping_file).keys()))
     out[utils.TARG_ENUM] = 2  ## TODO: HARDCODED FOR NOW, change
+    # out[utils.TASK_HIST_ENUM] = 1
     return out
 
 
