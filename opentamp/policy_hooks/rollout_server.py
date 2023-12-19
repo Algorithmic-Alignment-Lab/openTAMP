@@ -562,6 +562,8 @@ class RolloutServer(Server):
         old_eta = self.eta
         debug = np.random.uniform() < 0.1
         while t < max_t and self.agent.feasible_state(state, targets):
+            self.agent.store_hist_info([len(path), path[-1].get(TARG_ENUM)[0,:].reshape(-1)]) if path else self.agent.store_hist_info([len(path), np.array([0.,0.])]) ## HACK, TODO ADD AS GENERIC WRAPPER
+            print(self.agent.num_tasks)
             l = self.get_task(state, targets, l, soft)
             if l is None: break
             task_name = self.task_list[l[0]]

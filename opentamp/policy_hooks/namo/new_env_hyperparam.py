@@ -77,6 +77,8 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
                         utils.MJC_SENSOR_ENUM,
                         utils.TARG_ENUM,
                         utils.PAST_COUNT_ENUM,
+                        utils.PAST_TARG_ENUM,
+                        utils.TASK_ENUM,
                         # utils.ONEHOT_GOAL_ENUM
                         # utils.TASK_ENUM,
                         # utils.END_POSE_ENUM,
@@ -89,6 +91,7 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
                             #  utils.THETA_VEC_ENUM,
                             utils.MJC_SENSOR_ENUM,
                             utils.PAST_COUNT_ENUM,
+                            utils.PAST_TARG_ENUM,
                             # utils.ONEHOT_GOAL_ENUM
                              ],
 
@@ -97,9 +100,11 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
         'sensor_dims': {
                 # utils.OBJ_POSE_ENUM: 2,
                 utils.TARG_ENUM: 2,
+                utils.PAST_TARG_ENUM: 2,
                 utils.PAST_COUNT_ENUM: 1,
                 # utils.LIDAR_ENUM: N_DIRS,
                 utils.MJC_SENSOR_ENUM: BlankEnvWrapper().observation_space.shape[0],
+
                 # utils.EE_ENUM: 2,
                 # utils.END_POSE_ENUM: 2,
                 # utils.GRIPPER_ENUM: 1,

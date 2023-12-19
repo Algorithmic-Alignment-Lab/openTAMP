@@ -200,7 +200,7 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
         return data
 
 
-    def add_cont_sample(self, sample, max_buf=1e2):
+    def add_cont_sample(self, sample, max_buf=1e5):
         max_buf = int(max_buf)
         self.cont_samples.append(sample)
         self.cont_samples = self.cont_samples[-max_buf:]
@@ -907,7 +907,7 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
             dummy_sample.set(STATE_ENUM, ref_x0, t=0)
             dummy_sample.targets = targets
 
-            # reset to state x0, and store the historical info (currently does nothing)
+            # reset to state x0, and store the historical info
             self.update_hist_info(hist_info)
             self.reset_to_state(x0)
             self.store_hist_info(hist_info)
@@ -1053,7 +1053,8 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
                    base_x0=None, 
                    add_noop=True, 
                    prev_hist=None, 
-                   hist_info=None):        
+                   hist_info=None,
+                   aux_info=None):        
         # create static copy of x0
         x0 = x0.copy()
         static_x0 = x0.copy()
@@ -1101,6 +1102,8 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
         self._x_delta[:] = cur_hist
         if hist_info is not None:
             self.store_hist_info(hist_info)
+        if aux_info is not None:
+            self.store_aux_info(aux_info)
 
         # if self.retime:
         #     # get velocity
@@ -1162,17 +1165,6 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
             path.append(zero_sample)
         end_s = path[-1]
         end_s.task_end = True
-
-        ### NOTE: TODO UNHACK THIS CHANGE (POPIULATING WITH SAMPLE POSES)
-        ## setting the sampled targets through the codebase
-        for t in range(self.T):
-            target_pose = plan.params['target1'].pose[:, st]
-            sample.set(TARG_ENUM, target_pose, t=t)
-
-        ## setting the sampled targets through the codebase
-        for t in range(self.T):
-            target_pose = plan.params['target1'].pose[:, st]
-            zero_sample.set(TARG_ENUM, target_pose, t=t)
 
         ## FOR NOW, UNCONDITIONALLY SAVE TRAJECTORIES (ASSUME ALL SUCCEEDED)
         for ind, s in enumerate(path):
@@ -1557,9 +1549,13 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
 
     def get_hist_info(self):
         return {}
-
+        
 
     def store_hist_info(self, info):
+        return
+    
+
+    def store_aux_info(self, info):
         return
 
 

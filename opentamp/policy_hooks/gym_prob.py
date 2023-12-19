@@ -30,7 +30,6 @@ def get_prim_choices(task_list=None):
     #out[utils.ABS_POSE_ENUM] = 2
     out[utils.TASK_ENUM] = sorted(list(get_tasks(mapping_file).keys()))
     out[utils.TARG_ENUM] = 2  ## TODO: HARDCODED FOR NOW, change
-    # out[utils.TASK_HIST_ENUM] = 1
     return out
 
 

@@ -80,6 +80,7 @@ LEFT_VEL_ENUM = 74
 QPOS_ENUM = 75
 BELIEF_GLOBAL_ENUM = 76
 PAST_COUNT_ENUM = 77
+PAST_TARG_ENUM = 78
 
 OBJ_ENUMS = {}
 for i in range(100):
@@ -131,7 +132,7 @@ VEL = 3
 ACC = 4
 JOINT = 5
 
-## Misc Constant
+## Misc Constants
 EXPAND_LIMIT = 30
 
 

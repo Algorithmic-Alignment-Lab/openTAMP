@@ -11,6 +11,8 @@ class GymAgent(TAMPAgent):
         self.curr_obs = self.gym_env.reset()
         self.curr_state = self.gym_env.curr_state
         self.num_tasks = 0
+        self.curr_targ = np.array([0.,0.])
+        self.past_targ = np.array([0.,0.])
 
     def reset(self, m):
         self.curr_obs = self.gym_env.reset()
@@ -21,6 +23,8 @@ class GymAgent(TAMPAgent):
         sample.set(utils.MJC_SENSOR_ENUM, self.curr_obs, t)
         sample.set(utils.STATE_ENUM, self.curr_state, t)
         sample.set(utils.PAST_COUNT_ENUM, np.array([self.num_tasks]), t)
+        sample.set(utils.TARG_ENUM, self.curr_targ, t=t)
+        sample.set(utils.PAST_TARG_ENUM, self.past_targ, t=t)
 
     def run_policy_step(self, U_full, curr_state):
         self.curr_obs, _, _, _ = self.gym_env.step(U_full)  # left to internal logic
@@ -69,5 +73,10 @@ class GymAgent(TAMPAgent):
         im = self.gym_env.render()
         return im
 
+    ## TODO SHUNT THESE INTO API
     def store_hist_info(self, hist_info):
-        self.num_tasks = len(hist_info)/2 ## for now, just store the number of tasks TODO move into array
+        self.num_tasks = hist_info[0] 
+        self.past_targ = hist_info[1]
+
+    def store_aux_info(self, aux_info):
+        self.curr_targ = aux_info

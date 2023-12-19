@@ -159,7 +159,7 @@ class MotionServer(Server):
 
         wt = self.explore_wt if node.label.lower().find('rollout') >= 0 or node.nodetype.find('dagger') >= 0 else 1.
         # verbose = self.verbose and (self.id.find('r0') >= 0 or np.random.uniform() < 0.05)
-        self.agent.store_hist_info(node.info)
+        # self.agent.store_hist_info(node.info)
         
         init_t = time.time()
                 
@@ -292,9 +292,14 @@ class MotionServer(Server):
             st = plan.actions[a_num].active_timesteps[0]
             tasks = self.agent.encode_plan(plan)
 
-            print(tasks)
-
             for a_num in range(len(plan.actions)):
+                if a_num > 0:
+                    prior_st = plan.actions[a_num-1].active_timesteps[0]
+                    past_targ = plan.params['target1'].pose[:, prior_st]
+                else:
+                    past_targ = np.array([0.,0.])
+
+
                 new_path, x0 = self.agent.run_action(plan, 
                             a_num, 
                             x0,
@@ -304,7 +309,8 @@ class MotionServer(Server):
                             reset=True,
                             save=True, 
                             record=True,
-                            hist_info=path)
+                            hist_info=[len(path)//2, past_targ],
+                            aux_info=plan.params['target1'].pose[:, plan.actions[a_num].active_timesteps[0]])
                 
                 path.extend(new_path)
 
