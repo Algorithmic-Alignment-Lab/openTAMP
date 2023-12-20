@@ -217,6 +217,11 @@ class RolloutServer(Server):
             val, path = self.test_run(x0, [], max_t=20, hl=True, soft=self.config['soft_eval'], eta=eta, lab=-5, hor=25)
             vals.append(val)
             print([s.task for s in path])
+            # print(samp)
+            # print([s.get(TARG_ENUM) for s in path])
+            # print([s.get(PAST_TARG_ENUM) for s in path])
+            # print([s.get(PAST_COUNT_ENUM)[-1,:] for s in path])
+            # print([s.get(TASK_ENUM)[-1,:] for s in path])
             self.save_video(path, val > 0, lab='vid_imit_'+str(i))
 
         avg_val = np.mean(np.array(vals))
@@ -562,8 +567,8 @@ class RolloutServer(Server):
         old_eta = self.eta
         debug = np.random.uniform() < 0.1
         while t < max_t and self.agent.feasible_state(state, targets):
-            self.agent.store_hist_info([len(path), path[-1].get(TARG_ENUM)[0,:].reshape(-1)]) if path else self.agent.store_hist_info([len(path), np.array([0.,0.])]) ## HACK, TODO ADD AS GENERIC WRAPPER
-            print(self.agent.num_tasks)
+            self.agent.store_hist_info([len(path), path[-1].get(TARG_ENUM)[0,:].reshape(-1), sum([1.0 if s.task[0] == 1 else 0.0 for s in path])]) if path \
+                else self.agent.store_hist_info([len(path), np.array([0.,0.]), 0]) ## HACK, TODO ADD AS GENERIC WRAPPER
             l = self.get_task(state, targets, l, soft)
             if l is None: break
             task_name = self.task_list[l[0]]

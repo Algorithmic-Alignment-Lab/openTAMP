@@ -309,7 +309,7 @@ class MotionServer(Server):
                             reset=True,
                             save=True, 
                             record=True,
-                            hist_info=[len(path)//2, past_targ],
+                            hist_info=[len(path)//2, past_targ, sum([1 if (s.task)[0] == 1 else 0 for s in path])//2],
                             aux_info=plan.params['target1'].pose[:, plan.actions[a_num].active_timesteps[0]])
                 
                 path.extend(new_path)

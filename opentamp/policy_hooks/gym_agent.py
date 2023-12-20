@@ -25,6 +25,7 @@ class GymAgent(TAMPAgent):
         sample.set(utils.PAST_COUNT_ENUM, np.array([self.num_tasks]), t)
         sample.set(utils.TARG_ENUM, self.curr_targ, t=t)
         sample.set(utils.PAST_TARG_ENUM, self.past_targ, t=t)
+        sample.set(utils.PAST_POINT_ENUM, np.array([self.past_point]), t=t)
 
     def run_policy_step(self, U_full, curr_state):
         self.curr_obs, _, _, _ = self.gym_env.step(U_full)  # left to internal logic
@@ -77,6 +78,7 @@ class GymAgent(TAMPAgent):
     def store_hist_info(self, hist_info):
         self.num_tasks = hist_info[0] 
         self.past_targ = hist_info[1]
+        self.past_point = hist_info[2]
 
     def store_aux_info(self, aux_info):
         self.curr_targ = aux_info
