@@ -23,7 +23,7 @@ python3 -W ignore -m cProfile -o profile_out policy_hooks/run_training.py -c pol
                                                 -post -pre \
                                                 -warm 100 \
                                                 -neg_ratio 0. -opt_ratio 0.9 -dagger_ratio 0.1 \
-						-descr pointer_pilot_originalobs_modhistfeat
+						-descr pointer_pilot_originalobs_addhistcont
 # sleep 1800 
 # pkill -f run_train -9
 # pkill -f ros -9
