@@ -9,9 +9,9 @@ import pyro.distributions as distros
 class BlankEnv(Env):    
     def __init__(self):
         self.action_space = spaces.Box(low=0.0, high=1.0, shape=(1,), dtype='float32')
-        self.observation_space = spaces.Box(low=0.0, high=1.0, shape=(2,), dtype='float32')
+        self.observation_space = spaces.Box(low=0.0, high=1.0, shape=(3,), dtype='float32')
         self.curr_state = np.array([0.0]*1)
-        self.curr_obs = np.array([0.0]*2)
+        self.curr_obs = np.array([0.0]*3)
         self.dist = self.assemble_dist()
         self.belief_true = {'target1': torch.tensor([0.0, 0.0])}
 
@@ -38,15 +38,13 @@ class BlankEnv(Env):
             ## reject this observation, give zero reading
             noisy_obs = distros.MultivariateNormal(torch.zeros((2,)), 0.01 * torch.eye(2)).sample().numpy()
 
-        noisy_obs = np.arctan([noisy_obs[1]/noisy_obs[0]])
-
         self.curr_obs = np.concatenate((self.curr_state, noisy_obs))
 
         return self.curr_obs, 1.0, False, {}
 
     def reset(self):
         self.curr_state = np.array([0.0]*1)
-        self.curr_obs = np.array([0.0]*2)
+        self.curr_obs = np.array([0.0]*3)
         return self.curr_obs
     
     ## NOTE: only rgb_array mode supported, ignores keyword
@@ -100,7 +98,7 @@ class BlankEnv(Env):
 class BlankEnvWrapper(BlankEnv):
     def reset_to_state(self, state):
         self.curr_state = state
-        self.curr_obs = np.array([0.0]*2)
+        self.curr_obs = np.array([0.0]*3)
         return self.curr_obs
 
     def get_vector(self):
