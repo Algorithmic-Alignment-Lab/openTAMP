@@ -185,7 +185,7 @@ class MotionServer(Server):
         
         print('Full Conditioned Obs At Start: ', node.conditioned_obs)
 
-        ## get the true state of belief variables from sim
+        ## set the true state of belief variables from sim
         if len(plan.belief_params) > 0:
             self.agent.gym_env.set_belief_true(node.belief_true)
             goal = node.belief_true
@@ -218,7 +218,7 @@ class MotionServer(Server):
                                                       st=cur_t, 
                                                       conditioned_obs=node.conditioned_obs)
         
-        ## for belief-space replanning, only refine if indeed belief-space, and 
+        ## for belief-space replanning, only replan if indeed belief-space, and plan against sampled obs dict
         replan_success = True
         if refine_success and len(plan.belief_params) > 0:
             print('Refining from: ', node.replan_start)    

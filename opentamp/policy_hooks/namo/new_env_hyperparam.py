@@ -76,7 +76,6 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
         'obs_include': [#utils.LIDAR_ENUM,
                         utils.MJC_SENSOR_ENUM,
                         utils.TARG_ENUM,
-                        utils.TASK_ENUM,
                         # utils.ONEHOT_GOAL_ENUM
                         # utils.TASK_ENUM,
                         # utils.END_POSE_ENUM,

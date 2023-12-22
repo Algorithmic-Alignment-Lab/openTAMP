@@ -221,6 +221,7 @@ class RolloutServer(Server):
             print([s.get(MJC_SENSOR_ENUM)[-1,:] for s in path])
             print([s.get(TARG_ENUM)[-1,:] for s in path])
             print([s.get(TASK_ENUM)[-1,:] for s in path])
+            print([s.get_U()[-1,:] for s in path])
             # print(samp)
             # print([s.get(TARG_ENUM) for s in path])
             # print([s.get(PAST_TARG_ENUM) for s in path])
