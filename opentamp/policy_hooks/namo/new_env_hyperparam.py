@@ -86,7 +86,7 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
 
         'cont_obs_include': [#utils.LIDAR_ENUM,
                         utils.MJC_SENSOR_ENUM,
-                        # utils.PAST_TARG_ENUM,
+                        utils.PAST_TARG_ENUM,
                         utils.TASK_ENUM,
                         utils.PAST_TASK_ENUM,
                         # utils.PAST_POINT_ENUM,
