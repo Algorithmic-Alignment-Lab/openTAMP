@@ -638,10 +638,10 @@ class Server(object):
             for t in ts_range:
                 ims = []
                 for ind, cam_id in enumerate(cam_ids):
-                    # if annotate and ind == 0:
-                    #     ims.append(self.agent.get_annotated_image(step, t, cam_id=cam_id))
-                    # else:
-                    ims.append(self.agent.get_image(step.get_X(t=t), cam_id=cam_id))
+                    if annotate and ind == 0:
+                        ims.append(self.agent.get_annotated_image(step, t, cam_id=cam_id))
+                    else:
+                        ims.append(self.agent.get_image(step.get_X(t=t), cam_id=cam_id))
                 im = np.concatenate(ims, axis=1)
                 buf.append(im)
             self.agent.target_vecs[0] = old_vec

@@ -216,12 +216,12 @@ class RolloutServer(Server):
             self.agent.gym_env.set_belief_true(samp)
             val, path = self.test_run(x0, [], max_t=20, hl=True, soft=self.config['soft_eval'], eta=eta, lab=-5, hor=25)
             vals.append(val)
-            print(samp)
-            print([s.task for s in path])
-            print([s.get(MJC_SENSOR_ENUM)[-1,:] for s in path])
-            print([s.get(TARG_ENUM)[-1,:] for s in path])
-            print([s.get(TASK_ENUM)[-1,:] for s in path])
-            print([s.get_U()[-1,:] for s in path])
+            # print(samp)
+            # print([s.task for s in path])
+            # print([s.get(MJC_SENSOR_ENUM)[-1,:] for s in path])
+            # print([s.get(TARG_ENUM)[-1,:] for s in path])
+            # print([s.get(TASK_ENUM)[-1,:] for s in path])
+            # print([s.get_U()[-1,:] for s in path])
             # print(samp)
             # print([s.get(TARG_ENUM) for s in path])
             # print([s.get(PAST_TARG_ENUM) for s in path])
@@ -572,8 +572,9 @@ class RolloutServer(Server):
         old_eta = self.eta
         debug = np.random.uniform() < 0.1
         while t < max_t and self.agent.feasible_state(state, targets):
-            self.agent.store_hist_info([len(path), path[-1].get(TARG_ENUM)[0,:].reshape(-1), sum([1.0 if s.task[0] == 1 else 0.0 for s in path])]) if path \
-                else self.agent.store_hist_info([len(path), np.array([0.,0.]), 0]) ## HACK, TODO ADD AS GENERIC WRAPPER
+            self.agent.store_hist_info([len(path), path[-1].get(TARG_ENUM)[0,:].reshape(-1), sum([1.0 if s.task[0] == 1 else 0.0 for s in path]),
+                                        (path[-2].task)[0] if len(path)>1 else -1.0]) if path \
+                else self.agent.store_hist_info([len(path), np.array([0.,0.]), 0, -1.0]) ## HACK, TODO ADD AS GENERIC WRAPPER
             l = self.get_task(state, targets, l, soft)
             if l is None: break
             task_name = self.task_list[l[0]]

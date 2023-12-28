@@ -86,9 +86,9 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
 
         'cont_obs_include': [#utils.LIDAR_ENUM,
                         utils.MJC_SENSOR_ENUM,
-                        utils.PAST_TARG_ENUM,
+                        # utils.PAST_TARG_ENUM,
                         utils.TASK_ENUM,
-                        utils.PAST_POINT_ENUM,
+                        # utils.PAST_POINT_ENUM,
                         # utils.ONEHOT_GOAL_ENUM
                         # utils.TASK_ENUM,
                         # utils.END_POSE_ENUM,
@@ -100,9 +100,9 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
         'prim_obs_include': [
                             #  utils.THETA_VEC_ENUM,
                             utils.MJC_SENSOR_ENUM,
-                            utils.PAST_COUNT_ENUM,
-                            utils.PAST_POINT_ENUM,
-                            utils.PAST_TARG_ENUM,
+                            utils.PAST_TASK_ENUM,
+                            # utils.PAST_POINT_ENUM,
+                            # utils.PAST_TARG_ENUM,
                             # utils.ONEHOT_GOAL_ENUM
                              ],
 
@@ -114,6 +114,7 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
                 utils.PAST_TARG_ENUM: 2,
                 utils.PAST_COUNT_ENUM: 1,
                 utils.PAST_POINT_ENUM: 1,
+                utils.PAST_TASK_ENUM: 1,
                 # utils.LIDAR_ENUM: N_DIRS,
                 utils.MJC_SENSOR_ENUM: BlankEnvWrapper().observation_space.shape[0],
                 # utils.EE_ENUM: 2,

@@ -26,6 +26,7 @@ class GymAgent(TAMPAgent):
         sample.set(utils.TARG_ENUM, self.curr_targ, t=t)
         sample.set(utils.PAST_TARG_ENUM, self.past_targ, t=t)
         sample.set(utils.PAST_POINT_ENUM, np.array([self.past_point]), t=t)
+        sample.set(utils.PAST_TASK_ENUM, np.array([self.past_task]), t=t)
 
     def run_policy_step(self, U_full, curr_state):
         self.curr_obs, _, _, _ = self.gym_env.step(U_full)  # left to internal logic
@@ -73,12 +74,18 @@ class GymAgent(TAMPAgent):
         if cam_id is None: cam_id = self.camera_id
         im = self.gym_env.render()
         return im
+    
+    def get_annotated_image(self, s, t, cam_id=None):
+        base_im = self.get_image(s.get_X()[t,0], depth=False, cam_id=cam_id)
+        im = self.gym_env.postproc_im(base_im, s, t, cam_id) ## TODO replace with processing from s
+        return im
 
-    ## TODO SHUNT THESE INTO API
+    ## TODO SHUNT THESE INTO API, builds hist_info samples
     def store_hist_info(self, hist_info):
         self.num_tasks = hist_info[0] 
         self.past_targ = hist_info[1]
         self.past_point = hist_info[2]
+        self.past_task = hist_info[3]
 
     def store_aux_info(self, aux_info):
         self.curr_targ = aux_info

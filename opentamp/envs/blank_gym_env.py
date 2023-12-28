@@ -5,6 +5,7 @@ import numpy as np
 import torch
 import pyro.distributions as distros
 
+from opentamp.policy_hooks.utils.policy_solver_utils import *
 
 class BlankEnv(Env):    
     def __init__(self):
@@ -31,14 +32,17 @@ class BlankEnv(Env):
     def step(self, action):
         self.curr_state = action
 
+        ## TODO: integrate noise in the flag
         if self.is_in_ray(action, self.belief_true['target1'].detach().numpy()):
             ## sample around the true belief, with extremely low variation / error
-            noisy_obs = distros.MultivariateNormal(self.belief_true['target1'], 0.01 * torch.eye(2)).sample().numpy()
+            # noisy_obs = distros.MultivariateNormal(self.belief_true['target1'], 0.01 * torch.eye(2)).sample().numpy()
+            no_noisy_obs = self.belief_true['target1'].detach().numpy()
         else:
             ## reject this observation, give zero reading
-            noisy_obs = distros.MultivariateNormal(torch.zeros((2,)), 0.01 * torch.eye(2)).sample().numpy()
+            # noisy_obs = distros.MultivariateNormal(torch.zeros((2,)), 0.01 * torch.eye(2)).sample().numpy()
+            no_noisy_obs = np.zeros((2,))
 
-        self.curr_obs = np.concatenate((self.curr_state, noisy_obs))
+        self.curr_obs = np.concatenate((self.curr_state, no_noisy_obs))
 
         return self.curr_obs, 1.0, False, {}
 
@@ -47,6 +51,7 @@ class BlankEnv(Env):
         self.curr_obs = np.array([0.0]*3)
         return self.curr_obs
     
+
     ## NOTE: only rgb_array mode supported, ignores keyword
     def render(self, mode='rgb_array'):
         def is_in_ray_vectorized(a_pose, x_coord, y_coord):
@@ -65,6 +70,10 @@ class BlankEnv(Env):
         y_coords = x_coords.copy().T
 
         ## coloring in the ray of the pointer
+        color_arr[:,:,0] = np.where(is_in_ray_vectorized(self.curr_state, x_coords, y_coords),
+                                            np.ones((256, 256), dtype=np.uint8) * 255, 
+                                            np.ones((256, 256), dtype=np.uint8) * 255)
+                
         color_arr[:,:,1] = np.where(is_in_ray_vectorized(self.curr_state, x_coords, y_coords),
                                     np.zeros((256, 256), dtype=np.uint8), 
                                     np.ones((256, 256), dtype=np.uint8) * 255)
@@ -82,7 +91,38 @@ class BlankEnv(Env):
                                     np.zeros((256, 256), dtype=np.uint8), 
                                     color_arr[:,:,1])
         
+        color_arr[:,:,2] = np.where(is_close_to_obj_vectorized(true_loc, x_coords, y_coords),
+                                    np.ones((256, 256), dtype=np.uint8)*255, 
+                                    color_arr[:,:,2])
+        
         return color_arr
+    
+    def postproc_im(self, base_im, s, t, cam_id):
+        def is_close_to_obj_vectorized(true_loc, x_coord, y_coord):
+            return np.linalg.norm(np.stack((x_coord, y_coord)) - np.tile(true_loc.reshape(-1, 1, 1), (1, 256, 256)), axis=0) <= 0.2
+
+        im = base_im.copy()
+
+        ## initializing vectorized x_coord and y_coord arrays
+        x_coords = np.tile(np.arange(-5, 5, 5./128.).reshape(-1, 1), (1, 256))
+        y_coords = x_coords.copy().T
+
+        ## coloring in the ray of the pointer
+        im[:,:,0] = np.where(is_close_to_obj_vectorized(s.get(TARG_ENUM)[t,:], x_coords, y_coords),
+                                            np.zeros((256, 256), dtype=np.uint8), 
+                                            im[:,:,0])
+                
+        im[:,:,1] = np.where(is_close_to_obj_vectorized(s.get(TARG_ENUM)[t,:], x_coords, y_coords),
+                                    np.ones((256, 256), dtype=np.uint8) * 255, 
+                                    im[:,:,1])
+        
+        im[:,:,2] = np.where(is_close_to_obj_vectorized(s.get(TARG_ENUM)[t,:], x_coords, y_coords),
+                                    np.zeros((256, 256), dtype=np.uint8), 
+                                    im[:,:,2])
+
+
+        return im
+
 
     def is_in_ray(self, a_pose, target):
         return np.abs(np.arctan(target[1]/target[0]) - a_pose) <= np.pi / 4
