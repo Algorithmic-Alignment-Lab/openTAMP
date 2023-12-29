@@ -6,6 +6,7 @@
 #python3 -W ignore policy_hooks/run_training.py -c policy_hooks.robosuite.jnt_pick_hyp \
 
 python3 -W ignore policy_hooks/run_training.py -c policy_hooks.namo.new_env_hyperparam \
+                                                -render \
                                                 -no 1 -llus 1000  -hlus 1000 \
                                                 -spl -mask -hln 2 -lln 2 -hldim 256 -lldim 256 \
                                                 -retime -vel 0.3 -eta 5 -softev \
@@ -23,7 +24,7 @@ python3 -W ignore policy_hooks/run_training.py -c policy_hooks.namo.new_env_hype
                                                 -post -pre \
                                                 -warm 100 \
                                                 -neg_ratio 0. -opt_ratio 0.9 -dagger_ratio 0.1 \
-						-descr pointer_pilot_nonoiseobs_pasttaskonly_addpointcount
+						-descr pointer_pilot_nonoiseobs_debugpasttaskonly_addpointcount
 # sleep 1800 
 # pkill -f run_train -9
 # pkill -f ros -9
