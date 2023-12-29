@@ -101,13 +101,17 @@ class BlankEnv(Env):
         def is_close_to_obj_vectorized(true_loc, x_coord, y_coord):
             return np.linalg.norm(np.stack((x_coord, y_coord)) - np.tile(true_loc.reshape(-1, 1, 1), (1, 256, 256)), axis=0) <= 0.2
 
+        def in_corner(x_coord, y_coord):
+            return np.logical_and(x_coord <= -3.0, y_coord <= -3.0)
+
+
         im = base_im.copy()
 
         ## initializing vectorized x_coord and y_coord arrays
         x_coords = np.tile(np.arange(-5, 5, 5./128.).reshape(-1, 1), (1, 256))
         y_coords = x_coords.copy().T
 
-        ## coloring in the ray of the pointer
+        ## adding the current target location as an observation for rendering
         im[:,:,0] = np.where(is_close_to_obj_vectorized(s.get(TARG_ENUM)[t,:], x_coords, y_coords),
                                             np.zeros((256, 256), dtype=np.uint8), 
                                             im[:,:,0])
@@ -120,6 +124,18 @@ class BlankEnv(Env):
                                     np.zeros((256, 256), dtype=np.uint8), 
                                     im[:,:,2])
 
+        ## adding in preliminary task stuff as an enum
+        im[:,:,0] = np.where(in_corner(x_coords, y_coords),
+                                        np.ones((256, 256), dtype=np.uint8)*255 if s.task[0]==0 else np.zeros((256, 256), dtype=np.uint8), 
+                                        im[:,:,0])
+            
+        im[:,:,1] = np.where(in_corner(x_coords, y_coords),
+                                        np.ones((256, 256), dtype=np.uint8)*255 if s.task[0]==1 else np.zeros((256, 256), dtype=np.uint8), 
+                                        im[:,:,1])
+        
+        im[:,:,2] = np.where(in_corner(x_coords, y_coords),
+                                        np.ones((256, 256), dtype=np.uint8)*255 if s.task[0]==2 else np.zeros((256, 256), dtype=np.uint8), 
+                                        im[:,:,2])
 
         return im
 

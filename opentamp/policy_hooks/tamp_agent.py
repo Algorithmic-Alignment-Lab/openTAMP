@@ -1438,7 +1438,7 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
 
 
     def get_inv_cov(self):
-        return np.eye(self.dU)
+        return np.eye(self.dU) * 1000
 
 
     def get_random_initial_state_vec(self, config, plans, dX, state_inds, n=1):
