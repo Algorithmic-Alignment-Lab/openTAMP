@@ -19,6 +19,8 @@ from opentamp.policy_hooks.observation_models import *
 
 from opentamp.envs.blank_gym_env import BlankEnvWrapper
 
+import torch.nn.functional as F
+
 BASE_DIR = opentamp.__path__._path[0] +  '/policy_hooks/'
 EXP_DIR = BASE_DIR + 'experiments/'
 
@@ -149,6 +151,8 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
         'her': False,
         'prim_decay': 0.95,
         'prim_first_wt': 1e1,
+        'll_loss_fn': F.l1_loss,
+        'cont_loss_fn': F.l1_loss,
     }
 
     #config['prim_obs_include'].append(utils.EE_ENUM)
