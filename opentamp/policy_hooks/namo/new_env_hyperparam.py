@@ -152,7 +152,7 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
         'prim_decay': 0.95,
         'prim_first_wt': 1e1,
         'll_loss_fn': F.l1_loss,
-        'cont_loss_fn': F.l1_loss,
+        # 'cont_loss_fn': F.l1_loss,
     }
 
     #config['prim_obs_include'].append(utils.EE_ENUM)
