@@ -23,7 +23,7 @@ python3 -W ignore policy_hooks/run_training.py -c policy_hooks.namo.new_env_hype
                                                 -post -pre \
                                                 -warm 100 \
                                                 -neg_ratio 0. -opt_ratio 0.9 -dagger_ratio 0.1 \
-						-descr pointer_pilot_milinvcov_addvalhistfeat_l1controlonly
+						-descr pointer_pilot_server_milinvcov_addvalhistfeat_shorttrain
 # sleep 1800 
 # pkill -f run_train -9
 # pkill -f ros -9

@@ -54,47 +54,41 @@ class BlankEnv(Env):
 
     ## NOTE: only rgb_array mode supported, ignores keyword
     def render(self, mode='rgb_array'):
-        def is_in_ray_vectorized(a_pose, x_coord, y_coord):
+        def is_in_ray_vectorized(a_pose, x_coord, y_coord, ray_ang):
             return np.where(x_coord > 0, 
-                            np.abs(np.arctan(y_coord/x_coord) - a_pose) <= np.pi/4,
-                            np.abs(np.arctan(y_coord/x_coord) - (a_pose - np.pi)) <= np.pi/4)
+                            np.abs(np.arctan(y_coord/x_coord) - a_pose) <= ray_ang,
+                            np.abs(np.arctan(y_coord/x_coord) - (a_pose - np.pi)) <= ray_ang)
             
         def is_close_to_obj_vectorized(true_loc, x_coord, y_coord):
-            return np.linalg.norm(np.stack((x_coord, y_coord)) - np.tile(true_loc.reshape(-1, 1, 1), (1, 256, 256)), axis=0) <= 0.2
+            return np.linalg.norm(np.stack((x_coord, y_coord)) - np.tile(true_loc.reshape(-1, 1, 1, 1), (1, 256, 256, 3)), axis=0) <= 0.2
 
         true_loc = self.belief_true['target1'].detach().numpy()
         color_arr = np.ones((256, 256, 3), dtype=np.uint8) * 255
         
         ## initializing vectorized x_coord and y_coord arrays
-        x_coords = np.tile(np.arange(-5, 5, 5./128.).reshape(-1, 1), (1, 256))
-        y_coords = x_coords.copy().T
+        x_coords = np.stack([np.tile(np.arange(-5, 5, 5./128.).reshape(-1, 1), (1, 256))]*3, axis=2)
+        y_coords = np.stack([x_coords[:,:,0].copy().T]*3, axis=2)
+
+        red = np.stack((np.ones((256, 256), dtype=np.uint8)*255, np.zeros((256, 256), dtype=np.uint8), np.zeros((256, 256), dtype=np.uint8)), axis=2)
+        green = np.stack((np.zeros((256, 256), dtype=np.uint8), np.ones((256, 256), dtype=np.uint8)*255, np.zeros((256, 256), np.uint8)), axis=2)
+        blue = np.stack((np.zeros((256, 256), np.uint8), np.zeros((256, 256), np.uint8), np.ones((256, 256), dtype=np.uint8)*255), axis=2)
+        white = np.ones((256, 256, 3), dtype=np.uint8) * 255
 
         ## coloring in the ray of the pointer
-        color_arr[:,:,0] = np.where(is_in_ray_vectorized(self.curr_state, x_coords, y_coords),
-                                            np.ones((256, 256), dtype=np.uint8) * 255, 
-                                            np.ones((256, 256), dtype=np.uint8) * 255)
-                
-        color_arr[:,:,1] = np.where(is_in_ray_vectorized(self.curr_state, x_coords, y_coords),
-                                    np.zeros((256, 256), dtype=np.uint8), 
-                                    np.ones((256, 256), dtype=np.uint8) * 255)
-        
-        color_arr[:,:,2] = np.where(is_in_ray_vectorized(self.curr_state, x_coords, y_coords),
-                                    np.zeros((256, 256), dtype=np.uint8), 
-                                    np.ones((256, 256), dtype=np.uint8) * 255)
-        
+        color_arr = np.where(is_in_ray_vectorized(self.curr_state, x_coords, y_coords, np.pi/4),
+                                            red, 
+                                            white) 
+
+        ## coloring in precise ray within pointer
+        color_arr = np.where(is_in_ray_vectorized(self.curr_state, x_coords, y_coords, 0.05),
+                                            green+red, 
+                                            color_arr)
+
         ## coloring in the object
-        color_arr[:,:,0] = np.where(is_close_to_obj_vectorized(true_loc, x_coords, y_coords),
-                                    np.zeros((256, 256), dtype=np.uint8), 
-                                    color_arr[:,:,0])
-        
-        color_arr[:,:,1] = np.where(is_close_to_obj_vectorized(true_loc, x_coords, y_coords),
-                                    np.zeros((256, 256), dtype=np.uint8), 
-                                    color_arr[:,:,1])
-        
-        color_arr[:,:,2] = np.where(is_close_to_obj_vectorized(true_loc, x_coords, y_coords),
-                                    np.ones((256, 256), dtype=np.uint8)*255, 
-                                    color_arr[:,:,2])
-        
+        color_arr = np.where(is_close_to_obj_vectorized(true_loc, x_coords, y_coords),
+                                    blue, 
+                                    color_arr)
+
         return color_arr
     
     def postproc_im(self, base_im, s, t, cam_id):

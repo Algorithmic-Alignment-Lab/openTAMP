@@ -94,3 +94,6 @@ class GymAgent(TAMPAgent):
 
     def store_aux_info(self, aux_info):
         self.curr_targ = aux_info
+
+    def get_inv_cov(self):
+        return np.eye(self.dU) * 1000
