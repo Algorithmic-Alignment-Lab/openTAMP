@@ -500,7 +500,7 @@ class Server(object):
             if np.any(np.isnan(obs)):
                 print("NAN IN OBS CONT:", obs, sample.task, 'SAMPLE')
             obs_data = np.concatenate((obs_data, obs))
-            prc = np.tile(np.eye(dP) * 10, (sample.T,1,1))
+            prc = np.tile(np.eye(dP) * 1000, (sample.T,1,1))
             tgt_prc = np.concatenate((tgt_prc, prc))
 
         if len(tgt_mu):

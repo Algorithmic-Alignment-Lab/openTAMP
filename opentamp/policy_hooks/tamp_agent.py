@@ -49,9 +49,9 @@ class OptimalPolicy:
         u = np.zeros(self.dU)
         for param, attr in self.action_inds:
             if t < len(self.opt_traj) - 1:
-                u[self.action_inds[param, attr]] = self.opt_traj[t + 1, self.action_inds[param, attr]] 
+                u[self.action_inds[param, attr]] = self.opt_traj[t + 1, self.action_inds[param, attr]] * 100
             else:
-                u[self.action_inds[param, attr]] = self.opt_traj[-1, self.action_inds[param, attr]]
+                u[self.action_inds[param, attr]] = self.opt_traj[-1, self.action_inds[param, attr]] * 100
         return u
 
 
