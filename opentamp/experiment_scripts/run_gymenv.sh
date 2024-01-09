@@ -16,14 +16,14 @@ python3 -W ignore policy_hooks/run_training.py -c policy_hooks.namo.new_env_hype
                                                 -add_noop 2 --permute_hl 1 \
                                                 -expl_wt 10 -expl_eta 4 \
                                                 -col_coeff 0.0 \
-                                                -motion 1 \
+                                                -motion 4 \
                                                 -n_gpu 1 \
                                                 -rollout 0 \
                                                 -task 1 \
                                                 -post -pre \
                                                 -warm 100 \
                                                 -neg_ratio 0. -opt_ratio 0.9 -dagger_ratio 0.1 \
-						-descr pointer_pilot_server_milinvcov_addvalhistfeat_shorttrain
+						-descr pointer_pilot_shorttrain_targnoprec
 # sleep 1800 
 # pkill -f run_train -9
 # pkill -f ros -9
