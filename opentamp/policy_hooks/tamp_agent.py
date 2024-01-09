@@ -35,6 +35,7 @@ MAX_SAMPLELISTS = 1000
 MAX_TASK_PATHS = 1000
 ROLL_TOL = 1e-3
 
+ACTION_SCALE = 100
 
 class OptimalPolicy:
     def __init__(self, dU, action_inds, state_inds, opt_traj):
@@ -49,9 +50,9 @@ class OptimalPolicy:
         u = np.zeros(self.dU)
         for param, attr in self.action_inds:
             if t < len(self.opt_traj) - 1:
-                u[self.action_inds[param, attr]] = self.opt_traj[t + 1, self.action_inds[param, attr]] * 100
+                u[self.action_inds[param, attr]] = self.opt_traj[t + 1, self.action_inds[param, attr]] * ACTION_SCALE
             else:
-                u[self.action_inds[param, attr]] = self.opt_traj[-1, self.action_inds[param, attr]] * 100
+                u[self.action_inds[param, attr]] = self.opt_traj[-1, self.action_inds[param, attr]] * ACTION_SCALE
         return u
 
 
@@ -425,7 +426,7 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
                 sample.set(enum, val, t=t)
             if len(self._prev_U): self._prev_U = np.r_[self._prev_U[1:], [U_full]]
 
-            suc, col = self.run_policy_step(U_full, cur_state)
+            suc, col = self.run_policy_step(U_full / ACTION_SCALE, cur_state)
             col_ts[t] = col
             new_state = self.get_state()
 
