@@ -169,7 +169,8 @@ class BlankEnvWrapper(BlankEnv):
 
     # reset without affecting the simulator
     def get_random_init_state(self):
-        return np.array([0.0]*1)
+        init_pose = random.random() * np.pi/2  # give random initial state between 0 and 90 degrees
+        return np.array([init_pose])
 
     # determine whether or not a given state satisfies a goal condition
     def assess_goal(self, condition, state, targets=None, cont=None):
