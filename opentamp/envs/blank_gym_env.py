@@ -42,7 +42,11 @@ class BlankEnv(Env):
             # noisy_obs = distros.MultivariateNormal(torch.zeros((2,)), 0.01 * torch.eye(2)).sample().numpy()
             no_noisy_obs = np.zeros((2,))
 
-        self.curr_obs = np.concatenate((self.curr_state, np.array([np.arctan(no_noisy_obs[1]/no_noisy_obs[0])])))
+        if no_noisy_obs[0] < 0.001:
+            nan_ang = np.pi/2 if no_noisy_obs[1] >= 0 else -np.pi/2
+            self.curr_obs = np.concatenate((self.curr_state, np.array([nan_ang])))
+        else:
+            self.curr_obs = np.concatenate((self.curr_state, np.array([np.arctan(no_noisy_obs[1]/no_noisy_obs[0])])))
 
         return self.curr_obs, 1.0, False, {}
 
