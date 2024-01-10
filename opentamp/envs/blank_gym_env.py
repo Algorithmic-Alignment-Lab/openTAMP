@@ -10,9 +10,9 @@ from opentamp.policy_hooks.utils.policy_solver_utils import *
 class BlankEnv(Env):    
     def __init__(self):
         self.action_space = spaces.Box(low=0.0, high=1.0, shape=(1,), dtype='float32')
-        self.observation_space = spaces.Box(low=0.0, high=1.0, shape=(2,), dtype='float32')
+        self.observation_space = spaces.Box(low=0.0, high=1.0, shape=(4,), dtype='float32')
         self.curr_state = np.array([0.0]*1)
-        self.curr_obs = np.array([0.0]*2)
+        self.curr_obs = np.array([0.0]*4)
         self.dist = self.assemble_dist()
         self.belief_true = {'target1': torch.tensor([0.0, 0.0])}
 
@@ -43,16 +43,16 @@ class BlankEnv(Env):
             no_noisy_obs = np.zeros((2,))
 
         if no_noisy_obs[0] < 0.001:
-            nan_ang = np.pi/2 if no_noisy_obs[1] >= 0 else -np.pi/2
-            self.curr_obs = np.concatenate((self.curr_state, np.array([nan_ang])))
+            nan_ang = np.pi/2 if no_noisy_obs[1] >= 0.0 else -np.pi/2
+            self.curr_obs = np.concatenate((self.curr_state, np.array([nan_ang]), no_noisy_obs))
         else:
-            self.curr_obs = np.concatenate((self.curr_state, np.array([np.arctan(no_noisy_obs[1]/no_noisy_obs[0])])))
+            self.curr_obs = np.concatenate((self.curr_state, np.array([np.arctan(no_noisy_obs[1]/no_noisy_obs[0])]), no_noisy_obs))
 
         return self.curr_obs, 1.0, False, {}
 
     def reset(self):
         self.curr_state = np.array([0.0]*1)
-        self.curr_obs = np.array([0.0]*2)
+        self.curr_obs = np.array([0.0]*4)
         return self.curr_obs
     
 
@@ -152,7 +152,7 @@ class BlankEnv(Env):
 class BlankEnvWrapper(BlankEnv):
     def reset_to_state(self, state):
         self.curr_state = state
-        self.curr_obs = np.array([0.0]*2)
+        self.curr_obs = np.array([0.0]*4)
         return self.curr_obs
 
     def get_vector(self):
