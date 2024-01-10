@@ -30,18 +30,8 @@ class ObservationModel(object):
     def set_active_planned_observations(self, planned_obs):
         self.active_planned_observations = planned_obs
 
-    ## sample an observation, optionally conditioned on true state, and set active_planned observation
-    ## can override with different schemes (max-likelihood observation, average, etc...)
-    # def resample_planned_observation(self, params):
-    #     ## by default, just samples from the prior of each belief state         
-    #     planned_obs = {}
-
-    #     ## resample the prior for target1
-    #     for param_key in params:
-    #         if hasattr(params[param_key], 'belief'):
-    #             planned_obs[param_key] = params[param_key].belief.dist.sample().detach()  ## sample the prior 
-
-    #     self.active_planned_observations = planned_obs
+    def get_obs_likelihood(self, obs):
+        raise NotImplementedError
 
     ## a callable giving a parametric form for the approximation to the belief posterior, used subsequently in MCMC
     def approx_model(self, data):
@@ -176,18 +166,37 @@ class NoVIPointerObservationModel(ObservationModel):
         self.approx_params = {'weights'+str(os.getpid()): None, 'locs'+str(os.getpid()): None, 'scales'+str(os.getpid()): None}
         self.active_planned_observations = {'target1': torch.empty((2,)).detach()}
     
+    def is_in_ray(self, a_pose, target):
+        ray_width = np.pi / 4  ## has 45-degree field of view on either side
+
+        if target[0] >= 0:
+            return np.abs(np.arctan(target[1]/target[0]) - a_pose) <= ray_width
+        else:
+            return np.abs(np.arctan(target[1]/target[0]) - (a_pose - np.pi)) <= ray_width
+
+
     def approx_model(self, data):
         pass
 
-    def forward_model(self, params, active_ts, provided_state=None, past_obs={}):        
-        ray_width = np.pi / 4  ## has 45-degree field of view on either side
+    def get_unnorm_obs_log_likelihood(self, params, prefix_obs, fail_ts):
+        log_likelihood = torch.zeros((params['target1'].belief.samples.shape[0], ))
 
-        def is_in_ray(a_pose, target):
-            if target[0] >= 0:
-                return np.abs(np.arctan(target[1]/target[0]) - a_pose) <= ray_width
-            else:
-                return np.abs(np.arctan(target[1]/target[0]) - (a_pose - np.pi)) <= ray_width
-        
+        for idx in range(params['target1'].belief.samples.shape[0]):
+            ## initialize log_likelihood to prior probability
+            log_likelihood[idx] = params['target1'].belief.dist.log_prob(params['target1'].belief.samples[idx, :, fail_ts])
+
+            ## add in terms for the forward model
+            for obs_active_ts in prefix_obs:
+                if self.is_in_ray(params['pr2'].pose[0,obs_active_ts[1]-1], params['target1'].belief.samples[idx,:,fail_ts]):
+                    ## sample around the true belief, with extremely low variation / error
+                    log_likelihood[idx] += dist.MultivariateNormal(params['target1'].belief.samples[idx,:,fail_ts], (0.01 * torch.eye(2))).log_prob(prefix_obs[obs_active_ts]['target1'])
+                else:
+                    ## sample from prior dist -- have no additional knowledge, don't read it
+                    log_likelihood[idx] += dist.MultivariateNormal(torch.zeros((2,)).to(DEVICE), 0.01 * torch.eye(2)).log_prob(prefix_obs[obs_active_ts]['target1'])
+
+        return log_likelihood
+
+    def forward_model(self, params, active_ts, provided_state=None, past_obs={}):        
         if provided_state is not None:
             ## overrides the current belief sample with a true state
             b_global_samp = provided_state['target1'].to(DEVICE)
@@ -197,7 +206,7 @@ class NoVIPointerObservationModel(ObservationModel):
         
         ## sample through strict prefix of current obs
         for obs_active_ts in past_obs:
-            if is_in_ray(params['pr2'].pose[0,obs_active_ts[1]-1], b_global_samp.detach().to('cpu')):
+            if self.is_in_ray(params['pr2'].pose[0,obs_active_ts[1]-1], b_global_samp.detach().to('cpu')):
                 ## sample around the true belief, with extremely low variation / error
                 pyro.sample('target1.'+str(obs_active_ts[0]), dist.MultivariateNormal(b_global_samp.float().to(DEVICE), (0.01 * torch.eye(2)).to(DEVICE)))
             else:
@@ -208,7 +217,7 @@ class NoVIPointerObservationModel(ObservationModel):
         ## get sample for current timestep, record and return
         samps = {}
 
-        if is_in_ray(params['pr2'].pose[0,active_ts[1]-1], b_global_samp.detach().to('cpu')):
+        if self.is_in_ray(params['pr2'].pose[0,active_ts[1]-1], b_global_samp.detach().to('cpu')):
             ## sample around the true belief, with extremely low variation / error
             samps['target1'] = pyro.sample('target1.'+str(active_ts[0]), dist.MultivariateNormal(b_global_samp.float().to(DEVICE), 0.01 * torch.eye(2).to(DEVICE)))
         else:

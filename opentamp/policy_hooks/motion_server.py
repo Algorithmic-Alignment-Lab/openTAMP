@@ -261,7 +261,10 @@ class MotionServer(Server):
                     new_assumed_goal = {}
 
                     ## reset the true state planned to be a random one, with consistent index across samples
-                    new_goal_idx = np.random.randint(0, param.belief.samples.shape[0])
+                    # new_goal_idx = np.random.randint(0, param.belief.samples.shape[0])
+                    unnorm_loglikelihood = plan.observation_model.get_unnorm_obs_log_likelihood(plan.params, node.conditioned_obs, fail_step)
+                    new_goal_idx = torch.argmax(unnorm_loglikelihood).item()
+
                     if a.active_timesteps[0] <= fail_step and fail_step < a.active_timesteps[1]:
                         for param in plan.belief_params:
                             ## set new assumed value for planning to sample from belief -- random choice
