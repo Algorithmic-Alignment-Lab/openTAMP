@@ -84,7 +84,7 @@ class BlankEnv(Env):
                                             white) 
 
         ## coloring in precise ray within pointer
-        color_arr = np.where(is_in_ray_vectorized(self.curr_state, x_coords, y_coords, 0.05),
+        color_arr = np.where(is_in_ray_vectorized(self.curr_state, x_coords, y_coords, 0.1),
                                             green+red, 
                                             color_arr)
 
@@ -180,7 +180,7 @@ class BlankEnvWrapper(BlankEnv):
     def assess_goal(self, condition, state, targets=None, cont=None):
         item_loc = self.belief_true['target1']
         # if pointing directly at the object
-        if np.abs(np.arctan(item_loc[1]/item_loc[0]) - state) <= 0.05:
+        if np.abs(np.arctan(item_loc[1]/item_loc[0]) - state) <= 0.1:
             return 0.0
         else:
             return 1.0
