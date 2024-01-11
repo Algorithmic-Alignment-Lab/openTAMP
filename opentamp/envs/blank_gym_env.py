@@ -96,6 +96,11 @@ class BlankEnv(Env):
         return color_arr
     
     def postproc_im(self, base_im, s, t, cam_id):
+        def is_in_ray_vectorized(a_pose, x_coord, y_coord, ray_ang):
+            return np.where(x_coord > 0, 
+                np.abs(np.arctan(y_coord/x_coord) - a_pose) <= ray_ang,
+                np.abs(np.arctan(y_coord/x_coord) - (a_pose - np.pi)) <= ray_ang)
+
         def is_close_to_obj_vectorized(true_loc, x_coord, y_coord):
             return np.linalg.norm(np.stack((x_coord, y_coord)) - np.tile(true_loc.reshape(-1, 1, 1), (1, 256, 256)), axis=0) <= 0.2
 
@@ -110,15 +115,15 @@ class BlankEnv(Env):
         y_coords = x_coords.copy().T
 
         ## adding the current target location as an observation for rendering
-        im[:,:,0] = np.where(is_close_to_obj_vectorized(s.get(TARG_ENUM)[t,:], x_coords, y_coords),
+        im[:,:,0] = np.where(is_in_ray_vectorized(s.get(ANG_ENUM)[t,:], x_coords, y_coords, 0.01),
                                             np.zeros((256, 256), dtype=np.uint8), 
                                             im[:,:,0])
                 
-        im[:,:,1] = np.where(is_close_to_obj_vectorized(s.get(TARG_ENUM)[t,:], x_coords, y_coords),
+        im[:,:,1] = np.where(is_in_ray_vectorized(s.get(ANG_ENUM)[t,:], x_coords, y_coords, 0.01),
                                     np.ones((256, 256), dtype=np.uint8) * 255, 
                                     im[:,:,1])
         
-        im[:,:,2] = np.where(is_close_to_obj_vectorized(s.get(TARG_ENUM)[t,:], x_coords, y_coords),
+        im[:,:,2] = np.where(is_in_ray_vectorized(s.get(ANG_ENUM)[t,:], x_coords, y_coords, 0.01),
                                     np.zeros((256, 256), dtype=np.uint8), 
                                     im[:,:,2])
 
