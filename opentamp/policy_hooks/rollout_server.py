@@ -336,7 +336,7 @@ class RolloutServer(Server):
         #     self.last_hl_test = time.time()
         # self.agent._eval_mode = False
         # self.agent.debug = True
-        return avg_val, path
+        return avg_val, path, samp
 
 
     def deploy(self, rlen=None, save=True, ckpt_ind=None,
@@ -398,7 +398,14 @@ class RolloutServer(Server):
                 self.agent.reset(0)
                 n_plans = self._hyperparams['policy_opt']['buffer_sizes']['n_plans'].value
                 save_video = self.id.find('test') >= 0
-                val, path = self.test_hl(save_video=save_video)
+                val, path, samp = self.test_hl(save_video=save_video)
+
+                ## issue a sample rollout from this trial to the task server
+                node = self.spawn_problem()
+                targets = node.targets
+                node = self.spawn_problem(x0=path[-1].get(STATE_ENUM, -1), targets=targets)
+                node.belief_true = samp
+                self.push_queue(node, self.task_queue)
 
             if self.run_hl_test: 
                 if self.debug or self.plan_only:
@@ -411,31 +418,31 @@ class RolloutServer(Server):
 
                 continue
 
-            self.set_policies()
-            node = self.pop_queue(self.rollout_queue)
-            if node is None:
-                node = self.spawn_problem()
+            # self.set_policies()
+            # node = self.pop_queue(self.rollout_queue)
+            # if node is None:
+            #     node = self.spawn_problem()
 
-            self.send_rollout(node)
+            # self.send_rollout(node)
 
 
-            for task in self.agent.task_list:
-                data = self.agent.get_opt_samples(task, clear=True)
-                if len(data) and self.ll_rollout_opt:
-                    inv_cov = self.agent.get_inv_cov()
-                    self.update_policy(data, label='rollout', task=task, inv_cov=inv_cov)
+            # for task in self.agent.task_list:
+            #     data = self.agent.get_opt_samples(task, clear=True)
+            #     if len(data) and self.ll_rollout_opt:
+            #         inv_cov = self.agent.get_inv_cov()
+            #         self.update_policy(data, label='rollout', task=task, inv_cov=inv_cov)
 
-            if self.hl_rollout_opt:
-                self.run_hl_update(label='rollout')
+            # if self.hl_rollout_opt:
+            #     self.run_hl_update(label='rollout')
 
-            self.agent.clear_task_paths()
-            if len(cont_samples):
-                self.update_cont_network(cont_samples)
+            # self.agent.clear_task_paths()
+            # if len(cont_samples):
+            #     self.update_cont_network(cont_samples)
 
-            self.write_log()
+            # self.write_log()
 
-            if self.debug or self.plan_only:
-                break # stop iteration after one loop
+            # if self.debug or self.plan_only:
+            #     break # stop iteration after one loop
 
 
     def send_rollout(self, node):
@@ -571,6 +578,8 @@ class RolloutServer(Server):
         if eta is not None: self.eta = eta 
         old_eta = self.eta
         debug = np.random.uniform() < 0.1
+        # tasks = [(1,), (0,), (1,), (0,), (2,)]
+        # for task in tasks:
         while t < max_t and self.agent.feasible_state(state, targets):
             self.agent.store_hist_info([len(path), 
                                         path[-1].get(ANG_ENUM)[0,:].reshape(-1), 
@@ -581,6 +590,7 @@ class RolloutServer(Server):
             l = self.get_task(state, targets, l, soft)
             if l is None: break
             task_name = self.task_list[l[0]]
+            # task_name = self.task_list[task[0]]
             pol = self.agent.policies[task_name]
             s = self.agent.sample_task(pol, 0, state, l, noisy=False, task_f=task_f, skip_opt=True, hor=hor, policies=self.agent.policies)
             val = 1 - self.agent.goal_f(0, s.get_X(s.T-1), targets)

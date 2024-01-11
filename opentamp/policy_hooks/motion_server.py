@@ -178,8 +178,9 @@ class MotionServer(Server):
             node.replan_start = 0
             node.conditioned_obs = {}
 
-            ## get a true belief state, to plan against in the problem
-            node.belief_true = self.agent.gym_env.sample_belief_true()
+            ## get a true belief state, to plan against in the problem (if not given by a rollout)
+            if not node.belief_true:
+                node.belief_true = self.agent.gym_env.sample_belief_true()
 
             plan.set_mc_lock(self.config['mc_lock'])
         

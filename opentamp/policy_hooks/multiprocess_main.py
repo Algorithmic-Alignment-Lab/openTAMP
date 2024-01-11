@@ -522,7 +522,6 @@ class MultiProcessMain(object):
         self.queue_manager = QueueManager()
         self.queue_manager.start()
 
-        ## TODO revert, these be tiny
         queue_size = 20
         train_queue_size = 20
 
@@ -641,7 +640,7 @@ class MultiProcessMain(object):
             print('RUN:', '0')
             server.agent.replace_cond(0)
             server.agent.reset(0)
-            val, path = server.test_hl(save=True, restore=True, save_video=True, save_fail=False)
+            val, path, samp = server.test_hl(save=True, restore=True, save_video=True, save_fail=False)
             server.check_hl_statistics()
         '''
         while server.policy_opt.restore_ckpts(ind):
