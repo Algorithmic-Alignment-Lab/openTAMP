@@ -76,8 +76,8 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
         'state_include': [utils.STATE_ENUM],
 
         'obs_include': [#utils.LIDAR_ENUM,
-                        utils.MJC_SENSOR_ENUM,
-                        utils.TARG_ENUM,
+                        # utils.MJC_SENSOR_ENUM,
+                        utils.ANG_ENUM,
                         # utils.ONEHOT_GOAL_ENUM
                         # utils.TASK_ENUM,
                         # utils.END_POSE_ENUM,
@@ -88,7 +88,7 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
 
         'cont_obs_include': [#utils.LIDAR_ENUM,
                         utils.MJC_SENSOR_ENUM,
-                        utils.PAST_TARG_ENUM,
+                        utils.PAST_ANG_ENUM,
                         utils.TASK_ENUM,
                         utils.PAST_TASK_ENUM,
                         # utils.PAST_POINT_ENUM,
@@ -114,6 +114,8 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
 
         'sensor_dims': {
                 # utils.OBJ_POSE_ENUM: 2,
+                utils.ANG_ENUM: 1,
+                utils.PAST_ANG_ENUM: 1,
                 utils.TARG_ENUM: 2,
                 utils.PAST_TARG_ENUM: 2,
                 utils.PAST_COUNT_ENUM: 1,

@@ -299,10 +299,18 @@ class MotionServer(Server):
                 if a_num > 0:
                     prior_st = plan.actions[a_num-1].active_timesteps[0]
                     past_targ = plan.params['target1'].pose[:, prior_st]
+                    past_ang = np.arctan(np.array([past_targ[1]])/np.array([past_targ[0]])) \
+                        if not np.any(np.isnan(np.arctan(np.array([past_targ[1]])/np.array([past_targ[0]])))) \
+                            else np.pi/2
                 else:
-                    past_targ = np.array([0.,0.])
+                    past_targ = np.array([0., 0.])
+                    past_ang = np.array([0.])
 
-
+                targ_pred = plan.params['target1'].pose[:, plan.actions[a_num].active_timesteps[0]]
+                targ_ang = np.arctan(np.array([targ_pred[1]])/np.array([targ_pred[0]])) \
+                        if not np.any(np.isnan(np.arctan(np.array([targ_pred[1]])/np.array([targ_pred[0]])))) \
+                            else np.pi/2
+                
                 new_path, x0 = self.agent.run_action(plan, 
                             a_num, 
                             x0,
@@ -313,11 +321,11 @@ class MotionServer(Server):
                             save=True, 
                             record=True,
                             hist_info=[len(path)//2, 
-                                       past_targ, 
+                                       past_ang, 
                                        sum([1 if (s.task)[0] == 1 else 0 for s in path])//2,
                                        sum([1 if (s.task)[0] == 0 else 0 for s in path])//2,
                                        (path[-2].task)[0] if len(path) > 0 else -1.0],
-                            aux_info=plan.params['target1'].pose[:, plan.actions[a_num].active_timesteps[0]])
+                            aux_info=targ_ang)
                 
                 path.extend(new_path)
 

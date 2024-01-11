@@ -352,8 +352,6 @@ class Server(object):
 
         rollout_policies['cont'] = self.policy_opt.get_policy('cont')
         
-        print(rollout_policies['cont'])
-
         self.agent.policies = rollout_policies
 
 

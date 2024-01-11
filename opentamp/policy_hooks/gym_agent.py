@@ -11,8 +11,8 @@ class GymAgent(TAMPAgent):
         self.curr_obs = self.gym_env.reset()
         self.curr_state = self.gym_env.curr_state
         self.num_tasks = 0
-        self.curr_targ = np.array([0.,0.])
-        self.past_targ = np.array([0.,0.])
+        self.curr_targ = np.array([0.])
+        self.past_targ = np.array([0.])
         self.past_point = 0
         self.past_val = 0
         self.past_task = -1.0
@@ -26,8 +26,8 @@ class GymAgent(TAMPAgent):
         sample.set(utils.MJC_SENSOR_ENUM, self.curr_obs, t)
         sample.set(utils.STATE_ENUM, self.curr_state, t)
         sample.set(utils.PAST_COUNT_ENUM, np.array([self.num_tasks]), t)
-        sample.set(utils.TARG_ENUM, self.curr_targ, t=t)
-        sample.set(utils.PAST_TARG_ENUM, self.past_targ, t=t)
+        sample.set(utils.ANG_ENUM, self.curr_targ, t=t)
+        sample.set(utils.PAST_ANG_ENUM, self.past_targ, t=t)
         sample.set(utils.PAST_POINT_ENUM, np.array([self.past_point]), t=t)
         sample.set(utils.PAST_VAL_ENUM, np.array([self.past_val]), t=t)
         sample.set(utils.PAST_TASK_ENUM, np.array([self.past_task]), t=t)

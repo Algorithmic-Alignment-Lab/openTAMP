@@ -7,7 +7,7 @@ from opentamp.policy_hooks.utils.load_task_definitions import get_tasks, plan_fr
 # random constants, todo deprecate
 mapping_file = "policy_hooks/namo/pointer_taskmapping"  # TODO alter
 
-END_TARGETS = [(2)]
+END_TARGETS = [(1)]
 n_aux=0
 NUM_OBJS = 1
 
@@ -29,7 +29,7 @@ def get_prim_choices(task_list=None):
     #out[utils.GRASP_ENUM] = ['grasp{0}'.format(i) for i in range(N_GRASPS)]
     #out[utils.ABS_POSE_ENUM] = 2
     out[utils.TASK_ENUM] = sorted(list(get_tasks(mapping_file).keys()))
-    out[utils.TARG_ENUM] = 2  ## TODO: HARDCODED FOR NOW, change
+    out[utils.ANG_ENUM] = 1  ## TODO: HARDCODED FOR NOW, change
     return out
 
 
