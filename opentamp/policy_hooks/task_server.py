@@ -54,7 +54,7 @@ class TaskServer(Server):
             else:
                 node = self.spawn_problem()
             
-            ## instatiate new observation model calss for new problem
+            ## instatiate new observation model class for new problem
             node.observation_model = self._hyperparams['observation_model']()
         
         plan_str = self.agent.hl_solver.run_planner(node.abs_prob, 

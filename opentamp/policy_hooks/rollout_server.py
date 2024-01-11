@@ -405,6 +405,7 @@ class RolloutServer(Server):
                 targets = node.targets
                 node = self.spawn_problem(x0=path[-1].get(STATE_ENUM, -1), targets=targets)
                 node.belief_true = samp
+                node.observation_model = self._hyperparams['observation_model']()
                 self.push_queue(node, self.task_queue)
 
             if self.run_hl_test: 
