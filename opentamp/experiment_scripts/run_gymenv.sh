@@ -23,7 +23,7 @@ python3 -W ignore policy_hooks/run_training.py -c new_specs.pointer_domain.new_e
                                                 -post -pre \
                                                 -warm 100 \
                                                 -neg_ratio 0. -opt_ratio 0.9 -dagger_ratio 0.1 \
-						-descr pointer_pilot_shorttrain_rolloutinit
+						-descr pointer_pilot_shorttrain_rolloutinit_actscale
 # sleep 1800 
 # pkill -f run_train -9
 # pkill -f ros -9
