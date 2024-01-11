@@ -35,7 +35,7 @@ MAX_SAMPLELISTS = 1000
 MAX_TASK_PATHS = 1000
 ROLL_TOL = 1e-3
 
-ACTION_SCALE = 5
+ACTION_SCALE = 1
 
 class OptimalPolicy:
     def __init__(self, dU, action_inds, state_inds, opt_traj):

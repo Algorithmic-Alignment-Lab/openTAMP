@@ -403,7 +403,12 @@ class RolloutServer(Server):
                 ## issue a sample rollout from this trial to the task server
                 node = self.spawn_problem()
                 targets = node.targets
-                node = self.spawn_problem(x0=path[-1].get(STATE_ENUM, -1), targets=targets)
+                terminal_idx = -1
+                for idx, s in enumerate(path):
+                    if s.task[0] == 2:
+                        terminal_idx = idx
+                        break
+                node = self.spawn_problem(x0=path[terminal_idx].get(STATE_ENUM, -1), targets=targets)
                 node.belief_true = samp
                 node.observation_model = self._hyperparams['observation_model']()
                 self.push_queue(node, self.task_queue)
@@ -581,7 +586,8 @@ class RolloutServer(Server):
         debug = np.random.uniform() < 0.1
         # tasks = [(1,), (0,), (1,), (0,), (2,)]
         # for task in tasks:
-        while t < max_t and self.agent.feasible_state(state, targets):
+        has_terminated = False
+        while t < max_t and self.agent.feasible_state(state, targets) and not has_terminated:
             self.agent.store_hist_info([len(path), 
                                         path[-1].get(ANG_ENUM)[0,:].reshape(-1), 
                                         sum([1.0 if s.task[0] == 1 else 0.0 for s in path]),
@@ -594,10 +600,13 @@ class RolloutServer(Server):
             # task_name = self.task_list[task[0]]
             pol = self.agent.policies[task_name]
             s = self.agent.sample_task(pol, 0, state, l, noisy=False, task_f=task_f, skip_opt=True, hor=hor, policies=self.agent.policies)
-            val = 1 - self.agent.goal_f(0, s.get_X(s.T-1), targets)
+            if not has_terminated:
+                val = 1 - self.agent.goal_f(0, s.get_X(s.T-1), targets)
             t += 1
             state = s.end_state # s.get_X(s.T-1)
             path.append(s)
+            if l[0] == 2:
+                has_terminated = True
         self.eta = old_eta
         self.log_path(path, lab)
         return val, path
