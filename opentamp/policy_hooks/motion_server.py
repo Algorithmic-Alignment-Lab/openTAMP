@@ -168,15 +168,17 @@ class MotionServer(Server):
             print('Planning on new problem')
             
             planned_obs = {}
-            
+            node.conditioned_obs = {}
+            node.replan_start = 0
+
+            unnorm_loglikelihood = plan.observation_model.get_unnorm_obs_log_likelihood(plan.params, node.conditioned_obs, 0)
+            new_goal_idx = torch.argmax(unnorm_loglikelihood).item()
+
             for param in plan.belief_params:
-                planned_obs[param.name] = param.belief.dist.sample()
+                planned_obs[param.name] = param.belief.samples[new_goal_idx,:,0]
                 param.pose[:, 0] = planned_obs[param.name].detach().numpy()
             
             plan.observation_model.set_active_planned_observations(planned_obs)
-
-            node.replan_start = 0
-            node.conditioned_obs = {}
 
             ## get a true belief state, to plan against in the problem (if not given by a rollout)
             if not node.belief_true:
