@@ -154,11 +154,11 @@ class MultiProcessMain(object):
                 'dim_hidden': self.config['dim_hidden'],
                 'act_fn': self.config.get('act_fn', 'relu'),
                 'output_fn': self.config.get('output_fn', None),
-                'loss_fn': self.config.get('ll_loss_fn', 'precision_mse'),
+                # 'loss_fn': self.config.get('ll_loss_fn', 'precision_mse'),
                 'conv_to_fc': 'fp',
                 'normalize': not add_image,
                 'build_conv': add_image,
-                'use_precision': True,
+                'use_precision': False,
             },
 
             'hl_network_params': {
@@ -202,11 +202,11 @@ class MultiProcessMain(object):
                 'types': self.task_types,
                 'act_fn': self.config.get('act_fn', 'relu'),
                 'output_fn': self.config.get('output_fn', None),
-                'loss_fn': self.config.get('cont_loss_fn', 'precision_mse'),
+                # 'loss_fn': self.config.get('cont_loss_fn', 'precision_mse'),
                 'conv_to_fc': 'fp',
                 'normalize': False,
                 'build_conv': add_hl_image,
-                'use_precision': True,
+                'use_precision': False,
             },
 
             'lr': self.config['lr'],

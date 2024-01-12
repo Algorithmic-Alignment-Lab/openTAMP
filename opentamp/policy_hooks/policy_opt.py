@@ -114,13 +114,10 @@ class TorchPolicyOpt():
 
         pred = model.forward(x)
 
-        if task == 'primitive' and torch.any(torch.isnan(model.compute_loss(pred, y, precision))):
-            breakpoint()
-
         return model.compute_loss(pred, y, precision)
 
 
-    def train_step(self, task, x, y, precision=None):        
+    def train_step(self, task, x, y, precision=None):
         if precision is not None and torch.sum(precision) <= 0:
             raise Exception('Found only zeroes in precision, skip this update')
 

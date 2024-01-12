@@ -407,6 +407,8 @@ class Server(object):
         if task is None:
             task = self.task
 
+        # breakpoint()
+
         if len(tgt_mu):
             print('Sending update to policy')
             # breakpoint()
@@ -500,6 +502,8 @@ class Server(object):
             obs_data = np.concatenate((obs_data, obs))
             prc = np.tile(np.eye(dP), (sample.T,1,1))
             tgt_prc = np.concatenate((tgt_prc, prc))
+
+        # breakpoint()
 
         if len(tgt_mu):
             print('Sending update to cont net')
