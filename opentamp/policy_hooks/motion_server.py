@@ -298,15 +298,21 @@ class MotionServer(Server):
             #     if plan.actions[a_num].name == 'point_to':
             #         plan.actions[a_num].active_timesteps = (plan.actions[a_num].active_timesteps[0] + 1, 
             #                                                 plan.actions[a_num].active_timesteps[1])
-            
+
+            # Remove observation actions for easier imitation          
+            active_anums = []
+            for a_num in range(len(plan.actions)):
+                if plan.actions[a_num].name != 'infer_position':
+                    active_anums.append(a_num)
+
             ## populate the sample with the entire plan
-            a_num = 0
-            st = plan.actions[a_num].active_timesteps[0]
+            # a_num = 0
+            st = plan.actions[active_anums[0]].active_timesteps[0]
             tasks = self.agent.encode_plan(plan)
 
-            for a_num in range(len(plan.actions)):
-                if a_num > 0:
-                    prior_st = plan.actions[a_num-1].active_timesteps[0]
+            for a_num_idx in range(len(active_anums)):
+                if a_num_idx > 0:
+                    prior_st = plan.actions[active_anums[a_num_idx-1]].active_timesteps[0]
                     past_targ = plan.params['target1'].pose[:, prior_st]
                     past_ang = np.arctan(np.array([past_targ[1]])/np.array([past_targ[0]])) \
                         if not np.any(np.isnan(np.arctan(np.array([past_targ[1]])/np.array([past_targ[0]])))) \
@@ -315,26 +321,26 @@ class MotionServer(Server):
                     past_targ = np.array([0., 0.])
                     past_ang = np.array([0.])
 
-                targ_pred = plan.params['target1'].pose[:, plan.actions[a_num].active_timesteps[0]]
+                targ_pred = plan.params['target1'].pose[:, plan.actions[active_anums[a_num_idx]].active_timesteps[0]]
                 targ_ang = np.arctan(np.array([targ_pred[1]])/np.array([targ_pred[0]])) \
                         if not np.any(np.isnan(np.arctan(np.array([targ_pred[1]])/np.array([targ_pred[0]])))) \
                             else np.pi/2
                 
                 
                 new_path, x0 = self.agent.run_action(plan, 
-                            a_num, 
+                            active_anums[a_num_idx], 
                             x0,
                             self.agent.target_vecs[0], 
-                            tasks[a_num], 
+                            tasks[active_anums[a_num_idx]], 
                             st,
                             reset=True,
                             save=True, 
                             record=True,
-                            hist_info=[len(path)//2, 
+                            hist_info=[len(path), 
                                        past_ang, 
-                                       sum([1 if (s.task)[0] == 1 else 0 for s in path])//2,
-                                       sum([1 if (s.task)[0] == 0 else 0 for s in path])//2,
-                                       (path[-2].task)[0] if len(path) > 0 else -1.0],
+                                       sum([1 if (s.task)[0] == 1 else 0 for s in path]),
+                                       sum([1 if (s.task)[0] == 0 else 0 for s in path]),
+                                       (path[-1].task)[0] if len(path) > 0 else -1.0],
                             aux_info=targ_ang)
                 
                 path.extend(new_path)
