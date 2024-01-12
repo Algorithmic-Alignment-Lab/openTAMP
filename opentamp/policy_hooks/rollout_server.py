@@ -401,17 +401,17 @@ class RolloutServer(Server):
                 val, path, samp = self.test_hl(save_video=save_video)
 
                 ## issue a sample rollout from this trial to the task server
-                node = self.spawn_problem()
-                targets = node.targets
-                terminal_idx = -1
-                for idx, s in enumerate(path):
-                    if s.task[0] == 2:
-                        terminal_idx = idx
-                        break
-                node = self.spawn_problem(x0=path[terminal_idx].get(STATE_ENUM, -1), targets=targets)
-                node.belief_true = samp
-                node.observation_model = self._hyperparams['observation_model']()
-                self.push_queue(node, self.task_queue)
+                # node = self.spawn_problem()
+                # targets = node.targets
+                # terminal_idx = -1
+                # for idx, s in enumerate(path):
+                #     if s.task[0] == 2:
+                #         terminal_idx = idx
+                #         break
+                # node = self.spawn_problem(x0=path[terminal_idx].get(STATE_ENUM, -1), targets=targets)
+                # node.belief_true = samp
+                # node.observation_model = self._hyperparams['observation_model']()
+                # self.push_queue(node, self.task_queue)
 
             if self.run_hl_test: 
                 if self.debug or self.plan_only:
