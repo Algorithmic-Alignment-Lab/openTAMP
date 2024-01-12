@@ -11,7 +11,7 @@ class GymAgent(TAMPAgent):
         self.curr_obs = self.gym_env.reset()
         self.curr_state = self.gym_env.curr_state
         self.num_tasks = 0
-        self.curr_targ = np.array([0.])
+        self.curr_targ = self.gym_env.curr_state
         self.past_targ = np.array([0.])
         self.past_point = 0
         self.past_val = 0
@@ -96,4 +96,4 @@ class GymAgent(TAMPAgent):
         self.curr_targ = aux_info
 
     def get_inv_cov(self):
-        return np.eye(self.dU) * 1000
+        return np.eye(self.dU)

@@ -293,6 +293,12 @@ class MotionServer(Server):
         path = []
 
         if refine_success and replan_success:
+            ## TEMPORARY HACK DUE TO SAMPLE INDEXING
+            # for a_num in range(len(plan.actions)):
+            #     if plan.actions[a_num].name == 'point_to':
+            #         plan.actions[a_num].active_timesteps = (plan.actions[a_num].active_timesteps[0] + 1, 
+            #                                                 plan.actions[a_num].active_timesteps[1])
+            
             ## populate the sample with the entire plan
             a_num = 0
             st = plan.actions[a_num].active_timesteps[0]
@@ -313,6 +319,7 @@ class MotionServer(Server):
                 targ_ang = np.arctan(np.array([targ_pred[1]])/np.array([targ_pred[0]])) \
                         if not np.any(np.isnan(np.arctan(np.array([targ_pred[1]])/np.array([targ_pred[0]])))) \
                             else np.pi/2
+                
                 
                 new_path, x0 = self.agent.run_action(plan, 
                             a_num, 
@@ -350,6 +357,7 @@ class MotionServer(Server):
             ## if plan only, invoke a breakpoint and inspect the plan statistics
             if self.plan_only:
                 ## TODO add a general wrapper here
+                print([plan.actions[a_num].active_timesteps for a_num in range(len(plan.actions))])
                 print(plan.params['pr2'].pose)
                 print(plan.params['target1'].pose)
                 print(plan.params['target1'].belief.samples.mean(axis=0))
