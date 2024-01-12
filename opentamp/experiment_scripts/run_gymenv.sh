@@ -23,11 +23,7 @@ python3 -W ignore policy_hooks/run_training.py -c new_specs.pointer_domain.new_e
                                                 -post -pre \
                                                 -warm 100 \
                                                 -neg_ratio 0. -opt_ratio 0.9 -dagger_ratio 0.1 \
-<<<<<<< HEAD
-						-descr pointer_pilot_shorttrain_deterministicstart_richcontrolobs_redo
-=======
-						-descr pointer_pilot_shorttrain_deterministicstart_richcontrolfeat
->>>>>>> a642d0e84bb167490328dbe34d1fabc6a1132d99
+						-descr pointer_pilot_shorttrain_deterministicstart_redo
 # sleep 1800 
 # pkill -f run_train -9
 # pkill -f ros -9
