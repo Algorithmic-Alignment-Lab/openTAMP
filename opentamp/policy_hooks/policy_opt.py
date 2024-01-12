@@ -151,7 +151,7 @@ class TorchPolicyOpt():
                 pass  ## train_step can possbily throw error if there is no more, pass to the next batch
             
         # decrease the learning rate
-        self.update_lr()
+        # self.update_lr()
         self.average_losses.append(average_loss / self.config['iterations'])
 
 
