@@ -255,6 +255,7 @@ def argsparser():
     parser.add_argument('-hldec', '--prim_weight_decay', type=float, default=1e-3)
     parser.add_argument('-contdec', '--cont_weight_decay', type=float, default=1e-3)
     parser.add_argument('-lr', '--lr', type=float, default=1e-3)
+    parser.add_argument('-contlr', '--contlr', type=float, default=1e-3)
     parser.add_argument('-hllr', '--hllr', type=float, default=1e-3)
     parser.add_argument('-lr_schedule', '--lr_schedule', type=str, default='fixed')
     parser.add_argument('-split_hl', '--split_hl_loss', action='store_true', default=False)

@@ -91,7 +91,12 @@ class TorchPolicyOpt():
     def _set_opt(self, task):
         opt_cls = self.config.get('opt_cls', optim.Adam)
         if type(opt_cls) is str: opt_cls = getattr(optim, opt_cls)
-        lr = self.config.get('lr', 1e-3)
+        if task == 'cont':
+            lr = self.config.get('contlr', 1e-3)
+        elif task == 'primitive':
+            lr = self.config.get('hllr', 1e-3)
+        else:
+            lr = self.config.get('lr', 1e-3)
         self.opts[task] = opt_cls(self.nets[task].parameters(), lr=lr) 
 
 
@@ -121,8 +126,7 @@ class TorchPolicyOpt():
         if precision is not None and torch.sum(precision) <= 0:
             raise Exception('Found only zeroes in precision, skip this update')
 
-        if task not in self.opts is None: self._set_opt(task)
-
+        if task not in self.opts: self._set_opt(task)
         self.opts[task].zero_grad()
         loss = self.get_loss(task, x, y, precision)
         loss.backward()
@@ -145,7 +149,9 @@ class TorchPolicyOpt():
                 self.N += len(batch)
             except:
                 pass  ## train_step can possbily throw error if there is no more, pass to the next batch
-
+            
+        # decrease the learning rate
+        self.update_lr()
         self.average_losses.append(average_loss / self.config['iterations'])
 
 
@@ -289,9 +295,8 @@ class TorchPolicyOpt():
 
 
     def update_lr(self):
-        if self.method == 'linear':
-            self.cur_lr *= self.lr_scale
-            self.cur_hllr *= self.lr_scale
+        self.cur_lr *= self.lr_scale
+        self.cur_hllr *= self.lr_scale
 
     def select_dims(self, scope):
         dO = self._dO

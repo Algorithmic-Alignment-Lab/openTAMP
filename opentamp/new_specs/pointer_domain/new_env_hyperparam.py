@@ -77,11 +77,12 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
 
         'obs_include': [#utils.LIDAR_ENUM,
                         # utils.MJC_SENSOR_ENUM,
-                        utils.MJC_SENSOR_ENUM,
+                        # utils.MJC_SENSOR_ENUM,
                         # utils.PAST_ANG_ENUM,
                         # utils.TASK_ENUM,
                         # utils.PAST_TASK_ENUM,
                         utils.ANG_ENUM,
+                        utils.PAST_POINT_ENUM,
                         # utils.ONEHOT_GOAL_ENUM
                         # utils.TASK_ENUM,
                         # utils.END_POSE_ENUM,
@@ -94,7 +95,8 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
                         utils.MJC_SENSOR_ENUM,
                         # utils.PAST_ANG_ENUM,
                         utils.TASK_ENUM,
-                        utils.PAST_TASK_ENUM,
+                        # utils.PAST_TASK_ENUM,
+                        utils.PAST_POINT_ENUM,
                         # utils.PAST_POINT_ENUM,
                         # utils.ONEHOT_GOAL_ENUM
                         # utils.TASK_ENUM,
