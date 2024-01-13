@@ -12,7 +12,7 @@ python3 -W ignore policy_hooks/run_training.py -c new_specs.pointer_domain.new_e
                                                 -lr_schedule fixed \
                                                 -imwidth 256 -imheight 256 \
                                                 -hist_len 2 -prim_first_wt 20 -lr 0.001 \
-                                                -hllr 0.0001 -contlr 0.001 -lldec 0.0001 -hldec 0.0001 \
+                                                -hllr 0.0001 -contlr 0.00001 -lldec 0.0001 -hldec 0.0001 \
                                                 --permute_hl 1 \
                                                 -expl_wt 10 -expl_eta 4 \
                                                 -col_coeff 0.0 \
@@ -23,7 +23,7 @@ python3 -W ignore policy_hooks/run_training.py -c new_specs.pointer_domain.new_e
                                                 -post -pre \
                                                 -warm 100 \
                                                 -neg_ratio 0. -opt_ratio 1.0 -dagger_ratio 0.0 \
-						-descr pointer_pilot_shorttrain_deterministicstart_noobsimit_noprec_highlrnewobs
+						-descr pointer_pilot_shorttrain_deterministicstart_noobsimit_noprec_customlroldcontobs
 # sleep 1800 
 # pkill -f run_train -9
 # pkill -f ros -9
