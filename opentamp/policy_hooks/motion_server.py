@@ -19,7 +19,7 @@ from opentamp.policy_hooks.sample_list import SampleList
 from opentamp.policy_hooks.utils.policy_solver_utils import *
 from opentamp.policy_hooks.server import Server
 from opentamp.policy_hooks.search_node import *
-
+from opentamp.policy_hooks.tamp_agent import ACTION_SCALE
 
 import torch
 import matplotlib.pyplot as plt
@@ -317,6 +317,7 @@ class MotionServer(Server):
                     past_ang = np.arctan(np.array([past_targ[1]])/np.array([past_targ[0]])) \
                         if not np.any(np.isnan(np.arctan(np.array([past_targ[1]])/np.array([past_targ[0]])))) \
                             else np.pi/2
+                    past_ang *= ACTION_SCALE
                 else:
                     past_targ = np.array([0., 0.])
                     past_ang = np.array([0.])
@@ -325,6 +326,7 @@ class MotionServer(Server):
                 targ_ang = np.arctan(np.array([targ_pred[1]])/np.array([targ_pred[0]])) \
                         if not np.any(np.isnan(np.arctan(np.array([targ_pred[1]])/np.array([targ_pred[0]])))) \
                             else np.pi/2
+                targ_ang *= ACTION_SCALE
                 
                 
                 new_path, x0 = self.agent.run_action(plan, 
