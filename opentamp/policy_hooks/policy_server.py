@@ -143,7 +143,7 @@ class PolicyServer(object):
         if self.task in ['primitive', 'label']:
             normalize = False
         else:
-            normalize = IM_ENUM not in self.config['obs_include']
+            normalize = False
 
         feed_prob = self.config['end_to_end_prob']
         in_inds, out_inds = None, None
