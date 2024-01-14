@@ -119,6 +119,8 @@ class TorchPolicyOpt():
 
         pred = model.forward(x)
 
+        # breakpoint()
+
         return model.compute_loss(pred, y, precision)
 
 
@@ -148,8 +150,8 @@ class TorchPolicyOpt():
                 self.torch_iter += 1
                 self.N += len(batch)
             except:
-                pass  ## train_step can possbily throw error if there is no more, pass to the next batch
-            
+                pass  ## train_step can possbily throw error if there is no more, pass to the next batch        
+
         # decrease the learning rate
         # self.update_lr()
         self.average_losses.append(average_loss / self.config['iterations'])

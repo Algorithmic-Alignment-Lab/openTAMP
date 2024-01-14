@@ -230,6 +230,7 @@ class RolloutServer(Server):
             self.save_video(path, val > 0, lab='vid_imit_'+str(i))
 
         avg_val = np.mean(np.array(vals))
+        print(avg_val)
         if save:
             self.hl_data.append([(avg_val, len(path))])  ## update the HL statistics
             np.save(self.hl_test_log.format('', 'rerun_' if ckpt_ind is not None else ''), np.array(self.hl_data))
@@ -584,7 +585,7 @@ class RolloutServer(Server):
         if eta is not None: self.eta = eta 
         old_eta = self.eta
         debug = np.random.uniform() < 0.1
-        # tasks = [(1,), (0,), (1,), (0,), (2,)]
+        # tasks = [(1,), (1,), (2,)]
         # for task in tasks:
         has_terminated = False
         while t < max_t and self.agent.feasible_state(state, targets) and not has_terminated:
@@ -597,11 +598,12 @@ class RolloutServer(Server):
             l = self.get_task(state, targets, l, soft)
             if l is None: break
             task_name = self.task_list[l[0]]
-            # task_name = self.task_list[task[0]]
             pol = self.agent.policies[task_name]
             s = self.agent.sample_task(pol, 0, state, l, noisy=False, task_f=task_f, skip_opt=True, hor=hor, policies=self.agent.policies)
-            if not has_terminated:
-                val = 1 - self.agent.goal_f(0, s.get_X(s.T-1), targets)
+            # print(s.get(ACTION_ENUM))
+            # print(s.get(ANG_ENUM))
+            # print(s.get(MJC_SENSOR_ENUM))
+            val = 1 - self.agent.goal_f(0, s.get_X(s.T-1), targets)
             t += 1
             state = s.end_state # s.get_X(s.T-1)
             path.append(s)

@@ -1457,6 +1457,7 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
         for ind, enum in enumerate(self.continuous_opts):
             # old_vals[enum] = sample.get(enum, t=t).copy()
             sample.set(enum, vals[ind], t=t)
+            # sample.set(enum, 0.75, t=t)
         return old_vals
 
 
