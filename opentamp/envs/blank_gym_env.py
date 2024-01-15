@@ -47,7 +47,7 @@ class BlankEnv(Env):
             ## reject this observation, give zero reading
             # noisy_obs = distros.MultivariateNormal(torch.zeros((2,)), 0.01 * torch.eye(2)).sample().numpy()
             no_noisy_obs = np.zeros((2,))
-            self.curr_obs = np.array([0.0, 0.0])
+            self.curr_obs = np.array([-10.0, 0.0])
 
         return self.curr_obs, 1.0, False, {}
 
