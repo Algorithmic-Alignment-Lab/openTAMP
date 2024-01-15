@@ -23,7 +23,7 @@ python3 -W ignore policy_hooks/run_training.py -c new_specs.pointer_domain.new_e
                                                 -post -pre \
                                                 -warm 100 \
                                                 -neg_ratio 0. -opt_ratio 1.0 -dagger_ratio 0.0 \
-						-descr pointer_pilot_simplerenvobs_removenormalization_pointercountcontrol
+						-descr pointer_pilot_simplerenvobs_removenormalization_pointercountcontrol_noactscale
 # sleep 1800 
 # pkill -f run_train -9
 # pkill -f ros -9

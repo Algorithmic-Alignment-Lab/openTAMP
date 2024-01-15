@@ -44,9 +44,9 @@ class BlankEnv(Env):
 
         if no_noisy_obs[0] < 0.001:
             nan_ang = np.pi/2 if no_noisy_obs[1] >= 0.0 else -np.pi/2
-            self.curr_obs = np.array([nan_ang * 10])
+            self.curr_obs = np.array([nan_ang])
         else:
-            self.curr_obs = np.array([np.arctan(no_noisy_obs[1]/no_noisy_obs[0]) * 10])
+            self.curr_obs = np.array([np.arctan(no_noisy_obs[1]/no_noisy_obs[0])])
 
         return self.curr_obs, 1.0, False, {}
 
