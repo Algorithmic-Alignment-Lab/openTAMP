@@ -407,8 +407,6 @@ class Server(object):
         if task is None:
             task = self.task
 
-        # breakpoint()
-
         if len(tgt_mu):
             print('Sending update to policy')
             # breakpoint()
