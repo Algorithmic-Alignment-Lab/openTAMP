@@ -539,4 +539,3 @@ class Plan(object):
             for _ in range(active_ts[0], active_ts[1]-1):
                 new_samp = torch.cat((param.belief.samples, param.belief.samples[:, :, -1:]), dim=2)
                 param.belief.samples = new_samp
-                running_idx += param.belief.size

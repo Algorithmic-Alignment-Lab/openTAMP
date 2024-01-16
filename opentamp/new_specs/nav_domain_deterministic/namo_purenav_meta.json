@@ -1,0 +1,21 @@
+{
+    "types": ["Robot", "Target"],
+    "attribute_imports": {
+        "opentamp.core.util_classes.matrix": ["Vector2d"],
+        "opentamp.core.util_classes.beliefs": ["UniformPrior"]
+    },
+    "predicates_import_path": "opentamp.core.util_classes.namo_grip_predicates",
+    "type_attrs": {
+        "Target": {
+            "value": "Vector2d",
+            "belief": "UniformPrior"
+        },
+        "Robot": {
+            "pose": "Vector2d"
+        }
+    },
+    "predicates": {
+        "RobotAtTarget": ["Robot", "Target"],
+        "IsMP": ["Robot"]
+    }
+}

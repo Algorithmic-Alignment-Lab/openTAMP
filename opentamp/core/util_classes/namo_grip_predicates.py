@@ -23,7 +23,7 @@ This file implements the predicates for the 2D NAMO domain.
 
 dsafe = 1e-3
 # dmove = 1.1e0 # 5e-1
-dmove = 1.8e0  # 5e-1
+dmove = 1  # 5e-1
 contact_dist = 2e-1  # dsafe
 gripdist = 0.61  # 75
 
@@ -646,7 +646,7 @@ class At(ExprPredicate):
         attr_inds = OrderedDict(
             [
                 (self.can, [("pose", np.array([0, 1], dtype=np.int))]),
-                (self.targ, [("value", np.array([0, 1], dtype=np.int))]),
+                (self.targ, [("pose", np.array([0, 1], dtype=np.int))]),
             ]
         )
 
@@ -736,6 +736,28 @@ class RobotAtTarget(At):
         aff_e = AffExpr(A, b)
         e = EqExpr(aff_e, val)
         super(At, self).__init__(name, e, attr_inds, params, expected_param_types)
+
+
+# class RobotAtTargetIncr(At):
+
+#     # RobotAt Robot Targ
+
+#     def __init__(self, name, params, expected_param_types, env=None, sess=None, debug=False):
+#         ## At Robot Targ
+#         self.r, self.rp = params
+#         attr_inds = OrderedDict(
+#             [
+#                 (self.r, [("pose", np.array([0, 1], dtype=np.int))]),
+#                 (self.rp, [("value", np.array([0, 1], dtype=np.int))]),
+#             ]
+#         )
+
+#         A = np.concatenate((np.tile(np.array([[1, 1, 0, 0]]), (1, 18)), np.array([[1, 1, -1, -1]])), axis=1)
+#         b = np.zeros((1, 1))
+#         val = np.zeros((1, 1))
+#         aff_e = AffExpr(A, b)
+#         e = EqExpr(aff_e, val)
+#         super(At, self).__init__(name, e, attr_inds, params, expected_param_types)
 
 
 
@@ -3354,83 +3376,102 @@ class StationaryW(ExprPredicate):
             attr_inds,
             params,
             expected_param_types,
-            active_range=(0, 1),
+            active_range=((0, 1)),
             priority=-2,
         )
-
-
-# class IsMP(ExprPredicate):
-#
-#    # IsMP Robot
-#
-#    def __init__(self, name, params, expected_param_types, env=None, sess=None, debug=False, dmove=dmove):
-#        self.r, = params
-#        ## constraints  |x_t - x_{t+1}| < dmove
-#        ## ==> x_t - x_{t+1} < dmove, -x_t + x_{t+a} < dmove
-#        attr_inds = OrderedDict([(self.r, [("pose", np.array([0, 1], dtype=np.int))])])
-#        A = np.array([[1, 0, -1, 0],
-#                      [0, 1, 0, -1],
-#                      [-1, 0, 1, 0],
-#                      [0, -1, 0, 1]])
-#        b = np.zeros((4, 1))
-#        e = LEqExpr(AffExpr(A, b), dmove*np.ones((4, 1)))
-#        super(IsMP, self).__init__(name, e, attr_inds, params, expected_param_types, active_range=(0,1), priority=-2)
 
 
 class IsMP(ExprPredicate):
 
-    # IsMP Robot
+   # IsMP Robot
 
-    def __init__(
-        self,
-        name,
-        params,
-        expected_param_types,
-        env=None,
-        sess=None,
-        debug=False,
-        dmove=dmove,
-    ):
-        (self.r,) = params
-        ## constraints  |x_t - x_{t+1}| < dmove
-        ## ==> x_t - x_{t+1} < dmove, -x_t + x_{t+a} < dmove
-        attr_inds = OrderedDict(
-            [
-                (
-                    self.r,
-                    [
-                        ("pose", np.array([0, 1], dtype=np.int)),
-                        ("theta", np.array([0], dtype=np.int)),
-                    ],
-                )
-            ]
-        )
-        A = np.array(
-            [
-                [1, 0, 0, -1, 0, 0],
-                [0, 1, 0, 0, -1, 0],
-                [0, 0, 1, 0, 0, -1],
-                [-1, 0, 0, 1, 0, 0],
-                [0, -1, 0, 0, 1, 0],
-                [0, 0, -1, 0, 0, 1],
-            ]
-        )
-        b = np.zeros((6, 1))
-        drot = np.pi / 3.0
-        e = LEqExpr(
-            AffExpr(A, b),
-            np.array([dmove, dmove, drot, dmove, dmove, drot]).reshape((6, 1)),
-        )
-        super(IsMP, self).__init__(
-            name,
-            e,
-            attr_inds,
-            params,
-            expected_param_types,
-            active_range=(0, 1),
-            priority=-2,
-        )
-        self._nonrollout = True
+   def __init__(self, name, params, expected_param_types, env=None, sess=None, debug=False, dmove=dmove):
+       self.r, = params
+       ## constraints  |x_t - x_{t+1}| < dmove
+       ## ==> x_t - x_{t+1} < dmove, -x_t + x_{t+a} < dmove
+       attr_inds = OrderedDict([(self.r, [("pose", np.array([0, 1], dtype=np.int))])])
+       A = np.array([[1, 0, -1, 0],
+                     [0, 1, 0, -1],
+                     [-1, 0, 1, 0],
+                     [0, -1, 0, 1]])
+       b = np.zeros((4, 1))
+       e = LEqExpr(AffExpr(A, b), dmove*np.ones((4, 1)))
+       super(IsMP, self).__init__(name, e, attr_inds, params, expected_param_types, active_range=(0,1), priority=-2)
+
+
+class IsMPIncr(ExprPredicate):
+
+   # IsMP Robot
+
+   def __init__(self, name, params, expected_param_types, env=None, sess=None, debug=False, dmove=dmove):
+       self.r, = params
+       ## constraints  |x_t - x_{t+1}| < dmove
+       ## ==> x_t - x_{t+1} < dmove, -x_t + x_{t+a} < dmove
+       attr_inds = OrderedDict([(self.r, [("pose", np.array([0, 1], dtype=np.int))])])
+       A = np.array([[1, 0],
+                     [0, 1],
+                     [-1, 0],
+                     [0, -1]])
+       b = np.zeros((4, 1))
+       e = LEqExpr(AffExpr(A, b), dmove*np.ones((4, 1)))
+       super(IsMPIncr, self).__init__(name, e, attr_inds, params, expected_param_types, active_range=(0,1), priority=-2)
+
+
+
+# class IsMP(ExprPredicate):
+
+#     # IsMP Robot
+
+#     def __init__(
+#         self,
+#         name,
+#         params,
+#         expected_param_types,
+#         env=None,
+#         sess=None,
+#         debug=False,
+#         dmove=dmove,
+#     ):
+#         (self.r,) = params
+#         ## constraints  |x_t - x_{t+1}| < dmove
+#         ## ==> x_t - x_{t+1} < dmove, -x_t + x_{t+a} < dmove
+#         attr_inds = OrderedDict(
+#             [
+#                 (
+#                     self.r,
+#                     [
+#                         ("pose", np.array([0, 1], dtype=np.int)),
+#                         ("theta", np.array([0], dtype=np.int)),
+#                     ],
+#                 )
+#             ]
+#         )
+#         A = np.array(
+#             [
+#                 [1, 0, 0, -1, 0, 0],
+#                 [0, 1, 0, 0, -1, 0],
+#                 [0, 0, 1, 0, 0, -1],
+#                 [-1, 0, 0, 1, 0, 0],
+#                 [0, -1, 0, 0, 1, 0],
+#                 [0, 0, -1, 0, 0, 1],
+#             ]
+#         )
+#         b = np.zeros((6, 1))
+#         drot = np.pi / 3.0
+#         e = LEqExpr(
+#             AffExpr(A, b),
+#             np.array([dmove, dmove, drot, dmove, dmove, drot]).reshape((6, 1)),
+#         )
+#         super(IsMP, self).__init__(
+#             name,
+#             e,
+#             attr_inds,
+#             params,
+#             expected_param_types,
+#             active_range=(0, 1),
+#             priority=-2,
+#         )
+#         self._nonrollout = True
 
 
 class DoorIsMP(ExprPredicate):

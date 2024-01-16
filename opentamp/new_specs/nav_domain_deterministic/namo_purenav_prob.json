@@ -1,0 +1,23 @@
+{
+    "init_objs": [
+        {
+            "name": "target1",
+            "type": "Target",
+            "value": [3, 3],
+            "belief": [100, -3, -3, 3, 3]
+        },
+        {
+            "name": "pr2",
+            "type": "Robot",
+            "pose": [0, 0]
+        }
+    ],
+    "init_preds": [
+    ],
+    "goals": [
+        {
+            "type": "RobotAtTarget",
+            "args": ["pr2", "target1"]
+        }
+    ]
+}

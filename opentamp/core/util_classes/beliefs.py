@@ -20,18 +20,18 @@ class Belief(object):
 # NOTE: works terribly with Hamiltonian Monte Carlo (so **DON'T USE** for inference)
 class UniformPrior(Belief):
     def __init__(self, args):
-        super().__init__(int(args[0]), int(args[1]))
-        self.dist = distros.Uniform(float(args[2]), float(args[3]))  # hard-coded
+        super().__init__(2, int(args[0]))
+        self.dist = distros.Uniform(torch.tensor([float(args[1]), float(args[2])]), torch.tensor([float(args[3]), float(args[4])]))   # hard-coded
         self._type = "unif_belief"
-        tensor_samples = self.dist.sample_n(self.num_samples * self.size)
-        self.samples = tensor_samples.view(self.num_samples, self.size) # sample from prior
+        tensor_samples = self.dist.sample_n(self.num_samples)
+        self.samples = tensor_samples.view(self.num_samples, self.size, 1) # sample from prior
 
 
 ## spherical Gaussians
 class Isotropic2DGaussianPrior(Belief):
     def __init__(self, args):
         super().__init__(int(args[0]), int(args[1]))
-        self.dist = distros.MultivariateNormal(torch.tensor([float(args[2]), float(args[3])]), float(args[4]) * torch.eye(2))  # hard-coded
+        self.dist = distros.MultivariateNormal(torch.tensor([float(args[2]), float(args[3])]), float(args[4]) * torch.eye(2)) # hard-coded
         self._type = "isotropic_gaussian_prior"
         tensor_samples = self.dist.sample_n(self.num_samples)
         self.samples = tensor_samples.view(self.num_samples, self.size, 1)  # sample from prior

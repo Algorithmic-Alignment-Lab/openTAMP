@@ -80,7 +80,7 @@ class GymAgent(TAMPAgent):
         return im
     
     def get_annotated_image(self, s, t, cam_id=None):
-        base_im = self.get_image(s.get_X()[t,0], depth=False, cam_id=cam_id)
+        base_im = self.get_image(s.get_X()[t,:], depth=False, cam_id=cam_id)
         im = self.gym_env.postproc_im(base_im, s, t, cam_id) ## TODO replace with processing from s
         return im
 

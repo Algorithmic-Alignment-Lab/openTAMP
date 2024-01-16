@@ -174,15 +174,22 @@ class MotionServer(Server):
             unnorm_loglikelihood = plan.observation_model.get_unnorm_obs_log_likelihood(plan.params, node.conditioned_obs, 0)
             new_goal_idx = torch.argmax(unnorm_loglikelihood).item()
 
-            for param in plan.belief_params:
-                planned_obs[param.name] = param.belief.samples[new_goal_idx,:,0]
-                param.pose[:, 0] = planned_obs[param.name].detach().numpy()
-            
-            plan.observation_model.set_active_planned_observations(planned_obs)
-
             ## get a true belief state, to plan against in the problem (if not given by a rollout)
             if not node.belief_true:
                 node.belief_true = self.agent.gym_env.sample_belief_true()
+
+            for param in plan.belief_params:
+                if self._hyperparams['assume_true']:
+                    planned_obs[param.name] = node.belief_true[param.name]
+                else:
+                    planned_obs[param.name] = param.belief.samples[new_goal_idx,:,0]
+                if param.is_symbol():
+                    param.value[:, 0] = planned_obs[param.name].detach().numpy()
+                else:
+                    param.pose[:, 0] = planned_obs[param.name].detach().numpy()
+            
+            plan.observation_model.set_active_planned_observations(planned_obs)
+
 
             plan.set_mc_lock(self.config['mc_lock'])
         
@@ -271,7 +278,15 @@ class MotionServer(Server):
                     if a.active_timesteps[0] <= fail_step and fail_step < a.active_timesteps[1]:
                         for param in plan.belief_params:
                             ## set new assumed value for planning to sample from belief -- random choice
-                            new_assumed_goal[param.name] = param.belief.samples[new_goal_idx,:,a.active_timesteps[0]]
+                            if self._hyperparams['assume_true']:
+                                new_assumed_goal[param.name] = node.belief_true[param.name]
+                            else:
+                                new_assumed_goal[param.name] = param.belief.samples[new_goal_idx,:,0]
+                            if param.is_symbol():
+                                param.value[:, 0] = planned_obs[param.name].detach().numpy()
+                            else:
+                                param.pose[:, 0] = planned_obs[param.name].detach().numpy()
+
                             param.pose[:, a.active_timesteps[0]] = new_assumed_goal[param.name]
                             new_assumed_goal[param.name] = torch.tensor(new_assumed_goal[param.name])
                         node.replan_start = anum
@@ -313,7 +328,8 @@ class MotionServer(Server):
             for a_num_idx in range(len(active_anums)):
                 if a_num_idx > 0:
                     prior_st = plan.actions[active_anums[a_num_idx-1]].active_timesteps[0]
-                    past_targ = plan.params['target1'].pose[:, prior_st]
+                    # past_targ = plan.params['target1'].pose[:, prior_st]
+                    past_targ = np.array([3.0, 3.0])
                     past_ang = np.arctan(np.array([past_targ[1]])/np.array([past_targ[0]])) \
                         if not np.any(np.isnan(np.arctan(np.array([past_targ[1]])/np.array([past_targ[0]])))) \
                             else np.pi/2
@@ -322,7 +338,8 @@ class MotionServer(Server):
                     past_targ = np.array([0., 0.])
                     past_ang = np.array([0.])
 
-                targ_pred = plan.params['target1'].pose[:, plan.actions[active_anums[a_num_idx]].active_timesteps[0]]
+                # targ_pred = plan.params['target1'].pose[:, plan.actions[active_anums[a_num_idx]].active_timesteps[0]]
+                targ_pred = np.array([3.0, 3.0])
                 targ_ang = np.arctan(np.array([targ_pred[1]])/np.array([targ_pred[0]])) \
                         if not np.any(np.isnan(np.arctan(np.array([targ_pred[1]])/np.array([targ_pred[0]])))) \
                             else np.pi/2
@@ -365,17 +382,17 @@ class MotionServer(Server):
             ## if plan only, invoke a breakpoint and inspect the plan statistics
             if self.plan_only:
                 ## TODO add a general wrapper here
-                print([plan.actions[a_num].active_timesteps for a_num in range(len(plan.actions))])
-                print(plan.params['pr2'].pose)
-                print(plan.params['target1'].pose)
-                print(plan.params['target1'].belief.samples.mean(axis=0))
-                print(plan.params['target1'].belief.samples.std(axis=0))
-                print([self.agent.goal_f(0, s.get_X()[-1, :]) for s in path])
-                for idx in range(plan.params['target1'].belief.samples.shape[2]):
-                    plt.scatter(plan.params['target1'].belief.samples[:,0,idx], plan.params['target1'].belief.samples[:,1,idx], alpha=0.5)
-                    plt.scatter([goal['target1'][0]], [goal['target1'][1]], alpha=1.0, marker='x')
-                    plt.savefig('samps'+str(idx)+'.pdf')
-                    plt.clf()
+                # print([plan.actions[a_num].active_timesteps for a_num in range(len(plan.actions))])
+                # print(plan.params['pr2'].pose)
+                # print(plan.params['target1'].pose)
+                # print(plan.params['target1'].belief.samples.mean(axis=0))
+                # print(plan.params['target1'].belief.samples.std(axis=0))
+                # print([self.agent.goal_f(0, s.get_X()[-1, :]) for s in path])
+                # for idx in range(plan.params['target1'].belief.samples.shape[2]):
+                #     plt.scatter(plan.params['target1'].belief.samples[:,0,idx], plan.params['target1'].belief.samples[:,1,idx], alpha=0.5)
+                #     plt.scatter([goal['target1'][0]], [goal['target1'][1]], alpha=1.0, marker='x')
+                #     plt.savefig('samps'+str(idx)+'.pdf')
+                #     plt.clf()
                 self.save_video(path, True, lab='vid_planner')
             
                 breakpoint()

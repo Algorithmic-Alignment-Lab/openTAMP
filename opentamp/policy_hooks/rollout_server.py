@@ -589,17 +589,18 @@ class RolloutServer(Server):
         # for task in tasks:
         has_terminated = False
         while t < max_t and self.agent.feasible_state(state, targets) and not has_terminated:
-            self.agent.store_hist_info([len(path), 
-                                        path[-1].get(ANG_ENUM)[0,:].reshape(-1), 
-                                        sum([1.0 if s.task[0] == 1 else 0.0 for s in path]),
-                                        sum([1.0 if s.task[0] == 0 else 0.0 for s in path]),
-                                        (path[-1].task)[0]]) if path \
-                else self.agent.store_hist_info([len(path), np.array([0.]), 0, 0, -1.0]) ## HACK, TODO ADD AS GENERIC WRAPPER
+            # self.agent.store_hist_info([len(path), 
+            #                             path[-1].get(ANG_ENUM)[0,:].reshape(-1), 
+            #                             sum([1.0 if s.task[0] == 1 else 0.0 for s in path]),
+            #                             sum([1.0 if s.task[0] == 0 else 0.0 for s in path]),
+            #                             (path[-1].task)[0]]) if path \
+            #     else self.agent.store_hist_info([len(path), np.array([0.]), 0, 0, -1.0]) ## HACK, TODO ADD AS GENERIC WRAPPER
             l = self.get_task(state, targets, l, soft)
             if l is None: break
             task_name = self.task_list[l[0]]
             pol = self.agent.policies[task_name]
             s = self.agent.sample_task(pol, 0, state, l, noisy=False, task_f=task_f, skip_opt=True, hor=hor, policies=self.agent.policies)
+            # breakpoint()
             # print(s.get(ACTION_ENUM))
             # print(s.get(ANG_ENUM))
             # print(s.get(MJC_SENSOR_ENUM))
@@ -607,8 +608,8 @@ class RolloutServer(Server):
             t += 1
             state = s.end_state # s.get_X(s.T-1)
             path.append(s)
-            if l[0] == 2:
-                has_terminated = True
+            # if l[0] == 2:
+            has_terminated = True
         self.eta = old_eta
         self.log_path(path, lab)
         return val, path

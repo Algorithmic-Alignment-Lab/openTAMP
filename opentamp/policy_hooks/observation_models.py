@@ -183,7 +183,8 @@ class NoVIPointerObservationModel(ObservationModel):
 
         for idx in range(params['target1'].belief.samples.shape[0]):
             ## initialize log_likelihood to prior probability
-            log_likelihood[idx] = params['target1'].belief.dist.log_prob(params['target1'].belief.samples[idx, :, fail_ts])
+
+            log_likelihood[idx] = params['target1'].belief.dist.log_prob(params['target1'].belief.samples[idx, :, fail_ts]).sum().item()
 
             ## add in terms for the forward model
             for obs_active_ts in prefix_obs:

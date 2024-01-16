@@ -1,0 +1,24 @@
+{
+    "move": {
+        "params": [
+            ["?robot", "Robot"],
+            ["?target", "Target"]
+        ],
+        "horizon": 20,
+        "pre": [
+            
+        ],
+        "eff": [
+            {
+                "type": "IsMP",
+                "args": ["?robot"],
+                "active_timesteps": [0, 18]
+            },
+            {
+                "type": "RobotAtTarget",
+                "args": ["?robot", "?target"],
+                "active_timesteps": [19, 19]
+            }
+        ]
+    }
+}

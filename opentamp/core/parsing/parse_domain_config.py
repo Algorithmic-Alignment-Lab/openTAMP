@@ -91,7 +91,7 @@ class ParseDomainConfig(object):
         for t in param_schemas: inherit(t, t)
 
         for type_name, attr_dict in list(param_schemas.items()):
-            assert ("pose" in attr_dict or "value" in attr_dict) or ("belief" in attr_dict)
+            assert "pose" in attr_dict or "value" in attr_dict
             obj_or_symbol = ParseDomainConfig._dispatch_obj_or_symbol(attr_dict)  # for now, beliefs are objects
             param_schemas[type_name] = ParameterSchema(type_name, getattr(parameter, obj_or_symbol), attr_dict, super_types[type_name])
 
@@ -280,7 +280,7 @@ class ParseDomainConfig(object):
     def _dispatch_obj_or_symbol(attr_dict):
         # decide whether this parameter is an Object or Symbol by looking at whether
         # it has an instance attribute named "pose" or one named "value" in the config file
-        if "pose" in attr_dict or "belief" in attr_dict:
+        if "pose" in attr_dict:
             return "Object"
         elif "value" in attr_dict:
             return "Symbol"

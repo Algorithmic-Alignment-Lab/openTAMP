@@ -50,9 +50,9 @@ class OptimalPolicy:
         u = np.zeros(self.dU)
         for param, attr in self.action_inds:
             if t < len(self.opt_traj) - 1:
-                u[self.action_inds[param, attr]] = self.opt_traj[t + 1, self.action_inds[param, attr]] * ACTION_SCALE
+                u[self.action_inds[param, attr]] = (self.opt_traj[t + 1, self.action_inds[param, attr]] - self.opt_traj[t, self.action_inds[param, attr]]) * ACTION_SCALE
             else:
-                u[self.action_inds[param, attr]] = self.opt_traj[-1, self.action_inds[param, attr]] * ACTION_SCALE
+                u[self.action_inds[param, attr]] = (self.opt_traj[-1, self.action_inds[param, attr]] - self.opt_traj[-2, self.action_inds[param, attr]]) * ACTION_SCALE
         return u
 
 
@@ -391,7 +391,7 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
         end_state = None
         cur_state = self.get_state() # x0
         sample.task = task
-        sample.set(TASK_ENUM, np.tile(np.array([1. if i==sample.task[0] else 0. for i in range(3)]), (20, 1)))
+        sample.set(TASK_ENUM, np.tile(np.array([1.]), (20, 1)))
 
         self.fill_sample(condition, sample, cur_state.copy(), 0, task, fill_obs=True)
         for t in range(0, self.T):
