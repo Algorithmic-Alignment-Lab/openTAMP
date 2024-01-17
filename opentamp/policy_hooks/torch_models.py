@@ -253,6 +253,8 @@ class TorchNet(nn.Module):
                 else:
                     return torch.mean(self.loss_fn(pred, y, reduction='none'))  ## just average the loss as a behaviour
         else:
+            if self.loss_fn == F.nll_loss:
+                y = torch.argmax(y, dim=-1).flatten()
             pred = pred.flatten()
             y = y.flatten()
             return self.loss_fn(pred, y, reduction='mean')

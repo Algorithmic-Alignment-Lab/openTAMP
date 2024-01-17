@@ -2,12 +2,13 @@
     "types": ["Robot", "Target"],
     "attribute_imports": {
         "opentamp.core.util_classes.matrix": ["Vector2d"],
-        "opentamp.core.util_classes.beliefs": ["UniformPrior"]
+        "opentamp.core.util_classes.beliefs": ["Isotropic2DGaussianPrior"]
     },
     "predicates_import_path": "opentamp.core.util_classes.namo_grip_predicates",
     "type_attrs": {
         "Target": {
-            "value": "Vector2d"
+            "value": "Vector2d",
+            "belief": "Isotropic2DGaussianPrior"
         },
         "Robot": {
             "pose": "Vector2d"

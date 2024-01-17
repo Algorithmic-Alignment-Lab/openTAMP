@@ -119,8 +119,6 @@ class TorchPolicyOpt():
 
         pred = model.forward(x)
 
-        # breakpoint()
-
         return model.compute_loss(pred, y, precision)
 
 
