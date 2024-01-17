@@ -154,24 +154,24 @@ class GymEnvNav(Env):
 
     ## get random sample to initialize uncertain problem
     def sample_belief_true(self):
-        # return {'target1': self.dist.sample()}
-        rand = random.random() * 8
-        if rand < 1.0:
-            return {'target1': torch.tensor([3.0, 3.0])}
-        elif rand < 2.0:
-            return {'target1': torch.tensor([3.0, -3.0])}
-        elif rand < 3.0:
-            return {'target1': torch.tensor([-3.0, 3.0])}
-        elif rand < 4.0:
-            return {'target1': torch.tensor([-3.0, -3.0])}
-        elif rand < 5.0:
-            return {'target1': torch.tensor([4.2426, 0])}
-        elif rand < 6.0:
-            return {'target1': torch.tensor([0, 4.2426])}
-        elif rand < 7.0:
-            return {'target1': torch.tensor([-4.2426, 0])}
-        else:
-            return {'target1': torch.tensor([0, -4.2426])}
+        return {'target1': self.dist.sample()}
+        # rand = random.random() * 8
+        # if rand < 1.0:
+        #     return {'target1': torch.tensor([3.0, 3.0])}
+        # elif rand < 2.0:
+        #     return {'target1': torch.tensor([3.0, -3.0])}
+        # elif rand < 3.0:
+        #     return {'target1': torch.tensor([-3.0, 3.0])}
+        # elif rand < 4.0:
+        #     return {'target1': torch.tensor([-3.0, -3.0])}
+        # elif rand < 5.0:
+        #     return {'target1': torch.tensor([4.2426, 0])}
+        # elif rand < 6.0:
+        #     return {'target1': torch.tensor([0, 4.2426])}
+        # elif rand < 7.0:
+        #     return {'target1': torch.tensor([-4.2426, 0])}
+        # else:
+        #     return {'target1': torch.tensor([0, -4.2426])}
 
     def set_belief_true(self, belief_dict):
         self.belief_true = belief_dict
