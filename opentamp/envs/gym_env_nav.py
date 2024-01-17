@@ -10,9 +10,9 @@ from opentamp.policy_hooks.utils.policy_solver_utils import *
 class GymEnvNav(Env):    
     def __init__(self):
         self.action_space = spaces.Box(low=0.0, high=1.0, shape=(2,), dtype='float32')
-        self.observation_space = spaces.Box(low=0.0, high=1.0, shape=(3,), dtype='float32')
+        self.observation_space = spaces.Box(low=0.0, high=1.0, shape=(2,), dtype='float32')
         self.curr_state = np.array([0.0]*2)
-        self.curr_obs = np.array([0.0]*3)
+        self.curr_obs = np.array([0.0]*2)
         self.dist = self.assemble_dist()
         self.belief_true = {'target1': torch.tensor([3.0, 3.0])}
 
@@ -35,7 +35,7 @@ class GymEnvNav(Env):
         self.curr_state += action  # move by action
         self.curr_obs = self.belief_true['target1'].detach().numpy() - self.curr_state  ## return relative position
 
-        self.curr_obs = np.concatenate((self.curr_obs, np.array([np.linalg.norm(self.belief_true['target1'].detach().numpy(), ord=2)]))) ## add norm of destination as proxy for speed
+        # self.curr_obs = np.concatenate((self.curr_obs)) ## add norm of destination as proxy for speed
 
         # ## TODO: integrate noise in the flag
         # if self.is_in_ray(action, self.belief_true['target1'].detach().numpy()):
@@ -53,11 +53,12 @@ class GymEnvNav(Env):
         #     # noisy_obs = distros.MultivariateNormal(torch.zeros((2,)), 0.01 * torch.eye(2)).sample().numpy()
         #     no_noisy_obs = np.zeros((2,))
         #     self.curr_obs = np.array([0.0, 0.0])
+
         return self.curr_obs, 1.0, False, {}
 
     def reset(self):
         self.curr_state = np.array([0.0]*2)
-        self.curr_obs = self.belief_true['target1']
+        self.curr_obs = np.array([0.0]*2)
         return self.curr_obs
     
 
@@ -153,7 +154,8 @@ class GymEnvNav(Env):
 
     ## get random sample to initialize uncertain problem
     def sample_belief_true(self):
-        return {'target1': self.dist.sample()}
+        # return {'target1': self.dist.sample()}
+        return {'target1': torch.tensor([3.0, 3.0])}
 
     def set_belief_true(self, belief_dict):
         self.belief_true = belief_dict
@@ -162,7 +164,7 @@ class GymEnvNav(Env):
 class GymEnvNavWrapper(GymEnvNav):
     def reset_to_state(self, state):
         self.curr_state = state
-        self.curr_obs = np.array([0.0]*3)
+        self.curr_obs = np.array([0.0]*2)
         return self.curr_obs
 
     def get_vector(self):

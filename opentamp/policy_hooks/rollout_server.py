@@ -205,19 +205,20 @@ class RolloutServer(Server):
         elif self.policy_opt.share_buffers:
             self.policy_opt.read_shared_weights()
 
-        x0 = self.agent.x0[0]
         
         vals = []
 
         print('Initialized policies: ', self.agent.policies_initialized())
 
         for i in range(20):
+            self.agent.reset(0)
             samp = self.agent.gym_env.sample_belief_true()  ## resample at the start of each rollout
             self.agent.gym_env.set_belief_true(samp)
-            val, path = self.test_run(x0, [], max_t=20, hl=True, soft=self.config['soft_eval'], eta=eta, lab=-5, hor=25)
+            val, path = self.test_run(None, [], max_t=20, hl=True, soft=self.config['soft_eval'], eta=eta, lab=-5, hor=25)
             vals.append(val)
             # print(samp)
             print([s.task for s in path])
+            # print([s.get(MJC_SENSOR_ENUM) for s in path])
             # print([s.get(MJC_SENSOR_ENUM)[-1,:] for s in path])
             # print([s.get(TARG_ENUM)[-1,:] for s in path])
             # print([s.get(TASK_ENUM)[-1,:] for s in path])
@@ -402,17 +403,17 @@ class RolloutServer(Server):
                 val, path, samp = self.test_hl(save_video=save_video)
 
                 ## issue a sample rollout from this trial to the task server
-                # node = self.spawn_problem()
                 # targets = node.targets
                 # terminal_idx = -1
                 # for idx, s in enumerate(path):
                 #     if s.task[0] == 2:
                 #         terminal_idx = idx
                 #         break
-                # node = self.spawn_problem(x0=path[terminal_idx].get(STATE_ENUM, -1), targets=targets)
-                # node.belief_true = samp
-                # node.observation_model = self._hyperparams['observation_model']()
-                # self.push_queue(node, self.task_queue)
+                node = self.spawn_problem()  # spawn a planning instance
+                node.path = path
+                node.belief_true = samp
+                node.observation_model = self._hyperparams['observation_model']()
+                self.push_queue(node, self.task_queue)
 
             if self.run_hl_test: 
                 if self.debug or self.plan_only:
@@ -576,7 +577,9 @@ class RolloutServer(Server):
     def test_run(self, state, targets, max_t=20, hl=False, soft=False, check_cost=True, eta=None, lab=0, hor=30):
         def task_f(sample, t, curtask):
             return self.get_task(sample.get_X(t=t), sample.targets, curtask, soft)
-        self.agent.reset_to_state(state)
+        if state:
+            self.agent.reset_to_state(state)
+        state = self.agent.curr_state
         path = []
         val = 0
         nout = len(self.agent._hyperparams['prim_out_include'])

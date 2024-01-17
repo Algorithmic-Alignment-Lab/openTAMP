@@ -221,10 +221,19 @@ class MotionServer(Server):
             for t in del_list:
                 del node.conditioned_obs[t]
         
+        ## if provided, construct initalization path for optimizer
+        init_traj = []
+        if len(node.path):
+            init_traj = np.zeros((1, node.path[0].get(STATE_ENUM).shape[1]))
+            for s in node.path:
+                init_traj = np.concatenate((init_traj, s.get(STATE_ENUM)[1:, :]), axis=0)
+
+            plan.state_inds = self.agent.state_inds
+        
         refine_success = self.agent.ll_solver._backtrack_solve(plan,
                                                       anum=plan.start,
                                                       n_resamples=5,
-                                                      init_traj=node.ref_traj,
+                                                      init_traj=init_traj,
                                                       st=cur_t, 
                                                       conditioned_obs=node.conditioned_obs)
         
@@ -381,18 +390,6 @@ class MotionServer(Server):
 
             ## if plan only, invoke a breakpoint and inspect the plan statistics
             if self.plan_only:
-                ## TODO add a general wrapper here
-                # print([plan.actions[a_num].active_timesteps for a_num in range(len(plan.actions))])
-                # print(plan.params['pr2'].pose)
-                # print(plan.params['target1'].pose)
-                # print(plan.params['target1'].belief.samples.mean(axis=0))
-                # print(plan.params['target1'].belief.samples.std(axis=0))
-                # print([self.agent.goal_f(0, s.get_X()[-1, :]) for s in path])
-                # for idx in range(plan.params['target1'].belief.samples.shape[2]):
-                #     plt.scatter(plan.params['target1'].belief.samples[:,0,idx], plan.params['target1'].belief.samples[:,1,idx], alpha=0.5)
-                #     plt.scatter([goal['target1'][0]], [goal['target1'][1]], alpha=1.0, marker='x')
-                #     plt.savefig('samps'+str(idx)+'.pdf')
-                #     plt.clf()
                 self.save_video(path, True, lab='vid_planner')
             
                 breakpoint()
@@ -456,7 +453,8 @@ class MotionServer(Server):
                              replan_start=node.replan_start,
                              conditioned_obs=node.conditioned_obs,
                              observation_model=node.observation_model,
-                             belief_true=node.belief_true)
+                             belief_true=node.belief_true,
+                             path=node.path)
         self.push_queue(hlnode, self.task_queue)
         print(self.id, 'Failed to refine, pushing to task node.')
 

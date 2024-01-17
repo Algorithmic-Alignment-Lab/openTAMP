@@ -47,6 +47,10 @@ class GymAgent(TAMPAgent):
     def reset_to_state(self, x):
         self.curr_obs = self.gym_env.reset_to_state(x)
         self.curr_state = self.gym_env.curr_state
+
+    def reset(self, m):
+        self.curr_obs = self.gym_env.reset()
+        self.curr_state = self.gym_env.curr_state
     
     def get_state(self):
         return self.curr_state

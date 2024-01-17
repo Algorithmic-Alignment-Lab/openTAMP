@@ -104,7 +104,8 @@ class TaskServer(Server):
                                 replan_start=node.replan_start,
                                 conditioned_obs=node.conditioned_obs,
                                 observation_model=node.observation_model,
-                                belief_true=node.belief_true)
+                                belief_true=node.belief_true,
+                                path=node.path)
 
 
         # if self.config['seq']:

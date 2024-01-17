@@ -7,8 +7,7 @@
     "predicates_import_path": "opentamp.core.util_classes.namo_grip_predicates",
     "type_attrs": {
         "Target": {
-            "value": "Vector2d",
-            "belief": "UniformPrior"
+            "value": "Vector2d"
         },
         "Robot": {
             "pose": "Vector2d"

@@ -22,7 +22,7 @@ BASE_MOVE_COEFF = 1.0
 TRAJOPT_COEFF = 5e1
 TRANSFER_COEFF = 1e-1
 FIXED_COEFF = 1e3
-INIT_TRAJ_COEFF = 1e-1
+INIT_TRAJ_COEFF = 10
 RS_COEFF = 1e2  # 1e2
 COL_COEFF = 0
 SAMPLE_SIZE = 5
@@ -1302,7 +1302,9 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
                 else:
                     attr_val = mean[-T:][:, plan.state_inds[p_name, attr_name]]
 
-                T = len(attr_val)
+                attr_val = -attr_val.T
+
+                T = attr_val.shape[1]
 
                 if DEBUG:
                     assert (K, T) == attr_val.shape

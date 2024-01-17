@@ -38,7 +38,7 @@ class SearchNode(object):
         raise NotImplementedError("Override this.")
 
 class HLSearchNode(SearchNode):
-    def __init__(self, abs_prob, domain, concr_prob, priority=0, prefix=None, label='', llnode=None, x0=None, targets=None, expansions=0, nodetype='optimal', info={}, replan_start=None, conditioned_obs={}, observation_model=None, belief_true={}):
+    def __init__(self, abs_prob, domain, concr_prob, priority=0, prefix=None, label='', llnode=None, x0=None, targets=None, expansions=0, nodetype='optimal', info={}, replan_start=None, conditioned_obs={}, observation_model=None, belief_true={}, path=[]):
         self.abs_prob = abs_prob
         self.domain = domain
         self.concr_prob = concr_prob
@@ -59,6 +59,7 @@ class HLSearchNode(SearchNode):
         self.conditioned_obs = conditioned_obs
         self.observation_model = observation_model
         self.belief_true = belief_true
+        self.path = path
 
     # def is_hl_node(self):
     #     return True
@@ -75,7 +76,7 @@ class HLSearchNode(SearchNode):
     #     return plan_obj
 
 class LLSearchNode(SearchNode):
-    def __init__(self, plan_str, domain, prob, initial, priority=1, keep_failed=False, ref_plan=None, x0=None, targets=None, expansions=0, label='', refnode=None, freeze_ts=-1, hl=True, ref_traj=[], nodetype='optimal', env_state=None, info={}, replan_start=None, conditioned_obs={}, observation_model=None, belief_true={}):
+    def __init__(self, plan_str, domain, prob, initial, priority=1, keep_failed=False, ref_plan=None, x0=None, targets=None, expansions=0, label='', refnode=None, freeze_ts=-1, hl=True, ref_traj=[], nodetype='optimal', env_state=None, info={}, replan_start=None, conditioned_obs={}, observation_model=None, belief_true={}, path=[]):
         self.curr_plan = 'no plan'
         self.plan_str = plan_str
         self.domain = domain
@@ -107,6 +108,7 @@ class LLSearchNode(SearchNode):
         self.conditioned_obs = conditioned_obs
         self.observation_model = observation_model
         self.belief_true = belief_true
+        self.path = path
 
 
     def parse_state(self, plan, failed_preds, ts, all_preds=[]):
