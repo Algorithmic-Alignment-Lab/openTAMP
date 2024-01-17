@@ -15,6 +15,7 @@
     },
     "predicates": {
         "RobotAtTarget": ["Robot", "Target"],
-        "IsMP": ["Robot"]
+        "IsMP": ["Robot"],
+        "RobotCloseToTarget": ["Robot", "Target"]
     }
 }

@@ -15,6 +15,11 @@
                 "active_timesteps": [0, 18]
             },
             {
+                "type": "RobotCloseToTarget",
+                "args": ["?robot", "?target"],
+                "active_timesteps": [10, 19]
+            },
+            {
                 "type": "RobotAtTarget",
                 "args": ["?robot", "?target"],
                 "active_timesteps": [19, 19]

@@ -3381,6 +3381,29 @@ class StationaryW(ExprPredicate):
         )
 
 
+class RobotCloseToTarget(ExprPredicate):
+
+   # IsMP Robot
+
+    def __init__(self, name, params, expected_param_types, env=None, sess=None, debug=False, dmove=dmove):
+        self.r, self.rp = params
+        ## constraints  |x_t - x_{t+1}| < dmove
+        ## ==> x_t - x_{t+1} < dmove, -x_t + x_{t+a} < dmove
+        attr_inds = OrderedDict(
+            [
+                (self.r, [("pose", np.array([0, 1], dtype=np.int))]),
+                (self.rp, [("value", np.array([0, 1], dtype=np.int))]),
+            ]
+        )
+        A = np.array([[1, 0, -1, 0],
+                     [0, 1, 0, -1],
+                     [-1, 0, 1, 0],
+                     [0, -1, 0, 1]])
+        b = np.zeros((4, 1))
+        e = LEqExpr(AffExpr(A, b), 0.2*np.ones((4, 1)))
+        super(RobotCloseToTarget, self).__init__(name, e, attr_inds, params, expected_param_types, priority=-2)
+
+
 class IsMP(ExprPredicate):
 
    # IsMP Robot
