@@ -35,7 +35,7 @@ MAX_SAMPLELISTS = 1000
 MAX_TASK_PATHS = 1000
 ROLL_TOL = 1e-3
 
-ACTION_SCALE = 1
+ACTION_SCALE = 10
 
 class OptimalPolicy:
     def __init__(self, dU, action_inds, state_inds, opt_traj):
@@ -440,6 +440,8 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
                 sample.use_ts[t] = 0
 
             cur_state = new_state
+
+        breakpoint()
 
         sample.end_state = self.get_state()
         sample.task_cost = self.goal_f(condition, sample.end_state)
