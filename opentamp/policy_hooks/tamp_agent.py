@@ -441,8 +441,6 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
 
             cur_state = new_state
 
-        breakpoint()
-
         sample.end_state = self.get_state()
         sample.task_cost = self.goal_f(condition, sample.end_state)
         sample.prim_use_ts[:] = sample.use_ts[:]
