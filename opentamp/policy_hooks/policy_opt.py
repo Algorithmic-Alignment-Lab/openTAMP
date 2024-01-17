@@ -140,8 +140,8 @@ class TorchPolicyOpt():
         start_t = time.time()
         average_loss = 0
         for idx, batch in enumerate(self.data_loader):
-            if idx >= self.config['iterations']:
-                break
+            # if idx >= self.config['iterations']:
+            #     break
 
             x, y, precision = batch
             try:
