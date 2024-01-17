@@ -23,7 +23,7 @@ python3 -W ignore policy_hooks/run_training.py -c new_specs.nav_domain_determini
                                                 -post -pre \
                                                 -warm 100 \
                                                 -neg_ratio 0. -opt_ratio 1.0 -dagger_ratio 0.0 \
-						-descr simple_nav_domain_policyguide_multitarg \
+						-descr simple_nav_domain_policyguide_multitarg_noactscale \
                                                 -assume_true
 # sleep 1800 
 # pkill -f run_train -9

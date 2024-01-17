@@ -33,7 +33,7 @@ class GymEnvNav(Env):
         # make single step in direction of target
 
         self.curr_state += action  # move by action
-        self.curr_obs = (self.belief_true['target1'].detach().numpy() - self.curr_state) * 10  ## return relative position
+        self.curr_obs = (self.belief_true['target1'].detach().numpy() - self.curr_state) * 1  ## return relative position
 
         # self.curr_obs = np.concatenate((self.curr_obs)) ## add norm of destination as proxy for speed
 
