@@ -209,7 +209,7 @@ class GymEnvNavWrapper(GymEnvNav):
         item_loc = self.belief_true['target1']
         # if pointing directly at the object
 
-        if np.linalg.norm(item_loc - state, ord=2) <= 0.1:
+        if np.linalg.norm(item_loc - state, ord=2) <= 0.4:
             return 0.0
         else:
             return 1.0
