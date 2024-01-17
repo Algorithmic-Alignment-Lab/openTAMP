@@ -183,7 +183,7 @@ class MultiProcessMain(object):
                 'conv_to_fc': 'fp',
                 'normalize': False,
                 'build_conv': add_hl_image,
-                'use_precision': True,
+                'use_precision': False,
             },
     
             'cont_network_params': {

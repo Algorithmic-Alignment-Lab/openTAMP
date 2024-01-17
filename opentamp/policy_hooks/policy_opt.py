@@ -125,7 +125,7 @@ class TorchPolicyOpt():
 
 
     def train_step(self, task, x, y, precision=None):
-        if precision is not None and torch.sum(precision) <= 0:
+        if (precision is not None and torch.sum(precision) <= 0) and self.nets[task].use_precision:
             raise Exception('Found only zeroes in precision, skip this update')
 
         if task not in self.opts: self._set_opt(task)
