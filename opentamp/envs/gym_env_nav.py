@@ -10,11 +10,11 @@ from opentamp.policy_hooks.utils.policy_solver_utils import *
 class GymEnvNav(Env):    
     def __init__(self):
         self.action_space = spaces.Box(low=0.0, high=1.0, shape=(2,), dtype='float32')
-        self.observation_space = spaces.Box(low=0.0, high=1.0, shape=(2,), dtype='float32')
+        self.observation_space = spaces.Box(low=0.0, high=1.0, shape=(4,), dtype='float32')
         self.curr_state = np.array([0.0]*2)
-        self.curr_obs = np.array([0.0]*2)
+        self.curr_obs = np.array([0.0]*4)
         self.dist = self.assemble_dist()
-        self.belief_true = {'target1': torch.tensor([3.0, 3.0])}
+        self.belief_true = {'obs1': torch.tensor([0.0, 0.0])}
 
     def assemble_dist(self):
         # weights = torch.tensor([0.6,0.4])
@@ -26,14 +26,16 @@ class GymEnvNav(Env):
         # stack_scale = torch.tile(scales.unsqueeze(dim=1).unsqueeze(dim=2), dims=(1, 2, 2))
         # cov_tensor = stack_eye * stack_scale
         # batched_multivar = distros.MultivariateNormal(loc=locs, covariance_matrix=cov_tensor)
-        dist = distros.Uniform(torch.tensor([-3.0, -3.0]), torch.tensor([3.0, 3.0]))
+        dist = distros.Uniform(torch.tensor([-1.0, -1.0]), torch.tensor([1.0, 1.0]))
         return dist
 
     def step(self, action):
         # make single step in direction of target
 
         self.curr_state += action  # move by action
-        self.curr_obs = (self.belief_true['target1'].detach().numpy() - self.curr_state) * 1  ## return relative position
+        goal_rel_pos = (np.array([3.0, 3.0]) - self.curr_state) * 1  ## return relative position
+        obstacle_rel_pos = (self.belief_true['obs1'].detach().numpy() - self.curr_state) * 1 
+        self.curr_obs = np.concatenate((goal_rel_pos, obstacle_rel_pos))
 
         # self.curr_obs = np.concatenate((self.curr_obs)) ## add norm of destination as proxy for speed
 
@@ -58,7 +60,7 @@ class GymEnvNav(Env):
 
     def reset(self):
         self.curr_state = np.array([0.0]*2)
-        self.curr_obs = np.array([0.0]*2)
+        self.curr_obs = np.array([0.0]*4)
         return self.curr_obs
     
 
@@ -72,7 +74,6 @@ class GymEnvNav(Env):
         def is_close_to_obj_vectorized(true_loc, x_coord, y_coord):
             return np.linalg.norm(np.stack((x_coord, y_coord)) - np.tile(true_loc.reshape(-1, 1, 1, 1), (1, 256, 256, 3)), axis=0) <= 0.2
 
-        true_loc = self.belief_true['target1'].detach().numpy()
         color_arr = np.ones((256, 256, 3), dtype=np.uint8) * 255
         
         ## initializing vectorized x_coord and y_coord arrays
@@ -94,9 +95,14 @@ class GymEnvNav(Env):
         #                                     green+red, 
         #                                     color_arr)
 
-        ## coloring in the target loc
-        color_arr = np.where(is_close_to_obj_vectorized(self.belief_true['target1'], x_coords, y_coords),
+        ## coloring in the obstacle
+        color_arr = np.where(is_close_to_obj_vectorized(self.belief_true['obs1'], x_coords, y_coords),
                                     blue, 
+                                    color_arr)
+        
+        ## coloring in the target
+        color_arr = np.where(is_close_to_obj_vectorized(np.array([3.0, 3.0]), x_coords, y_coords),
+                                    green, 
                                     color_arr)
 
         return color_arr
@@ -154,7 +160,8 @@ class GymEnvNav(Env):
 
     ## get random sample to initialize uncertain problem
     def sample_belief_true(self):
-        return {'target1': self.dist.sample()}
+        return {'obs1': self.dist.sample()}
+        # return {'obs1': torch.tensor([0.0, 0.0])}
         # rand = random.random() * 8
         # if rand < 1.0:
         #     return {'target1': torch.tensor([3.0, 3.0])}
@@ -180,7 +187,7 @@ class GymEnvNav(Env):
 class GymEnvNavWrapper(GymEnvNav):
     def reset_to_state(self, state):
         self.curr_state = state
-        self.curr_obs = np.array([0.0]*2)
+        self.curr_obs = np.array([0.0]*4)
         return self.curr_obs
 
     def get_vector(self):
@@ -202,11 +209,11 @@ class GymEnvNavWrapper(GymEnvNav):
     # reset without affecting the simulator
     def get_random_init_state(self):
         # init_pose = random.random() * np.pi/2  # give random initial state between 0 and 90 degrees
-        return np.array([0.0, 0.0]) ## targets are randomized, initial pose fixed
+        return np.array([-3.0, -3.0]) ## targets are randomized, initial pose fixed
 
     # determine whether or not a given state satisfies a goal condition
     def assess_goal(self, condition, state, targets=None, cont=None):
-        item_loc = self.belief_true['target1']
+        item_loc = np.array([3.0, 3.0])
         # if pointing directly at the object
 
         if np.linalg.norm(item_loc - state, ord=2) <= 0.4:

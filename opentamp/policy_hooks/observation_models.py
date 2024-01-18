@@ -236,92 +236,78 @@ class NoVIPointerObservationModel(ObservationModel):
         pass
 
 
-## TODO implement one with just clustering, not even using GMM
-class SampleAvgPointerObservationModel(ObservationModel):
+
+class NoVIObstacleObservationModel(ObservationModel):
     def __init__(self):
         # uninitialized parameters
-        self.approx_params = {'loc': None, 'cov': None}
-        self.active_planned_observations = {'target1': torch.empty((2,)).detach()}
-
-    def forward_model(self, params, active_ts, provided_state=None, past_obs={}):        
+        self.approx_params = {'weights'+str(os.getpid()): None, 'locs'+str(os.getpid()): None, 'scales'+str(os.getpid()): None}
+        self.active_planned_observations = {'obs1': torch.empty((2,)).detach()}
+    
+    def is_in_ray(self, a_pose, target):
         ray_width = np.pi / 4  ## has 45-degree field of view on either side
 
-        def is_in_ray(a_pose, target):
+        if target[0] >= 0:
             return np.abs(np.arctan(target[1]/target[0]) - a_pose) <= ray_width
-        
-        ## construct Gaussian mixture model using the current approximation
+        else:
+            return np.abs(np.arctan(target[1]/target[0]) - (a_pose - np.pi)) <= ray_width
 
-        # cat_dist = dist.Categorical(probs=self.approx_params['weights'])
-        # stack_eye = torch.tile(torch.eye(2).unsqueeze(dim=0), dims=(2, 1, 1))
-        # stack_scale = torch.tile(self.approx_params['scales'].unsqueeze(dim=1).unsqueeze(dim=2), dims=(1, 2, 2))
-        # cov_tensor = stack_eye * stack_scale
-        # batched_multivar = dist.MultivariateNormal(loc=self.approx_params['locs'], covariance_matrix=cov_tensor)
-        # mix_dist = dist.MixtureSameFamily(cat_dist, batched_multivar)
 
-        multiv_gauss = dist.MultivariateNormal(loc=self.approx_params['loc'], covariance_matrix=self.approx_params['cov'])
+    def approx_model(self, data):
+        pass
 
+    def get_unnorm_obs_log_likelihood(self, params, prefix_obs, fail_ts):
+        log_likelihood = torch.zeros((params['obs1'].belief.samples.shape[0], ))
+
+        for idx in range(params['obs1'].belief.samples.shape[0]):
+            ## initialize log_likelihood to prior probability
+
+            log_likelihood[idx] = params['obs1'].belief.dist.log_prob(params['obs1'].belief.samples[idx, :, fail_ts]).sum().item()
+
+            ## add in terms for the forward model
+            for obs_active_ts in prefix_obs:
+                if self.is_in_ray(params['pr2'].pose[0,obs_active_ts[1]-1], params['obs1'].belief.samples[idx,:,fail_ts]):
+                    ## sample around the true belief, with extremely low variation / error
+                    log_likelihood[idx] += dist.MultivariateNormal(params['obs1'].belief.samples[idx,:,fail_ts], (0.01 * torch.eye(2))).log_prob(prefix_obs[obs_active_ts]['target1'])
+                else:
+                    ## sample from prior dist -- have no additional knowledge, don't read it
+                    log_likelihood[idx] += dist.MultivariateNormal(torch.zeros((2,)).to(DEVICE), 0.01 * torch.eye(2)).log_prob(prefix_obs[obs_active_ts]['obs1'])
+
+        return log_likelihood
+
+    def forward_model(self, params, active_ts, provided_state=None, past_obs={}):        
         if provided_state is not None:
             ## overrides the current belief sample with a true state
-            b_global_samp = provided_state['target1']
+            b_global_samp = provided_state['obs1'].to(DEVICE)
         else:
             ## sample from current Gaussian mixture model
-            b_global_samp = pyro.sample('belief_global', multiv_gauss)
+            b_global_samp = pyro.sample('belief_global', params['obs1'].belief.dist).to(DEVICE)
         
+        ## sample through strict prefix of current obs
+        for obs_active_ts in past_obs:
+            if self.is_in_ray(params['pr2'].pose[0,obs_active_ts[1]-1], b_global_samp.detach().to('cpu')):
+                ## sample around the true belief, with extremely low variation / error
+                pyro.sample('obs1.'+str(obs_active_ts[0]), dist.MultivariateNormal(b_global_samp.float().to(DEVICE), (0.01 * torch.eye(2)).to(DEVICE)))
+            else:
+                ## sample from prior dist -- have no additional knowledge, don't read it
+                pyro.sample('obs1.'+str(obs_active_ts[0]), dist.MultivariateNormal(torch.zeros((2,)).to(DEVICE), 0.01 * torch.eye(2).to(DEVICE)))
+
+        
+        ## get sample for current timestep, record and return
         samps = {}
 
-        if is_in_ray(params['pr2'].pose[0,active_ts[1]], b_global_samp.detach()):
+        if self.is_in_ray(params['pr2'].pose[0,active_ts[1]-1], b_global_samp.detach().to('cpu')):
             ## sample around the true belief, with extremely low variation / error
-            samps['target1'] = pyro.sample('target1', dist.MultivariateNormal(b_global_samp.float(), 0.01 * torch.eye(2)))
+            samps['obs1'] = pyro.sample('obs1.'+str(active_ts[0]), dist.MultivariateNormal(b_global_samp.float().to(DEVICE), 0.01 * torch.eye(2).to(DEVICE)))
         else:
-            ## sample from prior belief (*NOT* from the current mixture)
-            samps['target1'] = pyro.sample('target1', params['target1'].belief.dist)
+            ## sample from prior dist -- have no additional knowledge, don't read it
+            samps['obs1'] = pyro.sample('obs1.'+str(active_ts[0]), dist.MultivariateNormal(torch.zeros((2,)).to(DEVICE), 0.01 * torch.eye(2).to(DEVICE)))
+
+        # return tensors on CPU for compatib
+        for samp in samps:
+            samps[samp].to('cpu')
 
         return samps
-    
-    ## override resample logic by simply observing the mean
-    # def resample_planned_observation(self, params):
-    #     ## by default, just samples from the prior of each belief state         
-    #     planned_obs = {}
 
-    #     ## resample the prior for target1
-    #     for param_key in params:
-    #         if hasattr(params[param_key], 'belief'):
-    #             planned_obs[param_key] = params[param_key].belief.samples[:,:,-1].mean(axis=0) ## return the mean
-
-    #     self.active_planned_observations = planned_obs
-
-
-    ## LaPlace approximation -- Gaussian param
-    def fit_approximation(self, params):
-        belief_data = params['target1'].belief.samples[:, :, -1]
-        self.approx_params = {'loc': belief_data.mean(axis=0), 'cov': belief_data.T.cov()}
-
-
-
-## bivariate Gaussian guide to perform SVI
-# def basic_gaussian_mix_guide(data):
-#     # registering var
-#     mean_1 = pyro.param("mean_1", torch.tensor([3.0, 3.0]).unsqueeze(dim=0))
-#     mean_2 = pyro.param("mean_2", torch.tensor([3.0, 3.0]).unsqueeze(dim=0))
-    
-#     var_1 = pyro.param("var_1", torch.tensor(1.0), constraint=dist.constraints.positive)
-#     var_2 = pyro.param("var_2", torch.tensor(1.0), constraint=dist.constraints.positive)
-
-#     cluster_1_prob = pyro.param("cluster_1_prob", torch.tensor([0.5]), constraint=dist.constraints.interval(0.0, 1.0))
-    
-#     ## constructing stack for Gaussian Mixture
-#     prob_vec = torch.cat([cluster_1_prob, 1 - cluster_1_prob])
-#     mean_tensor = torch.cat((mean_1, mean_2), dim=0)
-#     var_tensor = torch.cat(((var_1 *torch.eye(2)).unsqueeze(dim=0), (var_2*torch.eye(2)).unsqueeze(dim=0)), dim=0)
-
-#     # sample latent_fairness from the distribution Beta(alpha_q, beta_q)
-#     pyro.sample("belief_samp", dist.MixtureSameFamily(dist.Categorical(probs=prob_vec), dist.MultivariateNormal(mean_tensor, var_tensor), validate_args=None))
-
-
-
-# ## dummy observation model
-# def dummy_obs(plan, active_ts):
-#     # start observations in the first action todo: loop this over actions in the plan
-#     pyro.sample('belief_global', dist.Normal(0, 1))
-
-#     # return torch.tensor([0, 0])  # return observation
+    ## no VI in the pointer observation
+    def fit_approximation(self, params):        
+        pass

@@ -3,13 +3,18 @@
         {
             "name": "target1",
             "type": "Target",
-            "value": [3, 3],
+            "value": [3, 3]
+        },
+        {
+            "name": "obs1",
+            "type": "Obstacle",
+            "value": [0, 0],
             "belief": [2, 100, 3, 3, 0.5]
         },
         {
             "name": "pr2",
             "type": "Robot",
-            "pose": [0, 0]
+            "pose": [-3, -3]
         }
     ],
     "init_preds": [

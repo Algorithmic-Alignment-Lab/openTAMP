@@ -391,7 +391,7 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
         end_state = None
         cur_state = self.get_state() # x0
         sample.task = task
-        sample.set(TASK_ENUM, np.tile(np.array([1.]), (20, 1)))
+        sample.set(TASK_ENUM, np.tile(np.array([1.]), (self.T, 1)))
 
         self.fill_sample(condition, sample, cur_state.copy(), 0, task, fill_obs=True)
         for t in range(0, self.T):

@@ -3381,6 +3381,39 @@ class StationaryW(ExprPredicate):
         )
 
 
+
+class AvoidObs(ExprPredicate):
+
+   # IsMP Robot
+
+    def __init__(self, name, params, expected_param_types, env=None, sess=None, debug=False, dmove=dmove):
+        self.r, self.rt = params
+        ## constraints  |x_t - x_{t+1}| < dmove
+        ## ==> x_t - x_{t+1} < dmove, -x_t + x_{t+a} < dmove
+        attr_inds = OrderedDict(
+            [
+                (self.r, [("pose", np.array([0, 1], dtype=np.int))]),
+                (self.rt, [("value", np.array([0, 1], dtype=np.int))]),
+            ]
+        )
+        col_expr = Expr(self.f, grad=self.grad_f)
+        val = -np.ones((1, 1)) * 2
+        # val = np.zeros((1, 1))
+        e = LEqExpr(col_expr, val)
+        super(AvoidObs, self).__init__(name, e, attr_inds, params, expected_param_types, priority=-1)
+
+    def f(self, x):
+        norm = np.sum(np.power(x[:2] - x[2:], 2))
+        # return np.array([diff, -diff])
+        return -norm
+
+    def grad_f(self, x):
+        diff = x[:2] - x[2:]
+        grad = np.array([2 * diff[0], 2 * diff[1], -2 * diff[0], -2*diff[1]]).reshape(1, -1)
+        # return np.array([grad[0], -grad[0]])
+        # breakpoint()
+        return -grad
+
 class RobotCloseToTarget(ExprPredicate):
 
    # IsMP Robot
