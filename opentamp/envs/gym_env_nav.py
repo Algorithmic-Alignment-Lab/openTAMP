@@ -39,7 +39,7 @@ class GymEnvNav(Env):
         spot_abs_angle = np.arctan(action[1]/action[0]) if action[0] > 0.001 else (np.pi/2 if action[1]>0 else -np.pi/2)
         
         # making formula globally true at all theta (correcting for angle readings behind)
-        obstacle_angle = obstacle_abs_angle if obstacle_rel_pos[0] >= 0 else -obstacle_abs_angle
+        obstacle_angle = obstacle_abs_angle if obstacle_rel_pos[0] >= 0  else (obstacle_abs_angle + np.pi if -np.pi/2 <= obstacle_abs_angle < 0 else obstacle_abs_angle - np.pi)
         spot_angle = spot_abs_angle if action[0] >= 0 else (spot_abs_angle + np.pi if -np.pi/2 <= spot_abs_angle < 0 else spot_abs_angle - np.pi)
         
         # relative angle of obstacle with respect to spot,
