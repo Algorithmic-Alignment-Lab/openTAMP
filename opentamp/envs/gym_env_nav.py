@@ -10,9 +10,9 @@ from opentamp.policy_hooks.utils.policy_solver_utils import *
 class GymEnvNav(Env):    
     def __init__(self):
         self.action_space = spaces.Box(low=0.0, high=1.0, shape=(2,), dtype='float32')
-        self.observation_space = spaces.Box(low=0.0, high=1.0, shape=(6,), dtype='float32')
+        self.observation_space = spaces.Box(low=0.0, high=1.0, shape=(18,), dtype='float32')
         self.curr_state = np.array([0.0]*2)
-        self.curr_obs = np.array([0.0]*6)
+        self.curr_obs = np.array([0.0]*18)
         self.dist = self.assemble_dist()
         self.belief_true = {'obs1': torch.tensor([0.0, 0.0])}
 
@@ -22,7 +22,7 @@ class GymEnvNav(Env):
         #                      [3., -3.]])
         # scales = torch.tensor([0.5, 0.5])
         # cat_dist = distros.Categorical(probs=weights)
-        # stack_eye = torch.tile(torch.eye(2).unsqueeze(dim=0), dims=(2, 1, 1))
+        # stack_eye = torch.tile(torch.eye().unsqueeze(dim=0), dims=(2, 1, 1))
         # stack_scale = torch.tile(scales.unsqueeze(dim=1).unsqueeze(dim=2), dims=(1, 2, 2))
         # cov_tensor = stack_eye * stack_scale
         # batched_multivar = distros.MultivariateNormal(loc=locs, covariance_matrix=cov_tensor)
@@ -36,24 +36,26 @@ class GymEnvNav(Env):
         obstacle_rel_pos = (self.belief_true['obs1'].detach().numpy() - self.curr_state) * 1 
         obstacle_abs_angle = np.arctan(obstacle_rel_pos[1]/obstacle_rel_pos[0]) if obstacle_rel_pos[0] > 0.001 else (np.pi/2 if obstacle_rel_pos[1]>0 else -np.pi/2)
         obstacle_rel_distance = np.linalg.norm(obstacle_rel_pos, ord=2)
-        spot_angle = np.arctan(action[1]/action[0]) if action[0] > 0.001 else (np.pi/2 if action[1]>0 else -np.pi/2)
-        obstacle_rel_angle = obstacle_abs_angle - spot_angle
+        spot_abs_angle = np.arctan(action[1]/action[0]) if action[0] > 0.001 else (np.pi/2 if action[1]>0 else -np.pi/2)
+        
+        # making formula globally true at all theta (correcting for angle readings behind)
+        obstacle_angle = obstacle_abs_angle if obstacle_rel_pos[0] >= 0 else -obstacle_abs_angle
+        spot_angle = spot_abs_angle if action[0] >= 0 else -spot_abs_angle
+        
+        # relative angle of obstacle with respect to spot,
+        obstacle_rel_angle = obstacle_angle - spot_angle
 
         ## rotate the relative pose to be in the frame of the SPOT
-        rot_matrix = np.array([[np.cos(spot_angle),np.sin(spot_angle)],[-np.sin(spot_angle),np.cos(spot_angle)]])
-        obstacle_rel_pos_spot_frame = np.dot(rot_matrix, obstacle_rel_pos)
+        # rot_matrix = np.array([[np.cos(spot_angle),np.sin(spot_angle)],[-np.sin(spot_angle),np.cos(spot_angle)]])
+        # obstacle_rel_pos_spot_frame = np.dot(rot_matrix, obstacle_rel_pos)
 
-        lidar_obs = np.array([-1, -1, -1, -1])
+        lidar_obs = np.array([-1] * 16)
+        lidar_list = [(np.arange(-np.pi, np.pi, np.pi/8)[i], np.arange(-np.pi, 2 * np.pi, np.pi/8)[i+1]) for i in range(16)]
+        
         # formulas only valid on -pi/2 to pi/2
-        if obstacle_rel_pos_spot_frame[0] > 0:
-            if -np.pi/2 <= obstacle_rel_angle < -np.pi / 4 and obstacle_rel_distance <= 3.0:
-                lidar_obs[0] = obstacle_rel_distance
-            if  -np.pi / 4 <= obstacle_rel_angle < 0 and obstacle_rel_distance <= 3.0:
-                lidar_obs[1] = obstacle_rel_distance
-            if 0 <= obstacle_rel_angle < np.pi/4 and obstacle_rel_distance <= 3.0:
-                lidar_obs[2] = obstacle_rel_distance
-            if np.pi/4 <= obstacle_rel_angle < np.pi/2 and obstacle_rel_distance <= 3.0:
-                lidar_obs[3] = obstacle_rel_distance
+        for detect_idx, theta_thresh in enumerate(lidar_list):
+            if theta_thresh[0] <= obstacle_rel_angle < theta_thresh[1] and obstacle_rel_distance <= 3.0:
+                lidar_obs[detect_idx] = obstacle_rel_distance
 
         self.curr_obs = np.concatenate([goal_rel_pos, lidar_obs])
 
@@ -80,7 +82,7 @@ class GymEnvNav(Env):
 
     def reset(self):
         self.curr_state = np.array([-3.0, -3.0])
-        self.curr_obs = np.array([0.0]*6)
+        self.curr_obs = np.array([0.0]*18)
         return self.curr_obs
     
 
@@ -207,7 +209,7 @@ class GymEnvNav(Env):
 class GymEnvNavWrapper(GymEnvNav):
     def reset_to_state(self, state):
         self.curr_state = state
-        self.curr_obs = np.array([0.0]*6)
+        self.curr_obs = np.array([0.0]*18)
         return self.curr_obs
 
     def get_vector(self):
