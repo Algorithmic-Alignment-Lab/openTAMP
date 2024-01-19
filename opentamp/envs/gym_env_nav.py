@@ -50,7 +50,7 @@ class GymEnvNav(Env):
         # rot_matrix = np.array([[np.cos(spot_angle),np.sin(spot_angle)],[-np.sin(spot_angle),np.cos(spot_angle)]])
         # obstacle_rel_pos_spot_frame = np.dot(rot_matrix, obstacle_rel_pos)
 
-        lidar_obs = np.array([-1.0] * 16)
+        lidar_obs = np.array([8.0] * 16)
         lidar_list = [(np.arange(-np.pi, np.pi, np.pi/8)[i], np.arange(-np.pi, 2 * np.pi, np.pi/8)[i+1]) for i in range(16)]
         
         # formulas only valid on -pi/2 to pi/2
