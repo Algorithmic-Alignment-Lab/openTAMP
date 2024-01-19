@@ -46,13 +46,13 @@ class GymEnvNav(Env):
         lidar_obs = np.array([-1, -1, -1, -1])
         # formulas only valid on -pi/2 to pi/2
         if obstacle_rel_pos_spot_frame[0] > 0:
-            if -np.pi/2 <= obstacle_rel_angle < -np.pi / 4 and obstacle_rel_distance <= 2.0:
+            if -np.pi/2 <= obstacle_rel_angle < -np.pi / 4 and obstacle_rel_distance <= 3.0:
                 lidar_obs[0] = obstacle_rel_distance
-            if  -np.pi / 4 <= obstacle_rel_angle < 0 and obstacle_rel_distance <= 2.0:
+            if  -np.pi / 4 <= obstacle_rel_angle < 0 and obstacle_rel_distance <= 3.0:
                 lidar_obs[1] = obstacle_rel_distance
-            if 0 <= obstacle_rel_angle < np.pi/4 and obstacle_rel_distance <= 2.0:
+            if 0 <= obstacle_rel_angle < np.pi/4 and obstacle_rel_distance <= 3.0:
                 lidar_obs[2] = obstacle_rel_distance
-            if np.pi/4 <= obstacle_rel_angle < np.pi/2 and obstacle_rel_distance <= 2.0:
+            if np.pi/4 <= obstacle_rel_angle < np.pi/2 and obstacle_rel_distance <= 3.0:
                 lidar_obs[3] = obstacle_rel_distance
 
         self.curr_obs = np.concatenate([goal_rel_pos, lidar_obs])
