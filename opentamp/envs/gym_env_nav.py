@@ -10,9 +10,9 @@ from opentamp.policy_hooks.utils.policy_solver_utils import *
 class GymEnvNav(Env):    
     def __init__(self):
         self.action_space = spaces.Box(low=0.0, high=1.0, shape=(2,), dtype='float32')
-        self.observation_space = spaces.Box(low=0.0, high=1.0, shape=(4,), dtype='float32')
+        self.observation_space = spaces.Box(low=0.0, high=1.0, shape=(6,), dtype='float32')
         self.curr_state = np.array([0.0]*2)
-        self.curr_obs = np.array([0.0]*4)
+        self.curr_obs = np.array([0.0]*6)
         self.dist = self.assemble_dist()
         self.belief_true = {'obs1': torch.tensor([0.0, 0.0])}
 
@@ -35,7 +35,19 @@ class GymEnvNav(Env):
         self.curr_state += action  # move by action
         goal_rel_pos = (np.array([3.0, 3.0]) - self.curr_state) * 1  ## return relative position
         obstacle_rel_pos = (self.belief_true['obs1'].detach().numpy() - self.curr_state) * 1 
-        self.curr_obs = np.concatenate((goal_rel_pos, obstacle_rel_pos))
+        obstacle_rel_angle = np.arctan(obstacle_rel_pos[1]/obstacle_rel_pos[0]) if obstacle_rel_pos[0] > 0.001 else (np.pi/2 if obstacle_rel_pos[1]>0 else -np.pi/2)
+        obstacle_rel_distance = np.linalg.norm(obstacle_rel_pos, ord=2)
+        lidar_obs = np.array([-1, -1, -1, -1])
+        if -np.pi/4 <= obstacle_rel_angle < -np.pi / 8 and obstacle_rel_distance <= 2.0:
+            lidar_obs[0] = obstacle_rel_distance
+        if  -np.pi / 8 <= obstacle_rel_angle < 0 and obstacle_rel_distance <= 2.0:
+            lidar_obs[1] = obstacle_rel_distance
+        if 0 <= obstacle_rel_angle < np.pi/8 and obstacle_rel_distance <= 2.0:
+            lidar_obs[2] = obstacle_rel_distance
+        if np.pi/8 <= obstacle_rel_angle < np.pi/4 and obstacle_rel_distance <= 2.0:
+            lidar_obs[3] = obstacle_rel_distance
+
+        self.curr_obs = np.concatenate([goal_rel_pos, lidar_obs])
 
         # self.curr_obs = np.concatenate((self.curr_obs)) ## add norm of destination as proxy for speed
 
@@ -59,8 +71,8 @@ class GymEnvNav(Env):
         return self.curr_obs, 1.0, False, {}
 
     def reset(self):
-        self.curr_state = np.array([0.0]*2)
-        self.curr_obs = np.array([0.0]*4)
+        self.curr_state = np.array([-3.0, -3.0])
+        self.curr_obs = np.array([0.0]*6)
         return self.curr_obs
     
 
@@ -187,7 +199,7 @@ class GymEnvNav(Env):
 class GymEnvNavWrapper(GymEnvNav):
     def reset_to_state(self, state):
         self.curr_state = state
-        self.curr_obs = np.array([0.0]*4)
+        self.curr_obs = np.array([0.0]*6)
         return self.curr_obs
 
     def get_vector(self):
