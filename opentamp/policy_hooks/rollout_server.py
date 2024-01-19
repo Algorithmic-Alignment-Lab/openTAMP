@@ -168,7 +168,8 @@ class RolloutServer(Server):
         ## NOTE -- turned off several of these, will reactivate gradually
         inds = {
                     'success_probability': 0,
-                    'path length': 1,
+                    'constraint_violation_rate': 1,
+                    'path length': 2,
                     # 'optimal rollout success': 9,
                     # 'time': 3,
                     # 'n data': 6,
@@ -207,6 +208,7 @@ class RolloutServer(Server):
 
         
         vals = []
+        constraint_viols = []
 
         print('Initialized policies: ', self.agent.policies_initialized())
 
@@ -215,7 +217,10 @@ class RolloutServer(Server):
             samp = self.agent.gym_env.sample_belief_true()  ## resample at the start of each rollout
             self.agent.gym_env.set_belief_true(samp)
             val, path = self.test_run(None, [], max_t=20, hl=True, soft=self.config['soft_eval'], eta=eta, lab=-5, hor=25)
+            constraint_viol = self.agent.gym_env.assess_constraint_viol()
             vals.append(val)
+            constraint_viols.append(constraint_viol)
+
             # print(samp)
             print([s.task for s in path])
             # print([s.get(MJC_SENSOR_ENUM) for s in path])
@@ -231,9 +236,11 @@ class RolloutServer(Server):
             self.save_video(path, val > 0, lab='vid_imit_'+str(i))
 
         avg_val = np.mean(np.array(vals))
-        print(avg_val)
+        avg_viol = np.mean(np.array(constraint_viols))
+        print('Goal Attainment:', avg_val)
+        print('Constraint Violation:', avg_viol)
         if save:
-            self.hl_data.append([(avg_val, len(path))])  ## update the HL statistics
+            self.hl_data.append([(avg_val, avg_viol, len(path))])  ## update the HL statistics
             np.save(self.hl_test_log.format('', 'rerun_' if ckpt_ind is not None else ''), np.array(self.hl_data))
             
         # if self.agent.policies_initialized():
@@ -338,7 +345,7 @@ class RolloutServer(Server):
         #     self.last_hl_test = time.time()
         # self.agent._eval_mode = False
         # self.agent.debug = True
-        return avg_val, path, samp
+        return avg_val, avg_viol, path, samp
 
 
     def deploy(self, rlen=None, save=True, ckpt_ind=None,
@@ -400,7 +407,7 @@ class RolloutServer(Server):
                 self.agent.reset(0)
                 n_plans = self._hyperparams['policy_opt']['buffer_sizes']['n_plans'].value
                 save_video = self.id.find('test') >= 0
-                val, path, samp = self.test_hl(save_video=save_video)
+                val, viol, path, samp = self.test_hl(save_video=save_video)
 
                 ## issue a sample rollout from this trial to the task server
                 # targets = node.targets

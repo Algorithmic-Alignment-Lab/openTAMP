@@ -15,6 +15,7 @@ class GymEnvNav(Env):
         self.curr_obs = np.array([0.0]*18)
         self.dist = self.assemble_dist()
         self.belief_true = {'obs1': torch.tensor([0.0, 0.0])}
+        self.constraint_viol = False
 
     def assemble_dist(self):
         # weights = torch.tensor([0.6,0.4])
@@ -54,10 +55,14 @@ class GymEnvNav(Env):
         
         # formulas only valid on -pi/2 to pi/2
         for detect_idx, theta_thresh in enumerate(lidar_list):
-            if theta_thresh[0] <= obstacle_rel_angle < theta_thresh[1] and obstacle_rel_distance <= 3.0:
+            if theta_thresh[0] <= obstacle_rel_angle < theta_thresh[1]:
                 lidar_obs[detect_idx] = obstacle_rel_distance
 
         self.curr_obs = np.concatenate([goal_rel_pos, lidar_obs])
+
+        # if too close to object, indicate that the current trajectory violated a safety constraint
+        if obstacle_rel_distance <= 1.0:
+            self.constraint_viol = True
 
         # self.curr_obs = np.concatenate((self.curr_obs)) ## add norm of destination as proxy for speed
 
@@ -83,6 +88,7 @@ class GymEnvNav(Env):
     def reset(self):
         self.curr_state = np.array([-3.0, -3.0])
         self.curr_obs = np.array([0.0]*18)
+        self.constraint_viol = False
         return self.curr_obs
     
 
@@ -110,7 +116,7 @@ class GymEnvNav(Env):
         ## coloring in the robot location
         color_arr = np.where(is_close_to_obj_vectorized(self.curr_state, x_coords, y_coords),
                                             red, 
-                                            white) 
+                                            white)
 
         # ## coloring in precise ray within pointer
         # color_arr = np.where(is_in_ray_vectorized(self.curr_state, x_coords, y_coords, 0.1),
@@ -210,6 +216,7 @@ class GymEnvNavWrapper(GymEnvNav):
     def reset_to_state(self, state):
         self.curr_state = state
         self.curr_obs = np.array([0.0]*18)
+        self.constraint_viol = False
         return self.curr_obs
 
     def get_vector(self):
@@ -244,3 +251,10 @@ class GymEnvNavWrapper(GymEnvNav):
             return 1.0
 
         # return 0.0 ## always succeeds for now
+
+    # determine whether constraints have been violated since last reset
+    def assess_constraint_viol(self):
+        if self.constraint_viol:
+            return 1.0
+        else:
+            return 0.0
