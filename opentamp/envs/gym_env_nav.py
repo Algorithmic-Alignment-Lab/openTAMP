@@ -31,21 +31,29 @@ class GymEnvNav(Env):
 
     def step(self, action):
         # make single step in direction of target
-
         self.curr_state += action  # move by action
         goal_rel_pos = (np.array([3.0, 3.0]) - self.curr_state) * 1  ## return relative position
         obstacle_rel_pos = (self.belief_true['obs1'].detach().numpy() - self.curr_state) * 1 
-        obstacle_rel_angle = np.arctan(obstacle_rel_pos[1]/obstacle_rel_pos[0]) if obstacle_rel_pos[0] > 0.001 else (np.pi/2 if obstacle_rel_pos[1]>0 else -np.pi/2)
+        obstacle_abs_angle = np.arctan(obstacle_rel_pos[1]/obstacle_rel_pos[0]) if obstacle_rel_pos[0] > 0.001 else (np.pi/2 if obstacle_rel_pos[1]>0 else -np.pi/2)
         obstacle_rel_distance = np.linalg.norm(obstacle_rel_pos, ord=2)
+        spot_angle = np.arctan(action[1]/action[0]) if action[0] > 0.001 else (np.pi/2 if action[1]>0 else -np.pi/2)
+        obstacle_rel_angle = obstacle_abs_angle - spot_angle
+
+        ## rotate the relative pose to be in the frame of the SPOT
+        rot_matrix = np.array([[np.cos(spot_angle),np.sin(spot_angle)],[-np.sin(spot_angle),np.cos(spot_angle)]])
+        obstacle_rel_pos_spot_frame = np.dot(rot_matrix, obstacle_rel_pos)
+
         lidar_obs = np.array([-1, -1, -1, -1])
-        if -np.pi/4 <= obstacle_rel_angle < -np.pi / 8 and obstacle_rel_distance <= 2.0:
-            lidar_obs[0] = obstacle_rel_distance
-        if  -np.pi / 8 <= obstacle_rel_angle < 0 and obstacle_rel_distance <= 2.0:
-            lidar_obs[1] = obstacle_rel_distance
-        if 0 <= obstacle_rel_angle < np.pi/8 and obstacle_rel_distance <= 2.0:
-            lidar_obs[2] = obstacle_rel_distance
-        if np.pi/8 <= obstacle_rel_angle < np.pi/4 and obstacle_rel_distance <= 2.0:
-            lidar_obs[3] = obstacle_rel_distance
+        # formulas only valid on -pi/2 to pi/2
+        if obstacle_rel_pos_spot_frame[0] > 0:
+            if -np.pi/4 <= obstacle_rel_angle < -np.pi / 8 and obstacle_rel_distance <= 2.0:
+                lidar_obs[0] = obstacle_rel_distance
+            if  -np.pi / 8 <= obstacle_rel_angle < 0 and obstacle_rel_distance <= 2.0:
+                lidar_obs[1] = obstacle_rel_distance
+            if 0 <= obstacle_rel_angle < np.pi/8 and obstacle_rel_distance <= 2.0:
+                lidar_obs[2] = obstacle_rel_distance
+            if np.pi/8 <= obstacle_rel_angle < np.pi/4 and obstacle_rel_distance <= 2.0:
+                lidar_obs[3] = obstacle_rel_distance
 
         self.curr_obs = np.concatenate([goal_rel_pos, lidar_obs])
 
