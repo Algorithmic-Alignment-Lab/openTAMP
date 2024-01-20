@@ -62,7 +62,7 @@ class GymEnvNav(Env):
         self.curr_obs = np.concatenate([goal_rel_pos, lidar_obs])
 
         # if too close to object, indicate that the current trajectory violated a safety constraint
-        if obstacle_rel_distance <= 1.0:
+        if obstacle_rel_distance <= 0.5:
             self.constraint_viol = True
 
         # self.curr_obs = np.concatenate((self.curr_obs)) ## add norm of destination as proxy for speed
@@ -196,9 +196,9 @@ class GymEnvNav(Env):
             if torch.norm(proposal_belief['target1']) <= 4.0:
                 continue
 
-            # rand = random.random()
+            rand = random.random()
 
-            avg_val = proposal_belief['target1'] / 2
+            avg_val = proposal_belief['target1'] * rand 
 
             obstacle_dist = distros.Uniform(avg_val - torch.tensor([1.0, 1.0]), 
                                             avg_val + torch.tensor([1.0, 1.0]))
