@@ -196,9 +196,9 @@ class GymEnvNav(Env):
             if torch.norm(proposal_belief['target1']) <= 4.0:
                 continue
 
-            rand = random.random()
+            # rand = random.random()
 
-            avg_val = proposal_belief['target1'] * rand
+            avg_val = proposal_belief['target1'] / 2
 
             obstacle_dist = distros.Uniform(avg_val - torch.tensor([1.0, 1.0]), 
                                             avg_val + torch.tensor([1.0, 1.0]))
