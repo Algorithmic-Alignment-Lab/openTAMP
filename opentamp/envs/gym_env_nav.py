@@ -38,14 +38,14 @@ class GymEnvNav(Env):
         obstacle_rel_pos = (self.belief_true['obs1'].detach().numpy() - self.curr_state) * 1 
         obstacle_abs_angle = np.arctan(obstacle_rel_pos[1]/obstacle_rel_pos[0]) if obstacle_rel_pos[0] > 0.001 else (np.pi/2 if obstacle_rel_pos[1]>0 else -np.pi/2)
         obstacle_rel_distance = np.linalg.norm(obstacle_rel_pos, ord=2)
-        spot_abs_angle = np.arctan(action[1]/action[0]) if action[0] > 0.001 else (np.pi/2 if action[1]>0 else -np.pi/2)
+        # spot_abs_angle = np.arctan(action[1]/action[0]) if action[0] > 0.001 else (np.pi/2 if action[1]>0 else -np.pi/2)
         
         # making formula globally true at all theta (correcting for angle readings behind)
         obstacle_angle = obstacle_abs_angle if obstacle_rel_pos[0] >= 0  else (obstacle_abs_angle + np.pi if -np.pi/2 <= obstacle_abs_angle < 0 else obstacle_abs_angle - np.pi)
-        spot_angle = spot_abs_angle if action[0] >= 0 else (spot_abs_angle + np.pi if -np.pi/2 <= spot_abs_angle < 0 else spot_abs_angle - np.pi)
+        # spot_angle = spot_abs_angle if action[0] >= 0 else (spot_abs_angle + np.pi if -np.pi/2 <= spot_abs_angle < 0 else spot_abs_angle - np.pi)
         
         # relative angle of obstacle with respect to spot,
-        obstacle_rel_angle = obstacle_angle - spot_angle
+        # obstacle_rel_angle = obstacle_angle - spot_angle
 
         ## rotate the relative pose to be in the frame of the SPOT
         # rot_matrix = np.array([[np.cos(spot_angle),np.sin(spot_angle)],[-np.sin(spot_angle),np.cos(spot_angle)]])
@@ -56,13 +56,13 @@ class GymEnvNav(Env):
         
         # formulas only valid on -pi/2 to pi/2
         for detect_idx, theta_thresh in enumerate(lidar_list):
-            if theta_thresh[0] <= obstacle_rel_angle < theta_thresh[1]:
+            if theta_thresh[0] <= obstacle_angle < theta_thresh[1]:
                 lidar_obs[detect_idx] = obstacle_rel_distance
 
         self.curr_obs = np.concatenate([goal_rel_pos, lidar_obs])
 
         # if too close to object, indicate that the current trajectory violated a safety constraint
-        if obstacle_rel_distance <= 0.5:
+        if obstacle_rel_distance <= 1.0:
             self.constraint_viol = True
 
         # self.curr_obs = np.concatenate((self.curr_obs)) ## add norm of destination as proxy for speed
