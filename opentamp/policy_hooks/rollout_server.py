@@ -213,7 +213,8 @@ class RolloutServer(Server):
         print('Initialized policies: ', self.agent.policies_initialized())
 
         for i in range(20):
-            self.agent.reset(0)
+            x0 = self.agent.gym_env.get_random_init_state()
+            self.agent.reset_to_state(x0)
             samp = self.agent.gym_env.sample_belief_true()  ## resample at the start of each rollout
             self.agent.gym_env.set_belief_true(samp)
             val, path = self.test_run(None, [], max_t=20, hl=True, soft=self.config['soft_eval'], eta=eta, lab=-5, hor=25)
