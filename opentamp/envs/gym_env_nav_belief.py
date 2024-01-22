@@ -10,9 +10,9 @@ from opentamp.policy_hooks.utils.policy_solver_utils import *
 class GymEnvNav(Env):    
     def __init__(self):
         self.action_space = spaces.Box(low=0.0, high=1.0, shape=(2,), dtype='float32')
-        self.observation_space = spaces.Box(low=0.0, high=1.0, shape=(11,), dtype='float32')
+        self.observation_space = spaces.Box(low=0.0, high=1.0, shape=(7,), dtype='float32')
         self.curr_state = np.array([0.0]*7)
-        self.curr_obs = np.array([0.0]*11)
+        self.curr_obs = np.array([0.0]*7)
         self.dist = self.assemble_dist()
         self.belief_true = {}
         self.constraint_viol = False
@@ -44,18 +44,20 @@ class GymEnvNav(Env):
         # spot_angle = spot_abs_angle if action[0] >= 0 else (spot_abs_angle + np.pi if -np.pi/2 <= spot_abs_angle < 0 else spot_abs_angle - np.pi)
         
         # relative angle of obstacle with respect to spot,
-        # obstacle_rel_angle = obstacle_angle - spot_angle
+        obstacle_rel_angle = obstacle_angle - self.curr_state[2]
 
         ## rotate the relative pose to be in the frame of the SPOT
         # rot_matrix = np.array([[np.cos(spot_angle),np.sin(spot_angle)],[-np.sin(spot_angle),np.cos(spot_angle)]])
         # obstacle_rel_pos_spot_frame = np.dot(rot_matrix, obstacle_rel_pos)
 
-        lidar_obs = np.array([8.0] * 8)
-        lidar_list = [(np.arange(-np.pi, np.pi, np.pi/4)[i], np.arange(-np.pi, 2 * np.pi, np.pi/4)[i+1]) for i in range(8)]
+        lidar_obs = np.array([8.0] * 4)
+        lidar_list = [(np.arange(-np.pi/4, np.pi/4, np.pi/8)[i], np.arange(-np.pi/4, np.pi/2, np.pi/8)[i+1]) for i in range(4)]
         
         # formulas only valid on -pi/2 to pi/2
         for detect_idx, theta_thresh in enumerate(lidar_list):
-            if theta_thresh[0] <= obstacle_angle < theta_thresh[1]:
+            if theta_thresh[0] <= obstacle_rel_angle < theta_thresh[1] or \
+                theta_thresh[0] <= obstacle_rel_angle + 2*np.pi < theta_thresh[1] or \
+                theta_thresh[0] <= obstacle_rel_angle - 2*np.pi < theta_thresh[1]:
                 lidar_obs[detect_idx] = obstacle_rel_distance
 
         self.curr_obs = np.concatenate([goal_rel_pos, np.array([self.curr_state[2]]), lidar_obs])
@@ -87,7 +89,7 @@ class GymEnvNav(Env):
 
     def reset(self):
         self.curr_state = np.array([0.0]*7)
-        self.curr_obs = np.array([0.0]*11)
+        self.curr_obs = np.array([0.0]*7)
         self.constraint_viol = False
         return self.curr_obs
     
@@ -215,7 +217,7 @@ class GymEnvNav(Env):
 class GymEnvNavWrapper(GymEnvNav):
     def reset_to_state(self, state):
         self.curr_state = state
-        self.curr_obs = np.array([0.0]*11)
+        self.curr_obs = np.array([0.0]*7)
         self.constraint_viol = False
         return self.curr_obs
 

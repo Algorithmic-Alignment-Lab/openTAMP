@@ -16,17 +16,14 @@ python3 -W ignore policy_hooks/run_training.py -c new_specs.nav_domain_belief.ne
                                                 --permute_hl 1 \
                                                 -expl_wt 10 -expl_eta 4 \
                                                 -col_coeff 0.0 \
-                                                -motion 4 \
+                                                -motion 12 \
                                                 -n_gpu 1 \
                                                 -rollout 5 \
                                                 -task 1 \
                                                 -post -pre \
                                                 -warm 100 \
                                                 -neg_ratio 0. -opt_ratio 1.0 -dagger_ratio 0.0 \
-						-descr simple_nav_domain_policyguide_obstacleavoid_lidar360randinit_pointing \
-                                                -assume_true \
-                                                -plan_only \
-                                                -render
+						-descr simple_nav_domain_policyguide_obstacleavoid_lidar360randinit_pointing
 
 # sleep 1800 
 # pkill -f run_train -9
