@@ -235,8 +235,7 @@ class MotionServer(Server):
                                                       n_resamples=5,
                                                       init_traj=init_traj,
                                                       st=cur_t, 
-                                                      conditioned_obs=node.conditioned_obs,
-                                                      verbose=True)
+                                                      conditioned_obs=node.conditioned_obs)
         
         ## for belief-space replanning, only replan if indeed belief-space, and plan against sampled obs dict
         replan_success = True
