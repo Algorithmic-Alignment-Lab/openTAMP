@@ -229,8 +229,6 @@ class MotionServer(Server):
                 init_traj = np.concatenate((init_traj, s.get(STATE_ENUM)[1:, :]), axis=0)
 
             plan.state_inds = self.agent.state_inds
-        
-        breakpoint()
 
         refine_success = self.agent.ll_solver._backtrack_solve(plan,
                                                       anum=plan.start,
