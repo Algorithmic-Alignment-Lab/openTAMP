@@ -237,6 +237,8 @@ class MotionServer(Server):
                                                       st=cur_t, 
                                                       conditioned_obs=node.conditioned_obs)
         
+        # breakpoint()
+        
         ## for belief-space replanning, only replan if indeed belief-space, and plan against sampled obs dict
         replan_success = True
         if refine_success and len(plan.belief_params) > 0:

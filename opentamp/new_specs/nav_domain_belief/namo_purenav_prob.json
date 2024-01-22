@@ -1,0 +1,28 @@
+{
+    "init_objs": [
+        {
+            "name": "target1",
+            "type": "Target",
+            "value": [3, 3]
+        },
+        {
+            "name": "obs1",
+            "type": "Obstacle",
+            "value": [0, 0]
+        },
+        {
+            "name": "pr2",
+            "type": "Robot",
+            "pose": [-3, -3],
+            "theta": [0.0]
+        }
+    ],
+    "init_preds": [
+    ],
+    "goals": [
+        {
+            "type": "RobotAtTarget",
+            "args": ["pr2", "target1"]
+        }
+    ]
+}

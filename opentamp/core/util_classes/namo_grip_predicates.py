@@ -779,6 +779,64 @@ class ThetaValid(ExprPredicate):
         # return np.array([grad[0], -grad[0]])
         # breakpoint()
         return grad
+    
+class PointingAtObs(ExprPredicate):
+
+    # RobotAt Robot Targ
+
+    def __init__(self, name, params, expected_param_types, env=None, sess=None, debug=False, dmove=dmove):
+        (self.r, self.obs) = params
+        ## constraints  |x_t - x_{t+1}| < dmove
+        ## ==> x_t - x_{t+1} < dmove, -x_t + x_{t+a} < dmove
+        attr_inds = OrderedDict(
+            [
+                (self.r, [
+                    ("pose", np.array([0, 1], dtype=np.int)),
+                    ("theta", np.array([0], dtype=np.int))
+                ]),
+                (self.obs, [
+                    ("value", np.array([0, 1], dtype=np.int)),
+                ])
+            ]
+        )
+        col_expr = Expr(self.f, grad=self.grad_f)
+        val = np.zeros((2,1))
+        # val = np.zeros((1, 1))
+        e = EqExpr(col_expr, val)
+        super(PointingAtObs, self).__init__(name, e, attr_inds, params, expected_param_types, tol=1e-3, priority=-1)
+
+    def f(self, x):
+        # breakpoint()
+        relative_obs_pose = (x[3:]-x[:2]).reshape((-1,))
+        relative_obs_dist = np.linalg.norm(relative_obs_pose)
+
+        # return np.array([diff, -diff])
+        f_res =  np.array([[relative_obs_dist * np.cos(x[2]).item() - relative_obs_pose[0]],
+                         [relative_obs_dist * np.sin(x[2]).item() - relative_obs_pose[1]]])
+
+        # breakpoint()
+        
+        return f_res
+
+    def grad_f(self, x):
+        # breakpoint()
+        relative_obs_pose = x[3:]-x[:2]
+        relative_obs_dist = np.linalg.norm(relative_obs_pose)
+
+        grad = np.array([[(relative_obs_pose[0].item()/relative_obs_dist* -1) * np.cos(x[2]).item() + 1, 
+                          (relative_obs_pose[1].item()/relative_obs_dist* -1) * np.cos(x[2]).item(), 
+                          -relative_obs_dist * np.sin(x[2]).item(), 
+                          relative_obs_pose[0].item()/relative_obs_dist * np.cos(x[2]).item() - 1, 
+                          relative_obs_pose[1].item()/relative_obs_dist * np.cos(x[2]).item()],
+                         [(relative_obs_pose[0].item()/relative_obs_dist * -1) * np.sin(x[2]).item(), 
+                          (relative_obs_pose[1].item()/relative_obs_dist * -1) * np.sin(x[2]).item() + 1, 
+                          relative_obs_dist * np.cos(x[2]).item(), 
+                          relative_obs_pose[0].item()/relative_obs_dist * np.sin(x[2]).item(), 
+                          relative_obs_pose[1].item()/relative_obs_dist * np.sin(x[2]).item() - 1]])
+        # return np.array([grad[0], -grad[0]])
+        # breakpoint()
+        return grad
+
 
 class VelValid(ExprPredicate):
 
