@@ -275,7 +275,7 @@ class GymEnvNavWrapper(GymEnvNav):
 
     # determine whether or not a given state satisfies a goal condition
     def assess_goal(self, condition, state, targets=None, cont=None):
-        item_loc = self.curr_state[2:4]
+        item_loc = self.curr_state[3:5]
         pose = self.curr_state[:2]
         # if pointing directly at the object
 
