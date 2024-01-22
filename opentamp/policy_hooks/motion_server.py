@@ -105,7 +105,7 @@ class MotionServer(Server):
         
         ## TODO populates attribute of start of current update, to the current simulator state...
         # if node.freeze_ts <= 0:
-        #     set_params_attrs(plan.params, self.agent.state_inds, node.x0, ts[1])
+        set_params_attrs(plan.params, self.agent.state_inds, node.x0, ts[1], use_symbols=True)
 
         plan.freeze_actions(plan.start)
         # cur_t = node.freeze_ts if node.freeze_ts >= 0 else 0
@@ -230,12 +230,15 @@ class MotionServer(Server):
 
             plan.state_inds = self.agent.state_inds
         
+        breakpoint()
+
         refine_success = self.agent.ll_solver._backtrack_solve(plan,
                                                       anum=plan.start,
                                                       n_resamples=5,
                                                       init_traj=init_traj,
                                                       st=cur_t, 
-                                                      conditioned_obs=node.conditioned_obs)
+                                                      conditioned_obs=node.conditioned_obs,
+                                                      verbose=True)
         
         ## for belief-space replanning, only replan if indeed belief-space, and plan against sampled obs dict
         replan_success = True
@@ -390,6 +393,9 @@ class MotionServer(Server):
 
             ## if plan only, invoke a breakpoint and inspect the plan statistics
             if self.plan_only:
+                ## reset sim state to state planned against
+                self.agent.reset_to_state(node.x0)
+                
                 self.save_video(path, True, lab='vid_planner')
             
                 breakpoint()

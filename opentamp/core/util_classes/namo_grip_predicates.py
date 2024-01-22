@@ -738,6 +738,124 @@ class RobotAtTarget(At):
         super(At, self).__init__(name, e, attr_inds, params, expected_param_types)
 
 
+class ThetaValid(ExprPredicate):
+
+    # RobotAt Robot Targ
+
+    def __init__(self, name, params, expected_param_types, env=None, sess=None, debug=False, dmove=dmove):
+        (self.r,) = params
+        ## constraints  |x_t - x_{t+1}| < dmove
+        ## ==> x_t - x_{t+1} < dmove, -x_t + x_{t+a} < dmove
+        attr_inds = OrderedDict(
+            [
+                (self.r, [
+                    ("pose", np.array([0, 1], dtype=np.int)),
+                    ("theta", np.array([0], dtype=np.int)),
+                ]),
+            ]
+        )
+        col_expr = Expr(self.f, grad=self.grad_f)
+        val = np.zeros((1,1))
+        # val = np.zeros((1, 1))
+        e = EqExpr(col_expr, val)
+        super(ThetaValid, self).__init__(name, e, attr_inds, params, expected_param_types, active_range=(0, 1), priority=-1)
+
+    def f(self, x):
+        # breakpoint()
+        travel_vec = x[3:5]-x[:2]
+        travel_dist = np.linalg.norm(travel_vec)
+        theta_prop_abs = np.arctan(travel_dist[1]/travel_dist[0]) if np.abs(travel_dist[0]) > 0.001 else (np.pi/2 if travel_dist[1]>0 else -np.pi/2)
+
+        # return np.array([diff, -diff])
+        return theta_prop_abs - x[5]
+
+    def grad_f(self, x):
+        # breakpoint()
+        travel_dist = x[3:5]-x[:2]
+        dist_ratio = travel_dist[1] / travel_dist[0]
+        inv_ratio = 1 / travel_dist[0]
+        arctan_deriv = 1 / (1 + dist_ratio**2)
+        grad = np.array([inv_ratio * dist_ratio, -inv_ratio, 0.0, -inv_ratio * dist_ratio, inv_ratio, -1.0/arctan_deriv]).reshape(1, -1) * arctan_deriv
+        # return np.array([grad[0], -grad[0]])
+        # breakpoint()
+        return grad
+
+class VelValid(ExprPredicate):
+
+    # RobotAt Robot Targ
+
+    def __init__(self, name, params, expected_param_types, env=None, sess=None, debug=False, dmove=dmove):
+        (self.r,) = params
+        ## constraints  |x_t - x_{t+1}| < dmove
+        ## ==> x_t - x_{t+1} < dmove, -x_t + x_{t+a} < dmove
+        attr_inds = OrderedDict(
+            [
+                (self.r, [
+                    ("pose", np.array([0, 1], dtype=np.int)),
+                    ("vel", np.array([0], dtype=np.int)),
+                ]),
+            ]
+        )
+        col_expr = Expr(self.f, grad=self.grad_f)
+        val = np.zeros((1,1))
+        # val = np.zeros((1, 1))
+        e = EqExpr(col_expr, val)
+        super(VelValid, self).__init__(name, e, attr_inds, params, expected_param_types, active_range=(0, 1), priority=-1)
+
+    def f(self, x):
+        # breakpoint()
+        travel_dist = x[3:5]-x[:2]
+
+        # return np.array([diff, -diff])
+        return np.linalg.norm(travel_dist)**2 - x[5]
+
+    def grad_f(self, x):
+        # breakpoint()
+        travel_dist = x[3:5]-x[:2]
+        grad = np.array([-2 * travel_dist[0],-2*travel_dist[1],0.0,2*travel_dist[0],2*travel_dist[1], -1.0]).reshape(1, -1)
+        # return np.array([grad[0], -grad[0]])
+        # breakpoint()
+        return grad
+
+
+
+class RobotCloserToTarg(ExprPredicate):
+
+    # RobotAt Robot Targ
+
+    def __init__(self, name, params, expected_param_types, env=None, sess=None, debug=False, dmove=dmove):
+        self.r, self.rt = params
+        ## constraints  |x_t - x_{t+1}| < dmove
+        ## ==> x_t - x_{t+1} < dmove, -x_t + x_{t+a} < dmove
+        attr_inds = OrderedDict(
+            [
+                (self.r, [("pose", np.array([0, 1], dtype=np.int))]),
+                (self.rt, [("value", np.array([0, 1], dtype=np.int))]),
+            ]
+        )
+        col_expr = Expr(self.f, grad=self.grad_f)
+        val = -np.ones((1, 1)) * 0.1
+        # val = np.zeros((1, 1))
+        e = LEqExpr(col_expr, val)
+        super(RobotCloserToTarg, self).__init__(name, e, attr_inds, params, expected_param_types, active_range=(0, 1), priority=-1)
+
+    def f(self, x):
+        # breakpoint()
+        dist_1 = np.sum(np.power(x[:2] - x[2:4], 2))
+        dist_2 = np.sum(np.power(x[4:6] - x[6:], 2))
+
+        # return np.array([diff, -diff])
+        return dist_2 - dist_1
+
+    def grad_f(self, x):
+        # breakpoint()
+        diff_1 = x[:2] - x[2:4]
+        diff_2 = x[4:6] - x[6:]
+        diff = np.concatenate((diff_1, diff_2))
+        grad = np.array([2 * diff[0], 2 * diff[1], -2 * diff[0], -2*diff[1], -2 * diff[2], -2 * diff[3], 2 * diff[2], 2*diff[3]]).reshape(1, -1)
+        # return np.array([grad[0], -grad[0]])
+        # breakpoint()
+        return -grad
 # class RobotAtTargetIncr(At):
 
 #     # RobotAt Robot Targ
@@ -1246,6 +1364,108 @@ class BPointing(ExprPredicate):
     #         ## this happens with an invalid time
     #         raise PredicateException("Out of range time for predicate '%s'." % self)
 
+## evals 95% chance that obstacle is far away
+class ObstacleFar(ExprPredicate):
+    def __init__(self, name, params, expected_param_types, env=None, sess=None, debug=False):
+        # NOTE: Below line is for debugging purposes only, should be commented out
+        # and line below should be commented in
+        # self._debug = True
+        # self._debug = debug
+
+        # if self._debug:
+        #     self._env.SetViewer("qtcoin")
+        # self._env = env
+        self.robot, self.obstacle = params
+        attr_inds = OrderedDict(
+            [(self.robot, [("pose", np.array([0, 1], dtype=np.int))])]
+        )
+        # self._param_to_body = {
+        #     self.rp: self.lazy_spawn_or_body(self.rp, self.rp.name, self.rp.geom),
+        #     self.targ: self.lazy_spawn_or_body(
+        #         self.targ, self.targ.name, self.targ.geom
+        #     ),
+        # }
+
+        # INCONTACT_COEFF = 1e1
+        # unused constraints, pass some BS in
+        A = np.zeros((1, 2))
+        b = np.zeros((1,1))
+        dummy_expr = AffExpr(A, b)
+        val = np.zeros((1, 1)) # output of fcn should be zero
+        # val = np.zeros((1, 1))
+        e = EqExpr(dummy_expr, val)
+        super(ObstacleFar, self).__init__(
+            name,
+            e,
+            attr_inds,
+            params,
+            expected_param_types,
+            debug=debug,
+            priority=1
+        )
+
+    def test(self, time, negated=False, tol=None):
+        diff_vec = self.obstacle.belief.samples[:,:,time].detach().numpy() - self.robot.pose[:,time]
+
+        is_far = np.linalg.norm(diff_vec, axis=0) >= 5.0
+
+        num_far = np.sum(is_far)
+
+        breakpoint()
+        
+        if negated:
+            return not num_far / diff_vec.shape[0] >= 0.95
+        return  num_far / diff_vec.shape[0] >= 0.95
+
+# assesses whether or not the obstacle has a low standard deviation
+class ObstacleLocated(ExprPredicate):
+    def __init__(self, name, params, expected_param_types, env=None, sess=None, debug=False):
+        # NOTE: Below line is for debugging purposes only, should be commented out
+        # and line below should be commented in
+        # self._debug = True
+        # self._debug = debug
+
+        # if self._debug:
+        #     self._env.SetViewer("qtcoin")
+        # self._env = env
+        self.robot, self.obstacle = params
+        attr_inds = OrderedDict(
+            [(self.robot, [("pose", np.array([0, 1], dtype=np.int))])]
+        )
+        # self._param_to_body = {
+        #     self.rp: self.lazy_spawn_or_body(self.rp, self.rp.name, self.rp.geom),
+        #     self.targ: self.lazy_spawn_or_body(
+        #         self.targ, self.targ.name, self.targ.geom
+        #     ),
+        # }
+
+        # INCONTACT_COEFF = 1e1
+        # unused constraints, pass some BS in
+        A = np.zeros((1, 2))
+        b = np.zeros((1,1))
+        dummy_expr = AffExpr(A, b)
+        val = np.zeros((1, 1)) # output of fcn should be zero
+        # val = np.zeros((1, 1))
+        e = EqExpr(dummy_expr, val)
+        super(ObstacleLocated, self).__init__(
+            name,
+            e,
+            attr_inds,
+            params,
+            expected_param_types,
+            debug=debug,
+            priority=1
+        )
+
+    def test(self, time, negated=False, tol=None):
+        numpy_obs_samples = self.obstacle.belief.samples[:,:,time].detach().numpy()
+
+        diff_vec = numpy_obs_samples - np.mean(numpy_obs_samples, axis=0)
+
+        if negated:
+            return not np.sqrt(np.power(diff_vec, 2)).mean() <= 0.1
+        return np.sqrt(np.power(diff_vec, 2)).mean() <= 0.1
+
 
 ## a stub computing only the
 class CertainPosition(ExprPredicate):
@@ -1324,6 +1544,46 @@ class ConfirmedPosition(ExprPredicate):
         # val = np.zeros((1, 1))
         e = EqExpr(dummy_expr, val)
         super(ConfirmedPosition, self).__init__(
+            name,
+            e,
+            attr_inds,
+            params,
+            expected_param_types,
+            debug=debug,
+            priority=-1
+        )
+
+
+class RobotConfirmedAtTarget(ExprPredicate):
+    def __init__(self, name, params, expected_param_types, env=None, sess=None, debug=False):
+        # NOTE: Below line is for debugging purposes only, should be commented out
+        # and line below should be commented in
+        # self._debug = True
+        # self._debug = debug
+
+        # if self._debug:
+        #     self._env.SetViewer("qtcoin")
+        # self._env = env
+        (self.target,) = params
+        attr_inds = OrderedDict(
+            [(self.target, [("pose", np.array([0, 1], dtype=np.int))])]
+        )
+        # self._param_to_body = {
+        #     self.rp: self.lazy_spawn_or_body(self.rp, self.rp.name, self.rp.geom),
+        #     self.targ: self.lazy_spawn_or_body(
+        #         self.targ, self.targ.name, self.targ.geom
+        #     ),
+        # }
+
+        # INCONTACT_COEFF = 1e1
+        # unused constraints, pass some BS in
+        A = np.zeros((1,2))
+        b = np.zeros((1,1))
+        dummy_expr = AffExpr(A, b)
+        val = np.zeros((1, 1)) # output of fcn should be zero
+        # val = np.zeros((1, 1))
+        e = EqExpr(dummy_expr, val)
+        super(RobotConfirmedAtTarget, self).__init__(
             name,
             e,
             attr_inds,
@@ -3597,178 +3857,178 @@ class AccWithinBounds(At):
         super(At, self).__init__(name, e, attr_inds, params, expected_param_types)
 
 
-class VelValid(ExprPredicate):
+# class VelValid(ExprPredicate):
 
-    # VelValid Robot
+#     # VelValid Robot
 
-    def __init__(
-        self,
-        name,
-        params,
-        expected_param_types,
-        env=None,
-        sess=None,
-        debug=False,
-        dmove=dmove,
-    ):
-        (self.r,) = params
-        ## constraints  |x_t - x_{t+1}| < dmove
-        ## ==> x_t - x_{t+1} < dmove, -x_t + x_{t+a} < dmove
-        attr_inds = OrderedDict(
-            [
-                (
-                    self.r,
-                    [
-                        ("pose", np.array([0, 1], dtype=np.int)),
-                        ("vel", np.array([0, 1], dtype=np.int)),
-                    ],
-                ),
-            ]
-        )
-        A = np.array(
-            [
-                [-1, 0, 1, 0, 1, 0, 0, 0],
-                [0, -1, 0, 1, 0, 1, 0, 0],
-            ]
-        )
-        b = np.zeros((4, 1))
+#     def __init__(
+#         self,
+#         name,
+#         params,
+#         expected_param_types,
+#         env=None,
+#         sess=None,
+#         debug=False,
+#         dmove=dmove,
+#     ):
+#         (self.r,) = params
+#         ## constraints  |x_t - x_{t+1}| < dmove
+#         ## ==> x_t - x_{t+1} < dmove, -x_t + x_{t+a} < dmove
+#         attr_inds = OrderedDict(
+#             [
+#                 (
+#                     self.r,
+#                     [
+#                         ("pose", np.array([0, 1], dtype=np.int)),
+#                         ("vel", np.array([0, 1], dtype=np.int)),
+#                     ],
+#                 ),
+#             ]
+#         )
+#         A = np.array(
+#             [
+#                 [-1, 0, 1, 0, 1, 0, 0, 0],
+#                 [0, -1, 0, 1, 0, 1, 0, 0],
+#             ]
+#         )
+#         b = np.zeros((4, 1))
 
-        e = LEqExpr(AffExpr(A, b), dmove * np.ones((4, 1)))
-        super(VelValid, self).__init__(
-            name,
-            e,
-            attr_inds,
-            params,
-            expected_param_types,
-            active_range=(0, 1),
-            priority=-2,
-        )
-
-
-class Decelerating(ExprPredicate):
-    def __init__(
-        self,
-        name,
-        params,
-        expected_param_types,
-        env=None,
-        sess=None,
-        debug=False,
-        dmove=dmove,
-    ):
-        (self.r,) = params
-        ## constraints  |x_t - x_{t+1}| < dmove
-        ## ==> x_t - x_{t+1} < dmove, -x_t + x_{t+a} < dmove
-        attr_inds = OrderedDict(
-            [
-                (self.r, [("vel", np.array([0, 1], dtype=np.int))]),
-            ]
-        )
-        A = np.array(
-            [
-                [-1, 0, 1, 0],
-                [0, -1, 0, 1],
-            ]
-        )
-        b = np.zeros((4, 1))
-
-        e = LEqExpr(AffExpr(A, b), b.copy())
-        super(VelValid, self).__init__(
-            name,
-            e,
-            attr_inds,
-            params,
-            expected_param_types,
-            active_range=(0, 1),
-            priority=-2,
-        )
+#         e = LEqExpr(AffExpr(A, b), dmove * np.ones((4, 1)))
+#         super(VelValid, self).__init__(
+#             name,
+#             e,
+#             attr_inds,
+#             params,
+#             expected_param_types,
+#             active_range=(0, 1),
+#             priority=-2,
+#         )
 
 
-class Accelerating(ExprPredicate):
-    def __init__(
-        self,
-        name,
-        params,
-        expected_param_types,
-        env=None,
-        sess=None,
-        debug=False,
-        dmove=dmove,
-    ):
-        (self.r,) = params
-        ## constraints  |x_t - x_{t+1}| < dmove
-        ## ==> x_t - x_{t+1} < dmove, -x_t + x_{t+a} < dmove
-        attr_inds = OrderedDict(
-            [
-                (self.r, [("vel", np.array([0, 1], dtype=np.int))]),
-            ]
-        )
-        A = np.array(
-            [
-                [1, 0, -1, 0],
-                [0, 1, 0, -1],
-            ]
-        )
-        b = np.zeros((4, 1))
+# class Decelerating(ExprPredicate):
+#     def __init__(
+#         self,
+#         name,
+#         params,
+#         expected_param_types,
+#         env=None,
+#         sess=None,
+#         debug=False,
+#         dmove=dmove,
+#     ):
+#         (self.r,) = params
+#         ## constraints  |x_t - x_{t+1}| < dmove
+#         ## ==> x_t - x_{t+1} < dmove, -x_t + x_{t+a} < dmove
+#         attr_inds = OrderedDict(
+#             [
+#                 (self.r, [("vel", np.array([0, 1], dtype=np.int))]),
+#             ]
+#         )
+#         A = np.array(
+#             [
+#                 [-1, 0, 1, 0],
+#                 [0, -1, 0, 1],
+#             ]
+#         )
+#         b = np.zeros((4, 1))
 
-        e = LEqExpr(AffExpr(A, b), b.copy())
-        super(VelValid, self).__init__(
-            name,
-            e,
-            attr_inds,
-            params,
-            expected_param_types,
-            active_range=(0, 1),
-            priority=-2,
-        )
+#         e = LEqExpr(AffExpr(A, b), b.copy())
+#         super(VelValid, self).__init__(
+#             name,
+#             e,
+#             attr_inds,
+#             params,
+#             expected_param_types,
+#             active_range=(0, 1),
+#             priority=-2,
+#         )
 
 
-class VelValid(ExprPredicate):
+# class Accelerating(ExprPredicate):
+#     def __init__(
+#         self,
+#         name,
+#         params,
+#         expected_param_types,
+#         env=None,
+#         sess=None,
+#         debug=False,
+#         dmove=dmove,
+#     ):
+#         (self.r,) = params
+#         ## constraints  |x_t - x_{t+1}| < dmove
+#         ## ==> x_t - x_{t+1} < dmove, -x_t + x_{t+a} < dmove
+#         attr_inds = OrderedDict(
+#             [
+#                 (self.r, [("vel", np.array([0, 1], dtype=np.int))]),
+#             ]
+#         )
+#         A = np.array(
+#             [
+#                 [1, 0, -1, 0],
+#                 [0, 1, 0, -1],
+#             ]
+#         )
+#         b = np.zeros((4, 1))
 
-    # VelValid Robot
+#         e = LEqExpr(AffExpr(A, b), b.copy())
+#         super(VelValid, self).__init__(
+#             name,
+#             e,
+#             attr_inds,
+#             params,
+#             expected_param_types,
+#             active_range=(0, 1),
+#             priority=-2,
+#         )
 
-    def __init__(
-        self,
-        name,
-        params,
-        expected_param_types,
-        env=None,
-        sess=None,
-        debug=False,
-        dmove=dmove,
-    ):
-        (self.r,) = params
-        ## constraints  |x_t - x_{t+1}| < dmove
-        ## ==> x_t - x_{t+1} < dmove, -x_t + x_{t+a} < dmove
-        attr_inds = OrderedDict(
-            [
-                (
-                    self.r,
-                    [
-                        ("pose", np.array([0, 1], dtype=np.int)),
-                        ("vel", np.array([0, 1], dtype=np.int)),
-                    ],
-                ),
-            ]
-        )
-        A = np.array(
-            [
-                [-1, 0, 1, 0, 1, 0, 0, 0],
-                [0, -1, 0, 1, 0, 1, 0, 0],
-            ]
-        )
-        b = np.zeros((4, 1))
 
-        e = LEqExpr(AffExpr(A, b), dmove * np.ones((4, 1)))
-        super(VelValid, self).__init__(
-            name,
-            e,
-            attr_inds,
-            params,
-            expected_param_types,
-            active_range=(0, 1),
-            priority=-2,
-        )
+# class VelValid(ExprPredicate):
+
+#     # VelValid Robot
+
+#     def __init__(
+#         self,
+#         name,
+#         params,
+#         expected_param_types,
+#         env=None,
+#         sess=None,
+#         debug=False,
+#         dmove=dmove,
+#     ):
+#         (self.r,) = params
+#         ## constraints  |x_t - x_{t+1}| < dmove
+#         ## ==> x_t - x_{t+1} < dmove, -x_t + x_{t+a} < dmove
+#         attr_inds = OrderedDict(
+#             [
+#                 (
+#                     self.r,
+#                     [
+#                         ("pose", np.array([0, 1], dtype=np.int)),
+#                         ("vel", np.array([0, 1], dtype=np.int)),
+#                     ],
+#                 ),
+#             ]
+#         )
+#         A = np.array(
+#             [
+#                 [-1, 0, 1, 0, 1, 0, 0, 0],
+#                 [0, -1, 0, 1, 0, 1, 0, 0],
+#             ]
+#         )
+#         b = np.zeros((4, 1))
+
+#         e = LEqExpr(AffExpr(A, b), dmove * np.ones((4, 1)))
+#         super(VelValid, self).__init__(
+#             name,
+#             e,
+#             attr_inds,
+#             params,
+#             expected_param_types,
+#             active_range=(0, 1),
+#             priority=-2,
+#         )
 
 
 class AccValid(VelValid):

@@ -1,7 +1,9 @@
 from opentamp.policy_hooks.tamp_agent import TAMPAgent
 import opentamp.policy_hooks.utils.policy_solver_utils as utils
 
-from opentamp.policy_hooks.gym_prob import *
+
+import numpy as np
+# from opentamp.policy_hooks.gym_prob import *
 
 class GymAgent(TAMPAgent):
     def __init__(self, hyperparams):

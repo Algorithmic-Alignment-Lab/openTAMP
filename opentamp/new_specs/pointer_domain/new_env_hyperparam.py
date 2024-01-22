@@ -13,7 +13,7 @@ from opentamp.core.util_classes.namo_grip_predicates import ATTRMAP
 # from opentamp.pma.namo_grip_solver import NAMOSolverOSQP as NAMOSolver
 from opentamp.pma.toy_solver import ToySolver
 from opentamp.policy_hooks.gym_agent import GymAgent
-import opentamp.policy_hooks.gym_prob as prob
+import opentamp.new_specs.pointer_domain.gym_prob as prob
 from opentamp.policy_hooks.utils.file_utils import LOG_DIR
 from opentamp.policy_hooks.observation_models import *
 

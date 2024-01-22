@@ -11,11 +11,10 @@ class GymEnvNav(Env):
     def __init__(self):
         self.action_space = spaces.Box(low=0.0, high=1.0, shape=(2,), dtype='float32')
         self.observation_space = spaces.Box(low=0.0, high=1.0, shape=(10,), dtype='float32')
-        self.curr_state = np.array([0.0]*2)
+        self.curr_state = np.array([0.0]*6)
         self.curr_obs = np.array([0.0]*10)
         self.dist = self.assemble_dist()
-        self.belief_true = {'obs1': torch.tensor([0.0, 0.0]),
-                            'target1': torch.tensor([0.0,0.0])}
+        self.belief_true = {}
         self.constraint_viol = False
 
     def assemble_dist(self):
@@ -33,10 +32,10 @@ class GymEnvNav(Env):
 
     def step(self, action):
         # make single step in direction of target
-        self.curr_state += action  # move by action
-        goal_rel_pos = (self.belief_true['target1'].detach().numpy() - self.curr_state) * 1  ## return relative position
-        obstacle_rel_pos = (self.belief_true['obs1'].detach().numpy() - self.curr_state) * 1 
-        obstacle_abs_angle = np.arctan(obstacle_rel_pos[1]/obstacle_rel_pos[0]) if obstacle_rel_pos[0] > 0.001 else (np.pi/2 if obstacle_rel_pos[1]>0 else -np.pi/2)
+        self.curr_state[:2] += action  # move by action
+        goal_rel_pos = (self.curr_state[2:4] - self.curr_state[:2]) * 1  ## return relative position
+        obstacle_rel_pos = (self.curr_state[4:] - self.curr_state[:2]) * 1 
+        obstacle_abs_angle = np.arctan(obstacle_rel_pos[1]/obstacle_rel_pos[0]) if np.abs(obstacle_rel_pos[0]) > 0.001 else (np.pi/2 if obstacle_rel_pos[1]*obstacle_rel_pos[0]>0 else -np.pi/2)
         obstacle_rel_distance = np.linalg.norm(obstacle_rel_pos, ord=2)
         # spot_abs_angle = np.arctan(action[1]/action[0]) if action[0] > 0.001 else (np.pi/2 if action[1]>0 else -np.pi/2)
         
@@ -87,7 +86,7 @@ class GymEnvNav(Env):
         return self.curr_obs, 1.0, False, {}
 
     def reset(self):
-        self.curr_state = np.array([0.0,0.0])
+        self.curr_state = np.array([0.0]*6)
         self.curr_obs = np.array([0.0]*10)
         self.constraint_viol = False
         return self.curr_obs
@@ -115,7 +114,7 @@ class GymEnvNav(Env):
         white = np.ones((256, 256, 3), dtype=np.uint8) * 255
 
         ## coloring in the robot location
-        color_arr = np.where(is_close_to_obj_vectorized(self.curr_state, x_coords, y_coords),
+        color_arr = np.where(is_close_to_obj_vectorized(self.curr_state[:2], x_coords, y_coords),
                                             red, 
                                             white)
 
@@ -125,12 +124,12 @@ class GymEnvNav(Env):
         #                                     color_arr)
 
         ## coloring in the obstacle
-        color_arr = np.where(is_close_to_obj_vectorized(self.belief_true['obs1'], x_coords, y_coords),
+        color_arr = np.where(is_close_to_obj_vectorized(self.curr_state[4:], x_coords, y_coords),
                                     blue, 
                                     color_arr)
         
         ## coloring in the target
-        color_arr = np.where(is_close_to_obj_vectorized(self.belief_true['target1'], x_coords, y_coords),
+        color_arr = np.where(is_close_to_obj_vectorized(self.curr_state[2:4], x_coords, y_coords),
                                     green, 
                                     color_arr)
 
@@ -189,27 +188,7 @@ class GymEnvNav(Env):
 
     ## get random sample to initialize uncertain problem
     def sample_belief_true(self):
-        is_valid = False
-        while not is_valid:
-            proposal_belief = {'target1': self.dist.sample()}
-
-            if torch.norm(proposal_belief['target1']) <= 4.0:
-                continue
-
-            rand = random.random()
-
-            avg_val = proposal_belief['target1'] * rand 
-
-            obstacle_dist = distros.Uniform(avg_val - torch.tensor([1.0, 1.0]), 
-                                            avg_val + torch.tensor([1.0, 1.0]))
-            proposal_belief['obs1'] = obstacle_dist.sample()
-
-            if torch.norm(proposal_belief['target1']-proposal_belief['obs1']) < 1.5 or torch.norm(proposal_belief['obs1']) < 1.5 :
-                continue
-                
-            is_valid = True
-
-        return proposal_belief
+        return {}
         # return {'obs1': torch.tensor([0.0, 0.0])}
         # rand = random.random() * 8
         # if rand < 1.0:
@@ -242,7 +221,9 @@ class GymEnvNavWrapper(GymEnvNav):
 
     def get_vector(self):
         state_vector_include = {
-            'pr2': ['pose']
+            'pr2': ['pose'],
+            'target1': ['value'],
+            'obs1': ['value']
         }
         
         action_vector_include = {
@@ -259,14 +240,39 @@ class GymEnvNavWrapper(GymEnvNav):
     # reset without affecting the simulator
     def get_random_init_state(self):
         # init_pose = random.random() * np.pi/2  # give random initial state between 0 and 90 degrees
-        return np.array([0.0,0.0]) ## targets are randomized, initial pose fixed
+        init_pose = np.array([0.0,0.0])
+        # init_theta = np.array([random.random() * 2 * np.pi - np.pi]) ## random on -np.pi to np.pi
+        # init_vel = np.array([0.0])
+
+        is_valid = False
+        while not is_valid:
+            proposal_targ = self.dist.sample().detach().numpy()
+
+            if np.linalg.norm(proposal_targ) <= 4.0:
+                continue
+
+            rand = random.random()
+
+            avg_val = torch.tensor(proposal_targ * rand) 
+
+            obstacle_dist = distros.Uniform(avg_val - torch.tensor([1.0, 1.0]), 
+                                            avg_val + torch.tensor([1.0, 1.0]))
+            proposal_obs = obstacle_dist.sample().detach().numpy()
+
+            if np.linalg.norm(proposal_targ-proposal_obs) < 1.5 or np.linalg.norm(proposal_obs) < 1.5 :
+                continue
+                
+            is_valid = True
+        
+        return np.concatenate((init_pose,proposal_targ, proposal_obs))
 
     # determine whether or not a given state satisfies a goal condition
     def assess_goal(self, condition, state, targets=None, cont=None):
-        item_loc = self.belief_true['target1']
+        item_loc = self.curr_state[2:4]
+        pose = self.curr_state[:2]
         # if pointing directly at the object
 
-        if np.linalg.norm(item_loc - state, ord=2) <= 0.5:
+        if np.linalg.norm(item_loc - pose, ord=2) <= 0.5:
             return 0.0
         else:
             return 1.0

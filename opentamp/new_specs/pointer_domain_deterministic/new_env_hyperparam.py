@@ -17,7 +17,7 @@ import opentamp.new_specs.pointer_domain_bimodal.gym_prob as prob
 from opentamp.policy_hooks.utils.file_utils import LOG_DIR
 from opentamp.policy_hooks.observation_models import *
 
-from opentamp.envs.blank_gym_env_bimodal import BlankEnvWrapperBimodal
+from opentamp.envs.blank_gym_env import BlankEnvWrapper
 
 import torch.nn.functional as F
 
@@ -67,9 +67,9 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
         'gym_env_type': BlankEnvWrapperBimodal,
         'mp_solver_type': ToySolver,
         'll_solver_type': ToySolver,
-        'meta_file': opentamp.__path__._path[0] + '/new_specs/pointer_domain_bimodal/pointer_meta.json',
-        'acts_file': opentamp.__path__._path[0] + '/new_specs/pointer_domain_bimodal/pointer_acts.json',
-        'prob_file': opentamp.__path__._path[0] + '/new_specs/pointer_domain_bimodal/pointer_prob.json',
+        'meta_file': opentamp.__path__._path[0] + '/new_specs/pointer_domain_deterministic/pointer_meta.json',
+        'acts_file': opentamp.__path__._path[0] + '/new_specs/pointer_domain_deterministic/pointer_acts.json',
+        'prob_file': opentamp.__path__._path[0] + '/new_specs/pointer_domain_deterministic/pointer_prob.json',
         'observation_model': NoVIPointerObservationModel,
         'n_dirs': N_DIRS,
 
