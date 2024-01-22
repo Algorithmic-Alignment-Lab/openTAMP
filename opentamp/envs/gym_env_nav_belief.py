@@ -10,9 +10,9 @@ from opentamp.policy_hooks.utils.policy_solver_utils import *
 class GymEnvNav(Env):    
     def __init__(self):
         self.action_space = spaces.Box(low=0.0, high=1.0, shape=(2,), dtype='float32')
-        self.observation_space = spaces.Box(low=0.0, high=1.0, shape=(7,), dtype='float32')
+        self.observation_space = spaces.Box(low=0.0, high=1.0, shape=(11,), dtype='float32')
         self.curr_state = np.array([0.0]*7)
-        self.curr_obs = np.array([0.0]*7)
+        self.curr_obs = np.array([0.0]*11)
         self.dist = self.assemble_dist()
         self.belief_true = {}
         self.constraint_viol = False
@@ -50,8 +50,8 @@ class GymEnvNav(Env):
         # rot_matrix = np.array([[np.cos(spot_angle),np.sin(spot_angle)],[-np.sin(spot_angle),np.cos(spot_angle)]])
         # obstacle_rel_pos_spot_frame = np.dot(rot_matrix, obstacle_rel_pos)
 
-        lidar_obs = np.array([8.0] * 4)
-        lidar_list = [(np.arange(-np.pi/4, np.pi/4, np.pi/8)[i], np.arange(-np.pi/4, np.pi/2, np.pi/8)[i+1]) for i in range(4)]
+        lidar_obs = np.array([8.0] * 8)
+        lidar_list = [(np.arange(-np.pi/4, np.pi/4, np.pi/16)[i], np.arange(-np.pi/4, np.pi/2, np.pi/16)[i+1]) for i in range(8)]
         
         # formulas only valid on -pi/2 to pi/2
         for detect_idx, theta_thresh in enumerate(lidar_list):
@@ -89,7 +89,7 @@ class GymEnvNav(Env):
 
     def reset(self):
         self.curr_state = np.array([0.0]*7)
-        self.curr_obs = np.array([0.0]*7)
+        self.curr_obs = np.array([0.0]*11)
         self.constraint_viol = False
         return self.curr_obs
     
@@ -217,7 +217,7 @@ class GymEnvNav(Env):
 class GymEnvNavWrapper(GymEnvNav):
     def reset_to_state(self, state):
         self.curr_state = state
-        self.curr_obs = np.array([0.0]*7)
+        self.curr_obs = np.array([0.0]*11)
         self.constraint_viol = False
         return self.curr_obs
 
