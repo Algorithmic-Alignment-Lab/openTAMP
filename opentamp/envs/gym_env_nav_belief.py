@@ -266,6 +266,11 @@ class GymEnvNavWrapper(GymEnvNav):
                 
             is_valid = True
         
+        # by default, point at the obstacle at spawn
+        obstacle_abs_angle = np.arctan(proposal_obs[1]/proposal_obs[0]) if np.abs(proposal_obs[0]) > 0.001 else (np.pi/2 if proposal_obs[1]*proposal_obs[0]>0 else -np.pi/2)
+        obstacle_angle = obstacle_abs_angle if proposal_obs[0] >= 0  else (obstacle_abs_angle + np.pi if -np.pi/2 <= obstacle_abs_angle < 0 else obstacle_abs_angle - np.pi)
+        init_pose[2] = obstacle_angle
+
         return np.concatenate((init_pose,proposal_targ, proposal_obs))
 
     # determine whether or not a given state satisfies a goal condition
