@@ -23,7 +23,7 @@ python3 -W ignore policy_hooks/run_training.py -c new_specs.nav_domain_belief.ne
                                                 -post -pre \
                                                 -warm 100 \
                                                 -neg_ratio 0. -opt_ratio 1.0 -dagger_ratio 0.0 \
-						-descr simple_nav_domain_policyguide_obstacleavoid_pointinitview_finerview
+						-descr simple_nav_domain_policyguide_obstacleavoid_pointinitview_finerview_widerswerve
 
 # sleep 1800 
 # pkill -f run_train -9

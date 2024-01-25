@@ -3715,7 +3715,7 @@ class AvoidObs(ExprPredicate):
             ]
         )
         col_expr = Expr(self.f, grad=self.grad_f)
-        val = -np.ones((1, 1))
+        val = -np.ones((1, 1)) * 2
         # val = np.zeros((1, 1))
         e = LEqExpr(col_expr, val)
         super(AvoidObs, self).__init__(name, e, attr_inds, params, expected_param_types, priority=-1)

@@ -37,13 +37,13 @@ class GymEnvNav(Env):
         obstacle_rel_pos = (self.curr_state[5:] - self.curr_state[:2]) * 1 
         obstacle_abs_angle = np.arctan(obstacle_rel_pos[1]/obstacle_rel_pos[0]) if np.abs(obstacle_rel_pos[0]) > 0.001 else (np.pi/2 if obstacle_rel_pos[1]*obstacle_rel_pos[0]>0 else -np.pi/2)
         obstacle_rel_distance = np.linalg.norm(obstacle_rel_pos, ord=2)
-        # spot_abs_angle = np.arctan(action[1]/action[0]) if action[0] > 0.001 else (np.pi/2 if action[1]>0 else -np.pi/2)
+        # spot_abs_angle = np.arctan(action[1]/action[0]) if action∂[0] > 0.001 else (np.pi/2 if action[1]>0 else -np.pi/2)
         
         # making formula globally true at all theta (correcting for angle readings behind)
         obstacle_angle = obstacle_abs_angle if obstacle_rel_pos[0] >= 0  else (obstacle_abs_angle + np.pi if -np.pi/2 <= obstacle_abs_angle < 0 else obstacle_abs_angle - np.pi)
         # spot_angle = spot_abs_angle if action[0] >= 0 else (spot_abs_angle + np.pi if -np.pi/2 <= spot_abs_angle < 0 else spot_abs_angle - np.pi)
         
-        # relative angle of obstacle with respect to spot,
+        # relative angle of obstacle with respect to spot camera
         obstacle_rel_angle = obstacle_angle - self.curr_state[2]
 
         ## rotate the relative pose to be in the frame of the SPOT
@@ -65,6 +65,8 @@ class GymEnvNav(Env):
         # if too close to object, indicate that the current trajectory violated a safety constraint
         if obstacle_rel_distance <= 0.5:
             self.constraint_viol = True
+
+        breakpoint()
 
         # self.curr_obs = np.concatenate((self.curr_obs)) ## add norm of destination as proxy for speed
 
@@ -279,7 +281,7 @@ class GymEnvNavWrapper(GymEnvNav):
         pose = self.curr_state[:2]
         # if pointing directly at the object
 
-        if np.linalg.norm(item_loc - pose, ord=2) <= 0.5:
+        if np.linalg.norm(item_loc - pose, ord=2) <= 1.0:
             return 0.0
         else:
             return 1.0
