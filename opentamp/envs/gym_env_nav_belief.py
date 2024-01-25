@@ -66,8 +66,6 @@ class GymEnvNav(Env):
         if obstacle_rel_distance <= 0.5:
             self.constraint_viol = True
 
-        breakpoint()
-
         # self.curr_obs = np.concatenate((self.curr_obs)) ## add norm of destination as proxy for speed
 
         # ## TODO: integrate noise in the flag
