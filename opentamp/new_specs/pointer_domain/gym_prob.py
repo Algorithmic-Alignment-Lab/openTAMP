@@ -5,7 +5,7 @@ from opentamp.policy_hooks.utils.policy_solver_utils import *
 from opentamp.policy_hooks.utils.load_task_definitions import get_tasks, plan_from_str
 
 # random constants, todo deprecate
-mapping_file = "policy_hooks/namo/spotnav_task_mapping"  # TODO alter
+mapping_file = "policy_hooks/namo/pointer_taskmapping"  # TODO alter
 
 END_TARGETS = [(1)]
 n_aux=0

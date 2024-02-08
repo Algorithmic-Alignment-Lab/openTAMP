@@ -292,13 +292,12 @@ class MotionServer(Server):
                             if self._hyperparams['assume_true']:
                                 new_assumed_goal[param.name] = node.belief_true[param.name]
                             else:
-                                new_assumed_goal[param.name] = param.belief.samples[new_goal_idx,:,0]
+                                new_assumed_goal[param.name] = param.belief.samples[new_goal_idx,:,a.active_timesteps[0]]
                             if param.is_symbol():
-                                param.value[:, 0] = planned_obs[param.name].detach().numpy()
+                                param.value[:, 0] = new_assumed_goal[param.name].detach().numpy()
                             else:
-                                param.pose[:, 0] = planned_obs[param.name].detach().numpy()
+                                param.pose[:, a.active_timesteps[0]] = new_assumed_goal[param.name].detach().numpy()
 
-                            param.pose[:, a.active_timesteps[0]] = new_assumed_goal[param.name]
                             new_assumed_goal[param.name] = torch.tensor(new_assumed_goal[param.name])
                         node.replan_start = anum
 
@@ -319,12 +318,6 @@ class MotionServer(Server):
         path = []
 
         if refine_success and replan_success:
-            ## TEMPORARY HACK DUE TO SAMPLE INDEXING
-            # for a_num in range(len(plan.actions)):
-            #     if plan.actions[a_num].name == 'point_to':
-            #         plan.actions[a_num].active_timesteps = (plan.actions[a_num].active_timesteps[0] + 1, 
-            #                                                 plan.actions[a_num].active_timesteps[1])
-
             # Remove observation actions for easier imitation          
             active_anums = []
             for a_num in range(len(plan.actions)):

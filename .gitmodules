@@ -5,3 +5,7 @@
 [submodule "opentamp/gps"]
 	path = opentamp/gps
 	url = https://github.com/cbfinn/gps.git
+[submodule "opentamp/drake_gym_sim"]
+	path = opentamp/drake_gym_sim
+	url = https://github.com/rachelma80000/drake_gym_sim.git
+	branch = gripper_incorporation

@@ -233,6 +233,7 @@ def argsparser():
     parser.add_argument('-debug', '--debug', action='store_true', default=False)
     parser.add_argument('-plan_only', '--plan_only', action='store_true', default=False)
     parser.add_argument('-assume_true ', '--assume_true', action='store_true', default=False)
+    parser.add_argument('-absolute', '--absolute_policy', action='store_true', default=False)
 
 
     # Previous policy directories

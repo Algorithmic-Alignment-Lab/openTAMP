@@ -37,6 +37,7 @@ ROLL_TOL = 1e-3
 
 ACTION_SCALE = 1
 
+
 class OptimalPolicy:
     def __init__(self, dU, action_inds, state_inds, opt_traj):
         self.dU = dU
@@ -53,6 +54,28 @@ class OptimalPolicy:
                 u[self.action_inds[param, attr]] = (self.opt_traj[t + 1, self.action_inds[param, attr]] - self.opt_traj[t, self.action_inds[param, attr]]) * ACTION_SCALE
             else:
                 u[self.action_inds[param, attr]] = (self.opt_traj[-1, self.action_inds[param, attr]] - self.opt_traj[-2, self.action_inds[param, attr]]) * ACTION_SCALE
+        return u
+
+
+    def is_initialized(self):
+        return True
+
+class OptimalAbsolutePolicy:
+    def __init__(self, dU, action_inds, state_inds, opt_traj):
+        self.dU = dU
+        self.action_inds = action_inds
+        self.state_inds = state_inds
+        self.opt_traj = opt_traj
+
+
+    ## optimal policy simply emulates the actions taken along the optimal trajectory, as given here
+    def act(self, X, O, t, noise=None):
+        u = np.zeros(self.dU)
+        for param, attr in self.action_inds:
+            if t < len(self.opt_traj) - 1:
+                u[self.action_inds[param, attr]] = (self.opt_traj[t + 1, self.action_inds[param, attr]]) * ACTION_SCALE
+            else:
+                u[self.action_inds[param, attr]] = (self.opt_traj[-1, self.action_inds[param, attr]]) * ACTION_SCALE
         return u
 
 
@@ -128,7 +151,10 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
         self.cur_state = self.x0[0]
         self.discrete_prim = self.config.get('discrete_prim', True)
         self.swap = self.config['master_config'].get('swap', False)
-        self.optimal_pol_cls = OptimalPolicy
+        if self.config['master_config'].get('absolute_policy', False):
+            self.optimal_pol_cls = OptimalAbsolutePolicy
+        else:
+            self.optimal_pol_cls = OptimalPolicy
         self.hist_len = self.config['hist_len']
         self.task_hist_len = self.config['master_config'].get('task_hist_len', 0)
         self._prev_U = np.zeros((self.hist_len, self.dU))
@@ -391,7 +417,7 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
         end_state = None
         cur_state = self.get_state() # x0
         sample.task = task
-        sample.set(TASK_ENUM, np.tile(np.array([1.]), (self.T, 1)))
+        sample.set(TASK_ENUM, np.tile(np.array([1. if i == task[0] else 0. for i in range(len(self.task_list))]), (self.T, 1)))
 
         self.fill_sample(condition, sample, cur_state.copy(), 0, task, fill_obs=True)
         for t in range(0, self.T):
