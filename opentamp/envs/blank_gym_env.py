@@ -192,3 +192,6 @@ class BlankEnvWrapper(BlankEnv):
             return 1.0
 
         # return 0.0 ## always succeeds for now
+
+    def assess_constraint_viol(self):
+        return 0.0
