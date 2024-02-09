@@ -255,8 +255,9 @@ class TorchNet(nn.Module):
         else:
             if self.loss_fn == F.nll_loss:
                 y = torch.argmax(y, dim=-1).flatten()
-            pred = pred.flatten()
-            y = y.flatten()
+            else:
+                pred = pred.flatten()
+                y = y.flatten()
             return self.loss_fn(pred, y, reduction='mean')
 
     def compute_loss(self, pred, y, precision=None):

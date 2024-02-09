@@ -173,7 +173,7 @@ class Sample(object):
                     continue
                 data = (self._data[data_type] if t is None
                         else self._data[data_type][t, :])
-                breakpoint()
+                # breakpoint()
                 self.agent.pack_data_prim_out(out, data, data_types=[data_type])
         return out.copy()
 
