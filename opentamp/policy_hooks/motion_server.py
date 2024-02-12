@@ -19,7 +19,6 @@ from opentamp.policy_hooks.sample_list import SampleList
 from opentamp.policy_hooks.utils.policy_solver_utils import *
 from opentamp.policy_hooks.server import Server
 from opentamp.policy_hooks.search_node import *
-from opentamp.policy_hooks.tamp_agent import ACTION_SCALE
 
 import torch
 import matplotlib.pyplot as plt
@@ -318,67 +317,21 @@ class MotionServer(Server):
         path = []
 
         if refine_success and replan_success:
-            # Remove observation actions for easier imitation          
-            active_anums = []
-            for a_num in range(len(plan.actions)):
-                if plan.actions[a_num].name != 'infer_position':
-                    active_anums.append(a_num)
-
-            ## populate the sample with the entire plan
-            # a_num = 0
-            st = plan.actions[active_anums[0]].active_timesteps[0]
-            tasks = self.agent.encode_plan(plan)
-
-            for a_num_idx in range(len(active_anums)):
-                if a_num_idx > 0:
-                    prior_st = plan.actions[active_anums[a_num_idx-1]].active_timesteps[0]
-                    # past_targ = plan.params['target1'].pose[:, prior_st]
-                    past_targ = np.array([3.0, 3.0])
-                    past_ang = np.arctan(np.array([past_targ[1]])/np.array([past_targ[0]])) \
-                        if not np.any(np.isnan(np.arctan(np.array([past_targ[1]])/np.array([past_targ[0]])))) \
-                            else np.pi/2
-                    past_ang *= ACTION_SCALE
-                else:
-                    past_targ = np.array([0., 0.])
-                    past_ang = np.array([0.])
-
-                # targ_pred = plan.params['target1'].pose[:, plan.actions[active_anums[a_num_idx]].active_timesteps[0]]
-                targ_pred = np.array([3.0, 3.0])
-                targ_ang = np.arctan(np.array([targ_pred[1]])/np.array([targ_pred[0]])) \
-                        if not np.any(np.isnan(np.arctan(np.array([targ_pred[1]])/np.array([targ_pred[0]])))) \
-                            else np.pi/2
-                targ_ang *= ACTION_SCALE
-                
-                
-                new_path, x0 = self.agent.run_action(plan, 
-                            active_anums[a_num_idx], 
-                            x0,
-                            self.agent.target_vecs[0], 
-                            tasks[active_anums[a_num_idx]], 
-                            st,
-                            reset=True,
-                            save=True, 
-                            record=True,
-                            hist_info=[len(path), 
-                                       past_ang, 
-                                       sum([1 if (s.task)[0] == 1 else 0 for s in path]),
-                                       sum([1 if (s.task)[0] == 0 else 0 for s in path]),
-                                       (path[-1].task)[0] if len(path) > 0 else -1.0],
-                            aux_info=targ_ang)
-                
-                path.extend(new_path)
+            # domain-specific sample population method for agent
+            self.config['sample_fill_method'](path, plan, self.agent, x0)
 
             end_t = time.time()
+
             for step in path:
                 step.wt = wt
 
-            if (refine_success and replan_success):
-                self.plan_horizons.append(plan.horizon)
-                self.plan_horizons = self.plan_horizons[-5:]
-                self.plan_times.append(end_t-init_t)
-                self.plan_times = self.plan_times[-5:]
+            self.plan_horizons.append(plan.horizon)
+            self.plan_horizons = self.plan_horizons[-5:]
+            self.plan_times.append(end_t-init_t)
+            self.plan_times = self.plan_times[-5:]
 
             self.agent.add_task_paths([path])  ## add the given history of tasks from this successful rollout
+
 
         if replan_success and refine_success:
             print('Success')

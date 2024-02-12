@@ -20,6 +20,10 @@ from opentamp.policy_hooks.observation_models import *
 from opentamp.envs.blank_gym_env import BlankEnvWrapper
 
 import torch.nn.functional as F
+import time
+from opentamp.policy_hooks.tamp_agent import ACTION_SCALE
+from opentamp.policy_hooks.utils.policy_solver_utils import *
+
 
 BASE_DIR = opentamp.__path__._path[0] +  '/policy_hooks/'
 EXP_DIR = BASE_DIR + 'experiments/'
@@ -41,6 +45,70 @@ N_OPTIMIZERS = 0
 N_DIRS = 16
 N_GRASPS = 4
 TIME_LIMIT = 14400
+
+## populating samples from plan to 
+def sample_fill_method(path, plan, agent, x0):
+    # Remove observation actions for easier imitation          
+    active_anums = []
+    for a_num in range(len(plan.actions)):
+        if plan.actions[a_num].name != 'infer_position':
+            active_anums.append(a_num)
+
+    ## populate the sample with the entire plan
+    # a_num = 0
+    st = plan.actions[active_anums[0]].active_timesteps[0]
+    tasks = agent.encode_plan(plan)
+
+    for a_num_idx in range(len(active_anums)):
+        if a_num_idx > 0:
+            # prior_st = plan.actions[active_anums[a_num_idx-1]].active_timesteps[0]
+            # past_targ = plan.params['target1'].pose[:, prior_st]
+            past_targ = np.array([3.0, 3.0])
+            past_ang = np.arctan(np.array([past_targ[1]])/np.array([past_targ[0]])) \
+                if not np.any(np.isnan(np.arctan(np.array([past_targ[1]])/np.array([past_targ[0]])))) \
+                    else np.pi/2
+            past_ang *= ACTION_SCALE
+        else:
+            past_targ = np.array([0., 0.])
+            past_ang = np.array([0.])
+
+        # targ_pred = plan.params['target1'].pose[:, plan.actions[active_anums[a_num_idx]].active_timesteps[0]]
+        targ_pred = np.array([3.0, 3.0])
+        targ_ang = np.arctan(np.array([targ_pred[1]])/np.array([targ_pred[0]])) \
+                if not np.any(np.isnan(np.arctan(np.array([targ_pred[1]])/np.array([targ_pred[0]])))) \
+                    else np.pi/2
+        targ_ang *= ACTION_SCALE
+        
+        
+        new_path, x0 = agent.run_action(plan, 
+                    active_anums[a_num_idx], 
+                    x0,
+                    agent.target_vecs[0], 
+                    tasks[active_anums[a_num_idx]], 
+                    st,
+                    reset=True,
+                    save=True, 
+                    record=True,
+                    hist_info=[len(path), 
+                                past_ang, 
+                                sum([1 if (s.task)[0] == 1 else 0 for s in path]),
+                                sum([1 if (s.task)[0] == 0 else 0 for s in path]),
+                                (path[-1].task)[0] if len(path) > 0 else -1.0],
+                    aux_info=targ_ang)
+        
+        path.extend(new_path)
+
+def rollout_fill_method(path, agent):
+    agent.store_hist_info([len(path), 
+                            path[-1].get(ANG_ENUM)[0,:].reshape(-1), 
+                            sum([1.0 if s.task[0] == 1 else 0.0 for s in path]),
+                            sum([1.0 if s.task[0] == 0 else 0.0 for s in path]),
+                            (path[-1].task)[0]]) if path \
+    else agent.store_hist_info([len(path), np.array([0.]), 0, 0, -1.0])
+
+def rollout_terminate_cond(task_idx):
+    return task_idx == 2
+
 
 def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
     # cost_wp_mult = np.ones((3 + 2 * NUM_OBJS))
@@ -158,6 +226,9 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
         'her': False,
         'prim_decay': 0.95,
         'prim_first_wt': 1e1,
+        'sample_fill_method': sample_fill_method,
+        'rollout_fill_method': rollout_fill_method,
+        'rollout_terminate_cond': rollout_terminate_cond
         # 'll_loss_fn': F.l1_loss,
         # 'cont_loss_fn': F.l1_loss,
     }
