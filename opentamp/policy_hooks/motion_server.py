@@ -332,8 +332,6 @@ class MotionServer(Server):
 
             self.agent.add_task_paths([path])  ## add the given history of tasks from this successful rollout
 
-            breakpoint()
-
 
         if replan_success and refine_success:
             print('Success')

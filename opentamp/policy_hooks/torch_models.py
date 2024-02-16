@@ -132,10 +132,12 @@ class TorchNet(nn.Module):
     def _compute_idx(self):
         if 'idx' in self.config:
             self.idx = self.config['idx']
-            self.x_idx, self.img_idx = [], []
+            self.x_idx, self.img_idx, self.recur_idx = [], [], []
             for (sensor, inds) in self.idx.items():
                 if sensor in self.config['obs_image_data']:
                     self.img_idx.extend(inds)
+                elif sensor in self.config['recur_obs_include']:
+                    self.recur_idx.extend(inds)
                 else:
                     self.x_idx.extend(inds)
 
@@ -146,6 +148,8 @@ class TorchNet(nn.Module):
 
                 if sensor in self.config['obs_image_data']:
                     self.img_idx = self.img_idx + list(range(i, i+dim))
+                elif sensor in self.config['recur_obs_include']:
+                    self.recur_idx = self.recur_idx + list(range(i, i+dim))
                 else:
                     self.x_idx = self.x_idx + list(range(i, i+dim))
 

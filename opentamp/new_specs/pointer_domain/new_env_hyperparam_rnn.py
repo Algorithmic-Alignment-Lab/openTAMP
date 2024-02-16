@@ -152,7 +152,7 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
                         # utils.TASK_ENUM,
                         # utils.PAST_TASK_ENUM,
                         # utils.ANG_ENUM,
-                        utils.PAST_POINT_ENUM,
+                        utils.PAST_TASK_ARR_ENUM,
                         # utils.ONEHOT_GOAL_ENUM
                         # utils.TASK_ENUM,
                         # utils.END_POSE_ENUM,
@@ -160,6 +160,10 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
                         # #utils.VEL_ENUM,
                         # utils.THETA_VEC_ENUM,
                         ],
+
+        'recur_obs_include': [
+             utils.PAST_TASK_ARR_ENUM,
+        ],
 
         # 'cont_obs_include': [#utils.LIDAR_ENUM,
         #                 utils.MJC_SENSOR_ENUM,
@@ -179,11 +183,15 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
                             #  utils.THETA_VEC_ENUM,
                             utils.MJC_SENSOR_ENUM,
                             # utils.PAST_TASK_ENUM,
-                            utils.PAST_POINT_ENUM,
+                            utils.PAST_TASK_ARR_ENUM,
                             # utils.PAST_VAL_ENUM,
                             # utils.PAST_TARG_ENUM,
                             # utils.ONEHOT_GOAL_ENUM
                              ],
+
+        'prim_recur_obs_include': [
+             utils.PAST_TASK_ARR_ENUM,
+        ],
 
         'prim_out_include': list(prob.get_prim_choices().keys()),
 
@@ -197,6 +205,7 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
                 utils.PAST_POINT_ENUM: 1,
                 utils.PAST_VAL_ENUM: 1,
                 utils.PAST_TASK_ENUM: 1,
+                utils.PAST_TASK_ARR_ENUM: 20,
                 # utils.LIDAR_ENUM: N_DIRS,
                 utils.MJC_SENSOR_ENUM: BlankEnvWrapper().observation_space.shape[0],
                 # utils.EE_ENUM: 2,

@@ -44,7 +44,6 @@ class RnnGymAgent(GymAgent):
 
     ## TODO SHUNT THESE INTO API, builds hist_info samples
     def store_hist_info(self, hist_info):
-        breakpoint()
         self.num_tasks = hist_info[0] 
         self.past_targ = hist_info[1]
         self.past_point = hist_info[2]
