@@ -157,7 +157,6 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
         'state_include': [utils.STATE_ENUM],
         'add_recur': True,
         'add_hl_recur': True,
-
         
         'obs_include': [#utils.LIDAR_ENUM,
                         utils.MJC_SENSOR_ENUM,
