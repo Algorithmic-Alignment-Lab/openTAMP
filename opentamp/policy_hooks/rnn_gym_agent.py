@@ -49,7 +49,7 @@ class RnnGymAgent(GymAgent):
         self.past_point = hist_info[2]
         self.past_val = hist_info[3]
         self.past_task = hist_info[4]
-        self.past_task_arr[:self.num_tasks] = hist_info[5][:self.num_tasks]
+        self.past_task_arr[:self.num_tasks+1] = hist_info[5][:self.num_tasks+1]
 
     def store_aux_info(self, aux_info):
         self.curr_targ = aux_info

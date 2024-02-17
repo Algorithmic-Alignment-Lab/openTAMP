@@ -129,6 +129,8 @@ class MultiProcessMain(object):
         obs_image_data = [IM_ENUM, OVERHEAD_IMAGE_ENUM, LEFT_IMAGE_ENUM, RIGHT_IMAGE_ENUM]
         add_image = self.config.get('add_image', False)
         add_hl_image = self.config.get('add_hl_image', False)
+        add_recur = self.config.get('add_recur', False)
+        add_recur_hl = self.config.get('add_recur_hl', False)
 
 
         self.config['policy_opt'] = {
@@ -160,6 +162,7 @@ class MultiProcessMain(object):
                 # 'normalize': not add_image,
                 'normalize': False,
                 'build_conv': add_image,
+                'build_recur': add_recur,
                 'use_precision': False,
             },
 
@@ -185,6 +188,7 @@ class MultiProcessMain(object):
                 'conv_to_fc': 'fp',
                 'normalize': False,
                 'build_conv': add_hl_image,
+                'build_recur': add_recur_hl,
                 'use_precision': False,
             },
     
@@ -210,6 +214,7 @@ class MultiProcessMain(object):
                 'conv_to_fc': 'fp',
                 'normalize': False ,
                 'build_conv': add_hl_image,
+                'build_recur': add_recur_hl,
                 'use_precision': False,
             },
 

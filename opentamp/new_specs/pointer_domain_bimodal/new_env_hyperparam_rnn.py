@@ -17,7 +17,7 @@ import opentamp.new_specs.pointer_domain.gym_prob as prob
 from opentamp.policy_hooks.utils.file_utils import LOG_DIR
 from opentamp.policy_hooks.observation_models import *
 
-from opentamp.envs.blank_gym_env import BlankEnvWrapper
+from opentamp.envs.blank_gym_env_bimodal import BlankEnvWrapperBimodal
 
 import torch.nn.functional as F
 import time
@@ -134,18 +134,17 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
         'num_targs': nt,
         'attr_map': ATTRMAP,
         'agent_type': RnnGymAgent,
-        'gym_env_type': BlankEnvWrapper,
+        'gym_env_type': BlankEnvWrapperBimodal,
         'mp_solver_type': ToySolver,
         'll_solver_type': ToySolver,
-        'meta_file': opentamp.__path__._path[0] + '/new_specs/pointer_domain/pointer_meta.json',
-        'acts_file': opentamp.__path__._path[0] + '/new_specs/pointer_domain/pointer_acts.json',
-        'prob_file': opentamp.__path__._path[0] + '/new_specs/pointer_domain/pointer_prob.json',
+        'meta_file': opentamp.__path__._path[0] + '/new_specs/pointer_domain_bimodal/pointer_meta.json',
+        'acts_file': opentamp.__path__._path[0] + '/new_specs/pointer_domain_bimodal/pointer_acts.json',
+        'prob_file': opentamp.__path__._path[0] + '/new_specs/pointer_domain_bimodal/pointer_prob.json',
         'observation_model': NoVIPointerObservationModel,
         'n_dirs': N_DIRS,
 
         'state_include': [utils.STATE_ENUM],
-
-        # 'add_recur': True,
+        'add_recur': True,
         'add_hl_recur': True,
 
         'obs_include': [#utils.LIDAR_ENUM,
@@ -211,7 +210,7 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
                 utils.PAST_TASK_ENUM: 1,
                 utils.PAST_TASK_ARR_ENUM: 20,
                 # utils.LIDAR_ENUM: N_DIRS,
-                utils.MJC_SENSOR_ENUM: BlankEnvWrapper().observation_space.shape[0],
+                utils.MJC_SENSOR_ENUM: BlankEnvWrapperBimodal().observation_space.shape[0],
                 # utils.EE_ENUM: 2,
                 # utils.END_POSE_ENUM: 2,
                 # utils.GRIPPER_ENUM: 1,
