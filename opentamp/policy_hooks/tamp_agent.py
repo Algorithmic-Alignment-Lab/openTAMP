@@ -1175,21 +1175,21 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
         path[-1].task_end = True
         path[-1].set(TASK_DONE_ENUM, np.array([0, 1]), t=path[-1].T-1)
         #path[-1].prim_use_ts[-1] = 0.
-        if nzero > 0 and add_noop:
-            # get a sample of the zero trajectory 
-            zero_traj = np.tile(opt_traj[-1], [nzero, 1])
-            zero_sample = self.sample_optimal_trajectory(path[-1].end_state, task, 0, zero_traj, targets=targets)
-            x0 = zero_sample.end_state # sample.get_X(sample.T-1)
-            zero_sample.use_ts[:] = 0.
-            zero_sample.use_ts[:nzero] = 1.
-            zero_sample.prim_use_ts[:] = np.zeros(len(zero_sample.prim_use_ts))
-            zero_sample.step = path[-1].step + 1
-            zero_sample.draw = False
-            # zero_sample.success = path[-1].success
-            zero_sample.success = 1. - self.goal_f(0, x0, targets)
-            zero_sample.set(TASK_DONE_ENUM, np.tile([0,1], (zero_sample.T, 1)))
-            zero_sample.task = task
-            path.append(zero_sample)
+        # if nzero > 0 and add_noop:
+        #     # get a sample of the zero trajectory 
+        #     zero_traj = np.tile(opt_traj[-1], [nzero, 1])
+        #     zero_sample = self.sample_optimal_trajectory(path[-1].end_state, task, 0, zero_traj, targets=targets)
+        #     x0 = zero_sample.end_state # sample.get_X(sample.T-1)
+        #     zero_sample.use_ts[:] = 0.
+        #     zero_sample.use_ts[:nzero] = 1.
+        #     zero_sample.prim_use_ts[:] = np.zeros(len(zero_sample.prim_use_ts))
+        #     zero_sample.step = path[-1].step + 1
+        #     zero_sample.draw = False
+        #     # zero_sample.success = path[-1].success
+        #     zero_sample.success = 1. - self.goal_f(0, x0, targets)
+        #     zero_sample.set(TASK_DONE_ENUM, np.tile([0,1], (zero_sample.T, 1)))
+        #     zero_sample.task = task
+        #     path.append(zero_sample)
         end_s = path[-1]
         end_s.task_end = True
 
