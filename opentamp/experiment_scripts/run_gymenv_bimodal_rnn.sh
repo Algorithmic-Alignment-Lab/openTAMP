@@ -11,8 +11,8 @@ python3 -W ignore policy_hooks/run_training.py -c new_specs.pointer_domain_bimod
                                                 -retime -vel 0.3 -eta 5 -softev \
                                                 -lr_schedule fixed \
                                                 -imwidth 256 -imheight 256 \
-                                                -hist_len 2 -prim_first_wt 20 -lr 0.00001 \
-                                                -hllr 0.001 -lldec 0.0001 -hldec 0.0004 \
+                                                -hist_len 2 -prim_first_wt 20 -lr 0.0001 \
+                                                -hllr 0.00001 -lldec 0.0001 -hldec 0.0004 \
                                                 -add_noop 2 --permute_hl 1 \
                                                 -expl_wt 10 -expl_eta 4 \
                                                 -col_coeff 0.0 \

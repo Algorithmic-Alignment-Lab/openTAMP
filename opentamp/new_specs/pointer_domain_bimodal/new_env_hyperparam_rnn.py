@@ -160,7 +160,7 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
         
         'obs_include': [#utils.LIDAR_ENUM,
                         utils.MJC_SENSOR_ENUM,
-                        utils.PAST_MJCOBS_ARR_ENUM,
+                        # utils.PAST_MJCOBS_ARR_ENUM,
                         # utils.MJC_SENSOR_ENUM,
                         # utils.PAST_ANG_ENUM,
                         utils.PAST_TASK_ARR_ENUM,
@@ -178,7 +178,7 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
 
         'recur_obs_include': [
              utils.PAST_TASK_ARR_ENUM,
-             utils.PAST_MJCOBS_ARR_ENUM
+            #  utils.PAST_MJCOBS_ARR_ENUM
         ],
 
         # 'cont_obs_include': [#utils.LIDAR_ENUM,
