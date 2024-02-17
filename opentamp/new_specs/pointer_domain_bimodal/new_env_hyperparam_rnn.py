@@ -105,9 +105,10 @@ def sample_fill_method(path, plan, agent, x0):
         path.extend(new_path)
 
 def rollout_fill_method(path, agent):
-    mjc_obs_array = [0., 0.]
-    for s in path:
-        mjc_obs_array.extend(s.get(MJC_SENSOR_ENUM)[-1,:])
+    mjc_obs_array = []
+    mjc_obs_array = torch.tensor([[0.,0.]] + [list(s.get(MJC_SENSOR_ENUM)[-1,:]) for s in path])
+    mjc_obs_array = torch.flatten(mjc_obs_array.T)
+    mjc_obs_array = [x.item() for x in list(mjc_obs_array)]
 
     agent.store_hist_info([len(path), 
                             path[-1].get(ANG_ENUM)[0,:].reshape(-1), 
