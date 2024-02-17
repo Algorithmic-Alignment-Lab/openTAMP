@@ -79,9 +79,10 @@ def sample_fill_method(path, plan, agent, x0):
                     else np.pi/2
         targ_ang *= ACTION_SCALE
                 
-        mjc_obs_array = [0., 0.]
-        for s in path:
-            mjc_obs_array.extend(s.get(MJC_SENSOR_ENUM)[-1,:])
+        mjc_obs_array = []
+        mjc_obs_array = torch.tensor([[0.,0.]] + [list(s.get(MJC_SENSOR_ENUM)[-1,:]) for s in path])
+        mjc_obs_array = torch.flatten(mjc_obs_array.T)
+        mjc_obs_array = [x.item() for x in list(mjc_obs_array)]
         
         new_path, x0 = agent.run_action(plan, 
                     active_anums[a_num_idx], 
