@@ -23,7 +23,7 @@ python3 -W ignore policy_hooks/run_training.py -c new_specs.pointer_domain_bimod
                                                 -post -pre \
                                                 -warm 100 \
                                                 -neg_ratio 0. -opt_ratio 0.9 -dagger_ratio 0.1 \
-						-descr pointer_pilot_shorttrain_bimodal_diffnodetectobs \
+						-descr pointer_rnn_bimodal_imageandtask \
                                                 -absolute
 # sleep 1800 
 # pkill -f run_train -9

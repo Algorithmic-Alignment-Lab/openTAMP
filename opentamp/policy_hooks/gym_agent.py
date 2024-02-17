@@ -90,7 +90,6 @@ class GymAgent(TAMPAgent):
         im = self.gym_env.postproc_im(base_im, s, t, cam_id)
         return im
 
-    ## TODO SHUNT THESE INTO API, builds hist_info samples
     def store_hist_info(self, hist_info):
         self.num_tasks = hist_info[0] 
         self.past_targ = hist_info[1]

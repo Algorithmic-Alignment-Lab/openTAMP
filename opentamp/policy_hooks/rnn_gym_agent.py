@@ -19,16 +19,20 @@ class RnnGymAgent(GymAgent):
         self.past_val = 0
         self.past_task = -1.0
         self.past_task_arr = np.array([-1.] * 20)
+        self.past_obs_arr = np.array([-1., -1.] * 20)
 
     def reset_to_state(self, x):
         self.curr_obs = self.gym_env.reset_to_state(x)
         self.curr_state = self.gym_env.curr_state
         self.past_task_arr = np.array([-1.] * 20)
+        self.past_obs_arr = np.array([-1., -1.] * 20)
+
 
     def reset(self, m):
         self.curr_obs = self.gym_env.reset()
         self.curr_state = self.gym_env.curr_state
         self.past_task_arr = np.array([-1.] * 20)
+        self.past_obs_arr = np.array([-1., -1.] * 20)
 
     ## subclass as needed for different kinds of sample populations (e.g. RNN stuff)
     def fill_sample(self, cond, sample, mp_state, t, task, fill_obs=False, targets=None):
@@ -41,8 +45,8 @@ class RnnGymAgent(GymAgent):
         sample.set(utils.PAST_VAL_ENUM, np.array([self.past_val]), t=t)
         sample.set(utils.PAST_TASK_ENUM, np.array([self.past_task]), t=t)
         sample.set(utils.PAST_TASK_ARR_ENUM, self.past_task_arr, t)
+        sample.set(utils.PAST_MJCOBS_ARR_ENUM, self.past_obs_arr, t)
 
-    ## TODO SHUNT THESE INTO API, builds hist_info samples
     def store_hist_info(self, hist_info):
         self.num_tasks = hist_info[0] 
         self.past_targ = hist_info[1]
@@ -50,6 +54,7 @@ class RnnGymAgent(GymAgent):
         self.past_val = hist_info[3]
         self.past_task = hist_info[4]
         self.past_task_arr[:self.num_tasks+1] = hist_info[5][:self.num_tasks+1]
+        self.past_obs_arr[:(self.num_tasks*2)+2] = hist_info[6][:(self.num_tasks*2)+2]
 
     def store_aux_info(self, aux_info):
         self.curr_targ = aux_info

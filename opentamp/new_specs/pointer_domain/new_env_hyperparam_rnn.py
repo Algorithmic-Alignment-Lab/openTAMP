@@ -78,7 +78,10 @@ def sample_fill_method(path, plan, agent, x0):
                 if not np.any(np.isnan(np.arctan(np.array([targ_pred[1]])/np.array([targ_pred[0]])))) \
                     else np.pi/2
         targ_ang *= ACTION_SCALE
-        
+                
+        mjc_obs_array = [0., 0.]
+        for s in path:
+            mjc_obs_array.extend(s.get(MJC_SENSOR_ENUM)[-1,:])
         
         new_path, x0 = agent.run_action(plan, 
                     active_anums[a_num_idx], 
@@ -94,19 +97,25 @@ def sample_fill_method(path, plan, agent, x0):
                                 sum([1 if (s.task)[0] == 1 else 0 for s in path]),
                                 sum([1 if (s.task)[0] == 0 else 0 for s in path]),
                                 (path[-1].task)[0] if len(path) > 0 else -1.0,
-                                [0.] + [s.task[0] for s in path]],
+                                [0.] + [s.task[0] for s in path],
+                                mjc_obs_array],
                     aux_info=targ_ang)
         
         path.extend(new_path)
 
 def rollout_fill_method(path, agent):
+    mjc_obs_array = [0., 0.]
+    for s in path:
+        mjc_obs_array.extend(s.get(MJC_SENSOR_ENUM)[-1,:])
+
     agent.store_hist_info([len(path), 
                             path[-1].get(ANG_ENUM)[0,:].reshape(-1), 
                             sum([1.0 if s.task[0] == 1 else 0.0 for s in path]),
                             sum([1.0 if s.task[0] == 0 else 0.0 for s in path]),
                             (path[-1].task)[0],
-                            [0.] + [s.task[0] for s in path]]) if path \
-    else agent.store_hist_info([len(path), np.array([0.]), 0, 0, -1.0, [0.]])
+                            [0.] + [s.task[0] for s in path],
+                            mjc_obs_array]) if path \
+    else agent.store_hist_info([len(path), np.array([0.]), 0, 0, -1.0, [0.], mjc_obs_array])
 
 def rollout_terminate_cond(task_idx):
     return task_idx == 2
@@ -150,6 +159,7 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
 
         'obs_include': [#utils.LIDAR_ENUM,
                         utils.MJC_SENSOR_ENUM,
+                        utils.PAST_MJCOBS_ARR_ENUM,
                         # utils.MJC_SENSOR_ENUM,
                         # utils.PAST_ANG_ENUM,
                         utils.PAST_TASK_ARR_ENUM,
@@ -167,6 +177,7 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
 
         'recur_obs_include': [
              utils.PAST_TASK_ARR_ENUM,
+             utils.PAST_MJCOBS_ARR_ENUM
         ],
 
         # 'cont_obs_include': [#utils.LIDAR_ENUM,
@@ -188,6 +199,7 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
                             utils.MJC_SENSOR_ENUM,
                             # utils.PAST_TASK_ENUM,
                             utils.PAST_TASK_ARR_ENUM,
+                            utils.PAST_MJCOBS_ARR_ENUM,
                             # utils.PAST_VAL_ENUM,
                             # utils.PAST_TARG_ENUM,
                             # utils.ONEHOT_GOAL_ENUM
@@ -195,6 +207,7 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
 
         'prim_recur_obs_include': [
              utils.PAST_TASK_ARR_ENUM,
+             utils.PAST_MJCOBS_ARR_ENUM
         ],
 
         'prim_out_include': list(prob.get_prim_choices().keys()),
@@ -210,6 +223,7 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
                 utils.PAST_VAL_ENUM: 1,
                 utils.PAST_TASK_ENUM: 1,
                 utils.PAST_TASK_ARR_ENUM: 20,
+                utils.PAST_MJCOBS_ARR_ENUM: 40,
                 # utils.LIDAR_ENUM: N_DIRS,
                 utils.MJC_SENSOR_ENUM: BlankEnvWrapper().observation_space.shape[0],
                 # utils.EE_ENUM: 2,
