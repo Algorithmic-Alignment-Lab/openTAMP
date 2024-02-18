@@ -10,9 +10,9 @@ from opentamp.policy_hooks.utils.policy_solver_utils import *
 class BlankEnv(Env):    
     def __init__(self):
         self.action_space = spaces.Box(low=-np.pi/2, high=np.pi/2, shape=(1,), dtype='float32')
-        self.observation_space = spaces.Box(low=-10.0, high=10.0, shape=(2,), dtype='float32')
+        self.observation_space = spaces.Box(low=-10.0, high=10.0, shape=(3,), dtype='float32')
         self.curr_state = np.array([0.0]*1)
-        self.curr_obs = np.array([0.0]*1)
+        self.curr_obs = np.array([0.0]*3)
         self.dist = self.assemble_dist()
         self.belief_true = {'target1': torch.tensor([0.0, 0.0])}
         self.num_ts = 0
@@ -41,9 +41,9 @@ class BlankEnv(Env):
 
             if no_noisy_obs[0] < 0.001:
                 nan_ang = np.pi/2 if no_noisy_obs[1] >= 0.0 else -np.pi/2
-                self.curr_obs = np.array([nan_ang, 1.0])
+                self.curr_obs = np.array([self.curr_state, nan_ang, 1.0])
             else:
-                self.curr_obs = np.array([np.arctan(no_noisy_obs[1]/no_noisy_obs[0]), 1.0])
+                self.curr_obs = np.array([self.curr_state, np.arctan(no_noisy_obs[1]/no_noisy_obs[0]), 1.0])
 
             reward = - 4/np.pi * np.abs(self.curr_obs[0] - action) ## normalized angle distance from goal
             
@@ -51,16 +51,16 @@ class BlankEnv(Env):
             ## reject this observation, give zero reading
             # noisy_obs = distros.MultivariateNormal(torch.zeros((2,)), 0.01 * torch.eye(2)).sample().numpy()
             no_noisy_obs = np.zeros((2,))
-            self.curr_obs = np.array([-10.0, 0.0])
+            self.curr_obs = np.array([self.curr_state, -10.0, 0.0])
             reward = -1.0
 
         self.num_ts += 1
 
-        return self.curr_obs * 10, reward, self.num_ts >= 100, {}
+        return self.curr_obs, reward, self.num_ts >= 100 or self.assess_goal(None, self.curr_state) < 0.01, {}
 
     def reset(self):
         self.curr_state = np.array([0.0]*1)
-        self.curr_obs = np.array([0.0]*2)
+        self.curr_obs = np.array([0.0]*3)
         self.num_ts = 0
         self.belief_true = self.sample_belief_true()
         return self.curr_obs
@@ -167,7 +167,7 @@ class BlankEnv(Env):
 class BlankEnvWrapper(BlankEnv):
     def reset_to_state(self, state):
         self.curr_state = state
-        self.curr_obs = np.array([0.0]*2)
+        self.curr_obs = np.array([0.0]*3)
         self.num_ts = 0
         return self.curr_obs
 

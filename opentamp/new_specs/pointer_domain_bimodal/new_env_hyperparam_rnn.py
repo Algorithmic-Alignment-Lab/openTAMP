@@ -80,7 +80,7 @@ def sample_fill_method(path, plan, agent, x0):
         targ_ang *= ACTION_SCALE
 
         mjc_obs_array = []
-        mjc_obs_array = torch.tensor([[0.,0.]] + [list(s.get(MJC_SENSOR_ENUM)[-1,:]) for s in path])
+        mjc_obs_array = torch.tensor([[0.,0.,0.]] + [list(s.get(MJC_SENSOR_ENUM)[-1,:]) for s in path])
         mjc_obs_array = torch.flatten(mjc_obs_array.T)
         mjc_obs_array = [x.item() for x in list(mjc_obs_array)]
         
@@ -106,7 +106,7 @@ def sample_fill_method(path, plan, agent, x0):
 
 def rollout_fill_method(path, agent):
     mjc_obs_array = []
-    mjc_obs_array = torch.tensor([[0.,0.]] + [list(s.get(MJC_SENSOR_ENUM)[-1,:]) for s in path])
+    mjc_obs_array = torch.tensor([[0.,0.,0.]] + [list(s.get(MJC_SENSOR_ENUM)[-1,:]) for s in path])
     mjc_obs_array = torch.flatten(mjc_obs_array.T)
     mjc_obs_array = [x.item() for x in list(mjc_obs_array)]
 
@@ -160,7 +160,7 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
         
         'obs_include': [#utils.LIDAR_ENUM,
                         utils.MJC_SENSOR_ENUM,
-                        # utils.PAST_MJCOBS_ARR_ENUM,
+                        utils.PAST_MJCOBS_ARR_ENUM,
                         # utils.MJC_SENSOR_ENUM,
                         # utils.PAST_ANG_ENUM,
                         utils.PAST_TASK_ARR_ENUM,
@@ -178,7 +178,7 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
 
         'recur_obs_include': [
              utils.PAST_TASK_ARR_ENUM,
-            #  utils.PAST_MJCOBS_ARR_ENUM
+             utils.PAST_MJCOBS_ARR_ENUM
         ],
 
         # 'cont_obs_include': [#utils.LIDAR_ENUM,
@@ -224,7 +224,7 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
                 utils.PAST_VAL_ENUM: 1,
                 utils.PAST_TASK_ENUM: 1,
                 utils.PAST_TASK_ARR_ENUM: 20,
-                utils.PAST_MJCOBS_ARR_ENUM: 40,
+                utils.PAST_MJCOBS_ARR_ENUM: 60,
                 # utils.LIDAR_ENUM: N_DIRS,
                 utils.MJC_SENSOR_ENUM: BlankEnvWrapperBimodal().observation_space.shape[0],
                 # utils.EE_ENUM: 2,
