@@ -217,7 +217,7 @@ class RolloutServer(Server):
             self.agent.reset_to_state(x0)
             samp = self.agent.gym_env.sample_belief_true()  ## resample at the start of each rollout
             self.agent.gym_env.set_belief_true(samp)
-            val, path = self.test_run(None, [], max_t=20, hl=True, soft=self.config['soft_eval'], eta=eta, lab=-5, hor=25)
+            val, path = self.test_run(None, [], self.config.get('horizon', 20), hl=True, soft=self.config['soft_eval'], eta=eta, lab=-5, hor=25)
             constraint_viol = self.agent.gym_env.assess_constraint_viol()
             vals.append(val)
             constraint_viols.append(constraint_viol)

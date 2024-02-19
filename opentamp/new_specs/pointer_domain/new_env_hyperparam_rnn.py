@@ -225,7 +225,7 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
                 utils.PAST_VAL_ENUM: 1,
                 utils.PAST_TASK_ENUM: 1,
                 utils.PAST_TASK_ARR_ENUM: 20,
-                utils.PAST_MJCOBS_ARR_ENUM: 60,
+                utils.PAST_MJCOBS_ARR_ENUM: 20 * BlankEnvWrapper().observation_space.shape[0],
                 # utils.LIDAR_ENUM: N_DIRS,
                 utils.MJC_SENSOR_ENUM: BlankEnvWrapper().observation_space.shape[0],
                 # utils.EE_ENUM: 2,

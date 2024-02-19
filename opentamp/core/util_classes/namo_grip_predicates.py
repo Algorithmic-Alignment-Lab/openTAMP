@@ -892,15 +892,15 @@ class RobotCloserToTarg(ExprPredicate):
             ]
         )
         col_expr = Expr(self.f, grad=self.grad_f)
-        val = -np.ones((1, 1)) * 0.1
+        val = -np.ones((1, 1)) * 1
         # val = np.zeros((1, 1))
         e = LEqExpr(col_expr, val)
-        super(RobotCloserToTarg, self).__init__(name, e, attr_inds, params, expected_param_types, active_range=(0, 1), priority=-1)
+        super(RobotCloserToTarg, self).__init__(name, e, attr_inds, params, expected_param_types, active_range=(0, 19), priority=-1)
 
     def f(self, x):
         # breakpoint()
         dist_1 = np.sum(np.power(x[:2] - x[2:4], 2))
-        dist_2 = np.sum(np.power(x[4:6] - x[6:], 2))
+        dist_2 = np.sum(np.power(x[76:78] - x[78:], 2))
 
         # return np.array([diff, -diff])
         return dist_2 - dist_1
@@ -908,9 +908,9 @@ class RobotCloserToTarg(ExprPredicate):
     def grad_f(self, x):
         # breakpoint()
         diff_1 = x[:2] - x[2:4]
-        diff_2 = x[4:6] - x[6:]
+        diff_2 = x[76:78] - x[78:]
         diff = np.concatenate((diff_1, diff_2))
-        grad = np.array([2 * diff[0], 2 * diff[1], -2 * diff[0], -2*diff[1], -2 * diff[2], -2 * diff[3], 2 * diff[2], 2*diff[3]]).reshape(1, -1)
+        grad = np.array([2 * diff[0], 2 * diff[1], -2 * diff[0], -2*diff[1]]+ [0.] * 72+ [-2 * diff[2], -2 * diff[3], 2 * diff[2], 2*diff[3]]).reshape(1, -1)
         # return np.array([grad[0], -grad[0]])
         # breakpoint()
         return -grad
@@ -3731,6 +3731,39 @@ class AvoidObs(ExprPredicate):
         # return np.array([grad[0], -grad[0]])
         # breakpoint()
         return -grad
+
+class RobotWithinFinishofTarg(ExprPredicate):
+
+   # IsMP Robot
+
+    def __init__(self, name, params, expected_param_types, env=None, sess=None, debug=False, dmove=dmove):
+        self.r, self.rt = params
+        ## constraints  |x_t - x_{t+1}| < dmove
+        ## ==> x_t - x_{t+1} < dmove, -x_t + x_{t+a} < dmove
+        attr_inds = OrderedDict(
+            [
+                (self.r, [("pose", np.array([0, 1], dtype=np.int))]),
+                (self.rt, [("value", np.array([0, 1], dtype=np.int))]),
+            ]
+        )
+        col_expr = Expr(self.f, grad=self.grad_f)
+        val = np.ones((1, 1)) * 2
+        # val = np.zeros((1, 1))
+        e = LEqExpr(col_expr, val)
+        super(RobotWithinFinishofTarg, self).__init__(name, e, attr_inds, params, expected_param_types, priority=-1)
+
+    def f(self, x):
+        norm = np.sum(np.power(x[:2] - x[2:], 2))
+        # return np.array([diff, -diff])
+        return norm
+
+    def grad_f(self, x):
+        diff = x[:2] - x[2:]
+        grad = np.array([2 * diff[0], 2 * diff[1], -2 * diff[0], -2*diff[1]]).reshape(1, -1)
+        # return np.array([grad[0], -grad[0]])
+        # breakpoint()
+        return grad
+
 
 class RobotCloseToTarget(ExprPredicate):
 

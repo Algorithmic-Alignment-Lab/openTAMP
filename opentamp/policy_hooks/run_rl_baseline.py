@@ -3,9 +3,9 @@ import numpy as np
 from stable_baselines3 import PPO
 from sb3_contrib import RecurrentPPO
 from stable_baselines3.common.evaluation import evaluate_policy
-from opentamp.envs.blank_gym_env import BlankEnvWrapper
+from opentamp.envs.blank_gym_env_bimodal import BlankEnvWrapperBimodal
 
-env = BlankEnvWrapper()
+env = BlankEnvWrapperBimodal()
 model = RecurrentPPO("MlpLstmPolicy", env, verbose=1)
 model.learn(200000)
 
@@ -13,7 +13,7 @@ vec_env = model.get_env()
 mean_reward, std_reward = evaluate_policy(model, vec_env, n_eval_episodes=20, warn=False)
 print(mean_reward)
 
-# model.save("ppo_recurrent")
+model.save("ppo_recurrent_bimodal")
 # del model # remove to demonstrate saving and loading
 
 # model = RecurrentPPO.load("ppo_recurrent")

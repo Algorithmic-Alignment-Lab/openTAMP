@@ -267,7 +267,7 @@ class NoVIObstacleObservationModel(ObservationModel):
             for obs_active_ts in prefix_obs:
                 if self.is_in_ray(params['pr2'].pose[0,obs_active_ts[1]-1], params['obs1'].belief.samples[idx,:,fail_ts]):
                     ## sample around the true belief, with extremely low variation / error
-                    log_likelihood[idx] += dist.MultivariateNormal(params['obs1'].belief.samples[idx,:,fail_ts], (0.01 * torch.eye(2))).log_prob(prefix_obs[obs_active_ts]['target1'])
+                    log_likelihood[idx] += dist.MultivariateNormal(params['obs1'].belief.samples[idx,:,fail_ts], (0.01 * torch.eye(2))).log_prob(prefix_obs[obs_active_ts]['obs1'])
                 else:
                     ## sample from prior dist -- have no additional knowledge, don't read it
                     log_likelihood[idx] += dist.MultivariateNormal(torch.zeros((2,)).to(DEVICE), 0.01 * torch.eye(2)).log_prob(prefix_obs[obs_active_ts]['obs1'])

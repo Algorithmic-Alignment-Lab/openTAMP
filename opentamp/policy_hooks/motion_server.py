@@ -348,7 +348,7 @@ class MotionServer(Server):
                 raise Exception('Terminating after single plan')
 
         print('Full Conditioned Obs At Start: ', node.conditioned_obs)
-
+        
         return path, refine_success, replan_success
 
 
@@ -389,6 +389,7 @@ class MotionServer(Server):
         n_problem = node.get_problem(fail_step, fail_pred, fail_negated)
         abs_prob = self.agent.hl_solver.translate_problem(n_problem, goal=node.concr_prob.goal)
         prefix = node.curr_plan.prefix(fail_step)
+        breakpoint()
         hlnode = HLSearchNode(abs_prob,
                              node.domain,
                              n_problem,
