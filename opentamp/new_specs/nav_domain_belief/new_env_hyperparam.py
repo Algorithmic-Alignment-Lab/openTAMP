@@ -118,7 +118,7 @@ def rollout_fill_method(path, agent):
     else agent.store_hist_info([len(path), np.array([0.]), 0, 0, -1.0, [0.], mjc_obs_array])
 
 def rollout_terminate_cond(task_idx):
-    return task_idx == 2
+    return task_idx == 0
 
 def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
     # cost_wp_mult = np.ones((3 + 2 * NUM_OBJS))
