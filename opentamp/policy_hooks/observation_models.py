@@ -179,7 +179,7 @@ class NoVIPointerObservationModel(ObservationModel):
         pass
 
     def get_unnorm_obs_log_likelihood(self, params, prefix_obs, fail_ts):
-        log_likelihood = torch.zeros((params['target1'].belief.samples.shape[0], ))
+        log_likelihood = torch.zeros((params['target1'].belief.samples.shape[0],))
 
         for idx in range(params['target1'].belief.samples.shape[0]):
             ## initialize log_likelihood to prior probability
@@ -265,7 +265,7 @@ class NoVIObstacleObservationModel(ObservationModel):
 
             ## add in terms for the forward model
             for obs_active_ts in prefix_obs:
-                if self.is_in_ray(params['pr2'].pose[0,obs_active_ts[1]-1], params['obs1'].belief.samples[idx,:,fail_ts]):
+                if self.is_in_ray(params['pr2'].theta[0,obs_active_ts[1]-1], params['obs1'].belief.samples[idx,:,fail_ts] - params['pr2'].pose[:,obs_active_ts[1]-1]):
                     ## sample around the true belief, with extremely low variation / error
                     log_likelihood[idx] += dist.MultivariateNormal(params['obs1'].belief.samples[idx,:,fail_ts], (0.01 * torch.eye(2))).log_prob(prefix_obs[obs_active_ts]['obs1'])
                 else:
@@ -284,7 +284,7 @@ class NoVIObstacleObservationModel(ObservationModel):
         
         ## sample through strict prefix of current obs
         for obs_active_ts in past_obs:
-            if self.is_in_ray(params['pr2'].pose[0,obs_active_ts[1]-1], b_global_samp.detach().to('cpu')):
+            if self.is_in_ray(params['pr2'].pose[0,obs_active_ts[1]-1], b_global_samp.detach().to('cpu') - params['pr2'].pose[:,obs_active_ts[1]-1]):
                 ## sample around the true belief, with extremely low variation / error
                 pyro.sample('obs1.'+str(obs_active_ts[0]), dist.MultivariateNormal(b_global_samp.float().to(DEVICE), (0.01 * torch.eye(2)).to(DEVICE)))
             else:

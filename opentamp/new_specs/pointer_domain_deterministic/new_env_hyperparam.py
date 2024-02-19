@@ -64,7 +64,7 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
         'num_targs': nt,
         'attr_map': ATTRMAP,
         'agent_type': GymAgent,
-        'gym_env_type': BlankEnvWrapperBimodal,
+        'gym_env_type': BlankEnvWrapper,
         'mp_solver_type': ToySolver,
         'll_solver_type': ToySolver,
         'meta_file': opentamp.__path__._path[0] + '/new_specs/pointer_domain_deterministic/pointer_meta.json',

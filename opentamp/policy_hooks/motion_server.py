@@ -102,9 +102,10 @@ class MotionServer(Server):
 
         # ts = (0, plan.actions[plan.start].active_timesteps[0])
         
-        ## TODO populates attribute of start of current update, to the current simulator state...
         # if node.freeze_ts <= 0:
-        set_params_attrs(plan.params, self.agent.state_inds, node.x0, ts[1], use_symbols=True)
+        ## if this is the initial planned action, populate the state_inds with random init-state from node (don't do this later)
+        if plan.start == 0:
+            set_params_attrs(plan.params, self.agent.state_inds, node.x0, ts[1], use_symbols=True)
 
         plan.freeze_actions(plan.start)
         # cur_t = node.freeze_ts if node.freeze_ts >= 0 else 0
@@ -332,6 +333,7 @@ class MotionServer(Server):
 
             self.agent.add_task_paths([path])  ## add the given history of tasks from this successful rollout
 
+        
 
         if replan_success and refine_success:
             print('Success')
@@ -389,7 +391,6 @@ class MotionServer(Server):
         n_problem = node.get_problem(fail_step, fail_pred, fail_negated)
         abs_prob = self.agent.hl_solver.translate_problem(n_problem, goal=node.concr_prob.goal)
         prefix = node.curr_plan.prefix(fail_step)
-        breakpoint()
         hlnode = HLSearchNode(abs_prob,
                              node.domain,
                              n_problem,
