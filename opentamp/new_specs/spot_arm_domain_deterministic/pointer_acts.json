@@ -1,0 +1,29 @@
+{
+    "point_to": {
+        "params": [
+            ["?robot", "Robot"],
+            ["?target", "Target"]
+        ],
+        "horizon": 2,
+        "pre": [
+            
+        ],
+        "eff": [
+            {
+                "type": "BPointingSpotHeight",
+                "args": ["?robot", "?target"],
+                "active_timesteps": [1, 1]
+            }, 
+            {
+                "type": "BPointingSpotGripper",
+                "args": ["?robot", "?target"],
+                "active_timesteps": [1, 1]
+            },
+            {
+                "type": "ConstantObservation",
+                "args": ["?target"],
+                "active_timesteps": [0, 1]
+            }
+        ]
+    }
+}

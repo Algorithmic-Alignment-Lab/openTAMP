@@ -1,0 +1,570 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>mpi4py &#8212; MPI for Python 3.1.3 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/classic.css" />
+    
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="mpi4py.MPI" href="mpi4py.MPI.html" />
+    <link rel="prev" title="Tutorial" href="tutorial.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mpi4py.MPI.html" title="mpi4py.MPI"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="tutorial.html" title="Tutorial"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">MPI for Python 3.1.3 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">mpi4py</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-mpi4py">
+<span id="mpi4py"></span><h1>mpi4py<a class="headerlink" href="#module-mpi4py" title="Permalink to this headline">¶</a></h1>
+<p>This is the <strong>MPI for Python</strong> package.</p>
+<p>The <em>Message Passing Interface</em> (MPI) is a standardized and portable
+message-passing system designed to function on a wide variety of
+parallel computers. The MPI standard defines the syntax and semantics
+of library routines and allows users to write portable programs in the
+main scientific programming languages (Fortran, C, or C++). Since its
+release, the MPI specification has become the leading standard for
+message-passing libraries for parallel computers.</p>
+<p><em>MPI for Python</em> provides MPI bindings for the Python programming
+language, allowing any Python program to exploit multiple processors.
+This package build on the MPI specification and provides an object
+oriented interface which closely follows MPI-2 C++ bindings.</p>
+<section id="runtime-configuration-options">
+<h2>Runtime configuration options<a class="headerlink" href="#runtime-configuration-options" title="Permalink to this headline">¶</a></h2>
+<dl class="py data">
+<dt class="sig sig-object py" id="mpi4py.mpi4py.rc">
+<span class="sig-prename descclassname"><span class="pre">mpi4py.</span></span><span class="sig-name descname"><span class="pre">rc</span></span><a class="headerlink" href="#mpi4py.mpi4py.rc" title="Permalink to this definition">¶</a></dt>
+<dd><p>This object has attributes exposing runtime configuration options that
+become effective at import time of the <a class="reference internal" href="reference/mpi4py.MPI.html#module-mpi4py.MPI" title="mpi4py.MPI: Message Passing Interface."><code class="xref py py-mod docutils literal notranslate"><span class="pre">MPI</span></code></a> module.</p>
+</dd></dl>
+
+<p class="rubric">Attributes Summary</p>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 75%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.mpi4py.rc.initialize" title="mpi4py.mpi4py.rc.initialize"><code class="xref any py py-attr docutils literal notranslate"><span class="pre">initialize</span></code></a></p></td>
+<td><p>Automatic MPI initialization at import</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.mpi4py.rc.threads" title="mpi4py.mpi4py.rc.threads"><code class="xref any py py-attr docutils literal notranslate"><span class="pre">threads</span></code></a></p></td>
+<td><p>Request initialization with thread support</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.mpi4py.rc.thread_level" title="mpi4py.mpi4py.rc.thread_level"><code class="xref any py py-attr docutils literal notranslate"><span class="pre">thread_level</span></code></a></p></td>
+<td><p>Level of thread support to request</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.mpi4py.rc.finalize" title="mpi4py.mpi4py.rc.finalize"><code class="xref any py py-attr docutils literal notranslate"><span class="pre">finalize</span></code></a></p></td>
+<td><p>Automatic MPI finalization at exit</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.mpi4py.rc.fast_reduce" title="mpi4py.mpi4py.rc.fast_reduce"><code class="xref any py py-attr docutils literal notranslate"><span class="pre">fast_reduce</span></code></a></p></td>
+<td><p>Use tree-based reductions for objects</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.mpi4py.rc.recv_mprobe" title="mpi4py.mpi4py.rc.recv_mprobe"><code class="xref any py py-attr docutils literal notranslate"><span class="pre">recv_mprobe</span></code></a></p></td>
+<td><p>Use matched probes to receive objects</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.mpi4py.rc.errors" title="mpi4py.mpi4py.rc.errors"><code class="xref any py py-attr docutils literal notranslate"><span class="pre">errors</span></code></a></p></td>
+<td><p>Error handling policy</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes Documentation</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.mpi4py.rc.initialize">
+<span class="sig-prename descclassname"><span class="pre">mpi4py.rc.</span></span><span class="sig-name descname"><span class="pre">initialize</span></span><a class="headerlink" href="#mpi4py.mpi4py.rc.initialize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Automatic MPI initialization at import.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code></a></p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><span class="target" id="index-0"></span><a class="reference internal" href="#envvar-MPI4PY_RC_INITIALIZE"><code class="xref std std-envvar docutils literal notranslate"><span class="pre">MPI4PY_RC_INITIALIZE</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.mpi4py.rc.threads">
+<span class="sig-prename descclassname"><span class="pre">mpi4py.rc.</span></span><span class="sig-name descname"><span class="pre">threads</span></span><a class="headerlink" href="#mpi4py.mpi4py.rc.threads" title="Permalink to this definition">¶</a></dt>
+<dd><p>Request initialization with thread support.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code></a></p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><span class="target" id="index-1"></span><a class="reference internal" href="#envvar-MPI4PY_RC_THREADS"><code class="xref std std-envvar docutils literal notranslate"><span class="pre">MPI4PY_RC_THREADS</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.mpi4py.rc.thread_level">
+<span class="sig-prename descclassname"><span class="pre">mpi4py.rc.</span></span><span class="sig-name descname"><span class="pre">thread_level</span></span><a class="headerlink" href="#mpi4py.mpi4py.rc.thread_level" title="Permalink to this definition">¶</a></dt>
+<dd><p>Level of thread support to request.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">&quot;multiple&quot;</span></code></p>
+</dd>
+<dt class="field-odd">Choices</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">&quot;multiple&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;serialized&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;funneled&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;single&quot;</span></code></p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><span class="target" id="index-2"></span><a class="reference internal" href="#envvar-MPI4PY_RC_THREAD_LEVEL"><code class="xref std std-envvar docutils literal notranslate"><span class="pre">MPI4PY_RC_THREAD_LEVEL</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.mpi4py.rc.finalize">
+<span class="sig-prename descclassname"><span class="pre">mpi4py.rc.</span></span><span class="sig-name descname"><span class="pre">finalize</span></span><a class="headerlink" href="#mpi4py.mpi4py.rc.finalize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Automatic MPI finalization at exit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a> or <a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><span class="target" id="index-3"></span><a class="reference internal" href="#envvar-MPI4PY_RC_FINALIZE"><code class="xref std std-envvar docutils literal notranslate"><span class="pre">MPI4PY_RC_FINALIZE</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.mpi4py.rc.fast_reduce">
+<span class="sig-prename descclassname"><span class="pre">mpi4py.rc.</span></span><span class="sig-name descname"><span class="pre">fast_reduce</span></span><a class="headerlink" href="#mpi4py.mpi4py.rc.fast_reduce" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use tree-based reductions for objects.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code></a></p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><span class="target" id="index-4"></span><a class="reference internal" href="#envvar-MPI4PY_RC_FAST_REDUCE"><code class="xref std std-envvar docutils literal notranslate"><span class="pre">MPI4PY_RC_FAST_REDUCE</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.mpi4py.rc.recv_mprobe">
+<span class="sig-prename descclassname"><span class="pre">mpi4py.rc.</span></span><span class="sig-name descname"><span class="pre">recv_mprobe</span></span><a class="headerlink" href="#mpi4py.mpi4py.rc.recv_mprobe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use matched probes to receive objects.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code></a></p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><span class="target" id="index-5"></span><a class="reference internal" href="#envvar-MPI4PY_RC_RECV_MPROBE"><code class="xref std std-envvar docutils literal notranslate"><span class="pre">MPI4PY_RC_RECV_MPROBE</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.mpi4py.rc.errors">
+<span class="sig-prename descclassname"><span class="pre">mpi4py.rc.</span></span><span class="sig-name descname"><span class="pre">errors</span></span><a class="headerlink" href="#mpi4py.mpi4py.rc.errors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Error handling policy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">&quot;exception&quot;</span></code></p>
+</dd>
+<dt class="field-odd">Choices</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">&quot;exception&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;default&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;fatal&quot;</span></code></p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><span class="target" id="index-6"></span><a class="reference internal" href="#envvar-MPI4PY_RC_ERRORS"><code class="xref std std-envvar docutils literal notranslate"><span class="pre">MPI4PY_RC_ERRORS</span></code></a></p>
+</div>
+</dd></dl>
+
+<p class="rubric">Example</p>
+<p>MPI for Python features automatic initialization and finalization of the MPI
+execution environment. By using the <a class="reference internal" href="#mpi4py.mpi4py.rc" title="mpi4py.mpi4py.rc"><code class="xref any py py-data docutils literal notranslate"><span class="pre">mpi4py.rc</span></code></a> object, MPI initialization and
+finalization can be handled programatically:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mpi4py</span>
+<span class="n">mpi4py</span><span class="o">.</span><span class="n">rc</span><span class="o">.</span><span class="n">initialize</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># do not initialize MPI automatically</span>
+<span class="n">mpi4py</span><span class="o">.</span><span class="n">rc</span><span class="o">.</span><span class="n">finalize</span> <span class="o">=</span> <span class="kc">False</span>    <span class="c1"># do not finalize MPI automatically</span>
+
+<span class="kn">from</span> <span class="nn">mpi4py</span> <span class="kn">import</span> <span class="n">MPI</span> <span class="c1"># import the &#39;MPI&#39; module</span>
+
+<span class="n">MPI</span><span class="o">.</span><span class="n">Init</span><span class="p">()</span>      <span class="c1"># manual initialization of the MPI environment</span>
+<span class="o">...</span>             <span class="c1"># your finest code here ...</span>
+<span class="n">MPI</span><span class="o">.</span><span class="n">Finalize</span><span class="p">()</span>  <span class="c1"># manual finalization of the MPI environment</span>
+</pre></div>
+</div>
+</section>
+<section id="environment-variables">
+<h2>Environment variables<a class="headerlink" href="#environment-variables" title="Permalink to this headline">¶</a></h2>
+<p>The following environment variables override the corresponding attributes of
+the <a class="reference internal" href="#mpi4py.mpi4py.rc" title="mpi4py.mpi4py.rc"><code class="xref py py-data docutils literal notranslate"><span class="pre">mpi4py.rc</span></code></a> and <a class="reference internal" href="reference/mpi4py.MPI.pickle.html#mpi4py.MPI.pickle" title="mpi4py.MPI.pickle"><code class="xref py py-data docutils literal notranslate"><span class="pre">MPI.pickle</span></code></a> objects at import time of the
+<a class="reference internal" href="reference/mpi4py.MPI.html#module-mpi4py.MPI" title="mpi4py.MPI: Message Passing Interface."><code class="xref py py-mod docutils literal notranslate"><span class="pre">MPI</span></code></a> module.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For variables of boolean type, accepted values are <code class="docutils literal notranslate"><span class="pre">0</span></code> and <code class="docutils literal notranslate"><span class="pre">1</span></code>
+(interpreted as <a class="reference external" href="https://docs.python.org/3/library/constants.html#False" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">False</span></code></a> and <a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code></a>, respectively), and strings
+specifying a <a class="reference external" href="https://yaml.org/type/bool.html">YAML boolean</a> value (case-insensitive).</p>
+</div>
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-MPI4PY_RC_INITIALIZE">
+<span class="sig-name descname"><span class="pre">MPI4PY_RC_INITIALIZE</span></span><a class="headerlink" href="#envvar-MPI4PY_RC_INITIALIZE" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code></a></p>
+</dd>
+</dl>
+<p>Whether to automatically initialize MPI at import time of the
+<a class="reference internal" href="reference/mpi4py.MPI.html#module-mpi4py.MPI" title="mpi4py.MPI: Message Passing Interface."><code class="xref py py-mod docutils literal notranslate"><span class="pre">mpi4py.MPI</span></code></a> module.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#mpi4py.mpi4py.rc.initialize" title="mpi4py.mpi4py.rc.initialize"><code class="xref py py-attr docutils literal notranslate"><span class="pre">mpi4py.rc.initialize</span></code></a></p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.1.0.</span></p>
+</div>
+</dd></dl>
+
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-MPI4PY_RC_FINALIZE">
+<span class="sig-name descname"><span class="pre">MPI4PY_RC_FINALIZE</span></span><a class="headerlink" href="#envvar-MPI4PY_RC_FINALIZE" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+<dt class="field-odd">Choices</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#False" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">False</span></code></a></p>
+</dd>
+</dl>
+<p>Whether to automatically finalize MPI at exit time of the Python process.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#mpi4py.mpi4py.rc.finalize" title="mpi4py.mpi4py.rc.finalize"><code class="xref py py-attr docutils literal notranslate"><span class="pre">mpi4py.rc.finalize</span></code></a></p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.1.0.</span></p>
+</div>
+</dd></dl>
+
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-MPI4PY_RC_THREADS">
+<span class="sig-name descname"><span class="pre">MPI4PY_RC_THREADS</span></span><a class="headerlink" href="#envvar-MPI4PY_RC_THREADS" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code></a></p>
+</dd>
+</dl>
+<p>Whether to initialize MPI with thread support.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#mpi4py.mpi4py.rc.threads" title="mpi4py.mpi4py.rc.threads"><code class="xref py py-attr docutils literal notranslate"><span class="pre">mpi4py.rc.threads</span></code></a></p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.1.0.</span></p>
+</div>
+</dd></dl>
+
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-MPI4PY_RC_THREAD_LEVEL">
+<span class="sig-name descname"><span class="pre">MPI4PY_RC_THREAD_LEVEL</span></span><a class="headerlink" href="#envvar-MPI4PY_RC_THREAD_LEVEL" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Default</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">&quot;multiple&quot;</span></code></p>
+</dd>
+<dt class="field-even">Choices</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">&quot;single&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;funneled&quot;</span></code>,
+<code class="docutils literal notranslate"><span class="pre">&quot;serialized&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;multiple&quot;</span></code></p>
+</dd>
+</dl>
+<p>The level of required thread support.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#mpi4py.mpi4py.rc.thread_level" title="mpi4py.mpi4py.rc.thread_level"><code class="xref py py-attr docutils literal notranslate"><span class="pre">mpi4py.rc.thread_level</span></code></a></p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.1.0.</span></p>
+</div>
+</dd></dl>
+
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-MPI4PY_RC_FAST_REDUCE">
+<span class="sig-name descname"><span class="pre">MPI4PY_RC_FAST_REDUCE</span></span><a class="headerlink" href="#envvar-MPI4PY_RC_FAST_REDUCE" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code></a></p>
+</dd>
+</dl>
+<p>Whether to use tree-based reductions for objects.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#mpi4py.mpi4py.rc.fast_reduce" title="mpi4py.mpi4py.rc.fast_reduce"><code class="xref py py-attr docutils literal notranslate"><span class="pre">mpi4py.rc.fast_reduce</span></code></a></p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.1.0.</span></p>
+</div>
+</dd></dl>
+
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-MPI4PY_RC_RECV_MPROBE">
+<span class="sig-name descname"><span class="pre">MPI4PY_RC_RECV_MPROBE</span></span><a class="headerlink" href="#envvar-MPI4PY_RC_RECV_MPROBE" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code></a></p>
+</dd>
+</dl>
+<p>Whether to use matched probes to receive objects.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#mpi4py.mpi4py.rc.recv_mprobe" title="mpi4py.mpi4py.rc.recv_mprobe"><code class="xref py py-attr docutils literal notranslate"><span class="pre">mpi4py.rc.recv_mprobe</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-MPI4PY_RC_ERRORS">
+<span class="sig-name descname"><span class="pre">MPI4PY_RC_ERRORS</span></span><a class="headerlink" href="#envvar-MPI4PY_RC_ERRORS" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Default</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">&quot;exception&quot;</span></code></p>
+</dd>
+<dt class="field-even">Choices</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">&quot;exception&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;default&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;fatal&quot;</span></code></p>
+</dd>
+</dl>
+<p>Controls default MPI error handling policy.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#mpi4py.mpi4py.rc.errors" title="mpi4py.mpi4py.rc.errors"><code class="xref py py-attr docutils literal notranslate"><span class="pre">mpi4py.rc.errors</span></code></a></p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.1.0.</span></p>
+</div>
+</dd></dl>
+
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-MPI4PY_PICKLE_PROTOCOL">
+<span class="sig-name descname"><span class="pre">MPI4PY_PICKLE_PROTOCOL</span></span><a class="headerlink" href="#envvar-MPI4PY_PICKLE_PROTOCOL" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/pickle.html#pickle.HIGHEST_PROTOCOL" title="(in Python v3.10)"><code class="xref py py-data docutils literal notranslate"><span class="pre">pickle.HIGHEST_PROTOCOL</span></code></a></p>
+</dd>
+</dl>
+<p>Controls the default pickle protocol to use when communicating Python
+objects.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="reference/mpi4py.MPI.Pickle.html#mpi4py.MPI.Pickle.PROTOCOL" title="mpi4py.MPI.Pickle.PROTOCOL"><code class="xref py py-attr docutils literal notranslate"><span class="pre">PROTOCOL</span></code></a> attribute of the
+<a class="reference internal" href="reference/mpi4py.MPI.pickle.html#mpi4py.MPI.pickle" title="mpi4py.MPI.pickle"><code class="xref py py-data docutils literal notranslate"><span class="pre">MPI.pickle</span></code></a> object within the <a class="reference internal" href="reference/mpi4py.MPI.html#module-mpi4py.MPI" title="mpi4py.MPI: Message Passing Interface."><code class="xref py py-mod docutils literal notranslate"><span class="pre">MPI</span></code></a> module.</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.1.0.</span></p>
+</div>
+</dd></dl>
+
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-MPI4PY_PICKLE_THRESHOLD">
+<span class="sig-name descname"><span class="pre">MPI4PY_PICKLE_THRESHOLD</span></span><a class="headerlink" href="#envvar-MPI4PY_PICKLE_THRESHOLD" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">262144</span></code></p>
+</dd>
+</dl>
+<p>Controls the default buffer size threshold for switching from in-band to
+out-of-band buffer handling when using pickle protocol version 5 or higher.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>Module <a class="reference internal" href="mpi4py.util.pkl5.html#module-mpi4py.util.pkl5" title="mpi4py.util.pkl5: Pickle-based communication using protocol 5."><code class="xref py py-mod docutils literal notranslate"><span class="pre">mpi4py.util.pkl5</span></code></a>.</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.1.2.</span></p>
+</div>
+</dd></dl>
+
+</section>
+<section id="miscellaneous-functions">
+<h2>Miscellaneous functions<a class="headerlink" href="#miscellaneous-functions" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="mpi4py.profile">
+<span class="sig-prename descclassname"><span class="pre">mpi4py.</span></span><span class="sig-name descname"><span class="pre">profile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.profile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Support for the MPI profiling interface.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – Name of the profiler library to load.</p></li>
+<li><p><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/glossary.html#term-sequence" title="(in Python v3.10)"><code class="xref any docutils literal notranslate"><span class="pre">sequence</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <em>optional</em>) – Additional paths to search for the profiler.</p></li>
+<li><p><strong>logfile</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <em>optional</em>) – Filename prefix for dumping profiler output.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mpi4py.get_config">
+<span class="sig-prename descclassname"><span class="pre">mpi4py.</span></span><span class="sig-name descname"><span class="pre">get_config</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.get_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a dictionary with information about MPI.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Dict[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mpi4py.get_include">
+<span class="sig-prename descclassname"><span class="pre">mpi4py.</span></span><span class="sig-name descname"><span class="pre">get_include</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.get_include" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the directory in the package that contains header files.</p>
+<p>Extension modules that need to compile against mpi4py should use
+this function to locate the appropriate include directory. Using
+Python distutils (or perhaps NumPy distutils):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mpi4py</span>
+<span class="n">Extension</span><span class="p">(</span><span class="s1">&#39;extension_name&#39;</span><span class="p">,</span> <span class="o">...</span>
+          <span class="n">include_dirs</span><span class="o">=</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">mpi4py</span><span class="o">.</span><span class="n">get_include</span><span class="p">()])</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">mpi4py</a><ul>
+<li><a class="reference internal" href="#runtime-configuration-options">Runtime configuration options</a></li>
+<li><a class="reference internal" href="#environment-variables">Environment variables</a></li>
+<li><a class="reference internal" href="#miscellaneous-functions">Miscellaneous functions</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="tutorial.html"
+                        title="previous chapter">Tutorial</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="mpi4py.MPI.html"
+                        title="next chapter">mpi4py.MPI</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mpi4py.MPI.html" title="mpi4py.MPI"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="tutorial.html" title="Tutorial"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">MPI for Python 3.1.3 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">mpi4py</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Lisandro Dalcin.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.0.
+    </div>
+  </body>
+</html>

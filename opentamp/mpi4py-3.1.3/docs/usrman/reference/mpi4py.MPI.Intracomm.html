@@ -1,0 +1,513 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>mpi4py.MPI.Intracomm &#8212; MPI for Python 3.1.3 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/classic.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="mpi4py.MPI.Message" href="mpi4py.MPI.Message.html" />
+    <link rel="prev" title="mpi4py.MPI.Intercomm" href="mpi4py.MPI.Intercomm.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mpi4py.MPI.Message.html" title="mpi4py.MPI.Message"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="mpi4py.MPI.Intercomm.html" title="mpi4py.MPI.Intercomm"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">MPI for Python 3.1.3 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" >Reference</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="mpi4py.MPI.html" accesskey="U">mpi4py.MPI</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">mpi4py.MPI.Intracomm</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="mpi4py-mpi-intracomm">
+<h1>mpi4py.MPI.Intracomm<a class="headerlink" href="#mpi4py-mpi-intracomm" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="mpi4py.MPI.Intracomm">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mpi4py.MPI.</span></span><span class="sig-name descname"><span class="pre">Intracomm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">comm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Intracomm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="mpi4py.MPI.Comm.html#mpi4py.MPI.Comm" title="mpi4py.MPI.Comm"><code class="xref py py-class docutils literal notranslate"><span class="pre">mpi4py.MPI.Comm</span></code></a></p>
+<p>Intracommunicator</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>comm</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="#mpi4py.MPI.Intracomm" title="mpi4py.MPI.Intracomm"><em>Intracomm</em></a><em>]</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mpi4py.MPI.Intracomm" title="mpi4py.MPI.Intracomm">Intracomm</a></p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Intracomm.__new__">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">__new__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Intracomm.__new__" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>comm</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="#mpi4py.MPI.Intracomm" title="mpi4py.MPI.Intracomm"><em>Intracomm</em></a><em>]</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mpi4py.MPI.Intracomm" title="mpi4py.MPI.Intracomm">Intracomm</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Methods Summary</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Intracomm.Accept" title="mpi4py.MPI.Intracomm.Accept"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Accept</span></code></a>(port_name[, info, root])</p></td>
+<td><p>Accept a request to form a new intercommunicator</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Intracomm.Cart_map" title="mpi4py.MPI.Intracomm.Cart_map"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Cart_map</span></code></a>(dims[, periods])</p></td>
+<td><p>Return an optimal placement for the calling process on the physical machine</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Intracomm.Connect" title="mpi4py.MPI.Intracomm.Connect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Connect</span></code></a>(port_name[, info, root])</p></td>
+<td><p>Make a request to form a new intercommunicator</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Intracomm.Create_cart" title="mpi4py.MPI.Intracomm.Create_cart"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Create_cart</span></code></a>(dims[, periods, reorder])</p></td>
+<td><p>Create cartesian communicator</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Intracomm.Create_dist_graph" title="mpi4py.MPI.Intracomm.Create_dist_graph"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Create_dist_graph</span></code></a>(sources, degrees, destinations)</p></td>
+<td><p>Create distributed graph communicator</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Intracomm.Create_dist_graph_adjacent" title="mpi4py.MPI.Intracomm.Create_dist_graph_adjacent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Create_dist_graph_adjacent</span></code></a>(sources, destinations)</p></td>
+<td><p>Create distributed graph communicator</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Intracomm.Create_graph" title="mpi4py.MPI.Intracomm.Create_graph"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Create_graph</span></code></a>(index, edges[, reorder])</p></td>
+<td><p>Create graph communicator</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Intracomm.Create_intercomm" title="mpi4py.MPI.Intracomm.Create_intercomm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Create_intercomm</span></code></a>(local_leader, peer_comm, ...)</p></td>
+<td><p>Create intercommunicator</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Intracomm.Exscan" title="mpi4py.MPI.Intracomm.Exscan"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Exscan</span></code></a>(sendbuf, recvbuf[, op])</p></td>
+<td><p>Exclusive Scan</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Intracomm.Graph_map" title="mpi4py.MPI.Intracomm.Graph_map"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Graph_map</span></code></a>(index, edges)</p></td>
+<td><p>Return an optimal placement for the calling process on the physical machine</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Intracomm.Iexscan" title="mpi4py.MPI.Intracomm.Iexscan"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Iexscan</span></code></a>(sendbuf, recvbuf[, op])</p></td>
+<td><p>Inclusive Scan</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Intracomm.Iscan" title="mpi4py.MPI.Intracomm.Iscan"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Iscan</span></code></a>(sendbuf, recvbuf[, op])</p></td>
+<td><p>Inclusive Scan</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Intracomm.Scan" title="mpi4py.MPI.Intracomm.Scan"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Scan</span></code></a>(sendbuf, recvbuf[, op])</p></td>
+<td><p>Inclusive Scan</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Intracomm.Spawn" title="mpi4py.MPI.Intracomm.Spawn"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Spawn</span></code></a>(command[, args, maxprocs, info, root, ...])</p></td>
+<td><p>Spawn instances of a single MPI application</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Intracomm.Spawn_multiple" title="mpi4py.MPI.Intracomm.Spawn_multiple"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Spawn_multiple</span></code></a>(command[, args, maxprocs, ...])</p></td>
+<td><p>Spawn instances of multiple MPI applications</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Intracomm.exscan" title="mpi4py.MPI.Intracomm.exscan"><code class="xref py py-obj docutils literal notranslate"><span class="pre">exscan</span></code></a>(sendobj[, op])</p></td>
+<td><p>Exclusive Scan</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Intracomm.scan" title="mpi4py.MPI.Intracomm.scan"><code class="xref py py-obj docutils literal notranslate"><span class="pre">scan</span></code></a>(sendobj[, op])</p></td>
+<td><p>Inclusive Scan</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods Documentation</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Intracomm.Accept">
+<span class="sig-name descname"><span class="pre">Accept</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">port_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">INFO_NULL</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Intracomm.Accept" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accept a request to form a new intercommunicator</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>port_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – </p></li>
+<li><p><strong>info</strong> (<a class="reference internal" href="mpi4py.MPI.Info.html#mpi4py.MPI.Info" title="mpi4py.MPI.Info"><em>Info</em></a>) – </p></li>
+<li><p><strong>root</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Intercomm.html#mpi4py.MPI.Intercomm" title="mpi4py.MPI.Intercomm">Intercomm</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Intracomm.Cart_map">
+<span class="sig-name descname"><span class="pre">Cart_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dims</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">periods</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Intracomm.Cart_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an optimal placement for the
+calling process on the physical machine</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dims</strong> (<em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em>) – </p></li>
+<li><p><strong>periods</strong> (<em>Optional</em><em>[</em><em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>]</em><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Intracomm.Connect">
+<span class="sig-name descname"><span class="pre">Connect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">port_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">INFO_NULL</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Intracomm.Connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a request to form a new intercommunicator</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>port_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – </p></li>
+<li><p><strong>info</strong> (<a class="reference internal" href="mpi4py.MPI.Info.html#mpi4py.MPI.Info" title="mpi4py.MPI.Info"><em>Info</em></a>) – </p></li>
+<li><p><strong>root</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Intercomm.html#mpi4py.MPI.Intercomm" title="mpi4py.MPI.Intercomm">Intercomm</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Intracomm.Create_cart">
+<span class="sig-name descname"><span class="pre">Create_cart</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dims</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">periods</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reorder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Intracomm.Create_cart" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create cartesian communicator</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dims</strong> (<em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em>) – </p></li>
+<li><p><strong>periods</strong> (<em>Optional</em><em>[</em><em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>]</em><em>]</em>) – </p></li>
+<li><p><strong>reorder</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Cartcomm.html#mpi4py.MPI.Cartcomm" title="mpi4py.MPI.Cartcomm">Cartcomm</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Intracomm.Create_dist_graph">
+<span class="sig-name descname"><span class="pre">Create_dist_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sources</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">degrees</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">destinations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">INFO_NULL</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reorder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Intracomm.Create_dist_graph" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create distributed graph communicator</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sources</strong> (<em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em>) – </p></li>
+<li><p><strong>degrees</strong> (<em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em>) – </p></li>
+<li><p><strong>destinations</strong> (<em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em>) – </p></li>
+<li><p><strong>weights</strong> (<em>Optional</em><em>[</em><em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em><em>]</em>) – </p></li>
+<li><p><strong>info</strong> (<a class="reference internal" href="mpi4py.MPI.Info.html#mpi4py.MPI.Info" title="mpi4py.MPI.Info"><em>Info</em></a>) – </p></li>
+<li><p><strong>reorder</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Distgraphcomm.html#mpi4py.MPI.Distgraphcomm" title="mpi4py.MPI.Distgraphcomm">Distgraphcomm</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Intracomm.Create_dist_graph_adjacent">
+<span class="sig-name descname"><span class="pre">Create_dist_graph_adjacent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sources</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">destinations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sourceweights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">destweights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">INFO_NULL</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reorder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Intracomm.Create_dist_graph_adjacent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create distributed graph communicator</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sources</strong> (<em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em>) – </p></li>
+<li><p><strong>destinations</strong> (<em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em>) – </p></li>
+<li><p><strong>sourceweights</strong> (<em>Optional</em><em>[</em><em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em><em>]</em>) – </p></li>
+<li><p><strong>destweights</strong> (<em>Optional</em><em>[</em><em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em><em>]</em>) – </p></li>
+<li><p><strong>info</strong> (<a class="reference internal" href="mpi4py.MPI.Info.html#mpi4py.MPI.Info" title="mpi4py.MPI.Info"><em>Info</em></a>) – </p></li>
+<li><p><strong>reorder</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Distgraphcomm.html#mpi4py.MPI.Distgraphcomm" title="mpi4py.MPI.Distgraphcomm">Distgraphcomm</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Intracomm.Create_graph">
+<span class="sig-name descname"><span class="pre">Create_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edges</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reorder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Intracomm.Create_graph" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create graph communicator</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>index</strong> (<em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em>) – </p></li>
+<li><p><strong>edges</strong> (<em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em>) – </p></li>
+<li><p><strong>reorder</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Graphcomm.html#mpi4py.MPI.Graphcomm" title="mpi4py.MPI.Graphcomm">Graphcomm</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Intracomm.Create_intercomm">
+<span class="sig-name descname"><span class="pre">Create_intercomm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">local_leader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">peer_comm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remote_leader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Intracomm.Create_intercomm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create intercommunicator</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>local_leader</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>peer_comm</strong> (<a class="reference internal" href="#mpi4py.MPI.Intracomm" title="mpi4py.MPI.Intracomm"><em>Intracomm</em></a>) – </p></li>
+<li><p><strong>remote_leader</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>tag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Intercomm.html#mpi4py.MPI.Intercomm" title="mpi4py.MPI.Intercomm">Intercomm</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Intracomm.Exscan">
+<span class="sig-name descname"><span class="pre">Exscan</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sendbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recvbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">op</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">SUM</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Intracomm.Exscan" title="Permalink to this definition">¶</a></dt>
+<dd><p>Exclusive Scan</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sendbuf</strong> (<em>Union</em><em>[</em><em>BufSpec</em><em>, </em><em>InPlace</em><em>]</em>) – </p></li>
+<li><p><strong>recvbuf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>op</strong> (<a class="reference internal" href="mpi4py.MPI.Op.html#mpi4py.MPI.Op" title="mpi4py.MPI.Op"><em>Op</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Intracomm.Graph_map">
+<span class="sig-name descname"><span class="pre">Graph_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edges</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Intracomm.Graph_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an optimal placement for the
+calling process on the physical machine</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>index</strong> (<em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em>) – </p></li>
+<li><p><strong>edges</strong> (<em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Intracomm.Iexscan">
+<span class="sig-name descname"><span class="pre">Iexscan</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sendbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recvbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">op</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">SUM</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Intracomm.Iexscan" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inclusive Scan</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sendbuf</strong> (<em>Union</em><em>[</em><em>BufSpec</em><em>, </em><em>InPlace</em><em>]</em>) – </p></li>
+<li><p><strong>recvbuf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>op</strong> (<a class="reference internal" href="mpi4py.MPI.Op.html#mpi4py.MPI.Op" title="mpi4py.MPI.Op"><em>Op</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request">Request</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Intracomm.Iscan">
+<span class="sig-name descname"><span class="pre">Iscan</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sendbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recvbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">op</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">SUM</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Intracomm.Iscan" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inclusive Scan</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sendbuf</strong> (<em>Union</em><em>[</em><em>BufSpec</em><em>, </em><em>InPlace</em><em>]</em>) – </p></li>
+<li><p><strong>recvbuf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>op</strong> (<a class="reference internal" href="mpi4py.MPI.Op.html#mpi4py.MPI.Op" title="mpi4py.MPI.Op"><em>Op</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request">Request</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Intracomm.Scan">
+<span class="sig-name descname"><span class="pre">Scan</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sendbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recvbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">op</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">SUM</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Intracomm.Scan" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inclusive Scan</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sendbuf</strong> (<em>Union</em><em>[</em><em>BufSpec</em><em>, </em><em>InPlace</em><em>]</em>) – </p></li>
+<li><p><strong>recvbuf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>op</strong> (<a class="reference internal" href="mpi4py.MPI.Op.html#mpi4py.MPI.Op" title="mpi4py.MPI.Op"><em>Op</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Intracomm.Spawn">
+<span class="sig-name descname"><span class="pre">Spawn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">command</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxprocs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">INFO_NULL</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">errcodes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Intracomm.Spawn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Spawn instances of a single MPI application</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>command</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – </p></li>
+<li><p><strong>args</strong> (<em>Optional</em><em>[</em><em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>]</em><em>]</em>) – </p></li>
+<li><p><strong>maxprocs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>info</strong> (<a class="reference internal" href="mpi4py.MPI.Info.html#mpi4py.MPI.Info" title="mpi4py.MPI.Info"><em>Info</em></a>) – </p></li>
+<li><p><strong>root</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>errcodes</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Intercomm.html#mpi4py.MPI.Intercomm" title="mpi4py.MPI.Intercomm">Intercomm</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Intracomm.Spawn_multiple">
+<span class="sig-name descname"><span class="pre">Spawn_multiple</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">command</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxprocs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">INFO_NULL</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">errcodes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Intracomm.Spawn_multiple" title="Permalink to this definition">¶</a></dt>
+<dd><p>Spawn instances of multiple MPI applications</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>command</strong> (<em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>]</em>) – </p></li>
+<li><p><strong>args</strong> (<em>Optional</em><em>[</em><em>Sequence</em><em>[</em><em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>]</em><em>]</em><em>]</em>) – </p></li>
+<li><p><strong>maxprocs</strong> (<em>Optional</em><em>[</em><em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em><em>]</em>) – </p></li>
+<li><p><strong>info</strong> (<em>Union</em><em>[</em><a class="reference internal" href="mpi4py.MPI.Info.html#mpi4py.MPI.Info" title="mpi4py.MPI.Info"><em>Info</em></a><em>, </em><em>Sequence</em><em>[</em><a class="reference internal" href="mpi4py.MPI.Info.html#mpi4py.MPI.Info" title="mpi4py.MPI.Info"><em>Info</em></a><em>]</em><em>]</em>) – </p></li>
+<li><p><strong>root</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>errcodes</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Intercomm.html#mpi4py.MPI.Intercomm" title="mpi4py.MPI.Intercomm">Intercomm</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Intracomm.exscan">
+<span class="sig-name descname"><span class="pre">exscan</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sendobj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">op</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">SUM</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Intracomm.exscan" title="Permalink to this definition">¶</a></dt>
+<dd><p>Exclusive Scan</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sendobj</strong> (<em>Any</em>) – </p></li>
+<li><p><strong>op</strong> (<em>Union</em><em>[</em><a class="reference internal" href="mpi4py.MPI.Op.html#mpi4py.MPI.Op" title="mpi4py.MPI.Op"><em>Op</em></a><em>, </em><em>Callable</em><em>[</em><em>[</em><em>Any</em><em>, </em><em>Any</em><em>]</em><em>, </em><em>Any</em><em>]</em><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Any</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Intracomm.scan">
+<span class="sig-name descname"><span class="pre">scan</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sendobj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">op</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">SUM</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Intracomm.scan" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inclusive Scan</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sendobj</strong> (<em>Any</em>) – </p></li>
+<li><p><strong>op</strong> (<em>Union</em><em>[</em><a class="reference internal" href="mpi4py.MPI.Op.html#mpi4py.MPI.Op" title="mpi4py.MPI.Op"><em>Op</em></a><em>, </em><em>Callable</em><em>[</em><em>[</em><em>Any</em><em>, </em><em>Any</em><em>]</em><em>, </em><em>Any</em><em>]</em><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Any</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="mpi4py.MPI.Intercomm.html"
+                        title="previous chapter">mpi4py.MPI.Intercomm</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="mpi4py.MPI.Message.html"
+                        title="next chapter">mpi4py.MPI.Message</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mpi4py.MPI.Message.html" title="mpi4py.MPI.Message"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="mpi4py.MPI.Intercomm.html" title="mpi4py.MPI.Intercomm"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">MPI for Python 3.1.3 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" >Reference</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="mpi4py.MPI.html" >mpi4py.MPI</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">mpi4py.MPI.Intracomm</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Lisandro Dalcin.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.0.
+    </div>
+  </body>
+</html>

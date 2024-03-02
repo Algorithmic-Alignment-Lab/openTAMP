@@ -1,0 +1,1089 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>mpi4py.MPI.Win &#8212; MPI for Python 3.1.3 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/classic.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="mpi4py.MPI.memory" href="mpi4py.MPI.memory.html" />
+    <link rel="prev" title="mpi4py.MPI.Topocomm" href="mpi4py.MPI.Topocomm.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mpi4py.MPI.memory.html" title="mpi4py.MPI.memory"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="mpi4py.MPI.Topocomm.html" title="mpi4py.MPI.Topocomm"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">MPI for Python 3.1.3 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" >Reference</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="mpi4py.MPI.html" accesskey="U">mpi4py.MPI</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">mpi4py.MPI.Win</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="mpi4py-mpi-win">
+<h1>mpi4py.MPI.Win<a class="headerlink" href="#mpi4py-mpi-win" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mpi4py.MPI.</span></span><span class="sig-name descname"><span class="pre">Win</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">win</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Win" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Window handle</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>win</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="#mpi4py.MPI.Win" title="mpi4py.MPI.Win"><em>Win</em></a><em>]</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mpi4py.MPI.Win" title="mpi4py.MPI.Win">Win</a></p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.__new__">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">__new__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">win</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Win.__new__" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>win</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="#mpi4py.MPI.Win" title="mpi4py.MPI.Win"><em>Win</em></a><em>]</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mpi4py.MPI.Win" title="mpi4py.MPI.Win">Win</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Methods Summary</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.Accumulate" title="mpi4py.MPI.Win.Accumulate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Accumulate</span></code></a>(origin, target_rank[, target, op])</p></td>
+<td><p>Accumulate data into the target process</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.Allocate" title="mpi4py.MPI.Win.Allocate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Allocate</span></code></a>(size[, disp_unit, info, comm])</p></td>
+<td><p>Create an window object for one-sided communication</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.Allocate_shared" title="mpi4py.MPI.Win.Allocate_shared"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Allocate_shared</span></code></a>(size[, disp_unit, info, comm])</p></td>
+<td><p>Create an window object for one-sided communication</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.Attach" title="mpi4py.MPI.Win.Attach"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Attach</span></code></a>(memory)</p></td>
+<td><p>Attach a local memory region</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.Call_errhandler" title="mpi4py.MPI.Win.Call_errhandler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Call_errhandler</span></code></a>(errorcode)</p></td>
+<td><p>Call the error handler installed on a window</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.Compare_and_swap" title="mpi4py.MPI.Win.Compare_and_swap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Compare_and_swap</span></code></a>(origin, compare, result, ...)</p></td>
+<td><p>Perform one-sided atomic compare-and-swap</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.Complete" title="mpi4py.MPI.Win.Complete"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Complete</span></code></a>()</p></td>
+<td><p>Completes an RMA operations begun after an <a class="reference internal" href="#mpi4py.MPI.Win.Start" title="mpi4py.MPI.Win.Start"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Win.Start()</span></code></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.Create" title="mpi4py.MPI.Win.Create"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Create</span></code></a>(memory[, disp_unit, info, comm])</p></td>
+<td><p>Create an window object for one-sided communication</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.Create_dynamic" title="mpi4py.MPI.Win.Create_dynamic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Create_dynamic</span></code></a>([info, comm])</p></td>
+<td><p>Create an window object for one-sided communication</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.Create_keyval" title="mpi4py.MPI.Win.Create_keyval"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Create_keyval</span></code></a>([copy_fn, delete_fn, nopython])</p></td>
+<td><p>Create a new attribute key for windows</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.Delete_attr" title="mpi4py.MPI.Win.Delete_attr"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Delete_attr</span></code></a>(keyval)</p></td>
+<td><p>Delete attribute value associated with a key</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.Detach" title="mpi4py.MPI.Win.Detach"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Detach</span></code></a>(memory)</p></td>
+<td><p>Detach a local memory region</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.Fence" title="mpi4py.MPI.Win.Fence"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Fence</span></code></a>([assertion])</p></td>
+<td><p>Perform an MPI fence synchronization on a window</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.Fetch_and_op" title="mpi4py.MPI.Win.Fetch_and_op"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Fetch_and_op</span></code></a>(origin, result, target_rank[, ...])</p></td>
+<td><p>Perform one-sided read-modify-write</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.Flush" title="mpi4py.MPI.Win.Flush"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Flush</span></code></a>(rank)</p></td>
+<td><p>Complete all outstanding RMA operations at the given target</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.Flush_all" title="mpi4py.MPI.Win.Flush_all"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Flush_all</span></code></a>()</p></td>
+<td><p>Complete  all  outstanding RMA operations at all targets</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.Flush_local" title="mpi4py.MPI.Win.Flush_local"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Flush_local</span></code></a>(rank)</p></td>
+<td><p>Complete locally all outstanding RMA operations at the given target</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.Flush_local_all" title="mpi4py.MPI.Win.Flush_local_all"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Flush_local_all</span></code></a>()</p></td>
+<td><p>Complete locally all outstanding RMA opera- tions at all targets</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.Free" title="mpi4py.MPI.Win.Free"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Free</span></code></a>()</p></td>
+<td><p>Free a window</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.Free_keyval" title="mpi4py.MPI.Win.Free_keyval"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Free_keyval</span></code></a>(keyval)</p></td>
+<td><p>Free an attribute key for windows</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.Get" title="mpi4py.MPI.Win.Get"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Get</span></code></a>(origin, target_rank[, target])</p></td>
+<td><p>Get data from a memory window on a remote process.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.Get_accumulate" title="mpi4py.MPI.Win.Get_accumulate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Get_accumulate</span></code></a>(origin, result, target_rank)</p></td>
+<td><p>Fetch-and-accumulate data into the target process</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.Get_attr" title="mpi4py.MPI.Win.Get_attr"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Get_attr</span></code></a>(keyval)</p></td>
+<td><p>Retrieve attribute value by key</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.Get_errhandler" title="mpi4py.MPI.Win.Get_errhandler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Get_errhandler</span></code></a>()</p></td>
+<td><p>Get the error handler for a window</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.Get_group" title="mpi4py.MPI.Win.Get_group"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Get_group</span></code></a>()</p></td>
+<td><p>Return a duplicate of the group of the communicator used to create the window</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.Get_info" title="mpi4py.MPI.Win.Get_info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Get_info</span></code></a>()</p></td>
+<td><p>Return the hints for a windows that are currently in use</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.Get_name" title="mpi4py.MPI.Win.Get_name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Get_name</span></code></a>()</p></td>
+<td><p>Get the print name associated with the window</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.Lock" title="mpi4py.MPI.Win.Lock"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Lock</span></code></a>(rank[, lock_type, assertion])</p></td>
+<td><p>Begin an RMA access epoch at the target process</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.Lock_all" title="mpi4py.MPI.Win.Lock_all"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Lock_all</span></code></a>([assertion])</p></td>
+<td><p>Begin an RMA access epoch at all processes</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.Post" title="mpi4py.MPI.Win.Post"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Post</span></code></a>(group[, assertion])</p></td>
+<td><p>Start an RMA exposure epoch</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.Put" title="mpi4py.MPI.Win.Put"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Put</span></code></a>(origin, target_rank[, target])</p></td>
+<td><p>Put data into a memory window on a remote process.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.Raccumulate" title="mpi4py.MPI.Win.Raccumulate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Raccumulate</span></code></a>(origin, target_rank[, target, op])</p></td>
+<td><p>Fetch-and-accumulate data into the target process</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.Rget" title="mpi4py.MPI.Win.Rget"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Rget</span></code></a>(origin, target_rank[, target])</p></td>
+<td><p>Get data from a memory window on a remote process.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.Rget_accumulate" title="mpi4py.MPI.Win.Rget_accumulate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Rget_accumulate</span></code></a>(origin, result, target_rank)</p></td>
+<td><p>Accumulate data into the target process using remote memory access.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.Rput" title="mpi4py.MPI.Win.Rput"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Rput</span></code></a>(origin, target_rank[, target])</p></td>
+<td><p>Put data into a memory window on a remote process.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.Set_attr" title="mpi4py.MPI.Win.Set_attr"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Set_attr</span></code></a>(keyval, attrval)</p></td>
+<td><p>Store attribute value associated with a key</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.Set_errhandler" title="mpi4py.MPI.Win.Set_errhandler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Set_errhandler</span></code></a>(errhandler)</p></td>
+<td><p>Set the error handler for a window</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.Set_info" title="mpi4py.MPI.Win.Set_info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Set_info</span></code></a>(info)</p></td>
+<td><p>Set new values for the hints associated with a window</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.Set_name" title="mpi4py.MPI.Win.Set_name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Set_name</span></code></a>(name)</p></td>
+<td><p>Set the print name associated with the window</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.Shared_query" title="mpi4py.MPI.Win.Shared_query"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Shared_query</span></code></a>(rank)</p></td>
+<td><p>Query the process-local address for remote memory segments created with <a class="reference internal" href="#mpi4py.MPI.Win.Allocate_shared" title="mpi4py.MPI.Win.Allocate_shared"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Win.Allocate_shared()</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.Start" title="mpi4py.MPI.Win.Start"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Start</span></code></a>(group[, assertion])</p></td>
+<td><p>Start an RMA access epoch for MPI</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.Sync" title="mpi4py.MPI.Win.Sync"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Sync</span></code></a>()</p></td>
+<td><p>Synchronize public and private copies of the given window</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.Test" title="mpi4py.MPI.Win.Test"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Test</span></code></a>()</p></td>
+<td><p>Test whether an RMA exposure epoch has completed</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.Unlock" title="mpi4py.MPI.Win.Unlock"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Unlock</span></code></a>(rank)</p></td>
+<td><p>Complete an RMA access epoch at the target process</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.Unlock_all" title="mpi4py.MPI.Win.Unlock_all"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Unlock_all</span></code></a>()</p></td>
+<td><p>Complete an RMA access epoch at all processes</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.Wait" title="mpi4py.MPI.Win.Wait"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Wait</span></code></a>()</p></td>
+<td><p>Complete an RMA exposure epoch begun with <a class="reference internal" href="#mpi4py.MPI.Win.Post" title="mpi4py.MPI.Win.Post"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Win.Post()</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.f2py" title="mpi4py.MPI.Win.f2py"><code class="xref py py-obj docutils literal notranslate"><span class="pre">f2py</span></code></a>(arg)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.py2f" title="mpi4py.MPI.Win.py2f"><code class="xref py py-obj docutils literal notranslate"><span class="pre">py2f</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.tomemory" title="mpi4py.MPI.Win.tomemory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tomemory</span></code></a>()</p></td>
+<td><p>Return window memory buffer</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes Summary</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.attrs" title="mpi4py.MPI.Win.attrs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">attrs</span></code></a></p></td>
+<td><p>window attributes</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.flavor" title="mpi4py.MPI.Win.flavor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">flavor</span></code></a></p></td>
+<td><p>window create flavor</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.group" title="mpi4py.MPI.Win.group"><code class="xref py py-obj docutils literal notranslate"><span class="pre">group</span></code></a></p></td>
+<td><p>window group</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.info" title="mpi4py.MPI.Win.info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">info</span></code></a></p></td>
+<td><p>window info</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.model" title="mpi4py.MPI.Win.model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">model</span></code></a></p></td>
+<td><p>window memory model</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Win.name" title="mpi4py.MPI.Win.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code></a></p></td>
+<td><p>window name</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods Documentation</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.Accumulate">
+<span class="sig-name descname"><span class="pre">Accumulate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">origin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_rank</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">op</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">SUM</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Win.Accumulate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accumulate data into the target process</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>origin</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>target_rank</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>target</strong> (<em>Optional</em><em>[</em><em>TargetSpec</em><em>]</em>) – </p></li>
+<li><p><strong>op</strong> (<a class="reference internal" href="mpi4py.MPI.Op.html#mpi4py.MPI.Op" title="mpi4py.MPI.Op"><em>Op</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.Allocate">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Allocate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disp_unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">INFO_NULL</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">COMM_SELF</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Win.Allocate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an window object for one-sided communication</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>disp_unit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>info</strong> (<a class="reference internal" href="mpi4py.MPI.Info.html#mpi4py.MPI.Info" title="mpi4py.MPI.Info"><em>Info</em></a>) – </p></li>
+<li><p><strong>comm</strong> (<a class="reference internal" href="mpi4py.MPI.Intracomm.html#mpi4py.MPI.Intracomm" title="mpi4py.MPI.Intracomm"><em>Intracomm</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mpi4py.MPI.Win" title="mpi4py.MPI.Win">Win</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.Allocate_shared">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Allocate_shared</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disp_unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">INFO_NULL</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">COMM_SELF</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Win.Allocate_shared" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an window object for one-sided communication</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>disp_unit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>info</strong> (<a class="reference internal" href="mpi4py.MPI.Info.html#mpi4py.MPI.Info" title="mpi4py.MPI.Info"><em>Info</em></a>) – </p></li>
+<li><p><strong>comm</strong> (<a class="reference internal" href="mpi4py.MPI.Intracomm.html#mpi4py.MPI.Intracomm" title="mpi4py.MPI.Intracomm"><em>Intracomm</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mpi4py.MPI.Win" title="mpi4py.MPI.Win">Win</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.Attach">
+<span class="sig-name descname"><span class="pre">Attach</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">memory</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Win.Attach" title="Permalink to this definition">¶</a></dt>
+<dd><p>Attach a local memory region</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>memory</strong> (<em>Buffer</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.Call_errhandler">
+<span class="sig-name descname"><span class="pre">Call_errhandler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">errorcode</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Win.Call_errhandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call the error handler installed on a window</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>errorcode</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.Compare_and_swap">
+<span class="sig-name descname"><span class="pre">Compare_and_swap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">origin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compare</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_rank</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_disp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Win.Compare_and_swap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform one-sided atomic compare-and-swap</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>origin</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>compare</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>result</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>target_rank</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>target_disp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.Complete">
+<span class="sig-name descname"><span class="pre">Complete</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Win.Complete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Completes an RMA operations begun after an <a class="reference internal" href="#mpi4py.MPI.Win.Start" title="mpi4py.MPI.Win.Start"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Win.Start()</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.Create">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">memory</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disp_unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">INFO_NULL</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">COMM_SELF</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Win.Create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an window object for one-sided communication</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>memory</strong> (<em>Union</em><em>[</em><em>Buffer</em><em>, </em><em>Bottom</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em>]</em>) – </p></li>
+<li><p><strong>disp_unit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>info</strong> (<a class="reference internal" href="mpi4py.MPI.Info.html#mpi4py.MPI.Info" title="mpi4py.MPI.Info"><em>Info</em></a>) – </p></li>
+<li><p><strong>comm</strong> (<a class="reference internal" href="mpi4py.MPI.Intracomm.html#mpi4py.MPI.Intracomm" title="mpi4py.MPI.Intracomm"><em>Intracomm</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mpi4py.MPI.Win" title="mpi4py.MPI.Win">Win</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.Create_dynamic">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Create_dynamic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">INFO_NULL</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">COMM_SELF</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Win.Create_dynamic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an window object for one-sided communication</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>info</strong> (<a class="reference internal" href="mpi4py.MPI.Info.html#mpi4py.MPI.Info" title="mpi4py.MPI.Info"><em>Info</em></a>) – </p></li>
+<li><p><strong>comm</strong> (<a class="reference internal" href="mpi4py.MPI.Intracomm.html#mpi4py.MPI.Intracomm" title="mpi4py.MPI.Intracomm"><em>Intracomm</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mpi4py.MPI.Win" title="mpi4py.MPI.Win">Win</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.Create_keyval">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Create_keyval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">copy_fn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delete_fn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nopython</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Win.Create_keyval" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new attribute key for windows</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>copy_fn</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>[</em><em>[</em><a class="reference internal" href="#mpi4py.MPI.Win" title="mpi4py.MPI.Win"><em>Win</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>Any</em><em>]</em><em>, </em><em>Any</em><em>]</em><em>]</em>) – </p></li>
+<li><p><strong>delete_fn</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>[</em><em>[</em><a class="reference internal" href="#mpi4py.MPI.Win" title="mpi4py.MPI.Win"><em>Win</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>Any</em><em>]</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em>]</em><em>]</em>) – </p></li>
+<li><p><strong>nopython</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.Delete_attr">
+<span class="sig-name descname"><span class="pre">Delete_attr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keyval</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Win.Delete_attr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete attribute value associated with a key</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>keyval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.Detach">
+<span class="sig-name descname"><span class="pre">Detach</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">memory</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Win.Detach" title="Permalink to this definition">¶</a></dt>
+<dd><p>Detach a local memory region</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>memory</strong> (<em>Buffer</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.Fence">
+<span class="sig-name descname"><span class="pre">Fence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">assertion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Win.Fence" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform an MPI fence synchronization on a window</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>assertion</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.Fetch_and_op">
+<span class="sig-name descname"><span class="pre">Fetch_and_op</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">origin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_rank</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_disp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">op</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">SUM</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Win.Fetch_and_op" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform one-sided read-modify-write</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>origin</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>result</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>target_rank</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>target_disp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>op</strong> (<a class="reference internal" href="mpi4py.MPI.Op.html#mpi4py.MPI.Op" title="mpi4py.MPI.Op"><em>Op</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.Flush">
+<span class="sig-name descname"><span class="pre">Flush</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rank</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Win.Flush" title="Permalink to this definition">¶</a></dt>
+<dd><p>Complete all outstanding RMA operations at the given target</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>rank</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.Flush_all">
+<span class="sig-name descname"><span class="pre">Flush_all</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Win.Flush_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Complete  all  outstanding RMA operations at all targets</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.Flush_local">
+<span class="sig-name descname"><span class="pre">Flush_local</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rank</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Win.Flush_local" title="Permalink to this definition">¶</a></dt>
+<dd><p>Complete locally all outstanding RMA operations at the given target</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>rank</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.Flush_local_all">
+<span class="sig-name descname"><span class="pre">Flush_local_all</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Win.Flush_local_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Complete locally all outstanding RMA opera- tions at all targets</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.Free">
+<span class="sig-name descname"><span class="pre">Free</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Win.Free" title="Permalink to this definition">¶</a></dt>
+<dd><p>Free a window</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.Free_keyval">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Free_keyval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keyval</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Win.Free_keyval" title="Permalink to this definition">¶</a></dt>
+<dd><p>Free an attribute key for windows</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>keyval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.Get">
+<span class="sig-name descname"><span class="pre">Get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">origin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_rank</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Win.Get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get data from a memory window on a remote process.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>origin</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>target_rank</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>target</strong> (<em>Optional</em><em>[</em><em>TargetSpec</em><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.Get_accumulate">
+<span class="sig-name descname"><span class="pre">Get_accumulate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">origin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_rank</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">op</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">SUM</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Win.Get_accumulate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetch-and-accumulate data into the target process</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>origin</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>result</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>target_rank</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>target</strong> (<em>Optional</em><em>[</em><em>TargetSpec</em><em>]</em>) – </p></li>
+<li><p><strong>op</strong> (<a class="reference internal" href="mpi4py.MPI.Op.html#mpi4py.MPI.Op" title="mpi4py.MPI.Op"><em>Op</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.Get_attr">
+<span class="sig-name descname"><span class="pre">Get_attr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keyval</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Win.Get_attr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve attribute value by key</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>keyval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Optional[Union[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a>, Any]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.Get_errhandler">
+<span class="sig-name descname"><span class="pre">Get_errhandler</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Win.Get_errhandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the error handler for a window</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="mpi4py.MPI.Errhandler.html#mpi4py.MPI.Errhandler" title="mpi4py.MPI.Errhandler">Errhandler</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.Get_group">
+<span class="sig-name descname"><span class="pre">Get_group</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Win.Get_group" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a duplicate of the group of the
+communicator used to create the window</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="mpi4py.MPI.Group.html#mpi4py.MPI.Group" title="mpi4py.MPI.Group">Group</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.Get_info">
+<span class="sig-name descname"><span class="pre">Get_info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Win.Get_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the hints for a windows
+that are currently in use</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="mpi4py.MPI.Info.html#mpi4py.MPI.Info" title="mpi4py.MPI.Info">Info</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.Get_name">
+<span class="sig-name descname"><span class="pre">Get_name</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Win.Get_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the print name associated with the window</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.Lock">
+<span class="sig-name descname"><span class="pre">Lock</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rank</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lock_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">LOCK_EXCLUSIVE</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assertion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Win.Lock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Begin an RMA access epoch at the target process</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rank</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>lock_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>assertion</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.Lock_all">
+<span class="sig-name descname"><span class="pre">Lock_all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">assertion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Win.Lock_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Begin an RMA access epoch at all processes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>assertion</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.Post">
+<span class="sig-name descname"><span class="pre">Post</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assertion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Win.Post" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start an RMA exposure epoch</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>group</strong> (<a class="reference internal" href="mpi4py.MPI.Group.html#mpi4py.MPI.Group" title="mpi4py.MPI.Group"><em>Group</em></a>) – </p></li>
+<li><p><strong>assertion</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.Put">
+<span class="sig-name descname"><span class="pre">Put</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">origin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_rank</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Win.Put" title="Permalink to this definition">¶</a></dt>
+<dd><p>Put data into a memory window on a remote process.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>origin</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>target_rank</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>target</strong> (<em>Optional</em><em>[</em><em>TargetSpec</em><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.Raccumulate">
+<span class="sig-name descname"><span class="pre">Raccumulate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">origin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_rank</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">op</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">SUM</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Win.Raccumulate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetch-and-accumulate data into the target process</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>origin</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>target_rank</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>target</strong> (<em>Optional</em><em>[</em><em>TargetSpec</em><em>]</em>) – </p></li>
+<li><p><strong>op</strong> (<a class="reference internal" href="mpi4py.MPI.Op.html#mpi4py.MPI.Op" title="mpi4py.MPI.Op"><em>Op</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request">Request</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.Rget">
+<span class="sig-name descname"><span class="pre">Rget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">origin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_rank</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Win.Rget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get data from a memory window on a remote process.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>origin</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>target_rank</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>target</strong> (<em>Optional</em><em>[</em><em>TargetSpec</em><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request">Request</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.Rget_accumulate">
+<span class="sig-name descname"><span class="pre">Rget_accumulate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">origin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_rank</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">op</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">SUM</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Win.Rget_accumulate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accumulate data into the target process
+using remote memory access.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>origin</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>result</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>target_rank</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>target</strong> (<em>Optional</em><em>[</em><em>TargetSpec</em><em>]</em>) – </p></li>
+<li><p><strong>op</strong> (<a class="reference internal" href="mpi4py.MPI.Op.html#mpi4py.MPI.Op" title="mpi4py.MPI.Op"><em>Op</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request">Request</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.Rput">
+<span class="sig-name descname"><span class="pre">Rput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">origin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_rank</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Win.Rput" title="Permalink to this definition">¶</a></dt>
+<dd><p>Put data into a memory window on a remote process.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>origin</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>target_rank</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>target</strong> (<em>Optional</em><em>[</em><em>TargetSpec</em><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request">Request</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.Set_attr">
+<span class="sig-name descname"><span class="pre">Set_attr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keyval</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrval</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Win.Set_attr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Store attribute value associated with a key</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>keyval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>attrval</strong> (<em>Any</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.Set_errhandler">
+<span class="sig-name descname"><span class="pre">Set_errhandler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">errhandler</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Win.Set_errhandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the error handler for a window</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>errhandler</strong> (<a class="reference internal" href="mpi4py.MPI.Errhandler.html#mpi4py.MPI.Errhandler" title="mpi4py.MPI.Errhandler"><em>Errhandler</em></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.Set_info">
+<span class="sig-name descname"><span class="pre">Set_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">info</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Win.Set_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set new values for the hints
+associated with a window</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>info</strong> (<a class="reference internal" href="mpi4py.MPI.Info.html#mpi4py.MPI.Info" title="mpi4py.MPI.Info"><em>Info</em></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.Set_name">
+<span class="sig-name descname"><span class="pre">Set_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Win.Set_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the print name associated with the window</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.Shared_query">
+<span class="sig-name descname"><span class="pre">Shared_query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rank</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Win.Shared_query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Query the process-local address
+for remote memory segments
+created with <a class="reference internal" href="#mpi4py.MPI.Win.Allocate_shared" title="mpi4py.MPI.Win.Allocate_shared"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Win.Allocate_shared()</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>rank</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Tuple[<a class="reference internal" href="mpi4py.MPI.memory.html#mpi4py.MPI.memory" title="mpi4py.MPI.memory">memory</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.Start">
+<span class="sig-name descname"><span class="pre">Start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assertion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Win.Start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start an RMA access epoch for MPI</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>group</strong> (<a class="reference internal" href="mpi4py.MPI.Group.html#mpi4py.MPI.Group" title="mpi4py.MPI.Group"><em>Group</em></a>) – </p></li>
+<li><p><strong>assertion</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.Sync">
+<span class="sig-name descname"><span class="pre">Sync</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Win.Sync" title="Permalink to this definition">¶</a></dt>
+<dd><p>Synchronize public and private copies of the given window</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.Test">
+<span class="sig-name descname"><span class="pre">Test</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Win.Test" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test whether an RMA exposure epoch has completed</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.Unlock">
+<span class="sig-name descname"><span class="pre">Unlock</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rank</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Win.Unlock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Complete an RMA access epoch at the target process</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>rank</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.Unlock_all">
+<span class="sig-name descname"><span class="pre">Unlock_all</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Win.Unlock_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Complete an RMA access epoch at all processes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.Wait">
+<span class="sig-name descname"><span class="pre">Wait</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Win.Wait" title="Permalink to this definition">¶</a></dt>
+<dd><p>Complete an RMA exposure epoch begun with <a class="reference internal" href="#mpi4py.MPI.Win.Post" title="mpi4py.MPI.Win.Post"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Win.Post()</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Literal[True]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.f2py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">f2py</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Win.f2py" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>arg</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mpi4py.MPI.Win" title="mpi4py.MPI.Win">Win</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.py2f">
+<span class="sig-name descname"><span class="pre">py2f</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Win.py2f" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.tomemory">
+<span class="sig-name descname"><span class="pre">tomemory</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Win.tomemory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return window memory buffer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="mpi4py.MPI.memory.html#mpi4py.MPI.memory" title="mpi4py.MPI.memory">memory</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Attributes Documentation</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.attrs">
+<span class="sig-name descname"><span class="pre">attrs</span></span><a class="headerlink" href="#mpi4py.MPI.Win.attrs" title="Permalink to this definition">¶</a></dt>
+<dd><p>window attributes</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.flavor">
+<span class="sig-name descname"><span class="pre">flavor</span></span><a class="headerlink" href="#mpi4py.MPI.Win.flavor" title="Permalink to this definition">¶</a></dt>
+<dd><p>window create flavor</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.group">
+<span class="sig-name descname"><span class="pre">group</span></span><a class="headerlink" href="#mpi4py.MPI.Win.group" title="Permalink to this definition">¶</a></dt>
+<dd><p>window group</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.info">
+<span class="sig-name descname"><span class="pre">info</span></span><a class="headerlink" href="#mpi4py.MPI.Win.info" title="Permalink to this definition">¶</a></dt>
+<dd><p>window info</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#mpi4py.MPI.Win.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>window memory model</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.MPI.Win.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#mpi4py.MPI.Win.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>window name</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="mpi4py.MPI.Topocomm.html"
+                        title="previous chapter">mpi4py.MPI.Topocomm</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="mpi4py.MPI.memory.html"
+                        title="next chapter">mpi4py.MPI.memory</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mpi4py.MPI.memory.html" title="mpi4py.MPI.memory"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="mpi4py.MPI.Topocomm.html" title="mpi4py.MPI.Topocomm"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">MPI for Python 3.1.3 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" >Reference</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="mpi4py.MPI.html" >mpi4py.MPI</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">mpi4py.MPI.Win</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Lisandro Dalcin.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.0.
+    </div>
+  </body>
+</html>

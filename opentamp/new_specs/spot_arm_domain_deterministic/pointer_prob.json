@@ -1,0 +1,25 @@
+{
+    "init_objs": [
+        {
+            "name": "target1",
+            "type": "Target",
+            "pose": [3]
+        },
+        {
+            "name": "pr2",
+            "type": "Robot",
+            "pose": [0, 0]
+        }
+    ],
+    "init_preds": [],
+    "goals": [
+        {
+            "type": "BPointingSpotHeight",
+            "args": ["pr2", "target1"]
+        },
+        {
+            "type": "BPointingSpotGripper",
+            "args": ["pr2", "target1"]
+        }
+    ]
+}

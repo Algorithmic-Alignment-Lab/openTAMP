@@ -1,0 +1,1261 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>mpi4py.MPI &#8212; MPI for Python 3.1.3 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/classic.css" />
+    
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="mpi4py.futures" href="mpi4py.futures.html" />
+    <link rel="prev" title="mpi4py" href="mpi4py.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mpi4py.futures.html" title="mpi4py.futures"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="mpi4py.html" title="mpi4py"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">MPI for Python 3.1.3 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">mpi4py.MPI</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="mpi4py-mpi">
+<h1>mpi4py.MPI<a class="headerlink" href="#mpi4py-mpi" title="Permalink to this headline">¶</a></h1>
+<section id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<p class="rubric">Ancillary</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Datatype</span></code></a>([datatype])</p></td>
+<td><p>Datatype object</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.Status.html#mpi4py.MPI.Status" title="mpi4py.MPI.Status"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Status</span></code></a>([status])</p></td>
+<td><p>Status object</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Request</span></code></a>([request])</p></td>
+<td><p>Request handle</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.Prequest.html#mpi4py.MPI.Prequest" title="mpi4py.MPI.Prequest"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Prequest</span></code></a>([request])</p></td>
+<td><p>Persistent request handle</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.Grequest.html#mpi4py.MPI.Grequest" title="mpi4py.MPI.Grequest"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Grequest</span></code></a>([request])</p></td>
+<td><p>Generalized request handle</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.Op.html#mpi4py.MPI.Op" title="mpi4py.MPI.Op"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Op</span></code></a>([op])</p></td>
+<td><p>Operation object</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.Group.html#mpi4py.MPI.Group" title="mpi4py.MPI.Group"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Group</span></code></a>([group])</p></td>
+<td><p>Group of processes</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.Info.html#mpi4py.MPI.Info" title="mpi4py.MPI.Info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Info</span></code></a>([info])</p></td>
+<td><p>Info object</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Communication</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm" title="mpi4py.MPI.Comm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Comm</span></code></a>([comm])</p></td>
+<td><p>Communicator</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.Intracomm.html#mpi4py.MPI.Intracomm" title="mpi4py.MPI.Intracomm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Intracomm</span></code></a>([comm])</p></td>
+<td><p>Intracommunicator</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.Topocomm.html#mpi4py.MPI.Topocomm" title="mpi4py.MPI.Topocomm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Topocomm</span></code></a>([comm])</p></td>
+<td><p>Topology intracommunicator</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.Cartcomm.html#mpi4py.MPI.Cartcomm" title="mpi4py.MPI.Cartcomm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Cartcomm</span></code></a>([comm])</p></td>
+<td><p>Cartesian topology intracommunicator</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.Graphcomm.html#mpi4py.MPI.Graphcomm" title="mpi4py.MPI.Graphcomm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Graphcomm</span></code></a>([comm])</p></td>
+<td><p>General graph topology intracommunicator</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.Distgraphcomm.html#mpi4py.MPI.Distgraphcomm" title="mpi4py.MPI.Distgraphcomm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Distgraphcomm</span></code></a>([comm])</p></td>
+<td><p>Distributed graph topology intracommunicator</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.Intercomm.html#mpi4py.MPI.Intercomm" title="mpi4py.MPI.Intercomm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Intercomm</span></code></a>([comm])</p></td>
+<td><p>Intercommunicator</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.Message.html#mpi4py.MPI.Message" title="mpi4py.MPI.Message"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Message</span></code></a>([message])</p></td>
+<td><p>Matched message handle</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">One-sided operations</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.Win.html#mpi4py.MPI.Win" title="mpi4py.MPI.Win"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Win</span></code></a>([win])</p></td>
+<td><p>Window handle</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Input/Output</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.File.html#mpi4py.MPI.File" title="mpi4py.MPI.File"><code class="xref py py-obj docutils literal notranslate"><span class="pre">File</span></code></a>([file])</p></td>
+<td><p>File handle</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Error handling</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.Errhandler.html#mpi4py.MPI.Errhandler" title="mpi4py.MPI.Errhandler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Errhandler</span></code></a>([errhandler])</p></td>
+<td><p>Error handler</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.Exception.html#mpi4py.MPI.Exception" title="mpi4py.MPI.Exception"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Exception</span></code></a>([ierr])</p></td>
+<td><p>Exception class</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Auxiliary</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.Pickle.html#mpi4py.MPI.Pickle" title="mpi4py.MPI.Pickle"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Pickle</span></code></a>([dumps, loads, protocol])</p></td>
+<td><p>Pickle/unpickle Python objects</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.memory.html#mpi4py.MPI.memory" title="mpi4py.MPI.memory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">memory</span></code></a>(buf)</p></td>
+<td><p>Memory buffer</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<p class="rubric">Version inquiry</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.Get_version.html#mpi4py.MPI.Get_version" title="mpi4py.MPI.Get_version"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Get_version</span></code></a>()</p></td>
+<td><p>Obtain the version number of the MPI standard supported by the implementation as a tuple <code class="docutils literal notranslate"><span class="pre">(version,</span> <span class="pre">subversion)</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.Get_library_version.html#mpi4py.MPI.Get_library_version" title="mpi4py.MPI.Get_library_version"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Get_library_version</span></code></a>()</p></td>
+<td><p>Obtain the version string of the MPI library</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Initialization and finalization</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.Init.html#mpi4py.MPI.Init" title="mpi4py.MPI.Init"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Init</span></code></a>()</p></td>
+<td><p>Initialize the MPI execution environment</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.Init_thread.html#mpi4py.MPI.Init_thread" title="mpi4py.MPI.Init_thread"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Init_thread</span></code></a>([required])</p></td>
+<td><p>Initialize the MPI execution environment</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.Finalize.html#mpi4py.MPI.Finalize" title="mpi4py.MPI.Finalize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Finalize</span></code></a>()</p></td>
+<td><p>Terminate the MPI execution environment</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.Is_initialized.html#mpi4py.MPI.Is_initialized" title="mpi4py.MPI.Is_initialized"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Is_initialized</span></code></a>()</p></td>
+<td><p>Indicates whether <a class="reference internal" href="reference/mpi4py.MPI.Init.html#mpi4py.MPI.Init" title="mpi4py.MPI.Init"><code class="xref any py py-func docutils literal notranslate"><span class="pre">Init</span></code></a> has been called</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.Is_finalized.html#mpi4py.MPI.Is_finalized" title="mpi4py.MPI.Is_finalized"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Is_finalized</span></code></a>()</p></td>
+<td><p>Indicates whether <a class="reference internal" href="reference/mpi4py.MPI.Finalize.html#mpi4py.MPI.Finalize" title="mpi4py.MPI.Finalize"><code class="xref any py py-func docutils literal notranslate"><span class="pre">Finalize</span></code></a> has completed</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.Query_thread.html#mpi4py.MPI.Query_thread" title="mpi4py.MPI.Query_thread"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Query_thread</span></code></a>()</p></td>
+<td><p>Return the level of thread support provided by the MPI library</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.Is_thread_main.html#mpi4py.MPI.Is_thread_main" title="mpi4py.MPI.Is_thread_main"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Is_thread_main</span></code></a>()</p></td>
+<td><p>Indicate whether this thread called <a class="reference internal" href="reference/mpi4py.MPI.Init.html#mpi4py.MPI.Init" title="mpi4py.MPI.Init"><code class="xref any py py-func docutils literal notranslate"><span class="pre">Init</span></code></a> or <a class="reference internal" href="reference/mpi4py.MPI.Init_thread.html#mpi4py.MPI.Init_thread" title="mpi4py.MPI.Init_thread"><code class="xref any py py-func docutils literal notranslate"><span class="pre">Init_thread</span></code></a></p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Memory allocation</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.Alloc_mem.html#mpi4py.MPI.Alloc_mem" title="mpi4py.MPI.Alloc_mem"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Alloc_mem</span></code></a>(size[, info])</p></td>
+<td><p>Allocate memory for message passing and RMA</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.Free_mem.html#mpi4py.MPI.Free_mem" title="mpi4py.MPI.Free_mem"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Free_mem</span></code></a>(mem)</p></td>
+<td><p>Free memory allocated with <a class="reference internal" href="reference/mpi4py.MPI.Alloc_mem.html#mpi4py.MPI.Alloc_mem" title="mpi4py.MPI.Alloc_mem"><code class="xref any py py-func docutils literal notranslate"><span class="pre">Alloc_mem()</span></code></a></p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Address manipulation</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.Get_address.html#mpi4py.MPI.Get_address" title="mpi4py.MPI.Get_address"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Get_address</span></code></a>(location)</p></td>
+<td><p>Get the address of a location in memory</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.Aint_add.html#mpi4py.MPI.Aint_add" title="mpi4py.MPI.Aint_add"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Aint_add</span></code></a>(base, disp)</p></td>
+<td><p>Return the sum of base address and displacement</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.Aint_diff.html#mpi4py.MPI.Aint_diff" title="mpi4py.MPI.Aint_diff"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Aint_diff</span></code></a>(addr1, addr2)</p></td>
+<td><p>Return the difference between absolute addresses</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Timer</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.Wtick.html#mpi4py.MPI.Wtick" title="mpi4py.MPI.Wtick"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Wtick</span></code></a>()</p></td>
+<td><p>Return the resolution of <a class="reference internal" href="reference/mpi4py.MPI.Wtime.html#mpi4py.MPI.Wtime" title="mpi4py.MPI.Wtime"><code class="xref any py py-func docutils literal notranslate"><span class="pre">Wtime</span></code></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.Wtime.html#mpi4py.MPI.Wtime" title="mpi4py.MPI.Wtime"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Wtime</span></code></a>()</p></td>
+<td><p>Return an elapsed time on the calling processor</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Error handling</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.Get_error_class.html#mpi4py.MPI.Get_error_class" title="mpi4py.MPI.Get_error_class"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Get_error_class</span></code></a>(errorcode)</p></td>
+<td><p>Convert an <em>error code</em> into an <em>error class</em></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.Get_error_string.html#mpi4py.MPI.Get_error_string" title="mpi4py.MPI.Get_error_string"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Get_error_string</span></code></a>(errorcode)</p></td>
+<td><p>Return the <em>error string</em> for a given <em>error class</em> or <em>error code</em></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.Add_error_class.html#mpi4py.MPI.Add_error_class" title="mpi4py.MPI.Add_error_class"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Add_error_class</span></code></a>()</p></td>
+<td><p>Add an <em>error class</em> to the known error classes</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.Add_error_code.html#mpi4py.MPI.Add_error_code" title="mpi4py.MPI.Add_error_code"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Add_error_code</span></code></a>(errorclass)</p></td>
+<td><p>Add an <em>error code</em> to an <em>error class</em></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.Add_error_string.html#mpi4py.MPI.Add_error_string" title="mpi4py.MPI.Add_error_string"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Add_error_string</span></code></a>(errorcode, string)</p></td>
+<td><p>Associate an <em>error string</em> with an <em>error class</em> or <em>errorcode</em></p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Dynamic process management</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.Open_port.html#mpi4py.MPI.Open_port" title="mpi4py.MPI.Open_port"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Open_port</span></code></a>([info])</p></td>
+<td><p>Return an address that can be used to establish connections between groups of MPI processes</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.Close_port.html#mpi4py.MPI.Close_port" title="mpi4py.MPI.Close_port"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Close_port</span></code></a>(port_name)</p></td>
+<td><p>Close a port</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.Publish_name.html#mpi4py.MPI.Publish_name" title="mpi4py.MPI.Publish_name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Publish_name</span></code></a>(service_name, port_name[, info])</p></td>
+<td><p>Publish a service name</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.Unpublish_name.html#mpi4py.MPI.Unpublish_name" title="mpi4py.MPI.Unpublish_name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Unpublish_name</span></code></a>(service_name, port_name[, info])</p></td>
+<td><p>Unpublish a service name</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.Lookup_name.html#mpi4py.MPI.Lookup_name" title="mpi4py.MPI.Lookup_name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Lookup_name</span></code></a>(service_name[, info])</p></td>
+<td><p>Lookup a port name given a service name</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Miscellanea</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.Attach_buffer.html#mpi4py.MPI.Attach_buffer" title="mpi4py.MPI.Attach_buffer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Attach_buffer</span></code></a>(buf)</p></td>
+<td><p>Attach a user-provided buffer for sending in buffered mode</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.Detach_buffer.html#mpi4py.MPI.Detach_buffer" title="mpi4py.MPI.Detach_buffer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Detach_buffer</span></code></a>()</p></td>
+<td><p>Remove an existing attached buffer</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.Compute_dims.html#mpi4py.MPI.Compute_dims" title="mpi4py.MPI.Compute_dims"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Compute_dims</span></code></a>(nnodes, dims)</p></td>
+<td><p>Return a balanced distribution of processes per coordinate direction</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.Get_processor_name.html#mpi4py.MPI.Get_processor_name" title="mpi4py.MPI.Get_processor_name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Get_processor_name</span></code></a>()</p></td>
+<td><p>Obtain the name of the calling processor</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.Register_datarep.html#mpi4py.MPI.Register_datarep" title="mpi4py.MPI.Register_datarep"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Register_datarep</span></code></a>(datarep, read_fn, write_fn, ...)</p></td>
+<td><p>Register user-defined data representations</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.Pcontrol.html#mpi4py.MPI.Pcontrol" title="mpi4py.MPI.Pcontrol"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Pcontrol</span></code></a>(level)</p></td>
+<td><p>Control profiling</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Utilities</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.get_vendor.html#mpi4py.MPI.get_vendor" title="mpi4py.MPI.get_vendor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_vendor</span></code></a>()</p></td>
+<td><p>Infomation about the underlying MPI implementation</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.UNDEFINED.html#mpi4py.MPI.UNDEFINED" title="mpi4py.MPI.UNDEFINED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">UNDEFINED</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">UNDEFINED</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ANY_SOURCE.html#mpi4py.MPI.ANY_SOURCE" title="mpi4py.MPI.ANY_SOURCE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ANY_SOURCE</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ANY_SOURCE</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ANY_TAG.html#mpi4py.MPI.ANY_TAG" title="mpi4py.MPI.ANY_TAG"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ANY_TAG</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ANY_TAG</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.PROC_NULL.html#mpi4py.MPI.PROC_NULL" title="mpi4py.MPI.PROC_NULL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PROC_NULL</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">PROC_NULL</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ROOT.html#mpi4py.MPI.ROOT" title="mpi4py.MPI.ROOT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ROOT</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ROOT</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.BOTTOM.html#mpi4py.MPI.BOTTOM" title="mpi4py.MPI.BOTTOM"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BOTTOM</span></code></a></p></td>
+<td><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Bottom</span></code> <code class="docutils literal notranslate"><span class="pre">BOTTOM</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.IN_PLACE.html#mpi4py.MPI.IN_PLACE" title="mpi4py.MPI.IN_PLACE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IN_PLACE</span></code></a></p></td>
+<td><p><code class="xref py py-class docutils literal notranslate"><span class="pre">InPlace</span></code> <code class="docutils literal notranslate"><span class="pre">IN_PLACE</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.KEYVAL_INVALID.html#mpi4py.MPI.KEYVAL_INVALID" title="mpi4py.MPI.KEYVAL_INVALID"><code class="xref py py-obj docutils literal notranslate"><span class="pre">KEYVAL_INVALID</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">KEYVAL_INVALID</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.TAG_UB.html#mpi4py.MPI.TAG_UB" title="mpi4py.MPI.TAG_UB"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TAG_UB</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">TAG_UB</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.HOST.html#mpi4py.MPI.HOST" title="mpi4py.MPI.HOST"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HOST</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">HOST</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.IO.html#mpi4py.MPI.IO" title="mpi4py.MPI.IO"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IO</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">IO</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.WTIME_IS_GLOBAL.html#mpi4py.MPI.WTIME_IS_GLOBAL" title="mpi4py.MPI.WTIME_IS_GLOBAL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WTIME_IS_GLOBAL</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">WTIME_IS_GLOBAL</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.UNIVERSE_SIZE.html#mpi4py.MPI.UNIVERSE_SIZE" title="mpi4py.MPI.UNIVERSE_SIZE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">UNIVERSE_SIZE</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">UNIVERSE_SIZE</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.APPNUM.html#mpi4py.MPI.APPNUM" title="mpi4py.MPI.APPNUM"><code class="xref py py-obj docutils literal notranslate"><span class="pre">APPNUM</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">APPNUM</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.LASTUSEDCODE.html#mpi4py.MPI.LASTUSEDCODE" title="mpi4py.MPI.LASTUSEDCODE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LASTUSEDCODE</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">LASTUSEDCODE</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.WIN_BASE.html#mpi4py.MPI.WIN_BASE" title="mpi4py.MPI.WIN_BASE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WIN_BASE</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">WIN_BASE</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.WIN_SIZE.html#mpi4py.MPI.WIN_SIZE" title="mpi4py.MPI.WIN_SIZE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WIN_SIZE</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">WIN_SIZE</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.WIN_DISP_UNIT.html#mpi4py.MPI.WIN_DISP_UNIT" title="mpi4py.MPI.WIN_DISP_UNIT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WIN_DISP_UNIT</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">WIN_DISP_UNIT</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.WIN_CREATE_FLAVOR.html#mpi4py.MPI.WIN_CREATE_FLAVOR" title="mpi4py.MPI.WIN_CREATE_FLAVOR"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WIN_CREATE_FLAVOR</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">WIN_CREATE_FLAVOR</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.WIN_FLAVOR.html#mpi4py.MPI.WIN_FLAVOR" title="mpi4py.MPI.WIN_FLAVOR"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WIN_FLAVOR</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">WIN_FLAVOR</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.WIN_MODEL.html#mpi4py.MPI.WIN_MODEL" title="mpi4py.MPI.WIN_MODEL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WIN_MODEL</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">WIN_MODEL</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.SUCCESS.html#mpi4py.MPI.SUCCESS" title="mpi4py.MPI.SUCCESS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SUCCESS</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">SUCCESS</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_LASTCODE.html#mpi4py.MPI.ERR_LASTCODE" title="mpi4py.MPI.ERR_LASTCODE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_LASTCODE</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_LASTCODE</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_COMM.html#mpi4py.MPI.ERR_COMM" title="mpi4py.MPI.ERR_COMM"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_COMM</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_COMM</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_GROUP.html#mpi4py.MPI.ERR_GROUP" title="mpi4py.MPI.ERR_GROUP"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_GROUP</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_GROUP</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_TYPE.html#mpi4py.MPI.ERR_TYPE" title="mpi4py.MPI.ERR_TYPE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_TYPE</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_TYPE</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_REQUEST.html#mpi4py.MPI.ERR_REQUEST" title="mpi4py.MPI.ERR_REQUEST"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_REQUEST</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_REQUEST</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_OP.html#mpi4py.MPI.ERR_OP" title="mpi4py.MPI.ERR_OP"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_OP</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_OP</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_BUFFER.html#mpi4py.MPI.ERR_BUFFER" title="mpi4py.MPI.ERR_BUFFER"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_BUFFER</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_BUFFER</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_COUNT.html#mpi4py.MPI.ERR_COUNT" title="mpi4py.MPI.ERR_COUNT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_COUNT</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_COUNT</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_TAG.html#mpi4py.MPI.ERR_TAG" title="mpi4py.MPI.ERR_TAG"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_TAG</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_TAG</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_RANK.html#mpi4py.MPI.ERR_RANK" title="mpi4py.MPI.ERR_RANK"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_RANK</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_RANK</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_ROOT.html#mpi4py.MPI.ERR_ROOT" title="mpi4py.MPI.ERR_ROOT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_ROOT</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_ROOT</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_TRUNCATE.html#mpi4py.MPI.ERR_TRUNCATE" title="mpi4py.MPI.ERR_TRUNCATE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_TRUNCATE</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_TRUNCATE</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_IN_STATUS.html#mpi4py.MPI.ERR_IN_STATUS" title="mpi4py.MPI.ERR_IN_STATUS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_IN_STATUS</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_IN_STATUS</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_PENDING.html#mpi4py.MPI.ERR_PENDING" title="mpi4py.MPI.ERR_PENDING"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_PENDING</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_PENDING</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_TOPOLOGY.html#mpi4py.MPI.ERR_TOPOLOGY" title="mpi4py.MPI.ERR_TOPOLOGY"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_TOPOLOGY</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_TOPOLOGY</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_DIMS.html#mpi4py.MPI.ERR_DIMS" title="mpi4py.MPI.ERR_DIMS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_DIMS</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_DIMS</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_ARG.html#mpi4py.MPI.ERR_ARG" title="mpi4py.MPI.ERR_ARG"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_ARG</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_ARG</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_OTHER.html#mpi4py.MPI.ERR_OTHER" title="mpi4py.MPI.ERR_OTHER"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_OTHER</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_OTHER</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_UNKNOWN.html#mpi4py.MPI.ERR_UNKNOWN" title="mpi4py.MPI.ERR_UNKNOWN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_UNKNOWN</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_UNKNOWN</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_INTERN.html#mpi4py.MPI.ERR_INTERN" title="mpi4py.MPI.ERR_INTERN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_INTERN</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_INTERN</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_INFO.html#mpi4py.MPI.ERR_INFO" title="mpi4py.MPI.ERR_INFO"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_INFO</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_INFO</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_FILE.html#mpi4py.MPI.ERR_FILE" title="mpi4py.MPI.ERR_FILE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_FILE</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_FILE</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_WIN.html#mpi4py.MPI.ERR_WIN" title="mpi4py.MPI.ERR_WIN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_WIN</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_WIN</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_KEYVAL.html#mpi4py.MPI.ERR_KEYVAL" title="mpi4py.MPI.ERR_KEYVAL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_KEYVAL</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_KEYVAL</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_INFO_KEY.html#mpi4py.MPI.ERR_INFO_KEY" title="mpi4py.MPI.ERR_INFO_KEY"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_INFO_KEY</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_INFO_KEY</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_INFO_VALUE.html#mpi4py.MPI.ERR_INFO_VALUE" title="mpi4py.MPI.ERR_INFO_VALUE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_INFO_VALUE</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_INFO_VALUE</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_INFO_NOKEY.html#mpi4py.MPI.ERR_INFO_NOKEY" title="mpi4py.MPI.ERR_INFO_NOKEY"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_INFO_NOKEY</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_INFO_NOKEY</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_ACCESS.html#mpi4py.MPI.ERR_ACCESS" title="mpi4py.MPI.ERR_ACCESS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_ACCESS</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_ACCESS</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_AMODE.html#mpi4py.MPI.ERR_AMODE" title="mpi4py.MPI.ERR_AMODE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_AMODE</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_AMODE</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_BAD_FILE.html#mpi4py.MPI.ERR_BAD_FILE" title="mpi4py.MPI.ERR_BAD_FILE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_BAD_FILE</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_BAD_FILE</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_FILE_EXISTS.html#mpi4py.MPI.ERR_FILE_EXISTS" title="mpi4py.MPI.ERR_FILE_EXISTS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_FILE_EXISTS</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_FILE_EXISTS</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_FILE_IN_USE.html#mpi4py.MPI.ERR_FILE_IN_USE" title="mpi4py.MPI.ERR_FILE_IN_USE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_FILE_IN_USE</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_FILE_IN_USE</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_NO_SPACE.html#mpi4py.MPI.ERR_NO_SPACE" title="mpi4py.MPI.ERR_NO_SPACE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_NO_SPACE</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_NO_SPACE</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_NO_SUCH_FILE.html#mpi4py.MPI.ERR_NO_SUCH_FILE" title="mpi4py.MPI.ERR_NO_SUCH_FILE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_NO_SUCH_FILE</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_NO_SUCH_FILE</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_IO.html#mpi4py.MPI.ERR_IO" title="mpi4py.MPI.ERR_IO"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_IO</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_IO</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_READ_ONLY.html#mpi4py.MPI.ERR_READ_ONLY" title="mpi4py.MPI.ERR_READ_ONLY"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_READ_ONLY</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_READ_ONLY</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_CONVERSION.html#mpi4py.MPI.ERR_CONVERSION" title="mpi4py.MPI.ERR_CONVERSION"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_CONVERSION</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_CONVERSION</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_DUP_DATAREP.html#mpi4py.MPI.ERR_DUP_DATAREP" title="mpi4py.MPI.ERR_DUP_DATAREP"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_DUP_DATAREP</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_DUP_DATAREP</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_UNSUPPORTED_DATAREP.html#mpi4py.MPI.ERR_UNSUPPORTED_DATAREP" title="mpi4py.MPI.ERR_UNSUPPORTED_DATAREP"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_UNSUPPORTED_DATAREP</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_UNSUPPORTED_DATAREP</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_UNSUPPORTED_OPERATION.html#mpi4py.MPI.ERR_UNSUPPORTED_OPERATION" title="mpi4py.MPI.ERR_UNSUPPORTED_OPERATION"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_UNSUPPORTED_OPERATION</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_UNSUPPORTED_OPERATION</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_NAME.html#mpi4py.MPI.ERR_NAME" title="mpi4py.MPI.ERR_NAME"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_NAME</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_NAME</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_NO_MEM.html#mpi4py.MPI.ERR_NO_MEM" title="mpi4py.MPI.ERR_NO_MEM"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_NO_MEM</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_NO_MEM</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_NOT_SAME.html#mpi4py.MPI.ERR_NOT_SAME" title="mpi4py.MPI.ERR_NOT_SAME"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_NOT_SAME</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_NOT_SAME</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_PORT.html#mpi4py.MPI.ERR_PORT" title="mpi4py.MPI.ERR_PORT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_PORT</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_PORT</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_QUOTA.html#mpi4py.MPI.ERR_QUOTA" title="mpi4py.MPI.ERR_QUOTA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_QUOTA</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_QUOTA</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_SERVICE.html#mpi4py.MPI.ERR_SERVICE" title="mpi4py.MPI.ERR_SERVICE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_SERVICE</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_SERVICE</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_SPAWN.html#mpi4py.MPI.ERR_SPAWN" title="mpi4py.MPI.ERR_SPAWN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_SPAWN</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_SPAWN</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_BASE.html#mpi4py.MPI.ERR_BASE" title="mpi4py.MPI.ERR_BASE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_BASE</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_BASE</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_SIZE.html#mpi4py.MPI.ERR_SIZE" title="mpi4py.MPI.ERR_SIZE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_SIZE</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_SIZE</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_DISP.html#mpi4py.MPI.ERR_DISP" title="mpi4py.MPI.ERR_DISP"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_DISP</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_DISP</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_ASSERT.html#mpi4py.MPI.ERR_ASSERT" title="mpi4py.MPI.ERR_ASSERT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_ASSERT</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_ASSERT</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_LOCKTYPE.html#mpi4py.MPI.ERR_LOCKTYPE" title="mpi4py.MPI.ERR_LOCKTYPE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_LOCKTYPE</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_LOCKTYPE</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_RMA_CONFLICT.html#mpi4py.MPI.ERR_RMA_CONFLICT" title="mpi4py.MPI.ERR_RMA_CONFLICT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_RMA_CONFLICT</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_RMA_CONFLICT</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_RMA_SYNC.html#mpi4py.MPI.ERR_RMA_SYNC" title="mpi4py.MPI.ERR_RMA_SYNC"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_RMA_SYNC</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_RMA_SYNC</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_RMA_RANGE.html#mpi4py.MPI.ERR_RMA_RANGE" title="mpi4py.MPI.ERR_RMA_RANGE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_RMA_RANGE</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_RMA_RANGE</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_RMA_ATTACH.html#mpi4py.MPI.ERR_RMA_ATTACH" title="mpi4py.MPI.ERR_RMA_ATTACH"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_RMA_ATTACH</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_RMA_ATTACH</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_RMA_SHARED.html#mpi4py.MPI.ERR_RMA_SHARED" title="mpi4py.MPI.ERR_RMA_SHARED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_RMA_SHARED</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_RMA_SHARED</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERR_RMA_FLAVOR.html#mpi4py.MPI.ERR_RMA_FLAVOR" title="mpi4py.MPI.ERR_RMA_FLAVOR"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERR_RMA_FLAVOR</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERR_RMA_FLAVOR</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ORDER_C.html#mpi4py.MPI.ORDER_C" title="mpi4py.MPI.ORDER_C"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ORDER_C</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ORDER_C</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ORDER_F.html#mpi4py.MPI.ORDER_F" title="mpi4py.MPI.ORDER_F"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ORDER_F</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ORDER_F</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ORDER_FORTRAN.html#mpi4py.MPI.ORDER_FORTRAN" title="mpi4py.MPI.ORDER_FORTRAN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ORDER_FORTRAN</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">ORDER_FORTRAN</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.TYPECLASS_INTEGER.html#mpi4py.MPI.TYPECLASS_INTEGER" title="mpi4py.MPI.TYPECLASS_INTEGER"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TYPECLASS_INTEGER</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">TYPECLASS_INTEGER</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.TYPECLASS_REAL.html#mpi4py.MPI.TYPECLASS_REAL" title="mpi4py.MPI.TYPECLASS_REAL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TYPECLASS_REAL</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">TYPECLASS_REAL</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.TYPECLASS_COMPLEX.html#mpi4py.MPI.TYPECLASS_COMPLEX" title="mpi4py.MPI.TYPECLASS_COMPLEX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TYPECLASS_COMPLEX</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">TYPECLASS_COMPLEX</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.DISTRIBUTE_NONE.html#mpi4py.MPI.DISTRIBUTE_NONE" title="mpi4py.MPI.DISTRIBUTE_NONE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DISTRIBUTE_NONE</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">DISTRIBUTE_NONE</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.DISTRIBUTE_BLOCK.html#mpi4py.MPI.DISTRIBUTE_BLOCK" title="mpi4py.MPI.DISTRIBUTE_BLOCK"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DISTRIBUTE_BLOCK</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">DISTRIBUTE_BLOCK</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.DISTRIBUTE_CYCLIC.html#mpi4py.MPI.DISTRIBUTE_CYCLIC" title="mpi4py.MPI.DISTRIBUTE_CYCLIC"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DISTRIBUTE_CYCLIC</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">DISTRIBUTE_CYCLIC</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.DISTRIBUTE_DFLT_DARG.html#mpi4py.MPI.DISTRIBUTE_DFLT_DARG" title="mpi4py.MPI.DISTRIBUTE_DFLT_DARG"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DISTRIBUTE_DFLT_DARG</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">DISTRIBUTE_DFLT_DARG</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.COMBINER_NAMED.html#mpi4py.MPI.COMBINER_NAMED" title="mpi4py.MPI.COMBINER_NAMED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">COMBINER_NAMED</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">COMBINER_NAMED</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.COMBINER_DUP.html#mpi4py.MPI.COMBINER_DUP" title="mpi4py.MPI.COMBINER_DUP"><code class="xref py py-obj docutils literal notranslate"><span class="pre">COMBINER_DUP</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">COMBINER_DUP</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.COMBINER_CONTIGUOUS.html#mpi4py.MPI.COMBINER_CONTIGUOUS" title="mpi4py.MPI.COMBINER_CONTIGUOUS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">COMBINER_CONTIGUOUS</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">COMBINER_CONTIGUOUS</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.COMBINER_VECTOR.html#mpi4py.MPI.COMBINER_VECTOR" title="mpi4py.MPI.COMBINER_VECTOR"><code class="xref py py-obj docutils literal notranslate"><span class="pre">COMBINER_VECTOR</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">COMBINER_VECTOR</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.COMBINER_HVECTOR.html#mpi4py.MPI.COMBINER_HVECTOR" title="mpi4py.MPI.COMBINER_HVECTOR"><code class="xref py py-obj docutils literal notranslate"><span class="pre">COMBINER_HVECTOR</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">COMBINER_HVECTOR</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.COMBINER_INDEXED.html#mpi4py.MPI.COMBINER_INDEXED" title="mpi4py.MPI.COMBINER_INDEXED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">COMBINER_INDEXED</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">COMBINER_INDEXED</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.COMBINER_HINDEXED.html#mpi4py.MPI.COMBINER_HINDEXED" title="mpi4py.MPI.COMBINER_HINDEXED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">COMBINER_HINDEXED</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">COMBINER_HINDEXED</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.COMBINER_INDEXED_BLOCK.html#mpi4py.MPI.COMBINER_INDEXED_BLOCK" title="mpi4py.MPI.COMBINER_INDEXED_BLOCK"><code class="xref py py-obj docutils literal notranslate"><span class="pre">COMBINER_INDEXED_BLOCK</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">COMBINER_INDEXED_BLOCK</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.COMBINER_HINDEXED_BLOCK.html#mpi4py.MPI.COMBINER_HINDEXED_BLOCK" title="mpi4py.MPI.COMBINER_HINDEXED_BLOCK"><code class="xref py py-obj docutils literal notranslate"><span class="pre">COMBINER_HINDEXED_BLOCK</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">COMBINER_HINDEXED_BLOCK</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.COMBINER_STRUCT.html#mpi4py.MPI.COMBINER_STRUCT" title="mpi4py.MPI.COMBINER_STRUCT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">COMBINER_STRUCT</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">COMBINER_STRUCT</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.COMBINER_SUBARRAY.html#mpi4py.MPI.COMBINER_SUBARRAY" title="mpi4py.MPI.COMBINER_SUBARRAY"><code class="xref py py-obj docutils literal notranslate"><span class="pre">COMBINER_SUBARRAY</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">COMBINER_SUBARRAY</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.COMBINER_DARRAY.html#mpi4py.MPI.COMBINER_DARRAY" title="mpi4py.MPI.COMBINER_DARRAY"><code class="xref py py-obj docutils literal notranslate"><span class="pre">COMBINER_DARRAY</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">COMBINER_DARRAY</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.COMBINER_RESIZED.html#mpi4py.MPI.COMBINER_RESIZED" title="mpi4py.MPI.COMBINER_RESIZED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">COMBINER_RESIZED</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">COMBINER_RESIZED</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.COMBINER_F90_REAL.html#mpi4py.MPI.COMBINER_F90_REAL" title="mpi4py.MPI.COMBINER_F90_REAL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">COMBINER_F90_REAL</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">COMBINER_F90_REAL</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.COMBINER_F90_COMPLEX.html#mpi4py.MPI.COMBINER_F90_COMPLEX" title="mpi4py.MPI.COMBINER_F90_COMPLEX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">COMBINER_F90_COMPLEX</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">COMBINER_F90_COMPLEX</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.COMBINER_F90_INTEGER.html#mpi4py.MPI.COMBINER_F90_INTEGER" title="mpi4py.MPI.COMBINER_F90_INTEGER"><code class="xref py py-obj docutils literal notranslate"><span class="pre">COMBINER_F90_INTEGER</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">COMBINER_F90_INTEGER</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.IDENT.html#mpi4py.MPI.IDENT" title="mpi4py.MPI.IDENT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IDENT</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">IDENT</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.CONGRUENT.html#mpi4py.MPI.CONGRUENT" title="mpi4py.MPI.CONGRUENT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CONGRUENT</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">CONGRUENT</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.SIMILAR.html#mpi4py.MPI.SIMILAR" title="mpi4py.MPI.SIMILAR"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SIMILAR</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">SIMILAR</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.UNEQUAL.html#mpi4py.MPI.UNEQUAL" title="mpi4py.MPI.UNEQUAL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">UNEQUAL</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">UNEQUAL</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.CART.html#mpi4py.MPI.CART" title="mpi4py.MPI.CART"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CART</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">CART</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.GRAPH.html#mpi4py.MPI.GRAPH" title="mpi4py.MPI.GRAPH"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GRAPH</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">GRAPH</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.DIST_GRAPH.html#mpi4py.MPI.DIST_GRAPH" title="mpi4py.MPI.DIST_GRAPH"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DIST_GRAPH</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">DIST_GRAPH</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.UNWEIGHTED.html#mpi4py.MPI.UNWEIGHTED" title="mpi4py.MPI.UNWEIGHTED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">UNWEIGHTED</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">UNWEIGHTED</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.WEIGHTS_EMPTY.html#mpi4py.MPI.WEIGHTS_EMPTY" title="mpi4py.MPI.WEIGHTS_EMPTY"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WEIGHTS_EMPTY</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">WEIGHTS_EMPTY</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.COMM_TYPE_SHARED.html#mpi4py.MPI.COMM_TYPE_SHARED" title="mpi4py.MPI.COMM_TYPE_SHARED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">COMM_TYPE_SHARED</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">COMM_TYPE_SHARED</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.BSEND_OVERHEAD.html#mpi4py.MPI.BSEND_OVERHEAD" title="mpi4py.MPI.BSEND_OVERHEAD"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BSEND_OVERHEAD</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">BSEND_OVERHEAD</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.WIN_FLAVOR_CREATE.html#mpi4py.MPI.WIN_FLAVOR_CREATE" title="mpi4py.MPI.WIN_FLAVOR_CREATE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WIN_FLAVOR_CREATE</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">WIN_FLAVOR_CREATE</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.WIN_FLAVOR_ALLOCATE.html#mpi4py.MPI.WIN_FLAVOR_ALLOCATE" title="mpi4py.MPI.WIN_FLAVOR_ALLOCATE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WIN_FLAVOR_ALLOCATE</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">WIN_FLAVOR_ALLOCATE</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.WIN_FLAVOR_DYNAMIC.html#mpi4py.MPI.WIN_FLAVOR_DYNAMIC" title="mpi4py.MPI.WIN_FLAVOR_DYNAMIC"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WIN_FLAVOR_DYNAMIC</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">WIN_FLAVOR_DYNAMIC</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.WIN_FLAVOR_SHARED.html#mpi4py.MPI.WIN_FLAVOR_SHARED" title="mpi4py.MPI.WIN_FLAVOR_SHARED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WIN_FLAVOR_SHARED</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">WIN_FLAVOR_SHARED</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.WIN_SEPARATE.html#mpi4py.MPI.WIN_SEPARATE" title="mpi4py.MPI.WIN_SEPARATE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WIN_SEPARATE</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">WIN_SEPARATE</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.WIN_UNIFIED.html#mpi4py.MPI.WIN_UNIFIED" title="mpi4py.MPI.WIN_UNIFIED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WIN_UNIFIED</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">WIN_UNIFIED</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.MODE_NOCHECK.html#mpi4py.MPI.MODE_NOCHECK" title="mpi4py.MPI.MODE_NOCHECK"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MODE_NOCHECK</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">MODE_NOCHECK</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.MODE_NOSTORE.html#mpi4py.MPI.MODE_NOSTORE" title="mpi4py.MPI.MODE_NOSTORE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MODE_NOSTORE</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">MODE_NOSTORE</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.MODE_NOPUT.html#mpi4py.MPI.MODE_NOPUT" title="mpi4py.MPI.MODE_NOPUT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MODE_NOPUT</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">MODE_NOPUT</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.MODE_NOPRECEDE.html#mpi4py.MPI.MODE_NOPRECEDE" title="mpi4py.MPI.MODE_NOPRECEDE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MODE_NOPRECEDE</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">MODE_NOPRECEDE</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.MODE_NOSUCCEED.html#mpi4py.MPI.MODE_NOSUCCEED" title="mpi4py.MPI.MODE_NOSUCCEED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MODE_NOSUCCEED</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">MODE_NOSUCCEED</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.LOCK_EXCLUSIVE.html#mpi4py.MPI.LOCK_EXCLUSIVE" title="mpi4py.MPI.LOCK_EXCLUSIVE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LOCK_EXCLUSIVE</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">LOCK_EXCLUSIVE</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.LOCK_SHARED.html#mpi4py.MPI.LOCK_SHARED" title="mpi4py.MPI.LOCK_SHARED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LOCK_SHARED</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">LOCK_SHARED</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.MODE_RDONLY.html#mpi4py.MPI.MODE_RDONLY" title="mpi4py.MPI.MODE_RDONLY"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MODE_RDONLY</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">MODE_RDONLY</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.MODE_WRONLY.html#mpi4py.MPI.MODE_WRONLY" title="mpi4py.MPI.MODE_WRONLY"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MODE_WRONLY</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">MODE_WRONLY</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.MODE_RDWR.html#mpi4py.MPI.MODE_RDWR" title="mpi4py.MPI.MODE_RDWR"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MODE_RDWR</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">MODE_RDWR</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.MODE_CREATE.html#mpi4py.MPI.MODE_CREATE" title="mpi4py.MPI.MODE_CREATE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MODE_CREATE</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">MODE_CREATE</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.MODE_EXCL.html#mpi4py.MPI.MODE_EXCL" title="mpi4py.MPI.MODE_EXCL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MODE_EXCL</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">MODE_EXCL</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.MODE_DELETE_ON_CLOSE.html#mpi4py.MPI.MODE_DELETE_ON_CLOSE" title="mpi4py.MPI.MODE_DELETE_ON_CLOSE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MODE_DELETE_ON_CLOSE</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">MODE_DELETE_ON_CLOSE</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.MODE_UNIQUE_OPEN.html#mpi4py.MPI.MODE_UNIQUE_OPEN" title="mpi4py.MPI.MODE_UNIQUE_OPEN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MODE_UNIQUE_OPEN</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">MODE_UNIQUE_OPEN</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.MODE_SEQUENTIAL.html#mpi4py.MPI.MODE_SEQUENTIAL" title="mpi4py.MPI.MODE_SEQUENTIAL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MODE_SEQUENTIAL</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">MODE_SEQUENTIAL</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.MODE_APPEND.html#mpi4py.MPI.MODE_APPEND" title="mpi4py.MPI.MODE_APPEND"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MODE_APPEND</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">MODE_APPEND</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.SEEK_SET.html#mpi4py.MPI.SEEK_SET" title="mpi4py.MPI.SEEK_SET"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SEEK_SET</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">SEEK_SET</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.SEEK_CUR.html#mpi4py.MPI.SEEK_CUR" title="mpi4py.MPI.SEEK_CUR"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SEEK_CUR</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">SEEK_CUR</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.SEEK_END.html#mpi4py.MPI.SEEK_END" title="mpi4py.MPI.SEEK_END"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SEEK_END</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">SEEK_END</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.DISPLACEMENT_CURRENT.html#mpi4py.MPI.DISPLACEMENT_CURRENT" title="mpi4py.MPI.DISPLACEMENT_CURRENT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DISPLACEMENT_CURRENT</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">DISPLACEMENT_CURRENT</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.DISP_CUR.html#mpi4py.MPI.DISP_CUR" title="mpi4py.MPI.DISP_CUR"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DISP_CUR</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">DISP_CUR</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.THREAD_SINGLE.html#mpi4py.MPI.THREAD_SINGLE" title="mpi4py.MPI.THREAD_SINGLE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">THREAD_SINGLE</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">THREAD_SINGLE</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.THREAD_FUNNELED.html#mpi4py.MPI.THREAD_FUNNELED" title="mpi4py.MPI.THREAD_FUNNELED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">THREAD_FUNNELED</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">THREAD_FUNNELED</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.THREAD_SERIALIZED.html#mpi4py.MPI.THREAD_SERIALIZED" title="mpi4py.MPI.THREAD_SERIALIZED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">THREAD_SERIALIZED</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">THREAD_SERIALIZED</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.THREAD_MULTIPLE.html#mpi4py.MPI.THREAD_MULTIPLE" title="mpi4py.MPI.THREAD_MULTIPLE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">THREAD_MULTIPLE</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">THREAD_MULTIPLE</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.VERSION.html#mpi4py.MPI.VERSION" title="mpi4py.MPI.VERSION"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VERSION</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">VERSION</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.SUBVERSION.html#mpi4py.MPI.SUBVERSION" title="mpi4py.MPI.SUBVERSION"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SUBVERSION</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">SUBVERSION</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.MAX_PROCESSOR_NAME.html#mpi4py.MPI.MAX_PROCESSOR_NAME" title="mpi4py.MPI.MAX_PROCESSOR_NAME"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MAX_PROCESSOR_NAME</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">MAX_PROCESSOR_NAME</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.MAX_ERROR_STRING.html#mpi4py.MPI.MAX_ERROR_STRING" title="mpi4py.MPI.MAX_ERROR_STRING"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MAX_ERROR_STRING</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">MAX_ERROR_STRING</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.MAX_PORT_NAME.html#mpi4py.MPI.MAX_PORT_NAME" title="mpi4py.MPI.MAX_PORT_NAME"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MAX_PORT_NAME</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">MAX_PORT_NAME</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.MAX_INFO_KEY.html#mpi4py.MPI.MAX_INFO_KEY" title="mpi4py.MPI.MAX_INFO_KEY"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MAX_INFO_KEY</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">MAX_INFO_KEY</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.MAX_INFO_VAL.html#mpi4py.MPI.MAX_INFO_VAL" title="mpi4py.MPI.MAX_INFO_VAL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MAX_INFO_VAL</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">MAX_INFO_VAL</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.MAX_OBJECT_NAME.html#mpi4py.MPI.MAX_OBJECT_NAME" title="mpi4py.MPI.MAX_OBJECT_NAME"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MAX_OBJECT_NAME</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">MAX_OBJECT_NAME</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.MAX_DATAREP_STRING.html#mpi4py.MPI.MAX_DATAREP_STRING" title="mpi4py.MPI.MAX_DATAREP_STRING"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MAX_DATAREP_STRING</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">MAX_DATAREP_STRING</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.MAX_LIBRARY_VERSION_STRING.html#mpi4py.MPI.MAX_LIBRARY_VERSION_STRING" title="mpi4py.MPI.MAX_LIBRARY_VERSION_STRING"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MAX_LIBRARY_VERSION_STRING</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">MAX_LIBRARY_VERSION_STRING</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.DATATYPE_NULL.html#mpi4py.MPI.DATATYPE_NULL" title="mpi4py.MPI.DATATYPE_NULL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DATATYPE_NULL</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">DATATYPE_NULL</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.UB.html#mpi4py.MPI.UB" title="mpi4py.MPI.UB"><code class="xref py py-obj docutils literal notranslate"><span class="pre">UB</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">UB</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.LB.html#mpi4py.MPI.LB" title="mpi4py.MPI.LB"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LB</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">LB</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.PACKED.html#mpi4py.MPI.PACKED" title="mpi4py.MPI.PACKED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PACKED</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">PACKED</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.BYTE.html#mpi4py.MPI.BYTE" title="mpi4py.MPI.BYTE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BYTE</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">BYTE</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.AINT.html#mpi4py.MPI.AINT" title="mpi4py.MPI.AINT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AINT</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">AINT</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.OFFSET.html#mpi4py.MPI.OFFSET" title="mpi4py.MPI.OFFSET"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OFFSET</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">OFFSET</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.COUNT.html#mpi4py.MPI.COUNT" title="mpi4py.MPI.COUNT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">COUNT</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">COUNT</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.CHAR.html#mpi4py.MPI.CHAR" title="mpi4py.MPI.CHAR"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CHAR</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">CHAR</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.WCHAR.html#mpi4py.MPI.WCHAR" title="mpi4py.MPI.WCHAR"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WCHAR</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">WCHAR</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.SIGNED_CHAR.html#mpi4py.MPI.SIGNED_CHAR" title="mpi4py.MPI.SIGNED_CHAR"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SIGNED_CHAR</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">SIGNED_CHAR</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.SHORT.html#mpi4py.MPI.SHORT" title="mpi4py.MPI.SHORT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SHORT</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">SHORT</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.INT.html#mpi4py.MPI.INT" title="mpi4py.MPI.INT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">INT</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">INT</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.LONG.html#mpi4py.MPI.LONG" title="mpi4py.MPI.LONG"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LONG</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">LONG</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.LONG_LONG.html#mpi4py.MPI.LONG_LONG" title="mpi4py.MPI.LONG_LONG"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LONG_LONG</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">LONG_LONG</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.UNSIGNED_CHAR.html#mpi4py.MPI.UNSIGNED_CHAR" title="mpi4py.MPI.UNSIGNED_CHAR"><code class="xref py py-obj docutils literal notranslate"><span class="pre">UNSIGNED_CHAR</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">UNSIGNED_CHAR</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.UNSIGNED_SHORT.html#mpi4py.MPI.UNSIGNED_SHORT" title="mpi4py.MPI.UNSIGNED_SHORT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">UNSIGNED_SHORT</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">UNSIGNED_SHORT</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.UNSIGNED.html#mpi4py.MPI.UNSIGNED" title="mpi4py.MPI.UNSIGNED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">UNSIGNED</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">UNSIGNED</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.UNSIGNED_LONG.html#mpi4py.MPI.UNSIGNED_LONG" title="mpi4py.MPI.UNSIGNED_LONG"><code class="xref py py-obj docutils literal notranslate"><span class="pre">UNSIGNED_LONG</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">UNSIGNED_LONG</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.UNSIGNED_LONG_LONG.html#mpi4py.MPI.UNSIGNED_LONG_LONG" title="mpi4py.MPI.UNSIGNED_LONG_LONG"><code class="xref py py-obj docutils literal notranslate"><span class="pre">UNSIGNED_LONG_LONG</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">UNSIGNED_LONG_LONG</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.FLOAT.html#mpi4py.MPI.FLOAT" title="mpi4py.MPI.FLOAT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FLOAT</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">FLOAT</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.DOUBLE.html#mpi4py.MPI.DOUBLE" title="mpi4py.MPI.DOUBLE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DOUBLE</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">DOUBLE</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.LONG_DOUBLE.html#mpi4py.MPI.LONG_DOUBLE" title="mpi4py.MPI.LONG_DOUBLE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LONG_DOUBLE</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">LONG_DOUBLE</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.C_BOOL.html#mpi4py.MPI.C_BOOL" title="mpi4py.MPI.C_BOOL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">C_BOOL</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">C_BOOL</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.INT8_T.html#mpi4py.MPI.INT8_T" title="mpi4py.MPI.INT8_T"><code class="xref py py-obj docutils literal notranslate"><span class="pre">INT8_T</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">INT8_T</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.INT16_T.html#mpi4py.MPI.INT16_T" title="mpi4py.MPI.INT16_T"><code class="xref py py-obj docutils literal notranslate"><span class="pre">INT16_T</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">INT16_T</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.INT32_T.html#mpi4py.MPI.INT32_T" title="mpi4py.MPI.INT32_T"><code class="xref py py-obj docutils literal notranslate"><span class="pre">INT32_T</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">INT32_T</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.INT64_T.html#mpi4py.MPI.INT64_T" title="mpi4py.MPI.INT64_T"><code class="xref py py-obj docutils literal notranslate"><span class="pre">INT64_T</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">INT64_T</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.UINT8_T.html#mpi4py.MPI.UINT8_T" title="mpi4py.MPI.UINT8_T"><code class="xref py py-obj docutils literal notranslate"><span class="pre">UINT8_T</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">UINT8_T</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.UINT16_T.html#mpi4py.MPI.UINT16_T" title="mpi4py.MPI.UINT16_T"><code class="xref py py-obj docutils literal notranslate"><span class="pre">UINT16_T</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">UINT16_T</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.UINT32_T.html#mpi4py.MPI.UINT32_T" title="mpi4py.MPI.UINT32_T"><code class="xref py py-obj docutils literal notranslate"><span class="pre">UINT32_T</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">UINT32_T</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.UINT64_T.html#mpi4py.MPI.UINT64_T" title="mpi4py.MPI.UINT64_T"><code class="xref py py-obj docutils literal notranslate"><span class="pre">UINT64_T</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">UINT64_T</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.C_COMPLEX.html#mpi4py.MPI.C_COMPLEX" title="mpi4py.MPI.C_COMPLEX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">C_COMPLEX</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">C_COMPLEX</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.C_FLOAT_COMPLEX.html#mpi4py.MPI.C_FLOAT_COMPLEX" title="mpi4py.MPI.C_FLOAT_COMPLEX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">C_FLOAT_COMPLEX</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">C_FLOAT_COMPLEX</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.C_DOUBLE_COMPLEX.html#mpi4py.MPI.C_DOUBLE_COMPLEX" title="mpi4py.MPI.C_DOUBLE_COMPLEX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">C_DOUBLE_COMPLEX</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">C_DOUBLE_COMPLEX</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.C_LONG_DOUBLE_COMPLEX.html#mpi4py.MPI.C_LONG_DOUBLE_COMPLEX" title="mpi4py.MPI.C_LONG_DOUBLE_COMPLEX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">C_LONG_DOUBLE_COMPLEX</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">C_LONG_DOUBLE_COMPLEX</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.CXX_BOOL.html#mpi4py.MPI.CXX_BOOL" title="mpi4py.MPI.CXX_BOOL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CXX_BOOL</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">CXX_BOOL</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.CXX_FLOAT_COMPLEX.html#mpi4py.MPI.CXX_FLOAT_COMPLEX" title="mpi4py.MPI.CXX_FLOAT_COMPLEX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CXX_FLOAT_COMPLEX</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">CXX_FLOAT_COMPLEX</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.CXX_DOUBLE_COMPLEX.html#mpi4py.MPI.CXX_DOUBLE_COMPLEX" title="mpi4py.MPI.CXX_DOUBLE_COMPLEX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CXX_DOUBLE_COMPLEX</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">CXX_DOUBLE_COMPLEX</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.CXX_LONG_DOUBLE_COMPLEX.html#mpi4py.MPI.CXX_LONG_DOUBLE_COMPLEX" title="mpi4py.MPI.CXX_LONG_DOUBLE_COMPLEX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CXX_LONG_DOUBLE_COMPLEX</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">CXX_LONG_DOUBLE_COMPLEX</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.SHORT_INT.html#mpi4py.MPI.SHORT_INT" title="mpi4py.MPI.SHORT_INT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SHORT_INT</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">SHORT_INT</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.INT_INT.html#mpi4py.MPI.INT_INT" title="mpi4py.MPI.INT_INT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">INT_INT</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">INT_INT</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.TWOINT.html#mpi4py.MPI.TWOINT" title="mpi4py.MPI.TWOINT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TWOINT</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">TWOINT</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.LONG_INT.html#mpi4py.MPI.LONG_INT" title="mpi4py.MPI.LONG_INT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LONG_INT</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">LONG_INT</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.FLOAT_INT.html#mpi4py.MPI.FLOAT_INT" title="mpi4py.MPI.FLOAT_INT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FLOAT_INT</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">FLOAT_INT</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.DOUBLE_INT.html#mpi4py.MPI.DOUBLE_INT" title="mpi4py.MPI.DOUBLE_INT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DOUBLE_INT</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">DOUBLE_INT</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.LONG_DOUBLE_INT.html#mpi4py.MPI.LONG_DOUBLE_INT" title="mpi4py.MPI.LONG_DOUBLE_INT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LONG_DOUBLE_INT</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">LONG_DOUBLE_INT</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.CHARACTER.html#mpi4py.MPI.CHARACTER" title="mpi4py.MPI.CHARACTER"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CHARACTER</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">CHARACTER</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.LOGICAL.html#mpi4py.MPI.LOGICAL" title="mpi4py.MPI.LOGICAL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LOGICAL</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">LOGICAL</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.INTEGER.html#mpi4py.MPI.INTEGER" title="mpi4py.MPI.INTEGER"><code class="xref py py-obj docutils literal notranslate"><span class="pre">INTEGER</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">INTEGER</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.REAL.html#mpi4py.MPI.REAL" title="mpi4py.MPI.REAL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">REAL</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">REAL</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.DOUBLE_PRECISION.html#mpi4py.MPI.DOUBLE_PRECISION" title="mpi4py.MPI.DOUBLE_PRECISION"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DOUBLE_PRECISION</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">DOUBLE_PRECISION</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.COMPLEX.html#mpi4py.MPI.COMPLEX" title="mpi4py.MPI.COMPLEX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">COMPLEX</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">COMPLEX</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.DOUBLE_COMPLEX.html#mpi4py.MPI.DOUBLE_COMPLEX" title="mpi4py.MPI.DOUBLE_COMPLEX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DOUBLE_COMPLEX</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">DOUBLE_COMPLEX</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.LOGICAL1.html#mpi4py.MPI.LOGICAL1" title="mpi4py.MPI.LOGICAL1"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LOGICAL1</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">LOGICAL1</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.LOGICAL2.html#mpi4py.MPI.LOGICAL2" title="mpi4py.MPI.LOGICAL2"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LOGICAL2</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">LOGICAL2</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.LOGICAL4.html#mpi4py.MPI.LOGICAL4" title="mpi4py.MPI.LOGICAL4"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LOGICAL4</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">LOGICAL4</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.LOGICAL8.html#mpi4py.MPI.LOGICAL8" title="mpi4py.MPI.LOGICAL8"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LOGICAL8</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">LOGICAL8</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.INTEGER1.html#mpi4py.MPI.INTEGER1" title="mpi4py.MPI.INTEGER1"><code class="xref py py-obj docutils literal notranslate"><span class="pre">INTEGER1</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">INTEGER1</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.INTEGER2.html#mpi4py.MPI.INTEGER2" title="mpi4py.MPI.INTEGER2"><code class="xref py py-obj docutils literal notranslate"><span class="pre">INTEGER2</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">INTEGER2</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.INTEGER4.html#mpi4py.MPI.INTEGER4" title="mpi4py.MPI.INTEGER4"><code class="xref py py-obj docutils literal notranslate"><span class="pre">INTEGER4</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">INTEGER4</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.INTEGER8.html#mpi4py.MPI.INTEGER8" title="mpi4py.MPI.INTEGER8"><code class="xref py py-obj docutils literal notranslate"><span class="pre">INTEGER8</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">INTEGER8</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.INTEGER16.html#mpi4py.MPI.INTEGER16" title="mpi4py.MPI.INTEGER16"><code class="xref py py-obj docutils literal notranslate"><span class="pre">INTEGER16</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">INTEGER16</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.REAL2.html#mpi4py.MPI.REAL2" title="mpi4py.MPI.REAL2"><code class="xref py py-obj docutils literal notranslate"><span class="pre">REAL2</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">REAL2</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.REAL4.html#mpi4py.MPI.REAL4" title="mpi4py.MPI.REAL4"><code class="xref py py-obj docutils literal notranslate"><span class="pre">REAL4</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">REAL4</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.REAL8.html#mpi4py.MPI.REAL8" title="mpi4py.MPI.REAL8"><code class="xref py py-obj docutils literal notranslate"><span class="pre">REAL8</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">REAL8</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.REAL16.html#mpi4py.MPI.REAL16" title="mpi4py.MPI.REAL16"><code class="xref py py-obj docutils literal notranslate"><span class="pre">REAL16</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">REAL16</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.COMPLEX4.html#mpi4py.MPI.COMPLEX4" title="mpi4py.MPI.COMPLEX4"><code class="xref py py-obj docutils literal notranslate"><span class="pre">COMPLEX4</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">COMPLEX4</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.COMPLEX8.html#mpi4py.MPI.COMPLEX8" title="mpi4py.MPI.COMPLEX8"><code class="xref py py-obj docutils literal notranslate"><span class="pre">COMPLEX8</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">COMPLEX8</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.COMPLEX16.html#mpi4py.MPI.COMPLEX16" title="mpi4py.MPI.COMPLEX16"><code class="xref py py-obj docutils literal notranslate"><span class="pre">COMPLEX16</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">COMPLEX16</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.COMPLEX32.html#mpi4py.MPI.COMPLEX32" title="mpi4py.MPI.COMPLEX32"><code class="xref py py-obj docutils literal notranslate"><span class="pre">COMPLEX32</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">COMPLEX32</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.UNSIGNED_INT.html#mpi4py.MPI.UNSIGNED_INT" title="mpi4py.MPI.UNSIGNED_INT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">UNSIGNED_INT</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">UNSIGNED_INT</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.SIGNED_SHORT.html#mpi4py.MPI.SIGNED_SHORT" title="mpi4py.MPI.SIGNED_SHORT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SIGNED_SHORT</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">SIGNED_SHORT</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.SIGNED_INT.html#mpi4py.MPI.SIGNED_INT" title="mpi4py.MPI.SIGNED_INT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SIGNED_INT</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">SIGNED_INT</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.SIGNED_LONG.html#mpi4py.MPI.SIGNED_LONG" title="mpi4py.MPI.SIGNED_LONG"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SIGNED_LONG</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">SIGNED_LONG</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.SIGNED_LONG_LONG.html#mpi4py.MPI.SIGNED_LONG_LONG" title="mpi4py.MPI.SIGNED_LONG_LONG"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SIGNED_LONG_LONG</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">SIGNED_LONG_LONG</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.BOOL.html#mpi4py.MPI.BOOL" title="mpi4py.MPI.BOOL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BOOL</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">BOOL</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.SINT8_T.html#mpi4py.MPI.SINT8_T" title="mpi4py.MPI.SINT8_T"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SINT8_T</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">SINT8_T</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.SINT16_T.html#mpi4py.MPI.SINT16_T" title="mpi4py.MPI.SINT16_T"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SINT16_T</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">SINT16_T</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.SINT32_T.html#mpi4py.MPI.SINT32_T" title="mpi4py.MPI.SINT32_T"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SINT32_T</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">SINT32_T</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.SINT64_T.html#mpi4py.MPI.SINT64_T" title="mpi4py.MPI.SINT64_T"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SINT64_T</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">SINT64_T</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.F_BOOL.html#mpi4py.MPI.F_BOOL" title="mpi4py.MPI.F_BOOL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">F_BOOL</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">F_BOOL</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.F_INT.html#mpi4py.MPI.F_INT" title="mpi4py.MPI.F_INT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">F_INT</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">F_INT</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.F_FLOAT.html#mpi4py.MPI.F_FLOAT" title="mpi4py.MPI.F_FLOAT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">F_FLOAT</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">F_FLOAT</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.F_DOUBLE.html#mpi4py.MPI.F_DOUBLE" title="mpi4py.MPI.F_DOUBLE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">F_DOUBLE</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">F_DOUBLE</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.F_COMPLEX.html#mpi4py.MPI.F_COMPLEX" title="mpi4py.MPI.F_COMPLEX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">F_COMPLEX</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">F_COMPLEX</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.F_FLOAT_COMPLEX.html#mpi4py.MPI.F_FLOAT_COMPLEX" title="mpi4py.MPI.F_FLOAT_COMPLEX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">F_FLOAT_COMPLEX</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">F_FLOAT_COMPLEX</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.F_DOUBLE_COMPLEX.html#mpi4py.MPI.F_DOUBLE_COMPLEX" title="mpi4py.MPI.F_DOUBLE_COMPLEX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">F_DOUBLE_COMPLEX</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><code class="xref py py-class docutils literal notranslate"><span class="pre">Datatype</span></code></a> <code class="docutils literal notranslate"><span class="pre">F_DOUBLE_COMPLEX</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.REQUEST_NULL.html#mpi4py.MPI.REQUEST_NULL" title="mpi4py.MPI.REQUEST_NULL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">REQUEST_NULL</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request"><code class="xref py py-class docutils literal notranslate"><span class="pre">Request</span></code></a> <code class="docutils literal notranslate"><span class="pre">REQUEST_NULL</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.MESSAGE_NULL.html#mpi4py.MPI.MESSAGE_NULL" title="mpi4py.MPI.MESSAGE_NULL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MESSAGE_NULL</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Message.html#mpi4py.MPI.Message" title="mpi4py.MPI.Message"><code class="xref py py-class docutils literal notranslate"><span class="pre">Message</span></code></a> <code class="docutils literal notranslate"><span class="pre">MESSAGE_NULL</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.MESSAGE_NO_PROC.html#mpi4py.MPI.MESSAGE_NO_PROC" title="mpi4py.MPI.MESSAGE_NO_PROC"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MESSAGE_NO_PROC</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Message.html#mpi4py.MPI.Message" title="mpi4py.MPI.Message"><code class="xref py py-class docutils literal notranslate"><span class="pre">Message</span></code></a> <code class="docutils literal notranslate"><span class="pre">MESSAGE_NO_PROC</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.OP_NULL.html#mpi4py.MPI.OP_NULL" title="mpi4py.MPI.OP_NULL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OP_NULL</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Op.html#mpi4py.MPI.Op" title="mpi4py.MPI.Op"><code class="xref py py-class docutils literal notranslate"><span class="pre">Op</span></code></a> <code class="docutils literal notranslate"><span class="pre">OP_NULL</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.MAX.html#mpi4py.MPI.MAX" title="mpi4py.MPI.MAX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MAX</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Op.html#mpi4py.MPI.Op" title="mpi4py.MPI.Op"><code class="xref py py-class docutils literal notranslate"><span class="pre">Op</span></code></a> <code class="docutils literal notranslate"><span class="pre">MAX</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.MIN.html#mpi4py.MPI.MIN" title="mpi4py.MPI.MIN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MIN</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Op.html#mpi4py.MPI.Op" title="mpi4py.MPI.Op"><code class="xref py py-class docutils literal notranslate"><span class="pre">Op</span></code></a> <code class="docutils literal notranslate"><span class="pre">MIN</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.SUM.html#mpi4py.MPI.SUM" title="mpi4py.MPI.SUM"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SUM</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Op.html#mpi4py.MPI.Op" title="mpi4py.MPI.Op"><code class="xref py py-class docutils literal notranslate"><span class="pre">Op</span></code></a> <code class="docutils literal notranslate"><span class="pre">SUM</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.PROD.html#mpi4py.MPI.PROD" title="mpi4py.MPI.PROD"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PROD</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Op.html#mpi4py.MPI.Op" title="mpi4py.MPI.Op"><code class="xref py py-class docutils literal notranslate"><span class="pre">Op</span></code></a> <code class="docutils literal notranslate"><span class="pre">PROD</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.LAND.html#mpi4py.MPI.LAND" title="mpi4py.MPI.LAND"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LAND</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Op.html#mpi4py.MPI.Op" title="mpi4py.MPI.Op"><code class="xref py py-class docutils literal notranslate"><span class="pre">Op</span></code></a> <code class="docutils literal notranslate"><span class="pre">LAND</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.BAND.html#mpi4py.MPI.BAND" title="mpi4py.MPI.BAND"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BAND</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Op.html#mpi4py.MPI.Op" title="mpi4py.MPI.Op"><code class="xref py py-class docutils literal notranslate"><span class="pre">Op</span></code></a> <code class="docutils literal notranslate"><span class="pre">BAND</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.LOR.html#mpi4py.MPI.LOR" title="mpi4py.MPI.LOR"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LOR</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Op.html#mpi4py.MPI.Op" title="mpi4py.MPI.Op"><code class="xref py py-class docutils literal notranslate"><span class="pre">Op</span></code></a> <code class="docutils literal notranslate"><span class="pre">LOR</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.BOR.html#mpi4py.MPI.BOR" title="mpi4py.MPI.BOR"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BOR</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Op.html#mpi4py.MPI.Op" title="mpi4py.MPI.Op"><code class="xref py py-class docutils literal notranslate"><span class="pre">Op</span></code></a> <code class="docutils literal notranslate"><span class="pre">BOR</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.LXOR.html#mpi4py.MPI.LXOR" title="mpi4py.MPI.LXOR"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LXOR</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Op.html#mpi4py.MPI.Op" title="mpi4py.MPI.Op"><code class="xref py py-class docutils literal notranslate"><span class="pre">Op</span></code></a> <code class="docutils literal notranslate"><span class="pre">LXOR</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.BXOR.html#mpi4py.MPI.BXOR" title="mpi4py.MPI.BXOR"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BXOR</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Op.html#mpi4py.MPI.Op" title="mpi4py.MPI.Op"><code class="xref py py-class docutils literal notranslate"><span class="pre">Op</span></code></a> <code class="docutils literal notranslate"><span class="pre">BXOR</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.MAXLOC.html#mpi4py.MPI.MAXLOC" title="mpi4py.MPI.MAXLOC"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MAXLOC</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Op.html#mpi4py.MPI.Op" title="mpi4py.MPI.Op"><code class="xref py py-class docutils literal notranslate"><span class="pre">Op</span></code></a> <code class="docutils literal notranslate"><span class="pre">MAXLOC</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.MINLOC.html#mpi4py.MPI.MINLOC" title="mpi4py.MPI.MINLOC"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MINLOC</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Op.html#mpi4py.MPI.Op" title="mpi4py.MPI.Op"><code class="xref py py-class docutils literal notranslate"><span class="pre">Op</span></code></a> <code class="docutils literal notranslate"><span class="pre">MINLOC</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.REPLACE.html#mpi4py.MPI.REPLACE" title="mpi4py.MPI.REPLACE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">REPLACE</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Op.html#mpi4py.MPI.Op" title="mpi4py.MPI.Op"><code class="xref py py-class docutils literal notranslate"><span class="pre">Op</span></code></a> <code class="docutils literal notranslate"><span class="pre">REPLACE</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.NO_OP.html#mpi4py.MPI.NO_OP" title="mpi4py.MPI.NO_OP"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NO_OP</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Op.html#mpi4py.MPI.Op" title="mpi4py.MPI.Op"><code class="xref py py-class docutils literal notranslate"><span class="pre">Op</span></code></a> <code class="docutils literal notranslate"><span class="pre">NO_OP</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.GROUP_NULL.html#mpi4py.MPI.GROUP_NULL" title="mpi4py.MPI.GROUP_NULL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GROUP_NULL</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Group.html#mpi4py.MPI.Group" title="mpi4py.MPI.Group"><code class="xref py py-class docutils literal notranslate"><span class="pre">Group</span></code></a> <code class="docutils literal notranslate"><span class="pre">GROUP_NULL</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.GROUP_EMPTY.html#mpi4py.MPI.GROUP_EMPTY" title="mpi4py.MPI.GROUP_EMPTY"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GROUP_EMPTY</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Group.html#mpi4py.MPI.Group" title="mpi4py.MPI.Group"><code class="xref py py-class docutils literal notranslate"><span class="pre">Group</span></code></a> <code class="docutils literal notranslate"><span class="pre">GROUP_EMPTY</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.INFO_NULL.html#mpi4py.MPI.INFO_NULL" title="mpi4py.MPI.INFO_NULL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">INFO_NULL</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Info.html#mpi4py.MPI.Info" title="mpi4py.MPI.Info"><code class="xref py py-class docutils literal notranslate"><span class="pre">Info</span></code></a> <code class="docutils literal notranslate"><span class="pre">INFO_NULL</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.INFO_ENV.html#mpi4py.MPI.INFO_ENV" title="mpi4py.MPI.INFO_ENV"><code class="xref py py-obj docutils literal notranslate"><span class="pre">INFO_ENV</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Info.html#mpi4py.MPI.Info" title="mpi4py.MPI.Info"><code class="xref py py-class docutils literal notranslate"><span class="pre">Info</span></code></a> <code class="docutils literal notranslate"><span class="pre">INFO_ENV</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERRHANDLER_NULL.html#mpi4py.MPI.ERRHANDLER_NULL" title="mpi4py.MPI.ERRHANDLER_NULL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERRHANDLER_NULL</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Errhandler.html#mpi4py.MPI.Errhandler" title="mpi4py.MPI.Errhandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">Errhandler</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERRHANDLER_NULL</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERRORS_RETURN.html#mpi4py.MPI.ERRORS_RETURN" title="mpi4py.MPI.ERRORS_RETURN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERRORS_RETURN</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Errhandler.html#mpi4py.MPI.Errhandler" title="mpi4py.MPI.Errhandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">Errhandler</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERRORS_RETURN</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.ERRORS_ARE_FATAL.html#mpi4py.MPI.ERRORS_ARE_FATAL" title="mpi4py.MPI.ERRORS_ARE_FATAL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ERRORS_ARE_FATAL</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Errhandler.html#mpi4py.MPI.Errhandler" title="mpi4py.MPI.Errhandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">Errhandler</span></code></a> <code class="docutils literal notranslate"><span class="pre">ERRORS_ARE_FATAL</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.COMM_NULL.html#mpi4py.MPI.COMM_NULL" title="mpi4py.MPI.COMM_NULL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">COMM_NULL</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm" title="mpi4py.MPI.Comm"><code class="xref py py-class docutils literal notranslate"><span class="pre">Comm</span></code></a> <code class="docutils literal notranslate"><span class="pre">COMM_NULL</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.COMM_SELF.html#mpi4py.MPI.COMM_SELF" title="mpi4py.MPI.COMM_SELF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">COMM_SELF</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Intracomm.html#mpi4py.MPI.Intracomm" title="mpi4py.MPI.Intracomm"><code class="xref py py-class docutils literal notranslate"><span class="pre">Intracomm</span></code></a> <code class="docutils literal notranslate"><span class="pre">COMM_SELF</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.COMM_WORLD.html#mpi4py.MPI.COMM_WORLD" title="mpi4py.MPI.COMM_WORLD"><code class="xref py py-obj docutils literal notranslate"><span class="pre">COMM_WORLD</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Intracomm.html#mpi4py.MPI.Intracomm" title="mpi4py.MPI.Intracomm"><code class="xref py py-class docutils literal notranslate"><span class="pre">Intracomm</span></code></a> <code class="docutils literal notranslate"><span class="pre">COMM_WORLD</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.WIN_NULL.html#mpi4py.MPI.WIN_NULL" title="mpi4py.MPI.WIN_NULL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WIN_NULL</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Win.html#mpi4py.MPI.Win" title="mpi4py.MPI.Win"><code class="xref py py-class docutils literal notranslate"><span class="pre">Win</span></code></a> <code class="docutils literal notranslate"><span class="pre">WIN_NULL</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/mpi4py.MPI.FILE_NULL.html#mpi4py.MPI.FILE_NULL" title="mpi4py.MPI.FILE_NULL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FILE_NULL</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.File.html#mpi4py.MPI.File" title="mpi4py.MPI.File"><code class="xref py py-class docutils literal notranslate"><span class="pre">File</span></code></a> <code class="docutils literal notranslate"><span class="pre">FILE_NULL</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/mpi4py.MPI.pickle.html#mpi4py.MPI.pickle" title="mpi4py.MPI.pickle"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pickle</span></code></a></p></td>
+<td><p><a class="reference internal" href="reference/mpi4py.MPI.Pickle.html#mpi4py.MPI.Pickle" title="mpi4py.MPI.Pickle"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pickle</span></code></a> <code class="docutils literal notranslate"><span class="pre">pickle</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">mpi4py.MPI</a><ul>
+<li><a class="reference internal" href="#classes">Classes</a></li>
+<li><a class="reference internal" href="#functions">Functions</a></li>
+<li><a class="reference internal" href="#attributes">Attributes</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="mpi4py.html"
+                        title="previous chapter">mpi4py</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="mpi4py.futures.html"
+                        title="next chapter">mpi4py.futures</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mpi4py.futures.html" title="mpi4py.futures"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="mpi4py.html" title="mpi4py"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">MPI for Python 3.1.3 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">mpi4py.MPI</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Lisandro Dalcin.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.0.
+    </div>
+  </body>
+</html>

@@ -356,11 +356,7 @@ def argsparser():
     parser.add_argument('-view', '--view_policy', action='store_true', default=False)
 
 
-    # Q learn args
-    parser.add_argument('-qimwt', '--q_imwt', type=float, default=0)
-    parser.add_argument('-q', '--use_qfunc', action='store_true', default=False)
-
-    ## Baselines - these are passed through to other codebases
+    # Q learn args', passed through to other codebases
     parser.add_argument('-run_baseline', '--run_baseline', action='store_true', default=False)
     if USE_BASELINES:
         parser.add_argument('-baseline', '--baseline', type=str, default='')

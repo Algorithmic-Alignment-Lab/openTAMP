@@ -1,0 +1,583 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>mpi4py.futures &#8212; MPI for Python 3.1.3 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/classic.css" />
+    
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="mpi4py.util" href="mpi4py.util.html" />
+    <link rel="prev" title="mpi4py.MPI" href="mpi4py.MPI.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mpi4py.util.html" title="mpi4py.util"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="mpi4py.MPI.html" title="mpi4py.MPI"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">MPI for Python 3.1.3 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">mpi4py.futures</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-mpi4py.futures">
+<span id="mpi4py-futures"></span><h1>mpi4py.futures<a class="headerlink" href="#module-mpi4py.futures" title="Permalink to this headline">¶</a></h1>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.0.0.</span></p>
+</div>
+<p>This package provides a high-level interface for asynchronously executing
+callables on a pool of worker processes using MPI for inter-process
+communication.</p>
+<section id="concurrent-futures">
+<h2>concurrent.futures<a class="headerlink" href="#concurrent-futures" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="#module-mpi4py.futures" title="mpi4py.futures: Execute computations concurrently using MPI processes."><code class="xref py py-mod docutils literal notranslate"><span class="pre">mpi4py.futures</span></code></a> package is based on <a class="reference external" href="https://docs.python.org/3/library/concurrent.futures.html#module-concurrent.futures" title="(in Python v3.10)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">concurrent.futures</span></code></a> from
+the Python standard library. More precisely, <a class="reference internal" href="#module-mpi4py.futures" title="mpi4py.futures: Execute computations concurrently using MPI processes."><code class="xref py py-mod docutils literal notranslate"><span class="pre">mpi4py.futures</span></code></a> provides the
+<a class="reference internal" href="#mpi4py.futures.MPIPoolExecutor" title="mpi4py.futures.MPIPoolExecutor"><code class="xref py py-class docutils literal notranslate"><span class="pre">MPIPoolExecutor</span></code></a> class as a concrete implementation of the abstract
+class <a class="reference external" href="https://docs.python.org/3/library/concurrent.futures.html#concurrent.futures.Executor" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Executor</span></code></a>.  The
+<a class="reference external" href="https://docs.python.org/3/library/concurrent.futures.html#concurrent.futures.Executor.submit" title="(in Python v3.10)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">submit()</span></code></a> interface schedules a callable to
+be executed asynchronously and returns a <a class="reference external" href="https://docs.python.org/3/library/concurrent.futures.html#concurrent.futures.Future" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Future</span></code></a>
+object representing the execution of the callable.
+<a class="reference external" href="https://docs.python.org/3/library/concurrent.futures.html#concurrent.futures.Future" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Future</span></code></a> instances can be queried for the call
+result or exception. Sets of <a class="reference external" href="https://docs.python.org/3/library/concurrent.futures.html#concurrent.futures.Future" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Future</span></code></a> instances can
+be passed to the <a class="reference external" href="https://docs.python.org/3/library/concurrent.futures.html#concurrent.futures.wait" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">wait()</span></code></a> and
+<a class="reference external" href="https://docs.python.org/3/library/concurrent.futures.html#concurrent.futures.as_completed" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">as_completed()</span></code></a> functions.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <a class="reference external" href="https://docs.python.org/3/library/concurrent.futures.html#module-concurrent.futures" title="(in Python v3.10)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">concurrent.futures</span></code></a> package was introduced in Python 3.2. A
+<a class="reference external" href="https://github.com/agronholm/pythonfutures">backport</a> targeting Python 2.7 is available on <a class="reference external" href="https://pypi.org/project/futures">PyPI</a>. The <a class="reference internal" href="#module-mpi4py.futures" title="mpi4py.futures: Execute computations concurrently using MPI processes."><code class="xref py py-mod docutils literal notranslate"><span class="pre">mpi4py.futures</span></code></a> package uses
+<a class="reference external" href="https://docs.python.org/3/library/concurrent.futures.html#module-concurrent.futures" title="(in Python v3.10)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">concurrent.futures</span></code></a> if available, either from the Python 3 standard
+library or the Python 2.7 backport if installed. Otherwise,
+<a class="reference internal" href="#module-mpi4py.futures" title="mpi4py.futures: Execute computations concurrently using MPI processes."><code class="xref py py-mod docutils literal notranslate"><span class="pre">mpi4py.futures</span></code></a> uses a bundled copy of core functionality backported
+from Python 3.5 to work with Python 2.7.</p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt>Module <a class="reference external" href="https://docs.python.org/3/library/concurrent.futures.html#module-concurrent.futures" title="(in Python v3.10)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">concurrent.futures</span></code></a></dt><dd><p>Documentation of the <a class="reference external" href="https://docs.python.org/3/library/concurrent.futures.html#module-concurrent.futures" title="(in Python v3.10)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">concurrent.futures</span></code></a> standard module.</p>
+</dd>
+</dl>
+</div>
+</section>
+<section id="mpipoolexecutor">
+<h2>MPIPoolExecutor<a class="headerlink" href="#mpipoolexecutor" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="#mpi4py.futures.MPIPoolExecutor" title="mpi4py.futures.MPIPoolExecutor"><code class="xref py py-class docutils literal notranslate"><span class="pre">MPIPoolExecutor</span></code></a> class uses a pool of MPI processes to execute
+calls asynchronously. By performing computations in separate processes, it
+allows to side-step the <a class="reference external" href="https://docs.python.org/3/glossary.html#term-global-interpreter-lock" title="(in Python v3.10)"><span class="xref std std-term">global interpreter lock</span></a> but also means that
+only picklable objects can be executed and returned. The <a class="reference external" href="https://docs.python.org/3/library/__main__.html#module-__main__" title="(in Python v3.10)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">__main__</span></code></a> module
+must be importable by worker processes, thus <a class="reference internal" href="#mpi4py.futures.MPIPoolExecutor" title="mpi4py.futures.MPIPoolExecutor"><code class="xref py py-class docutils literal notranslate"><span class="pre">MPIPoolExecutor</span></code></a> instances
+may not work in the interactive interpreter.</p>
+<p><a class="reference internal" href="#mpi4py.futures.MPIPoolExecutor" title="mpi4py.futures.MPIPoolExecutor"><code class="xref py py-class docutils literal notranslate"><span class="pre">MPIPoolExecutor</span></code></a> takes advantage of the dynamic process management
+features introduced in the MPI-2 standard. In particular, the
+<a class="reference internal" href="reference/mpi4py.MPI.Intracomm.html#mpi4py.MPI.Intracomm.Spawn" title="mpi4py.MPI.Intracomm.Spawn"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">MPI.Intracomm.Spawn</span></code></a> method of <a class="reference internal" href="reference/mpi4py.MPI.COMM_SELF.html#mpi4py.MPI.COMM_SELF" title="mpi4py.MPI.COMM_SELF"><code class="xref any py py-data docutils literal notranslate"><span class="pre">MPI.COMM_SELF</span></code></a> is used in the master (or
+parent) process to spawn new worker (or child) processes running a Python
+interpreter. The master process uses a separate thread (one for each
+<a class="reference internal" href="#mpi4py.futures.MPIPoolExecutor" title="mpi4py.futures.MPIPoolExecutor"><code class="xref py py-class docutils literal notranslate"><span class="pre">MPIPoolExecutor</span></code></a> instance) to communicate back and forth with the
+workers.  The worker processes serve the execution of tasks in the main (and
+only) thread until they are signaled for completion.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The worker processes must import the main script in order to <em>unpickle</em> any
+callable defined in the <a class="reference external" href="https://docs.python.org/3/library/__main__.html#module-__main__" title="(in Python v3.10)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">__main__</span></code></a> module and submitted from the master
+process. Furthermore, the callables may need access to other global
+variables. At the worker processes, <a class="reference internal" href="#module-mpi4py.futures" title="mpi4py.futures: Execute computations concurrently using MPI processes."><code class="xref py py-mod docutils literal notranslate"><span class="pre">mpi4py.futures</span></code></a> executes the main
+script code (using the <a class="reference external" href="https://docs.python.org/3/library/runpy.html#module-runpy" title="(in Python v3.10)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">runpy</span></code></a> module) under the <code class="xref py py-mod docutils literal notranslate"><span class="pre">__worker__</span></code>
+namespace to define the <a class="reference external" href="https://docs.python.org/3/library/__main__.html#module-__main__" title="(in Python v3.10)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">__main__</span></code></a> module. The <a class="reference external" href="https://docs.python.org/3/library/__main__.html#module-__main__" title="(in Python v3.10)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">__main__</span></code></a> and
+<code class="xref py py-mod docutils literal notranslate"><span class="pre">__worker__</span></code> modules are added to <a class="reference external" href="https://docs.python.org/3/library/sys.html#sys.modules" title="(in Python v3.10)"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.modules</span></code></a> (both at the
+master and worker processes) to ensure proper <em>pickling</em> and <em>unpickling</em>.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>During the initial import phase at the workers, the main script cannot
+create and use new <a class="reference internal" href="#mpi4py.futures.MPIPoolExecutor" title="mpi4py.futures.MPIPoolExecutor"><code class="xref py py-class docutils literal notranslate"><span class="pre">MPIPoolExecutor</span></code></a> instances. Otherwise, each
+worker would attempt to spawn a new pool of workers, leading to infinite
+recursion. <a class="reference internal" href="#module-mpi4py.futures" title="mpi4py.futures: Execute computations concurrently using MPI processes."><code class="xref py py-mod docutils literal notranslate"><span class="pre">mpi4py.futures</span></code></a> detects such recursive attempts to spawn
+new workers and aborts the MPI execution environment. As the main script
+code is run under the <code class="xref py py-mod docutils literal notranslate"><span class="pre">__worker__</span></code> namespace, the easiest way to avoid
+spawn recursion is using the idiom <code class="code docutils literal notranslate"><span class="pre">if</span> <span class="pre">__name__</span> <span class="pre">==</span> <span class="pre">'__main__':</span> <span class="pre">...</span></code> in
+the main script.</p>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="mpi4py.futures.MPIPoolExecutor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mpi4py.futures.</span></span><span class="sig-name descname"><span class="pre">MPIPoolExecutor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_workers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initializer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.futures.MPIPoolExecutor" title="Permalink to this definition">¶</a></dt>
+<dd><p>An <a class="reference external" href="https://docs.python.org/3/library/concurrent.futures.html#concurrent.futures.Executor" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Executor</span></code></a> subclass that executes calls
+asynchronously using a pool of at most <em>max_workers</em> processes.  If
+<em>max_workers</em> is <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><code class="xref any docutils literal notranslate"><span class="pre">None</span></code></a> or not given, its value is determined from the
+<span class="target" id="index-0"></span><a class="reference internal" href="#envvar-MPI4PY_FUTURES_MAX_WORKERS"><code class="xref std std-envvar docutils literal notranslate"><span class="pre">MPI4PY_FUTURES_MAX_WORKERS</span></code></a> environment variable if set, or the MPI
+universe size if set, otherwise a single worker process is spawned.  If
+<em>max_workers</em> is lower than or equal to <code class="docutils literal notranslate"><span class="pre">0</span></code>, then a <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.10)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a> will
+be raised.</p>
+<p><em>initializer</em> is an optional callable that is called at the start of each
+worker process before executing any tasks; <em>initargs</em> is a tuple of
+arguments passed to the initializer. If <em>initializer</em> raises an exception,
+all pending tasks and any attempt to submit new tasks to the pool will raise
+a <a class="reference external" href="https://docs.python.org/3/library/concurrent.futures.html#concurrent.futures.BrokenExecutor" title="(in Python v3.10)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">BrokenExecutor</span></code></a> exception.</p>
+<p>Other parameters:</p>
+<ul class="simple">
+<li><p><em>python_exe</em>: Path to the Python interpreter executable used to spawn
+worker processes, otherwise <a class="reference external" href="https://docs.python.org/3/library/sys.html#sys.executable" title="(in Python v3.10)"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.executable</span></code></a> is used.</p></li>
+<li><p><em>python_args</em>: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> or iterable with additional command line
+flags to pass to the Python executable. Command line flags determined from
+inspection of <a class="reference external" href="https://docs.python.org/3/library/sys.html#sys.flags" title="(in Python v3.10)"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.flags</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/sys.html#sys.warnoptions" title="(in Python v3.10)"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.warnoptions</span></code></a> and
+<a class="reference external" href="https://docs.python.org/3/library/sys.html#sys._xoptions" title="(in Python v3.10)"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys._xoptions</span></code></a> in are passed unconditionally.</p></li>
+<li><p><em>mpi_info</em>: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> or iterable yielding <code class="docutils literal notranslate"><span class="pre">(key,</span> <span class="pre">value)</span></code> pairs.
+These <code class="docutils literal notranslate"><span class="pre">(key,</span> <span class="pre">value)</span></code> pairs are passed (through an <a class="reference internal" href="reference/mpi4py.MPI.Info.html#mpi4py.MPI.Info" title="mpi4py.MPI.Info"><code class="xref any py py-class docutils literal notranslate"><span class="pre">MPI.Info</span></code></a> object) to
+the <a class="reference internal" href="reference/mpi4py.MPI.Intracomm.html#mpi4py.MPI.Intracomm.Spawn" title="mpi4py.MPI.Intracomm.Spawn"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">MPI.Intracomm.Spawn</span></code></a> call used to spawn worker processes. This
+mechanism allows telling the MPI runtime system where and how to start the
+processes. Check the documentation of the backend MPI implementation about
+the set of keys it interprets and the corresponding format for values.</p></li>
+<li><p><em>globals</em>: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> or iterable yielding <code class="docutils literal notranslate"><span class="pre">(name,</span> <span class="pre">value)</span></code> pairs to
+initialize the main module namespace in worker processes.</p></li>
+<li><p><em>main</em>: If set to <a class="reference external" href="https://docs.python.org/3/library/constants.html#False" title="(in Python v3.10)"><code class="xref any docutils literal notranslate"><span class="pre">False</span></code></a>, do not import the <a class="reference external" href="https://docs.python.org/3/library/__main__.html#module-__main__" title="(in Python v3.10)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">__main__</span></code></a> module in
+worker processes. Setting <em>main</em> to <a class="reference external" href="https://docs.python.org/3/library/constants.html#False" title="(in Python v3.10)"><code class="xref any docutils literal notranslate"><span class="pre">False</span></code></a> prevents worker processes
+from accessing definitions in the parent <a class="reference external" href="https://docs.python.org/3/library/__main__.html#module-__main__" title="(in Python v3.10)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">__main__</span></code></a> namespace.</p></li>
+<li><p><em>path</em>: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> or iterable with paths to append to <a class="reference external" href="https://docs.python.org/3/library/sys.html#sys.path" title="(in Python v3.10)"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.path</span></code></a>
+in worker processes to extend the <a class="reference external" href="https://docs.python.org/3/tutorial/modules.html#tut-searchpath" title="(in Python v3.10)"><span class="xref std std-ref">module search path</span></a>.</p></li>
+<li><p><em>wdir</em>: Path to set the current working directory in worker processes
+using <a class="reference external" href="https://docs.python.org/3/library/os.html#os.chdir" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.chdir()</span></code></a>. The initial working directory is set by the MPI
+implementation. Quality MPI implementations should honor a <code class="docutils literal notranslate"><span class="pre">wdir</span></code> info
+key passed through <em>mpi_info</em>, although such feature is not mandatory.</p></li>
+<li><p><em>env</em>: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> or iterable yielding <code class="docutils literal notranslate"><span class="pre">(name,</span> <span class="pre">value)</span></code> pairs with
+environment variables to update <a class="reference external" href="https://docs.python.org/3/library/os.html#os.environ" title="(in Python v3.10)"><code class="xref py py-data docutils literal notranslate"><span class="pre">os.environ</span></code></a> in worker processes.
+The initial environment is set by the MPI implementation. MPI
+implementations may allow setting the initial environment through
+<em>mpi_info</em>, however such feature is not required nor recommended by the
+MPI standard.</p></li>
+</ul>
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.futures.MPIPoolExecutor.submit">
+<span class="sig-name descname"><span class="pre">submit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.futures.MPIPoolExecutor.submit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Schedule the callable, <em>func</em>, to be executed as <code class="docutils literal notranslate"><span class="pre">func(*args,</span>
+<span class="pre">**kwargs)</span></code> and returns a <a class="reference external" href="https://docs.python.org/3/library/concurrent.futures.html#concurrent.futures.Future" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Future</span></code></a> object
+representing the execution of the callable.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">executor</span> <span class="o">=</span> <span class="n">MPIPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">future</span> <span class="o">=</span> <span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="nb">pow</span><span class="p">,</span> <span class="mi">321</span><span class="p">,</span> <span class="mi">1234</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">future</span><span class="o">.</span><span class="n">result</span><span class="p">())</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.futures.MPIPoolExecutor.map">
+<span class="sig-name descname"><span class="pre">map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">iterables</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunksize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.futures.MPIPoolExecutor.map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Equivalent to <a class="reference external" href="https://docs.python.org/3/library/functions.html#map" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">map(func,</span> <span class="pre">*iterables)</span></code></a> except <em>func</em> is
+executed asynchronously and several calls to <em>func</em> may be made
+concurrently, out-of-order, in separate processes.  The returned iterator
+raises a <a class="reference external" href="https://docs.python.org/3/library/concurrent.futures.html#concurrent.futures.TimeoutError" title="(in Python v3.10)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TimeoutError</span></code></a> if
+<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#iterator.__next__" title="(in Python v3.10)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__next__()</span></code></a> is called and the result isn’t available after
+<em>timeout</em> seconds from the original call to <a class="reference internal" href="#mpi4py.futures.MPIPoolExecutor.map" title="mpi4py.futures.MPIPoolExecutor.map"><code class="xref py py-meth docutils literal notranslate"><span class="pre">map()</span></code></a>.
+<em>timeout</em> can be an int or a float.  If <em>timeout</em> is not specified or
+<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><code class="xref any docutils literal notranslate"><span class="pre">None</span></code></a>, there is no limit to the wait time.  If a call raises an
+exception, then that exception will be raised when its value is retrieved
+from the iterator. This method chops <em>iterables</em> into a number of chunks
+which it submits to the pool as separate tasks. The (approximate) size of
+these chunks can be specified by setting <em>chunksize</em> to a positive
+integer. For very long iterables, using a large value for <em>chunksize</em> can
+significantly improve performance compared to the default size of one. By
+default, the returned iterator yields results in-order, waiting for
+successive tasks to complete . This behavior can be changed by passing
+the keyword argument <em>unordered</em> as <a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.10)"><code class="xref any docutils literal notranslate"><span class="pre">True</span></code></a>, then the result iterator
+will yield a result as soon as any of the tasks complete.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">executor</span> <span class="o">=</span> <span class="n">MPIPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">executor</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="nb">pow</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="mi">32</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">32</span><span class="p">)):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.futures.MPIPoolExecutor.starmap">
+<span class="sig-name descname"><span class="pre">starmap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iterable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunksize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.futures.MPIPoolExecutor.starmap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Equivalent to <a class="reference external" href="https://docs.python.org/3/library/itertools.html#itertools.starmap" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">itertools.starmap(func,</span> <span class="pre">iterable)</span></code></a>. Used instead of <a class="reference internal" href="#mpi4py.futures.MPIPoolExecutor.map" title="mpi4py.futures.MPIPoolExecutor.map"><code class="xref py py-meth docutils literal notranslate"><span class="pre">map()</span></code></a> when
+argument parameters are already grouped in tuples from a single iterable
+(the data has been “pre-zipped”). <a class="reference internal" href="#mpi4py.futures.MPIPoolExecutor.map" title="mpi4py.futures.MPIPoolExecutor.map"><code class="xref py py-func docutils literal notranslate"><span class="pre">map(func,</span> <span class="pre">*iterable)</span></code></a> is
+equivalent to <a class="reference internal" href="#mpi4py.futures.MPIPoolExecutor.starmap" title="mpi4py.futures.MPIPoolExecutor.starmap"><code class="xref py py-func docutils literal notranslate"><span class="pre">starmap(func,</span> <span class="pre">zip(*iterable))</span></code></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">executor</span> <span class="o">=</span> <span class="n">MPIPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">iterable</span> <span class="o">=</span> <span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">32</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">executor</span><span class="o">.</span><span class="n">starmap</span><span class="p">(</span><span class="nb">pow</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.futures.MPIPoolExecutor.shutdown">
+<span class="sig-name descname"><span class="pre">shutdown</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wait</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cancel_futures</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.futures.MPIPoolExecutor.shutdown" title="Permalink to this definition">¶</a></dt>
+<dd><p>Signal the executor that it should free any resources that it is using
+when the currently pending futures are done executing.  Calls to
+<a class="reference internal" href="#mpi4py.futures.MPIPoolExecutor.submit" title="mpi4py.futures.MPIPoolExecutor.submit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">submit()</span></code></a> and <a class="reference internal" href="#mpi4py.futures.MPIPoolExecutor.map" title="mpi4py.futures.MPIPoolExecutor.map"><code class="xref py py-meth docutils literal notranslate"><span class="pre">map()</span></code></a> made
+after <a class="reference internal" href="#mpi4py.futures.MPIPoolExecutor.shutdown" title="mpi4py.futures.MPIPoolExecutor.shutdown"><code class="xref py py-meth docutils literal notranslate"><span class="pre">shutdown()</span></code></a> will raise <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#RuntimeError" title="(in Python v3.10)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">RuntimeError</span></code></a>.</p>
+<p>If <em>wait</em> is <a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.10)"><code class="xref any docutils literal notranslate"><span class="pre">True</span></code></a> then this method will not return until all the
+pending futures are done executing and the resources associated with the
+executor have been freed.  If <em>wait</em> is <a class="reference external" href="https://docs.python.org/3/library/constants.html#False" title="(in Python v3.10)"><code class="xref any docutils literal notranslate"><span class="pre">False</span></code></a> then this method will
+return immediately and the resources associated with the executor will be
+freed when all pending futures are done executing.  Regardless of the
+value of <em>wait</em>, the entire Python program will not exit until all
+pending futures are done executing.</p>
+<p>If <em>cancel_futures</em> is <a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.10)"><code class="xref any docutils literal notranslate"><span class="pre">True</span></code></a>, this method will cancel all pending
+futures that the executor has not started running. Any futures that
+are completed or running won’t be cancelled, regardless of the value
+of <em>cancel_futures</em>.</p>
+<p>You can avoid having to call this method explicitly if you use the
+<a class="reference external" href="https://docs.python.org/3/reference/compound_stmts.html#with" title="(in Python v3.10)"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">with</span></code></a> statement, which will shutdown the executor instance
+(waiting as if <a class="reference internal" href="#mpi4py.futures.MPIPoolExecutor.shutdown" title="mpi4py.futures.MPIPoolExecutor.shutdown"><code class="xref py py-meth docutils literal notranslate"><span class="pre">shutdown()</span></code></a> were called with <em>wait</em>
+set to <a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.10)"><code class="xref any docutils literal notranslate"><span class="pre">True</span></code></a>).</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
+<span class="k">with</span> <span class="n">MPIPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="k">as</span> <span class="n">executor</span><span class="p">:</span>
+    <span class="n">future</span> <span class="o">=</span> <span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">future</span><span class="o">.</span><span class="n">done</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.futures.MPIPoolExecutor.bootup">
+<span class="sig-name descname"><span class="pre">bootup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wait</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.futures.MPIPoolExecutor.bootup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Signal the executor that it should allocate eagerly any required
+resources (in particular, MPI worker processes). If <em>wait</em> is <a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.10)"><code class="xref any docutils literal notranslate"><span class="pre">True</span></code></a>,
+then <a class="reference internal" href="#mpi4py.futures.MPIPoolExecutor.bootup" title="mpi4py.futures.MPIPoolExecutor.bootup"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bootup()</span></code></a> will not return until the executor
+resources are ready to process submissions.  Resources are automatically
+allocated in the first call to <a class="reference internal" href="#mpi4py.futures.MPIPoolExecutor.submit" title="mpi4py.futures.MPIPoolExecutor.submit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">submit()</span></code></a>, thus
+calling <a class="reference internal" href="#mpi4py.futures.MPIPoolExecutor.bootup" title="mpi4py.futures.MPIPoolExecutor.bootup"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bootup()</span></code></a> explicitly is seldom needed.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-MPI4PY_FUTURES_MAX_WORKERS">
+<span class="sig-name descname"><span class="pre">MPI4PY_FUTURES_MAX_WORKERS</span></span><a class="headerlink" href="#envvar-MPI4PY_FUTURES_MAX_WORKERS" title="Permalink to this definition">¶</a></dt>
+<dd><p>If the <em>max_workers</em> parameter to <a class="reference internal" href="#mpi4py.futures.MPIPoolExecutor" title="mpi4py.futures.MPIPoolExecutor"><code class="xref py py-class docutils literal notranslate"><span class="pre">MPIPoolExecutor</span></code></a> is <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><code class="xref any docutils literal notranslate"><span class="pre">None</span></code></a> or not
+given, the <span class="target" id="index-1"></span><a class="reference internal" href="#envvar-MPI4PY_FUTURES_MAX_WORKERS"><code class="xref std std-envvar docutils literal notranslate"><span class="pre">MPI4PY_FUTURES_MAX_WORKERS</span></code></a> environment variable
+provides fallback value for the maximum number of MPI worker processes to
+spawn.</p>
+</dd></dl>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>As the master process uses a separate thread to perform MPI communication
+with the workers, the backend MPI implementation should provide support for
+<a class="reference internal" href="reference/mpi4py.MPI.THREAD_MULTIPLE.html#mpi4py.MPI.THREAD_MULTIPLE" title="mpi4py.MPI.THREAD_MULTIPLE"><code class="xref any py py-data docutils literal notranslate"><span class="pre">MPI.THREAD_MULTIPLE</span></code></a>. However, some popular MPI implementations do not
+support yet concurrent MPI calls from multiple threads. Additionally, users
+may decide to initialize MPI with a lower level of thread support. If the
+level of thread support in the backend MPI is less than
+<a class="reference internal" href="reference/mpi4py.MPI.THREAD_MULTIPLE.html#mpi4py.MPI.THREAD_MULTIPLE" title="mpi4py.MPI.THREAD_MULTIPLE"><code class="xref any py py-data docutils literal notranslate"><span class="pre">MPI.THREAD_MULTIPLE</span></code></a>, <a class="reference internal" href="#module-mpi4py.futures" title="mpi4py.futures: Execute computations concurrently using MPI processes."><code class="xref py py-mod docutils literal notranslate"><span class="pre">mpi4py.futures</span></code></a> will use a global lock to
+serialize MPI calls. If the level of thread support is less than
+<a class="reference internal" href="reference/mpi4py.MPI.THREAD_SERIALIZED.html#mpi4py.MPI.THREAD_SERIALIZED" title="mpi4py.MPI.THREAD_SERIALIZED"><code class="xref any py py-data docutils literal notranslate"><span class="pre">MPI.THREAD_SERIALIZED</span></code></a>, <a class="reference internal" href="#module-mpi4py.futures" title="mpi4py.futures: Execute computations concurrently using MPI processes."><code class="xref py py-mod docutils literal notranslate"><span class="pre">mpi4py.futures</span></code></a> will emit a
+<a class="reference external" href="https://docs.python.org/3/library/exceptions.html#RuntimeWarning" title="(in Python v3.10)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">RuntimeWarning</span></code></a>.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If the level of thread support in the backend MPI is less than
+<a class="reference internal" href="reference/mpi4py.MPI.THREAD_SERIALIZED.html#mpi4py.MPI.THREAD_SERIALIZED" title="mpi4py.MPI.THREAD_SERIALIZED"><code class="xref any py py-data docutils literal notranslate"><span class="pre">MPI.THREAD_SERIALIZED</span></code></a> (i.e, it is either <a class="reference internal" href="reference/mpi4py.MPI.THREAD_SINGLE.html#mpi4py.MPI.THREAD_SINGLE" title="mpi4py.MPI.THREAD_SINGLE"><code class="xref any py py-data docutils literal notranslate"><span class="pre">MPI.THREAD_SINGLE</span></code></a> or
+<a class="reference internal" href="reference/mpi4py.MPI.THREAD_FUNNELED.html#mpi4py.MPI.THREAD_FUNNELED" title="mpi4py.MPI.THREAD_FUNNELED"><code class="xref any py py-data docutils literal notranslate"><span class="pre">MPI.THREAD_FUNNELED</span></code></a>), in theory <a class="reference internal" href="#module-mpi4py.futures" title="mpi4py.futures: Execute computations concurrently using MPI processes."><code class="xref py py-mod docutils literal notranslate"><span class="pre">mpi4py.futures</span></code></a> cannot be
+used. Rather than raising an exception, <a class="reference internal" href="#module-mpi4py.futures" title="mpi4py.futures: Execute computations concurrently using MPI processes."><code class="xref py py-mod docutils literal notranslate"><span class="pre">mpi4py.futures</span></code></a> emits a
+warning and takes a “cross-fingers” attitude to continue execution in the
+hope that serializing MPI calls with a global lock will actually work.</p>
+</div>
+</section>
+<section id="mpicommexecutor">
+<h2>MPICommExecutor<a class="headerlink" href="#mpicommexecutor" title="Permalink to this headline">¶</a></h2>
+<p>Legacy MPI-1 implementations (as well as some vendor MPI-2 implementations) do
+not support the dynamic process management features introduced in the MPI-2
+standard. Additionally, job schedulers and batch systems in supercomputing
+facilities may pose additional complications to applications using the
+<code class="xref c c-func docutils literal notranslate"><span class="pre">MPI_Comm_spawn()</span></code> routine.</p>
+<p>With these issues in mind, <a class="reference internal" href="#module-mpi4py.futures" title="mpi4py.futures: Execute computations concurrently using MPI processes."><code class="xref py py-mod docutils literal notranslate"><span class="pre">mpi4py.futures</span></code></a> supports an additonal, more
+traditional, SPMD-like usage pattern requiring MPI-1 calls only. Python
+applications are started the usual way, e.g., using the <strong class="program">mpiexec</strong>
+command. Python code should make a collective call to the
+<a class="reference internal" href="#mpi4py.futures.MPICommExecutor" title="mpi4py.futures.MPICommExecutor"><code class="xref py py-class docutils literal notranslate"><span class="pre">MPICommExecutor</span></code></a> context manager to partition the set of MPI processes
+within a MPI communicator in one master processes and many workers
+processes. The master process gets access to an <a class="reference internal" href="#mpi4py.futures.MPIPoolExecutor" title="mpi4py.futures.MPIPoolExecutor"><code class="xref py py-class docutils literal notranslate"><span class="pre">MPIPoolExecutor</span></code></a>
+instance to submit tasks. Meanwhile, the worker process follow a different
+execution path and team-up to execute the tasks submitted from the master.</p>
+<p>Besides alleviating the lack of dynamic process managment features in legacy
+MPI-1 or partial MPI-2 implementations, the <a class="reference internal" href="#mpi4py.futures.MPICommExecutor" title="mpi4py.futures.MPICommExecutor"><code class="xref py py-class docutils literal notranslate"><span class="pre">MPICommExecutor</span></code></a> context
+manager may be useful in classic MPI-based Python applications willing to take
+advantage of the simple, task-based, master/worker approach available in the
+<a class="reference internal" href="#module-mpi4py.futures" title="mpi4py.futures: Execute computations concurrently using MPI processes."><code class="xref py py-mod docutils literal notranslate"><span class="pre">mpi4py.futures</span></code></a> package.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="mpi4py.futures.MPICommExecutor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mpi4py.futures.</span></span><span class="sig-name descname"><span class="pre">MPICommExecutor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">comm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.futures.MPICommExecutor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Context manager for <a class="reference internal" href="#mpi4py.futures.MPIPoolExecutor" title="mpi4py.futures.MPIPoolExecutor"><code class="xref py py-class docutils literal notranslate"><span class="pre">MPIPoolExecutor</span></code></a>. This context manager splits a
+MPI (intra)communicator <em>comm</em> (defaults to <a class="reference internal" href="reference/mpi4py.MPI.COMM_WORLD.html#mpi4py.MPI.COMM_WORLD" title="mpi4py.MPI.COMM_WORLD"><code class="xref any py py-data docutils literal notranslate"><span class="pre">MPI.COMM_WORLD</span></code></a> if not provided
+or <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><code class="xref any docutils literal notranslate"><span class="pre">None</span></code></a>) in two disjoint sets: a single master process (with rank <em>root</em>
+in <em>comm</em>) and the remaining worker processes. These sets are then connected
+through an intercommunicator.  The target of the <a class="reference external" href="https://docs.python.org/3/reference/compound_stmts.html#with" title="(in Python v3.10)"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">with</span></code></a> statement
+is assigned either an <a class="reference internal" href="#mpi4py.futures.MPIPoolExecutor" title="mpi4py.futures.MPIPoolExecutor"><code class="xref py py-class docutils literal notranslate"><span class="pre">MPIPoolExecutor</span></code></a> instance (at the master) or
+<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><code class="xref any docutils literal notranslate"><span class="pre">None</span></code></a> (at the workers).</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mpi4py</span> <span class="kn">import</span> <span class="n">MPI</span>
+<span class="kn">from</span> <span class="nn">mpi4py.futures</span> <span class="kn">import</span> <span class="n">MPICommExecutor</span>
+
+<span class="k">with</span> <span class="n">MPICommExecutor</span><span class="p">(</span><span class="n">MPI</span><span class="o">.</span><span class="n">COMM_WORLD</span><span class="p">,</span> <span class="n">root</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">as</span> <span class="n">executor</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">executor</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+       <span class="n">future</span> <span class="o">=</span> <span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="nb">abs</span><span class="p">,</span> <span class="o">-</span><span class="mi">42</span><span class="p">)</span>
+       <span class="k">assert</span> <span class="n">future</span><span class="o">.</span><span class="n">result</span><span class="p">()</span> <span class="o">==</span> <span class="mi">42</span>
+       <span class="n">answer</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">executor</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="nb">abs</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mi">42</span><span class="p">,</span> <span class="mi">42</span><span class="p">]))</span>
+       <span class="k">assert</span> <span class="n">answer</span> <span class="o">==</span> <span class="p">{</span><span class="mi">42</span><span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If <a class="reference internal" href="#mpi4py.futures.MPICommExecutor" title="mpi4py.futures.MPICommExecutor"><code class="xref py py-class docutils literal notranslate"><span class="pre">MPICommExecutor</span></code></a> is passed a communicator of size one (e.g.,
+<a class="reference internal" href="reference/mpi4py.MPI.COMM_SELF.html#mpi4py.MPI.COMM_SELF" title="mpi4py.MPI.COMM_SELF"><code class="xref any py py-data docutils literal notranslate"><span class="pre">MPI.COMM_SELF</span></code></a>), then the executor instace assigned to the target of the
+<a class="reference external" href="https://docs.python.org/3/reference/compound_stmts.html#with" title="(in Python v3.10)"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">with</span></code></a> statement will execute all submitted tasks in a single
+worker thread, thus ensuring that task execution still progress
+asynchronously. However, the <a class="reference internal" href="#term-GIL"><span class="xref std std-term">GIL</span></a> will prevent the main and worker
+threads from running concurrently in multicore processors. Moreover, the
+thread context switching may harm noticeably the performance of CPU-bound
+tasks. In case of I/O-bound tasks, the <a class="reference internal" href="#term-GIL"><span class="xref std std-term">GIL</span></a> is not usually an issue,
+however, as a single worker thread is used, it progress one task at a
+time. We advice against using <a class="reference internal" href="#mpi4py.futures.MPICommExecutor" title="mpi4py.futures.MPICommExecutor"><code class="xref py py-class docutils literal notranslate"><span class="pre">MPICommExecutor</span></code></a> with communicators of
+size one and suggest refactoring your code to use instead a
+<a class="reference external" href="https://docs.python.org/3/library/concurrent.futures.html#concurrent.futures.ThreadPoolExecutor" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ThreadPoolExecutor</span></code></a>.</p>
+</div>
+</section>
+<section id="command-line">
+<h2>Command line<a class="headerlink" href="#command-line" title="Permalink to this headline">¶</a></h2>
+<p>Recalling the issues related to the lack of support for dynamic process
+managment features in MPI implementations, <a class="reference internal" href="#module-mpi4py.futures" title="mpi4py.futures: Execute computations concurrently using MPI processes."><code class="xref py py-mod docutils literal notranslate"><span class="pre">mpi4py.futures</span></code></a> supports an
+alternative usage pattern where Python code (either from scripts, modules, or
+zip files) is run under command line control of the <a class="reference internal" href="#module-mpi4py.futures" title="mpi4py.futures: Execute computations concurrently using MPI processes."><code class="xref py py-mod docutils literal notranslate"><span class="pre">mpi4py.futures</span></code></a>
+package by passing <code class="samp docutils literal notranslate"><span class="pre">-m</span> <span class="pre">mpi4py.futures</span></code> to the <strong class="program">python</strong>
+executable.  The <code class="docutils literal notranslate"><span class="pre">mpi4py.futures</span></code> invocation should be passed a <em>pyfile</em> path
+to a script (or a zipfile/directory containing a <code class="file docutils literal notranslate"><span class="pre">__main__.py</span></code> file).
+Additionally, <code class="docutils literal notranslate"><span class="pre">mpi4py.futures</span></code> accepts <code class="samp docutils literal notranslate"><span class="pre">-m</span> <em><span class="pre">mod</span></em></code> to execute a module
+named <em>mod</em>, <code class="samp docutils literal notranslate"><span class="pre">-c</span> <em><span class="pre">cmd</span></em></code> to execute a command string <em>cmd</em>, or even
+<code class="samp docutils literal notranslate"><span class="pre">-</span></code> to read commands from standard input (<a class="reference external" href="https://docs.python.org/3/library/sys.html#sys.stdin" title="(in Python v3.10)"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.stdin</span></code></a>).
+Summarizing, <code class="samp docutils literal notranslate"><span class="pre">mpi4py.futures</span></code> can be invoked in the following ways:</p>
+<ul class="simple">
+<li><p><code class="samp docutils literal notranslate"><span class="pre">$</span> <span class="pre">mpiexec</span> <span class="pre">-n</span> <em><span class="pre">numprocs</span></em> <span class="pre">python</span> <span class="pre">-m</span> <span class="pre">mpi4py.futures</span> <em><span class="pre">pyfile</span></em> <span class="pre">[arg]</span> <span class="pre">...</span></code></p></li>
+<li><p><code class="samp docutils literal notranslate"><span class="pre">$</span> <span class="pre">mpiexec</span> <span class="pre">-n</span> <em><span class="pre">numprocs</span></em> <span class="pre">python</span> <span class="pre">-m</span> <span class="pre">mpi4py.futures</span> <span class="pre">-m</span> <em><span class="pre">mod</span></em> <span class="pre">[arg]</span> <span class="pre">...</span></code></p></li>
+<li><p><code class="samp docutils literal notranslate"><span class="pre">$</span> <span class="pre">mpiexec</span> <span class="pre">-n</span> <em><span class="pre">numprocs</span></em> <span class="pre">python</span> <span class="pre">-m</span> <span class="pre">mpi4py.futures</span> <span class="pre">-c</span> <em><span class="pre">cmd</span></em> <span class="pre">[arg]</span> <span class="pre">...</span></code></p></li>
+<li><p><code class="samp docutils literal notranslate"><span class="pre">$</span> <span class="pre">mpiexec</span> <span class="pre">-n</span> <em><span class="pre">numprocs</span></em> <span class="pre">python</span> <span class="pre">-m</span> <span class="pre">mpi4py.futures</span> <span class="pre">-</span> <span class="pre">[arg]</span> <span class="pre">...</span></code></p></li>
+</ul>
+<p>Before starting the main script execution, <a class="reference internal" href="#module-mpi4py.futures" title="mpi4py.futures: Execute computations concurrently using MPI processes."><code class="xref py py-mod docutils literal notranslate"><span class="pre">mpi4py.futures</span></code></a> splits
+<a class="reference internal" href="reference/mpi4py.MPI.COMM_WORLD.html#mpi4py.MPI.COMM_WORLD" title="mpi4py.MPI.COMM_WORLD"><code class="xref any py py-data docutils literal notranslate"><span class="pre">MPI.COMM_WORLD</span></code></a> in one master (the process with rank 0 in <a class="reference internal" href="reference/mpi4py.MPI.COMM_WORLD.html#mpi4py.MPI.COMM_WORLD" title="mpi4py.MPI.COMM_WORLD"><code class="xref any py py-data docutils literal notranslate"><span class="pre">MPI.COMM_WORLD</span></code></a>) and
+<em>numprocs - 1</em> workers and connects them through an MPI intercommunicator.
+Afterwards, the master process proceeds with the execution of the user script
+code, which eventually creates <a class="reference internal" href="#mpi4py.futures.MPIPoolExecutor" title="mpi4py.futures.MPIPoolExecutor"><code class="xref py py-class docutils literal notranslate"><span class="pre">MPIPoolExecutor</span></code></a> instances to submit
+tasks. Meanwhile, the worker processes follow a different execution path to
+serve the master.  Upon successful termination of the main script at the master,
+the entire MPI execution environment exists gracefully. In case of any unhandled
+exception in the main script, the master process calls
+<code class="docutils literal notranslate"><span class="pre">MPI.COMM_WORLD.Abort(1)</span></code> to prevent deadlocks and force termination of entire
+MPI execution environment.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Running scripts under command line control of <a class="reference internal" href="#module-mpi4py.futures" title="mpi4py.futures: Execute computations concurrently using MPI processes."><code class="xref py py-mod docutils literal notranslate"><span class="pre">mpi4py.futures</span></code></a> is quite
+similar to executing a single-process application that spawn additional
+workers as required. However, there is a very important difference users
+should be aware of. All <a class="reference internal" href="#mpi4py.futures.MPIPoolExecutor" title="mpi4py.futures.MPIPoolExecutor"><code class="xref py py-class docutils literal notranslate"><span class="pre">MPIPoolExecutor</span></code></a> instances created at the
+master will share the pool of workers. Tasks submitted at the master from
+many different executors will be scheduled for execution in random order as
+soon as a worker is idle. Any executor can easily starve all the workers
+(e.g., by calling <a class="reference internal" href="#mpi4py.futures.MPIPoolExecutor.map" title="mpi4py.futures.MPIPoolExecutor.map"><code class="xref py py-func docutils literal notranslate"><span class="pre">MPIPoolExecutor.map()</span></code></a> with long iterables). If that
+ever happens, submissions from other executors will not be serviced until
+free workers are available.</p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference external" href="https://docs.python.org/3/using/cmdline.html#using-on-cmdline" title="(in Python v3.10)"><span>Command line</span></a></dt><dd><p>Documentation on Python command line interface.</p>
+</dd>
+</dl>
+</div>
+</section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<p>The following <code class="file docutils literal notranslate"><span class="pre">julia.py</span></code> script computes the <a class="reference external" href="https://en.wikipedia.org/wiki/Julia_set">Julia set</a> and dumps an
+image to disk in binary <a class="reference external" href="http://netpbm.sourceforge.net/doc/pgm.html">PGM</a> format. The code starts by importing
+<a class="reference internal" href="#mpi4py.futures.MPIPoolExecutor" title="mpi4py.futures.MPIPoolExecutor"><code class="xref py py-class docutils literal notranslate"><span class="pre">MPIPoolExecutor</span></code></a> from the <a class="reference internal" href="#module-mpi4py.futures" title="mpi4py.futures: Execute computations concurrently using MPI processes."><code class="xref py py-mod docutils literal notranslate"><span class="pre">mpi4py.futures</span></code></a> package. Next, some
+global constants and functions implement the computation of the Julia set. The
+computations are protected with the standard <code class="code docutils literal notranslate"><span class="pre">if</span> <span class="pre">__name__</span> <span class="pre">==</span> <span class="pre">'__main__':</span>
+<span class="pre">...</span></code> idiom.  The image is computed by whole scanlines submitting all these
+tasks at once using the <a class="reference internal" href="#mpi4py.futures.MPIPoolExecutor.map" title="mpi4py.futures.MPIPoolExecutor.map"><code class="xref py py-class docutils literal notranslate"><span class="pre">map</span></code></a> method. The result
+iterator yields scanlines in-order as the tasks complete. Finally, each
+scanline is dumped to disk.</p>
+<div class="literal-block-wrapper docutils container" id="julia-py">
+<div class="code-block-caption"><span class="caption-text"><code class="file docutils literal notranslate"><span class="pre">julia.py</span></code></span><a class="headerlink" href="#julia-py" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="hll"><span class="linenos"> 1</span><span class="kn">from</span> <span class="nn">mpi4py.futures</span> <span class="kn">import</span> <span class="n">MPIPoolExecutor</span>
+</span><span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="n">x0</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">w</span> <span class="o">=</span> <span class="o">-</span><span class="mf">2.0</span><span class="p">,</span> <span class="o">+</span><span class="mf">2.0</span><span class="p">,</span> <span class="mi">640</span><span class="o">*</span><span class="mi">2</span>
+<span class="linenos"> 4</span><span class="n">y0</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="o">+</span><span class="mf">1.5</span><span class="p">,</span> <span class="mi">480</span><span class="o">*</span><span class="mi">2</span>
+<span class="linenos"> 5</span><span class="n">dx</span> <span class="o">=</span> <span class="p">(</span><span class="n">x1</span> <span class="o">-</span> <span class="n">x0</span><span class="p">)</span> <span class="o">/</span> <span class="n">w</span>
+<span class="linenos"> 6</span><span class="n">dy</span> <span class="o">=</span> <span class="p">(</span><span class="n">y1</span> <span class="o">-</span> <span class="n">y0</span><span class="p">)</span> <span class="o">/</span> <span class="n">h</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span><span class="n">c</span> <span class="o">=</span> <span class="nb">complex</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.65</span><span class="p">)</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span><span class="k">def</span> <span class="nf">julia</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<span class="linenos">11</span>    <span class="n">z</span> <span class="o">=</span> <span class="nb">complex</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="linenos">12</span>    <span class="n">n</span> <span class="o">=</span> <span class="mi">255</span>
+<span class="linenos">13</span>    <span class="k">while</span> <span class="nb">abs</span><span class="p">(</span><span class="n">z</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+<span class="linenos">14</span>        <span class="n">z</span> <span class="o">=</span> <span class="n">z</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">c</span>
+<span class="linenos">15</span>        <span class="n">n</span> <span class="o">-=</span> <span class="mi">1</span>
+<span class="linenos">16</span>    <span class="k">return</span> <span class="n">n</span>
+<span class="linenos">17</span>
+<span class="linenos">18</span><span class="k">def</span> <span class="nf">julia_line</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+<span class="linenos">19</span>    <span class="n">line</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+<span class="linenos">20</span>    <span class="n">y</span> <span class="o">=</span> <span class="n">y1</span> <span class="o">-</span> <span class="n">k</span> <span class="o">*</span> <span class="n">dy</span>
+<span class="linenos">21</span>    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">w</span><span class="p">):</span>
+<span class="linenos">22</span>        <span class="n">x</span> <span class="o">=</span> <span class="n">x0</span> <span class="o">+</span> <span class="n">j</span> <span class="o">*</span> <span class="n">dx</span>
+<span class="linenos">23</span>        <span class="n">line</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">julia</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="linenos">24</span>    <span class="k">return</span> <span class="n">line</span>
+<span class="linenos">25</span>
+<span class="hll"><span class="linenos">26</span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+</span><span class="linenos">27</span>
+<span class="hll"><span class="linenos">28</span>    <span class="k">with</span> <span class="n">MPIPoolExecutor</span><span class="p">()</span> <span class="k">as</span> <span class="n">executor</span><span class="p">:</span>
+</span><span class="hll"><span class="linenos">29</span>        <span class="n">image</span> <span class="o">=</span> <span class="n">executor</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">julia_line</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="n">h</span><span class="p">))</span>
+</span><span class="linenos">30</span>        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;julia.pgm&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="linenos">31</span>            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;P5 </span><span class="si">%d</span><span class="s1"> </span><span class="si">%d</span><span class="s1"> </span><span class="si">%d</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="mi">255</span><span class="p">))</span>
+<span class="linenos">32</span>            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">image</span><span class="p">:</span>
+<span class="linenos">33</span>                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>The recommended way to execute the script is by using the <strong class="program">mpiexec</strong>
+command specifying one MPI process (master) and (optional but recommended) the
+desired MPI universe size, which determines the number of additional
+dynamically spawned processes (workers). The MPI universe size is provided
+either by a batch system or set by the user via command-line arguments to
+<strong class="program">mpiexec</strong> or environment variables. Below we provide examples for
+MPICH and Open MPI implementations <a class="footnote-reference brackets" href="#id2" id="id1">1</a>. In all of these examples, the
+<strong class="program">mpiexec</strong> command launches a single master process running the Python
+interpreter and executing the main script. When required, <a class="reference internal" href="#module-mpi4py.futures" title="mpi4py.futures: Execute computations concurrently using MPI processes."><code class="xref py py-mod docutils literal notranslate"><span class="pre">mpi4py.futures</span></code></a>
+spawns the pool of 16 worker processes. The master submits tasks to the workers
+and waits for the results. The workers receive incoming tasks, execute them,
+and send back the results to the master.</p>
+<p>When using MPICH implementation or its derivatives based on the Hydra process
+manager, users can set the MPI universe size via the <code class="docutils literal notranslate"><span class="pre">-usize</span></code> argument to
+<strong class="program">mpiexec</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mpiexec -n 1 -usize 17 python julia.py
+</pre></div>
+</div>
+<p>or, alternatively, by setting the <span class="target" id="index-2"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">MPIEXEC_UNIVERSE_SIZE</span></code> environment
+variable:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ MPIEXEC_UNIVERSE_SIZE=17 mpiexec -n 1 python julia.py
+</pre></div>
+</div>
+<p>In the Open MPI implementation, the MPI universe size can be set via the
+<code class="docutils literal notranslate"><span class="pre">-host</span></code> argument to <strong class="program">mpiexec</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mpiexec -n 1 -host &lt;hostname&gt;:17 python julia.py
+</pre></div>
+</div>
+<p>Another way to specify the number of workers is to use the
+<a class="reference internal" href="#module-mpi4py.futures" title="mpi4py.futures: Execute computations concurrently using MPI processes."><code class="xref py py-mod docutils literal notranslate"><span class="pre">mpi4py.futures</span></code></a>-specific environment variable
+<span class="target" id="index-3"></span><a class="reference internal" href="#envvar-MPI4PY_FUTURES_MAX_WORKERS"><code class="xref std std-envvar docutils literal notranslate"><span class="pre">MPI4PY_FUTURES_MAX_WORKERS</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ MPI4PY_FUTURES_MAX_WORKERS=16 mpiexec -n 1 python julia.py
+</pre></div>
+</div>
+<p>Note that in this case, the MPI universe size is ignored.</p>
+<p>Alternatively, users may decide to execute the script in a more traditional
+way, that is, all the MPI processes are started at once. The user script is run
+under command-line control of <a class="reference internal" href="#module-mpi4py.futures" title="mpi4py.futures: Execute computations concurrently using MPI processes."><code class="xref py py-mod docutils literal notranslate"><span class="pre">mpi4py.futures</span></code></a> passing the <a class="reference external" href="https://docs.python.org/3/using/cmdline.html#using-on-cmdline" title="(in Python v3.10)"><span class="xref std std-ref">-m</span></a> flag to the <strong class="program">python</strong> executable:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mpiexec -n 17 python -m mpi4py.futures julia.py
+</pre></div>
+</div>
+<p>As explained previously, the 17 processes are partitioned in one master and 16
+workers. The master process executes the main script while the workers execute
+the tasks submitted by the master.</p>
+<dl class="footnote brackets">
+<dt class="label" id="id2"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>When using an MPI implementation other than MPICH or Open MPI, please
+check the documentation of the implementation and/or batch
+system for the ways to specify the desired MPI universe size.</p>
+</dd>
+</dl>
+<dl class="glossary simple">
+<dt id="term-GIL">GIL<a class="headerlink" href="#term-GIL" title="Permalink to this term">¶</a></dt><dd><p>See <a class="reference external" href="https://docs.python.org/3/glossary.html#term-global-interpreter-lock" title="(in Python v3.10)"><span class="xref std std-term">global interpreter lock</span></a>.</p>
+</dd>
+</dl>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">mpi4py.futures</a><ul>
+<li><a class="reference internal" href="#concurrent-futures">concurrent.futures</a></li>
+<li><a class="reference internal" href="#mpipoolexecutor">MPIPoolExecutor</a></li>
+<li><a class="reference internal" href="#mpicommexecutor">MPICommExecutor</a></li>
+<li><a class="reference internal" href="#command-line">Command line</a></li>
+<li><a class="reference internal" href="#examples">Examples</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="mpi4py.MPI.html"
+                        title="previous chapter">mpi4py.MPI</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="mpi4py.util.html"
+                        title="next chapter">mpi4py.util</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mpi4py.util.html" title="mpi4py.util"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="mpi4py.MPI.html" title="mpi4py.MPI"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">MPI for Python 3.1.3 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">mpi4py.futures</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Lisandro Dalcin.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.0.
+    </div>
+  </body>
+</html>

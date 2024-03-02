@@ -1,0 +1,443 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>mpi4py.MPI.Topocomm &#8212; MPI for Python 3.1.3 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/classic.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="mpi4py.MPI.Win" href="mpi4py.MPI.Win.html" />
+    <link rel="prev" title="mpi4py.MPI.Status" href="mpi4py.MPI.Status.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mpi4py.MPI.Win.html" title="mpi4py.MPI.Win"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="mpi4py.MPI.Status.html" title="mpi4py.MPI.Status"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">MPI for Python 3.1.3 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" >Reference</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="mpi4py.MPI.html" accesskey="U">mpi4py.MPI</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">mpi4py.MPI.Topocomm</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="mpi4py-mpi-topocomm">
+<h1>mpi4py.MPI.Topocomm<a class="headerlink" href="#mpi4py-mpi-topocomm" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="mpi4py.MPI.Topocomm">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mpi4py.MPI.</span></span><span class="sig-name descname"><span class="pre">Topocomm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">comm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Topocomm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="mpi4py.MPI.Intracomm.html#mpi4py.MPI.Intracomm" title="mpi4py.MPI.Intracomm"><code class="xref py py-class docutils literal notranslate"><span class="pre">mpi4py.MPI.Intracomm</span></code></a></p>
+<p>Topology intracommunicator</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>comm</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="#mpi4py.MPI.Topocomm" title="mpi4py.MPI.Topocomm"><em>Topocomm</em></a><em>]</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mpi4py.MPI.Topocomm" title="mpi4py.MPI.Topocomm">Topocomm</a></p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Topocomm.__new__">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">__new__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Topocomm.__new__" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>comm</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="#mpi4py.MPI.Topocomm" title="mpi4py.MPI.Topocomm"><em>Topocomm</em></a><em>]</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mpi4py.MPI.Topocomm" title="mpi4py.MPI.Topocomm">Topocomm</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Methods Summary</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Topocomm.Ineighbor_allgather" title="mpi4py.MPI.Topocomm.Ineighbor_allgather"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Ineighbor_allgather</span></code></a>(sendbuf, recvbuf)</p></td>
+<td><p>Nonblocking Neighbor Gather to All</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Topocomm.Ineighbor_allgatherv" title="mpi4py.MPI.Topocomm.Ineighbor_allgatherv"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Ineighbor_allgatherv</span></code></a>(sendbuf, recvbuf)</p></td>
+<td><p>Nonblocking Neighbor Gather to All Vector</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Topocomm.Ineighbor_alltoall" title="mpi4py.MPI.Topocomm.Ineighbor_alltoall"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Ineighbor_alltoall</span></code></a>(sendbuf, recvbuf)</p></td>
+<td><p>Nonblocking Neighbor All-to-All</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Topocomm.Ineighbor_alltoallv" title="mpi4py.MPI.Topocomm.Ineighbor_alltoallv"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Ineighbor_alltoallv</span></code></a>(sendbuf, recvbuf)</p></td>
+<td><p>Nonblocking Neighbor All-to-All Vector</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Topocomm.Ineighbor_alltoallw" title="mpi4py.MPI.Topocomm.Ineighbor_alltoallw"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Ineighbor_alltoallw</span></code></a>(sendbuf, recvbuf)</p></td>
+<td><p>Nonblocking Neighbor All-to-All Generalized</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Topocomm.Neighbor_allgather" title="mpi4py.MPI.Topocomm.Neighbor_allgather"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Neighbor_allgather</span></code></a>(sendbuf, recvbuf)</p></td>
+<td><p>Neighbor Gather to All</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Topocomm.Neighbor_allgatherv" title="mpi4py.MPI.Topocomm.Neighbor_allgatherv"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Neighbor_allgatherv</span></code></a>(sendbuf, recvbuf)</p></td>
+<td><p>Neighbor Gather to All Vector</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Topocomm.Neighbor_alltoall" title="mpi4py.MPI.Topocomm.Neighbor_alltoall"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Neighbor_alltoall</span></code></a>(sendbuf, recvbuf)</p></td>
+<td><p>Neighbor All-to-All</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Topocomm.Neighbor_alltoallv" title="mpi4py.MPI.Topocomm.Neighbor_alltoallv"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Neighbor_alltoallv</span></code></a>(sendbuf, recvbuf)</p></td>
+<td><p>Neighbor All-to-All Vector</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Topocomm.Neighbor_alltoallw" title="mpi4py.MPI.Topocomm.Neighbor_alltoallw"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Neighbor_alltoallw</span></code></a>(sendbuf, recvbuf)</p></td>
+<td><p>Neighbor All-to-All Generalized</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Topocomm.neighbor_allgather" title="mpi4py.MPI.Topocomm.neighbor_allgather"><code class="xref py py-obj docutils literal notranslate"><span class="pre">neighbor_allgather</span></code></a>(sendobj)</p></td>
+<td><p>Neighbor Gather to All</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Topocomm.neighbor_alltoall" title="mpi4py.MPI.Topocomm.neighbor_alltoall"><code class="xref py py-obj docutils literal notranslate"><span class="pre">neighbor_alltoall</span></code></a>(sendobj)</p></td>
+<td><p>Neighbor All to All Scatter/Gather</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes Summary</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Topocomm.degrees" title="mpi4py.MPI.Topocomm.degrees"><code class="xref py py-obj docutils literal notranslate"><span class="pre">degrees</span></code></a></p></td>
+<td><p>number of incoming and outgoing neighbors</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Topocomm.indegree" title="mpi4py.MPI.Topocomm.indegree"><code class="xref py py-obj docutils literal notranslate"><span class="pre">indegree</span></code></a></p></td>
+<td><p>number of incoming neighbors</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Topocomm.inedges" title="mpi4py.MPI.Topocomm.inedges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inedges</span></code></a></p></td>
+<td><p>incoming neighbors</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Topocomm.inoutedges" title="mpi4py.MPI.Topocomm.inoutedges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inoutedges</span></code></a></p></td>
+<td><p>incoming and outgoing neighbors</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Topocomm.outdegree" title="mpi4py.MPI.Topocomm.outdegree"><code class="xref py py-obj docutils literal notranslate"><span class="pre">outdegree</span></code></a></p></td>
+<td><p>number of outgoing neighbors</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Topocomm.outedges" title="mpi4py.MPI.Topocomm.outedges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">outedges</span></code></a></p></td>
+<td><p>outgoing neighbors</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods Documentation</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Topocomm.Ineighbor_allgather">
+<span class="sig-name descname"><span class="pre">Ineighbor_allgather</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sendbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recvbuf</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Topocomm.Ineighbor_allgather" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nonblocking Neighbor Gather to All</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sendbuf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>recvbuf</strong> (<em>BufSpecB</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request">Request</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Topocomm.Ineighbor_allgatherv">
+<span class="sig-name descname"><span class="pre">Ineighbor_allgatherv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sendbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recvbuf</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Topocomm.Ineighbor_allgatherv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nonblocking Neighbor Gather to All Vector</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sendbuf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>recvbuf</strong> (<em>BufSpecV</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request">Request</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Topocomm.Ineighbor_alltoall">
+<span class="sig-name descname"><span class="pre">Ineighbor_alltoall</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sendbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recvbuf</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Topocomm.Ineighbor_alltoall" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nonblocking Neighbor All-to-All</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sendbuf</strong> (<em>BufSpecB</em>) – </p></li>
+<li><p><strong>recvbuf</strong> (<em>BufSpecB</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request">Request</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Topocomm.Ineighbor_alltoallv">
+<span class="sig-name descname"><span class="pre">Ineighbor_alltoallv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sendbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recvbuf</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Topocomm.Ineighbor_alltoallv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nonblocking Neighbor All-to-All Vector</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sendbuf</strong> (<em>BufSpecV</em>) – </p></li>
+<li><p><strong>recvbuf</strong> (<em>BufSpecV</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request">Request</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Topocomm.Ineighbor_alltoallw">
+<span class="sig-name descname"><span class="pre">Ineighbor_alltoallw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sendbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recvbuf</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Topocomm.Ineighbor_alltoallw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nonblocking Neighbor All-to-All Generalized</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sendbuf</strong> (<em>BufSpecW</em>) – </p></li>
+<li><p><strong>recvbuf</strong> (<em>BufSpecW</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request">Request</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Topocomm.Neighbor_allgather">
+<span class="sig-name descname"><span class="pre">Neighbor_allgather</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sendbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recvbuf</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Topocomm.Neighbor_allgather" title="Permalink to this definition">¶</a></dt>
+<dd><p>Neighbor Gather to All</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sendbuf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>recvbuf</strong> (<em>BufSpecB</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Topocomm.Neighbor_allgatherv">
+<span class="sig-name descname"><span class="pre">Neighbor_allgatherv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sendbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recvbuf</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Topocomm.Neighbor_allgatherv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Neighbor Gather to All Vector</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sendbuf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>recvbuf</strong> (<em>BufSpecV</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Topocomm.Neighbor_alltoall">
+<span class="sig-name descname"><span class="pre">Neighbor_alltoall</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sendbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recvbuf</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Topocomm.Neighbor_alltoall" title="Permalink to this definition">¶</a></dt>
+<dd><p>Neighbor All-to-All</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sendbuf</strong> (<em>BufSpecB</em>) – </p></li>
+<li><p><strong>recvbuf</strong> (<em>BufSpecB</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Topocomm.Neighbor_alltoallv">
+<span class="sig-name descname"><span class="pre">Neighbor_alltoallv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sendbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recvbuf</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Topocomm.Neighbor_alltoallv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Neighbor All-to-All Vector</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sendbuf</strong> (<em>BufSpecV</em>) – </p></li>
+<li><p><strong>recvbuf</strong> (<em>BufSpecV</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Topocomm.Neighbor_alltoallw">
+<span class="sig-name descname"><span class="pre">Neighbor_alltoallw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sendbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recvbuf</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Topocomm.Neighbor_alltoallw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Neighbor All-to-All Generalized</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sendbuf</strong> (<em>BufSpecW</em>) – </p></li>
+<li><p><strong>recvbuf</strong> (<em>BufSpecW</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Topocomm.neighbor_allgather">
+<span class="sig-name descname"><span class="pre">neighbor_allgather</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sendobj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Topocomm.neighbor_allgather" title="Permalink to this definition">¶</a></dt>
+<dd><p>Neighbor Gather to All</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>sendobj</strong> (<em>Any</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>List[Any]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Topocomm.neighbor_alltoall">
+<span class="sig-name descname"><span class="pre">neighbor_alltoall</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sendobj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Topocomm.neighbor_alltoall" title="Permalink to this definition">¶</a></dt>
+<dd><p>Neighbor All to All Scatter/Gather</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>sendobj</strong> (<em>List</em><em>[</em><em>Any</em><em>]</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>List[Any]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Attributes Documentation</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.MPI.Topocomm.degrees">
+<span class="sig-name descname"><span class="pre">degrees</span></span><a class="headerlink" href="#mpi4py.MPI.Topocomm.degrees" title="Permalink to this definition">¶</a></dt>
+<dd><p>number of incoming and outgoing neighbors</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.MPI.Topocomm.indegree">
+<span class="sig-name descname"><span class="pre">indegree</span></span><a class="headerlink" href="#mpi4py.MPI.Topocomm.indegree" title="Permalink to this definition">¶</a></dt>
+<dd><p>number of incoming neighbors</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.MPI.Topocomm.inedges">
+<span class="sig-name descname"><span class="pre">inedges</span></span><a class="headerlink" href="#mpi4py.MPI.Topocomm.inedges" title="Permalink to this definition">¶</a></dt>
+<dd><p>incoming neighbors</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.MPI.Topocomm.inoutedges">
+<span class="sig-name descname"><span class="pre">inoutedges</span></span><a class="headerlink" href="#mpi4py.MPI.Topocomm.inoutedges" title="Permalink to this definition">¶</a></dt>
+<dd><p>incoming and outgoing neighbors</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.MPI.Topocomm.outdegree">
+<span class="sig-name descname"><span class="pre">outdegree</span></span><a class="headerlink" href="#mpi4py.MPI.Topocomm.outdegree" title="Permalink to this definition">¶</a></dt>
+<dd><p>number of outgoing neighbors</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.MPI.Topocomm.outedges">
+<span class="sig-name descname"><span class="pre">outedges</span></span><a class="headerlink" href="#mpi4py.MPI.Topocomm.outedges" title="Permalink to this definition">¶</a></dt>
+<dd><p>outgoing neighbors</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="mpi4py.MPI.Status.html"
+                        title="previous chapter">mpi4py.MPI.Status</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="mpi4py.MPI.Win.html"
+                        title="next chapter">mpi4py.MPI.Win</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mpi4py.MPI.Win.html" title="mpi4py.MPI.Win"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="mpi4py.MPI.Status.html" title="mpi4py.MPI.Status"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">MPI for Python 3.1.3 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" >Reference</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="mpi4py.MPI.html" >mpi4py.MPI</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">mpi4py.MPI.Topocomm</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Lisandro Dalcin.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.0.
+    </div>
+  </body>
+</html>

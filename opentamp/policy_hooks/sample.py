@@ -133,7 +133,7 @@ class Sample(object):
                         else self._data[data_type][t, :])
 
                 if np.any(np.isnan(data)):
-                    breakpoint()
+                    #breakpoint()
                     print("Nans in ctrl obs for data_type", data_type)
 
                 self.agent.pack_data_obs(obs, data, data_types=[data_type])
@@ -153,12 +153,12 @@ class Sample(object):
                         else self._data[data_type][t, :])
 
                 if np.any(np.isnan(data)):
-                    breakpoint()
+                    #breakpoint()
                     print("Nans in prim obs for data_type", data_type)
                     
                 self.agent.pack_data_prim_obs(obs, data, data_types=[data_type])
         if np.any(np.isnan(obs)):
-            breakpoint()
+            #breakpoint()
             print("Still have nans in obs, idxs are", self.agent._prim_obs_idx, self.agent.dPrim)
         return obs.copy()
 

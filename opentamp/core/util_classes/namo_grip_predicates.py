@@ -456,7 +456,7 @@ class CollisionPredicate(ExprPredicate):
 
     def _calc_rot_grad(self, rpose, objpose, colpos):
         jntaxis = np.array([0, 0, 1])
-        return np.dot(objpose - rpose, np.cross(colpos - rpos, jntaxis))
+        return np.dot(objpose - rpose, np.cross(colpos - rpose, jntaxis))
 
     # @profile
     def _calc_grad_and_val(self, name0, name1, pose0, pose1, collisions):
@@ -1399,11 +1399,128 @@ class BPointing(ExprPredicate):
         # breakpoint()
         return grad
     
+class BPointingSpotGripper(ExprPredicate):
+    def __init__(self, name, params, expected_param_types, env=None, sess=None, debug=False):
+        # NOTE: Below line is for debugging purposes only, should be commented out
+        # and line below should be commented in
+        # self._debug = True
+        # self._debug = debug
+
+        # if self._debug:
+        #     self._env.SetViewer("qtcoin")
+        # self._env = env
+        self.robot, self.target = params
+        attr_inds = OrderedDict(
+            [
+                (self.robot, [("pose", np.array([0, 1], dtype=np.int))]),
+                (self.target, [("pose", np.array([0], dtype=np.int))]),
+            ]
+        )
+        # self._param_to_body = {
+        #     self.rp: self.lazy_spawn_or_body(self.rp, self.rp.name, self.rp.geom),
+        #     self.targ: self.lazy_spawn_or_body(
+        #         self.targ, self.targ.name, self.targ.geom
+        #     ),
+        # }
+
+        # INCONTACT_COEFF = 1e1
+        # define these
+        col_expr = Expr(self.f, grad=self.grad_f)
+        val = np.zeros((1, 1)) # output of fcn should be zero
+        # val = np.zeros((1, 1))
+        e = EqExpr(col_expr, val)
+        super(BPointingSpotGripper, self).__init__(
+            name,
+            e,
+            attr_inds,
+            params,
+            expected_param_types,
+            tol=5e-2,
+            debug=debug,
+            priority=0
+        )
+
+    def f(self, x):
+        #diff = np.tan(x[0]) - x[2]/x[1]
+        diff = x[0] + x[1] - np.tan(-np.sin(x[0])/ (x[2]-np.cos(x[0])))
+        # return np.array([diff, -diff])
+        return diff
+
+    def grad_f(self, x):
+        #tan_der = 1/np.cos(np.sin(x[0])/(x[2]-np.cos(x[0])))**2
+        #chain_der = np.cos(x[0])/(x[2]- np.cos(x[0])) 
+        #chain_der2 = -1* np.sin(x[0])**2/(x[2] - np.cos(x[0])**2)
+        #grad_x0 = 1 + tan_der*(-1) * (chain_der - chain_der2)
+        sec_den = (np.cos(np.sin(x[0])/(np.cos(x[0])-x[2])))**2
+        cos_den = (np.cos(x[0])-x[2])**2
+        num = -1*(x[2]*np.cos(x[0]) - 1)
+        grad_x0 = num/(cos_den * sec_den)
+        grad_x1 = 1
+        
+        # return np.array([grad[0], -grad[0]])
+        # breakpoint()
+        return np.array([grad_x0, grad_x1])
+    
+
+class BPointingSpotHeight(ExprPredicate):
+    def __init__(self, name, params, expected_param_types, env=None, sess=None, debug=False):
+        # NOTE: Below line is for debugging purposes only, should be commented out
+        # and line below should be commented in
+        # self._debug = True
+        # self._debug = debug
+
+        # if self._debug:
+        #     self._env.SetViewer("qtcoin")
+        # self._env = env
+        self.robot, self.target = params
+        attr_inds = OrderedDict(
+            [
+                (self.robot, [("pose", np.array([0, 1], dtype=np.int))]),
+                (self.target, [("pose", np.array([0], dtype=np.int))]),
+            ]
+        )
+        # self._param_to_body = {
+        #     self.rp: self.lazy_spawn_or_body(self.rp, self.rp.name, self.rp.geom),
+        #     self.targ: self.lazy_spawn_or_body(
+        #         self.targ, self.targ.name, self.targ.geom
+        #     ),
+        # }
+
+        # INCONTACT_COEFF = 1e1
+        # define these
+        col_expr = Expr(self.f, grad=self.grad_f)
+        val = np.ones((1))* 0.75 #np.zeros((1, 1)) # output of fcn should be zero
+        # val = np.zeros((1, 1))
+        e = LEqExpr(col_expr, val)
+        super(BPointingSpotHeight, self).__init__(
+            name,
+            e,
+            attr_inds,
+            params,
+            expected_param_types,
+            tol=5e-2,
+            debug=debug,
+            priority=0
+        )
+
+    def f(self, x):
+        #diff = np.tan(x[0]) - x[2]/x[1]
+        diff = -np.sin(x[0])
+        # return np.array([diff, -diff])
+        return diff
+
+    def grad_f(self, x):
+        grad = np.array([-np.cos(x[0]), 0, 0]).reshape(1, -1)
+        #grad = np.array([1/np.cos(x[0])**2, -x[2]/(x[1]**2), 1/x[1]]).reshape(1, -1)
+        # return np.array([grad[0], -grad[0]])
+        # breakpoint()
+        return grad
+    
     # def hess(self, x):
     #     hessian = np.array([[-2*x[0]/((1+x[0]**2)**2), 0, 0],
     #                         [0, 2*x[2]/(x[1]**2), -1/(x[1]**2)],
     #                         [0, -1/(x[1]**2), 0]])
-    #     return hessian
+    #     return hessian-0.75
 
     # def test(self, time, negated=False, tol=1e-3):
     #     # This test is overwritten so that collisions can be calculated correctly
