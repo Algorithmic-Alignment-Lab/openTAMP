@@ -36,24 +36,24 @@ RETREAT_DIST = 1.2
 
 ATTRMAP = {
     "Robot": (
-        ("pose", np.array(list(range(2)), dtype=np.int)),
-        ("gripper", np.array(list(range(1)), dtype=np.int)),
-        ("theta", np.array(list(range(1)), dtype=np.int)),
-        ("vel", np.array(list(range(1)), dtype=np.int)),
-        ("acc", np.array(list(range(1)), dtype=np.int)),
+        ("pose", np.array(list(range(2)), dtype=np.int_)),
+        ("gripper", np.array(list(range(1)), dtype=np.int_)),
+        ("theta", np.array(list(range(1)), dtype=np.int_)),
+        ("vel", np.array(list(range(1)), dtype=np.int_)),
+        ("acc", np.array(list(range(1)), dtype=np.int_)),
     ),
-    "Can": (("pose", np.array(list(range(2)), dtype=np.int)),),
-    "Target": (("value", np.array(list(range(2)), dtype=np.int)),),
+    "Can": (("pose", np.array(list(range(2)), dtype=np.int_)),),
+    "Target": (("value", np.array(list(range(2)), dtype=np.int_)),),
     "RobotPose": (
-        ("value", np.array(list(range(2)), dtype=np.int)),
-        ("theta", np.array(list(range(1)), dtype=np.int)),
-        ("gripper", np.array(list(range(1)), dtype=np.int)),
-        ("vel", np.array(list(range(1)), dtype=np.int)),
-        ("acc", np.array(list(range(1)), dtype=np.int)),
+        ("value", np.array(list(range(2)), dtype=np.int_)),
+        ("theta", np.array(list(range(1)), dtype=np.int_)),
+        ("gripper", np.array(list(range(1)), dtype=np.int_)),
+        ("vel", np.array(list(range(1)), dtype=np.int_)),
+        ("acc", np.array(list(range(1)), dtype=np.int_)),
     ),
-    "Obstacle": (("pose", np.array(list(range(2)), dtype=np.int)),),
-    "Grasp": (("value", np.array(list(range(2)), dtype=np.int)),),
-    "Rotation": (("value", np.array(list(range(1)), dtype=np.int)),),
+    "Obstacle": (("pose", np.array(list(range(2)), dtype=np.int_)),),
+    "Grasp": (("value", np.array(list(range(2)), dtype=np.int_)),),
+    "Rotation": (("value", np.array(list(range(1)), dtype=np.int_)),),
 }
 
 HANDLE_OFFSET = 0.8
@@ -246,7 +246,7 @@ class ConstantObservation(ExprPredicate):
         self.target = params[0]
         attr_inds = OrderedDict(
             [
-                (self.target, [("pose", np.array([0, 1], dtype=np.int))])
+                (self.target, [("pose", np.array([0, 1], dtype=np.int_))])
             ]
         )
 
@@ -725,8 +725,8 @@ class RobotAtTarget(At):
         self.r, self.rp = params
         attr_inds = OrderedDict(
             [
-                (self.r, [("pose", np.array([0, 1], dtype=np.int))]),
-                (self.rp, [("value", np.array([0, 1], dtype=np.int))]),
+                (self.r, [("pose", np.array([0, 1], dtype=np.int_))]),
+                (self.rp, [("value", np.array([0, 1], dtype=np.int_))]),
             ]
         )
 
@@ -1418,8 +1418,8 @@ class BPointing(ExprPredicate):
         self.robot, self.target = params
         attr_inds = OrderedDict(
             [
-                (self.robot, [("pose", np.array([0], dtype=np.int))]),
-                (self.target, [("pose", np.array([0, 1], dtype=np.int))]),
+                (self.robot, [("pose", np.array([0], dtype=np.int_))]),
+                (self.target, [("pose", np.array([0, 1], dtype=np.int_))]),
             ]
         )
         # self._param_to_body = {
@@ -1596,7 +1596,7 @@ class CertainPosition(ExprPredicate):
         # self._env = env
         (self.target,) = params
         attr_inds = OrderedDict(
-            [(self.target, [("pose", np.array([0, 1], dtype=np.int))])]
+            [(self.target, [("pose", np.array([0, 1], dtype=np.int_))])]
         )
         # self._param_to_body = {
         #     self.rp: self.lazy_spawn_or_body(self.rp, self.rp.name, self.rp.geom),
@@ -1748,7 +1748,7 @@ class CertainObs(ExprPredicate):
         # self._env = env
         (self.obstacle,) = params
         attr_inds = OrderedDict(
-            [(self.obstacle, [("value", np.array([0, 1], dtype=np.int))])]
+            [(self.obstacle, [("value", np.array([0, 1], dtype=np.int_))])]
         )
         # self._param_to_body = {
         #     self.rp: self.lazy_spawn_or_body(self.rp, self.rp.name, self.rp.geom),
@@ -1795,7 +1795,7 @@ class ConfirmedPosition(ExprPredicate):
         # self._env = env
         (self.target,) = params
         attr_inds = OrderedDict(
-            [(self.target, [("pose", np.array([0, 1], dtype=np.int))])]
+            [(self.target, [("pose", np.array([0, 1], dtype=np.int_))])]
         )
         # self._param_to_body = {
         #     self.rp: self.lazy_spawn_or_body(self.rp, self.rp.name, self.rp.geom),
@@ -2014,7 +2014,7 @@ class RobotConfirmedAtTarget(ExprPredicate):
         # self._env = env
         (self.target,) = params
         attr_inds = OrderedDict(
-            [(self.target, [("pose", np.array([0, 1], dtype=np.int))])]
+            [(self.target, [("pose", np.array([0, 1], dtype=np.int_))])]
         )
         # self._param_to_body = {
         #     self.rp: self.lazy_spawn_or_body(self.rp, self.rp.name, self.rp.geom),
@@ -2045,7 +2045,7 @@ class GripperClosed(ExprPredicate):
     def __init__(self, name, params, expected_param_types, env=None, sess=None, debug=False):
         (self.robot,) = params
         attr_inds = OrderedDict(
-            [(self.robot, [("gripper", np.array([0], dtype=np.int))])]
+            [(self.robot, [("gripper", np.array([0], dtype=np.int_))])]
         )
         A = np.ones((1, 1))
         b = np.zeros((1, 1))
@@ -2074,7 +2074,7 @@ class DoorClosed(ExprPredicate):
         (self.door,) = params
         if not hasattr(self, "coeff"):
             self.coeff = 1e0
-        attr_inds = OrderedDict([(self.door, [("theta", np.array([0], dtype=np.int))])])
+        attr_inds = OrderedDict([(self.door, [("theta", np.array([0], dtype=np.int_))])])
         A = self.coeff * np.ones((1, 1))
         b = np.zeros((1, 1))
         val = np.zeros((1, 1))  # (GRIP_TOL + 1e-1) * -np.ones((1,1))
@@ -2119,8 +2119,8 @@ class InContact(CollisionPredicate):
         self.robot, self.rp, self.targ = params
         attr_inds = OrderedDict(
             [
-                (self.rp, [("value", np.array([0, 1], dtype=np.int))]),
-                (self.targ, [("value", np.array([0, 1], dtype=np.int))]),
+                (self.rp, [("value", np.array([0, 1], dtype=np.int_))]),
+                (self.targ, [("value", np.array([0, 1], dtype=np.int_))]),
             ]
         )
         self._param_to_body = {
@@ -2165,8 +2165,8 @@ class Collides(CollisionPredicate):
         self.c, self.w = params
         attr_inds = OrderedDict(
             [
-                (self.c, [("pose", np.array([0, 1], dtype=np.int))]),
-                (self.w, [("pose", np.array([0, 1], dtype=np.int))]),
+                (self.c, [("pose", np.array([0, 1], dtype=np.int_))]),
+                (self.w, [("pose", np.array([0, 1], dtype=np.int_))]),
             ]
         )
         self._param_to_body = {
@@ -2236,9 +2236,9 @@ class TargetGraspCollides(Collides):
             k = "pose"
         attr_inds = OrderedDict(
             [
-                (self.c, [(k, np.array([0, 1], dtype=np.int))]),
-                (self.w, [("pose", np.array([0, 1], dtype=np.int))]),
-                (self.g, [("value", np.array([0, 1], dtype=np.int))]),
+                (self.c, [(k, np.array([0, 1], dtype=np.int_))]),
+                (self.w, [("pose", np.array([0, 1], dtype=np.int_))]),
+                (self.g, [("value", np.array([0, 1], dtype=np.int_))]),
             ]
         )
         self._param_to_body = {
@@ -2314,9 +2314,9 @@ class RobotCanGraspCollides(Collides):
             k = "pose"
         attr_inds = OrderedDict(
             [
-                (self.c, [(k, np.array([0, 1], dtype=np.int))]),
-                (self.w, [("pose", np.array([0, 1], dtype=np.int))]),
-                (self.g, [("value", np.array([0, 1], dtype=np.int))]),
+                (self.c, [(k, np.array([0, 1], dtype=np.int_))]),
+                (self.w, [("pose", np.array([0, 1], dtype=np.int_))]),
+                (self.g, [("value", np.array([0, 1], dtype=np.int_))]),
             ]
         )
         self._param_to_body = {
@@ -2391,8 +2391,8 @@ class TargetCollides(Collides):
         self.c, self.w = params
         attr_inds = OrderedDict(
             [
-                (self.c, [("value", np.array([0, 1], dtype=np.int))]),
-                (self.w, [("pose", np.array([0, 1], dtype=np.int))]),
+                (self.c, [("value", np.array([0, 1], dtype=np.int_))]),
+                (self.w, [("pose", np.array([0, 1], dtype=np.int_))]),
             ]
         )
         self._param_to_body = {
@@ -2463,12 +2463,12 @@ class RCollides(CollisionPredicate):
                 (
                     self.r,
                     [
-                        ("pose", np.array([0, 1], dtype=np.int)),
-                        ("gripper", np.array([0], dtype=np.int)),
-                        ("theta", np.array([0], dtype=np.int)),
+                        ("pose", np.array([0, 1], dtype=np.int_)),
+                        ("gripper", np.array([0], dtype=np.int_)),
+                        ("theta", np.array([0], dtype=np.int_)),
                     ],
                 ),
-                (self.w, [("pose", np.array([0, 1], dtype=np.int))]),
+                (self.w, [("pose", np.array([0, 1], dtype=np.int_))]),
             ]
         )
 
@@ -2575,12 +2575,12 @@ class Obstructs(CollisionPredicate):
                 (
                     self.r,
                     [
-                        ("pose", np.array([0, 1], dtype=np.int)),
-                        ("gripper", np.array([0], dtype=np.int)),
-                        ("theta", np.array([0], dtype=np.int)),
+                        ("pose", np.array([0, 1], dtype=np.int_)),
+                        ("gripper", np.array([0], dtype=np.int_)),
+                        ("theta", np.array([0], dtype=np.int_)),
                     ],
                 ),
-                (self.c, [("pose", np.array([0, 1], dtype=np.int))]),
+                (self.c, [("pose", np.array([0, 1], dtype=np.int_))]),
             ]
         )
         self._param_to_body = {
@@ -2772,16 +2772,16 @@ class DoorObstructs(CollisionPredicate):
                 (
                     self.r,
                     [
-                        ("pose", np.array([0, 1], dtype=np.int)),
-                        ("gripper", np.array([0], dtype=np.int)),
-                        ("theta", np.array([0], dtype=np.int)),
+                        ("pose", np.array([0, 1], dtype=np.int_)),
+                        ("gripper", np.array([0], dtype=np.int_)),
+                        ("theta", np.array([0], dtype=np.int_)),
                     ],
                 ),
                 (
                     self.door,
                     [
-                        ("pose", np.array([0, 1], dtype=np.int)),
-                        ("theta", np.array([0], dtype=np.int)),
+                        ("pose", np.array([0, 1], dtype=np.int_)),
+                        ("theta", np.array([0], dtype=np.int_)),
                     ],
                 ),
             ]
@@ -2916,13 +2916,13 @@ class ObstructsHolding(CollisionPredicate):
                 (
                     r,
                     [
-                        ("pose", np.array([0, 1], dtype=np.int)),
-                        ("gripper", np.array([0], dtype=np.int)),
-                        ("theta", np.array([0], dtype=np.int)),
+                        ("pose", np.array([0, 1], dtype=np.int_)),
+                        ("gripper", np.array([0], dtype=np.int_)),
+                        ("theta", np.array([0], dtype=np.int_)),
                     ],
                 ),
-                (obstr, [("pose", np.array([0, 1], dtype=np.int))]),
-                (held, [("pose", np.array([0, 1], dtype=np.int))]),
+                (obstr, [("pose", np.array([0, 1], dtype=np.int_))]),
+                (held, [("pose", np.array([0, 1], dtype=np.int_))]),
             ]
         )
 
@@ -3182,9 +3182,9 @@ class InGripper(ExprPredicate):
         self.r, self.can, self.grasp = params
         attr_inds = OrderedDict(
             [
-                (self.r, [("pose", np.array([0, 1], dtype=np.int))]),
-                (self.can, [("pose", np.array([0, 1], dtype=np.int))]),
-                (self.grasp, [("value", np.array([0, 1], dtype=np.int))]),
+                (self.r, [("pose", np.array([0, 1], dtype=np.int_))]),
+                (self.can, [("pose", np.array([0, 1], dtype=np.int_))]),
+                (self.grasp, [("value", np.array([0, 1], dtype=np.int_))]),
             ]
         )
         # want x0 - x2 = x4, x1 - x3 = x5
@@ -3223,11 +3223,11 @@ class InGraspAngle(ExprPredicate):
                 (
                     self.r,
                     [
-                        (k, np.array([0, 1], dtype=np.int)),
-                        ("theta", np.array([0], dtype=np.int)),
+                        (k, np.array([0, 1], dtype=np.int_)),
+                        ("theta", np.array([0], dtype=np.int_)),
                     ],
                 ),
-                (self.can, [(obj_k, np.array([0, 1], dtype=np.int))]),
+                (self.can, [(obj_k, np.array([0, 1], dtype=np.int_))]),
             ]
         )
         angle_expr = Expr(self.f, self.grad)
@@ -3349,15 +3349,15 @@ class DoorInGrasp(ExprPredicate):
                 (
                     self.r,
                     [
-                        (k, np.array([0, 1], dtype=np.int)),
-                        ("theta", np.array([0], dtype=np.int)),
+                        (k, np.array([0, 1], dtype=np.int_)),
+                        ("theta", np.array([0], dtype=np.int_)),
                     ],
                 ),
                 (
                     self.door,
                     [
-                        ("pose", np.array([0, 1], dtype=np.int)),
-                        ("theta", np.array([0], dtype=np.int)),
+                        ("pose", np.array([0, 1], dtype=np.int_)),
+                        ("theta", np.array([0], dtype=np.int_)),
                     ],
                 ),
             ]
@@ -3626,8 +3626,8 @@ class HandleAngleValid(ExprPredicate):
                 (
                     self.r,
                     [
-                        (k, np.array([0, 1], dtype=np.int)),
-                        ("theta", np.array([0], dtype=np.int)),
+                        (k, np.array([0, 1], dtype=np.int_)),
+                        ("theta", np.array([0], dtype=np.int_)),
                     ],
                 ),
             ]
@@ -3698,8 +3698,8 @@ class LinearRetreat(ExprPredicate):
                 (
                     self.r,
                     [
-                        ("pose", np.array([0, 1], dtype=np.int)),
-                        ("theta", np.array([0], dtype=np.int)),
+                        ("pose", np.array([0, 1], dtype=np.int_)),
+                        ("theta", np.array([0], dtype=np.int_)),
                     ],
                 ),
             ]
@@ -3791,8 +3791,8 @@ class RobotRetreat(ExprPredicate):
                 (
                     self.r,
                     [
-                        ("pose", np.array([0, 1], dtype=np.int)),
-                        ("theta", np.array([0], dtype=np.int)),
+                        ("pose", np.array([0, 1], dtype=np.int_)),
+                        ("theta", np.array([0], dtype=np.int_)),
                     ],
                 ),
             ]
@@ -3822,8 +3822,8 @@ class RobotApproach(ExprPredicate):
         self.r, self.grasp = params
         attr_inds = OrderedDict(
             [
-                (self.r, [("pose", np.array([0, 1], dtype=np.int))]),
-                (self.grasp, [("value", np.array([0, 1], dtype=np.int))]),
+                (self.r, [("pose", np.array([0, 1], dtype=np.int_))]),
+                (self.grasp, [("value", np.array([0, 1], dtype=np.int_))]),
             ]
         )
         # want x0 - x2 = x4, x1 - x3 = x5
@@ -3854,9 +3854,9 @@ class GraspValid(ExprPredicate):
         self.rp, self.target, self.grasp = params
         attr_inds = OrderedDict(
             [
-                (self.rp, [("value", np.array([0, 1], dtype=np.int))]),
-                (self.target, [("value", np.array([0, 1], dtype=np.int))]),
-                (self.grasp, [("value", np.array([0, 1], dtype=np.int))]),
+                (self.rp, [("value", np.array([0, 1], dtype=np.int_))]),
+                (self.target, [("value", np.array([0, 1], dtype=np.int_))]),
+                (self.grasp, [("value", np.array([0, 1], dtype=np.int_))]),
             ]
         )
         # want x0 - x2 = x4, x1 - x3 = x5
@@ -3879,7 +3879,7 @@ class RobotStationary(ExprPredicate):
         self, name, params, expected_param_types, env=None, sess=None, debug=False
     ):
         (self.c,) = params
-        attr_inds = OrderedDict([(self.c, [("pose", np.array([0, 1], dtype=np.int))])])
+        attr_inds = OrderedDict([(self.c, [("pose", np.array([0, 1], dtype=np.int_))])])
         A = np.array([[1, 0, -1, 0], [0, 1, 0, -1]])
         b = np.zeros((2, 1))
         e = EqExpr(AffExpr(A, b), np.zeros((2, 1)))
@@ -3906,7 +3906,7 @@ class Stationary(ExprPredicate):
         self, name, params, expected_param_types, env=None, sess=None, debug=False
     ):
         (self.c,) = params
-        attr_inds = OrderedDict([(self.c, [("pose", np.array([0, 1], dtype=np.int))])])
+        attr_inds = OrderedDict([(self.c, [("pose", np.array([0, 1], dtype=np.int_))])])
         A = np.array([[1, 0, -1, 0], [0, 1, 0, -1]])
         b = np.zeros((2, 1))
         e = EqExpr(AffExpr(A, b), np.zeros((2, 1)))
@@ -3929,7 +3929,7 @@ class StationaryDoor(ExprPredicate):
         self, name, params, expected_param_types, env=None, sess=None, debug=False
     ):
         (self.c,) = params
-        attr_inds = OrderedDict([(self.c, [("theta", np.array([0], dtype=np.int))])])
+        attr_inds = OrderedDict([(self.c, [("theta", np.array([0], dtype=np.int_))])])
         A = np.array(
             [
                 [
@@ -3959,7 +3959,7 @@ class StationaryDoorPos(ExprPredicate):
         self, name, params, expected_param_types, env=None, sess=None, debug=False
     ):
         (self.c,) = params
-        attr_inds = OrderedDict([(self.c, [("pose", np.array([0, 1], dtype=np.int))])])
+        attr_inds = OrderedDict([(self.c, [("pose", np.array([0, 1], dtype=np.int_))])])
         A = np.array([[1, 0, -1, 0], [0, 1, 0, -1]])
         b = np.zeros((2, 1))
         e = EqExpr(AffExpr(A, b), np.zeros((2, 1)))
@@ -3979,7 +3979,7 @@ class StationaryRot(ExprPredicate):
         self, name, params, expected_param_types, env=None, sess=None, debug=False
     ):
         (self.c,) = params
-        attr_inds = OrderedDict([(self.c, [("theta", np.array([0], dtype=np.int))])])
+        attr_inds = OrderedDict([(self.c, [("theta", np.array([0], dtype=np.int_))])])
         A = np.array([[1, -1]])
         b = np.zeros((1, 1))
         e = EqExpr(AffExpr(A, b), np.zeros((1, 1)))
@@ -4018,8 +4018,8 @@ class AtRot(ExprPredicate):
         self.r, self.rot = params
         attr_inds = OrderedDict(
             [
-                (self.r, [("theta", np.array([0], dtype=np.int))]),
-                (self.rot, [("value", np.array([0], dtype=np.int))]),
+                (self.r, [("theta", np.array([0], dtype=np.int_))]),
+                (self.rot, [("value", np.array([0], dtype=np.int_))]),
             ]
         )
         A = np.array([[1, -1]])
@@ -4047,7 +4047,7 @@ class StationaryNEq(ExprPredicate):
         self, name, params, expected_param_types, env=None, sess=None, debug=False
     ):
         self.c, self.c_held = params
-        attr_inds = OrderedDict([(self.c, [("pose", np.array([0, 1], dtype=np.int))])])
+        attr_inds = OrderedDict([(self.c, [("pose", np.array([0, 1], dtype=np.int_))])])
         if self.c.name == self.c_held.name:
             A = np.zeros((1, 4))
             b = np.zeros((1, 1))
@@ -4074,7 +4074,7 @@ class StationaryW(ExprPredicate):
         self, name, params, expected_param_types, env=None, sess=None, debug=False
     ):
         (self.w,) = params
-        attr_inds = OrderedDict([(self.w, [("pose", np.array([0, 1], dtype=np.int))])])
+        attr_inds = OrderedDict([(self.w, [("pose", np.array([0, 1], dtype=np.int_))])])
         A = np.array([[1, 0, -1, 0], [0, 1, 0, -1]])
         b = np.zeros((2, 1))
         e = EqExpr(AffExpr(A, b), b)
@@ -4100,8 +4100,8 @@ class AvoidObs(ExprPredicate):
         ## ==> x_t - x_{t+1} < dmove, -x_t + x_{t+a} < dmove
         attr_inds = OrderedDict(
             [
-                (self.r, [("pose", np.array([0, 1], dtype=np.int))]),
-                (self.rt, [("value", np.array([0, 1], dtype=np.int))]),
+                (self.r, [("pose", np.array([0, 1], dtype=np.int_))]),
+                (self.rt, [("value", np.array([0, 1], dtype=np.int_))]),
             ]
         )
         col_expr = Expr(self.f, grad=self.grad_f)
@@ -4132,8 +4132,8 @@ class RobotWithinFinishofTarg(ExprPredicate):
         ## ==> x_t - x_{t+1} < dmove, -x_t + x_{t+a} < dmove
         attr_inds = OrderedDict(
             [
-                (self.r, [("pose", np.array([0, 1], dtype=np.int))]),
-                (self.rt, [("value", np.array([0, 1], dtype=np.int))]),
+                (self.r, [("pose", np.array([0, 1], dtype=np.int_))]),
+                (self.rt, [("value", np.array([0, 1], dtype=np.int_))]),
             ]
         )
         col_expr = Expr(self.f, grad=self.grad_f)
@@ -4165,8 +4165,8 @@ class RobotCloseToTarget(ExprPredicate):
         ## ==> x_t - x_{t+1} < dmove, -x_t + x_{t+a} < dmove
         attr_inds = OrderedDict(
             [
-                (self.r, [("pose", np.array([0, 1], dtype=np.int))]),
-                (self.rp, [("value", np.array([0, 1], dtype=np.int))]),
+                (self.r, [("pose", np.array([0, 1], dtype=np.int_))]),
+                (self.rp, [("value", np.array([0, 1], dtype=np.int_))]),
             ]
         )
         A = np.array([[1, 0, -1, 0],
@@ -4186,7 +4186,7 @@ class IsMP(ExprPredicate):
        self.r, = params
        ## constraints  |x_t - x_{t+1}| < dmove
        ## ==> x_t - x_{t+1} < dmove, -x_t + x_{t+a} < dmove
-       attr_inds = OrderedDict([(self.r, [("pose", np.array([0, 1], dtype=np.int))])])
+       attr_inds = OrderedDict([(self.r, [("pose", np.array([0, 1], dtype=np.int_))])])
        A = np.array([[1, 0, -1, 0],
                      [0, 1, 0, -1],
                      [-1, 0, 1, 0],
@@ -4221,7 +4221,7 @@ class IsMPIncr(ExprPredicate):
        self.r, = params
        ## constraints  |x_t - x_{t+1}| < dmove
        ## ==> x_t - x_{t+1} < dmove, -x_t + x_{t+a} < dmove
-       attr_inds = OrderedDict([(self.r, [("pose", np.array([0, 1], dtype=np.int))])])
+       attr_inds = OrderedDict([(self.r, [("pose", np.array([0, 1], dtype=np.int_))])])
        A = np.array([[1, 0],
                      [0, 1],
                      [-1, 0],
@@ -4305,7 +4305,7 @@ class DoorIsMP(ExprPredicate):
         (self.r,) = params
         ## constraints  |x_t - x_{t+1}| < dmove
         ## ==> x_t - x_{t+1} < dmove, -x_t + x_{t+a} < dmove
-        attr_inds = OrderedDict([(self.r, [("theta", np.array([0], dtype=np.int))])])
+        attr_inds = OrderedDict([(self.r, [("theta", np.array([0], dtype=np.int_))])])
         A = np.array([[1.0, -1.0], [-1.0, 1.0]])
         b = np.zeros((2, 1))
         drot = np.pi / 8.0
@@ -4328,7 +4328,7 @@ class VelWithinBounds(At):
     def __init__(self, name, params, expected_param_types, env=None, sess=None):
         ## At Robot RobotPose
         self.r, self.c = params
-        attr_inds = OrderedDict([(self.r, [("vel", np.array([0, 1], dtype=np.int))])])
+        attr_inds = OrderedDict([(self.r, [("vel", np.array([0, 1], dtype=np.int_))])])
 
         A = np.c_[np.eye(2), -np.eye(2)]
         b = np.zeros((4, 1))
@@ -4345,7 +4345,7 @@ class AccWithinBounds(At):
     def __init__(self, name, params, expected_param_types, env=None, sess=None):
         ## At Robot RobotPose
         self.r, self.c = params
-        attr_inds = OrderedDict([(self.r, [("acc", np.array([0, 1], dtype=np.int))])])
+        attr_inds = OrderedDict([(self.r, [("acc", np.array([0, 1], dtype=np.int_))])])
 
         A = np.c_[np.eye(2), -np.eye(2)]
         b = np.zeros((4, 1))
@@ -4551,8 +4551,8 @@ class AccValid(VelValid):
                 (
                     self.r,
                     [
-                        ("vel", np.array([0, 1], dtype=np.int)),
-                        ("acc", np.array([0, 1], dtype=np.int)),
+                        ("vel", np.array([0, 1], dtype=np.int_)),
+                        ("acc", np.array([0, 1], dtype=np.int_)),
                     ],
                 ),
             ]
@@ -4569,9 +4569,9 @@ class ScalarVelValid(ExprPredicate):
                 (
                     self.r,
                     [
-                        ("pose", np.array([0, 1], dtype=np.int)),
-                        ("theta", np.array([0], dtype=np.int)),
-                        ("vel", np.array([0], dtype=np.int)),
+                        ("pose", np.array([0, 1], dtype=np.int_)),
+                        ("theta", np.array([0], dtype=np.int_)),
+                        ("vel", np.array([0], dtype=np.int_)),
                     ],
                 ),
             ]
@@ -4651,8 +4651,8 @@ class InDoorAngle(ExprPredicate):
         self.r, self.c = params
         attr_inds = OrderedDict(
             [
-                (self.r, [("theta", np.array([0], dtype=np.int))]),
-                (self.c, [("theta", np.array([0], dtype=np.int))]),
+                (self.r, [("theta", np.array([0], dtype=np.int_))]),
+                (self.c, [("theta", np.array([0], dtype=np.int_))]),
             ]
         )
         A = np.array([[1.0, -1.0]])
@@ -4675,8 +4675,8 @@ class ThetaDirValid(ExprPredicate):
                 setattr(self, attr, True)
 
         self.coeff = 1e0
-        attr_inds = OrderedDict([(self.r, [("pose", np.array([0, 1], dtype=np.int)),
-                                           ("theta", np.array([0], dtype=np.int))]),
+        attr_inds = OrderedDict([(self.r, [("pose", np.array([0, 1], dtype=np.int_)),
+                                           ("theta", np.array([0], dtype=np.int_))]),
                                 ])
 
         self.torch_func = ThetaDir(use_forward=self.forward,
@@ -4825,8 +4825,8 @@ class ColObjPred(CollisionPredicate):
         self.r, self.c = params
         attr_inds = OrderedDict(
             [
-                (self.r, [("pose", np.array([0, 1], dtype=np.int))]),
-                (self.c, [("pose", np.array([0, 1], dtype=np.int))]),
+                (self.r, [("pose", np.array([0, 1], dtype=np.int_))]),
+                (self.c, [("pose", np.array([0, 1], dtype=np.int_))]),
             ]
         )
         self._param_to_body = {
@@ -4932,11 +4932,11 @@ class DoorColObjPred(CollisionPredicate):
                 (
                     self.door,
                     [
-                        ("pose", np.array([0, 1], dtype=np.int)),
-                        ("theta", np.array([0], dtype=np.int)),
+                        ("pose", np.array([0, 1], dtype=np.int_)),
+                        ("theta", np.array([0], dtype=np.int_)),
                     ],
                 ),
-                (self.robot, [("pose", np.array([0, 1], dtype=np.int))]),
+                (self.robot, [("pose", np.array([0, 1], dtype=np.int_))]),
             ]
         )
         self._param_to_body = {

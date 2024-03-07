@@ -41,9 +41,11 @@ class BlankEnv(Env):
 
             if no_noisy_obs[0] < 0.001:
                 nan_ang = np.pi/2 if no_noisy_obs[1] >= 0.0 else -np.pi/2
-                self.curr_obs = np.array([self.curr_state, nan_ang, 1.0])
+                self.curr_obs = np.array([self.curr_state[0], nan_ang, 1.0])
             else:
-                self.curr_obs = np.array([self.curr_state, np.arctan(no_noisy_obs[1]/no_noisy_obs[0]), 1.0])
+                #print(f"print debug: {np.arctan(no_noisy_obs[1]/no_noisy_obs[0])=}, {np.arctan(no_noisy_obs[1]/no_noisy_obs[0]).shape=}")
+                #print(f"print debug: {self.curr_state=}")
+                self.curr_obs = np.array([self.curr_state[0], np.arctan(no_noisy_obs[1]/no_noisy_obs[0]), 1.0])
 
             reward = - 4/np.pi * np.abs(self.curr_obs[0] - action) ## normalized angle distance from goal
             

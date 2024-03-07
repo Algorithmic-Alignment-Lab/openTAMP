@@ -46,14 +46,6 @@ class Server(object):
         n_gpu = hyperparams['n_gpu']
         if n_gpu == 0:
             gpus = -1
-        elif n_gpu == 1:
-            gpus = 0
-        else:
-            #gpus = str(list(range(1, n_gpu+1)))[1:-1]
-            #gpus = str(list(range(0, n_gpu)))[1:-1]
-            gpus = np.random.choice(range(n_gpu))
-        os.environ['CUDA_VISIBLE_DEVICES'] = "{0}".format(gpus)
-        #os.environ['CUDA_VISIBLE_DEVICES'] = ""
 
         self.solver = hyperparams['mp_solver_type'](hyperparams)
         self.init_policy_opt(hyperparams)
