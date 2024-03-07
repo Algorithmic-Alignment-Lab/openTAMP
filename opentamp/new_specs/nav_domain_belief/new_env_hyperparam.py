@@ -146,7 +146,7 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
         'mp_solver_type': ToySolver,
         'll_solver_type': ToySolver,
         'meta_file': opentamp.__path__._path[0] + '/new_specs/nav_domain_belief/namo_purenav_meta.json',
-        'acts_file': opentamp.__path__._path[0] + '/new_specs/nav_domain_belief/namo_purenav_acts.json',
+        'acts_file': opentamp.__path__._path[0] + '/new_specs/nav_domain_belief/namo_purenav_acts_belief.json',
         'prob_file': opentamp.__path__._path[0] + '/new_specs/nav_domain_belief/namo_purenav_prob.json',
         'observation_model': NoVIObstacleObservationModel,
         'n_dirs': N_DIRS,

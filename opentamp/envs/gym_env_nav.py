@@ -96,8 +96,8 @@ class GymEnvNav(Env):
     def render(self, mode='rgb_array'):
         def is_in_ray_vectorized(a_pose, x_coord, y_coord, ray_ang):
             return np.where(x_coord > 0, 
-                            np.abs(np.arctan(y_coord/x_coord) - a_pose) <= ray_ang,
-                            np.abs(np.arctan(y_coord/x_coord) - (a_pose - np.pi)) <= ray_ang)
+                            np.abs(np.arctan(y_coord/x_coord) - a_pose) <= ray_ang % 2*np.pi,
+                            np.abs(np.arctan(y_coord/x_coord) - (a_pose - np.pi)) <= ray_ang % np.pi)
             
         def is_close_to_obj_vectorized(true_loc, x_coord, y_coord):
             return np.linalg.norm(np.stack((x_coord, y_coord)) - np.tile(true_loc.reshape(-1, 1, 1, 1), (1, 256, 256, 3)), axis=0) <= 0.2
@@ -188,7 +188,7 @@ class GymEnvNav(Env):
 
     ## get random sample to initialize uncertain problem
     def sample_belief_true(self):
-        return {}
+        return {'obs1': self.dist.sample()}
         # return {'obs1': torch.tensor([0.0, 0.0])}
         # rand = random.random() * 8
         # if rand < 1.0:

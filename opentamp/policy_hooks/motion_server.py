@@ -190,25 +190,25 @@ class MotionServer(Server):
             
             plan.observation_model.set_active_planned_observations(planned_obs)
 
-
+            
             plan.set_mc_lock(self.config['mc_lock'])
         
         print('Full Conditioned Obs At Start: ', node.conditioned_obs)
+        print('Planning from: ', plan.start)
 
         ## set the true state of belief variables from sim
         if len(plan.belief_params) > 0:
             self.agent.gym_env.set_belief_true(node.belief_true)
             goal = node.belief_true
             
-        ## disable optimistic predicates for all actions coming before the start of current planning action
+        ## disable predicates for all actions coming before the start of current planning action
         for anum in range(plan.start):
             a = plan.actions[anum]
             for pred_dict in a.preds:
-                if pred_dict['pred'].optimistic:
-                    ## disable the predicate by using no-eval notation
-                    pred_dict['active_timesteps'] = (pred_dict['active_timesteps'][0], pred_dict['active_timesteps'][0]-1)
-                    pred_dict['pred'].active_range = (pred_dict['pred'].active_range[0], pred_dict['pred'].active_range[0]-1)
-        
+                ## disable the predicate by using no-eval notation
+                pred_dict['active_timesteps'] = (pred_dict['active_timesteps'][0], pred_dict['active_timesteps'][0]-1)
+                pred_dict['pred'].active_range = (pred_dict['pred'].active_range[0], pred_dict['pred'].active_range[0]-1)
+    
 
         ## reset beliefs and observations to beginning of refine_start
         if len(plan.belief_params) > 0:
@@ -237,12 +237,19 @@ class MotionServer(Server):
                                                       st=cur_t, 
                                                       conditioned_obs=node.conditioned_obs)
         
-        # breakpoint()
         
         ## for belief-space replanning, only replan if indeed belief-space, and plan against sampled obs dict
         replan_success = True
         if refine_success and len(plan.belief_params) > 0:
-            print('Refining from: ', node.replan_start)    
+            print('Refining from: ', node.replan_start)
+            
+            ## disable deterministic predicates for refined plan
+            # for a in plan.actions:
+            #     for pred_dict in a.preds:
+            #         if not pred_dict['pred'].optimistic:
+            #             pred_dict['active_timesteps'] = (pred_dict['active_timesteps'][0], pred_dict['active_timesteps'][0]-1)
+            #             pred_dict['pred'].active_range = (pred_dict['pred'].active_range[0], pred_dict['pred'].active_range[0]-1)
+
 
             ## reset beliefs and observations to beginning of refine_start
             for param in plan.belief_params:
@@ -277,42 +284,9 @@ class MotionServer(Server):
             fail_step, fail_pred, _ = node.get_failed_pred()
             if fail_pred:
                 ## replanning has now failed
-                for anum in range(len(plan.actions)):
-                    a = plan.actions[anum]
-                    new_assumed_goal = {}
-
-                    ## reset the true state planned to be a random one, with consistent index across samples
-                    # new_goal_idx = np.random.randint(0, param.belief.samples.shape[0])
-                    unnorm_loglikelihood = plan.observation_model.get_unnorm_obs_log_likelihood(plan.params, node.conditioned_obs, fail_step)
-                    new_goal_idx = torch.argmax(unnorm_loglikelihood).item()
-
-                    if a.active_timesteps[0] <= fail_step and fail_step < a.active_timesteps[1]:
-                        for param in plan.belief_params:
-                            ## set new assumed value for planning to sample from belief -- random choice
-                            if self._hyperparams['assume_true']:
-                                new_assumed_goal[param.name] = node.belief_true[param.name]
-                            else:
-                                new_assumed_goal[param.name] = param.belief.samples[new_goal_idx,:,a.active_timesteps[0]]
-                            if param.is_symbol():
-                                param.value[:, 0] = new_assumed_goal[param.name].detach().numpy()
-                            else:
-                                param.pose[:, a.active_timesteps[0]] = new_assumed_goal[param.name].detach().numpy()
-
-                            new_assumed_goal[param.name] = torch.tensor(new_assumed_goal[param.name])
-                        node.replan_start = anum
-
-                    ## populate with new goal
-                    plan.observation_model.set_active_planned_observations(new_assumed_goal)
-
-                    for pred_dict in a.preds:
-                        ## disable optimistic actions for planning (ones that can change with random effects)
-                        if (pred_dict['active_timesteps'][0] < fail_step and fail_step <= pred_dict['active_timesteps'][1]) and pred_dict['pred'].optimistic:
-                            ## disable the predicate by using no-eval notation
-                            pred_dict['active_timesteps'] = (pred_dict['active_timesteps'][0], pred_dict['active_timesteps'][0]-1)
-                            pred_dict['pred'].active_range = (pred_dict['pred'].active_range[0], pred_dict['pred'].active_range[0]-1)
+                # 
 
                 replan_success = False
-
 
         ## path of samples in imitation
         path = []
@@ -342,15 +316,14 @@ class MotionServer(Server):
             if self.plan_only:
                 ## reset sim state to state planned against
                 self.agent.reset_to_state(node.x0)
+                self.agent.gym_env.set_belief_true(node.belief_true)
                 
                 self.save_video(path, True, lab='vid_planner')
             
                 breakpoint()
 
                 raise Exception('Terminating after single plan')
-
-        print('Full Conditioned Obs At Start: ', node.conditioned_obs)
-        
+                
         return path, refine_success, replan_success
 
 
@@ -365,8 +338,8 @@ class MotionServer(Server):
             return
 
         # NOTE: refines also done if linear constraints fail, owing to replanning
-        failed_preds = plan.get_failed_preds((prev_t, fail_step+fail_pred.active_range[1]), priority=-1)
-
+        failed_preds = plan.get_failed_preds((prev_t, fail_step), priority=-1)
+        
         if len(failed_preds):
             print('Refine failed with linear constr. viol.', 
                    node._trace, 
@@ -378,7 +351,7 @@ class MotionServer(Server):
             # return ## NOTE: altered return logic here, so all failures hit expansion limit
 
         print('Refine failed:', 
-              plan.get_failed_preds((0, fail_step+fail_pred.active_range[1])), 
+              plan.get_failed_preds((0, fail_step)), 
               fail_pred, 
               fail_step, 
               plan.actions, 
@@ -388,9 +361,48 @@ class MotionServer(Server):
 
         if not node.hl and not node.gen_child(): return
 
+
+        breakpoint()
         n_problem = node.get_problem(fail_step, fail_pred, fail_negated)
         abs_prob = self.agent.hl_solver.translate_problem(n_problem, goal=node.concr_prob.goal)
         prefix = node.curr_plan.prefix(fail_step)
+
+        # if failed, modify belief predicates
+        if fail_pred:
+            for anum in range(len(plan.actions)):
+                a = plan.actions[anum]
+                new_assumed_goal = {}
+
+                ## reset the true state planned to be a random one, with consistent index across samples
+                # new_goal_idx = np.random.randint(0, param.belief.samples.shape[0])
+                unnorm_loglikelihood = plan.observation_model.get_unnorm_obs_log_likelihood(plan.params, node.conditioned_obs, fail_step)
+                new_goal_idx = torch.argmax(unnorm_loglikelihood).item()
+
+                if a.active_timesteps[0] <= fail_step and fail_step < a.active_timesteps[1]:
+                    for param in plan.belief_params:
+                        ## set new assumed value for planning to sample from belief -- random choice
+                        if self._hyperparams['assume_true']:
+                            new_assumed_goal[param.name] = node.belief_true[param.name]
+                        else:
+                            new_assumed_goal[param.name] = param.belief.samples[new_goal_idx,:,a.active_timesteps[0]]
+                        if param.is_symbol():
+                            param.value[:, 0] = new_assumed_goal[param.name]
+                        else:
+                            param.pose[:, a.active_timesteps[0]] = new_assumed_goal[param.name].detach().numpy()
+
+                        new_assumed_goal[param.name] = torch.tensor(new_assumed_goal[param.name])
+                    node.replan_start = anum
+
+                     ## populate with new goal
+                    plan.observation_model.set_active_planned_observations(new_assumed_goal)
+
+                for pred_dict in a.preds:
+                    ## disable optimistic actions for planning (ones that can change with random effects)
+                    if (pred_dict['active_timesteps'][0] < fail_step and fail_step <= pred_dict['active_timesteps'][1]) and pred_dict['pred'].optimistic:
+                        ## disable the predicate by using no-eval notation
+                        pred_dict['active_timesteps'] = (pred_dict['active_timesteps'][0], pred_dict['active_timesteps'][0]-1)
+                        pred_dict['pred'].active_range = (pred_dict['pred'].active_range[0], pred_dict['pred'].active_range[0]-1)
+
         hlnode = HLSearchNode(abs_prob,
                              node.domain,
                              n_problem,

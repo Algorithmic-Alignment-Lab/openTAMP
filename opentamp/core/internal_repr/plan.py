@@ -454,7 +454,6 @@ class Plan(object):
         # print('Acquired lock')
         
         self.observation_model.fit_approximation(copy.deepcopy(self.params))
-
         ## get random observation through the forward model
         obs = self.observation_model.forward_model(copy.deepcopy(self.params), active_ts, provided_state=provided_goal)
         
@@ -480,11 +479,13 @@ class Plan(object):
         kernel = NUTS(conditional_model, full_mass=True)
 
         ## get a vector of overall observations, as a warmstart for MCMC
-        global_vec = self.construct_global_belief_vec(provided_goal)
+        # global_vec = self.construct_global_belief_vec(provided_goal)
+        
+        if not provided_goal:
+            breakpoint()
 
         print('Conditioning on: ', full_prefix_obs)
-        print('Init inference to: ', global_vec)
-
+        print('Init inference to: ', provided_goal)
 
         ## initialize and run MCMC (conditions on the active observation)
         mcmc = MCMC(
@@ -492,7 +493,7 @@ class Plan(object):
             num_samples=self.num_belief_samples,
             warmup_steps=self.num_warmup_steps,
             num_chains=1,
-            initial_params={'belief_global': global_vec},
+            initial_params={'belief_'+id: provided_goal[id] for id in provided_goal.keys()},
             disable_progbar=True
         )
 
@@ -502,7 +503,7 @@ class Plan(object):
         # print('Releasing lock')
         # mc_lock.release()
         
-        return mcmc.get_samples()['belief_global'], obs
+        return mcmc.get_samples(), obs
 
     # def initialize_obs(self, anum=0, override_obs=None):
     #     for param in self.belief_params:
@@ -514,18 +515,20 @@ class Plan(object):
     ## called once per high-level action execution
     def filter_beliefs(self, active_ts, provided_goal=None, past_obs={}):
 
-        # max-likelihood feeds back on object here        
+        # max-likelihood feeds back on object here
         global_samples, plan_obs = self.sample_mcmc_run(active_ts, provided_goal=provided_goal, past_obs=past_obs)
 
-        if len(global_samples.shape) == 1:
-            global_samples = global_samples.unsqueeze(dim=1)
+        for key in global_samples:
+            if len(global_samples[key].shape) == 1:
+                global_samples[key] = global_samples[key].unsqueeze(dim=1)
 
-        assert len(global_samples.shape) == 2
+        for key in global_samples:
+            assert len(global_samples[key].shape) == 2
         
         # update all of the param samples objects, as induced from the belief object
         running_idx = 0
         for param in self.belief_params:
-            new_samp = torch.cat((param.belief.samples, torch.unsqueeze(global_samples[:, self.belief_inds[param.name][0]:self.belief_inds[param.name][1]], 2)), dim=2)
+            new_samp = torch.cat((param.belief.samples, torch.unsqueeze(global_samples['belief_' + param.name], 2)), dim=2)
             param.belief.samples = new_samp
             running_idx += param.belief.size
 

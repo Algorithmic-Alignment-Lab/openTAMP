@@ -1049,7 +1049,7 @@ class RobotNearTarget(At):
 
         A = np.c_[np.r_[np.eye(2), -np.eye(2)], np.r_[-np.eye(2), np.eye(2)]]
         b = np.zeros((4, 1))
-        val = 0.25 * np.ones((4, 1))
+        val = 1 * np.ones((4, 1))
         aff_e = AffExpr(A, b)
         e = LEqExpr(aff_e, val)
         super(At, self).__init__(name, e, attr_inds, params, expected_param_types)
@@ -1630,7 +1630,112 @@ class CertainPosition(ExprPredicate):
             return not np.sqrt(np.power(diff_vec, 2)).mean() <= 0.2
         return np.sqrt(np.power(diff_vec, 2)).mean() <= 0.2
 
-## a stub computing only the
+class CertainTarget(ExprPredicate):
+    def __init__(self, name, params, expected_param_types, env=None, sess=None, debug=False):
+        # NOTE: Below line is for debugging purposes only, should be commented out
+        # and line below should be commented in
+        # self._debug = True
+        # self._debug = debug
+
+        # if self._debug:
+        #     self._env.SetViewer("qtcoin")
+        # self._env = env
+        (self.target,) = params
+        attr_inds = OrderedDict(
+            [(self.target, [("value", np.array([0, 1], dtype=np.int))])]
+        )
+        # self._param_to_body = {
+        #     self.rp: self.lazy_spawn_or_body(self.rp, self.rp.name, self.rp.geom),
+        #     self.targ: self.lazy_spawn_or_body(
+        #         self.targ, self.targ.name, self.targ.geom
+        #     ),
+        # }
+
+        # INCONTACT_COEFF = 1e1
+        # unused constraints, pass some BS in
+        A = np.zeros((1, 2))
+        b = np.zeros((1,1))
+        dummy_expr = AffExpr(A, b)
+        val = np.zeros((1, 1)) # output of fcn should be zero
+        # val = np.zeros((1, 1))
+        e = EqExpr(dummy_expr, val)
+        super(CertainTarget, self).__init__(
+            name,
+            e,
+            attr_inds,
+            params,
+            expected_param_types,
+            debug=debug,
+            priority=1
+        )
+
+    def test(self, time, negated=False, tol=None):
+        diff_vec = self.target.belief.samples[:,:,time].detach().numpy() - self.target.value[:,0]
+        
+        if negated:
+            return not np.sqrt(np.power(diff_vec, 2)).mean() <= 0.2
+        return np.sqrt(np.power(diff_vec, 2)).mean() <= 0.2
+
+## a stub computing concentration in a given region
+class PathClear(ExprPredicate):
+    def __init__(self, name, params, expected_param_types, env=None, sess=None, debug=False):
+        # NOTE: Below line is for debugging purposes only, should be commented out
+        # and line below should be commented in
+        # self._debug = True
+        # self._debug = debug
+
+        # if self._debug:
+        #     self._env.SetViewer("qtcoin")
+        # self._env = env
+        (self.robot, self.target, self.obstacle,) = params
+        attr_inds = OrderedDict(
+            [(self.robot, [("pose", np.array([0, 1], dtype=np.int))]),
+             (self.target, [("value", np.array([0, 1], dtype=np.int))]),
+             (self.obstacle, [("value", np.array([0, 1], dtype=np.int))])]
+        )
+        # self._param_to_body = {
+        #     self.rp: self.lazy_spawn_or_body(self.rp, self.rp.name, self.rp.geom),
+        #     self.targ: self.lazy_spawn_or_body(
+        #         self.targ, self.targ.name, self.targ.geom
+        #     ),
+        # }
+
+        # INCONTACT_COEFF = 1e1
+        # unused constraints, pass some BS in
+        A = np.zeros((1, 2))
+        b = np.zeros((1,1))
+        dummy_expr = AffExpr(A, b)
+        val = np.zeros((1, 1)) # output of fcn should be zero
+        # val = np.zeros((1, 1))
+        e = EqExpr(dummy_expr, val)
+        super(PathClear, self).__init__(
+            name,
+            e,
+            attr_inds,
+            params,
+            expected_param_types,
+            debug=debug,
+            priority=1
+        )
+
+    def test(self, time, negated=False, tol=None):
+        diff_line = self.target.value[:,0] - self.robot.pose[:,0]
+        midpoint = self.robot.pose[:,0] + diff_line / 2
+
+        closest_dist = np.zeros(self.obstacle.belief.samples.shape[0])
+
+        for idx in range(self.obstacle.belief.samples.shape[0]):
+            obs_point = self.obstacle.belief.samples[idx, :, time]
+            proj_point = np.dot(obs_point, diff_line) / np.sum(np.power(diff_line, 2)) * diff_line
+
+            # return distance to projection on the line
+            closest_dist[idx] = np.linalg.norm(obs_point - proj_point) if np.linalg.norm(proj_point - midpoint) <= np.linalg.norm(diff_line / 2) + 1.0 else 3.0
+        
+        if negated:
+            return not np.sum(closest_dist <= 2.0) <= 5
+        return np.sum(closest_dist <= 2.0) <= 5
+    
+## a stub computing concentration in a given region
 class CertainObs(ExprPredicate):
     def __init__(self, name, params, expected_param_types, env=None, sess=None, debug=False):
         # NOTE: Below line is for debugging purposes only, should be commented out
@@ -1677,6 +1782,7 @@ class CertainObs(ExprPredicate):
             return not np.sqrt(np.power(diff_vec, 2)).mean() <= 0.2
         return np.sqrt(np.power(diff_vec, 2)).mean() <= 0.2
 
+
 class ConfirmedPosition(ExprPredicate):
     def __init__(self, name, params, expected_param_types, env=None, sess=None, debug=False):
         # NOTE: Below line is for debugging purposes only, should be commented out
@@ -1715,6 +1821,185 @@ class ConfirmedPosition(ExprPredicate):
             debug=debug,
             priority=-1
         )
+
+
+
+class ConfirmedTarget(ExprPredicate):
+    def __init__(self, name, params, expected_param_types, env=None, sess=None, debug=False):
+        # NOTE: Below line is for debugging purposes only, should be commented out
+        # and line below should be commented in
+        # self._debug = True
+        # self._debug = debug
+
+        # if self._debug:
+        #     self._env.SetViewer("qtcoin")
+        # self._env = env
+        (self.target,) = params
+        attr_inds = OrderedDict(
+            [(self.target, [("value", np.array([0, 1], dtype=np.int))])]
+        )
+        # self._param_to_body = {
+        #     self.rp: self.lazy_spawn_or_body(self.rp, self.rp.name, self.rp.geom),
+        #     self.targ: self.lazy_spawn_or_body(
+        #         self.targ, self.targ.name, self.targ.geom
+        #     ),
+        # }
+
+        # INCONTACT_COEFF = 1e1
+        # unused constraints, pass some BS in
+        A = np.zeros((1,2))
+        b = np.zeros((1,1))
+        dummy_expr = AffExpr(A, b)
+        val = np.zeros((1, 1)) # output of fcn should be zero
+        # val = np.zeros((1, 1))
+        e = EqExpr(dummy_expr, val)
+        super(ConfirmedTarget, self).__init__(
+            name,
+            e,
+            attr_inds,
+            params,
+            expected_param_types,
+            debug=debug,
+            priority=-1
+        )
+
+
+## stub method for high-level planner
+class PerformedInitObs(ExprPredicate):
+    def __init__(self, name, params, expected_param_types, env=None, sess=None, debug=False):
+        # NOTE: Below line is for debugging purposes only, should be commented out
+        # and line below should be commented in
+        # self._debug = True
+        # self._debug = debug
+
+        # if self._debug:
+        #     self._env.SetViewer("qtcoin")
+        # self._env = env
+        (self.robot,) = params
+        attr_inds = OrderedDict(
+            [(self.robot, [("pose", np.array([0, 1], dtype=np.int))])]
+        )
+        # self._param_to_body = {
+        #     self.rp: self.lazy_spawn_or_body(self.rp, self.rp.name, self.rp.geom),
+        #     self.targ: self.lazy_spawn_or_body(
+        #         self.targ, self.targ.name, self.targ.geom
+        #     ),
+        # }
+
+        # INCONTACT_COEFF = 1e1
+        # unused constraints, pass some BS in
+        A = np.zeros((1,2))
+        b = np.zeros((1,1))
+        dummy_expr = AffExpr(A, b)
+        val = np.zeros((1, 1)) # output of fcn should be zero
+        # val = np.zeros((1, 1))
+        e = EqExpr(dummy_expr, val)
+        super(PerformedInitObs, self).__init__(
+            name,
+            e,
+            attr_inds,
+            params,
+            expected_param_types,
+            debug=debug,
+            priority=-1
+        )
+
+    def test(self, time, negated=False, tol=1e-4):
+        # if negated:
+        #     return False
+        return True
+
+
+## stub method for high-level planner
+class NotPerformedInitObs(ExprPredicate):
+    def __init__(self, name, params, expected_param_types, env=None, sess=None, debug=False):
+        # NOTE: Below line is for debugging purposes only, should be commented out
+        # and line below should be commented in
+        # self._debug = True
+        # self._debug = debug
+
+        # if self._debug:
+        #     self._env.SetViewer("qtcoin")
+        # self._env = env
+        (self.robot,) = params
+        attr_inds = OrderedDict(
+            [(self.robot, [("pose", np.array([0, 1], dtype=np.int))])]
+        )
+        # self._param_to_body = {
+        #     self.rp: self.lazy_spawn_or_body(self.rp, self.rp.name, self.rp.geom),
+        #     self.targ: self.lazy_spawn_or_body(
+        #         self.targ, self.targ.name, self.targ.geom
+        #     ),
+        # }
+
+        # INCONTACT_COEFF = 1e1
+        # unused constraints, pass some BS in
+        A = np.zeros((1,2))
+        b = np.zeros((1,1))
+        dummy_expr = AffExpr(A, b)
+        val = np.zeros((1, 1)) # output of fcn should be zero
+        # val = np.zeros((1, 1))
+        e = EqExpr(dummy_expr, val)
+        super(NotPerformedInitObs, self).__init__(
+            name,
+            e,
+            attr_inds,
+            params,
+            expected_param_types,
+            debug=debug,
+            priority=-1
+        )
+
+    def test(self, time, negated=False, tol=1e-4):
+        # if negated:
+        #     return False
+        return True
+
+
+## stub method for high-level planner
+class CompletedMovement(ExprPredicate):
+    def __init__(self, name, params, expected_param_types, env=None, sess=None, debug=False):
+        # NOTE: Below line is for debugging purposes only, should be commented out
+        # and line below should be commented in
+        # self._debug = True
+        # self._debug = debug
+
+        # if self._debug:
+        #     self._env.SetViewer("qtcoin")
+        # self._env = env
+        (self.robot,) = params
+        attr_inds = OrderedDict(
+            [(self.robot, [("pose", np.array([0, 1], dtype=np.int))])]
+        )
+        # self._param_to_body = {
+        #     self.rp: self.lazy_spawn_or_body(self.rp, self.rp.name, self.rp.geom),
+        #     self.targ: self.lazy_spawn_or_body(
+        #         self.targ, self.targ.name, self.targ.geom
+        #     ),
+        # }
+
+        # INCONTACT_COEFF = 1e1
+        # unused constraints, pass some BS in
+        A = np.zeros((1,2))
+        b = np.zeros((1,1))
+        dummy_expr = AffExpr(A, b)
+        val = np.zeros((1, 1)) # output of fcn should be zero
+        # val = np.zeros((1, 1))
+        e = EqExpr(dummy_expr, val)
+        super(CompletedMovement, self).__init__(
+            name,
+            e,
+            attr_inds,
+            params,
+            expected_param_types,
+            debug=debug,
+            priority=-1
+        )
+
+    def test(self, time, negated=False, tol=1e-4):
+        # if negated:
+        #     return False
+        return True
 
 
 class RobotConfirmedAtTarget(ExprPredicate):
@@ -3889,7 +4174,7 @@ class RobotCloseToTarget(ExprPredicate):
                      [-1, 0, 1, 0],
                      [0, -1, 0, 1]])
         b = np.zeros((4, 1))
-        e = LEqExpr(AffExpr(A, b), 0.2*np.ones((4, 1)))
+        e = LEqExpr(AffExpr(A, b), np.ones((4, 1)) * 0.25)
         super(RobotCloseToTarget, self).__init__(name, e, attr_inds, params, expected_param_types, priority=-2)
 
 
@@ -3909,6 +4194,23 @@ class IsMP(ExprPredicate):
        b = np.zeros((4, 1))
        e = LEqExpr(AffExpr(A, b), dmove*np.ones((4, 1)))
        super(IsMP, self).__init__(name, e, attr_inds, params, expected_param_types, active_range=(0,1), priority=-2)
+
+class IsStationary(ExprPredicate):
+
+   # IsMP Robot
+
+   def __init__(self, name, params, expected_param_types, env=None, sess=None, debug=False, dmove=dmove):
+       self.r, = params
+       ## constraints  |x_t - x_{t+1}| < dmove
+       ## ==> x_t - x_{t+1} < dmove, -x_t + x_{t+a} < dmove
+       attr_inds = OrderedDict([(self.r, [("pose", np.array([0, 1], dtype=np.int))])])
+       A = np.array([[1, 0, -1, 0],
+                     [0, 1, 0, -1],
+                     [-1, 0, 1, 0],
+                     [0, -1, 0, 1]])
+       b = np.zeros((4, 1))
+       e = EqExpr(AffExpr(A, b), np.zeros((4, 1)))
+       super(IsStationary, self).__init__(name, e, attr_inds, params, expected_param_types, active_range=(0,1), priority=-2, tol=1e-2)
 
 
 class IsMPIncr(ExprPredicate):

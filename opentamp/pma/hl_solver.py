@@ -673,6 +673,7 @@ class FDSolver(FFSolver):
                 plan = Plan.IMPOSSIBLE
 
         else:
+            breakpoint()
             print('\nFD solve failed! Refer to {}'.format(log_file))
             print('Ran -->', commands+pddl_files, "\n\n")
             plan = Plan.IMPOSSIBLE
