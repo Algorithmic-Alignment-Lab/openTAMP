@@ -45,19 +45,19 @@ GRIP_VAL = 1.0
 
 ATTRMAP = {
     "Robot": (
-        ("pose", np.array(list(range(2)), dtype=np.int)),
-        ("gripper", np.array(list(range(1)), dtype=np.int)),
-        ("vel", np.array(list(range(2)), dtype=np.int)),
-        ("acc", np.array(list(range(2)), dtype=np.int)),
+        ("pose", np.array(list(range(2)), dtype=np.int_)),
+        ("gripper", np.array(list(range(1)), dtype=np.int_)),
+        ("vel", np.array(list(range(2)), dtype=np.int_)),
+        ("acc", np.array(list(range(2)), dtype=np.int_)),
     ),
-    "Can": (("pose", np.array(list(range(2)), dtype=np.int)),),
-    "Target": (("value", np.array(list(range(2)), dtype=np.int)),),
+    "Can": (("pose", np.array(list(range(2)), dtype=np.int_)),),
+    "Target": (("value", np.array(list(range(2)), dtype=np.int_)),),
     "RobotPose": (
-        ("value", np.array(list(range(2)), dtype=np.int)),
-        ("gripper", np.array(list(range(1)), dtype=np.int)),
+        ("value", np.array(list(range(2)), dtype=np.int_)),
+        ("gripper", np.array(list(range(1)), dtype=np.int_)),
     ),
-    "Obstacle": (("pose", np.array(list(range(2)), dtype=np.int)),),
-    "Grasp": (("value", np.array(list(range(2)), dtype=np.int)),),
+    "Obstacle": (("pose", np.array(list(range(2)), dtype=np.int_)),),
+    "Grasp": (("value", np.array(list(range(2)), dtype=np.int_)),),
 }
 
 USE_TF = True

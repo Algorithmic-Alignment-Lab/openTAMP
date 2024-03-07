@@ -7,24 +7,25 @@ license = "MIT"
 
 [tool.poetry.dependencies]
 python = ">=3.7.1,<=3.11"
-numpy = "*"
-ipdb = "*"
-numdifftools = "*"
-psutil = "*"
-robosuite = "*"
-dm-control = "*"
-h5py = "*"
-gym = "*"
-robodesk = "*"
+numpy = ">=1.13.3"
+pybullet = "3.1.6"
+ipdb = "^0.13.9"
+numdifftools = "^0.9.40"
+psutil = "^5.8.0"
+robosuite = "^1.3.1"
+dm-control = "^0.0.403778684"
+h5py = "^3.6.0"
+gym = "^0.21.0"
+robodesk = ">=1.0.0"
 osqp = "*"
 sco-py = {git = "https://github.com/Algorithmic-Alignment-Lab/sco.git", branch = "main" }
 torch = {version = "*"}
 pandas = {version = "*"}
 seaborn = {version = "*"}
-imageio = {version = "*"}
-mpi4py = {version = "*"}
-matplotlib = {version = "*"}
-gurobipy = {version = "*"}
+imageio = {version = "^2.12.0"}
+mpi4py = {version = "^3.1.2"}
+matplotlib = {version = "^3.5.0"}
+gurobipy = {version = ">=9.0.0"}
 
 [tool.poetry.dev-dependencies]
 
