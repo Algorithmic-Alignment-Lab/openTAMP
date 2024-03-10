@@ -147,7 +147,8 @@ class ExprPredicate(Predicate):
         if not self.is_concrete():
             return False
         if time < 0:
-            raise PredicateException("Out of range time for predicate '%s'." % self)
+            print("Out of range time for predicate '%s'." % self)
+            #raise PredicateException("Out of range time for predicate '%s'." % self)
         try:
             return self.expr.eval(self.get_param_vector(time), tol=tol, negated=negated)
         except IndexError as err:
