@@ -217,7 +217,7 @@ class RolloutServer(Server):
             self.agent.reset_to_state(x0)
             samp = self.agent.gym_env.sample_belief_true()  ## resample at the start of each rollout
             self.agent.gym_env.set_belief_true(samp)
-            val, path = self.test_run(None, [], max_t=20, hl=True, soft=self.config['soft_eval'], eta=eta, lab=-5, hor=25)
+            val, path = self.test_run(None, [], self.config.get('horizon', 20), hl=True, soft=self.config['soft_eval'], eta=eta, lab=-5, hor=25)
             constraint_viol = self.agent.gym_env.assess_constraint_viol()
             vals.append(val)
             constraint_viols.append(constraint_viol)
@@ -596,16 +596,9 @@ class RolloutServer(Server):
         if eta is not None: self.eta = eta 
         old_eta = self.eta
         debug = np.random.uniform() < 0.1
-        # tasks = [(1,), (1,), (2,)]
-        # for task in tasks:
         has_terminated = False
         while t < max_t and self.agent.feasible_state(state, targets) and not has_terminated:
-            # self.agent.store_hist_info([len(path), 
-            #                             path[-1].get(ANG_ENUM)[0,:].reshape(-1), 
-            #                             sum([1.0 if s.task[0] == 1 else 0.0 for s in path]),
-            #                             sum([1.0 if s.task[0] == 0 else 0.0 for s in path]),
-            #                             (path[-1].task)[0]]) if path \
-            #     else self.agent.store_hist_info([len(path), np.array([0.]), 0, 0, -1.0]) ## HACK, TODO ADD AS GENERIC WRAPPER
+            self.config['rollout_fill_method'](path, self.agent)
             l = self.get_task(state, targets, l, soft)
             if l is None: break
             task_name = self.task_list[l[0]]
@@ -619,8 +612,8 @@ class RolloutServer(Server):
             t += 1
             state = s.end_state # s.get_X(s.T-1)
             path.append(s)
-            # if l[0] == 2:
-            has_terminated = True
+            if self.config['rollout_terminate_cond'](l[0]):
+                has_terminated = True
         self.eta = old_eta
         self.log_path(path, lab)
         return val, path

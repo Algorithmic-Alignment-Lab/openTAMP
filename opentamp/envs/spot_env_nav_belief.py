@@ -27,7 +27,7 @@ class GymEnvNav(Env):
         # stack_scale = torch.tile(scales.unsqueeze(dim=1).unsqueeze(dim=2), dims=(1, 2, 2))
         # cov_tensor = stack_eye * stack_scale
         # batched_multivar = distros.MultivariateNormal(loc=locs, covariance_matrix=cov_tensor)
-        dist = distros.Normal(torch.tensor([0.0, 0.0]), 1.0)
+        dist = distros.Uniform(torch.tensor([-3.0, -3.0]), torch.tensor([3.0, 3.0]))
         return dist
 
     def step(self, action):
@@ -241,73 +241,37 @@ class GymEnvNavWrapper(GymEnvNav):
 
     # reset without affecting the simulator
     def get_random_init_state(self):
-        # # init_pose = random.random() * np.pi/2  # give random initial state between 0 and 90 degrees
-        # init_pose = np.array([0.0,0.0,0.0])
-        # # init_theta = np.array([random.random() * 2 * np.pi - np.pi]) ## random on -np.pi to np.pi
-        # # init_vel = np.array([0.0])
+        # init_pose = random.random() * np.pi/2  # give random initial state between 0 and 90 degrees
+        init_pose = np.array([0.0,0.0,0.0])
+        # init_theta = np.array([random.random() * 2 * np.pi - np.pi]) ## random on -np.pi to np.pi
+        # init_vel = np.array([0.0])
 
-        # is_valid = False
-        # while not is_valid:
-        #     proposal_targ = self.dist.sample().detach().numpy()
+        is_valid = False
+        while not is_valid:
+            proposal_targ = self.dist.sample().detach().numpy()
 
-        #     if np.linalg.norm(proposal_targ) <= 4.0:
-        #         continue
+            if np.linalg.norm(proposal_targ) <= 4.0:
+                continue
 
-        #     rand = random.random()
+            rand = random.random()
 
-        #     avg_val = torch.tensor(proposal_targ * rand) 
+            avg_val = torch.tensor(proposal_targ * rand) 
 
-        #     obstacle_dist = distros.Uniform(avg_val - torch.tensor([1.0, 1.0]), 
-        #                                     avg_val + torch.tensor([1.0, 1.0]))
-        #     proposal_obs = obstacle_dist.sample().detach().numpy()
+            obstacle_dist = distros.Uniform(avg_val - torch.tensor([1.0, 1.0]), 
+                                            avg_val + torch.tensor([1.0, 1.0]))
+            proposal_obs = obstacle_dist.sample().detach().numpy()
 
-        #     if np.linalg.norm(proposal_targ-proposal_obs) < 1.5 or np.linalg.norm(proposal_obs) < 1.5 :
-        #         continue
+            if np.linalg.norm(proposal_targ-proposal_obs) < 1.5 or np.linalg.norm(proposal_obs) < 1.5 :
+                continue
                 
-        #     is_valid = True
+            is_valid = True
         
-        # # by default, point at the obstacle at spawn
-        # obstacle_abs_angle = np.arctan(proposal_obs[1]/proposal_obs[0]) if np.abs(proposal_obs[0]) > 0.001 else (np.pi/2 if proposal_obs[1]*proposal_obs[0]>0 else -np.pi/2)
-        # obstacle_angle = obstacle_abs_angle if proposal_obs[0] >= 0  else (obstacle_abs_angle + np.pi if -np.pi/2 <= obstacle_abs_angle < 0 else obstacle_abs_angle - np.pi)
-        # init_pose[2] = obstacle_angle
-
-        rand_side_init = random.randrange(4)
-        # rand_side_goal = random.randrange(4)
-        # while rand_side_goal == rand_side_init:
-        #     rand_side_goal = random.randrange(4)
-
-        init_coords = random.random() * 6 - 3
-        # goal_coords = random.random() * 6 - 3
-
-        init_pos = np.array([-1, -1])
-        # goal_pos = np.array([-1, -1])
-
-        if rand_side_init == 0:
-            init_pos = np.array([-3., init_coords])
-        if rand_side_init == 1:
-            init_pos = np.array([init_coords, -3.])
-        if rand_side_init == 2:
-            init_pos = np.array([3., init_coords])
-        if rand_side_init == 3:
-            init_pos = np.array([init_coords, 3.])
-
-        # if rand_side_goal == 0:
-        #     goal_pos = np.array([-3., goal_coords])
-        # if rand_side_goal == 1:
-        #     goal_pos = np.array([goal_coords, -3.])
-        # if rand_side_goal == 2:
-        #     goal_pos = np.array([3., goal_coords])
-        # if rand_side_goal == 3:
-        #     goal_pos = np.array([goal_coords, 3.])
-
-        goal_pos = -init_pos
-        proposal_obs = -2 * init_pos
+        # by default, point at the obstacle at spawn
         obstacle_abs_angle = np.arctan(proposal_obs[1]/proposal_obs[0]) if np.abs(proposal_obs[0]) > 0.001 else (np.pi/2 if proposal_obs[1]*proposal_obs[0]>0 else -np.pi/2)
         obstacle_angle = obstacle_abs_angle if proposal_obs[0] >= 0  else (obstacle_abs_angle + np.pi if -np.pi/2 <= obstacle_abs_angle < 0 else obstacle_abs_angle - np.pi)
+        init_pose[2] = obstacle_angle
 
-        obs = self.dist.sample().detach().numpy()
-
-        return np.concatenate((init_pos, np.array([obstacle_angle]), goal_pos, obs))
+        return np.concatenate((init_pose,proposal_targ, proposal_obs))
 
     # determine whether or not a given state satisfies a goal condition
     def assess_goal(self, condition, state, targets=None, cont=None):

@@ -23,7 +23,7 @@ class GymAgent(TAMPAgent):
         self.curr_obs = self.gym_env.reset()
         self.curr_state = self.gym_env.curr_state
 
-    ## TODO: verify that this is general?
+    ## subclass as needed for different kinds of sample populations (e.g. RNN stuff)
     def fill_sample(self, cond, sample, mp_state, t, task, fill_obs=False, targets=None):
         sample.set(utils.MJC_SENSOR_ENUM, self.curr_obs, t)
         sample.set(utils.STATE_ENUM, self.curr_state, t)
@@ -87,10 +87,9 @@ class GymAgent(TAMPAgent):
     
     def get_annotated_image(self, s, t, cam_id=None):
         base_im = self.get_image(s.get_X()[t,:], depth=False, cam_id=cam_id)
-        im = self.gym_env.postproc_im(base_im, s, t, cam_id) ## TODO replace with processing from s
+        im = self.gym_env.postproc_im(base_im, s, t, cam_id)
         return im
 
-    ## TODO SHUNT THESE INTO API, builds hist_info samples
     def store_hist_info(self, hist_info):
         self.num_tasks = hist_info[0] 
         self.past_targ = hist_info[1]

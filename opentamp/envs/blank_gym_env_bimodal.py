@@ -30,7 +30,7 @@ class BlankEnvBimodal(BlankEnv):
 class BlankEnvWrapperBimodal(BlankEnvBimodal):
     def reset_to_state(self, state):
         self.curr_state = state
-        self.curr_obs = np.array([0.0]*2)
+        self.curr_obs = np.array([0.0]*3)
         return self.curr_obs
 
     def get_vector(self):

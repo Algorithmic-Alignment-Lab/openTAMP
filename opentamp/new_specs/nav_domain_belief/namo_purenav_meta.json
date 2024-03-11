@@ -10,7 +10,8 @@
             "value": "Vector2d"
         },
         "Obstacle": {
-            "value": "Vector2d"
+            "value": "Vector2d",
+            "belief": "Isotropic2DGaussianPrior"
         },
         "Robot": {
             "pose": "Vector2d",
@@ -21,6 +22,8 @@
         "RobotAtTarget": ["Robot", "Target"],
         "IsMP": ["Robot"],
         "AvoidObs": ["Robot", "Obstacle"],
-        "PointingAtObs": ["Robot", "Obstacle"]
+        "PointingAtObs": ["Robot", "Obstacle"],
+        "PointingAtTarget": ["Robot", "Target"],
+        "CertainObs": ["Obstacle"]
     }
 }

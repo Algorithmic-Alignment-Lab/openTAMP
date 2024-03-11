@@ -838,6 +838,64 @@ class PointingAtObs(ExprPredicate):
         return grad
 
 
+   
+class PointingAtTarget(ExprPredicate):
+
+    # RobotAt Robot Targ
+
+    def __init__(self, name, params, expected_param_types, env=None, sess=None, debug=False, dmove=dmove):
+        (self.r, self.obs) = params
+        ## constraints  |x_t - x_{t+1}| < dmove
+        ## ==> x_t - x_{t+1} < dmove, -x_t + x_{t+a} < dmove
+        attr_inds = OrderedDict(
+            [
+                (self.r, [
+                    ("pose", np.array([0, 1], dtype=np.int)),
+                    ("theta", np.array([0], dtype=np.int))
+                ]),
+                (self.obs, [
+                    ("value", np.array([0, 1], dtype=np.int)),
+                ])
+            ]
+        )
+        col_expr = Expr(self.f, grad=self.grad_f)
+        val = np.zeros((2,1))
+        # val = np.zeros((1, 1))
+        e = EqExpr(col_expr, val)
+        super(PointingAtTarget, self).__init__(name, e, attr_inds, params, expected_param_types, tol=1e-3, priority=-1)
+
+    def f(self, x):
+        # breakpoint()
+        relative_obs_pose = (x[3:]-x[:2]).reshape((-1,))
+        relative_obs_dist = np.linalg.norm(relative_obs_pose)
+
+        # return np.array([diff, -diff])
+        f_res =  np.array([[relative_obs_dist * np.cos(x[2]).item() - relative_obs_pose[0]],
+                         [relative_obs_dist * np.sin(x[2]).item() - relative_obs_pose[1]]])
+
+        # breakpoint()
+        
+        return f_res
+
+    def grad_f(self, x):
+        # breakpoint()
+        relative_obs_pose = x[3:]-x[:2]
+        relative_obs_dist = np.linalg.norm(relative_obs_pose)
+
+        grad = np.array([[(relative_obs_pose[0].item()/relative_obs_dist* -1) * np.cos(x[2]).item() + 1, 
+                          (relative_obs_pose[1].item()/relative_obs_dist* -1) * np.cos(x[2]).item(), 
+                          -relative_obs_dist * np.sin(x[2]).item(), 
+                          relative_obs_pose[0].item()/relative_obs_dist * np.cos(x[2]).item() - 1, 
+                          relative_obs_pose[1].item()/relative_obs_dist * np.cos(x[2]).item()],
+                         [(relative_obs_pose[0].item()/relative_obs_dist * -1) * np.sin(x[2]).item(), 
+                          (relative_obs_pose[1].item()/relative_obs_dist * -1) * np.sin(x[2]).item() + 1, 
+                          relative_obs_dist * np.cos(x[2]).item(), 
+                          relative_obs_pose[0].item()/relative_obs_dist * np.sin(x[2]).item(), 
+                          relative_obs_pose[1].item()/relative_obs_dist * np.sin(x[2]).item() - 1]])
+        # return np.array([grad[0], -grad[0]])
+        # breakpoint()
+        return grad
+
 class VelValid(ExprPredicate):
 
     # RobotAt Robot Targ
@@ -892,15 +950,15 @@ class RobotCloserToTarg(ExprPredicate):
             ]
         )
         col_expr = Expr(self.f, grad=self.grad_f)
-        val = -np.ones((1, 1)) * 0.1
+        val = -np.ones((1, 1)) * 1
         # val = np.zeros((1, 1))
         e = LEqExpr(col_expr, val)
-        super(RobotCloserToTarg, self).__init__(name, e, attr_inds, params, expected_param_types, active_range=(0, 1), priority=-1)
+        super(RobotCloserToTarg, self).__init__(name, e, attr_inds, params, expected_param_types, active_range=(0, 19), priority=-1)
 
     def f(self, x):
         # breakpoint()
         dist_1 = np.sum(np.power(x[:2] - x[2:4], 2))
-        dist_2 = np.sum(np.power(x[4:6] - x[6:], 2))
+        dist_2 = np.sum(np.power(x[76:78] - x[78:], 2))
 
         # return np.array([diff, -diff])
         return dist_2 - dist_1
@@ -908,9 +966,9 @@ class RobotCloserToTarg(ExprPredicate):
     def grad_f(self, x):
         # breakpoint()
         diff_1 = x[:2] - x[2:4]
-        diff_2 = x[4:6] - x[6:]
+        diff_2 = x[76:78] - x[78:]
         diff = np.concatenate((diff_1, diff_2))
-        grad = np.array([2 * diff[0], 2 * diff[1], -2 * diff[0], -2*diff[1], -2 * diff[2], -2 * diff[3], 2 * diff[2], 2*diff[3]]).reshape(1, -1)
+        grad = np.array([2 * diff[0], 2 * diff[1], -2 * diff[0], -2*diff[1]]+ [0.] * 72+ [-2 * diff[2], -2 * diff[3], 2 * diff[2], 2*diff[3]]).reshape(1, -1)
         # return np.array([grad[0], -grad[0]])
         # breakpoint()
         return -grad
@@ -1684,6 +1742,53 @@ class CertainPosition(ExprPredicate):
 
     def test(self, time, negated=False, tol=None):
         diff_vec = self.target.belief.samples[:,:,time].detach().numpy() - self.target.pose[:,time]
+        
+        if negated:
+            return not np.sqrt(np.power(diff_vec, 2)).mean() <= 0.2
+        return np.sqrt(np.power(diff_vec, 2)).mean() <= 0.2
+
+## a stub computing only the
+class CertainObs(ExprPredicate):
+    def __init__(self, name, params, expected_param_types, env=None, sess=None, debug=False):
+        # NOTE: Below line is for debugging purposes only, should be commented out
+        # and line below should be commented in
+        # self._debug = True
+        # self._debug = debug
+
+        # if self._debug:
+        #     self._env.SetViewer("qtcoin")
+        # self._env = env
+        (self.obstacle,) = params
+        attr_inds = OrderedDict(
+            [(self.obstacle, [("value", np.array([0, 1], dtype=np.int))])]
+        )
+        # self._param_to_body = {
+        #     self.rp: self.lazy_spawn_or_body(self.rp, self.rp.name, self.rp.geom),
+        #     self.targ: self.lazy_spawn_or_body(
+        #         self.targ, self.targ.name, self.targ.geom
+        #     ),
+        # }
+
+        # INCONTACT_COEFF = 1e1
+        # unused constraints, pass some BS in
+        A = np.zeros((1, 2))
+        b = np.zeros((1,1))
+        dummy_expr = AffExpr(A, b)
+        val = np.zeros((1, 1)) # output of fcn should be zero
+        # val = np.zeros((1, 1))
+        e = EqExpr(dummy_expr, val)
+        super(CertainObs, self).__init__(
+            name,
+            e,
+            attr_inds,
+            params,
+            expected_param_types,
+            debug=debug,
+            priority=1
+        )
+
+    def test(self, time, negated=False, tol=None):
+        diff_vec = self.obstacle.belief.samples[:,:,time].detach().numpy() - self.obstacle.value[:,0]
         
         if negated:
             return not np.sqrt(np.power(diff_vec, 2)).mean() <= 0.2
@@ -3832,7 +3937,7 @@ class AvoidObs(ExprPredicate):
             ]
         )
         col_expr = Expr(self.f, grad=self.grad_f)
-        val = -np.ones((1, 1)) * 2
+        val = -np.ones((1, 1)) * 4
         # val = np.zeros((1, 1))
         e = LEqExpr(col_expr, val)
         super(AvoidObs, self).__init__(name, e, attr_inds, params, expected_param_types, priority=-1)
@@ -3848,6 +3953,39 @@ class AvoidObs(ExprPredicate):
         # return np.array([grad[0], -grad[0]])
         # breakpoint()
         return -grad
+
+class RobotWithinFinishofTarg(ExprPredicate):
+
+   # IsMP Robot
+
+    def __init__(self, name, params, expected_param_types, env=None, sess=None, debug=False, dmove=dmove):
+        self.r, self.rt = params
+        ## constraints  |x_t - x_{t+1}| < dmove
+        ## ==> x_t - x_{t+1} < dmove, -x_t + x_{t+a} < dmove
+        attr_inds = OrderedDict(
+            [
+                (self.r, [("pose", np.array([0, 1], dtype=np.int))]),
+                (self.rt, [("value", np.array([0, 1], dtype=np.int))]),
+            ]
+        )
+        col_expr = Expr(self.f, grad=self.grad_f)
+        val = np.ones((1, 1)) * 2
+        # val = np.zeros((1, 1))
+        e = LEqExpr(col_expr, val)
+        super(RobotWithinFinishofTarg, self).__init__(name, e, attr_inds, params, expected_param_types, priority=-1)
+
+    def f(self, x):
+        norm = np.sum(np.power(x[:2] - x[2:], 2))
+        # return np.array([diff, -diff])
+        return norm
+
+    def grad_f(self, x):
+        diff = x[:2] - x[2:]
+        grad = np.array([2 * diff[0], 2 * diff[1], -2 * diff[0], -2*diff[1]]).reshape(1, -1)
+        # return np.array([grad[0], -grad[0]])
+        # breakpoint()
+        return grad
+
 
 class RobotCloseToTarget(ExprPredicate):
 

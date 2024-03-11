@@ -5,7 +5,7 @@
 
 #python3 -W ignore policy_hooks/run_training.py -c policy_hooks.robosuite.jnt_pick_hyp \
 
-python3 -W ignore -m cProfile -o profile_out policy_hooks/run_training.py -c policy_hooks.namo.new_env_hyperparam \
+python3 -W ignore -m cProfile -o profile_out policy_hooks/run_training.py -c policy_hooks.new_specs.pointer_domain_bimodal.new_env_hyperparam_rnn \
                                                 -no 1 -llus 100  -hlus 100 \
                                                 -spl -mask -hln 2 -hldim 256 -lldim 256 \
                                                 -retime -vel 0.3 -eta 5 -softev \
@@ -24,8 +24,8 @@ python3 -W ignore -m cProfile -o profile_out policy_hooks/run_training.py -c pol
                                                 -warm 100 \
                                                 -neg_ratio 0. -opt_ratio 0.9 -dagger_ratio 0.1 \
                                                 -ind 0 \
-						-descr simple_nav_domain_server_policyguide_obstacleavoid_pointinitview_finerview_widerswerve_lowlr \
-                                                -test namo_objs1_1/simple_nav_domain_server_policyguide_obstacleavoid_pointinitview_finerview_widerswerve_lowlr_0 \
+						-descr pointer_rnn_bimodal_addstate \
+                                                -test namo_objs1_1/pointer_rnn_bimodal_addstate_0 \
                                                 -render
 
 # sleep 1800 

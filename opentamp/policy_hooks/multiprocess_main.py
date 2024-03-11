@@ -129,6 +129,8 @@ class MultiProcessMain(object):
         obs_image_data = [IM_ENUM, OVERHEAD_IMAGE_ENUM, LEFT_IMAGE_ENUM, RIGHT_IMAGE_ENUM]
         add_image = self.config.get('add_image', False)
         add_hl_image = self.config.get('add_hl_image', False)
+        add_recur = self.config.get('add_recur', False)
+        add_recur_hl = self.config.get('add_recur_hl', False)
 
 
         self.config['policy_opt'] = {
@@ -143,6 +145,7 @@ class MultiProcessMain(object):
                 'obs_include': self.config['agent']['obs_include'],
                 'out_include': [ACTION_ENUM],
                 'obs_image_data': obs_image_data,
+                'recur_obs_include': self.config['agent'].get('recur_obs_include', []),
                 'idx': self.agent._obs_data_idx,
                 'sensor_dims': sensor_dims,
                 'num_filters': self.config.get('num_filters', [32, 32]),
@@ -159,6 +162,7 @@ class MultiProcessMain(object):
                 # 'normalize': not add_image,
                 'normalize': False,
                 'build_conv': add_image,
+                'build_recur': add_recur,
                 'use_precision': False,
             },
 
@@ -166,6 +170,7 @@ class MultiProcessMain(object):
                 'obs_include': self.config['agent']['prim_obs_include'],
                 'out_include': self.config['agent']['prim_out_include'],
                 'obs_image_data': obs_image_data,
+                'recur_obs_include': self.config['agent'].get('prim_recur_obs_include', []),
                 'idx': self.agent._prim_obs_data_idx,
                 'sensor_dims': sensor_dims,
                 'num_filters': self.config.get('prim_filters', [32, 32]),
@@ -183,6 +188,7 @@ class MultiProcessMain(object):
                 'conv_to_fc': 'fp',
                 'normalize': False,
                 'build_conv': add_hl_image,
+                'build_recur': add_recur_hl,
                 'use_precision': False,
             },
     
@@ -190,6 +196,7 @@ class MultiProcessMain(object):
                 'obs_include': self.config['agent']['cont_obs_include'],
                 'out_include': self.config['agent']['cont_out_include'],
                 'obs_image_data': obs_image_data,
+                'recur_obs_include': self.config['agent'].get('cont_recur_obs_include', []),
                 'idx': self.agent._cont_obs_data_idx,
                 'image_width': self.config['image_width'],
                 'image_height': self.config['image_height'],
@@ -207,6 +214,7 @@ class MultiProcessMain(object):
                 'conv_to_fc': 'fp',
                 'normalize': False ,
                 'build_conv': add_hl_image,
+                'build_recur': add_recur_hl,
                 'use_precision': False,
             },
 

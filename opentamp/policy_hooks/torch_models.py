@@ -29,6 +29,7 @@ class TorchNet(nn.Module):
         self.output_boundaries = config.get("output_boundaries", None)
         self.conv_layers = nn.ModuleList()
         self.fc_layers = nn.ModuleList()
+        self.recur_layers = nn.ModuleList()
 
         self.fc_input_dim = 0
         for sensor in self.config['obs_include']:
@@ -50,6 +51,9 @@ class TorchNet(nn.Module):
                 self.fp_tensor = None
                 self._build_fp()
 
+        if self.config['build_recur']:
+            self._build_recur_layers()
+
         self._build_fc_layers()
         self._set_nonlin_and_loss()
 
@@ -64,6 +68,9 @@ class TorchNet(nn.Module):
 
         if len(self.conv_layers):
             nn_input = self.conv_forward(nn_input)
+
+        if len(self.recur_layers):
+            nn_input = self.recur_forward(nn_input) ## TODO RETURN A VECTOR
 
         raw_output = self.fc_forward(nn_input)
         if self.output_fn:
@@ -111,6 +118,22 @@ class TorchNet(nn.Module):
             nn_input = self.act_fn(nn_input)
         return self.fc_layers[-1](nn_input)
 
+    def recur_forward(self, nn_input):
+        ## unpack current data into a sequence of tensors, removing all -1 / sentinel entries
+        recurrent_entries = [(r[r != -1]).view(self.num_recur_features, -1).T for r in list(nn_input[:, self.recur_idx])]
+        
+        recur_input = nn.utils.rnn.pack_sequence(recurrent_entries, enforce_sorted=False)
+
+        ## pass through recurrent layer
+        output, _ = self.recur_layers[0](recur_input)
+
+        unpacked_output = nn.utils.rnn.unpack_sequence(output)
+
+        last_states_only = torch.stack([u[-1, :] for u in unpacked_output])
+        
+        ## return concatenation of non-recurrent input with final hidden states on each batch
+        return torch.cat([nn_input[:, self.x_idx], last_states_only], dim=1)
+
 
     def to_device(self, device=None):
         if device is not None:
@@ -132,10 +155,12 @@ class TorchNet(nn.Module):
     def _compute_idx(self):
         if 'idx' in self.config:
             self.idx = self.config['idx']
-            self.x_idx, self.img_idx = [], []
+            self.x_idx, self.img_idx, self.recur_idx = [], [], []
             for (sensor, inds) in self.idx.items():
                 if sensor in self.config['obs_image_data']:
                     self.img_idx.extend(inds)
+                elif sensor in self.config['recur_obs_include']:
+                    self.recur_idx.extend(inds)
                 else:
                     self.x_idx.extend(inds)
 
@@ -146,6 +171,8 @@ class TorchNet(nn.Module):
 
                 if sensor in self.config['obs_image_data']:
                     self.img_idx = self.img_idx + list(range(i, i+dim))
+                elif sensor in self.config['recur_obs_include']:
+                    self.recur_idx = self.recur_idx + list(range(i, i+dim))
                 else:
                     self.x_idx = self.x_idx + list(range(i, i+dim))
 
@@ -191,6 +218,15 @@ class TorchNet(nn.Module):
         self.conv_output_dim = shape
         self.fc_input_dim = functools.reduce(operator.mul, shape)
 
+    def _build_recur_layers(self):
+        hist_len = 20 ## TODO FEED IN DATA FROM HYPERPARAMS
+        overall_recur_dim = len(self.recur_idx)
+        self.num_recur_features = int(overall_recur_dim / hist_len)
+        recur_hidden_size = self.config.get('recur_dim_hidden', 128)
+        recur_num_layers = self.config.get('recur_num_layers', 1)
+        recur_proj_size = self.config.get('recur_proj_size', 32)
+        self.recur_layers.append(nn.LSTM(input_size=self.num_recur_features, hidden_size=recur_hidden_size, num_layers=recur_num_layers, proj_size=recur_proj_size))
+        self.fc_input_dim = len(self.x_idx) + recur_proj_size
 
     def _build_fc_layers(self):
         n_fc_layers = self.config.get('n_layers', 1)
