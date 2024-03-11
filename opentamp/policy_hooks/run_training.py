@@ -94,6 +94,7 @@ def run_baseline(args):
 
 def main():
     args = argsparser()
+    #print(f"{args}")
     if args.run_baseline:
         run_baseline(args)
 

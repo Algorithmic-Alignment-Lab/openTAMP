@@ -216,7 +216,9 @@ class Symbol(Parameter):
         new = Symbol()
         new_free = {}
         for k, v in list(self.__dict__.items()):
-            if v == 'undefined':
+            #print(f"{v=}")
+            #if v == 'undefined':
+            if (isinstance(v, str) and v == 'undefined'):
                 attr_type = self.get_attr_type(k)
                 assert issubclass(attr_type, Vector)
                 val = np.empty((attr_type.dim, 1))

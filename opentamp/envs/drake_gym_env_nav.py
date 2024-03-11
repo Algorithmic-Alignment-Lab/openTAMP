@@ -5,9 +5,105 @@ import numpy as np
 import torch
 import pyro.distributions as distros
 
-from opentamp.policy_hooks.utils.policy_solver_utils import *
+import opentamp
+import json
 
-class GymEnvNav(Env):    
+from opentamp.policy_hooks.utils.policy_solver_utils import *
+import sys
+sys.path.append('./drake_gym_sim/src') #need to run from opentamp/ directory
+print(sys.path)
+
+
+from drake_gym_sim.imtGym.imtCommon import RobotState, RobotAction, RobotActionReturnParameter, RobotActionParameter, OBJECT_NAME_BANANA
+from drake_gym_sim.imtGym.imtSim import ImtSim
+from drake_gym_sim.imtGym import table_specs
+from drake_gym_sim.imtGym.hardcoded_cameras import (
+    get_base_positions_for_hardcoded_cameras,
+    get_cam_poses_nested_array,
+)
+from drake_gym_sim.imtGym.move_object import RepeatingTimer, move_box
+from os import system, name, path
+from pydrake.all import Meshcat, MeshcatParams
+
+import logging, logging.handlers
+
+prob = opentamp.__path__._path[0] + '/new_specs/drake_nav_domain_deterministic/namo_purenav_prob.json'
+
+
+
+_sim = None
+
+def get_vector(filename):
+    with open(filename) as f:
+        d = json.load(f)
+
+    init_objs = d["init_objs"]
+    
+    target_pose = []
+    robot_pose = []
+    obstacle_pose = []
+    for init_obj in init_objs:
+        print(init_obj)
+        if init_obj['type'] == "Target":
+            target_pose = init_obj["value"]
+
+        elif init_obj['type'] == "Robot":
+            robot_pose = init_obj["pose"]
+        elif init_obj['type'] == "Obstacle":
+            obstacle_pose = init_obj["value"]
+
+    return target_pose, robot_pose, obstacle_pose
+
+
+def drake_start_sim():
+        # set host to 0.0.0.0 to enable port forwarding on remote server
+
+        meshcat = Meshcat(MeshcatParams(host="0.0.0.0"))
+
+        rng = np.random.default_rng(145)  # this is for python
+
+        logging.root.setLevel(logging.INFO)
+        # logging.root.setLevel(logging.DEBUG)  # Uncomment to enable debug logging.
+
+        fsm_logger = logging.getLogger("imt.fsm")
+        fsm_logger.setLevel(logging.INFO)
+
+        bs_logger = logging.getLogger("imt.perception")
+        bs_logger.setLevel(logging.INFO)
+
+        simulation_time = -1
+        # simulation_time = 1
+        add_debug_logger = True
+        add_fixed_cameras = False
+        use_teleop = False
+        plot_camera_input = False
+        target_pose, robot_pose, obstacle_pose = get_vector(prob)
+        print(f"{target_pose=}, {robot_pose=}, {obstacle_pose=}")
+        #obstacle_pose = [1, 1, 0]
+        global _sim
+        _sim = ImtSim()
+        _sim.create_and_run_simulation(meshcat,
+            rng,
+            number_people=1,
+            add_debug_logger=add_debug_logger,
+            simulation_time=simulation_time,
+            starting_position = np.array([robot_pose[0], robot_pose[1], -1.57]),
+            add_fixed_cameras=add_fixed_cameras,
+            obstacle_position= np.array([obstacle_pose[0], obstacle_pose[1], 0]), 
+            #obstacle_position=obstacle_pose,
+            use_teleop=use_teleop,
+            plot_camera_input=plot_camera_input,
+            table_specs=table_specs.mix_rooms,
+            use_naive_fsm=True,
+            use_dummy_spotter=True)
+
+        _sim.start_simulation()
+
+drake_start_sim()
+
+
+class DrakeGymEnvNav(Env): 
+       
     def __init__(self):
         self.action_space = spaces.Box(low=0.0, high=1.0, shape=(2,), dtype='float32')
         self.observation_space = spaces.Box(low=0.0, high=1.0, shape=(10,), dtype='float32')
@@ -16,6 +112,7 @@ class GymEnvNav(Env):
         self.dist = self.assemble_dist()
         self.belief_true = {}
         self.constraint_viol = False
+
 
     def assemble_dist(self):
         # weights = torch.tensor([0.6,0.4])
@@ -132,6 +229,9 @@ class GymEnvNav(Env):
         color_arr = np.where(is_close_to_obj_vectorized(self.curr_state[2:4], x_coords, y_coords),
                                     green, 
                                     color_arr)
+        
+        print(f"{self.curr_state=}")
+        self.drake_spot_move(self.curr_state[:2][0], self.curr_state[:2][1])
 
         return color_arr
     
@@ -210,9 +310,31 @@ class GymEnvNav(Env):
 
     def set_belief_true(self, belief_dict):
         self.belief_true = belief_dict
-    
 
-class GymEnvNavWrapper(GymEnvNav):
+
+
+
+    #######################FROM DRAKE GYM SIM MAIN FUNCTIONS #######################
+    
+    
+    def drake_spot_move(self, x, y):
+        action = RobotAction.MOVE
+        para = RobotActionParameter()
+        para.move_position = np.array([x, y, 0])
+        #pos_idx = random.randint(0, len(base_pos)-1)
+        #para.move_position = base_pos[pos_idx]
+        #para.move_position = base_pos[8]
+        ret : RobotActionReturnParameter = _sim.do_action(action, para)
+        print(f"---------------------------------------------------------------")
+        print(f"---------------------------------------------------------------")
+        print(f"----------move-action: done, {ret=}----------------------------")
+        print(f"---------------------------------------------------------------")
+        print(f"---------------------------------------------------------------")
+
+
+
+
+class DrakeGymEnvNavWrapper(DrakeGymEnvNav):
     def reset_to_state(self, state):
         self.curr_state = state
         self.curr_obs = np.array([0.0]*10)

@@ -17,7 +17,7 @@ import opentamp.new_specs.nav_domain_deterministic.gym_prob as prob
 from opentamp.policy_hooks.utils.file_utils import LOG_DIR
 from opentamp.policy_hooks.observation_models import *
 
-from opentamp.envs.gym_env_nav import GymEnvNavWrapper
+from opentamp.envs.drake_gym_env_nav import DrakeGymEnvNavWrapper
 
 import torch.nn.functional as F
 from opentamp.policy_hooks.tamp_agent import ACTION_SCALE
@@ -142,12 +142,12 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
         'num_targs': nt,
         'attr_map': ATTRMAP,
         'agent_type': GymAgent,
-        'gym_env_type': GymEnvNavWrapper,
+        'gym_env_type': DrakeGymEnvNavWrapper,
         'mp_solver_type': ToySolver,
         'll_solver_type': ToySolver,
-        'meta_file': opentamp.__path__._path[0] + '/new_specs/nav_domain_deterministic/namo_purenav_meta.json',
-        'acts_file': opentamp.__path__._path[0] + '/new_specs/nav_domain_deterministic/namo_purenav_acts.json',
-        'prob_file': opentamp.__path__._path[0] + '/new_specs/nav_domain_deterministic/namo_purenav_prob.json',
+        'meta_file': opentamp.__path__._path[0] + '/new_specs/drake_nav_domain_deterministic/namo_purenav_meta.json',
+        'acts_file': opentamp.__path__._path[0] + '/new_specs/drake_nav_domain_deterministic/namo_purenav_acts.json',
+        'prob_file': opentamp.__path__._path[0] + '/new_specs/drake_nav_domain_deterministic/namo_purenav_prob.json',
         'observation_model': NoVIObstacleObservationModel,
         'n_dirs': N_DIRS,
 
@@ -206,7 +206,7 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
                 utils.PAST_VAL_ENUM: 1,
                 utils.PAST_TASK_ENUM: 1,
                 # utils.LIDAR_ENUM: N_DIRS,
-                utils.MJC_SENSOR_ENUM: GymEnvNavWrapper().observation_space.shape[0],
+                utils.MJC_SENSOR_ENUM: DrakeGymEnvNavWrapper().observation_space.shape[0],
                 # utils.EE_ENUM: 2,
                 # utils.END_POSE_ENUM: 2,
                 # utils.GRIPPER_ENUM: 1,

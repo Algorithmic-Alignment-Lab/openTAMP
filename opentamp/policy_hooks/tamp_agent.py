@@ -1214,10 +1214,10 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
             self._x_delta[:, self.state_inds[rev_perm.get(pname, pname), attr]] = static_hist[:, self.state_inds[pname, attr]]
 
         # permutation magic? not sure why permutation here... (for better HL policy learning?)
-        if len(perm.keys()):
-            cur_hist = self._x_delta.copy()
-            self.reset_to_state(x0)
-            self._x_delta[:] = cur_hist
+        # if len(perm.keys()):
+        #     cur_hist = self._x_delta.copy()
+        #     self.reset_to_state(x0)
+        #     self._x_delta[:] = cur_hist
 
         self.target_vecs[0] = old_targets
         return path, x0

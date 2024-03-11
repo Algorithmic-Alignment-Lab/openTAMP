@@ -11,30 +11,43 @@ class GymEnvNav(Env):
     def __init__(self):
         self.action_space = spaces.Box(low=0.0, high=1.0, shape=(2,), dtype='float32')
         self.observation_space = spaces.Box(low=0.0, high=1.0, shape=(11,), dtype='float32')
-        self.curr_state = np.array([0.0]*7)
+        self.curr_state = np.array([0.0]*9)
         self.curr_obs = np.array([0.0]*11)
-        self.dist = self.assemble_dist()
+        self.obs_dist, self.target_dist = self.assemble_dist()
         self.belief_true = {}
         self.constraint_viol = False
 
     def assemble_dist(self):
-        # weights = torch.tensor([0.6,0.4])
-        # locs = torch.tensor([[3., 3.],
-        #                      [3., -3.]])
-        # scales = torch.tensor([0.5, 0.5])
-        # cat_dist = distros.Categorical(probs=weights)
-        # stack_eye = torch.tile(torch.eye().unsqueeze(dim=0), dims=(2, 1, 1))
-        # stack_scale = torch.tile(scales.unsqueeze(dim=1).unsqueeze(dim=2), dims=(1, 2, 2))
-        # cov_tensor = stack_eye * stack_scale
-        # batched_multivar = distros.MultivariateNormal(loc=locs, covariance_matrix=cov_tensor)
-        dist = distros.Normal(torch.tensor([0.0, 0.0]), 1.0)
-        return dist
+        weights = torch.tensor([0.6,0.4])
+        locs = torch.tensor([[3., 0.],
+                             [-3., 0.]])
+        scales = torch.tensor([1.0, 1.0])
+        cat_dist = distros.Categorical(probs=weights)
+        stack_eye = torch.tile(torch.eye(2).unsqueeze(dim=0), dims=(2, 1, 1))
+        stack_scale = torch.tile(scales.unsqueeze(dim=1).unsqueeze(dim=2), dims=(1, 2, 2))
+        cov_tensor = stack_eye * stack_scale
+        batched_multivar = distros.MultivariateNormal(loc=locs, covariance_matrix=cov_tensor)
+        obs_dist = distros.MixtureSameFamily(cat_dist, batched_multivar)
+
+        weights = torch.tensor([0.6,0.4])
+        locs = torch.tensor([[8., 0.],
+                             [8., 0.]])
+        scales = torch.tensor([1.0, 1.0])
+        cat_dist = distros.Categorical(probs=weights)
+        stack_eye = torch.tile(torch.eye(2).unsqueeze(dim=0), dims=(2, 1, 1))
+        stack_scale = torch.tile(scales.unsqueeze(dim=1).unsqueeze(dim=2), dims=(1, 2, 2))
+        cov_tensor = stack_eye * stack_scale
+        batched_multivar = distros.MultivariateNormal(loc=locs, covariance_matrix=cov_tensor)
+        target_dist = distros.MixtureSameFamily(cat_dist, batched_multivar)
+
+        # dist = distros.Normal(torch.tensor([0.0, 0.0]), 1.0)
+        return obs_dist, target_dist
 
     def step(self, action):
         # make single step in direction of target
         self.curr_state[:3] += action  # move by action
         goal_rel_pos = (self.curr_state[3:5] - self.curr_state[:2]) * 1  ## return relative position
-        obstacle_rel_pos = (self.curr_state[5:] - self.curr_state[:2]) * 1 
+        obstacle_rel_pos = (self.curr_state[7:] - self.curr_state[:2]) * 1 
         obstacle_abs_angle = np.arctan(obstacle_rel_pos[1]/obstacle_rel_pos[0]) if np.abs(obstacle_rel_pos[0]) > 0.001 else (np.pi/2 if obstacle_rel_pos[1]*obstacle_rel_pos[0]>0 else -np.pi/2)
         obstacle_rel_distance = np.linalg.norm(obstacle_rel_pos, ord=2)
         # spot_abs_angle = np.arctan(action[1]/action[0]) if action∂[0] > 0.001 else (np.pi/2 if action[1]>0 else -np.pi/2)
@@ -88,7 +101,7 @@ class GymEnvNav(Env):
         return self.curr_obs, 1.0, False, {}
 
     def reset(self):
-        self.curr_state = np.array([0.0]*7)
+        self.curr_state = np.array([0.0]*9)
         self.curr_obs = np.array([0.0]*11)
         self.constraint_viol = False
         return self.curr_obs
@@ -97,9 +110,11 @@ class GymEnvNav(Env):
     ## NOTE: only rgb_array mode supported, ignores keyword
     def render(self, mode='rgb_array'):
         def is_in_ray_vectorized(ang, curr_loc, x_coord, y_coord, ray_ang):
+            adjust_ang = (ang + np.pi/2)%(2 * np.pi) - np.pi/2
+
             return np.where(x_coord - curr_loc[0] > 0, 
-                            np.abs(np.arctan((y_coord - curr_loc[1])/(x_coord - curr_loc[0])) - ang) <= ray_ang,
-                            np.abs(np.arctan((y_coord - curr_loc[1])/(x_coord - curr_loc[0])) - (ang - np.pi)) <= ray_ang)
+                            np.abs(np.arctan((y_coord - curr_loc[1])/(x_coord - curr_loc[0])) - adjust_ang) <= ray_ang,
+                            np.abs(np.arctan((y_coord - curr_loc[1])/(x_coord - curr_loc[0])) - (adjust_ang - np.pi)) <= ray_ang)
             
         def is_close_to_obj_vectorized(true_loc, x_coord, y_coord):
             return np.linalg.norm(np.stack((x_coord, y_coord)) - np.tile(true_loc.reshape(-1, 1, 1, 1), (1, 256, 256, 3)), axis=0) <= 0.2
@@ -107,7 +122,7 @@ class GymEnvNav(Env):
         color_arr = np.ones((256, 256, 3), dtype=np.uint8) * 255
         
         ## initializing vectorized x_coord and y_coord arrays
-        x_coords = np.stack([np.tile(np.arange(-5, 5, 5./128.).reshape(-1, 1), (1, 256))]*3, axis=2)
+        x_coords = np.stack([np.tile(np.arange(-10, 10, 10./128.).reshape(-1, 1), (1, 256))]*3, axis=2)
         y_coords = np.stack([x_coords[:,:,0].copy().T]*3, axis=2)
 
         red = np.stack((np.ones((256, 256), dtype=np.uint8)*255, np.zeros((256, 256), dtype=np.uint8), np.zeros((256, 256), dtype=np.uint8)), axis=2)
@@ -126,7 +141,7 @@ class GymEnvNav(Env):
                                             color_arr)
 
         ## coloring in the obstacle
-        color_arr = np.where(is_close_to_obj_vectorized(self.curr_state[5:], x_coords, y_coords),
+        color_arr = np.where(is_close_to_obj_vectorized(self.curr_state[7:], x_coords, y_coords),
                                     blue, 
                                     color_arr)
         
@@ -190,7 +205,8 @@ class GymEnvNav(Env):
 
     ## get random sample to initialize uncertain problem
     def sample_belief_true(self):
-        return {}
+        return {'obs1': self.obs_dist.sample(),
+                'target1': self.target_dist.sample()}
         # return {'obs1': torch.tensor([0.0, 0.0])}
         # rand = random.random() * 8
         # if rand < 1.0:
@@ -212,11 +228,15 @@ class GymEnvNav(Env):
 
     def set_belief_true(self, belief_dict):
         self.belief_true = belief_dict
+        self.curr_state[7:] = belief_dict['obs1']
+        self.curr_state[3:5] = belief_dict['target1']
+        pass
     
 
 class GymEnvNavWrapper(GymEnvNav):
     def reset_to_state(self, state):
-        self.curr_state = state
+        self.curr_state[:3] = state[:3]
+        self.curr_state[5:7] = state[5:7]
         self.curr_obs = np.array([0.0]*11)
         self.constraint_viol = False
         return self.curr_obs
@@ -225,6 +245,7 @@ class GymEnvNavWrapper(GymEnvNav):
         state_vector_include = {
             'pr2': ['pose', 'theta'],
             'target1': ['value'],
+            'softtarget1': ['value'],
             'obs1': ['value']
         }
         
@@ -301,13 +322,16 @@ class GymEnvNavWrapper(GymEnvNav):
         #     goal_pos = np.array([goal_coords, 3.])
 
         goal_pos = -init_pos
-        proposal_obs = -2 * init_pos
+        soft_goal_pos = init_pos * 2/3
+        proposal_obs = goal_pos
         obstacle_abs_angle = np.arctan(proposal_obs[1]/proposal_obs[0]) if np.abs(proposal_obs[0]) > 0.001 else (np.pi/2 if proposal_obs[1]*proposal_obs[0]>0 else -np.pi/2)
         obstacle_angle = obstacle_abs_angle if proposal_obs[0] >= 0  else (obstacle_abs_angle + np.pi if -np.pi/2 <= obstacle_abs_angle < 0 else obstacle_abs_angle - np.pi)
 
-        obs = self.dist.sample().detach().numpy()
+        obs = self.obs_dist.sample().detach().numpy()
+        goal_pos = self.target_dist.sample().detach().numpy()
 
-        return np.concatenate((init_pos, np.array([obstacle_angle]), goal_pos, obs))
+        ## initalize to center
+        return np.concatenate((np.array([0.0, 0.0]), np.array([obstacle_angle]), goal_pos, soft_goal_pos, obs))
 
     # determine whether or not a given state satisfies a goal condition
     def assess_goal(self, condition, state, targets=None, cont=None):

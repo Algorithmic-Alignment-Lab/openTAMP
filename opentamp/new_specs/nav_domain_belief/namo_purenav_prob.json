@@ -3,12 +3,19 @@
         {
             "name": "target1",
             "type": "Target",
+            "value": [3, 3],
+            "belief": [2, 100, 0.6, 0.4, 8.0, 0.0, 1.0, 8.0, 0.0, 1.0]
+        },
+        {
+            "name": "softtarget1",
+            "type": "SoftTarget",
             "value": [3, 3]
         },
         {
             "name": "obs1",
             "type": "Obstacle",
-            "value": [0, 0]
+            "value": [0, 0],
+            "belief": [2, 100, 0.6, 0.4, -3.0, 0.0, 1.0, 3.0, 0.0, 1.0]
         },
         {
             "name": "pr2",
@@ -18,11 +25,15 @@
         }
     ],
     "init_preds": [
+        {
+            "type": "NotPerformedInitObs",
+            "args": ["pr2"]
+        }
     ],
     "goals": [
         {
-            "type": "RobotAtTarget",
-            "args": ["pr2", "target1"]
+            "type": "ConfirmedTarget",
+            "args": ["target1"]
         }
     ]
 }
