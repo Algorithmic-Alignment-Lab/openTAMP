@@ -137,17 +137,18 @@ class LLSearchNode(SearchNode):
 
                 check_ts = ts - p['pred'].active_range[1]
 
-                if p['negated'] and p['pred'].hl_test(check_ts, tol=1e-3, negated=True) and \
-                        p['pred'].get_type() in [q['pred'].get_type() for q in new_preds if not q['negated']]:
-                        for q in new_preds:
-                            if q['pred'].get_type() == p['pred'].get_type():
-                                new_preds.remove(q)
+                if check_ts >= 0: 
+                    if p['negated'] and p['pred'].hl_test(check_ts, tol=1e-3, negated=True) and \
+                            p['pred'].get_type() in [q['pred'].get_type() for q in new_preds if not q['negated']]:
+                            for q in new_preds:
+                                if q['pred'].get_type() == p['pred'].get_type():
+                                    new_preds.remove(q)
 
-                if not p['negated'] and p['pred'].hl_test(check_ts, tol=1e-3, negated=False) and \
-                        p['pred'].get_type() in [q['pred'].get_type() for q in new_preds if q['negated']]:
-                        for q in new_preds:
-                            if q['pred'].get_type() == p['pred'].get_type():
-                                new_preds.remove(q)
+                    if not p['negated'] and p['pred'].hl_test(check_ts, tol=1e-3, negated=False) and \
+                            p['pred'].get_type() in [q['pred'].get_type() for q in new_preds if q['negated']]:
+                            for q in new_preds:
+                                if q['pred'].get_type() == p['pred'].get_type():
+                                    new_preds.remove(q)
                 #                     # reps.remove(p['pred'].get_rep())
                 #     else:
                 #         continue
@@ -216,7 +217,7 @@ class LLSearchNode(SearchNode):
         if failed_negated:
             preds = [failed_pred]
         state_preds = self.parse_state(self.curr_plan, preds, state_timestep, [])
-        breakpoint()
+        #breakpoint()
         state_preds.extend(self.curr_plan.hl_preds)
         new_state = State(state_name, state_params, state_preds, state_timestep, [])
         goal_preds = self.concr_prob.goal_preds.copy()

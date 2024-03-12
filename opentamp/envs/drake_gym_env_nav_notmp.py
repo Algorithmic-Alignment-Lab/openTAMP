@@ -232,7 +232,7 @@ class DrakeGymEnvNav(Env):
                                     color_arr)
         
         print(f"{self.curr_state=}")
-        #self.drake_spot_move(self.curr_state[:2][0], self.curr_state[:2][1])
+        self.drake_spot_move(self.curr_state[:2][0], self.curr_state[:2][1])
 
         return color_arr
     
@@ -318,7 +318,7 @@ class DrakeGymEnvNav(Env):
     #######################FROM DRAKE GYM SIM MAIN FUNCTIONS #######################
     
     
-    """def drake_spot_move(self, x, y):
+    def drake_spot_move(self, x, y):
         action = RobotAction.MOVE
         para = RobotActionParameter()
         para.move_position = np.array([x, y, 0])
@@ -330,13 +330,12 @@ class DrakeGymEnvNav(Env):
         print(f"---------------------------------------------------------------")
         print(f"----------move-action: done, {ret=}----------------------------")
         print(f"---------------------------------------------------------------")
-        print(f"---------------------------------------------------------------")"""
+        print(f"---------------------------------------------------------------")
 
 
 
 
 class DrakeGymEnvNavWrapper(DrakeGymEnvNav):
-    #_sim = None
 
     def reset_to_state(self, state):
         self.curr_state = state
@@ -363,14 +362,8 @@ class DrakeGymEnvNavWrapper(DrakeGymEnvNav):
 
 
     def render(self, mode='rgb_array'):
-
-        self.drake_init(self.curr_state[:2], self.curr_state[2:4], self.curr_state[4:])
         super(DrakeGymEnvNavWrapper, self).render(mode)
-        
         print("!!!!!!!!!!!!!!!!!!! DrakeGymEnvNavWrapper.render()")
-        print(f"{self.curr_state[:2][0]=}, {self.curr_state[:2][1]=}")
-        self.drake_spot_move(self.curr_state[:2][0], self.curr_state[:2][1])
-
 
     # reset without affecting the simulator
     def get_random_init_state(self):
@@ -399,8 +392,6 @@ class DrakeGymEnvNavWrapper(DrakeGymEnvNav):
                 
             is_valid = True
         print(f"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!GET_RANDOM_INIT_STATE: {init_pose=},{proposal_targ=}, {proposal_obs=}")
-        #drake_start_sim(init_pose,proposal_targ, proposal_obs)
-        #print(f"!!!!!!!!!!!!!!!!!!!!!!!!!!!!{self._sim}")
         return np.concatenate((init_pose,proposal_targ, proposal_obs))
 
     # determine whether or not a given state satisfies a goal condition
@@ -422,67 +413,3 @@ class DrakeGymEnvNavWrapper(DrakeGymEnvNav):
             return 1.0
         else:
             return 0.0
-
-    #############DRAKE SIM
-        
-    """def drake_start_sim(self, robot_pose, target_pose, obstacle_pose):
-        # set host to 0.0.0.0 to enable port forwarding on remote server
-
-        meshcat = Meshcat(MeshcatParams(host="0.0.0.0"))
-
-        rng = np.random.default_rng(145)  # this is for python
-
-        logging.root.setLevel(logging.INFO)
-        # logging.root.setLevel(logging.DEBUG)  # Uncomment to enable debug logging.
-
-        fsm_logger = logging.getLogger("imt.fsm")
-        fsm_logger.setLevel(logging.INFO)
-
-        bs_logger = logging.getLogger("imt.perception")
-        bs_logger.setLevel(logging.INFO)
-
-        simulation_time = -1
-        # simulation_time = 1
-        add_debug_logger = True
-        add_fixed_cameras = False
-        use_teleop = False
-        plot_camera_input = False
-        #target_pose, robot_pose, obstacle_pose = get_vector(prob)
-        #print(f"{target_pose=}, {robot_pose=}, {obstacle_pose=}")
-        #obstacle_pose = [1, 1, 0]
-        #global _sim
-        self._sim = ImtSim()
-        self._sim.create_and_run_simulation(meshcat,
-            rng,
-            number_people=1,
-            add_debug_logger=add_debug_logger,
-            simulation_time=simulation_time,
-            starting_position = np.array([robot_pose[0], robot_pose[1], -1.57]),
-            add_fixed_cameras=add_fixed_cameras,
-            obstacle_position= np.array([obstacle_pose[0], obstacle_pose[1], 0]), 
-            #obstacle_position=obstacle_pose,
-            use_teleop=use_teleop,
-            plot_camera_input=plot_camera_input,
-            table_specs=table_specs.mix_rooms,
-            use_naive_fsm=True,
-            use_dummy_spotter=True)
-
-        self._sim.start_simulation()    
-    """
-    def drake_spot_move(self, x, y):
-        action = RobotAction.MOVE
-        para = RobotActionParameter()
-        para.move_position = np.array([x, y, 0])
-        #pos_idx = random.randint(0, len(base_pos)-1)
-        #para.move_position = base_pos[pos_idx]
-        #para.move_position = base_pos[8]
-        print(f"MOVE SIM {action=}, {para=}")
-        ret : RobotActionReturnParameter = _sim.do_action(action, para)
-        print(f"---------------------------------------------------------------")
-        print(f"---------------------------------------------------------------")
-        print(f"----------move-action: done, {ret=}----------------------------")
-        print(f"---------------------------------------------------------------")
-        print(f"---------------------------------------------------------------")
-
-    def drake_init(self, robot_pose, target_pose, obstacle_pose):
-        _sim.move_obstacle(obstacle_pose)

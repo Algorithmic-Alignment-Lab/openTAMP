@@ -147,6 +147,7 @@ class ExprPredicate(Predicate):
         if not self.is_concrete():
             return False
         if time < 0:
+            breakpoint()
             print("Out of range time for predicate '%s'." % self)
             #raise PredicateException("Out of range time for predicate '%s'." % self)
         try:
