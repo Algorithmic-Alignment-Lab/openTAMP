@@ -634,6 +634,7 @@ class Server(object):
                         ims.append(self.agent.get_annotated_image(step, t, cam_id=cam_id))
                     else:
                         ims.append(self.agent.get_image(step.get_X(t=t), cam_id=cam_id))
+                #breakpoint()
                 im = np.concatenate(ims, axis=1)
                 buf.append(im)
             self.agent.target_vecs[0] = old_vec

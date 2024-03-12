@@ -13,6 +13,8 @@ import sys
 sys.path.append('./drake_gym_sim/src') #need to run from opentamp/ directory
 print(sys.path)
 
+from math import *
+
 
 from drake_gym_sim.imtGym.imtCommon import RobotState, RobotAction, RobotActionReturnParameter, RobotActionParameter, OBJECT_NAME_BANANA
 from drake_gym_sim.imtGym.imtSim import ImtSim
@@ -94,7 +96,6 @@ def drake_start_sim():
             add_fixed_cameras=add_fixed_cameras,
             obstacle_position= np.array([obstacle_pose[0], obstacle_pose[1], 0]), 
             target_position= np.array([target_pose[0], target_pose[1], 0]),
-            #obstacle_position=obstacle_pose,
             use_teleop=use_teleop,
             plot_camera_input=plot_camera_input,
             table_specs=table_specs.mix_rooms,
@@ -196,6 +197,7 @@ class DrakeGymEnvNav(Env):
     ## NOTE: only rgb_array mode supported, ignores keyword
     def render(self, mode='rgb_array'):
         print("+++++++++++++++++++ DrakeGymEnvNav.render()")
+        self.drake_init(self.curr_state[:2], self.curr_state[2:4], self.curr_state[4:])
         def is_in_ray_vectorized(a_pose, x_coord, y_coord, ray_ang):
             return np.where(x_coord > 0, 
                             np.abs(np.arctan(y_coord/x_coord) - a_pose) <= ray_ang % 2*np.pi,
@@ -237,6 +239,7 @@ class DrakeGymEnvNav(Env):
         
         print(f"{self.curr_state=}")
         #self.drake_spot_move(self.curr_state[:2][0], self.curr_state[:2][1])
+        self.drake_spot_move(self.curr_state[:2][0], self.curr_state[:2][1])
 
         return color_arr
     
@@ -317,7 +320,9 @@ class DrakeGymEnvNav(Env):
         self.belief_true = belief_dict
 
 
+    
 
+    
 
     #######################FROM DRAKE GYM SIM MAIN FUNCTIONS #######################
     
@@ -365,16 +370,16 @@ class DrakeGymEnvNavWrapper(DrakeGymEnvNav):
         
         return state_vector_include, action_vector_include, target_vector_include
 
-
+    """
     def render(self, mode='rgb_array'):
 
         self.drake_init(self.curr_state[:2], self.curr_state[2:4], self.curr_state[4:])
-        super(DrakeGymEnvNavWrapper, self).render(mode)
+        c = super(DrakeGymEnvNavWrapper, self).render(mode)
         
         print("!!!!!!!!!!!!!!!!!!! DrakeGymEnvNavWrapper.render()")
         print(f"{self.curr_state[:2][0]=}, {self.curr_state[:2][1]=}")
         self.drake_spot_move(self.curr_state[:2][0], self.curr_state[:2][1])
-
+        return c"""
 
     # reset without affecting the simulator
     def get_random_init_state(self):
@@ -490,5 +495,25 @@ class DrakeGymEnvNavWrapper(DrakeGymEnvNav):
 
     def drake_init(self, robot_pose, target_pose, obstacle_pose):
         _sim.move_obstacle(obstacle_pose)
-        _sim.move_target(target_pose)
-        
+        shifted_target_pose = self.shift_object_position(target_pose, [0.7, 0.7])
+        #_sim.move_target(target_pose)
+        _sim.move_target(shifted_target_pose)
+    
+    def shift_object_position(self, pos, rect):
+        # we will shift position to avoid collision
+        #shift distance = rect's center to far corner, it will be c=sqrt(a^2 + b^2)
+        # if rect width is 0.6, height is 0.8, dis = sqrt (0.3^2 + 0.4^2) = 0.5   
+        # if pos is (4, 3), the new pos will be (4.5, 3.5)
+        # if pos is (4, -3), the new pos will be (4.5, -3.5) 
+        # if pos is (-4, -3), the new pos will be (-4.5, -3.5) 
+        # if pos is (-4, 3), the new pos will be (-4.5, 3.5)
+        if len(rect) != 2: 
+            raise Exception ('rect size is not correct in shift_object_position()')
+
+        if len(pos) < 2: 
+            raise Exception ('pos size is not correct in shift_object_position()')
+
+        dis = sqrt((rect[0]/2)**2 + (rect[1]/2)**2) 
+        x =  pos[0] + dis if pos[0] >= 0 else pos[0] - dis 
+        y =  pos[1] + dis if pos[1] >= 0 else pos[1] - dis 
+        return [x, y]
