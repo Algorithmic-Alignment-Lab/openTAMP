@@ -33,7 +33,7 @@ prob = opentamp.__path__._path[0] + '/new_specs/drake_nav_domain_deterministic/n
 
 _sim = None
 
-def get_vector(filename):
+"""def get_vector(filename):
     with open(filename) as f:
         d = json.load(f)
 
@@ -52,7 +52,7 @@ def get_vector(filename):
         elif init_obj['type'] == "Obstacle":
             obstacle_pose = init_obj["value"]
 
-    return target_pose, robot_pose, obstacle_pose
+    return target_pose, robot_pose, obstacle_pose"""
 
 
 def drake_start_sim():
@@ -77,7 +77,10 @@ def drake_start_sim():
         add_fixed_cameras = False
         use_teleop = False
         plot_camera_input = False
-        target_pose, robot_pose, obstacle_pose = get_vector(prob)
+        #target_pose, robot_pose, obstacle_pose = get_vector(prob)
+        robot_pose = [0,0]
+        obstacle_pose = [1, 1]
+        target_pose = [3, 3]
         print(f"{target_pose=}, {robot_pose=}, {obstacle_pose=}")
         #obstacle_pose = [1, 1, 0]
         global _sim
@@ -90,7 +93,7 @@ def drake_start_sim():
             starting_position = np.array([robot_pose[0], robot_pose[1], -1.57]),
             add_fixed_cameras=add_fixed_cameras,
             obstacle_position= np.array([obstacle_pose[0], obstacle_pose[1], 0]), 
-            #obstacle_position=obstacle_pose,
+            target_position= np.array([target_pose[0], target_pose[1], 0]),
             use_teleop=use_teleop,
             plot_camera_input=plot_camera_input,
             table_specs=table_specs.mix_rooms,

@@ -46,7 +46,7 @@ class LLSolverOSQP(object):
                         x[i : i + n_vals] = getattr(ll_p, attr)[ind_arr, 0]
                         v[i : i + n_vals] = getattr(p, attr)[ind_arr, 0]
                     else:
-                        breakpoint()
+                        #breakpoint()
 
                         x[i : i + n_vals] = getattr(ll_p, attr)[
                             ind_arr, t + rel_t - self.ll_start
