@@ -183,6 +183,10 @@ class MotionServer(Server):
                     planned_obs[param.name] = node.belief_true[param.name]
                 else:
                     planned_obs[param.name] = param.belief.samples[new_goal_idx,:,0]
+
+            self.config['postproc_assumed_goal'](planned_obs)
+
+            for param in plan.belief_params:
                 if param.is_symbol():
                     param.value[:, 0] = planned_obs[param.name].detach().numpy()
                 else:
@@ -359,7 +363,9 @@ class MotionServer(Server):
               node._trace, 
               prev_t,)
 
-        if not node.hl and not node.gen_child(): return
+        if not node.hl and not node.gen_child(): 
+            print('RETURNING EARLY!')
+            return
 
 
         #breakpoint()

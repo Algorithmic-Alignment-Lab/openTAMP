@@ -432,6 +432,15 @@ class Plan(object):
         
         return global_belief_vec
     
+    def construct_random_prior_init(self):
+        ## constructs random
+        vals = {}
+
+        for param in self.belief_params:
+            vals[param.name] = param.belief.dist.sample()
+
+        return vals
+    
     def make_full_prefix_obs(self, past_obs, obs, active_ts):
         full_prefix_obs = {}
         for po_ts in past_obs:
@@ -469,41 +478,53 @@ class Plan(object):
         #     obs = self.observation_model.get_active_planned_observations()
         
         full_prefix_obs = self.make_full_prefix_obs(past_obs, obs, active_ts)
+        full_samps = {}
+        for _ in range(1):
+            print('Done Iter')
+            pyro.clear_param_store()
 
-        pyro.clear_param_store()
+            ## create a model conditioned on the observed data in the course of executing plan
+            conditional_model = poutine.condition(self.observation_model.forward_model, data=full_prefix_obs)
 
-        ## create a model conditioned on the observed data in the course of executing plan
-        conditional_model = poutine.condition(self.observation_model.forward_model, data=full_prefix_obs)
+            ## No-U Turn Sampling kernel
+            kernel = NUTS(conditional_model, full_mass=True)
 
-        ## No-U Turn Sampling kernel
-        kernel = NUTS(conditional_model, full_mass=True)
+            ## get a vector of overall observations, as a warmstart for MCMC
+            # global_vec = self.construct_global_belief_vec(provided_goal)
+            
+            if not provided_goal:
+                breakpoint()
 
-        ## get a vector of overall observations, as a warmstart for MCMC
-        # global_vec = self.construct_global_belief_vec(provided_goal)
-        
-        if not provided_goal:
-            breakpoint()
+            print('Conditioning on: ', full_prefix_obs)
 
-        print('Conditioning on: ', full_prefix_obs)
-        print('Init inference to: ', provided_goal)
+            rand_init = self.construct_random_prior_init()
 
-        ## initialize and run MCMC (conditions on the active observation)
-        mcmc = MCMC(
-            kernel,
-            num_samples=self.num_belief_samples,
-            warmup_steps=self.num_warmup_steps,
-            num_chains=1,
-            initial_params={'belief_'+id: provided_goal[id] for id in provided_goal.keys()},
-            disable_progbar=True
-        )
+            print('Init inference to: ', rand_init)
 
-        mcmc.run(copy.deepcopy(self.params), active_ts, past_obs=past_obs)
-        mcmc.summary(prob=0.95)  # for diagnostics
+            ## initialize and run MCMC (conditions on the active observation)
+            mcmc = MCMC(
+                kernel,
+                num_samples=self.num_belief_samples,
+                warmup_steps=self.num_warmup_steps,
+                num_chains=1,
+                initial_params={'belief_'+id: rand_init[id] for id in rand_init.keys()},
+                disable_progbar=True
+            )
 
-        # print('Releasing lock')
-        # mc_lock.release()
-        
-        return mcmc.get_samples(), obs
+            mcmc.run(copy.deepcopy(self.params), active_ts, past_obs=past_obs)
+            mcmc.summary(prob=0.95)  # for diagnostics
+
+            # print('Releasing lock')
+            # mc_lock.release()
+            
+            samps =  mcmc.get_samples()
+            for key in samps:
+                if key in full_samps:
+                    full_samps[key] = torch.cat((full_samps[key], samps[key]), dim=0)
+                else:
+                    full_samps[key] = samps[key]
+
+        return full_samps, obs
 
     # def initialize_obs(self, anum=0, override_obs=None):
     #     for param in self.belief_params:
