@@ -266,7 +266,7 @@ class NoVIObstacleObservationModel(ObservationModel):
             ## add in terms for the forward model
             for obs_active_ts in prefix_obs:
                 obs_vec = params['obs1'].belief.samples[idx,:,fail_ts]
-                mod_obs_vec = torch.sign(obs_vec) * (torch.abs(obs_vec) + torch.tensor([3.0, 0.0]))
+                mod_obs_vec = torch.sign(obs_vec) * (torch.abs(obs_vec))
                 rel_vec = mod_obs_vec - params['pr2'].pose[:,obs_active_ts[1]-1]
                 if self.is_in_ray(params['pr2'].theta[0,obs_active_ts[1]-1], rel_vec) and np.linalg.norm(rel_vec) <= self.obs_dist:
                     ## sample around the true belief, with extremely low variation / error
@@ -280,8 +280,8 @@ class NoVIObstacleObservationModel(ObservationModel):
     def forward_model(self, params, active_ts, provided_state=None, past_obs={}):                
         if provided_state:
             ## overrides the current belief sample with a true state
-            b_global_samp = np.sign(provided_state['obs1'].to(DEVICE)) * (np.abs(provided_state['obs1'].to(DEVICE)) - np.array([3.0, 0.0]))
-            b_global_samp_targ = np.sign(provided_state['target1'].to(DEVICE)) * (np.abs(provided_state['target1'].to(DEVICE)) - np.array([8.0, 0.0]))
+            b_global_samp = np.sign(provided_state['obs1'].to(DEVICE)) * (np.abs(provided_state['obs1'].to(DEVICE)))
+            b_global_samp_targ = np.sign(provided_state['target1'].to(DEVICE)) * (np.abs(provided_state['target1'].to(DEVICE)))
         else:
             ## sample from prior dist
             b_global_samp = pyro.sample('belief_obs1', params['obs1'].belief.dist).to(DEVICE)
@@ -289,7 +289,7 @@ class NoVIObstacleObservationModel(ObservationModel):
 
         ## sample through strict prefix of current obs
         for obs_active_ts in past_obs:
-            mod_obs = torch.sign(b_global_samp.detach().to('cpu')) * (torch.abs(b_global_samp.detach().to('cpu')) + torch.tensor([3.0, 0.0]))
+            mod_obs = torch.sign(b_global_samp.detach().to('cpu')) * (torch.abs(b_global_samp.detach().to('cpu')))
             rel_vec = mod_obs - params['pr2'].pose[:,obs_active_ts[1]-1]
             if self.is_in_ray(params['pr2'].theta[0,obs_active_ts[1]-1], rel_vec) and np.linalg.norm(rel_vec) <= self.obs_dist:
                 ## sample around the true belief, with extremely low variation / error
@@ -299,7 +299,7 @@ class NoVIObstacleObservationModel(ObservationModel):
                 pyro.sample('obs1.'+str(obs_active_ts[0]), dist.MultivariateNormal((torch.zeros((2,))).to(DEVICE), 0.01 * torch.eye(2).to(DEVICE)))
 
         for obs_active_ts in past_obs:
-            mod_targ = torch.sign(b_global_samp_targ.detach().to('cpu')) * (torch.abs(b_global_samp_targ.detach().to('cpu')) + torch.tensor([8.0, 0.0]))
+            mod_targ = torch.sign(b_global_samp_targ.detach().to('cpu')) * (torch.abs(b_global_samp_targ.detach().to('cpu')))
             rel_vec = b_global_samp_targ.detach().to('cpu') - params['pr2'].pose[:,obs_active_ts[1]-1]
             if self.is_in_ray(params['pr2'].theta[0,obs_active_ts[1]-1], rel_vec) and np.linalg.norm(rel_vec) <= self.obs_dist:
                 ## sample around the true belief, with extremely low variation / error
@@ -311,7 +311,7 @@ class NoVIObstacleObservationModel(ObservationModel):
         ## get sample for current timestep, record and return
         samps = {}
 
-        mod_obs = torch.sign(b_global_samp.detach().to('cpu')) * (torch.abs(b_global_samp.detach().to('cpu')) + torch.tensor([3.0, 0.0]))
+        mod_obs = torch.sign(b_global_samp.detach().to('cpu')) * (torch.abs(b_global_samp.detach().to('cpu')))
         rel_vec = mod_obs  - params['pr2'].pose[:,active_ts[1]-1]
         if self.is_in_ray(params['pr2'].theta[0,active_ts[1]-1], rel_vec) and np.linalg.norm(rel_vec) <= self.obs_dist:
             ## sample around the true belief, with extremely low variation / error
@@ -320,7 +320,7 @@ class NoVIObstacleObservationModel(ObservationModel):
             ## sample from prior dist -- have no additional knowledge, don't read it
             samps['obs1'] = pyro.sample('obs1.'+str(active_ts[0]), dist.MultivariateNormal((torch.zeros((2,))).to(DEVICE), 0.01 * torch.eye(2).to(DEVICE)))
 
-        mod_targ = torch.sign(b_global_samp_targ.detach().to('cpu')) * (torch.abs(b_global_samp_targ.detach().to('cpu')) + torch.tensor([8.0, 0.0]))
+        mod_targ = torch.sign(b_global_samp_targ.detach().to('cpu')) * (torch.abs(b_global_samp_targ.detach().to('cpu')))
         rel_vec = mod_targ - params['pr2'].pose[:,active_ts[1]-1]
         if self.is_in_ray(params['pr2'].theta[0,active_ts[1]-1], rel_vec) and np.linalg.norm(rel_vec) <= self.obs_dist:
             ## sample around the true belief, with extremely low variation / error

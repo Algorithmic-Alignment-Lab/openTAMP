@@ -19,8 +19,8 @@ class GymEnvNav(Env):
 
     def assemble_dist(self):
         weights = torch.tensor([0.6,0.4])
-        locs = torch.tensor([[3., 0.],
-                             [-3., 0.]])
+        locs = torch.tensor([[4., 0.],
+                             [4., 0.]])
         scales = torch.tensor([1.0, 1.0])
         cat_dist = distros.Categorical(probs=weights)
         stack_eye = torch.tile(torch.eye(2).unsqueeze(dim=0), dims=(2, 1, 1))
@@ -30,8 +30,8 @@ class GymEnvNav(Env):
         obs_dist = distros.MixtureSameFamily(cat_dist, batched_multivar)
 
         weights = torch.tensor([0.6,0.4])
-        locs = torch.tensor([[8., 0.],
-                             [8., 0.]])
+        locs = torch.tensor([[12., 0.],
+                             [12., 0.]])
         scales = torch.tensor([1.0, 1.0])
         cat_dist = distros.Categorical(probs=weights)
         stack_eye = torch.tile(torch.eye(2).unsqueeze(dim=0), dims=(2, 1, 1))

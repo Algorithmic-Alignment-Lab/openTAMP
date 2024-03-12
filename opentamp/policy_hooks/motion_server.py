@@ -183,6 +183,10 @@ class MotionServer(Server):
                     planned_obs[param.name] = node.belief_true[param.name]
                 else:
                     planned_obs[param.name] = param.belief.samples[new_goal_idx,:,0]
+
+            self.config['postproc_assumed_goal'](planned_obs)
+
+            for param in plan.belief_params:
                 if param.is_symbol():
                     param.value[:, 0] = planned_obs[param.name].detach().numpy()
                 else:
@@ -359,7 +363,9 @@ class MotionServer(Server):
               node._trace, 
               prev_t,)
 
-        if not node.hl and not node.gen_child(): return
+        if not node.hl and not node.gen_child(): 
+            print('RETURNING EARLY!')
+            return
 
 
         breakpoint()
@@ -382,13 +388,17 @@ class MotionServer(Server):
                     for param in plan.belief_params:
                         ## set new assumed value for planning to sample from belief -- random choice
                         if self._hyperparams['assume_true']:
-                            new_assumed_goal[param.name] = node.belief_true[param.name]
+                            new_assumed_goal[param.name] = node.belief_true[param.name].detach().numpy()
                         else:
-                            new_assumed_goal[param.name] = param.belief.samples[new_goal_idx,:,a.active_timesteps[0]]
+                            new_assumed_goal[param.name] = param.belief.samples[new_goal_idx,:,a.active_timesteps[0]].detach().numpy()
+
+                    self.config['postproc_assumed_goal'](new_assumed_goal)
+
+                    for param in plan.belief_params:
                         if param.is_symbol():
                             param.value[:, 0] = new_assumed_goal[param.name]
                         else:
-                            param.pose[:, a.active_timesteps[0]] = new_assumed_goal[param.name].detach().numpy()
+                            param.pose[:, a.active_timesteps[0]] = new_assumed_goal[param.name]
 
                         new_assumed_goal[param.name] = torch.tensor(new_assumed_goal[param.name])
                     node.replan_start = anum

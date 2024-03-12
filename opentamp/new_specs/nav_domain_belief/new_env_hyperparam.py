@@ -120,6 +120,11 @@ def rollout_fill_method(path, agent):
 def rollout_terminate_cond(task_idx):
     return task_idx == 0
 
+def postproc_assumed_goal(new_goal):
+    # new_goal['obs1'] = np.sign(new_goal['obs1']) * (np.abs(new_goal['obs1']) + np.array([3.0, 0.0]))
+    # new_goal['target1'] = np.sign(new_goal['target1']) * (np.abs(new_goal['target1']) + np.array([8.0, 0.0]))
+    pass
+
 def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
     # cost_wp_mult = np.ones((3 + 2 * NUM_OBJS))
     prob.NUM_OBJS = no
@@ -253,7 +258,8 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
         'prim_first_wt': 1e1,
         'sample_fill_method': sample_fill_method,
         'rollout_fill_method': rollout_fill_method,
-        'rollout_terminate_cond': rollout_terminate_cond
+        'rollout_terminate_cond': rollout_terminate_cond,
+        'postproc_assumed_goal': postproc_assumed_goal
         # 'll_loss_fn': F.l1_loss,
         # 'cont_loss_fn': F.l1_loss,
     }

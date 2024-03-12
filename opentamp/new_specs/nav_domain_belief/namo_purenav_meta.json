@@ -36,6 +36,8 @@
         "CompletedMovement": ["Robot"],
         "PathClear": ["Robot", "Target", "Obstacle"],
         "CertainTarget": ["Target"],
-        "ConfirmedTarget": ["Target"]
+        "ConfirmedTarget": ["Target"],
+        "PointingAtOrigin": ["Robot"],
+        "RobotAtOrigin": ["Robot"]
     }
 }
