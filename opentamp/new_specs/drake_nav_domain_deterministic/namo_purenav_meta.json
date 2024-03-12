@@ -1,0 +1,24 @@
+{
+    "types": ["Robot", "Target", "Obstacle"],
+    "attribute_imports": {
+        "opentamp.core.util_classes.matrix": ["Vector1d", "Vector2d"],
+        "opentamp.core.util_classes.beliefs": ["Isotropic2DGaussianPrior"]
+    },
+    "predicates_import_path": "opentamp.core.util_classes.namo_grip_predicates",
+    "type_attrs": {
+        "Target": {
+            "value": "Vector2d"
+        },
+        "Obstacle": {
+            "value": "Vector2d"
+        },
+        "Robot": {
+            "pose": "Vector2d"
+        }
+    },
+    "predicates": {
+        "RobotAtTarget": ["Robot", "Target"],
+        "IsMP": ["Robot"],
+        "AvoidObs": ["Robot", "Obstacle"]
+    }
+}

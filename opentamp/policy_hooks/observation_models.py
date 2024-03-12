@@ -69,6 +69,7 @@ class PointerObservationModel(ObservationModel):
             stack_scale = torch.tile(scales[assignment].unsqueeze(dim=1).unsqueeze(dim=2), dims=(1, 2, 2))
             cov_tensor = (stack_eye * stack_scale)
             pyro.sample("belief_global"+str(os.getpid()), dist.MultivariateNormal(locs[assignment], cov_tensor), obs=data)
+ 
 
     def forward_model(self, params, active_ts, provided_state=None, past_obs={}):        
         ray_width = np.pi / 4  ## has 45-degree field of view on either side
@@ -92,7 +93,9 @@ class PointerObservationModel(ObservationModel):
             b_global_samp = provided_state['target1']
         else:
             ## sample from current Gaussian mixture model
-            b_global_samp = pyro.sample('belief_global', mix_dist)
+            #b_global_samp = pyro.sample('belief_global', mix_dist)
+            b_global_samp = pyro.sample('belief_target1', mix_dist)
+        
         
         samps = {}
 

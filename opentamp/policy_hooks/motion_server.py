@@ -368,50 +368,47 @@ class MotionServer(Server):
             return
 
 
-        breakpoint()
+        #breakpoint()
         n_problem = node.get_problem(fail_step, fail_pred, fail_negated)
         abs_prob = self.agent.hl_solver.translate_problem(n_problem, goal=node.concr_prob.goal)
         prefix = node.curr_plan.prefix(fail_step)
 
         # if failed, modify belief predicates
-        if fail_pred:
-            for anum in range(len(plan.actions)):
-                a = plan.actions[anum]
-                new_assumed_goal = {}
+        if len(plan.belief_params) > 0: 
+            if fail_pred:
+                for anum in range(len(plan.actions)):
+                    a = plan.actions[anum]
+                    new_assumed_goal = {}
 
-                ## reset the true state planned to be a random one, with consistent index across samples
-                # new_goal_idx = np.random.randint(0, param.belief.samples.shape[0])
-                unnorm_loglikelihood = plan.observation_model.get_unnorm_obs_log_likelihood(plan.params, node.conditioned_obs, fail_step)
-                new_goal_idx = torch.argmax(unnorm_loglikelihood).item()
+                    ## reset the true state planned to be a random one, with consistent index across samples
+                    # new_goal_idx = np.random.randint(0, param.belief.samples.shape[0])
+                    unnorm_loglikelihood = plan.observation_model.get_unnorm_obs_log_likelihood(plan.params, node.conditioned_obs, fail_step)
+                    new_goal_idx = torch.argmax(unnorm_loglikelihood).item()
 
-                if a.active_timesteps[0] <= fail_step and fail_step < a.active_timesteps[1]:
-                    for param in plan.belief_params:
-                        ## set new assumed value for planning to sample from belief -- random choice
-                        if self._hyperparams['assume_true']:
-                            new_assumed_goal[param.name] = node.belief_true[param.name].detach().numpy()
-                        else:
-                            new_assumed_goal[param.name] = param.belief.samples[new_goal_idx,:,a.active_timesteps[0]].detach().numpy()
+                    if a.active_timesteps[0] <= fail_step and fail_step < a.active_timesteps[1]:
+                        for param in plan.belief_params:
+                            ## set new assumed value for planning to sample from belief -- random choice
+                            if self._hyperparams['assume_true']:
+                                new_assumed_goal[param.name] = node.belief_true[param.name]
+                            else:
+                                new_assumed_goal[param.name] = param.belief.samples[new_goal_idx,:,a.active_timesteps[0]]
+                            if param.is_symbol():
+                                param.value[:, 0] = new_assumed_goal[param.name]
+                            else:
+                                param.pose[:, a.active_timesteps[0]] = new_assumed_goal[param.name].detach().numpy()
 
-                    self.config['postproc_assumed_goal'](new_assumed_goal)
+                            new_assumed_goal[param.name] = torch.tensor(new_assumed_goal[param.name])
+                        node.replan_start = anum
 
-                    for param in plan.belief_params:
-                        if param.is_symbol():
-                            param.value[:, 0] = new_assumed_goal[param.name]
-                        else:
-                            param.pose[:, a.active_timesteps[0]] = new_assumed_goal[param.name]
+                        ## populate with new goal
+                        plan.observation_model.set_active_planned_observations(new_assumed_goal)
 
-                        new_assumed_goal[param.name] = torch.tensor(new_assumed_goal[param.name])
-                    node.replan_start = anum
-
-                     ## populate with new goal
-                    plan.observation_model.set_active_planned_observations(new_assumed_goal)
-
-                for pred_dict in a.preds:
-                    ## disable optimistic actions for planning (ones that can change with random effects)
-                    if (pred_dict['active_timesteps'][0] < fail_step and fail_step <= pred_dict['active_timesteps'][1]) and pred_dict['pred'].optimistic:
-                        ## disable the predicate by using no-eval notation
-                        pred_dict['active_timesteps'] = (pred_dict['active_timesteps'][0], pred_dict['active_timesteps'][0]-1)
-                        pred_dict['pred'].active_range = (pred_dict['pred'].active_range[0], pred_dict['pred'].active_range[0]-1)
+                    for pred_dict in a.preds:
+                        ## disable optimistic actions for planning (ones that can change with random effects)
+                        if (pred_dict['active_timesteps'][0] < fail_step and fail_step <= pred_dict['active_timesteps'][1]) and pred_dict['pred'].optimistic:
+                            ## disable the predicate by using no-eval notation
+                            pred_dict['active_timesteps'] = (pred_dict['active_timesteps'][0], pred_dict['active_timesteps'][0]-1)
+                            pred_dict['pred'].active_range = (pred_dict['pred'].active_range[0], pred_dict['pred'].active_range[0]-1)
 
         hlnode = HLSearchNode(abs_prob,
                              node.domain,

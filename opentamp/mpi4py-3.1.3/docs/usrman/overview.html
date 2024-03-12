@@ -1,0 +1,531 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Overview &#8212; MPI for Python 3.1.3 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/classic.css" />
+    
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Tutorial" href="tutorial.html" />
+    <link rel="prev" title="Introduction" href="intro.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tutorial.html" title="Tutorial"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="intro.html" title="Introduction"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">MPI for Python 3.1.3 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Overview</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="overview">
+<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
+<p>MPI for Python provides an object oriented approach to message passing
+which grounds on the standard MPI-2 C++ bindings. The interface was
+designed with focus in translating MPI syntax and semantics of
+standard MPI-2 bindings for C++ to Python. Any user of the standard
+C/C++ MPI bindings should be able to use this module without need of
+learning a new interface.</p>
+<section id="communicating-python-objects-and-array-data">
+<h2>Communicating Python Objects and Array Data<a class="headerlink" href="#communicating-python-objects-and-array-data" title="Permalink to this headline">¶</a></h2>
+<p>The Python standard library supports different mechanisms for data
+persistence. Many of them rely on disk storage, but <em>pickling</em> and
+<em>marshaling</em> can also work with memory buffers.</p>
+<p>The <a class="reference external" href="https://docs.python.org/3/library/pickle.html#module-pickle" title="(in Python v3.10)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code></a> modules provide user-extensible facilities to
+serialize general Python objects using ASCII or binary formats. The
+<a class="reference external" href="https://docs.python.org/3/library/marshal.html#module-marshal" title="(in Python v3.10)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">marshal</span></code></a> module provides facilities to serialize built-in Python
+objects using a binary format specific to Python, but independent of
+machine architecture issues.</p>
+<p><em>MPI for Python</em> can communicate any built-in or user-defined Python
+object taking advantage of the features provided by the <a class="reference external" href="https://docs.python.org/3/library/pickle.html#module-pickle" title="(in Python v3.10)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code></a>
+module. These facilities will be routinely used to build binary
+representations of objects to communicate (at sending processes), and
+restoring them back (at receiving processes).</p>
+<p>Although simple and general, the serialization approach (i.e.,
+<em>pickling</em> and <em>unpickling</em>) previously discussed imposes important
+overheads in memory as well as processor usage, especially in the
+scenario of objects with large memory footprints being
+communicated. Pickling general Python objects, ranging from primitive
+or container built-in types to user-defined classes, necessarily
+requires computer resources.  Processing is also needed for
+dispatching the appropriate serialization method (that depends on the
+type of the object) and doing the actual packing. Additional memory is
+always needed, and if its total amount is not known <em>a priori</em>, many
+reallocations can occur.  Indeed, in the case of large numeric arrays,
+this is certainly unacceptable and precludes communication of objects
+occupying half or more of the available memory resources.</p>
+<p><em>MPI for Python</em> supports direct communication of any object exporting
+the single-segment buffer interface. This interface is a standard
+Python mechanism provided by some types (e.g., strings and numeric
+arrays), allowing access in the C side to a contiguous memory buffer
+(i.e., address and length) containing the relevant data. This feature,
+in conjunction with the capability of constructing user-defined MPI
+datatypes describing complicated memory layouts, enables the
+implementation of many algorithms involving multidimensional numeric
+arrays (e.g., image processing, fast Fourier transforms, finite
+difference schemes on structured Cartesian grids) directly in Python,
+with negligible overhead, and almost as fast as compiled Fortran, C,
+or C++ codes.</p>
+</section>
+<section id="communicators">
+<h2>Communicators<a class="headerlink" href="#communicators" title="Permalink to this headline">¶</a></h2>
+<p>In <em>MPI for Python</em>, <a class="reference internal" href="reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm" title="mpi4py.MPI.Comm"><code class="xref any py py-class docutils literal notranslate"><span class="pre">Comm</span></code></a> is the base class of communicators. The
+<a class="reference internal" href="reference/mpi4py.MPI.Intracomm.html#mpi4py.MPI.Intracomm" title="mpi4py.MPI.Intracomm"><code class="xref any py py-class docutils literal notranslate"><span class="pre">Intracomm</span></code></a> and <a class="reference internal" href="reference/mpi4py.MPI.Intercomm.html#mpi4py.MPI.Intercomm" title="mpi4py.MPI.Intercomm"><code class="xref any py py-class docutils literal notranslate"><span class="pre">Intercomm</span></code></a> classes are sublcasses of the <a class="reference internal" href="reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm" title="mpi4py.MPI.Comm"><code class="xref any py py-class docutils literal notranslate"><span class="pre">Comm</span></code></a>
+class.  The <a class="reference internal" href="reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.Is_inter" title="mpi4py.MPI.Comm.Is_inter"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Comm.Is_inter</span></code></a> method (and <a class="reference internal" href="reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.Is_intra" title="mpi4py.MPI.Comm.Is_intra"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Comm.Is_intra</span></code></a>, provided for
+convenience but not part of the MPI specification) is defined for
+communicator objects and can be used to determine the particular
+communicator class.</p>
+<p>The two predefined intracommunicator instances are available:
+<a class="reference internal" href="reference/mpi4py.MPI.COMM_SELF.html#mpi4py.MPI.COMM_SELF" title="mpi4py.MPI.COMM_SELF"><code class="xref any py py-data docutils literal notranslate"><span class="pre">COMM_SELF</span></code></a> and <a class="reference internal" href="reference/mpi4py.MPI.COMM_WORLD.html#mpi4py.MPI.COMM_WORLD" title="mpi4py.MPI.COMM_WORLD"><code class="xref any py py-data docutils literal notranslate"><span class="pre">COMM_WORLD</span></code></a>. From them, new communicators can be
+created as needed.</p>
+<p>The number of processes in a communicator and the calling process rank
+can be respectively obtained with methods <a class="reference internal" href="reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.Get_size" title="mpi4py.MPI.Comm.Get_size"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Comm.Get_size</span></code></a> and
+<a class="reference internal" href="reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.Get_rank" title="mpi4py.MPI.Comm.Get_rank"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Comm.Get_rank</span></code></a>. The associated process group can be retrieved from a
+communicator by calling the <a class="reference internal" href="reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.Get_group" title="mpi4py.MPI.Comm.Get_group"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Comm.Get_group</span></code></a> method, which returns an
+instance of the <a class="reference internal" href="reference/mpi4py.MPI.Group.html#mpi4py.MPI.Group" title="mpi4py.MPI.Group"><code class="xref any py py-class docutils literal notranslate"><span class="pre">Group</span></code></a> class. Set operations with <a class="reference internal" href="reference/mpi4py.MPI.Group.html#mpi4py.MPI.Group" title="mpi4py.MPI.Group"><code class="xref any py py-class docutils literal notranslate"><span class="pre">Group</span></code></a> objects
+like like <a class="reference internal" href="reference/mpi4py.MPI.Group.html#mpi4py.MPI.Group.Union" title="mpi4py.MPI.Group.Union"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Group.Union</span></code></a>, <a class="reference internal" href="reference/mpi4py.MPI.Group.html#mpi4py.MPI.Group.Intersection" title="mpi4py.MPI.Group.Intersection"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Group.Intersection</span></code></a> and <a class="reference internal" href="reference/mpi4py.MPI.Group.html#mpi4py.MPI.Group.Difference" title="mpi4py.MPI.Group.Difference"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Group.Difference</span></code></a>
+are fully supported, as well as the creation of new communicators from
+these groups using <a class="reference internal" href="reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.Create" title="mpi4py.MPI.Comm.Create"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Comm.Create</span></code></a> and <a class="reference internal" href="reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.Create_group" title="mpi4py.MPI.Comm.Create_group"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Comm.Create_group</span></code></a>.</p>
+<p>New communicator instances can be obtained with the <a class="reference internal" href="reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.Clone" title="mpi4py.MPI.Comm.Clone"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Comm.Clone</span></code></a>,
+<a class="reference internal" href="reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.Dup" title="mpi4py.MPI.Comm.Dup"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Comm.Dup</span></code></a> and <a class="reference internal" href="reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.Split" title="mpi4py.MPI.Comm.Split"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Comm.Split</span></code></a> methods, as well methods
+<a class="reference internal" href="reference/mpi4py.MPI.Intracomm.html#mpi4py.MPI.Intracomm.Create_intercomm" title="mpi4py.MPI.Intracomm.Create_intercomm"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Intracomm.Create_intercomm</span></code></a> and <a class="reference internal" href="reference/mpi4py.MPI.Intercomm.html#mpi4py.MPI.Intercomm.Merge" title="mpi4py.MPI.Intercomm.Merge"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Intercomm.Merge</span></code></a>.</p>
+<p>Virtual topologies (<a class="reference internal" href="reference/mpi4py.MPI.Cartcomm.html#mpi4py.MPI.Cartcomm" title="mpi4py.MPI.Cartcomm"><code class="xref any py py-class docutils literal notranslate"><span class="pre">Cartcomm</span></code></a>, <a class="reference internal" href="reference/mpi4py.MPI.Graphcomm.html#mpi4py.MPI.Graphcomm" title="mpi4py.MPI.Graphcomm"><code class="xref any py py-class docutils literal notranslate"><span class="pre">Graphcomm</span></code></a> and <a class="reference internal" href="reference/mpi4py.MPI.Distgraphcomm.html#mpi4py.MPI.Distgraphcomm" title="mpi4py.MPI.Distgraphcomm"><code class="xref any py py-class docutils literal notranslate"><span class="pre">Distgraphcomm</span></code></a>
+classes, which are specializations of the <a class="reference internal" href="reference/mpi4py.MPI.Intracomm.html#mpi4py.MPI.Intracomm" title="mpi4py.MPI.Intracomm"><code class="xref any py py-class docutils literal notranslate"><span class="pre">Intracomm</span></code></a> class) are fully
+supported. New instances can be obtained from intracommunicator
+instances with factory methods <a class="reference internal" href="reference/mpi4py.MPI.Intracomm.html#mpi4py.MPI.Intracomm.Create_cart" title="mpi4py.MPI.Intracomm.Create_cart"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Intracomm.Create_cart</span></code></a> and
+<a class="reference internal" href="reference/mpi4py.MPI.Intracomm.html#mpi4py.MPI.Intracomm.Create_graph" title="mpi4py.MPI.Intracomm.Create_graph"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Intracomm.Create_graph</span></code></a>.</p>
+</section>
+<section id="point-to-point-communications">
+<h2>Point-to-Point Communications<a class="headerlink" href="#point-to-point-communications" title="Permalink to this headline">¶</a></h2>
+<p>Point to point communication is a fundamental capability of message
+passing systems. This mechanism enables the transmission of data
+between a pair of processes, one side sending, the other receiving.</p>
+<p>MPI provides a set of <em>send</em> and <em>receive</em> functions allowing the
+communication of <em>typed</em> data with an associated <em>tag</em>.  The type
+information enables the conversion of data representation from one
+architecture to another in the case of heterogeneous computing
+environments; additionally, it allows the representation of
+non-contiguous data layouts and user-defined datatypes, thus avoiding
+the overhead of (otherwise unavoidable) packing/unpacking
+operations. The tag information allows selectivity of messages at the
+receiving end.</p>
+<section id="blocking-communications">
+<h3>Blocking Communications<a class="headerlink" href="#blocking-communications" title="Permalink to this headline">¶</a></h3>
+<p>MPI provides basic send and receive functions that are <em>blocking</em>.
+These functions block the caller until the data buffers involved in
+the communication can be safely reused by the application program.</p>
+<p>In <em>MPI for Python</em>, the <a class="reference internal" href="reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.Send" title="mpi4py.MPI.Comm.Send"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Comm.Send</span></code></a>, <a class="reference internal" href="reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.Recv" title="mpi4py.MPI.Comm.Recv"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Comm.Recv</span></code></a> and <a class="reference internal" href="reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.Sendrecv" title="mpi4py.MPI.Comm.Sendrecv"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Comm.Sendrecv</span></code></a>
+methods of communicator objects provide support for blocking
+point-to-point communications within <a class="reference internal" href="reference/mpi4py.MPI.Intracomm.html#mpi4py.MPI.Intracomm" title="mpi4py.MPI.Intracomm"><code class="xref any py py-class docutils literal notranslate"><span class="pre">Intracomm</span></code></a> and <a class="reference internal" href="reference/mpi4py.MPI.Intercomm.html#mpi4py.MPI.Intercomm" title="mpi4py.MPI.Intercomm"><code class="xref any py py-class docutils literal notranslate"><span class="pre">Intercomm</span></code></a>
+instances. These methods can communicate memory buffers. The variants
+<a class="reference internal" href="reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.send" title="mpi4py.MPI.Comm.send"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Comm.send</span></code></a>, <a class="reference internal" href="reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.recv" title="mpi4py.MPI.Comm.recv"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Comm.recv</span></code></a> and <a class="reference internal" href="reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.sendrecv" title="mpi4py.MPI.Comm.sendrecv"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Comm.sendrecv</span></code></a> can communicate general
+Python objects.</p>
+</section>
+<section id="nonblocking-communications">
+<h3>Nonblocking Communications<a class="headerlink" href="#nonblocking-communications" title="Permalink to this headline">¶</a></h3>
+<p>On many systems, performance can be significantly increased by
+overlapping communication and computation. This is particularly true
+on systems where communication can be executed autonomously by an
+intelligent, dedicated communication controller.</p>
+<p>MPI provides <em>nonblocking</em> send and receive functions. They allow the
+possible overlap of communication and computation.  Non-blocking
+communication always come in two parts: posting functions, which begin
+the requested operation; and test-for-completion functions, which
+allow to discover whether the requested operation has completed.</p>
+<p>In <em>MPI for Python</em>, the <a class="reference internal" href="reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.Isend" title="mpi4py.MPI.Comm.Isend"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Comm.Isend</span></code></a> and <a class="reference internal" href="reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.Irecv" title="mpi4py.MPI.Comm.Irecv"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Comm.Irecv</span></code></a> methods
+initiate send and receive operations, respectively. These methods
+return a <a class="reference internal" href="reference/mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request"><code class="xref any py py-class docutils literal notranslate"><span class="pre">Request</span></code></a> instance, uniquely identifying the started
+operation.  Its completion can be managed using the <a class="reference internal" href="reference/mpi4py.MPI.Request.html#mpi4py.MPI.Request.Test" title="mpi4py.MPI.Request.Test"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Request.Test</span></code></a>,
+<a class="reference internal" href="reference/mpi4py.MPI.Request.html#mpi4py.MPI.Request.Wait" title="mpi4py.MPI.Request.Wait"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Request.Wait</span></code></a> and <a class="reference internal" href="reference/mpi4py.MPI.Request.html#mpi4py.MPI.Request.Cancel" title="mpi4py.MPI.Request.Cancel"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Request.Cancel</span></code></a> methods. The management of
+<a class="reference internal" href="reference/mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request"><code class="xref any py py-class docutils literal notranslate"><span class="pre">Request</span></code></a> objects and associated memory buffers involved in
+communication requires a careful, rather low-level coordination. Users
+must ensure that objects exposing their memory buffers are not
+accessed at the Python level while they are involved in nonblocking
+message-passing operations.</p>
+</section>
+<section id="persistent-communications">
+<h3>Persistent Communications<a class="headerlink" href="#persistent-communications" title="Permalink to this headline">¶</a></h3>
+<p>Often a communication with the same argument list is repeatedly
+executed within an inner loop. In such cases, communication can be
+further optimized by using persistent communication, a particular case
+of nonblocking communication allowing the reduction of the overhead
+between processes and communication controllers. Furthermore , this
+kind of optimization can also alleviate the extra call overheads
+associated to interpreted, dynamic languages like Python.</p>
+<p>In <em>MPI for Python</em>, the <a class="reference internal" href="reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.Send_init" title="mpi4py.MPI.Comm.Send_init"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Comm.Send_init</span></code></a> and <a class="reference internal" href="reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.Recv_init" title="mpi4py.MPI.Comm.Recv_init"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Comm.Recv_init</span></code></a> methods
+create persistent requests for a send and receive operation,
+respectively.  These methods return an instance of the <a class="reference internal" href="reference/mpi4py.MPI.Prequest.html#mpi4py.MPI.Prequest" title="mpi4py.MPI.Prequest"><code class="xref any py py-class docutils literal notranslate"><span class="pre">Prequest</span></code></a>
+class, a subclass of the <a class="reference internal" href="reference/mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request"><code class="xref any py py-class docutils literal notranslate"><span class="pre">Request</span></code></a> class. The actual communication can
+be effectively started using the <a class="reference internal" href="reference/mpi4py.MPI.Prequest.html#mpi4py.MPI.Prequest.Start" title="mpi4py.MPI.Prequest.Start"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Prequest.Start</span></code></a> method, and its
+completion can be managed as previously described.</p>
+</section>
+</section>
+<section id="collective-communications">
+<h2>Collective Communications<a class="headerlink" href="#collective-communications" title="Permalink to this headline">¶</a></h2>
+<p>Collective communications allow the transmittal of data between
+multiple processes of a group simultaneously. The syntax and semantics
+of collective functions is consistent with point-to-point
+communication. Collective functions communicate <em>typed</em> data, but
+messages are not paired with an associated <em>tag</em>; selectivity of
+messages is implied in the calling order. Additionally, collective
+functions come in blocking versions only.</p>
+<p>The more commonly used collective communication operations are the
+following.</p>
+<ul class="simple">
+<li><p>Barrier synchronization across all group members.</p></li>
+<li><p>Global communication functions</p>
+<ul>
+<li><p>Broadcast data from one member to all members of a group.</p></li>
+<li><p>Gather data from all members to one member of a group.</p></li>
+<li><p>Scatter data from one member to all members of a group.</p></li>
+</ul>
+</li>
+<li><p>Global reduction operations such as sum, maximum, minimum, etc.</p></li>
+</ul>
+<p>In <em>MPI for Python</em>, the <a class="reference internal" href="reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.Bcast" title="mpi4py.MPI.Comm.Bcast"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Comm.Bcast</span></code></a>, <a class="reference internal" href="reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.Scatter" title="mpi4py.MPI.Comm.Scatter"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Comm.Scatter</span></code></a>, <a class="reference internal" href="reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.Gather" title="mpi4py.MPI.Comm.Gather"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Comm.Gather</span></code></a>,
+<a class="reference internal" href="reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.Allgather" title="mpi4py.MPI.Comm.Allgather"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Comm.Allgather</span></code></a>, <a class="reference internal" href="reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.Alltoall" title="mpi4py.MPI.Comm.Alltoall"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Comm.Alltoall</span></code></a> methods provide support for
+collective communications of memory buffers. The lower-case variants
+<a class="reference internal" href="reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.bcast" title="mpi4py.MPI.Comm.bcast"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Comm.bcast</span></code></a>, <a class="reference internal" href="reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.scatter" title="mpi4py.MPI.Comm.scatter"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Comm.scatter</span></code></a>, <a class="reference internal" href="reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.gather" title="mpi4py.MPI.Comm.gather"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Comm.gather</span></code></a>, <a class="reference internal" href="reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.allgather" title="mpi4py.MPI.Comm.allgather"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Comm.allgather</span></code></a> and
+<a class="reference internal" href="reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.alltoall" title="mpi4py.MPI.Comm.alltoall"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Comm.alltoall</span></code></a> can communicate general Python objects.  The vector
+variants (which can communicate different amounts of data to each
+process) <a class="reference internal" href="reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.Scatterv" title="mpi4py.MPI.Comm.Scatterv"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Comm.Scatterv</span></code></a>, <a class="reference internal" href="reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.Gatherv" title="mpi4py.MPI.Comm.Gatherv"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Comm.Gatherv</span></code></a>, <a class="reference internal" href="reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.Allgatherv" title="mpi4py.MPI.Comm.Allgatherv"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Comm.Allgatherv</span></code></a>,
+<a class="reference internal" href="reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.Alltoallv" title="mpi4py.MPI.Comm.Alltoallv"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Comm.Alltoallv</span></code></a> and <a class="reference internal" href="reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.Alltoallw" title="mpi4py.MPI.Comm.Alltoallw"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Comm.Alltoallw</span></code></a> are also supported, they can
+only communicate objects exposing memory buffers.</p>
+<p>Global reducion operations on memory buffers are accessible through
+the <a class="reference internal" href="reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.Reduce" title="mpi4py.MPI.Comm.Reduce"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Comm.Reduce</span></code></a>, <a class="reference internal" href="reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.Reduce_scatter" title="mpi4py.MPI.Comm.Reduce_scatter"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Comm.Reduce_scatter</span></code></a>, <a class="reference internal" href="reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.Allreduce" title="mpi4py.MPI.Comm.Allreduce"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Comm.Allreduce</span></code></a>,
+<a class="reference internal" href="reference/mpi4py.MPI.Intracomm.html#mpi4py.MPI.Intracomm.Scan" title="mpi4py.MPI.Intracomm.Scan"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Intracomm.Scan</span></code></a> and <a class="reference internal" href="reference/mpi4py.MPI.Intracomm.html#mpi4py.MPI.Intracomm.Exscan" title="mpi4py.MPI.Intracomm.Exscan"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Intracomm.Exscan</span></code></a> methods. The lower-case
+variants <a class="reference internal" href="reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.reduce" title="mpi4py.MPI.Comm.reduce"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Comm.reduce</span></code></a>, <a class="reference internal" href="reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.allreduce" title="mpi4py.MPI.Comm.allreduce"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Comm.allreduce</span></code></a>, <a class="reference internal" href="reference/mpi4py.MPI.Intracomm.html#mpi4py.MPI.Intracomm.scan" title="mpi4py.MPI.Intracomm.scan"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Intracomm.scan</span></code></a> and
+<a class="reference internal" href="reference/mpi4py.MPI.Intracomm.html#mpi4py.MPI.Intracomm.exscan" title="mpi4py.MPI.Intracomm.exscan"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Intracomm.exscan</span></code></a> can communicate general Python objects; however,
+the actual required reduction computations are performed sequentially
+at some process. All the predefined (i.e., <a class="reference internal" href="reference/mpi4py.MPI.SUM.html#mpi4py.MPI.SUM" title="mpi4py.MPI.SUM"><code class="xref any py py-data docutils literal notranslate"><span class="pre">SUM</span></code></a>, <a class="reference internal" href="reference/mpi4py.MPI.PROD.html#mpi4py.MPI.PROD" title="mpi4py.MPI.PROD"><code class="xref any py py-data docutils literal notranslate"><span class="pre">PROD</span></code></a>, <a class="reference internal" href="reference/mpi4py.MPI.MAX.html#mpi4py.MPI.MAX" title="mpi4py.MPI.MAX"><code class="xref any py py-data docutils literal notranslate"><span class="pre">MAX</span></code></a>, etc.)
+reduction operations can be applied.</p>
+</section>
+<section id="support-for-gpu-aware-mpi">
+<h2>Support for GPU-aware MPI<a class="headerlink" href="#support-for-gpu-aware-mpi" title="Permalink to this headline">¶</a></h2>
+<p>Several MPI implementations, including Open MPI and MVAPICH, support
+passing GPU pointers to MPI calls to avoid explict data movement
+between the host and the device. On the Python side, GPU arrays have
+been implemented by many libraries that need GPU computation, such as
+CuPy, Numba, PyTorch, and PyArrow. In order to increase library
+interoperability, two kinds of zero-copy data exchange protocols are
+defined and agreed upon: <a class="reference external" href="https://data-apis.org/array-api/latest/design_topics/data_interchange.html">DLPack</a> and <a class="reference external" href="https://numba.readthedocs.io/en/stable/cuda/cuda_array_interface.html">CUDA Array Interface</a>. For
+example, a CuPy array can be passed to a Numba CUDA-jit kernel.</p>
+<p><em>MPI for Python</em> provides an experimental support for GPU-aware MPI.
+This feature requires:</p>
+<ol class="arabic simple">
+<li><p>mpi4py is built against a GPU-aware MPI library.</p></li>
+<li><p>The Python GPU arrays are compliant with either of the protocols.</p></li>
+</ol>
+<p>See the <a class="reference internal" href="tutorial.html"><span class="doc">Tutorial</span></a> section for further information. We note that</p>
+<ul class="simple">
+<li><p>Whether or not a MPI call can work for GPU arrays depends on the
+underlying MPI implementation, not on mpi4py.</p></li>
+<li><p>This support is currently experimental and subject to change in the
+future.</p></li>
+</ul>
+</section>
+<section id="dynamic-process-management">
+<h2>Dynamic Process Management<a class="headerlink" href="#dynamic-process-management" title="Permalink to this headline">¶</a></h2>
+<p>In the context of the MPI-1 specification, a parallel application is
+static; that is, no processes can be added to or deleted from a
+running application after it has been started. Fortunately, this
+limitation was addressed in MPI-2. The new specification added a
+process management model providing a basic interface between an
+application and external resources and process managers.</p>
+<p>This MPI-2 extension can be really useful, especially for sequential
+applications built on top of parallel modules, or parallel
+applications with a client/server model. The MPI-2 process model
+provides a mechanism to create new processes and establish
+communication between them and the existing MPI application. It also
+provides mechanisms to establish communication between two existing
+MPI applications, even when one did not <em>start</em> the other.</p>
+<p>In <em>MPI for Python</em>, new independent process groups can be created by
+calling the <a class="reference internal" href="reference/mpi4py.MPI.Intracomm.html#mpi4py.MPI.Intracomm.Spawn" title="mpi4py.MPI.Intracomm.Spawn"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Intracomm.Spawn</span></code></a> method within an intracommunicator.
+This call returns a new intercommunicator (i.e., an <a class="reference internal" href="reference/mpi4py.MPI.Intercomm.html#mpi4py.MPI.Intercomm" title="mpi4py.MPI.Intercomm"><code class="xref any py py-class docutils literal notranslate"><span class="pre">Intercomm</span></code></a>
+instance) at the parent process group. The child process group can
+retrieve the matching intercommunicator by calling the
+<a class="reference internal" href="reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.Get_parent" title="mpi4py.MPI.Comm.Get_parent"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Comm.Get_parent</span></code></a> class method. At each side, the new
+intercommunicator can be used to perform point to point and collective
+communications between the parent and child groups of processes.</p>
+<p>Alternatively, disjoint groups of processes can establish
+communication using a client/server approach. Any server application
+must first call the <a class="reference internal" href="reference/mpi4py.MPI.Open_port.html#mpi4py.MPI.Open_port" title="mpi4py.MPI.Open_port"><code class="xref any py py-func docutils literal notranslate"><span class="pre">Open_port</span></code></a> function to open a <em>port</em> and the
+<a class="reference internal" href="reference/mpi4py.MPI.Publish_name.html#mpi4py.MPI.Publish_name" title="mpi4py.MPI.Publish_name"><code class="xref any py py-func docutils literal notranslate"><span class="pre">Publish_name</span></code></a> function to publish a provided <em>service</em>, and next call
+the <a class="reference internal" href="reference/mpi4py.MPI.Intracomm.html#mpi4py.MPI.Intracomm.Accept" title="mpi4py.MPI.Intracomm.Accept"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Intracomm.Accept</span></code></a> method.  Any client applications can first find
+a published <em>service</em> by calling the <a class="reference internal" href="reference/mpi4py.MPI.Lookup_name.html#mpi4py.MPI.Lookup_name" title="mpi4py.MPI.Lookup_name"><code class="xref any py py-func docutils literal notranslate"><span class="pre">Lookup_name</span></code></a> function, which
+returns the <em>port</em> where a server can be contacted; and next call the
+<a class="reference internal" href="reference/mpi4py.MPI.Intracomm.html#mpi4py.MPI.Intracomm.Connect" title="mpi4py.MPI.Intracomm.Connect"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Intracomm.Connect</span></code></a> method. Both <a class="reference internal" href="reference/mpi4py.MPI.Intracomm.html#mpi4py.MPI.Intracomm.Accept" title="mpi4py.MPI.Intracomm.Accept"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Intracomm.Accept</span></code></a> and
+<a class="reference internal" href="reference/mpi4py.MPI.Intracomm.html#mpi4py.MPI.Intracomm.Connect" title="mpi4py.MPI.Intracomm.Connect"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Intracomm.Connect</span></code></a> methods return an <a class="reference internal" href="reference/mpi4py.MPI.Intercomm.html#mpi4py.MPI.Intercomm" title="mpi4py.MPI.Intercomm"><code class="xref any py py-class docutils literal notranslate"><span class="pre">Intercomm</span></code></a> instance. When
+connection between client/server processes is no longer needed, all of
+them must cooperatively call the <a class="reference internal" href="reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.Disconnect" title="mpi4py.MPI.Comm.Disconnect"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Comm.Disconnect</span></code></a>
+method. Additionally, server applications should release resources by
+calling the <a class="reference internal" href="reference/mpi4py.MPI.Unpublish_name.html#mpi4py.MPI.Unpublish_name" title="mpi4py.MPI.Unpublish_name"><code class="xref any py py-func docutils literal notranslate"><span class="pre">Unpublish_name</span></code></a> and <a class="reference internal" href="reference/mpi4py.MPI.Close_port.html#mpi4py.MPI.Close_port" title="mpi4py.MPI.Close_port"><code class="xref any py py-func docutils literal notranslate"><span class="pre">Close_port</span></code></a> functions.</p>
+</section>
+<section id="one-sided-communications">
+<h2>One-Sided Communications<a class="headerlink" href="#one-sided-communications" title="Permalink to this headline">¶</a></h2>
+<p>One-sided communications (also called <em>Remote Memory Access</em>, <em>RMA</em>)
+supplements the traditional two-sided, send/receive based MPI
+communication model with a one-sided, put/get based
+interface. One-sided communication that can take advantage of the
+capabilities of highly specialized network hardware. Additionally,
+this extension lowers latency and software overhead in applications
+written using a shared-memory-like paradigm.</p>
+<p>The MPI specification revolves around the use of objects called
+<em>windows</em>; they intuitively specify regions of a process’s memory that
+have been made available for remote read and write operations.  The
+published memory blocks can be accessed through three functions for
+put (remote send), get (remote write), and accumulate (remote update
+or reduction) data items. A much larger number of functions support
+different synchronization styles; the semantics of these
+synchronization operations are fairly complex.</p>
+<p>In <em>MPI for Python</em>, one-sided operations are available by using
+instances of the <a class="reference internal" href="reference/mpi4py.MPI.Win.html#mpi4py.MPI.Win" title="mpi4py.MPI.Win"><code class="xref any py py-class docutils literal notranslate"><span class="pre">Win</span></code></a> class. New window objects are created by
+calling the <a class="reference internal" href="reference/mpi4py.MPI.Win.html#mpi4py.MPI.Win.Create" title="mpi4py.MPI.Win.Create"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Win.Create</span></code></a> method at all processes within a communicator
+and specifying a memory buffer . When a window instance is no longer
+needed, the <a class="reference internal" href="reference/mpi4py.MPI.Win.html#mpi4py.MPI.Win.Free" title="mpi4py.MPI.Win.Free"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Win.Free</span></code></a> method should be called.</p>
+<p>The three one-sided MPI operations for remote write, read and
+reduction are available through calling the methods <a class="reference internal" href="reference/mpi4py.MPI.Win.html#mpi4py.MPI.Win.Put" title="mpi4py.MPI.Win.Put"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Win.Put</span></code></a>,
+<a class="reference internal" href="reference/mpi4py.MPI.Win.html#mpi4py.MPI.Win.Get" title="mpi4py.MPI.Win.Get"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Win.Get</span></code></a>, and <a class="reference internal" href="reference/mpi4py.MPI.Win.html#mpi4py.MPI.Win.Accumulate" title="mpi4py.MPI.Win.Accumulate"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Win.Accumulate</span></code></a> respectively within a <a class="reference internal" href="reference/mpi4py.MPI.Win.html#mpi4py.MPI.Win" title="mpi4py.MPI.Win"><code class="xref any py py-class docutils literal notranslate"><span class="pre">Win</span></code></a> instance.
+These methods need an integer rank identifying the target process and
+an integer offset relative the base address of the remote memory block
+being accessed.</p>
+<p>The one-sided operations read, write, and reduction are implicitly
+nonblocking, and must be synchronized by using two primary modes.
+Active target synchronization requires the origin process to call the
+<a class="reference internal" href="reference/mpi4py.MPI.Win.html#mpi4py.MPI.Win.Start" title="mpi4py.MPI.Win.Start"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Win.Start</span></code></a> and <a class="reference internal" href="reference/mpi4py.MPI.Win.html#mpi4py.MPI.Win.Complete" title="mpi4py.MPI.Win.Complete"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Win.Complete</span></code></a> methods at the origin process, and
+target process cooperates by calling the <a class="reference internal" href="reference/mpi4py.MPI.Win.html#mpi4py.MPI.Win.Post" title="mpi4py.MPI.Win.Post"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Win.Post</span></code></a> and <a class="reference internal" href="reference/mpi4py.MPI.Win.html#mpi4py.MPI.Win.Wait" title="mpi4py.MPI.Win.Wait"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Win.Wait</span></code></a>
+methods. There is also a collective variant provided by the
+<a class="reference internal" href="reference/mpi4py.MPI.Win.html#mpi4py.MPI.Win.Fence" title="mpi4py.MPI.Win.Fence"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Win.Fence</span></code></a> method. Passive target synchronization is more lenient,
+only the origin process calls the <a class="reference internal" href="reference/mpi4py.MPI.Win.html#mpi4py.MPI.Win.Lock" title="mpi4py.MPI.Win.Lock"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Win.Lock</span></code></a> and <a class="reference internal" href="reference/mpi4py.MPI.Win.html#mpi4py.MPI.Win.Unlock" title="mpi4py.MPI.Win.Unlock"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Win.Unlock</span></code></a>
+methods. Locks are used to protect remote accesses to the locked
+remote window and to protect local load/store accesses to a locked
+local window.</p>
+</section>
+<section id="parallel-input-output">
+<h2>Parallel Input/Output<a class="headerlink" href="#parallel-input-output" title="Permalink to this headline">¶</a></h2>
+<p>The POSIX standard provides a model of a widely portable file
+system. However, the optimization needed for parallel input/output
+cannot be achieved with this generic interface. In order to ensure
+efficiency and scalability, the underlying parallel input/output
+system must provide a high-level interface supporting partitioning of
+file data among processes and a collective interface supporting
+complete transfers of global data structures between process memories
+and files. Additionally, further efficiencies can be gained via
+support for asynchronous input/output, strided accesses to data, and
+control over physical file layout on storage devices. This scenario
+motivated the inclusion in the MPI-2 standard of a custom interface in
+order to support more elaborated parallel input/output operations.</p>
+<p>The MPI specification for parallel input/output revolves around the
+use objects called <em>files</em>. As defined by MPI, files are not just
+contiguous byte streams. Instead, they are regarded as ordered
+collections of <em>typed</em> data items. MPI supports sequential or random
+access to any integral set of these items. Furthermore, files are
+opened collectively by a group of processes.</p>
+<p>The common patterns for accessing a shared file (broadcast, scatter,
+gather, reduction) is expressed by using user-defined datatypes.
+Compared to the communication patterns of point-to-point and
+collective communications, this approach has the advantage of added
+flexibility and expressiveness. Data access operations (read and
+write) are defined for different kinds of positioning (using explicit
+offsets, individual file pointers, and shared file pointers),
+coordination (non-collective and collective), and synchronism
+(blocking, nonblocking, and split collective with begin/end phases).</p>
+<p>In <em>MPI for Python</em>, all MPI input/output operations are performed
+through instances of the <a class="reference internal" href="reference/mpi4py.MPI.File.html#mpi4py.MPI.File" title="mpi4py.MPI.File"><code class="xref any py py-class docutils literal notranslate"><span class="pre">File</span></code></a> class. File handles are obtained by
+calling the <a class="reference internal" href="reference/mpi4py.MPI.File.html#mpi4py.MPI.File.Open" title="mpi4py.MPI.File.Open"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">File.Open</span></code></a> method at all processes within a communicator
+and providing a file name and the intended access mode.  After use,
+they must be closed by calling the <a class="reference internal" href="reference/mpi4py.MPI.File.html#mpi4py.MPI.File.Close" title="mpi4py.MPI.File.Close"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">File.Close</span></code></a> method.  Files even
+can be deleted by calling method <a class="reference internal" href="reference/mpi4py.MPI.File.html#mpi4py.MPI.File.Delete" title="mpi4py.MPI.File.Delete"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">File.Delete</span></code></a>.</p>
+<p>After creation, files are typically associated with a per-process
+<em>view</em>. The view defines the current set of data visible and
+accessible from an open file as an ordered set of elementary
+datatypes. This data layout can be set and queried with the
+<a class="reference internal" href="reference/mpi4py.MPI.File.html#mpi4py.MPI.File.Set_view" title="mpi4py.MPI.File.Set_view"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">File.Set_view</span></code></a> and <a class="reference internal" href="reference/mpi4py.MPI.File.html#mpi4py.MPI.File.Get_view" title="mpi4py.MPI.File.Get_view"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">File.Get_view</span></code></a> methods respectively.</p>
+<p>Actual input/output operations are achieved by many methods combining
+read and write calls with different behavior regarding positioning,
+coordination, and synchronism. Summing up, <em>MPI for Python</em> provides
+the thirty (30) methods defined in MPI-2 for reading from or writing
+to files using explicit offsets or file pointers (individual or
+shared), in blocking or nonblocking and collective or noncollective
+versions.</p>
+</section>
+<section id="environmental-management">
+<h2>Environmental Management<a class="headerlink" href="#environmental-management" title="Permalink to this headline">¶</a></h2>
+<section id="initialization-and-exit">
+<h3>Initialization and Exit<a class="headerlink" href="#initialization-and-exit" title="Permalink to this headline">¶</a></h3>
+<p>Module functions <a class="reference internal" href="reference/mpi4py.MPI.Init.html#mpi4py.MPI.Init" title="mpi4py.MPI.Init"><code class="xref any py py-func docutils literal notranslate"><span class="pre">Init</span></code></a> or <a class="reference internal" href="reference/mpi4py.MPI.Init_thread.html#mpi4py.MPI.Init_thread" title="mpi4py.MPI.Init_thread"><code class="xref any py py-func docutils literal notranslate"><span class="pre">Init_thread</span></code></a> and <a class="reference internal" href="reference/mpi4py.MPI.Finalize.html#mpi4py.MPI.Finalize" title="mpi4py.MPI.Finalize"><code class="xref any py py-func docutils literal notranslate"><span class="pre">Finalize</span></code></a> provide MPI
+initialization and finalization respectively. Module functions
+<a class="reference internal" href="reference/mpi4py.MPI.Is_initialized.html#mpi4py.MPI.Is_initialized" title="mpi4py.MPI.Is_initialized"><code class="xref any py py-func docutils literal notranslate"><span class="pre">Is_initialized</span></code></a> and <a class="reference internal" href="reference/mpi4py.MPI.Is_finalized.html#mpi4py.MPI.Is_finalized" title="mpi4py.MPI.Is_finalized"><code class="xref any py py-func docutils literal notranslate"><span class="pre">Is_finalized</span></code></a> provide the respective tests for
+initialization and finalization.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="xref c c-func docutils literal notranslate"><span class="pre">MPI_Init()</span></code> or <code class="xref c c-func docutils literal notranslate"><span class="pre">MPI_Init_thread()</span></code> is actually called
+when you import the <a class="reference internal" href="reference/mpi4py.MPI.html#module-mpi4py.MPI" title="mpi4py.MPI: Message Passing Interface."><code class="xref py py-mod docutils literal notranslate"><span class="pre">MPI</span></code></a> module from the
+<a class="reference internal" href="mpi4py.html#module-mpi4py" title="mpi4py: The MPI for Python package."><code class="xref py py-mod docutils literal notranslate"><span class="pre">mpi4py</span></code></a> package, but only if MPI is not already
+initialized. In such case, calling <a class="reference internal" href="reference/mpi4py.MPI.Init.html#mpi4py.MPI.Init" title="mpi4py.MPI.Init"><code class="xref any py py-func docutils literal notranslate"><span class="pre">Init</span></code></a> or <a class="reference internal" href="reference/mpi4py.MPI.Init_thread.html#mpi4py.MPI.Init_thread" title="mpi4py.MPI.Init_thread"><code class="xref any py py-func docutils literal notranslate"><span class="pre">Init_thread</span></code></a> from
+Python is expected to generate an MPI error, and in turn an
+exception will be raised.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="xref c c-func docutils literal notranslate"><span class="pre">MPI_Finalize()</span></code> is registered (by using Python C/API
+function <a class="reference external" href="https://docs.python.org/3/c-api/sys.html#c.Py_AtExit" title="(in Python v3.10)"><code class="xref c c-func docutils literal notranslate"><span class="pre">Py_AtExit()</span></code></a>) for being automatically called when
+Python processes exit, but only if <a class="reference internal" href="mpi4py.html#module-mpi4py" title="mpi4py: The MPI for Python package."><code class="xref py py-mod docutils literal notranslate"><span class="pre">mpi4py</span></code></a> actually
+initialized MPI. Therefore, there is no need to call <a class="reference internal" href="reference/mpi4py.MPI.Finalize.html#mpi4py.MPI.Finalize" title="mpi4py.MPI.Finalize"><code class="xref any py py-func docutils literal notranslate"><span class="pre">Finalize</span></code></a>
+from Python to ensure MPI finalization.</p>
+</div>
+</section>
+<section id="implementation-information">
+<h3>Implementation Information<a class="headerlink" href="#implementation-information" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>The MPI version number can be retrieved from module function
+<a class="reference internal" href="reference/mpi4py.MPI.Get_version.html#mpi4py.MPI.Get_version" title="mpi4py.MPI.Get_version"><code class="xref any py py-func docutils literal notranslate"><span class="pre">Get_version</span></code></a>. It returns a two-integer tuple <code class="docutils literal notranslate"><span class="pre">(version,</span>
+<span class="pre">subversion)</span></code>.</p></li>
+<li><p>The <a class="reference internal" href="reference/mpi4py.MPI.Get_processor_name.html#mpi4py.MPI.Get_processor_name" title="mpi4py.MPI.Get_processor_name"><code class="xref any py py-func docutils literal notranslate"><span class="pre">Get_processor_name</span></code></a> function can be used to access the
+processor name.</p></li>
+<li><p>The values of predefined attributes attached to the world
+communicator can be obtained by calling the <a class="reference internal" href="reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.Get_attr" title="mpi4py.MPI.Comm.Get_attr"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Comm.Get_attr</span></code></a> method
+within the <a class="reference internal" href="reference/mpi4py.MPI.COMM_WORLD.html#mpi4py.MPI.COMM_WORLD" title="mpi4py.MPI.COMM_WORLD"><code class="xref any py py-data docutils literal notranslate"><span class="pre">COMM_WORLD</span></code></a> instance.</p></li>
+</ul>
+</section>
+<section id="timers">
+<h3>Timers<a class="headerlink" href="#timers" title="Permalink to this headline">¶</a></h3>
+<p>MPI timer functionalities are available through the <a class="reference internal" href="reference/mpi4py.MPI.Wtime.html#mpi4py.MPI.Wtime" title="mpi4py.MPI.Wtime"><code class="xref any py py-func docutils literal notranslate"><span class="pre">Wtime</span></code></a> and
+<a class="reference internal" href="reference/mpi4py.MPI.Wtick.html#mpi4py.MPI.Wtick" title="mpi4py.MPI.Wtick"><code class="xref any py py-func docutils literal notranslate"><span class="pre">Wtick</span></code></a> functions.</p>
+</section>
+<section id="error-handling">
+<h3>Error Handling<a class="headerlink" href="#error-handling" title="Permalink to this headline">¶</a></h3>
+<p>In order facilitate handle sharing with other Python modules
+interfacing MPI-based parallel libraries, the predefined MPI error
+handlers <a class="reference internal" href="reference/mpi4py.MPI.ERRORS_RETURN.html#mpi4py.MPI.ERRORS_RETURN" title="mpi4py.MPI.ERRORS_RETURN"><code class="xref any py py-data docutils literal notranslate"><span class="pre">ERRORS_RETURN</span></code></a> and <a class="reference internal" href="reference/mpi4py.MPI.ERRORS_ARE_FATAL.html#mpi4py.MPI.ERRORS_ARE_FATAL" title="mpi4py.MPI.ERRORS_ARE_FATAL"><code class="xref any py py-data docutils literal notranslate"><span class="pre">ERRORS_ARE_FATAL</span></code></a> can be assigned to and
+retrieved from communicators using methods <a class="reference internal" href="reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.Set_errhandler" title="mpi4py.MPI.Comm.Set_errhandler"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Comm.Set_errhandler</span></code></a> and
+<a class="reference internal" href="reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.Get_errhandler" title="mpi4py.MPI.Comm.Get_errhandler"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Comm.Get_errhandler</span></code></a>, and similarly for windows and files.</p>
+<p>When the predefined error handler <a class="reference internal" href="reference/mpi4py.MPI.ERRORS_RETURN.html#mpi4py.MPI.ERRORS_RETURN" title="mpi4py.MPI.ERRORS_RETURN"><code class="xref any py py-data docutils literal notranslate"><span class="pre">ERRORS_RETURN</span></code></a> is set, errors
+returned from MPI calls within Python code will raise an instance of
+the exception class <a class="reference internal" href="reference/mpi4py.MPI.Exception.html#mpi4py.MPI.Exception" title="mpi4py.MPI.Exception"><code class="xref any py py-exc docutils literal notranslate"><span class="pre">Exception</span></code></a>, which is a subclass of the standard
+Python exception <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#RuntimeError" title="(in Python v3.10)"><code class="docutils literal notranslate"><span class="pre">RuntimeError</span></code></a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>After import, mpi4py overrides the default MPI rules governing
+inheritance of error handlers. The <a class="reference internal" href="reference/mpi4py.MPI.ERRORS_RETURN.html#mpi4py.MPI.ERRORS_RETURN" title="mpi4py.MPI.ERRORS_RETURN"><code class="xref any py py-data docutils literal notranslate"><span class="pre">ERRORS_RETURN</span></code></a> error handler is
+set in the predefined <a class="reference internal" href="reference/mpi4py.MPI.COMM_SELF.html#mpi4py.MPI.COMM_SELF" title="mpi4py.MPI.COMM_SELF"><code class="xref any py py-data docutils literal notranslate"><span class="pre">COMM_SELF</span></code></a> and <a class="reference internal" href="reference/mpi4py.MPI.COMM_WORLD.html#mpi4py.MPI.COMM_WORLD" title="mpi4py.MPI.COMM_WORLD"><code class="xref any py py-data docutils literal notranslate"><span class="pre">COMM_WORLD</span></code></a> communicators,
+as well as any new <a class="reference internal" href="reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm" title="mpi4py.MPI.Comm"><code class="xref any py py-class docutils literal notranslate"><span class="pre">Comm</span></code></a>, <a class="reference internal" href="reference/mpi4py.MPI.Win.html#mpi4py.MPI.Win" title="mpi4py.MPI.Win"><code class="xref any py py-class docutils literal notranslate"><span class="pre">Win</span></code></a>, or <a class="reference internal" href="reference/mpi4py.MPI.File.html#mpi4py.MPI.File" title="mpi4py.MPI.File"><code class="xref any py py-class docutils literal notranslate"><span class="pre">File</span></code></a> instance created
+through mpi4py. If you ever pass such handles to C/C++/Fortran
+library code, it is recommended to set the <a class="reference internal" href="reference/mpi4py.MPI.ERRORS_ARE_FATAL.html#mpi4py.MPI.ERRORS_ARE_FATAL" title="mpi4py.MPI.ERRORS_ARE_FATAL"><code class="xref any py py-data docutils literal notranslate"><span class="pre">ERRORS_ARE_FATAL</span></code></a> error
+handler on them to ensure MPI errors do not pass silently.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Importing with <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">mpi4py.MPI</span> <span class="pre">import</span> <span class="pre">*</span></code> will cause a name
+clashing with the standard Python <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.10)"><code class="docutils literal notranslate"><span class="pre">Exception</span></code></a> base class.</p>
+</div>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Overview</a><ul>
+<li><a class="reference internal" href="#communicating-python-objects-and-array-data">Communicating Python Objects and Array Data</a></li>
+<li><a class="reference internal" href="#communicators">Communicators</a></li>
+<li><a class="reference internal" href="#point-to-point-communications">Point-to-Point Communications</a><ul>
+<li><a class="reference internal" href="#blocking-communications">Blocking Communications</a></li>
+<li><a class="reference internal" href="#nonblocking-communications">Nonblocking Communications</a></li>
+<li><a class="reference internal" href="#persistent-communications">Persistent Communications</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#collective-communications">Collective Communications</a></li>
+<li><a class="reference internal" href="#support-for-gpu-aware-mpi">Support for GPU-aware MPI</a></li>
+<li><a class="reference internal" href="#dynamic-process-management">Dynamic Process Management</a></li>
+<li><a class="reference internal" href="#one-sided-communications">One-Sided Communications</a></li>
+<li><a class="reference internal" href="#parallel-input-output">Parallel Input/Output</a></li>
+<li><a class="reference internal" href="#environmental-management">Environmental Management</a><ul>
+<li><a class="reference internal" href="#initialization-and-exit">Initialization and Exit</a></li>
+<li><a class="reference internal" href="#implementation-information">Implementation Information</a></li>
+<li><a class="reference internal" href="#timers">Timers</a></li>
+<li><a class="reference internal" href="#error-handling">Error Handling</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="intro.html"
+                        title="previous chapter">Introduction</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="tutorial.html"
+                        title="next chapter">Tutorial</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tutorial.html" title="Tutorial"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="intro.html" title="Introduction"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">MPI for Python 3.1.3 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Overview</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Lisandro Dalcin.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.0.
+    </div>
+  </body>
+</html>

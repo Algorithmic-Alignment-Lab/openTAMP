@@ -1,0 +1,2330 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>mpi4py.MPI.Comm &#8212; MPI for Python 3.1.3 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/classic.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="mpi4py.MPI.Datatype" href="mpi4py.MPI.Datatype.html" />
+    <link rel="prev" title="mpi4py.MPI.Cartcomm" href="mpi4py.MPI.Cartcomm.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mpi4py.MPI.Datatype.html" title="mpi4py.MPI.Datatype"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="mpi4py.MPI.Cartcomm.html" title="mpi4py.MPI.Cartcomm"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">MPI for Python 3.1.3 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" >Reference</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="mpi4py.MPI.html" accesskey="U">mpi4py.MPI</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">mpi4py.MPI.Comm</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="mpi4py-mpi-comm">
+<h1>mpi4py.MPI.Comm<a class="headerlink" href="#mpi4py-mpi-comm" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mpi4py.MPI.</span></span><span class="sig-name descname"><span class="pre">Comm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">comm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Communicator</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>comm</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="#mpi4py.MPI.Comm" title="mpi4py.MPI.Comm"><em>Comm</em></a><em>]</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mpi4py.MPI.Comm" title="mpi4py.MPI.Comm">Comm</a></p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.__new__">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">__new__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.__new__" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>comm</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="#mpi4py.MPI.Comm" title="mpi4py.MPI.Comm"><em>Comm</em></a><em>]</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mpi4py.MPI.Comm" title="mpi4py.MPI.Comm">Comm</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Methods Summary</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Abort" title="mpi4py.MPI.Comm.Abort"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Abort</span></code></a>([errorcode])</p></td>
+<td><p>Terminate MPI execution environment</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Allgather" title="mpi4py.MPI.Comm.Allgather"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Allgather</span></code></a>(sendbuf, recvbuf)</p></td>
+<td><p>Gather to All, gather data from all processes and distribute it to all other processes in a group</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Allgatherv" title="mpi4py.MPI.Comm.Allgatherv"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Allgatherv</span></code></a>(sendbuf, recvbuf)</p></td>
+<td><p>Gather to All Vector, gather data from all processes and distribute it to all other processes in a group providing different amount of data and displacements</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Allreduce" title="mpi4py.MPI.Comm.Allreduce"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Allreduce</span></code></a>(sendbuf, recvbuf[, op])</p></td>
+<td><p>Reduce to All</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Alltoall" title="mpi4py.MPI.Comm.Alltoall"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Alltoall</span></code></a>(sendbuf, recvbuf)</p></td>
+<td><p>All to All Scatter/Gather, send data from all to all processes in a group</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Alltoallv" title="mpi4py.MPI.Comm.Alltoallv"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Alltoallv</span></code></a>(sendbuf, recvbuf)</p></td>
+<td><p>All to All Scatter/Gather Vector, send data from all to all processes in a group providing different amount of data and displacements</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Alltoallw" title="mpi4py.MPI.Comm.Alltoallw"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Alltoallw</span></code></a>(sendbuf, recvbuf)</p></td>
+<td><p>Generalized All-to-All communication allowing different counts, displacements and datatypes for each partner</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Barrier" title="mpi4py.MPI.Comm.Barrier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Barrier</span></code></a>()</p></td>
+<td><p>Barrier synchronization</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Bcast" title="mpi4py.MPI.Comm.Bcast"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Bcast</span></code></a>(buf[, root])</p></td>
+<td><p>Broadcast a message from one process to all other processes in a group</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Bsend" title="mpi4py.MPI.Comm.Bsend"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Bsend</span></code></a>(buf, dest[, tag])</p></td>
+<td><p>Blocking send in buffered mode</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Bsend_init" title="mpi4py.MPI.Comm.Bsend_init"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Bsend_init</span></code></a>(buf, dest[, tag])</p></td>
+<td><p>Persistent request for a send in buffered mode</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Call_errhandler" title="mpi4py.MPI.Comm.Call_errhandler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Call_errhandler</span></code></a>(errorcode)</p></td>
+<td><p>Call the error handler installed on a communicator</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Clone" title="mpi4py.MPI.Comm.Clone"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Clone</span></code></a>()</p></td>
+<td><p>Clone an existing communicator</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Compare" title="mpi4py.MPI.Comm.Compare"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Compare</span></code></a>(comm1, comm2)</p></td>
+<td><p>Compare two communicators</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Create" title="mpi4py.MPI.Comm.Create"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Create</span></code></a>(group)</p></td>
+<td><p>Create communicator from group</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Create_group" title="mpi4py.MPI.Comm.Create_group"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Create_group</span></code></a>(group[, tag])</p></td>
+<td><p>Create communicator from group</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Create_keyval" title="mpi4py.MPI.Comm.Create_keyval"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Create_keyval</span></code></a>([copy_fn, delete_fn, nopython])</p></td>
+<td><p>Create a new attribute key for communicators</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Delete_attr" title="mpi4py.MPI.Comm.Delete_attr"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Delete_attr</span></code></a>(keyval)</p></td>
+<td><p>Delete attribute value associated with a key</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Disconnect" title="mpi4py.MPI.Comm.Disconnect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Disconnect</span></code></a>()</p></td>
+<td><p>Disconnect from a communicator</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Dup" title="mpi4py.MPI.Comm.Dup"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Dup</span></code></a>([info])</p></td>
+<td><p>Duplicate an existing communicator</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Dup_with_info" title="mpi4py.MPI.Comm.Dup_with_info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Dup_with_info</span></code></a>(info)</p></td>
+<td><p>Duplicate an existing communicator</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Free" title="mpi4py.MPI.Comm.Free"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Free</span></code></a>()</p></td>
+<td><p>Free a communicator</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Free_keyval" title="mpi4py.MPI.Comm.Free_keyval"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Free_keyval</span></code></a>(keyval)</p></td>
+<td><p>Free an attribute key for communicators</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Gather" title="mpi4py.MPI.Comm.Gather"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Gather</span></code></a>(sendbuf, recvbuf[, root])</p></td>
+<td><p>Gather together values from a group of processes</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Gatherv" title="mpi4py.MPI.Comm.Gatherv"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Gatherv</span></code></a>(sendbuf, recvbuf[, root])</p></td>
+<td><p>Gather Vector, gather data to one process from all other processes in a group providing different amount of data and displacements at the receiving sides</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Get_attr" title="mpi4py.MPI.Comm.Get_attr"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Get_attr</span></code></a>(keyval)</p></td>
+<td><p>Retrieve attribute value by key</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Get_errhandler" title="mpi4py.MPI.Comm.Get_errhandler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Get_errhandler</span></code></a>()</p></td>
+<td><p>Get the error handler for a communicator</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Get_group" title="mpi4py.MPI.Comm.Get_group"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Get_group</span></code></a>()</p></td>
+<td><p>Access the group associated with a communicator</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Get_info" title="mpi4py.MPI.Comm.Get_info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Get_info</span></code></a>()</p></td>
+<td><p>Return the hints for a communicator that are currently in use</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Get_name" title="mpi4py.MPI.Comm.Get_name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Get_name</span></code></a>()</p></td>
+<td><p>Get the print name for this communicator</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Get_parent" title="mpi4py.MPI.Comm.Get_parent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Get_parent</span></code></a>()</p></td>
+<td><p>Return the parent intercommunicator for this process</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Get_rank" title="mpi4py.MPI.Comm.Get_rank"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Get_rank</span></code></a>()</p></td>
+<td><p>Return the rank of this process in a communicator</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Get_size" title="mpi4py.MPI.Comm.Get_size"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Get_size</span></code></a>()</p></td>
+<td><p>Return the number of processes in a communicator</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Get_topology" title="mpi4py.MPI.Comm.Get_topology"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Get_topology</span></code></a>()</p></td>
+<td><p>Determine the type of topology (if any) associated with a communicator</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Iallgather" title="mpi4py.MPI.Comm.Iallgather"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Iallgather</span></code></a>(sendbuf, recvbuf)</p></td>
+<td><p>Nonblocking Gather to All</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Iallgatherv" title="mpi4py.MPI.Comm.Iallgatherv"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Iallgatherv</span></code></a>(sendbuf, recvbuf)</p></td>
+<td><p>Nonblocking Gather to All Vector</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Iallreduce" title="mpi4py.MPI.Comm.Iallreduce"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Iallreduce</span></code></a>(sendbuf, recvbuf[, op])</p></td>
+<td><p>Nonblocking Reduce to All</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Ialltoall" title="mpi4py.MPI.Comm.Ialltoall"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Ialltoall</span></code></a>(sendbuf, recvbuf)</p></td>
+<td><p>Nonblocking All to All Scatter/Gather</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Ialltoallv" title="mpi4py.MPI.Comm.Ialltoallv"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Ialltoallv</span></code></a>(sendbuf, recvbuf)</p></td>
+<td><p>Nonblocking All to All Scatter/Gather Vector</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Ialltoallw" title="mpi4py.MPI.Comm.Ialltoallw"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Ialltoallw</span></code></a>(sendbuf, recvbuf)</p></td>
+<td><p>Nonblocking Generalized All-to-All</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Ibarrier" title="mpi4py.MPI.Comm.Ibarrier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Ibarrier</span></code></a>()</p></td>
+<td><p>Nonblocking Barrier</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Ibcast" title="mpi4py.MPI.Comm.Ibcast"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Ibcast</span></code></a>(buf[, root])</p></td>
+<td><p>Nonblocking Broadcast</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Ibsend" title="mpi4py.MPI.Comm.Ibsend"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Ibsend</span></code></a>(buf, dest[, tag])</p></td>
+<td><p>Nonblocking send in buffered mode</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Idup" title="mpi4py.MPI.Comm.Idup"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Idup</span></code></a>()</p></td>
+<td><p>Nonblocking duplicate an existing communicator</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Igather" title="mpi4py.MPI.Comm.Igather"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Igather</span></code></a>(sendbuf, recvbuf[, root])</p></td>
+<td><p>Nonblocking Gather</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Igatherv" title="mpi4py.MPI.Comm.Igatherv"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Igatherv</span></code></a>(sendbuf, recvbuf[, root])</p></td>
+<td><p>Nonblocking Gather Vector</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Improbe" title="mpi4py.MPI.Comm.Improbe"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Improbe</span></code></a>([source, tag, status])</p></td>
+<td><p>Nonblocking test for a matched message</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Iprobe" title="mpi4py.MPI.Comm.Iprobe"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Iprobe</span></code></a>([source, tag, status])</p></td>
+<td><p>Nonblocking test for a message</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Irecv" title="mpi4py.MPI.Comm.Irecv"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Irecv</span></code></a>(buf[, source, tag])</p></td>
+<td><p>Nonblocking receive</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Ireduce" title="mpi4py.MPI.Comm.Ireduce"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Ireduce</span></code></a>(sendbuf, recvbuf[, op, root])</p></td>
+<td><p>Nonblocking Reduce to Root</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Ireduce_scatter" title="mpi4py.MPI.Comm.Ireduce_scatter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Ireduce_scatter</span></code></a>(sendbuf, recvbuf[, ...])</p></td>
+<td><p>Nonblocking Reduce-Scatter (vector version)</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Ireduce_scatter_block" title="mpi4py.MPI.Comm.Ireduce_scatter_block"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Ireduce_scatter_block</span></code></a>(sendbuf, recvbuf[, op])</p></td>
+<td><p>Nonblocking Reduce-Scatter Block (regular, non-vector version)</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Irsend" title="mpi4py.MPI.Comm.Irsend"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Irsend</span></code></a>(buf, dest[, tag])</p></td>
+<td><p>Nonblocking send in ready mode</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Is_inter" title="mpi4py.MPI.Comm.Is_inter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Is_inter</span></code></a>()</p></td>
+<td><p>Test to see if a comm is an intercommunicator</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Is_intra" title="mpi4py.MPI.Comm.Is_intra"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Is_intra</span></code></a>()</p></td>
+<td><p>Test to see if a comm is an intracommunicator</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Iscatter" title="mpi4py.MPI.Comm.Iscatter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Iscatter</span></code></a>(sendbuf, recvbuf[, root])</p></td>
+<td><p>Nonblocking Scatter</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Iscatterv" title="mpi4py.MPI.Comm.Iscatterv"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Iscatterv</span></code></a>(sendbuf, recvbuf[, root])</p></td>
+<td><p>Nonblocking Scatter Vector</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Isend" title="mpi4py.MPI.Comm.Isend"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Isend</span></code></a>(buf, dest[, tag])</p></td>
+<td><p>Nonblocking send</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Issend" title="mpi4py.MPI.Comm.Issend"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Issend</span></code></a>(buf, dest[, tag])</p></td>
+<td><p>Nonblocking send in synchronous mode</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Join" title="mpi4py.MPI.Comm.Join"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Join</span></code></a>(fd)</p></td>
+<td><p>Create a intercommunicator by joining two processes connected by a socket</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Mprobe" title="mpi4py.MPI.Comm.Mprobe"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Mprobe</span></code></a>([source, tag, status])</p></td>
+<td><p>Blocking test for a matched message</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Probe" title="mpi4py.MPI.Comm.Probe"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Probe</span></code></a>([source, tag, status])</p></td>
+<td><p>Blocking test for a message</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Recv" title="mpi4py.MPI.Comm.Recv"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Recv</span></code></a>(buf[, source, tag, status])</p></td>
+<td><p>Blocking receive</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Recv_init" title="mpi4py.MPI.Comm.Recv_init"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Recv_init</span></code></a>(buf[, source, tag])</p></td>
+<td><p>Create a persistent request for a receive</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Reduce" title="mpi4py.MPI.Comm.Reduce"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Reduce</span></code></a>(sendbuf, recvbuf[, op, root])</p></td>
+<td><p>Reduce to Root</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Reduce_scatter" title="mpi4py.MPI.Comm.Reduce_scatter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Reduce_scatter</span></code></a>(sendbuf, recvbuf[, ...])</p></td>
+<td><p>Reduce-Scatter (vector version)</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Reduce_scatter_block" title="mpi4py.MPI.Comm.Reduce_scatter_block"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Reduce_scatter_block</span></code></a>(sendbuf, recvbuf[, op])</p></td>
+<td><p>Reduce-Scatter Block (regular, non-vector version)</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Rsend" title="mpi4py.MPI.Comm.Rsend"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Rsend</span></code></a>(buf, dest[, tag])</p></td>
+<td><p>Blocking send in ready mode</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Rsend_init" title="mpi4py.MPI.Comm.Rsend_init"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Rsend_init</span></code></a>(buf, dest[, tag])</p></td>
+<td><p>Persistent request for a send in ready mode</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Scatter" title="mpi4py.MPI.Comm.Scatter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Scatter</span></code></a>(sendbuf, recvbuf[, root])</p></td>
+<td><p>Scatter data from one process to all other processes in a group</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Scatterv" title="mpi4py.MPI.Comm.Scatterv"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Scatterv</span></code></a>(sendbuf, recvbuf[, root])</p></td>
+<td><p>Scatter Vector, scatter data from one process to all other processes in a group providing different amount of data and displacements at the sending side</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Send" title="mpi4py.MPI.Comm.Send"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Send</span></code></a>(buf, dest[, tag])</p></td>
+<td><p>Blocking send</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Send_init" title="mpi4py.MPI.Comm.Send_init"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Send_init</span></code></a>(buf, dest[, tag])</p></td>
+<td><p>Create a persistent request for a standard send</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Sendrecv" title="mpi4py.MPI.Comm.Sendrecv"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Sendrecv</span></code></a>(sendbuf, dest[, sendtag, recvbuf, ...])</p></td>
+<td><p>Send and receive a message</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Sendrecv_replace" title="mpi4py.MPI.Comm.Sendrecv_replace"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Sendrecv_replace</span></code></a>(buf, dest[, sendtag, ...])</p></td>
+<td><p>Send and receive a message</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Set_attr" title="mpi4py.MPI.Comm.Set_attr"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Set_attr</span></code></a>(keyval, attrval)</p></td>
+<td><p>Store attribute value associated with a key</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Set_errhandler" title="mpi4py.MPI.Comm.Set_errhandler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Set_errhandler</span></code></a>(errhandler)</p></td>
+<td><p>Set the error handler for a communicator</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Set_info" title="mpi4py.MPI.Comm.Set_info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Set_info</span></code></a>(info)</p></td>
+<td><p>Set new values for the hints associated with a communicator</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Set_name" title="mpi4py.MPI.Comm.Set_name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Set_name</span></code></a>(name)</p></td>
+<td><p>Set the print name for this communicator</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Split" title="mpi4py.MPI.Comm.Split"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Split</span></code></a>([color, key])</p></td>
+<td><p>Split communicator by color and key</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Split_type" title="mpi4py.MPI.Comm.Split_type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Split_type</span></code></a>(split_type[, key, info])</p></td>
+<td><p>Split communicator by split type</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Ssend" title="mpi4py.MPI.Comm.Ssend"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Ssend</span></code></a>(buf, dest[, tag])</p></td>
+<td><p>Blocking send in synchronous mode</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.Ssend_init" title="mpi4py.MPI.Comm.Ssend_init"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Ssend_init</span></code></a>(buf, dest[, tag])</p></td>
+<td><p>Persistent request for a send in synchronous mode</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.allgather" title="mpi4py.MPI.Comm.allgather"><code class="xref py py-obj docutils literal notranslate"><span class="pre">allgather</span></code></a>(sendobj)</p></td>
+<td><p>Gather to All</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.allreduce" title="mpi4py.MPI.Comm.allreduce"><code class="xref py py-obj docutils literal notranslate"><span class="pre">allreduce</span></code></a>(sendobj[, op])</p></td>
+<td><p>Reduce to All</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.alltoall" title="mpi4py.MPI.Comm.alltoall"><code class="xref py py-obj docutils literal notranslate"><span class="pre">alltoall</span></code></a>(sendobj)</p></td>
+<td><p>All to All Scatter/Gather</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.barrier" title="mpi4py.MPI.Comm.barrier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">barrier</span></code></a>()</p></td>
+<td><p>Barrier</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.bcast" title="mpi4py.MPI.Comm.bcast"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bcast</span></code></a>(obj[, root])</p></td>
+<td><p>Broadcast</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.bsend" title="mpi4py.MPI.Comm.bsend"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bsend</span></code></a>(obj, dest[, tag])</p></td>
+<td><p>Send in buffered mode</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.f2py" title="mpi4py.MPI.Comm.f2py"><code class="xref py py-obj docutils literal notranslate"><span class="pre">f2py</span></code></a>(arg)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.gather" title="mpi4py.MPI.Comm.gather"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gather</span></code></a>(sendobj[, root])</p></td>
+<td><p>Gather</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.ibsend" title="mpi4py.MPI.Comm.ibsend"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ibsend</span></code></a>(obj, dest[, tag])</p></td>
+<td><p>Nonblocking send in buffered mode</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.improbe" title="mpi4py.MPI.Comm.improbe"><code class="xref py py-obj docutils literal notranslate"><span class="pre">improbe</span></code></a>([source, tag, status])</p></td>
+<td><p>Nonblocking test for a matched message</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.iprobe" title="mpi4py.MPI.Comm.iprobe"><code class="xref py py-obj docutils literal notranslate"><span class="pre">iprobe</span></code></a>([source, tag, status])</p></td>
+<td><p>Nonblocking test for a message</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.irecv" title="mpi4py.MPI.Comm.irecv"><code class="xref py py-obj docutils literal notranslate"><span class="pre">irecv</span></code></a>([buf, source, tag])</p></td>
+<td><p>Nonblocking receive</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.isend" title="mpi4py.MPI.Comm.isend"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isend</span></code></a>(obj, dest[, tag])</p></td>
+<td><p>Nonblocking send</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.issend" title="mpi4py.MPI.Comm.issend"><code class="xref py py-obj docutils literal notranslate"><span class="pre">issend</span></code></a>(obj, dest[, tag])</p></td>
+<td><p>Nonblocking send in synchronous mode</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.mprobe" title="mpi4py.MPI.Comm.mprobe"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mprobe</span></code></a>([source, tag, status])</p></td>
+<td><p>Blocking test for a matched message</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.probe" title="mpi4py.MPI.Comm.probe"><code class="xref py py-obj docutils literal notranslate"><span class="pre">probe</span></code></a>([source, tag, status])</p></td>
+<td><p>Blocking test for a message</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.py2f" title="mpi4py.MPI.Comm.py2f"><code class="xref py py-obj docutils literal notranslate"><span class="pre">py2f</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.recv" title="mpi4py.MPI.Comm.recv"><code class="xref py py-obj docutils literal notranslate"><span class="pre">recv</span></code></a>([buf, source, tag, status])</p></td>
+<td><p>Receive</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.reduce" title="mpi4py.MPI.Comm.reduce"><code class="xref py py-obj docutils literal notranslate"><span class="pre">reduce</span></code></a>(sendobj[, op, root])</p></td>
+<td><p>Reduce to Root</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.scatter" title="mpi4py.MPI.Comm.scatter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">scatter</span></code></a>(sendobj[, root])</p></td>
+<td><p>Scatter</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.send" title="mpi4py.MPI.Comm.send"><code class="xref py py-obj docutils literal notranslate"><span class="pre">send</span></code></a>(obj, dest[, tag])</p></td>
+<td><p>Send</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.sendrecv" title="mpi4py.MPI.Comm.sendrecv"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sendrecv</span></code></a>(sendobj, dest[, sendtag, recvbuf, ...])</p></td>
+<td><p>Send and Receive</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.ssend" title="mpi4py.MPI.Comm.ssend"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ssend</span></code></a>(obj, dest[, tag])</p></td>
+<td><p>Send in synchronous mode</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes Summary</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.group" title="mpi4py.MPI.Comm.group"><code class="xref py py-obj docutils literal notranslate"><span class="pre">group</span></code></a></p></td>
+<td><p>communicator group</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.info" title="mpi4py.MPI.Comm.info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">info</span></code></a></p></td>
+<td><p>communicator info</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.is_inter" title="mpi4py.MPI.Comm.is_inter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_inter</span></code></a></p></td>
+<td><p>is intercommunicator</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.is_intra" title="mpi4py.MPI.Comm.is_intra"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_intra</span></code></a></p></td>
+<td><p>is intracommunicator</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.is_topo" title="mpi4py.MPI.Comm.is_topo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_topo</span></code></a></p></td>
+<td><p>is a topology communicator</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.name" title="mpi4py.MPI.Comm.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code></a></p></td>
+<td><p>communicator name</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.rank" title="mpi4py.MPI.Comm.rank"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rank</span></code></a></p></td>
+<td><p>rank of this process in communicator</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.size" title="mpi4py.MPI.Comm.size"><code class="xref py py-obj docutils literal notranslate"><span class="pre">size</span></code></a></p></td>
+<td><p>number of processes in communicator</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Comm.topology" title="mpi4py.MPI.Comm.topology"><code class="xref py py-obj docutils literal notranslate"><span class="pre">topology</span></code></a></p></td>
+<td><p>communicator topology type</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods Documentation</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Abort">
+<span class="sig-name descname"><span class="pre">Abort</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">errorcode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Abort" title="Permalink to this definition">¶</a></dt>
+<dd><p>Terminate MPI execution environment</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This is a direct call, use it with care!!!.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>errorcode</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>NoReturn</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Allgather">
+<span class="sig-name descname"><span class="pre">Allgather</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sendbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recvbuf</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Allgather" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gather to All, gather data from all processes and
+distribute it to all other processes in a group</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sendbuf</strong> (<em>Union</em><em>[</em><em>BufSpec</em><em>, </em><em>InPlace</em><em>]</em>) – </p></li>
+<li><p><strong>recvbuf</strong> (<em>BufSpecB</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Allgatherv">
+<span class="sig-name descname"><span class="pre">Allgatherv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sendbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recvbuf</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Allgatherv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gather to All Vector, gather data from all processes and
+distribute it to all other processes in a group providing
+different amount of data and displacements</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sendbuf</strong> (<em>Union</em><em>[</em><em>BufSpec</em><em>, </em><em>InPlace</em><em>]</em>) – </p></li>
+<li><p><strong>recvbuf</strong> (<em>BufSpecV</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Allreduce">
+<span class="sig-name descname"><span class="pre">Allreduce</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sendbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recvbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">op</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">SUM</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Allreduce" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reduce to All</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sendbuf</strong> (<em>Union</em><em>[</em><em>BufSpec</em><em>, </em><em>InPlace</em><em>]</em>) – </p></li>
+<li><p><strong>recvbuf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>op</strong> (<a class="reference internal" href="mpi4py.MPI.Op.html#mpi4py.MPI.Op" title="mpi4py.MPI.Op"><em>Op</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Alltoall">
+<span class="sig-name descname"><span class="pre">Alltoall</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sendbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recvbuf</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Alltoall" title="Permalink to this definition">¶</a></dt>
+<dd><p>All to All Scatter/Gather, send data from all to all
+processes in a group</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sendbuf</strong> (<em>Union</em><em>[</em><em>BufSpecB</em><em>, </em><em>InPlace</em><em>]</em>) – </p></li>
+<li><p><strong>recvbuf</strong> (<em>BufSpecB</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Alltoallv">
+<span class="sig-name descname"><span class="pre">Alltoallv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sendbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recvbuf</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Alltoallv" title="Permalink to this definition">¶</a></dt>
+<dd><p>All to All Scatter/Gather Vector, send data from all to all
+processes in a group providing different amount of data and
+displacements</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sendbuf</strong> (<em>Union</em><em>[</em><em>BufSpecV</em><em>, </em><em>InPlace</em><em>]</em>) – </p></li>
+<li><p><strong>recvbuf</strong> (<em>BufSpecV</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Alltoallw">
+<span class="sig-name descname"><span class="pre">Alltoallw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sendbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recvbuf</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Alltoallw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generalized All-to-All communication allowing different
+counts, displacements and datatypes for each partner</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sendbuf</strong> (<em>Union</em><em>[</em><em>BufSpecW</em><em>, </em><em>InPlace</em><em>]</em>) – </p></li>
+<li><p><strong>recvbuf</strong> (<em>BufSpecW</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Barrier">
+<span class="sig-name descname"><span class="pre">Barrier</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Barrier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Barrier synchronization</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Bcast">
+<span class="sig-name descname"><span class="pre">Bcast</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Bcast" title="Permalink to this definition">¶</a></dt>
+<dd><p>Broadcast a message from one process
+to all other processes in a group</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>root</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Bsend">
+<span class="sig-name descname"><span class="pre">Bsend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Bsend" title="Permalink to this definition">¶</a></dt>
+<dd><p>Blocking send in buffered mode</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>dest</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>tag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Bsend_init">
+<span class="sig-name descname"><span class="pre">Bsend_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Bsend_init" title="Permalink to this definition">¶</a></dt>
+<dd><p>Persistent request for a send in buffered mode</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>dest</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>tag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request">Request</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Call_errhandler">
+<span class="sig-name descname"><span class="pre">Call_errhandler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">errorcode</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Call_errhandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call the error handler installed on a communicator</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>errorcode</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Clone">
+<span class="sig-name descname"><span class="pre">Clone</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Clone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clone an existing communicator</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#mpi4py.MPI.Comm" title="mpi4py.MPI.Comm">Comm</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Compare">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Compare</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">comm1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comm2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Compare" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compare two communicators</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>comm1</strong> (<a class="reference internal" href="#mpi4py.MPI.Comm" title="mpi4py.MPI.Comm"><em>Comm</em></a>) – </p></li>
+<li><p><strong>comm2</strong> (<a class="reference internal" href="#mpi4py.MPI.Comm" title="mpi4py.MPI.Comm"><em>Comm</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Create">
+<span class="sig-name descname"><span class="pre">Create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create communicator from group</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>group</strong> (<a class="reference internal" href="mpi4py.MPI.Group.html#mpi4py.MPI.Group" title="mpi4py.MPI.Group"><em>Group</em></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mpi4py.MPI.Comm" title="mpi4py.MPI.Comm">Comm</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Create_group">
+<span class="sig-name descname"><span class="pre">Create_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Create_group" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create communicator from group</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>group</strong> (<a class="reference internal" href="mpi4py.MPI.Group.html#mpi4py.MPI.Group" title="mpi4py.MPI.Group"><em>Group</em></a>) – </p></li>
+<li><p><strong>tag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mpi4py.MPI.Comm" title="mpi4py.MPI.Comm">Comm</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Create_keyval">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Create_keyval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">copy_fn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delete_fn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nopython</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Create_keyval" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new attribute key for communicators</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>copy_fn</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>[</em><em>[</em><a class="reference internal" href="#mpi4py.MPI.Comm" title="mpi4py.MPI.Comm"><em>Comm</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>Any</em><em>]</em><em>, </em><em>Any</em><em>]</em><em>]</em>) – </p></li>
+<li><p><strong>delete_fn</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>[</em><em>[</em><a class="reference internal" href="#mpi4py.MPI.Comm" title="mpi4py.MPI.Comm"><em>Comm</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>Any</em><em>]</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em>]</em><em>]</em>) – </p></li>
+<li><p><strong>nopython</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Delete_attr">
+<span class="sig-name descname"><span class="pre">Delete_attr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keyval</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Delete_attr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete attribute value associated with a key</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>keyval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Disconnect">
+<span class="sig-name descname"><span class="pre">Disconnect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Disconnect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disconnect from a communicator</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Dup">
+<span class="sig-name descname"><span class="pre">Dup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Dup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Duplicate an existing communicator</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>info</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="mpi4py.MPI.Info.html#mpi4py.MPI.Info" title="mpi4py.MPI.Info"><em>Info</em></a><em>]</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mpi4py.MPI.Comm" title="mpi4py.MPI.Comm">Comm</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Dup_with_info">
+<span class="sig-name descname"><span class="pre">Dup_with_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">info</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Dup_with_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Duplicate an existing communicator</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>info</strong> (<a class="reference internal" href="mpi4py.MPI.Info.html#mpi4py.MPI.Info" title="mpi4py.MPI.Info"><em>Info</em></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mpi4py.MPI.Comm" title="mpi4py.MPI.Comm">Comm</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Free">
+<span class="sig-name descname"><span class="pre">Free</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Free" title="Permalink to this definition">¶</a></dt>
+<dd><p>Free a communicator</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Free_keyval">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Free_keyval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keyval</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Free_keyval" title="Permalink to this definition">¶</a></dt>
+<dd><p>Free an attribute key for communicators</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>keyval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Gather">
+<span class="sig-name descname"><span class="pre">Gather</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sendbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recvbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Gather" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gather together values from a group of processes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sendbuf</strong> (<em>Union</em><em>[</em><em>BufSpec</em><em>, </em><em>InPlace</em><em>]</em>) – </p></li>
+<li><p><strong>recvbuf</strong> (<em>Optional</em><em>[</em><em>BufSpecB</em><em>]</em>) – </p></li>
+<li><p><strong>root</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Gatherv">
+<span class="sig-name descname"><span class="pre">Gatherv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sendbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recvbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Gatherv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gather Vector, gather data to one process from all other
+processes in a group providing different amount of data and
+displacements at the receiving sides</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sendbuf</strong> (<em>Union</em><em>[</em><em>BufSpec</em><em>, </em><em>InPlace</em><em>]</em>) – </p></li>
+<li><p><strong>recvbuf</strong> (<em>Optional</em><em>[</em><em>BufSpecV</em><em>]</em>) – </p></li>
+<li><p><strong>root</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Get_attr">
+<span class="sig-name descname"><span class="pre">Get_attr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keyval</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Get_attr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve attribute value by key</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>keyval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Optional[Union[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a>, Any]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Get_errhandler">
+<span class="sig-name descname"><span class="pre">Get_errhandler</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Get_errhandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the error handler for a communicator</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="mpi4py.MPI.Errhandler.html#mpi4py.MPI.Errhandler" title="mpi4py.MPI.Errhandler">Errhandler</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Get_group">
+<span class="sig-name descname"><span class="pre">Get_group</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Get_group" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access the group associated with a communicator</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="mpi4py.MPI.Group.html#mpi4py.MPI.Group" title="mpi4py.MPI.Group">Group</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Get_info">
+<span class="sig-name descname"><span class="pre">Get_info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Get_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the hints for a communicator
+that are currently in use</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="mpi4py.MPI.Info.html#mpi4py.MPI.Info" title="mpi4py.MPI.Info">Info</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Get_name">
+<span class="sig-name descname"><span class="pre">Get_name</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Get_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the print name for this communicator</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Get_parent">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Get_parent</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Get_parent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the parent intercommunicator for this process</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="mpi4py.MPI.Intercomm.html#mpi4py.MPI.Intercomm" title="mpi4py.MPI.Intercomm">Intercomm</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Get_rank">
+<span class="sig-name descname"><span class="pre">Get_rank</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Get_rank" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the rank of this process in a communicator</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Get_size">
+<span class="sig-name descname"><span class="pre">Get_size</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Get_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the number of processes in a communicator</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Get_topology">
+<span class="sig-name descname"><span class="pre">Get_topology</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Get_topology" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine the type of topology (if any)
+associated with a communicator</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Iallgather">
+<span class="sig-name descname"><span class="pre">Iallgather</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sendbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recvbuf</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Iallgather" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nonblocking Gather to All</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sendbuf</strong> (<em>Union</em><em>[</em><em>BufSpec</em><em>, </em><em>InPlace</em><em>]</em>) – </p></li>
+<li><p><strong>recvbuf</strong> (<em>BufSpecB</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request">Request</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Iallgatherv">
+<span class="sig-name descname"><span class="pre">Iallgatherv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sendbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recvbuf</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Iallgatherv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nonblocking Gather to All Vector</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sendbuf</strong> (<em>Union</em><em>[</em><em>BufSpec</em><em>, </em><em>InPlace</em><em>]</em>) – </p></li>
+<li><p><strong>recvbuf</strong> (<em>BufSpecV</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request">Request</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Iallreduce">
+<span class="sig-name descname"><span class="pre">Iallreduce</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sendbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recvbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">op</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">SUM</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Iallreduce" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nonblocking Reduce to All</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sendbuf</strong> (<em>Union</em><em>[</em><em>BufSpec</em><em>, </em><em>InPlace</em><em>]</em>) – </p></li>
+<li><p><strong>recvbuf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>op</strong> (<a class="reference internal" href="mpi4py.MPI.Op.html#mpi4py.MPI.Op" title="mpi4py.MPI.Op"><em>Op</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request">Request</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Ialltoall">
+<span class="sig-name descname"><span class="pre">Ialltoall</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sendbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recvbuf</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Ialltoall" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nonblocking All to All Scatter/Gather</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sendbuf</strong> (<em>Union</em><em>[</em><em>BufSpecB</em><em>, </em><em>InPlace</em><em>]</em>) – </p></li>
+<li><p><strong>recvbuf</strong> (<em>BufSpecB</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request">Request</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Ialltoallv">
+<span class="sig-name descname"><span class="pre">Ialltoallv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sendbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recvbuf</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Ialltoallv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nonblocking All to All Scatter/Gather Vector</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sendbuf</strong> (<em>Union</em><em>[</em><em>BufSpecV</em><em>, </em><em>InPlace</em><em>]</em>) – </p></li>
+<li><p><strong>recvbuf</strong> (<em>BufSpecV</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request">Request</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Ialltoallw">
+<span class="sig-name descname"><span class="pre">Ialltoallw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sendbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recvbuf</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Ialltoallw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nonblocking Generalized All-to-All</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sendbuf</strong> (<em>Union</em><em>[</em><em>BufSpecW</em><em>, </em><em>InPlace</em><em>]</em>) – </p></li>
+<li><p><strong>recvbuf</strong> (<em>BufSpecW</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request">Request</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Ibarrier">
+<span class="sig-name descname"><span class="pre">Ibarrier</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Ibarrier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nonblocking Barrier</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request">Request</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Ibcast">
+<span class="sig-name descname"><span class="pre">Ibcast</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Ibcast" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nonblocking Broadcast</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>root</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request">Request</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Ibsend">
+<span class="sig-name descname"><span class="pre">Ibsend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Ibsend" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nonblocking send in buffered mode</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>dest</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>tag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request">Request</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Idup">
+<span class="sig-name descname"><span class="pre">Idup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Idup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nonblocking duplicate an existing communicator</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tuple[<a class="reference internal" href="#mpi4py.MPI.Comm" title="mpi4py.MPI.Comm">Comm</a>, <a class="reference internal" href="mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request">Request</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Igather">
+<span class="sig-name descname"><span class="pre">Igather</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sendbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recvbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Igather" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nonblocking Gather</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sendbuf</strong> (<em>Union</em><em>[</em><em>BufSpec</em><em>, </em><em>InPlace</em><em>]</em>) – </p></li>
+<li><p><strong>recvbuf</strong> (<em>Optional</em><em>[</em><em>BufSpecB</em><em>]</em>) – </p></li>
+<li><p><strong>root</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request">Request</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Igatherv">
+<span class="sig-name descname"><span class="pre">Igatherv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sendbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recvbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Igatherv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nonblocking Gather Vector</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sendbuf</strong> (<em>Union</em><em>[</em><em>BufSpec</em><em>, </em><em>InPlace</em><em>]</em>) – </p></li>
+<li><p><strong>recvbuf</strong> (<em>Optional</em><em>[</em><em>BufSpecV</em><em>]</em>) – </p></li>
+<li><p><strong>root</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request">Request</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Improbe">
+<span class="sig-name descname"><span class="pre">Improbe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ANY_SOURCE</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ANY_TAG</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Improbe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nonblocking test for a matched message</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>tag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>status</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="mpi4py.MPI.Status.html#mpi4py.MPI.Status" title="mpi4py.MPI.Status"><em>Status</em></a><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Optional[<a class="reference internal" href="mpi4py.MPI.Message.html#mpi4py.MPI.Message" title="mpi4py.MPI.Message">Message</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Iprobe">
+<span class="sig-name descname"><span class="pre">Iprobe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ANY_SOURCE</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ANY_TAG</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Iprobe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nonblocking test for a message</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>tag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>status</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="mpi4py.MPI.Status.html#mpi4py.MPI.Status" title="mpi4py.MPI.Status"><em>Status</em></a><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Irecv">
+<span class="sig-name descname"><span class="pre">Irecv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ANY_SOURCE</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ANY_TAG</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Irecv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nonblocking receive</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>source</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>tag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request">Request</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Ireduce">
+<span class="sig-name descname"><span class="pre">Ireduce</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sendbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recvbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">op</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">SUM</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Ireduce" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nonblocking Reduce to Root</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sendbuf</strong> (<em>Union</em><em>[</em><em>BufSpec</em><em>, </em><em>InPlace</em><em>]</em>) – </p></li>
+<li><p><strong>recvbuf</strong> (<em>Optional</em><em>[</em><em>BufSpec</em><em>]</em>) – </p></li>
+<li><p><strong>op</strong> (<a class="reference internal" href="mpi4py.MPI.Op.html#mpi4py.MPI.Op" title="mpi4py.MPI.Op"><em>Op</em></a>) – </p></li>
+<li><p><strong>root</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request">Request</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Ireduce_scatter">
+<span class="sig-name descname"><span class="pre">Ireduce_scatter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sendbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recvbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recvcounts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">op</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">SUM</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Ireduce_scatter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nonblocking Reduce-Scatter (vector version)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sendbuf</strong> (<em>Union</em><em>[</em><em>BufSpec</em><em>, </em><em>InPlace</em><em>]</em>) – </p></li>
+<li><p><strong>recvbuf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>recvcounts</strong> (<em>Optional</em><em>[</em><em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em><em>]</em>) – </p></li>
+<li><p><strong>op</strong> (<a class="reference internal" href="mpi4py.MPI.Op.html#mpi4py.MPI.Op" title="mpi4py.MPI.Op"><em>Op</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request">Request</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Ireduce_scatter_block">
+<span class="sig-name descname"><span class="pre">Ireduce_scatter_block</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sendbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recvbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">op</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">SUM</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Ireduce_scatter_block" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nonblocking Reduce-Scatter Block (regular, non-vector version)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sendbuf</strong> (<em>Union</em><em>[</em><em>BufSpecB</em><em>, </em><em>InPlace</em><em>]</em>) – </p></li>
+<li><p><strong>recvbuf</strong> (<em>Union</em><em>[</em><em>BufSpec</em><em>, </em><em>BufSpecB</em><em>]</em>) – </p></li>
+<li><p><strong>op</strong> (<a class="reference internal" href="mpi4py.MPI.Op.html#mpi4py.MPI.Op" title="mpi4py.MPI.Op"><em>Op</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request">Request</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Irsend">
+<span class="sig-name descname"><span class="pre">Irsend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Irsend" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nonblocking send in ready mode</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>dest</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>tag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request">Request</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Is_inter">
+<span class="sig-name descname"><span class="pre">Is_inter</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Is_inter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test to see if a comm is an intercommunicator</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Is_intra">
+<span class="sig-name descname"><span class="pre">Is_intra</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Is_intra" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test to see if a comm is an intracommunicator</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Iscatter">
+<span class="sig-name descname"><span class="pre">Iscatter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sendbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recvbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Iscatter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nonblocking Scatter</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sendbuf</strong> (<em>Optional</em><em>[</em><em>BufSpecB</em><em>]</em>) – </p></li>
+<li><p><strong>recvbuf</strong> (<em>Union</em><em>[</em><em>BufSpec</em><em>, </em><em>InPlace</em><em>]</em>) – </p></li>
+<li><p><strong>root</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request">Request</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Iscatterv">
+<span class="sig-name descname"><span class="pre">Iscatterv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sendbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recvbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Iscatterv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nonblocking Scatter Vector</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sendbuf</strong> (<em>Optional</em><em>[</em><em>BufSpecV</em><em>]</em>) – </p></li>
+<li><p><strong>recvbuf</strong> (<em>Union</em><em>[</em><em>BufSpec</em><em>, </em><em>InPlace</em><em>]</em>) – </p></li>
+<li><p><strong>root</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request">Request</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Isend">
+<span class="sig-name descname"><span class="pre">Isend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Isend" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nonblocking send</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>dest</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>tag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request">Request</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Issend">
+<span class="sig-name descname"><span class="pre">Issend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Issend" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nonblocking send in synchronous mode</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>dest</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>tag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request">Request</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Join">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Join</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fd</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Join" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a intercommunicator by joining
+two processes connected by a socket</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>fd</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Intercomm.html#mpi4py.MPI.Intercomm" title="mpi4py.MPI.Intercomm">Intercomm</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Mprobe">
+<span class="sig-name descname"><span class="pre">Mprobe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ANY_SOURCE</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ANY_TAG</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Mprobe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Blocking test for a matched message</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>tag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>status</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="mpi4py.MPI.Status.html#mpi4py.MPI.Status" title="mpi4py.MPI.Status"><em>Status</em></a><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Message.html#mpi4py.MPI.Message" title="mpi4py.MPI.Message">Message</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Probe">
+<span class="sig-name descname"><span class="pre">Probe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ANY_SOURCE</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ANY_TAG</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Probe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Blocking test for a message</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This function blocks until the message arrives.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>tag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>status</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="mpi4py.MPI.Status.html#mpi4py.MPI.Status" title="mpi4py.MPI.Status"><em>Status</em></a><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Literal[True]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Recv">
+<span class="sig-name descname"><span class="pre">Recv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ANY_SOURCE</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ANY_TAG</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Recv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Blocking receive</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This function blocks until the message is received</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>source</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>tag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>status</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="mpi4py.MPI.Status.html#mpi4py.MPI.Status" title="mpi4py.MPI.Status"><em>Status</em></a><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Recv_init">
+<span class="sig-name descname"><span class="pre">Recv_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ANY_SOURCE</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ANY_TAG</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Recv_init" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a persistent request for a receive</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>source</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>tag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Prequest.html#mpi4py.MPI.Prequest" title="mpi4py.MPI.Prequest">Prequest</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Reduce">
+<span class="sig-name descname"><span class="pre">Reduce</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sendbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recvbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">op</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">SUM</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Reduce" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reduce to Root</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sendbuf</strong> (<em>Union</em><em>[</em><em>BufSpec</em><em>, </em><em>InPlace</em><em>]</em>) – </p></li>
+<li><p><strong>recvbuf</strong> (<em>Optional</em><em>[</em><em>BufSpec</em><em>]</em>) – </p></li>
+<li><p><strong>op</strong> (<a class="reference internal" href="mpi4py.MPI.Op.html#mpi4py.MPI.Op" title="mpi4py.MPI.Op"><em>Op</em></a>) – </p></li>
+<li><p><strong>root</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Reduce_scatter">
+<span class="sig-name descname"><span class="pre">Reduce_scatter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sendbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recvbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recvcounts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">op</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">SUM</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Reduce_scatter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reduce-Scatter (vector version)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sendbuf</strong> (<em>Union</em><em>[</em><em>BufSpec</em><em>, </em><em>InPlace</em><em>]</em>) – </p></li>
+<li><p><strong>recvbuf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>recvcounts</strong> (<em>Optional</em><em>[</em><em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em><em>]</em>) – </p></li>
+<li><p><strong>op</strong> (<a class="reference internal" href="mpi4py.MPI.Op.html#mpi4py.MPI.Op" title="mpi4py.MPI.Op"><em>Op</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Reduce_scatter_block">
+<span class="sig-name descname"><span class="pre">Reduce_scatter_block</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sendbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recvbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">op</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">SUM</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Reduce_scatter_block" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reduce-Scatter Block (regular, non-vector version)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sendbuf</strong> (<em>Union</em><em>[</em><em>BufSpecB</em><em>, </em><em>InPlace</em><em>]</em>) – </p></li>
+<li><p><strong>recvbuf</strong> (<em>Union</em><em>[</em><em>BufSpec</em><em>, </em><em>BufSpecB</em><em>]</em>) – </p></li>
+<li><p><strong>op</strong> (<a class="reference internal" href="mpi4py.MPI.Op.html#mpi4py.MPI.Op" title="mpi4py.MPI.Op"><em>Op</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Rsend">
+<span class="sig-name descname"><span class="pre">Rsend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Rsend" title="Permalink to this definition">¶</a></dt>
+<dd><p>Blocking send in ready mode</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>dest</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>tag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Rsend_init">
+<span class="sig-name descname"><span class="pre">Rsend_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Rsend_init" title="Permalink to this definition">¶</a></dt>
+<dd><p>Persistent request for a send in ready mode</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>dest</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>tag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request">Request</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Scatter">
+<span class="sig-name descname"><span class="pre">Scatter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sendbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recvbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Scatter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scatter data from one process
+to all other processes in a group</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sendbuf</strong> (<em>Optional</em><em>[</em><em>BufSpecB</em><em>]</em>) – </p></li>
+<li><p><strong>recvbuf</strong> (<em>Union</em><em>[</em><em>BufSpec</em><em>, </em><em>InPlace</em><em>]</em>) – </p></li>
+<li><p><strong>root</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Scatterv">
+<span class="sig-name descname"><span class="pre">Scatterv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sendbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recvbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Scatterv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scatter Vector, scatter data from one process to all other
+processes in a group providing different amount of data and
+displacements at the sending side</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sendbuf</strong> (<em>Optional</em><em>[</em><em>BufSpecV</em><em>]</em>) – </p></li>
+<li><p><strong>recvbuf</strong> (<em>Union</em><em>[</em><em>BufSpec</em><em>, </em><em>InPlace</em><em>]</em>) – </p></li>
+<li><p><strong>root</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Send">
+<span class="sig-name descname"><span class="pre">Send</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Send" title="Permalink to this definition">¶</a></dt>
+<dd><p>Blocking send</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This function may block until the message is
+received. Whether or not <a class="reference internal" href="#mpi4py.MPI.Comm.Send" title="mpi4py.MPI.Comm.Send"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">Send</span></code></a> blocks depends on
+several factors and is implementation dependent</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>dest</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>tag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Send_init">
+<span class="sig-name descname"><span class="pre">Send_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Send_init" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a persistent request for a standard send</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>dest</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>tag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Prequest.html#mpi4py.MPI.Prequest" title="mpi4py.MPI.Prequest">Prequest</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Sendrecv">
+<span class="sig-name descname"><span class="pre">Sendrecv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sendbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sendtag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recvbuf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ANY_SOURCE</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recvtag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ANY_TAG</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Sendrecv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send and receive a message</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This function is guaranteed not to deadlock in
+situations where pairs of blocking sends and receives may
+deadlock.</p>
+</div>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>A common mistake when using this function is to
+mismatch the tags with the source and destination ranks,
+which can result in deadlock.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sendbuf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>dest</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>sendtag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>recvbuf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>source</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>recvtag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>status</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="mpi4py.MPI.Status.html#mpi4py.MPI.Status" title="mpi4py.MPI.Status"><em>Status</em></a><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Sendrecv_replace">
+<span class="sig-name descname"><span class="pre">Sendrecv_replace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sendtag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ANY_SOURCE</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recvtag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ANY_TAG</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Sendrecv_replace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send and receive a message</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This function is guaranteed not to deadlock in
+situations where pairs of blocking sends and receives may
+deadlock.</p>
+</div>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>A common mistake when using this function is to
+mismatch the tags with the source and destination ranks,
+which can result in deadlock.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>dest</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>sendtag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>source</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>recvtag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>status</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="mpi4py.MPI.Status.html#mpi4py.MPI.Status" title="mpi4py.MPI.Status"><em>Status</em></a><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Set_attr">
+<span class="sig-name descname"><span class="pre">Set_attr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keyval</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrval</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Set_attr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Store attribute value associated with a key</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>keyval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>attrval</strong> (<em>Any</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Set_errhandler">
+<span class="sig-name descname"><span class="pre">Set_errhandler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">errhandler</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Set_errhandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the error handler for a communicator</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>errhandler</strong> (<a class="reference internal" href="mpi4py.MPI.Errhandler.html#mpi4py.MPI.Errhandler" title="mpi4py.MPI.Errhandler"><em>Errhandler</em></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Set_info">
+<span class="sig-name descname"><span class="pre">Set_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">info</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Set_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set new values for the hints
+associated with a communicator</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>info</strong> (<a class="reference internal" href="mpi4py.MPI.Info.html#mpi4py.MPI.Info" title="mpi4py.MPI.Info"><em>Info</em></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Set_name">
+<span class="sig-name descname"><span class="pre">Set_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Set_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the print name for this communicator</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Split">
+<span class="sig-name descname"><span class="pre">Split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Split" title="Permalink to this definition">¶</a></dt>
+<dd><p>Split communicator by color and key</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>color</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>key</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mpi4py.MPI.Comm" title="mpi4py.MPI.Comm">Comm</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Split_type">
+<span class="sig-name descname"><span class="pre">Split_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">split_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">INFO_NULL</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Split_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Split communicator by split type</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>split_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>key</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>info</strong> (<a class="reference internal" href="mpi4py.MPI.Info.html#mpi4py.MPI.Info" title="mpi4py.MPI.Info"><em>Info</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mpi4py.MPI.Comm" title="mpi4py.MPI.Comm">Comm</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Ssend">
+<span class="sig-name descname"><span class="pre">Ssend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Ssend" title="Permalink to this definition">¶</a></dt>
+<dd><p>Blocking send in synchronous mode</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>dest</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>tag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.Ssend_init">
+<span class="sig-name descname"><span class="pre">Ssend_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.Ssend_init" title="Permalink to this definition">¶</a></dt>
+<dd><p>Persistent request for a send in synchronous mode</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>dest</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>tag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request">Request</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.allgather">
+<span class="sig-name descname"><span class="pre">allgather</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sendobj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.allgather" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gather to All</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>sendobj</strong> (<em>Any</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>List[Any]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.allreduce">
+<span class="sig-name descname"><span class="pre">allreduce</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sendobj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">op</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">SUM</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.allreduce" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reduce to All</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sendobj</strong> (<em>Any</em>) – </p></li>
+<li><p><strong>op</strong> (<em>Union</em><em>[</em><a class="reference internal" href="mpi4py.MPI.Op.html#mpi4py.MPI.Op" title="mpi4py.MPI.Op"><em>Op</em></a><em>, </em><em>Callable</em><em>[</em><em>[</em><em>Any</em><em>, </em><em>Any</em><em>]</em><em>, </em><em>Any</em><em>]</em><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Any</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.alltoall">
+<span class="sig-name descname"><span class="pre">alltoall</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sendobj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.alltoall" title="Permalink to this definition">¶</a></dt>
+<dd><p>All to All Scatter/Gather</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>sendobj</strong> (<em>Sequence</em><em>[</em><em>Any</em><em>]</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>List[Any]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.barrier">
+<span class="sig-name descname"><span class="pre">barrier</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.barrier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Barrier</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.bcast">
+<span class="sig-name descname"><span class="pre">bcast</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.bcast" title="Permalink to this definition">¶</a></dt>
+<dd><p>Broadcast</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obj</strong> (<em>Any</em>) – </p></li>
+<li><p><strong>root</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Any</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.bsend">
+<span class="sig-name descname"><span class="pre">bsend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.bsend" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send in buffered mode</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obj</strong> (<em>Any</em>) – </p></li>
+<li><p><strong>dest</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>tag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.f2py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">f2py</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.f2py" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>arg</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mpi4py.MPI.Comm" title="mpi4py.MPI.Comm">Comm</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.gather">
+<span class="sig-name descname"><span class="pre">gather</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sendobj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.gather" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gather</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sendobj</strong> (<em>Any</em>) – </p></li>
+<li><p><strong>root</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Optional[List[Any]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.ibsend">
+<span class="sig-name descname"><span class="pre">ibsend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.ibsend" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nonblocking send in buffered mode</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obj</strong> (<em>Any</em>) – </p></li>
+<li><p><strong>dest</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>tag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request">Request</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.improbe">
+<span class="sig-name descname"><span class="pre">improbe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ANY_SOURCE</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ANY_TAG</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.improbe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nonblocking test for a matched message</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>tag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>status</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="mpi4py.MPI.Status.html#mpi4py.MPI.Status" title="mpi4py.MPI.Status"><em>Status</em></a><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Optional[<a class="reference internal" href="mpi4py.MPI.Message.html#mpi4py.MPI.Message" title="mpi4py.MPI.Message">Message</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.iprobe">
+<span class="sig-name descname"><span class="pre">iprobe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ANY_SOURCE</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ANY_TAG</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.iprobe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nonblocking test for a message</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>tag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>status</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="mpi4py.MPI.Status.html#mpi4py.MPI.Status" title="mpi4py.MPI.Status"><em>Status</em></a><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.irecv">
+<span class="sig-name descname"><span class="pre">irecv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ANY_SOURCE</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ANY_TAG</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.irecv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nonblocking receive</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buf</strong> (<em>Optional</em><em>[</em><em>Buffer</em><em>]</em>) – </p></li>
+<li><p><strong>source</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>tag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request">Request</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.isend">
+<span class="sig-name descname"><span class="pre">isend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.isend" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nonblocking send</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obj</strong> (<em>Any</em>) – </p></li>
+<li><p><strong>dest</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>tag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request">Request</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.issend">
+<span class="sig-name descname"><span class="pre">issend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.issend" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nonblocking send in synchronous mode</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obj</strong> (<em>Any</em>) – </p></li>
+<li><p><strong>dest</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>tag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request">Request</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.mprobe">
+<span class="sig-name descname"><span class="pre">mprobe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ANY_SOURCE</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ANY_TAG</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.mprobe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Blocking test for a matched message</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>tag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>status</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="mpi4py.MPI.Status.html#mpi4py.MPI.Status" title="mpi4py.MPI.Status"><em>Status</em></a><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Message.html#mpi4py.MPI.Message" title="mpi4py.MPI.Message">Message</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.probe">
+<span class="sig-name descname"><span class="pre">probe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ANY_SOURCE</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ANY_TAG</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.probe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Blocking test for a message</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>tag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>status</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="mpi4py.MPI.Status.html#mpi4py.MPI.Status" title="mpi4py.MPI.Status"><em>Status</em></a><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Literal[True]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.py2f">
+<span class="sig-name descname"><span class="pre">py2f</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.py2f" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.recv">
+<span class="sig-name descname"><span class="pre">recv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ANY_SOURCE</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ANY_TAG</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.recv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Receive</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buf</strong> (<em>Optional</em><em>[</em><em>Buffer</em><em>]</em>) – </p></li>
+<li><p><strong>source</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>tag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>status</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="mpi4py.MPI.Status.html#mpi4py.MPI.Status" title="mpi4py.MPI.Status"><em>Status</em></a><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Any</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.reduce">
+<span class="sig-name descname"><span class="pre">reduce</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sendobj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">op</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">SUM</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.reduce" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reduce to Root</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sendobj</strong> (<em>Any</em>) – </p></li>
+<li><p><strong>op</strong> (<em>Union</em><em>[</em><a class="reference internal" href="mpi4py.MPI.Op.html#mpi4py.MPI.Op" title="mpi4py.MPI.Op"><em>Op</em></a><em>, </em><em>Callable</em><em>[</em><em>[</em><em>Any</em><em>, </em><em>Any</em><em>]</em><em>, </em><em>Any</em><em>]</em><em>]</em>) – </p></li>
+<li><p><strong>root</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Optional[Any]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.scatter">
+<span class="sig-name descname"><span class="pre">scatter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sendobj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.scatter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scatter</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sendobj</strong> (<em>Sequence</em><em>[</em><em>Any</em><em>]</em>) – </p></li>
+<li><p><strong>root</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Any</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.send">
+<span class="sig-name descname"><span class="pre">send</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.send" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obj</strong> (<em>Any</em>) – </p></li>
+<li><p><strong>dest</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>tag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.sendrecv">
+<span class="sig-name descname"><span class="pre">sendrecv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sendobj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sendtag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recvbuf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ANY_SOURCE</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recvtag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ANY_TAG</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.sendrecv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send and Receive</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sendobj</strong> (<em>Any</em>) – </p></li>
+<li><p><strong>dest</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>sendtag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>recvbuf</strong> (<em>Optional</em><em>[</em><em>Buffer</em><em>]</em>) – </p></li>
+<li><p><strong>source</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>recvtag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>status</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="mpi4py.MPI.Status.html#mpi4py.MPI.Status" title="mpi4py.MPI.Status"><em>Status</em></a><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Any</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.ssend">
+<span class="sig-name descname"><span class="pre">ssend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Comm.ssend" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send in synchronous mode</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obj</strong> (<em>Any</em>) – </p></li>
+<li><p><strong>dest</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>tag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Attributes Documentation</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.group">
+<span class="sig-name descname"><span class="pre">group</span></span><a class="headerlink" href="#mpi4py.MPI.Comm.group" title="Permalink to this definition">¶</a></dt>
+<dd><p>communicator group</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.info">
+<span class="sig-name descname"><span class="pre">info</span></span><a class="headerlink" href="#mpi4py.MPI.Comm.info" title="Permalink to this definition">¶</a></dt>
+<dd><p>communicator info</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.is_inter">
+<span class="sig-name descname"><span class="pre">is_inter</span></span><a class="headerlink" href="#mpi4py.MPI.Comm.is_inter" title="Permalink to this definition">¶</a></dt>
+<dd><p>is intercommunicator</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.is_intra">
+<span class="sig-name descname"><span class="pre">is_intra</span></span><a class="headerlink" href="#mpi4py.MPI.Comm.is_intra" title="Permalink to this definition">¶</a></dt>
+<dd><p>is intracommunicator</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.is_topo">
+<span class="sig-name descname"><span class="pre">is_topo</span></span><a class="headerlink" href="#mpi4py.MPI.Comm.is_topo" title="Permalink to this definition">¶</a></dt>
+<dd><p>is a topology communicator</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#mpi4py.MPI.Comm.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>communicator name</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.rank">
+<span class="sig-name descname"><span class="pre">rank</span></span><a class="headerlink" href="#mpi4py.MPI.Comm.rank" title="Permalink to this definition">¶</a></dt>
+<dd><p>rank of this process in communicator</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.size">
+<span class="sig-name descname"><span class="pre">size</span></span><a class="headerlink" href="#mpi4py.MPI.Comm.size" title="Permalink to this definition">¶</a></dt>
+<dd><p>number of processes in communicator</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.MPI.Comm.topology">
+<span class="sig-name descname"><span class="pre">topology</span></span><a class="headerlink" href="#mpi4py.MPI.Comm.topology" title="Permalink to this definition">¶</a></dt>
+<dd><p>communicator topology type</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="mpi4py.MPI.Cartcomm.html"
+                        title="previous chapter">mpi4py.MPI.Cartcomm</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="mpi4py.MPI.Datatype.html"
+                        title="next chapter">mpi4py.MPI.Datatype</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mpi4py.MPI.Datatype.html" title="mpi4py.MPI.Datatype"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="mpi4py.MPI.Cartcomm.html" title="mpi4py.MPI.Cartcomm"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">MPI for Python 3.1.3 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" >Reference</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="mpi4py.MPI.html" >mpi4py.MPI</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">mpi4py.MPI.Comm</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Lisandro Dalcin.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.0.
+    </div>
+  </body>
+</html>

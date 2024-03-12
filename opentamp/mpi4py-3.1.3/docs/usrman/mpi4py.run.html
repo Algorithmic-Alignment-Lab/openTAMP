@@ -1,0 +1,214 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>mpi4py.run &#8212; MPI for Python 3.1.3 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/classic.css" />
+    
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Reference" href="reference.html" />
+    <link rel="prev" title="mpi4py.util.dtlib" href="mpi4py.util.dtlib.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="reference.html" title="Reference"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="mpi4py.util.dtlib.html" title="mpi4py.util.dtlib"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">MPI for Python 3.1.3 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">mpi4py.run</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-mpi4py.run">
+<span id="mpi4py-run"></span><h1>mpi4py.run<a class="headerlink" href="#module-mpi4py.run" title="Permalink to this headline">¶</a></h1>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.0.0.</span></p>
+</div>
+<p>At import time, <a class="reference internal" href="mpi4py.html#module-mpi4py" title="mpi4py: The MPI for Python package."><code class="xref py py-mod docutils literal notranslate"><span class="pre">mpi4py</span></code></a> initializes the MPI execution environment calling
+<code class="xref c c-func docutils literal notranslate"><span class="pre">MPI_Init_thread()</span></code> and installs an exit hook to automatically call
+<code class="xref c c-func docutils literal notranslate"><span class="pre">MPI_Finalize()</span></code> just before the Python process terminates. Additionally,
+<a class="reference internal" href="mpi4py.html#module-mpi4py" title="mpi4py: The MPI for Python package."><code class="xref py py-mod docutils literal notranslate"><span class="pre">mpi4py</span></code></a> overrides the default <a class="reference internal" href="reference/mpi4py.MPI.ERRORS_ARE_FATAL.html#mpi4py.MPI.ERRORS_ARE_FATAL" title="mpi4py.MPI.ERRORS_ARE_FATAL"><code class="xref any py py-data docutils literal notranslate"><span class="pre">ERRORS_ARE_FATAL</span></code></a> error handler in favor
+of <a class="reference internal" href="reference/mpi4py.MPI.ERRORS_RETURN.html#mpi4py.MPI.ERRORS_RETURN" title="mpi4py.MPI.ERRORS_RETURN"><code class="xref any py py-data docutils literal notranslate"><span class="pre">ERRORS_RETURN</span></code></a>, which allows translating MPI errors in Python
+exceptions. These departures from standard MPI behavior may be controversial,
+but are quite convenient within the highly dynamic Python programming
+environment. Third-party code using <a class="reference internal" href="mpi4py.html#module-mpi4py" title="mpi4py: The MPI for Python package."><code class="xref py py-mod docutils literal notranslate"><span class="pre">mpi4py</span></code></a> can just <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">mpi4py</span> <span class="pre">import</span>
+<span class="pre">MPI</span></code> and perform MPI calls without the tedious initialization/finalization
+handling.  MPI errors, once translated automatically to Python exceptions, can
+be dealt with the common <a class="reference external" href="https://docs.python.org/3/reference/compound_stmts.html#try" title="(in Python v3.10)"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">try</span></code></a>…<a class="reference external" href="https://docs.python.org/3/reference/compound_stmts.html#except" title="(in Python v3.10)"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">except</span></code></a>…<a class="reference external" href="https://docs.python.org/3/reference/compound_stmts.html#finally" title="(in Python v3.10)"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">finally</span></code></a> clauses; unhandled MPI exceptions will print a traceback
+which helps in locating problems in source code.</p>
+<p>Unfortunately, the interplay of automatic MPI finalization and unhandled
+exceptions may lead to deadlocks. In unattended runs, these deadlocks will
+drain the battery of your laptop, or burn precious allocation hours in your
+supercomputing facility.</p>
+<p>Consider the following snippet of Python code. Assume this code is stored in a
+standard Python script file and run with <strong class="command">mpiexec</strong> in two or more
+processes.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mpi4py</span> <span class="kn">import</span> <span class="n">MPI</span>
+<span class="k">assert</span> <span class="n">MPI</span><span class="o">.</span><span class="n">COMM_WORLD</span><span class="o">.</span><span class="n">Get_size</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">1</span>
+<span class="n">rank</span> <span class="o">=</span> <span class="n">MPI</span><span class="o">.</span><span class="n">COMM_WORLD</span><span class="o">.</span><span class="n">Get_rank</span><span class="p">()</span>
+<span class="k">if</span> <span class="n">rank</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="mi">1</span><span class="o">/</span><span class="mi">0</span>
+    <span class="n">MPI</span><span class="o">.</span><span class="n">COMM_WORLD</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="k">elif</span> <span class="n">rank</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="n">MPI</span><span class="o">.</span><span class="n">COMM_WORLD</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Process 0 raises <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ZeroDivisionError" title="(in Python v3.10)"><code class="xref any docutils literal notranslate"><span class="pre">ZeroDivisionError</span></code></a> exception before performing a send call to
+process 1. As the exception is not handled, the Python interpreter running in
+process 0 will proceed to exit with non-zero status. However, as <a class="reference internal" href="mpi4py.html#module-mpi4py" title="mpi4py: The MPI for Python package."><code class="xref py py-mod docutils literal notranslate"><span class="pre">mpi4py</span></code></a>
+installed a finalizer hook to call <code class="xref c c-func docutils literal notranslate"><span class="pre">MPI_Finalize()</span></code> before exit, process
+0 will block waiting for other processes to also enter the
+<code class="xref c c-func docutils literal notranslate"><span class="pre">MPI_Finalize()</span></code> call. Meanwhile, process 1 will block waiting for a
+message to arrive from process 0, thus never reaching to
+<code class="xref c c-func docutils literal notranslate"><span class="pre">MPI_Finalize()</span></code>. The whole MPI execution environment is irremediably in
+a deadlock state.</p>
+<p>To alleviate this issue, <a class="reference internal" href="mpi4py.html#module-mpi4py" title="mpi4py: The MPI for Python package."><code class="xref py py-mod docutils literal notranslate"><span class="pre">mpi4py</span></code></a> offers a simple, alternative command
+line execution mechanism based on using the <a class="reference external" href="https://docs.python.org/3/using/cmdline.html#using-on-cmdline" title="(in Python v3.10)"><span class="xref std std-ref">-m</span></a>
+flag and implemented with the <a class="reference external" href="https://docs.python.org/3/library/runpy.html#module-runpy" title="(in Python v3.10)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">runpy</span></code></a> module. To use this features, Python
+code should be run passing <code class="docutils literal notranslate"><span class="pre">-m</span> <span class="pre">mpi4py</span></code> in the command line invoking the
+Python interpreter. In case of unhandled exceptions, the finalizer hook will
+call <code class="xref c c-func docutils literal notranslate"><span class="pre">MPI_Abort()</span></code> on the <code class="xref c c-data docutils literal notranslate"><span class="pre">MPI_COMM_WORLD</span></code> communicator, thus
+effectively aborting the MPI execution environment.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>When a process is forced to abort, resources (e.g. open files) are not
+cleaned-up and any registered finalizers (either with the <a class="reference external" href="https://docs.python.org/3/library/atexit.html#module-atexit" title="(in Python v3.10)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">atexit</span></code></a>
+module, the Python C/API function <a class="reference external" href="https://docs.python.org/3/c-api/sys.html#c.Py_AtExit" title="(in Python v3.10)"><code class="xref c c-func docutils literal notranslate"><span class="pre">Py_AtExit()</span></code></a>, or even the C
+standard library function <code class="xref c c-func docutils literal notranslate"><span class="pre">atexit()</span></code>) will not be executed. Thus,
+aborting execution is an extremely impolite way of ensuring process
+termination. However, MPI provides no other mechanism to recover from a
+deadlock state.</p>
+</div>
+<section id="interface-options">
+<h2>Interface options<a class="headerlink" href="#interface-options" title="Permalink to this headline">¶</a></h2>
+<p>The use of <code class="docutils literal notranslate"><span class="pre">-m</span> <span class="pre">mpi4py</span></code> to execute Python code on the command line resembles
+that of the Python interpreter.</p>
+<ul class="simple">
+<li><p><code class="samp docutils literal notranslate"><span class="pre">mpiexec</span> <span class="pre">-n</span> <em><span class="pre">numprocs</span></em> <span class="pre">python</span> <span class="pre">-m</span> <span class="pre">mpi4py</span> <em><span class="pre">pyfile</span></em> <span class="pre">[arg]</span> <span class="pre">...</span></code></p></li>
+<li><p><code class="samp docutils literal notranslate"><span class="pre">mpiexec</span> <span class="pre">-n</span> <em><span class="pre">numprocs</span></em> <span class="pre">python</span> <span class="pre">-m</span> <span class="pre">mpi4py</span> <span class="pre">-m</span> <em><span class="pre">mod</span></em> <span class="pre">[arg]</span> <span class="pre">...</span></code></p></li>
+<li><p><code class="samp docutils literal notranslate"><span class="pre">mpiexec</span> <span class="pre">-n</span> <em><span class="pre">numprocs</span></em> <span class="pre">python</span> <span class="pre">-m</span> <span class="pre">mpi4py</span> <span class="pre">-c</span> <em><span class="pre">cmd</span></em> <span class="pre">[arg]</span> <span class="pre">...</span></code></p></li>
+<li><p><code class="samp docutils literal notranslate"><span class="pre">mpiexec</span> <span class="pre">-n</span> <em><span class="pre">numprocs</span></em> <span class="pre">python</span> <span class="pre">-m</span> <span class="pre">mpi4py</span> <span class="pre">-</span> <span class="pre">[arg]</span> <span class="pre">...</span></code></p></li>
+</ul>
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">&lt;pyfile&gt;</span></span></dt>
+<dd><p>Execute the Python code contained in <em>pyfile</em>, which must be a filesystem
+path referring to either a Python file, a directory containing a
+<code class="file docutils literal notranslate"><span class="pre">__main__.py</span></code> file, or a zipfile containing a <code class="file docutils literal notranslate"><span class="pre">__main__.py</span></code>
+file.</p>
+</dd></dl>
+
+<dl class="std cmdoption">
+<dt class="sig sig-object std" id="cmdoption-m">
+<span class="sig-name descname"><span class="pre">-m</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;mod&gt;</span></span><a class="headerlink" href="#cmdoption-m" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search <a class="reference external" href="https://docs.python.org/3/library/sys.html#sys.path" title="(in Python v3.10)"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.path</span></code></a> for the named module <em>mod</em> and execute its contents.</p>
+</dd></dl>
+
+<dl class="std cmdoption">
+<dt class="sig sig-object std" id="cmdoption-c">
+<span class="sig-name descname"><span class="pre">-c</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;cmd&gt;</span></span><a class="headerlink" href="#cmdoption-c" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute the Python code in the <em>cmd</em> string command.</p>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">-</span></span></dt>
+<dd><p>Read commands from standard input (<a class="reference external" href="https://docs.python.org/3/library/sys.html#sys.stdin" title="(in Python v3.10)"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.stdin</span></code></a>).</p>
+</dd></dl>
+
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference external" href="https://docs.python.org/3/using/cmdline.html#using-on-cmdline" title="(in Python v3.10)"><span>Command line</span></a></dt><dd><p>Documentation on Python command line interface.</p>
+</dd>
+</dl>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">mpi4py.run</a><ul>
+<li><a class="reference internal" href="#interface-options">Interface options</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="mpi4py.util.dtlib.html"
+                        title="previous chapter">mpi4py.util.dtlib</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="reference.html"
+                        title="next chapter">Reference</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="reference.html" title="Reference"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="mpi4py.util.dtlib.html" title="mpi4py.util.dtlib"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">MPI for Python 3.1.3 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">mpi4py.run</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Lisandro Dalcin.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.0.
+    </div>
+  </body>
+</html>
