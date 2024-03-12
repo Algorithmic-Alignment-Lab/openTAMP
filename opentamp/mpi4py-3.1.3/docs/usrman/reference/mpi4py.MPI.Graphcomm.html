@@ -1,0 +1,286 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>mpi4py.MPI.Graphcomm &#8212; MPI for Python 3.1.3 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/classic.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="mpi4py.MPI.Grequest" href="mpi4py.MPI.Grequest.html" />
+    <link rel="prev" title="mpi4py.MPI.File" href="mpi4py.MPI.File.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mpi4py.MPI.Grequest.html" title="mpi4py.MPI.Grequest"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="mpi4py.MPI.File.html" title="mpi4py.MPI.File"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">MPI for Python 3.1.3 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" >Reference</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="mpi4py.MPI.html" accesskey="U">mpi4py.MPI</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">mpi4py.MPI.Graphcomm</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="mpi4py-mpi-graphcomm">
+<h1>mpi4py.MPI.Graphcomm<a class="headerlink" href="#mpi4py-mpi-graphcomm" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="mpi4py.MPI.Graphcomm">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mpi4py.MPI.</span></span><span class="sig-name descname"><span class="pre">Graphcomm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">comm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Graphcomm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="mpi4py.MPI.Topocomm.html#mpi4py.MPI.Topocomm" title="mpi4py.MPI.Topocomm"><code class="xref py py-class docutils literal notranslate"><span class="pre">mpi4py.MPI.Topocomm</span></code></a></p>
+<p>General graph topology intracommunicator</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>comm</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="#mpi4py.MPI.Graphcomm" title="mpi4py.MPI.Graphcomm"><em>Graphcomm</em></a><em>]</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mpi4py.MPI.Graphcomm" title="mpi4py.MPI.Graphcomm">Graphcomm</a></p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Graphcomm.__new__">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">__new__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Graphcomm.__new__" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>comm</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="#mpi4py.MPI.Graphcomm" title="mpi4py.MPI.Graphcomm"><em>Graphcomm</em></a><em>]</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mpi4py.MPI.Graphcomm" title="mpi4py.MPI.Graphcomm">Graphcomm</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Methods Summary</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Graphcomm.Get_dims" title="mpi4py.MPI.Graphcomm.Get_dims"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Get_dims</span></code></a>()</p></td>
+<td><p>Return the number of nodes and edges</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Graphcomm.Get_neighbors" title="mpi4py.MPI.Graphcomm.Get_neighbors"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Get_neighbors</span></code></a>(rank)</p></td>
+<td><p>Return list of neighbors of a process</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Graphcomm.Get_neighbors_count" title="mpi4py.MPI.Graphcomm.Get_neighbors_count"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Get_neighbors_count</span></code></a>(rank)</p></td>
+<td><p>Return number of neighbors of a process</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Graphcomm.Get_topo" title="mpi4py.MPI.Graphcomm.Get_topo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Get_topo</span></code></a>()</p></td>
+<td><p>Return index and edges</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes Summary</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Graphcomm.dims" title="mpi4py.MPI.Graphcomm.dims"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dims</span></code></a></p></td>
+<td><p>number of nodes and edges</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Graphcomm.edges" title="mpi4py.MPI.Graphcomm.edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">edges</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Graphcomm.index" title="mpi4py.MPI.Graphcomm.index"><code class="xref py py-obj docutils literal notranslate"><span class="pre">index</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Graphcomm.nedges" title="mpi4py.MPI.Graphcomm.nedges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nedges</span></code></a></p></td>
+<td><p>number of edges</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Graphcomm.neighbors" title="mpi4py.MPI.Graphcomm.neighbors"><code class="xref py py-obj docutils literal notranslate"><span class="pre">neighbors</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Graphcomm.nneighbors" title="mpi4py.MPI.Graphcomm.nneighbors"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nneighbors</span></code></a></p></td>
+<td><p>number of neighbors</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Graphcomm.nnodes" title="mpi4py.MPI.Graphcomm.nnodes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nnodes</span></code></a></p></td>
+<td><p>number of nodes</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Graphcomm.topo" title="mpi4py.MPI.Graphcomm.topo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">topo</span></code></a></p></td>
+<td><p>topology information</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods Documentation</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Graphcomm.Get_dims">
+<span class="sig-name descname"><span class="pre">Get_dims</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Graphcomm.Get_dims" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the number of nodes and edges</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tuple[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Graphcomm.Get_neighbors">
+<span class="sig-name descname"><span class="pre">Get_neighbors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rank</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Graphcomm.Get_neighbors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return list of neighbors of a process</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>rank</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>List[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Graphcomm.Get_neighbors_count">
+<span class="sig-name descname"><span class="pre">Get_neighbors_count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rank</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Graphcomm.Get_neighbors_count" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return number of neighbors of a process</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>rank</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Graphcomm.Get_topo">
+<span class="sig-name descname"><span class="pre">Get_topo</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Graphcomm.Get_topo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return index and edges</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tuple[List[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a>], List[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Attributes Documentation</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.MPI.Graphcomm.dims">
+<span class="sig-name descname"><span class="pre">dims</span></span><a class="headerlink" href="#mpi4py.MPI.Graphcomm.dims" title="Permalink to this definition">¶</a></dt>
+<dd><p>number of nodes and edges</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.MPI.Graphcomm.edges">
+<span class="sig-name descname"><span class="pre">edges</span></span><a class="headerlink" href="#mpi4py.MPI.Graphcomm.edges" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.MPI.Graphcomm.index">
+<span class="sig-name descname"><span class="pre">index</span></span><a class="headerlink" href="#mpi4py.MPI.Graphcomm.index" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.MPI.Graphcomm.nedges">
+<span class="sig-name descname"><span class="pre">nedges</span></span><a class="headerlink" href="#mpi4py.MPI.Graphcomm.nedges" title="Permalink to this definition">¶</a></dt>
+<dd><p>number of edges</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.MPI.Graphcomm.neighbors">
+<span class="sig-name descname"><span class="pre">neighbors</span></span><a class="headerlink" href="#mpi4py.MPI.Graphcomm.neighbors" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.MPI.Graphcomm.nneighbors">
+<span class="sig-name descname"><span class="pre">nneighbors</span></span><a class="headerlink" href="#mpi4py.MPI.Graphcomm.nneighbors" title="Permalink to this definition">¶</a></dt>
+<dd><p>number of neighbors</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.MPI.Graphcomm.nnodes">
+<span class="sig-name descname"><span class="pre">nnodes</span></span><a class="headerlink" href="#mpi4py.MPI.Graphcomm.nnodes" title="Permalink to this definition">¶</a></dt>
+<dd><p>number of nodes</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.MPI.Graphcomm.topo">
+<span class="sig-name descname"><span class="pre">topo</span></span><a class="headerlink" href="#mpi4py.MPI.Graphcomm.topo" title="Permalink to this definition">¶</a></dt>
+<dd><p>topology information</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="mpi4py.MPI.File.html"
+                        title="previous chapter">mpi4py.MPI.File</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="mpi4py.MPI.Grequest.html"
+                        title="next chapter">mpi4py.MPI.Grequest</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mpi4py.MPI.Grequest.html" title="mpi4py.MPI.Grequest"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="mpi4py.MPI.File.html" title="mpi4py.MPI.File"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">MPI for Python 3.1.3 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" >Reference</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="mpi4py.MPI.html" >mpi4py.MPI</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">mpi4py.MPI.Graphcomm</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Lisandro Dalcin.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.0.
+    </div>
+  </body>
+</html>

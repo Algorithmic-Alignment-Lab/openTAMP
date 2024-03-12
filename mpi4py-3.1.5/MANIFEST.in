@@ -1,0 +1,22 @@
+include setup.py pyproject.toml *.cfg *.rst
+exclude .*
+
+recursive-include demo *.py *.pyx *.i *.h *.c *.cxx *.f90 *.f08
+recursive-include demo [M,m]akefile python-config *.sh *.txt *.bat
+recursive-include conf *.py *.sh *.txt *.h *.cfg *.conf *.ini *.bat
+recursive-include src  *.py py.typed *.pyi *.pyx *.px[di]
+recursive-include src  *.pth *.h *.c *.i
+recursive-include test *.py
+
+include docs/*.html
+include docs/*.pdf
+include docs/*.info
+include docs/*.[137]
+include docs/*.rst
+include docs/*.bib
+graft   docs/usrman
+graft   docs/apiref
+graft   docs/source
+prune   docs/source/usrman/reference
+
+prune conf/ci

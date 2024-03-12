@@ -5,7 +5,7 @@
 
 #python3 -W ignore policy_hooks/run_training.py -c policy_hooks.robosuite.jnt_pick_hyp \
 
-python3 -W ignore policy_hooks/run_training.py -c new_specs.pointer_domain.new_env_hyperparam \
+python3 -W ignore policy_hooks/run_training.py -c new_specs.spot_arm_domain_deterministic.new_env_hyperparam \
                                                 -no 1 -llus 1000  -hlus 1000 \
                                                 -spl -mask -hln 2 -lln 2 -hldim 256 -lldim 256 \
                                                 -retime -vel 0.3 -eta 5 -softev \
@@ -27,6 +27,7 @@ python3 -W ignore policy_hooks/run_training.py -c new_specs.pointer_domain.new_e
                                                 -absolute \
                                                 -plan_only \
                                                 -render
+
 # sleep 1800 
 # pkill -f run_train -9
 # pkill -f ros -9

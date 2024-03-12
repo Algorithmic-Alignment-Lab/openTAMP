@@ -1,0 +1,1292 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>mpi4py.MPI.File &#8212; MPI for Python 3.1.3 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/classic.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="mpi4py.MPI.Graphcomm" href="mpi4py.MPI.Graphcomm.html" />
+    <link rel="prev" title="mpi4py.MPI.Errhandler" href="mpi4py.MPI.Errhandler.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mpi4py.MPI.Graphcomm.html" title="mpi4py.MPI.Graphcomm"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="mpi4py.MPI.Errhandler.html" title="mpi4py.MPI.Errhandler"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">MPI for Python 3.1.3 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" >Reference</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="mpi4py.MPI.html" accesskey="U">mpi4py.MPI</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">mpi4py.MPI.File</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="mpi4py-mpi-file">
+<h1>mpi4py.MPI.File<a class="headerlink" href="#mpi4py-mpi-file" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="mpi4py.MPI.File">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mpi4py.MPI.</span></span><span class="sig-name descname"><span class="pre">File</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>File handle</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>file</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="#mpi4py.MPI.File" title="mpi4py.MPI.File"><em>File</em></a><em>]</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mpi4py.MPI.File" title="mpi4py.MPI.File">File</a></p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.__new__">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">__new__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.__new__" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>file</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="#mpi4py.MPI.File" title="mpi4py.MPI.File"><em>File</em></a><em>]</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mpi4py.MPI.File" title="mpi4py.MPI.File">File</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Methods Summary</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Call_errhandler" title="mpi4py.MPI.File.Call_errhandler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Call_errhandler</span></code></a>(errorcode)</p></td>
+<td><p>Call the error handler installed on a file</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Close" title="mpi4py.MPI.File.Close"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Close</span></code></a>()</p></td>
+<td><p>Close a file</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Delete" title="mpi4py.MPI.File.Delete"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Delete</span></code></a>(filename[, info])</p></td>
+<td><p>Delete a file</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Get_amode" title="mpi4py.MPI.File.Get_amode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Get_amode</span></code></a>()</p></td>
+<td><p>Return the file access mode</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Get_atomicity" title="mpi4py.MPI.File.Get_atomicity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Get_atomicity</span></code></a>()</p></td>
+<td><p>Return the atomicity mode</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Get_byte_offset" title="mpi4py.MPI.File.Get_byte_offset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Get_byte_offset</span></code></a>(offset)</p></td>
+<td><p>Return the absolute byte position in the file corresponding to 'offset' etypes relative to the current view</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Get_errhandler" title="mpi4py.MPI.File.Get_errhandler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Get_errhandler</span></code></a>()</p></td>
+<td><p>Get the error handler for a file</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Get_group" title="mpi4py.MPI.File.Get_group"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Get_group</span></code></a>()</p></td>
+<td><p>Return the group of processes that opened the file</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Get_info" title="mpi4py.MPI.File.Get_info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Get_info</span></code></a>()</p></td>
+<td><p>Return the hints for a file that that are currently in use</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Get_position" title="mpi4py.MPI.File.Get_position"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Get_position</span></code></a>()</p></td>
+<td><p>Return the current position of the individual file pointer in etype units relative to the current view</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Get_position_shared" title="mpi4py.MPI.File.Get_position_shared"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Get_position_shared</span></code></a>()</p></td>
+<td><p>Return the current position of the shared file pointer in etype units relative to the current view</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Get_size" title="mpi4py.MPI.File.Get_size"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Get_size</span></code></a>()</p></td>
+<td><p>Return the file size</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Get_type_extent" title="mpi4py.MPI.File.Get_type_extent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Get_type_extent</span></code></a>(datatype)</p></td>
+<td><p>Return the extent of datatype in the file</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Get_view" title="mpi4py.MPI.File.Get_view"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Get_view</span></code></a>()</p></td>
+<td><p>Return the file view</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Iread" title="mpi4py.MPI.File.Iread"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Iread</span></code></a>(buf)</p></td>
+<td><p>Nonblocking read using individual file pointer</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Iread_all" title="mpi4py.MPI.File.Iread_all"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Iread_all</span></code></a>(buf)</p></td>
+<td><p>Nonblocking collective read using individual file pointer</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Iread_at" title="mpi4py.MPI.File.Iread_at"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Iread_at</span></code></a>(offset, buf)</p></td>
+<td><p>Nonblocking read using explicit offset</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Iread_at_all" title="mpi4py.MPI.File.Iread_at_all"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Iread_at_all</span></code></a>(offset, buf)</p></td>
+<td><p>Nonblocking collective read using explicit offset</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Iread_shared" title="mpi4py.MPI.File.Iread_shared"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Iread_shared</span></code></a>(buf)</p></td>
+<td><p>Nonblocking read using shared file pointer</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Iwrite" title="mpi4py.MPI.File.Iwrite"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Iwrite</span></code></a>(buf)</p></td>
+<td><p>Nonblocking write using individual file pointer</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Iwrite_all" title="mpi4py.MPI.File.Iwrite_all"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Iwrite_all</span></code></a>(buf)</p></td>
+<td><p>Nonblocking collective write using individual file pointer</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Iwrite_at" title="mpi4py.MPI.File.Iwrite_at"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Iwrite_at</span></code></a>(offset, buf)</p></td>
+<td><p>Nonblocking write using explicit offset</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Iwrite_at_all" title="mpi4py.MPI.File.Iwrite_at_all"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Iwrite_at_all</span></code></a>(offset, buf)</p></td>
+<td><p>Nonblocking collective write using explicit offset</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Iwrite_shared" title="mpi4py.MPI.File.Iwrite_shared"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Iwrite_shared</span></code></a>(buf)</p></td>
+<td><p>Nonblocking write using shared file pointer</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Open" title="mpi4py.MPI.File.Open"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Open</span></code></a>(comm, filename[, amode, info])</p></td>
+<td><p>Open a file</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Preallocate" title="mpi4py.MPI.File.Preallocate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Preallocate</span></code></a>(size)</p></td>
+<td><p>Preallocate storage space for a file</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Read" title="mpi4py.MPI.File.Read"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Read</span></code></a>(buf[, status])</p></td>
+<td><p>Read using individual file pointer</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Read_all" title="mpi4py.MPI.File.Read_all"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Read_all</span></code></a>(buf[, status])</p></td>
+<td><p>Collective read using individual file pointer</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Read_all_begin" title="mpi4py.MPI.File.Read_all_begin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Read_all_begin</span></code></a>(buf)</p></td>
+<td><p>Start a split collective read using individual file pointer</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Read_all_end" title="mpi4py.MPI.File.Read_all_end"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Read_all_end</span></code></a>(buf[, status])</p></td>
+<td><p>Complete a split collective read using individual file pointer</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Read_at" title="mpi4py.MPI.File.Read_at"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Read_at</span></code></a>(offset, buf[, status])</p></td>
+<td><p>Read using explicit offset</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Read_at_all" title="mpi4py.MPI.File.Read_at_all"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Read_at_all</span></code></a>(offset, buf[, status])</p></td>
+<td><p>Collective read using explicit offset</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Read_at_all_begin" title="mpi4py.MPI.File.Read_at_all_begin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Read_at_all_begin</span></code></a>(offset, buf)</p></td>
+<td><p>Start a split collective read using explict offset</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Read_at_all_end" title="mpi4py.MPI.File.Read_at_all_end"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Read_at_all_end</span></code></a>(buf[, status])</p></td>
+<td><p>Complete a split collective read using explict offset</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Read_ordered" title="mpi4py.MPI.File.Read_ordered"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Read_ordered</span></code></a>(buf[, status])</p></td>
+<td><p>Collective read using shared file pointer</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Read_ordered_begin" title="mpi4py.MPI.File.Read_ordered_begin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Read_ordered_begin</span></code></a>(buf)</p></td>
+<td><p>Start a split collective read using shared file pointer</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Read_ordered_end" title="mpi4py.MPI.File.Read_ordered_end"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Read_ordered_end</span></code></a>(buf[, status])</p></td>
+<td><p>Complete a split collective read using shared file pointer</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Read_shared" title="mpi4py.MPI.File.Read_shared"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Read_shared</span></code></a>(buf[, status])</p></td>
+<td><p>Read using shared file pointer</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Seek" title="mpi4py.MPI.File.Seek"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Seek</span></code></a>(offset[, whence])</p></td>
+<td><p>Update the individual file pointer</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Seek_shared" title="mpi4py.MPI.File.Seek_shared"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Seek_shared</span></code></a>(offset[, whence])</p></td>
+<td><p>Update the shared file pointer</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Set_atomicity" title="mpi4py.MPI.File.Set_atomicity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Set_atomicity</span></code></a>(flag)</p></td>
+<td><p>Set the atomicity mode</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Set_errhandler" title="mpi4py.MPI.File.Set_errhandler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Set_errhandler</span></code></a>(errhandler)</p></td>
+<td><p>Set the error handler for a file</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Set_info" title="mpi4py.MPI.File.Set_info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Set_info</span></code></a>(info)</p></td>
+<td><p>Set new values for the hints associated with a file</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Set_size" title="mpi4py.MPI.File.Set_size"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Set_size</span></code></a>(size)</p></td>
+<td><p>Sets the file size</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Set_view" title="mpi4py.MPI.File.Set_view"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Set_view</span></code></a>([disp, etype, filetype, datarep, info])</p></td>
+<td><p>Set the file view</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Sync" title="mpi4py.MPI.File.Sync"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Sync</span></code></a>()</p></td>
+<td><p>Causes all previous writes to be transferred to the storage device</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Write" title="mpi4py.MPI.File.Write"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Write</span></code></a>(buf[, status])</p></td>
+<td><p>Write using individual file pointer</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Write_all" title="mpi4py.MPI.File.Write_all"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Write_all</span></code></a>(buf[, status])</p></td>
+<td><p>Collective write using individual file pointer</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Write_all_begin" title="mpi4py.MPI.File.Write_all_begin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Write_all_begin</span></code></a>(buf)</p></td>
+<td><p>Start a split collective write using individual file pointer</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Write_all_end" title="mpi4py.MPI.File.Write_all_end"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Write_all_end</span></code></a>(buf[, status])</p></td>
+<td><p>Complete a split collective write using individual file pointer</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Write_at" title="mpi4py.MPI.File.Write_at"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Write_at</span></code></a>(offset, buf[, status])</p></td>
+<td><p>Write using explicit offset</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Write_at_all" title="mpi4py.MPI.File.Write_at_all"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Write_at_all</span></code></a>(offset, buf[, status])</p></td>
+<td><p>Collective write using explicit offset</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Write_at_all_begin" title="mpi4py.MPI.File.Write_at_all_begin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Write_at_all_begin</span></code></a>(offset, buf)</p></td>
+<td><p>Start a split collective write using explict offset</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Write_at_all_end" title="mpi4py.MPI.File.Write_at_all_end"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Write_at_all_end</span></code></a>(buf[, status])</p></td>
+<td><p>Complete a split collective write using explict offset</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Write_ordered" title="mpi4py.MPI.File.Write_ordered"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Write_ordered</span></code></a>(buf[, status])</p></td>
+<td><p>Collective write using shared file pointer</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Write_ordered_begin" title="mpi4py.MPI.File.Write_ordered_begin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Write_ordered_begin</span></code></a>(buf)</p></td>
+<td><p>Start a split collective write using shared file pointer</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Write_ordered_end" title="mpi4py.MPI.File.Write_ordered_end"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Write_ordered_end</span></code></a>(buf[, status])</p></td>
+<td><p>Complete a split collective write using shared file pointer</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.File.Write_shared" title="mpi4py.MPI.File.Write_shared"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Write_shared</span></code></a>(buf[, status])</p></td>
+<td><p>Write using shared file pointer</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.File.f2py" title="mpi4py.MPI.File.f2py"><code class="xref py py-obj docutils literal notranslate"><span class="pre">f2py</span></code></a>(arg)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.File.py2f" title="mpi4py.MPI.File.py2f"><code class="xref py py-obj docutils literal notranslate"><span class="pre">py2f</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes Summary</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.File.amode" title="mpi4py.MPI.File.amode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">amode</span></code></a></p></td>
+<td><p>file access mode</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.File.atomicity" title="mpi4py.MPI.File.atomicity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">atomicity</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.File.group" title="mpi4py.MPI.File.group"><code class="xref py py-obj docutils literal notranslate"><span class="pre">group</span></code></a></p></td>
+<td><p>file group</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.File.info" title="mpi4py.MPI.File.info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">info</span></code></a></p></td>
+<td><p>file info</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.File.size" title="mpi4py.MPI.File.size"><code class="xref py py-obj docutils literal notranslate"><span class="pre">size</span></code></a></p></td>
+<td><p>file size</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods Documentation</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Call_errhandler">
+<span class="sig-name descname"><span class="pre">Call_errhandler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">errorcode</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Call_errhandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call the error handler installed on a file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>errorcode</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Close">
+<span class="sig-name descname"><span class="pre">Close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close a file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Delete">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Delete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">INFO_NULL</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete a file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – </p></li>
+<li><p><strong>info</strong> (<a class="reference internal" href="mpi4py.MPI.Info.html#mpi4py.MPI.Info" title="mpi4py.MPI.Info"><em>Info</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Get_amode">
+<span class="sig-name descname"><span class="pre">Get_amode</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Get_amode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the file access mode</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Get_atomicity">
+<span class="sig-name descname"><span class="pre">Get_atomicity</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Get_atomicity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the atomicity mode</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Get_byte_offset">
+<span class="sig-name descname"><span class="pre">Get_byte_offset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">offset</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Get_byte_offset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the absolute byte position in the file corresponding
+to ‘offset’ etypes relative to the current view</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Get_errhandler">
+<span class="sig-name descname"><span class="pre">Get_errhandler</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Get_errhandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the error handler for a file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="mpi4py.MPI.Errhandler.html#mpi4py.MPI.Errhandler" title="mpi4py.MPI.Errhandler">Errhandler</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Get_group">
+<span class="sig-name descname"><span class="pre">Get_group</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Get_group" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the group of processes
+that opened the file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="mpi4py.MPI.Group.html#mpi4py.MPI.Group" title="mpi4py.MPI.Group">Group</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Get_info">
+<span class="sig-name descname"><span class="pre">Get_info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Get_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the hints for a file that
+that are currently in use</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="mpi4py.MPI.Info.html#mpi4py.MPI.Info" title="mpi4py.MPI.Info">Info</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Get_position">
+<span class="sig-name descname"><span class="pre">Get_position</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Get_position" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the current position of the individual file pointer
+in etype units relative to the current view</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Get_position_shared">
+<span class="sig-name descname"><span class="pre">Get_position_shared</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Get_position_shared" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the current position of the shared file pointer
+in etype units relative to the current view</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Get_size">
+<span class="sig-name descname"><span class="pre">Get_size</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Get_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the file size</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Get_type_extent">
+<span class="sig-name descname"><span class="pre">Get_type_extent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">datatype</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Get_type_extent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the extent of datatype in the file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>datatype</strong> (<a class="reference internal" href="mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><em>Datatype</em></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Get_view">
+<span class="sig-name descname"><span class="pre">Get_view</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Get_view" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the file view</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tuple[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a>, <a class="reference internal" href="mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype">Datatype</a>, <a class="reference internal" href="mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype">Datatype</a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Iread">
+<span class="sig-name descname"><span class="pre">Iread</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buf</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Iread" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nonblocking read using individual file pointer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>buf</strong> (<em>BufSpec</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request">Request</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Iread_all">
+<span class="sig-name descname"><span class="pre">Iread_all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buf</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Iread_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nonblocking collective read using individual file pointer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>buf</strong> (<em>BufSpec</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request">Request</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Iread_at">
+<span class="sig-name descname"><span class="pre">Iread_at</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">offset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buf</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Iread_at" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nonblocking read using explicit offset</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>buf</strong> (<em>BufSpec</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request">Request</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Iread_at_all">
+<span class="sig-name descname"><span class="pre">Iread_at_all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">offset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buf</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Iread_at_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nonblocking collective read using explicit offset</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>buf</strong> (<em>BufSpec</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request">Request</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Iread_shared">
+<span class="sig-name descname"><span class="pre">Iread_shared</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buf</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Iread_shared" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nonblocking read using shared file pointer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>buf</strong> (<em>BufSpec</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request">Request</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Iwrite">
+<span class="sig-name descname"><span class="pre">Iwrite</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buf</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Iwrite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nonblocking write using individual file pointer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>buf</strong> (<em>BufSpec</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request">Request</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Iwrite_all">
+<span class="sig-name descname"><span class="pre">Iwrite_all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buf</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Iwrite_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nonblocking collective write using individual file pointer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>buf</strong> (<em>BufSpec</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request">Request</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Iwrite_at">
+<span class="sig-name descname"><span class="pre">Iwrite_at</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">offset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buf</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Iwrite_at" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nonblocking write using explicit offset</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>buf</strong> (<em>BufSpec</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request">Request</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Iwrite_at_all">
+<span class="sig-name descname"><span class="pre">Iwrite_at_all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">offset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buf</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Iwrite_at_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nonblocking collective write using explicit offset</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>buf</strong> (<em>BufSpec</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request">Request</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Iwrite_shared">
+<span class="sig-name descname"><span class="pre">Iwrite_shared</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buf</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Iwrite_shared" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nonblocking write using shared file pointer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>buf</strong> (<em>BufSpec</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request">Request</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Open">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Open</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">comm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">MODE_RDONLY</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">INFO_NULL</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Open" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open a file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>comm</strong> (<a class="reference internal" href="mpi4py.MPI.Intracomm.html#mpi4py.MPI.Intracomm" title="mpi4py.MPI.Intracomm"><em>Intracomm</em></a>) – </p></li>
+<li><p><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – </p></li>
+<li><p><strong>amode</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>info</strong> (<a class="reference internal" href="mpi4py.MPI.Info.html#mpi4py.MPI.Info" title="mpi4py.MPI.Info"><em>Info</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mpi4py.MPI.File" title="mpi4py.MPI.File">File</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Preallocate">
+<span class="sig-name descname"><span class="pre">Preallocate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Preallocate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Preallocate storage space for a file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Read">
+<span class="sig-name descname"><span class="pre">Read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read using individual file pointer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>status</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="mpi4py.MPI.Status.html#mpi4py.MPI.Status" title="mpi4py.MPI.Status"><em>Status</em></a><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Read_all">
+<span class="sig-name descname"><span class="pre">Read_all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Read_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collective read using individual file pointer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>status</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="mpi4py.MPI.Status.html#mpi4py.MPI.Status" title="mpi4py.MPI.Status"><em>Status</em></a><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Read_all_begin">
+<span class="sig-name descname"><span class="pre">Read_all_begin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buf</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Read_all_begin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start a split collective read
+using individual file pointer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>buf</strong> (<em>BufSpec</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Read_all_end">
+<span class="sig-name descname"><span class="pre">Read_all_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Read_all_end" title="Permalink to this definition">¶</a></dt>
+<dd><p>Complete a split collective read
+using individual file pointer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>status</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="mpi4py.MPI.Status.html#mpi4py.MPI.Status" title="mpi4py.MPI.Status"><em>Status</em></a><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Read_at">
+<span class="sig-name descname"><span class="pre">Read_at</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">offset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Read_at" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read using explicit offset</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>buf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>status</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="mpi4py.MPI.Status.html#mpi4py.MPI.Status" title="mpi4py.MPI.Status"><em>Status</em></a><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Read_at_all">
+<span class="sig-name descname"><span class="pre">Read_at_all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">offset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Read_at_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collective read using explicit offset</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>buf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>status</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="mpi4py.MPI.Status.html#mpi4py.MPI.Status" title="mpi4py.MPI.Status"><em>Status</em></a><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Read_at_all_begin">
+<span class="sig-name descname"><span class="pre">Read_at_all_begin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">offset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buf</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Read_at_all_begin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start a split collective read using explict offset</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>buf</strong> (<em>BufSpec</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Read_at_all_end">
+<span class="sig-name descname"><span class="pre">Read_at_all_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Read_at_all_end" title="Permalink to this definition">¶</a></dt>
+<dd><p>Complete a split collective read using explict offset</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>status</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="mpi4py.MPI.Status.html#mpi4py.MPI.Status" title="mpi4py.MPI.Status"><em>Status</em></a><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Read_ordered">
+<span class="sig-name descname"><span class="pre">Read_ordered</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Read_ordered" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collective read using shared file pointer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>status</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="mpi4py.MPI.Status.html#mpi4py.MPI.Status" title="mpi4py.MPI.Status"><em>Status</em></a><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Read_ordered_begin">
+<span class="sig-name descname"><span class="pre">Read_ordered_begin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buf</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Read_ordered_begin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start a split collective read
+using shared file pointer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>buf</strong> (<em>BufSpec</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Read_ordered_end">
+<span class="sig-name descname"><span class="pre">Read_ordered_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Read_ordered_end" title="Permalink to this definition">¶</a></dt>
+<dd><p>Complete a split collective read
+using shared file pointer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>status</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="mpi4py.MPI.Status.html#mpi4py.MPI.Status" title="mpi4py.MPI.Status"><em>Status</em></a><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Read_shared">
+<span class="sig-name descname"><span class="pre">Read_shared</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Read_shared" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read using shared file pointer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>status</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="mpi4py.MPI.Status.html#mpi4py.MPI.Status" title="mpi4py.MPI.Status"><em>Status</em></a><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Seek">
+<span class="sig-name descname"><span class="pre">Seek</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">offset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">whence</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">SEEK_SET</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Seek" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the individual file pointer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>whence</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Seek_shared">
+<span class="sig-name descname"><span class="pre">Seek_shared</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">offset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">whence</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">SEEK_SET</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Seek_shared" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the shared file pointer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>whence</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Set_atomicity">
+<span class="sig-name descname"><span class="pre">Set_atomicity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">flag</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Set_atomicity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the atomicity mode</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>flag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Set_errhandler">
+<span class="sig-name descname"><span class="pre">Set_errhandler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">errhandler</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Set_errhandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the error handler for a file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>errhandler</strong> (<a class="reference internal" href="mpi4py.MPI.Errhandler.html#mpi4py.MPI.Errhandler" title="mpi4py.MPI.Errhandler"><em>Errhandler</em></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Set_info">
+<span class="sig-name descname"><span class="pre">Set_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">info</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Set_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set new values for the hints
+associated with a file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>info</strong> (<a class="reference internal" href="mpi4py.MPI.Info.html#mpi4py.MPI.Info" title="mpi4py.MPI.Info"><em>Info</em></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Set_size">
+<span class="sig-name descname"><span class="pre">Set_size</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Set_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the file size</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Set_view">
+<span class="sig-name descname"><span class="pre">Set_view</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">disp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">etype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">BYTE</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filetype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datarep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'native'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">INFO_NULL</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Set_view" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the file view</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>disp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>etype</strong> (<a class="reference internal" href="mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><em>Datatype</em></a>) – </p></li>
+<li><p><strong>filetype</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="mpi4py.MPI.Datatype.html#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><em>Datatype</em></a><em>]</em>) – </p></li>
+<li><p><strong>datarep</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – </p></li>
+<li><p><strong>info</strong> (<a class="reference internal" href="mpi4py.MPI.Info.html#mpi4py.MPI.Info" title="mpi4py.MPI.Info"><em>Info</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Sync">
+<span class="sig-name descname"><span class="pre">Sync</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Sync" title="Permalink to this definition">¶</a></dt>
+<dd><p>Causes all previous writes to be
+transferred to the storage device</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Write">
+<span class="sig-name descname"><span class="pre">Write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write using individual file pointer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>status</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="mpi4py.MPI.Status.html#mpi4py.MPI.Status" title="mpi4py.MPI.Status"><em>Status</em></a><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Write_all">
+<span class="sig-name descname"><span class="pre">Write_all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Write_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collective write using individual file pointer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>status</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="mpi4py.MPI.Status.html#mpi4py.MPI.Status" title="mpi4py.MPI.Status"><em>Status</em></a><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Write_all_begin">
+<span class="sig-name descname"><span class="pre">Write_all_begin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buf</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Write_all_begin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start a split collective write
+using individual file pointer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>buf</strong> (<em>BufSpec</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Write_all_end">
+<span class="sig-name descname"><span class="pre">Write_all_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Write_all_end" title="Permalink to this definition">¶</a></dt>
+<dd><p>Complete a split collective write
+using individual file pointer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>status</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="mpi4py.MPI.Status.html#mpi4py.MPI.Status" title="mpi4py.MPI.Status"><em>Status</em></a><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Write_at">
+<span class="sig-name descname"><span class="pre">Write_at</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">offset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Write_at" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write using explicit offset</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>buf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>status</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="mpi4py.MPI.Status.html#mpi4py.MPI.Status" title="mpi4py.MPI.Status"><em>Status</em></a><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Write_at_all">
+<span class="sig-name descname"><span class="pre">Write_at_all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">offset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Write_at_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collective write using explicit offset</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>buf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>status</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="mpi4py.MPI.Status.html#mpi4py.MPI.Status" title="mpi4py.MPI.Status"><em>Status</em></a><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Write_at_all_begin">
+<span class="sig-name descname"><span class="pre">Write_at_all_begin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">offset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buf</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Write_at_all_begin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start a split collective write using explict offset</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>buf</strong> (<em>BufSpec</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Write_at_all_end">
+<span class="sig-name descname"><span class="pre">Write_at_all_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Write_at_all_end" title="Permalink to this definition">¶</a></dt>
+<dd><p>Complete a split collective write using explict offset</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>status</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="mpi4py.MPI.Status.html#mpi4py.MPI.Status" title="mpi4py.MPI.Status"><em>Status</em></a><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Write_ordered">
+<span class="sig-name descname"><span class="pre">Write_ordered</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Write_ordered" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collective write using shared file pointer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>status</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="mpi4py.MPI.Status.html#mpi4py.MPI.Status" title="mpi4py.MPI.Status"><em>Status</em></a><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Write_ordered_begin">
+<span class="sig-name descname"><span class="pre">Write_ordered_begin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buf</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Write_ordered_begin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start a split collective write using
+shared file pointer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>buf</strong> (<em>BufSpec</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Write_ordered_end">
+<span class="sig-name descname"><span class="pre">Write_ordered_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Write_ordered_end" title="Permalink to this definition">¶</a></dt>
+<dd><p>Complete a split collective write
+using shared file pointer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>status</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="mpi4py.MPI.Status.html#mpi4py.MPI.Status" title="mpi4py.MPI.Status"><em>Status</em></a><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.Write_shared">
+<span class="sig-name descname"><span class="pre">Write_shared</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.Write_shared" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write using shared file pointer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>status</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="mpi4py.MPI.Status.html#mpi4py.MPI.Status" title="mpi4py.MPI.Status"><em>Status</em></a><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.f2py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">f2py</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.f2py" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>arg</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mpi4py.MPI.File" title="mpi4py.MPI.File">File</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.py2f">
+<span class="sig-name descname"><span class="pre">py2f</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.File.py2f" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Attributes Documentation</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.amode">
+<span class="sig-name descname"><span class="pre">amode</span></span><a class="headerlink" href="#mpi4py.MPI.File.amode" title="Permalink to this definition">¶</a></dt>
+<dd><p>file access mode</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.atomicity">
+<span class="sig-name descname"><span class="pre">atomicity</span></span><a class="headerlink" href="#mpi4py.MPI.File.atomicity" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.group">
+<span class="sig-name descname"><span class="pre">group</span></span><a class="headerlink" href="#mpi4py.MPI.File.group" title="Permalink to this definition">¶</a></dt>
+<dd><p>file group</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.info">
+<span class="sig-name descname"><span class="pre">info</span></span><a class="headerlink" href="#mpi4py.MPI.File.info" title="Permalink to this definition">¶</a></dt>
+<dd><p>file info</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.MPI.File.size">
+<span class="sig-name descname"><span class="pre">size</span></span><a class="headerlink" href="#mpi4py.MPI.File.size" title="Permalink to this definition">¶</a></dt>
+<dd><p>file size</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="mpi4py.MPI.Errhandler.html"
+                        title="previous chapter">mpi4py.MPI.Errhandler</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="mpi4py.MPI.Graphcomm.html"
+                        title="next chapter">mpi4py.MPI.Graphcomm</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mpi4py.MPI.Graphcomm.html" title="mpi4py.MPI.Graphcomm"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="mpi4py.MPI.Errhandler.html" title="mpi4py.MPI.Errhandler"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">MPI for Python 3.1.3 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" >Reference</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="mpi4py.MPI.html" >mpi4py.MPI</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">mpi4py.MPI.File</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Lisandro Dalcin.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.0.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,995 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>mpi4py.MPI.Datatype &#8212; MPI for Python 3.1.3 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/classic.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="mpi4py.MPI.Distgraphcomm" href="mpi4py.MPI.Distgraphcomm.html" />
+    <link rel="prev" title="mpi4py.MPI.Comm" href="mpi4py.MPI.Comm.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mpi4py.MPI.Distgraphcomm.html" title="mpi4py.MPI.Distgraphcomm"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="mpi4py.MPI.Comm.html" title="mpi4py.MPI.Comm"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">MPI for Python 3.1.3 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" >Reference</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="mpi4py.MPI.html" accesskey="U">mpi4py.MPI</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">mpi4py.MPI.Datatype</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="mpi4py-mpi-datatype">
+<h1>mpi4py.MPI.Datatype<a class="headerlink" href="#mpi4py-mpi-datatype" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="mpi4py.MPI.Datatype">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mpi4py.MPI.</span></span><span class="sig-name descname"><span class="pre">Datatype</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">datatype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Datatype" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Datatype object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>datatype</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><em>Datatype</em></a><em>]</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype">Datatype</a></p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Datatype.__new__">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">__new__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datatype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Datatype.__new__" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>datatype</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><em>Datatype</em></a><em>]</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype">Datatype</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Methods Summary</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Datatype.Commit" title="mpi4py.MPI.Datatype.Commit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Commit</span></code></a>()</p></td>
+<td><p>Commit the datatype</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Datatype.Create_contiguous" title="mpi4py.MPI.Datatype.Create_contiguous"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Create_contiguous</span></code></a>(count)</p></td>
+<td><p>Create a contiguous datatype</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Datatype.Create_darray" title="mpi4py.MPI.Datatype.Create_darray"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Create_darray</span></code></a>(size, rank, gsizes, distribs, ...)</p></td>
+<td><p>Create a datatype representing an HPF-like distributed array on Cartesian process grids</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Datatype.Create_f90_complex" title="mpi4py.MPI.Datatype.Create_f90_complex"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Create_f90_complex</span></code></a>(p, r)</p></td>
+<td><p>Return a bounded complex datatype</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Datatype.Create_f90_integer" title="mpi4py.MPI.Datatype.Create_f90_integer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Create_f90_integer</span></code></a>(r)</p></td>
+<td><p>Return a bounded integer datatype</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Datatype.Create_f90_real" title="mpi4py.MPI.Datatype.Create_f90_real"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Create_f90_real</span></code></a>(p, r)</p></td>
+<td><p>Return a bounded real datatype</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Datatype.Create_hindexed" title="mpi4py.MPI.Datatype.Create_hindexed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Create_hindexed</span></code></a>(blocklengths, displacements)</p></td>
+<td><p>Create an indexed datatype with displacements in bytes</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Datatype.Create_hindexed_block" title="mpi4py.MPI.Datatype.Create_hindexed_block"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Create_hindexed_block</span></code></a>(blocklength, displacements)</p></td>
+<td><p>Create an indexed datatype with constant-sized blocks and displacements in bytes</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Datatype.Create_hvector" title="mpi4py.MPI.Datatype.Create_hvector"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Create_hvector</span></code></a>(count, blocklength, stride)</p></td>
+<td><p>Create a vector (strided) datatype</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Datatype.Create_indexed" title="mpi4py.MPI.Datatype.Create_indexed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Create_indexed</span></code></a>(blocklengths, displacements)</p></td>
+<td><p>Create an indexed datatype</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Datatype.Create_indexed_block" title="mpi4py.MPI.Datatype.Create_indexed_block"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Create_indexed_block</span></code></a>(blocklength, displacements)</p></td>
+<td><p>Create an indexed datatype with constant-sized blocks</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Datatype.Create_keyval" title="mpi4py.MPI.Datatype.Create_keyval"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Create_keyval</span></code></a>([copy_fn, delete_fn, nopython])</p></td>
+<td><p>Create a new attribute key for datatypes</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Datatype.Create_resized" title="mpi4py.MPI.Datatype.Create_resized"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Create_resized</span></code></a>(lb, extent)</p></td>
+<td><p>Create a datatype with a new lower bound and extent</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Datatype.Create_struct" title="mpi4py.MPI.Datatype.Create_struct"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Create_struct</span></code></a>(blocklengths, displacements, ...)</p></td>
+<td><p>Create an datatype from a general set of block sizes, displacements and datatypes</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Datatype.Create_subarray" title="mpi4py.MPI.Datatype.Create_subarray"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Create_subarray</span></code></a>(sizes, subsizes, starts[, order])</p></td>
+<td><p>Create a datatype for a subarray of a regular, multidimensional array</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Datatype.Create_vector" title="mpi4py.MPI.Datatype.Create_vector"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Create_vector</span></code></a>(count, blocklength, stride)</p></td>
+<td><p>Create a vector (strided) datatype</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Datatype.Delete_attr" title="mpi4py.MPI.Datatype.Delete_attr"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Delete_attr</span></code></a>(keyval)</p></td>
+<td><p>Delete attribute value associated with a key</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Datatype.Dup" title="mpi4py.MPI.Datatype.Dup"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Dup</span></code></a>()</p></td>
+<td><p>Duplicate a datatype</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Datatype.Free" title="mpi4py.MPI.Datatype.Free"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Free</span></code></a>()</p></td>
+<td><p>Free the datatype</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Datatype.Free_keyval" title="mpi4py.MPI.Datatype.Free_keyval"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Free_keyval</span></code></a>(keyval)</p></td>
+<td><p>Free an attribute key for datatypes</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Datatype.Get_attr" title="mpi4py.MPI.Datatype.Get_attr"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Get_attr</span></code></a>(keyval)</p></td>
+<td><p>Retrieve attribute value by key</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Datatype.Get_contents" title="mpi4py.MPI.Datatype.Get_contents"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Get_contents</span></code></a>()</p></td>
+<td><p>Retrieve the actual arguments used in the call that created a datatype</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Datatype.Get_envelope" title="mpi4py.MPI.Datatype.Get_envelope"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Get_envelope</span></code></a>()</p></td>
+<td><p>Return information on the number and type of input arguments used in the call that created a datatype</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Datatype.Get_extent" title="mpi4py.MPI.Datatype.Get_extent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Get_extent</span></code></a>()</p></td>
+<td><p>Return lower bound and extent of datatype</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Datatype.Get_name" title="mpi4py.MPI.Datatype.Get_name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Get_name</span></code></a>()</p></td>
+<td><p>Get the print name for this datatype</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Datatype.Get_size" title="mpi4py.MPI.Datatype.Get_size"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Get_size</span></code></a>()</p></td>
+<td><p>Return the number of bytes occupied by entries in the datatype</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Datatype.Get_true_extent" title="mpi4py.MPI.Datatype.Get_true_extent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Get_true_extent</span></code></a>()</p></td>
+<td><p>Return the true lower bound and extent of a datatype</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Datatype.Match_size" title="mpi4py.MPI.Datatype.Match_size"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Match_size</span></code></a>(typeclass, size)</p></td>
+<td><p>Find a datatype matching a specified size in bytes</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Datatype.Pack" title="mpi4py.MPI.Datatype.Pack"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Pack</span></code></a>(inbuf, outbuf, position, comm)</p></td>
+<td><p>Pack into contiguous memory according to datatype.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Datatype.Pack_external" title="mpi4py.MPI.Datatype.Pack_external"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Pack_external</span></code></a>(datarep, inbuf, outbuf, position)</p></td>
+<td><p>Pack into contiguous memory according to datatype, using a portable data representation (<strong>external32</strong>).</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Datatype.Pack_external_size" title="mpi4py.MPI.Datatype.Pack_external_size"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Pack_external_size</span></code></a>(datarep, count)</p></td>
+<td><p>Return the upper bound on the amount of space (in bytes) needed to pack a message according to datatype, using a portable data representation (<strong>external32</strong>).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Datatype.Pack_size" title="mpi4py.MPI.Datatype.Pack_size"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Pack_size</span></code></a>(count, comm)</p></td>
+<td><p>Return the upper bound on the amount of space (in bytes) needed to pack a message according to datatype.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Datatype.Set_attr" title="mpi4py.MPI.Datatype.Set_attr"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Set_attr</span></code></a>(keyval, attrval)</p></td>
+<td><p>Store attribute value associated with a key</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Datatype.Set_name" title="mpi4py.MPI.Datatype.Set_name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Set_name</span></code></a>(name)</p></td>
+<td><p>Set the print name for this datatype</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Datatype.Unpack" title="mpi4py.MPI.Datatype.Unpack"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Unpack</span></code></a>(inbuf, position, outbuf, comm)</p></td>
+<td><p>Unpack from contiguous memory according to datatype.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Datatype.Unpack_external" title="mpi4py.MPI.Datatype.Unpack_external"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Unpack_external</span></code></a>(datarep, inbuf, position, outbuf)</p></td>
+<td><p>Unpack from contiguous memory according to datatype, using a portable data representation (<strong>external32</strong>).</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Datatype.decode" title="mpi4py.MPI.Datatype.decode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">decode</span></code></a>()</p></td>
+<td><p>Convenience method for decoding a datatype</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Datatype.f2py" title="mpi4py.MPI.Datatype.f2py"><code class="xref py py-obj docutils literal notranslate"><span class="pre">f2py</span></code></a>(arg)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Datatype.py2f" title="mpi4py.MPI.Datatype.py2f"><code class="xref py py-obj docutils literal notranslate"><span class="pre">py2f</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes Summary</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Datatype.combiner" title="mpi4py.MPI.Datatype.combiner"><code class="xref py py-obj docutils literal notranslate"><span class="pre">combiner</span></code></a></p></td>
+<td><p>datatype combiner</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Datatype.contents" title="mpi4py.MPI.Datatype.contents"><code class="xref py py-obj docutils literal notranslate"><span class="pre">contents</span></code></a></p></td>
+<td><p>datatype contents</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Datatype.envelope" title="mpi4py.MPI.Datatype.envelope"><code class="xref py py-obj docutils literal notranslate"><span class="pre">envelope</span></code></a></p></td>
+<td><p>datatype envelope</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Datatype.extent" title="mpi4py.MPI.Datatype.extent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">extent</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Datatype.is_named" title="mpi4py.MPI.Datatype.is_named"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_named</span></code></a></p></td>
+<td><p>is a named datatype</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Datatype.is_predefined" title="mpi4py.MPI.Datatype.is_predefined"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_predefined</span></code></a></p></td>
+<td><p>is a predefined datatype</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Datatype.lb" title="mpi4py.MPI.Datatype.lb"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lb</span></code></a></p></td>
+<td><p>lower bound</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Datatype.name" title="mpi4py.MPI.Datatype.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code></a></p></td>
+<td><p>datatype name</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Datatype.size" title="mpi4py.MPI.Datatype.size"><code class="xref py py-obj docutils literal notranslate"><span class="pre">size</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Datatype.true_extent" title="mpi4py.MPI.Datatype.true_extent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">true_extent</span></code></a></p></td>
+<td><p>true extent</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Datatype.true_lb" title="mpi4py.MPI.Datatype.true_lb"><code class="xref py py-obj docutils literal notranslate"><span class="pre">true_lb</span></code></a></p></td>
+<td><p>true lower bound</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Datatype.true_ub" title="mpi4py.MPI.Datatype.true_ub"><code class="xref py py-obj docutils literal notranslate"><span class="pre">true_ub</span></code></a></p></td>
+<td><p>true upper bound</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Datatype.ub" title="mpi4py.MPI.Datatype.ub"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ub</span></code></a></p></td>
+<td><p>upper bound</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods Documentation</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Datatype.Commit">
+<span class="sig-name descname"><span class="pre">Commit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Datatype.Commit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Commit the datatype</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype">Datatype</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Datatype.Create_contiguous">
+<span class="sig-name descname"><span class="pre">Create_contiguous</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">count</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Datatype.Create_contiguous" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a contiguous datatype</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>count</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype">Datatype</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Datatype.Create_darray">
+<span class="sig-name descname"><span class="pre">Create_darray</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rank</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gsizes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distribs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dargs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">psizes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ORDER_C</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Datatype.Create_darray" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a datatype representing an HPF-like
+distributed array on Cartesian process grids</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>rank</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>gsizes</strong> (<em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em>) – </p></li>
+<li><p><strong>distribs</strong> (<em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em>) – </p></li>
+<li><p><strong>dargs</strong> (<em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em>) – </p></li>
+<li><p><strong>psizes</strong> (<em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em>) – </p></li>
+<li><p><strong>order</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype">Datatype</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Datatype.Create_f90_complex">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Create_f90_complex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Datatype.Create_f90_complex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a bounded complex datatype</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>p</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>r</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype">Datatype</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Datatype.Create_f90_integer">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Create_f90_integer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Datatype.Create_f90_integer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a bounded integer datatype</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>r</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype">Datatype</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Datatype.Create_f90_real">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Create_f90_real</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Datatype.Create_f90_real" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a bounded real datatype</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>p</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>r</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype">Datatype</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Datatype.Create_hindexed">
+<span class="sig-name descname"><span class="pre">Create_hindexed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">blocklengths</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">displacements</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Datatype.Create_hindexed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an indexed datatype
+with displacements in bytes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>blocklengths</strong> (<em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em>) – </p></li>
+<li><p><strong>displacements</strong> (<em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype">Datatype</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Datatype.Create_hindexed_block">
+<span class="sig-name descname"><span class="pre">Create_hindexed_block</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">blocklength</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">displacements</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Datatype.Create_hindexed_block" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an indexed datatype
+with constant-sized blocks
+and displacements in bytes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>blocklength</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>displacements</strong> (<em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype">Datatype</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Datatype.Create_hvector">
+<span class="sig-name descname"><span class="pre">Create_hvector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">count</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">blocklength</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stride</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Datatype.Create_hvector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a vector (strided) datatype</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>count</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>blocklength</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>stride</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype">Datatype</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Datatype.Create_indexed">
+<span class="sig-name descname"><span class="pre">Create_indexed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">blocklengths</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">displacements</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Datatype.Create_indexed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an indexed datatype</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>blocklengths</strong> (<em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em>) – </p></li>
+<li><p><strong>displacements</strong> (<em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype">Datatype</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Datatype.Create_indexed_block">
+<span class="sig-name descname"><span class="pre">Create_indexed_block</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">blocklength</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">displacements</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Datatype.Create_indexed_block" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an indexed datatype
+with constant-sized blocks</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>blocklength</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>displacements</strong> (<em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype">Datatype</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Datatype.Create_keyval">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Create_keyval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">copy_fn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delete_fn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nopython</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Datatype.Create_keyval" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new attribute key for datatypes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>copy_fn</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>[</em><em>[</em><a class="reference internal" href="#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><em>Datatype</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>Any</em><em>]</em><em>, </em><em>Any</em><em>]</em><em>]</em>) – </p></li>
+<li><p><strong>delete_fn</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>[</em><em>[</em><a class="reference internal" href="#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><em>Datatype</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>Any</em><em>]</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em>]</em><em>]</em>) – </p></li>
+<li><p><strong>nopython</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Datatype.Create_resized">
+<span class="sig-name descname"><span class="pre">Create_resized</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lb</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extent</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Datatype.Create_resized" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a datatype with a new lower bound and extent</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lb</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>extent</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype">Datatype</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Datatype.Create_struct">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Create_struct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">blocklengths</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">displacements</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datatypes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Datatype.Create_struct" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an datatype from a general set of
+block sizes, displacements and datatypes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>blocklengths</strong> (<em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em>) – </p></li>
+<li><p><strong>displacements</strong> (<em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em>) – </p></li>
+<li><p><strong>datatypes</strong> (<em>Sequence</em><em>[</em><a class="reference internal" href="#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype"><em>Datatype</em></a><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype">Datatype</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Datatype.Create_subarray">
+<span class="sig-name descname"><span class="pre">Create_subarray</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sizes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subsizes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">starts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ORDER_C</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Datatype.Create_subarray" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a datatype for a subarray of
+a regular, multidimensional array</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sizes</strong> (<em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em>) – </p></li>
+<li><p><strong>subsizes</strong> (<em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em>) – </p></li>
+<li><p><strong>starts</strong> (<em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em>) – </p></li>
+<li><p><strong>order</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype">Datatype</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Datatype.Create_vector">
+<span class="sig-name descname"><span class="pre">Create_vector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">count</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">blocklength</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stride</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Datatype.Create_vector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a vector (strided) datatype</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>count</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>blocklength</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>stride</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype">Datatype</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Datatype.Delete_attr">
+<span class="sig-name descname"><span class="pre">Delete_attr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keyval</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Datatype.Delete_attr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete attribute value associated with a key</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>keyval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Datatype.Dup">
+<span class="sig-name descname"><span class="pre">Dup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Datatype.Dup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Duplicate a datatype</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype">Datatype</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Datatype.Free">
+<span class="sig-name descname"><span class="pre">Free</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Datatype.Free" title="Permalink to this definition">¶</a></dt>
+<dd><p>Free the datatype</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Datatype.Free_keyval">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Free_keyval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keyval</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Datatype.Free_keyval" title="Permalink to this definition">¶</a></dt>
+<dd><p>Free an attribute key for datatypes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>keyval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Datatype.Get_attr">
+<span class="sig-name descname"><span class="pre">Get_attr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keyval</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Datatype.Get_attr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve attribute value by key</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>keyval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Optional[Union[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a>, Any]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Datatype.Get_contents">
+<span class="sig-name descname"><span class="pre">Get_contents</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Datatype.Get_contents" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve the actual arguments used in the call that created a
+datatype</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tuple[List[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a>], List[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a>], List[<a class="reference internal" href="#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype">Datatype</a>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Datatype.Get_envelope">
+<span class="sig-name descname"><span class="pre">Get_envelope</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Datatype.Get_envelope" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return information on the number and type of input arguments
+used in the call that created a datatype</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tuple[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Datatype.Get_extent">
+<span class="sig-name descname"><span class="pre">Get_extent</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Datatype.Get_extent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return lower bound and extent of datatype</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tuple[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Datatype.Get_name">
+<span class="sig-name descname"><span class="pre">Get_name</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Datatype.Get_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the print name for this datatype</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Datatype.Get_size">
+<span class="sig-name descname"><span class="pre">Get_size</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Datatype.Get_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the number of bytes occupied
+by entries in the datatype</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Datatype.Get_true_extent">
+<span class="sig-name descname"><span class="pre">Get_true_extent</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Datatype.Get_true_extent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the true lower bound and extent of a datatype</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tuple[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Datatype.Match_size">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Match_size</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">typeclass</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Datatype.Match_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find a datatype matching a specified size in bytes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>typeclass</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype">Datatype</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Datatype.Pack">
+<span class="sig-name descname"><span class="pre">Pack</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comm</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Datatype.Pack" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pack into contiguous memory according to datatype.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>inbuf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>outbuf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>position</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>comm</strong> (<a class="reference internal" href="mpi4py.MPI.Comm.html#mpi4py.MPI.Comm" title="mpi4py.MPI.Comm"><em>Comm</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Datatype.Pack_external">
+<span class="sig-name descname"><span class="pre">Pack_external</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">datarep</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">position</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Datatype.Pack_external" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pack into contiguous memory according to datatype,
+using a portable data representation (<strong>external32</strong>).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>datarep</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – </p></li>
+<li><p><strong>inbuf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>outbuf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>position</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Datatype.Pack_external_size">
+<span class="sig-name descname"><span class="pre">Pack_external_size</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">datarep</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Datatype.Pack_external_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the upper bound on the amount of space (in bytes)
+needed to pack a message according to datatype,
+using a portable data representation (<strong>external32</strong>).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>datarep</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – </p></li>
+<li><p><strong>count</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Datatype.Pack_size">
+<span class="sig-name descname"><span class="pre">Pack_size</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">count</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comm</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Datatype.Pack_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the upper bound on the amount of space (in bytes)
+needed to pack a message according to datatype.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>count</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>comm</strong> (<a class="reference internal" href="mpi4py.MPI.Comm.html#mpi4py.MPI.Comm" title="mpi4py.MPI.Comm"><em>Comm</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Datatype.Set_attr">
+<span class="sig-name descname"><span class="pre">Set_attr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keyval</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrval</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Datatype.Set_attr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Store attribute value associated with a key</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>keyval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>attrval</strong> (<em>Any</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Datatype.Set_name">
+<span class="sig-name descname"><span class="pre">Set_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Datatype.Set_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the print name for this datatype</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Datatype.Unpack">
+<span class="sig-name descname"><span class="pre">Unpack</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comm</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Datatype.Unpack" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unpack from contiguous memory according to datatype.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>inbuf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>position</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>outbuf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>comm</strong> (<a class="reference internal" href="mpi4py.MPI.Comm.html#mpi4py.MPI.Comm" title="mpi4py.MPI.Comm"><em>Comm</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Datatype.Unpack_external">
+<span class="sig-name descname"><span class="pre">Unpack_external</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">datarep</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inbuf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outbuf</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Datatype.Unpack_external" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unpack from contiguous memory according to datatype,
+using a portable data representation (<strong>external32</strong>).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>datarep</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – </p></li>
+<li><p><strong>inbuf</strong> (<em>BufSpec</em>) – </p></li>
+<li><p><strong>position</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>outbuf</strong> (<em>BufSpec</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Datatype.decode">
+<span class="sig-name descname"><span class="pre">decode</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Datatype.decode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience method for decoding a datatype</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tuple[<a class="reference internal" href="#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype">Datatype</a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a>, Dict[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a>, Any]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Datatype.f2py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">f2py</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Datatype.f2py" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>arg</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mpi4py.MPI.Datatype" title="mpi4py.MPI.Datatype">Datatype</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Datatype.py2f">
+<span class="sig-name descname"><span class="pre">py2f</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Datatype.py2f" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Attributes Documentation</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.MPI.Datatype.combiner">
+<span class="sig-name descname"><span class="pre">combiner</span></span><a class="headerlink" href="#mpi4py.MPI.Datatype.combiner" title="Permalink to this definition">¶</a></dt>
+<dd><p>datatype combiner</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.MPI.Datatype.contents">
+<span class="sig-name descname"><span class="pre">contents</span></span><a class="headerlink" href="#mpi4py.MPI.Datatype.contents" title="Permalink to this definition">¶</a></dt>
+<dd><p>datatype contents</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.MPI.Datatype.envelope">
+<span class="sig-name descname"><span class="pre">envelope</span></span><a class="headerlink" href="#mpi4py.MPI.Datatype.envelope" title="Permalink to this definition">¶</a></dt>
+<dd><p>datatype envelope</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.MPI.Datatype.extent">
+<span class="sig-name descname"><span class="pre">extent</span></span><a class="headerlink" href="#mpi4py.MPI.Datatype.extent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.MPI.Datatype.is_named">
+<span class="sig-name descname"><span class="pre">is_named</span></span><a class="headerlink" href="#mpi4py.MPI.Datatype.is_named" title="Permalink to this definition">¶</a></dt>
+<dd><p>is a named datatype</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.MPI.Datatype.is_predefined">
+<span class="sig-name descname"><span class="pre">is_predefined</span></span><a class="headerlink" href="#mpi4py.MPI.Datatype.is_predefined" title="Permalink to this definition">¶</a></dt>
+<dd><p>is a predefined datatype</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.MPI.Datatype.lb">
+<span class="sig-name descname"><span class="pre">lb</span></span><a class="headerlink" href="#mpi4py.MPI.Datatype.lb" title="Permalink to this definition">¶</a></dt>
+<dd><p>lower bound</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.MPI.Datatype.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#mpi4py.MPI.Datatype.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>datatype name</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.MPI.Datatype.size">
+<span class="sig-name descname"><span class="pre">size</span></span><a class="headerlink" href="#mpi4py.MPI.Datatype.size" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.MPI.Datatype.true_extent">
+<span class="sig-name descname"><span class="pre">true_extent</span></span><a class="headerlink" href="#mpi4py.MPI.Datatype.true_extent" title="Permalink to this definition">¶</a></dt>
+<dd><p>true extent</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.MPI.Datatype.true_lb">
+<span class="sig-name descname"><span class="pre">true_lb</span></span><a class="headerlink" href="#mpi4py.MPI.Datatype.true_lb" title="Permalink to this definition">¶</a></dt>
+<dd><p>true lower bound</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.MPI.Datatype.true_ub">
+<span class="sig-name descname"><span class="pre">true_ub</span></span><a class="headerlink" href="#mpi4py.MPI.Datatype.true_ub" title="Permalink to this definition">¶</a></dt>
+<dd><p>true upper bound</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.MPI.Datatype.ub">
+<span class="sig-name descname"><span class="pre">ub</span></span><a class="headerlink" href="#mpi4py.MPI.Datatype.ub" title="Permalink to this definition">¶</a></dt>
+<dd><p>upper bound</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="mpi4py.MPI.Comm.html"
+                        title="previous chapter">mpi4py.MPI.Comm</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="mpi4py.MPI.Distgraphcomm.html"
+                        title="next chapter">mpi4py.MPI.Distgraphcomm</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mpi4py.MPI.Distgraphcomm.html" title="mpi4py.MPI.Distgraphcomm"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="mpi4py.MPI.Comm.html" title="mpi4py.MPI.Comm"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">MPI for Python 3.1.3 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" >Reference</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="mpi4py.MPI.html" >mpi4py.MPI</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">mpi4py.MPI.Datatype</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Lisandro Dalcin.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.0.
+    </div>
+  </body>
+</html>

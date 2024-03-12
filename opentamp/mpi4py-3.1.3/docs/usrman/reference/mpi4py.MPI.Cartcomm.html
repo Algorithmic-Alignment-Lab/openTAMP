@@ -1,0 +1,310 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>mpi4py.MPI.Cartcomm &#8212; MPI for Python 3.1.3 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/classic.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="mpi4py.MPI.Comm" href="mpi4py.MPI.Comm.html" />
+    <link rel="prev" title="mpi4py.MPI" href="mpi4py.MPI.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mpi4py.MPI.Comm.html" title="mpi4py.MPI.Comm"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="mpi4py.MPI.html" title="mpi4py.MPI"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">MPI for Python 3.1.3 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" >Reference</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="mpi4py.MPI.html" accesskey="U">mpi4py.MPI</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">mpi4py.MPI.Cartcomm</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="mpi4py-mpi-cartcomm">
+<h1>mpi4py.MPI.Cartcomm<a class="headerlink" href="#mpi4py-mpi-cartcomm" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="mpi4py.MPI.Cartcomm">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mpi4py.MPI.</span></span><span class="sig-name descname"><span class="pre">Cartcomm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">comm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Cartcomm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="mpi4py.MPI.Topocomm.html#mpi4py.MPI.Topocomm" title="mpi4py.MPI.Topocomm"><code class="xref py py-class docutils literal notranslate"><span class="pre">mpi4py.MPI.Topocomm</span></code></a></p>
+<p>Cartesian topology intracommunicator</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>comm</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="#mpi4py.MPI.Cartcomm" title="mpi4py.MPI.Cartcomm"><em>Cartcomm</em></a><em>]</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mpi4py.MPI.Cartcomm" title="mpi4py.MPI.Cartcomm">Cartcomm</a></p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Cartcomm.__new__">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">__new__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Cartcomm.__new__" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>comm</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="#mpi4py.MPI.Cartcomm" title="mpi4py.MPI.Cartcomm"><em>Cartcomm</em></a><em>]</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mpi4py.MPI.Cartcomm" title="mpi4py.MPI.Cartcomm">Cartcomm</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Methods Summary</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Cartcomm.Get_cart_rank" title="mpi4py.MPI.Cartcomm.Get_cart_rank"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Get_cart_rank</span></code></a>(coords)</p></td>
+<td><p>Translate logical coordinates to ranks</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Cartcomm.Get_coords" title="mpi4py.MPI.Cartcomm.Get_coords"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Get_coords</span></code></a>(rank)</p></td>
+<td><p>Translate ranks to logical coordinates</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Cartcomm.Get_dim" title="mpi4py.MPI.Cartcomm.Get_dim"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Get_dim</span></code></a>()</p></td>
+<td><p>Return number of dimensions</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Cartcomm.Get_topo" title="mpi4py.MPI.Cartcomm.Get_topo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Get_topo</span></code></a>()</p></td>
+<td><p>Return information on the cartesian topology</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Cartcomm.Shift" title="mpi4py.MPI.Cartcomm.Shift"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Shift</span></code></a>(direction, disp)</p></td>
+<td><p>Return a tuple (source, dest) of process ranks for data shifting with Comm.Sendrecv()</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Cartcomm.Sub" title="mpi4py.MPI.Cartcomm.Sub"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Sub</span></code></a>(remain_dims)</p></td>
+<td><p>Return cartesian communicators that form lower-dimensional subgrids</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes Summary</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Cartcomm.coords" title="mpi4py.MPI.Cartcomm.coords"><code class="xref py py-obj docutils literal notranslate"><span class="pre">coords</span></code></a></p></td>
+<td><p>coordinates</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Cartcomm.dim" title="mpi4py.MPI.Cartcomm.dim"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dim</span></code></a></p></td>
+<td><p>number of dimensions</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Cartcomm.dims" title="mpi4py.MPI.Cartcomm.dims"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dims</span></code></a></p></td>
+<td><p>dimensions</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Cartcomm.ndim" title="mpi4py.MPI.Cartcomm.ndim"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ndim</span></code></a></p></td>
+<td><p>number of dimensions</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mpi4py.MPI.Cartcomm.periods" title="mpi4py.MPI.Cartcomm.periods"><code class="xref py py-obj docutils literal notranslate"><span class="pre">periods</span></code></a></p></td>
+<td><p>periodicity</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mpi4py.MPI.Cartcomm.topo" title="mpi4py.MPI.Cartcomm.topo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">topo</span></code></a></p></td>
+<td><p>topology information</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods Documentation</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Cartcomm.Get_cart_rank">
+<span class="sig-name descname"><span class="pre">Get_cart_rank</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coords</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Cartcomm.Get_cart_rank" title="Permalink to this definition">¶</a></dt>
+<dd><p>Translate logical coordinates to ranks</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>coords</strong> (<em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Cartcomm.Get_coords">
+<span class="sig-name descname"><span class="pre">Get_coords</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rank</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Cartcomm.Get_coords" title="Permalink to this definition">¶</a></dt>
+<dd><p>Translate ranks to logical coordinates</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>rank</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>List[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Cartcomm.Get_dim">
+<span class="sig-name descname"><span class="pre">Get_dim</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Cartcomm.Get_dim" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return number of dimensions</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Cartcomm.Get_topo">
+<span class="sig-name descname"><span class="pre">Get_topo</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Cartcomm.Get_topo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return information on the cartesian topology</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tuple[List[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a>], List[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a>], List[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Cartcomm.Shift">
+<span class="sig-name descname"><span class="pre">Shift</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">direction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disp</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Cartcomm.Shift" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a tuple (source, dest) of process ranks
+for data shifting with Comm.Sendrecv()</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>direction</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>disp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Tuple[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.MPI.Cartcomm.Sub">
+<span class="sig-name descname"><span class="pre">Sub</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">remain_dims</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.MPI.Cartcomm.Sub" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return cartesian communicators
+that form lower-dimensional subgrids</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>remain_dims</strong> (<em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>]</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mpi4py.MPI.Cartcomm" title="mpi4py.MPI.Cartcomm">Cartcomm</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Attributes Documentation</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.MPI.Cartcomm.coords">
+<span class="sig-name descname"><span class="pre">coords</span></span><a class="headerlink" href="#mpi4py.MPI.Cartcomm.coords" title="Permalink to this definition">¶</a></dt>
+<dd><p>coordinates</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.MPI.Cartcomm.dim">
+<span class="sig-name descname"><span class="pre">dim</span></span><a class="headerlink" href="#mpi4py.MPI.Cartcomm.dim" title="Permalink to this definition">¶</a></dt>
+<dd><p>number of dimensions</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.MPI.Cartcomm.dims">
+<span class="sig-name descname"><span class="pre">dims</span></span><a class="headerlink" href="#mpi4py.MPI.Cartcomm.dims" title="Permalink to this definition">¶</a></dt>
+<dd><p>dimensions</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.MPI.Cartcomm.ndim">
+<span class="sig-name descname"><span class="pre">ndim</span></span><a class="headerlink" href="#mpi4py.MPI.Cartcomm.ndim" title="Permalink to this definition">¶</a></dt>
+<dd><p>number of dimensions</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.MPI.Cartcomm.periods">
+<span class="sig-name descname"><span class="pre">periods</span></span><a class="headerlink" href="#mpi4py.MPI.Cartcomm.periods" title="Permalink to this definition">¶</a></dt>
+<dd><p>periodicity</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mpi4py.MPI.Cartcomm.topo">
+<span class="sig-name descname"><span class="pre">topo</span></span><a class="headerlink" href="#mpi4py.MPI.Cartcomm.topo" title="Permalink to this definition">¶</a></dt>
+<dd><p>topology information</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="mpi4py.MPI.html"
+                        title="previous chapter">mpi4py.MPI</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="mpi4py.MPI.Comm.html"
+                        title="next chapter">mpi4py.MPI.Comm</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mpi4py.MPI.Comm.html" title="mpi4py.MPI.Comm"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="mpi4py.MPI.html" title="mpi4py.MPI"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">MPI for Python 3.1.3 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" >Reference</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="mpi4py.MPI.html" >mpi4py.MPI</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">mpi4py.MPI.Cartcomm</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Lisandro Dalcin.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.0.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,608 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>mpi4py.util.pkl5 &#8212; MPI for Python 3.1.3 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/classic.css" />
+    
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="mpi4py.util.dtlib" href="mpi4py.util.dtlib.html" />
+    <link rel="prev" title="mpi4py.util" href="mpi4py.util.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mpi4py.util.dtlib.html" title="mpi4py.util.dtlib"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="mpi4py.util.html" title="mpi4py.util"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">MPI for Python 3.1.3 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="mpi4py.util.html" accesskey="U">mpi4py.util</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">mpi4py.util.pkl5</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-mpi4py.util.pkl5">
+<span id="mpi4py-util-pkl5"></span><h1>mpi4py.util.pkl5<a class="headerlink" href="#module-mpi4py.util.pkl5" title="Permalink to this headline">¶</a></h1>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.1.0.</span></p>
+</div>
+<p><a class="reference external" href="https://docs.python.org/3/library/pickle.html#module-pickle" title="(in Python v3.10)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code></a> protocol 5 (see <span class="target" id="index-0"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0574"><strong>PEP 574</strong></a>) introduced support for out-of-band
+buffers, allowing for more efficient handling of certain object types with
+large memory footprints.</p>
+<p>MPI for Python uses the traditional in-band handling of buffers. This approach
+is appropriate for communicating non-buffer Python objects, or buffer-like
+objects with small memory footprints. For point-to-point communication, in-band
+buffer handling allows for the communication of a pickled stream with a single
+MPI message, at the expense of additional CPU and memory overhead in the
+pickling and unpickling steps.</p>
+<p>The <a class="reference internal" href="#module-mpi4py.util.pkl5" title="mpi4py.util.pkl5: Pickle-based communication using protocol 5."><code class="xref py py-mod docutils literal notranslate"><span class="pre">mpi4py.util.pkl5</span></code></a> module provides communicator wrapper classes
+reimplementing pickle-based point-to-point communication methods using pickle
+protocol 5. Handling out-of-band buffers necessarily involve multiple MPI
+messages, thus increasing latency and hurting performance in case of small size
+data. However, in case of large size data, the zero-copy savings of out-of-band
+buffer handling more than offset the extra latency costs.  Additionally, these
+wrapper methods overcome the infamous 2 GiB message count limit (MPI-1 to
+MPI-3).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Support for pickle protocol 5 is available in the <a class="reference external" href="https://docs.python.org/3/library/pickle.html#module-pickle" title="(in Python v3.10)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code></a> module
+within the Python standard library since Python 3.8. Previous Python 3
+releases can use the <code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle5</span></code> backport, which is available on <a class="reference external" href="https://pypi.org/project/pickle5/">PyPI</a> and can be installed with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">pickle5</span>
+</pre></div>
+</div>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="mpi4py.util.pkl5.Request">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mpi4py.util.pkl5.</span></span><span class="sig-name descname"><span class="pre">Request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.util.pkl5.Request" title="Permalink to this definition">¶</a></dt>
+<dd><p>Request.</p>
+<p>Custom request class for nonblocking communications.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><a class="reference internal" href="#mpi4py.util.pkl5.Request" title="mpi4py.util.pkl5.Request"><code class="xref py py-class docutils literal notranslate"><span class="pre">Request</span></code></a> is not a subclass of <a class="reference internal" href="reference/mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request"><code class="xref py py-class docutils literal notranslate"><span class="pre">mpi4py.MPI.Request</span></code></a></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>request</strong> (<em>Iterable</em><em>[</em><a class="reference internal" href="reference/mpi4py.MPI.Request.html#mpi4py.MPI.Request" title="mpi4py.MPI.Request"><em>MPI.Request</em></a><em>]</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mpi4py.util.pkl5.Request" title="mpi4py.util.pkl5.Request">Request</a></p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.util.pkl5.Request.Free">
+<span class="sig-name descname"><span class="pre">Free</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.util.pkl5.Request.Free" title="Permalink to this definition">¶</a></dt>
+<dd><p>Free a communication request.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.util.pkl5.Request.cancel">
+<span class="sig-name descname"><span class="pre">cancel</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.util.pkl5.Request.cancel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cancel a communication request.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.util.pkl5.Request.get_status">
+<span class="sig-name descname"><span class="pre">get_status</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.util.pkl5.Request.get_status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Non-destructive test for the completion of a request.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>status</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="reference/mpi4py.MPI.Status.html#mpi4py.MPI.Status" title="mpi4py.MPI.Status"><em>Status</em></a><em>]</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.util.pkl5.Request.test">
+<span class="sig-name descname"><span class="pre">test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.util.pkl5.Request.test" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test for the completion of a request.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>status</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="reference/mpi4py.MPI.Status.html#mpi4py.MPI.Status" title="mpi4py.MPI.Status"><em>Status</em></a><em>]</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Tuple[<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a>, Optional[Any]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.util.pkl5.Request.wait">
+<span class="sig-name descname"><span class="pre">wait</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.util.pkl5.Request.wait" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wait for a request to complete.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>status</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="reference/mpi4py.MPI.Status.html#mpi4py.MPI.Status" title="mpi4py.MPI.Status"><em>Status</em></a><em>]</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Any</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.util.pkl5.Request.testall">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">testall</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">requests</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">statuses</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.util.pkl5.Request.testall" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test for the completion of all requests.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Classmethod</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.util.pkl5.Request.waitall">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">waitall</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">requests</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">statuses</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.util.pkl5.Request.waitall" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wait for all requests to complete.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Classmethod</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mpi4py.util.pkl5.Message">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mpi4py.util.pkl5.</span></span><span class="sig-name descname"><span class="pre">Message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.util.pkl5.Message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Message.</p>
+<p>Custom message class for matching probes.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><a class="reference internal" href="#mpi4py.util.pkl5.Message" title="mpi4py.util.pkl5.Message"><code class="xref py py-class docutils literal notranslate"><span class="pre">Message</span></code></a> is not a subclass of <a class="reference internal" href="reference/mpi4py.MPI.Message.html#mpi4py.MPI.Message" title="mpi4py.MPI.Message"><code class="xref py py-class docutils literal notranslate"><span class="pre">mpi4py.MPI.Message</span></code></a></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>message</strong> (<em>Iterable</em><em>[</em><a class="reference internal" href="reference/mpi4py.MPI.Message.html#mpi4py.MPI.Message" title="mpi4py.MPI.Message"><em>MPI.Message</em></a><em>]</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mpi4py.util.pkl5.Message" title="mpi4py.util.pkl5.Message">Message</a></p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.util.pkl5.Message.recv">
+<span class="sig-name descname"><span class="pre">recv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.util.pkl5.Message.recv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Blocking receive of matched message.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>status</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="reference/mpi4py.MPI.Status.html#mpi4py.MPI.Status" title="mpi4py.MPI.Status"><em>Status</em></a><em>]</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Any</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.util.pkl5.Message.irecv">
+<span class="sig-name descname"><span class="pre">irecv</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.util.pkl5.Message.irecv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nonblocking receive of matched message.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#mpi4py.util.pkl5.Request" title="mpi4py.util.pkl5.Request">Request</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.util.pkl5.Message.probe">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">probe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">comm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ANY_SOURCE</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ANY_TAG</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.util.pkl5.Message.probe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Blocking test for a matched message.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Classmethod</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.util.pkl5.Message.iprobe">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">iprobe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">comm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ANY_SOURCE</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ANY_TAG</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.util.pkl5.Message.iprobe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nonblocking test for a matched message.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Classmethod</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mpi4py.util.pkl5.Comm">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mpi4py.util.pkl5.</span></span><span class="sig-name descname"><span class="pre">Comm</span></span><a class="headerlink" href="#mpi4py.util.pkl5.Comm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Communicator.</p>
+<p>Base communicator wrapper class.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.util.pkl5.Comm.send">
+<span class="sig-name descname"><span class="pre">send</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.util.pkl5.Comm.send" title="Permalink to this definition">¶</a></dt>
+<dd><p>Blocking send in standard mode.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obj</strong> (<em>Any</em>) – </p></li>
+<li><p><strong>dest</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>tag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.util.pkl5.Comm.bsend">
+<span class="sig-name descname"><span class="pre">bsend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.util.pkl5.Comm.bsend" title="Permalink to this definition">¶</a></dt>
+<dd><p>Blocking send in buffered mode.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obj</strong> (<em>Any</em>) – </p></li>
+<li><p><strong>dest</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>tag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.util.pkl5.Comm.ssend">
+<span class="sig-name descname"><span class="pre">ssend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.util.pkl5.Comm.ssend" title="Permalink to this definition">¶</a></dt>
+<dd><p>Blocking send in synchronous mode.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obj</strong> (<em>Any</em>) – </p></li>
+<li><p><strong>dest</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>tag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.util.pkl5.Comm.isend">
+<span class="sig-name descname"><span class="pre">isend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.util.pkl5.Comm.isend" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nonblocking send in standard mode.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obj</strong> (<em>Any</em>) – </p></li>
+<li><p><strong>dest</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>tag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mpi4py.util.pkl5.Request" title="mpi4py.util.pkl5.Request">Request</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.util.pkl5.Comm.ibsend">
+<span class="sig-name descname"><span class="pre">ibsend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.util.pkl5.Comm.ibsend" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nonblocking send in buffered mode.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obj</strong> (<em>Any</em>) – </p></li>
+<li><p><strong>dest</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>tag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mpi4py.util.pkl5.Request" title="mpi4py.util.pkl5.Request">Request</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.util.pkl5.Comm.issend">
+<span class="sig-name descname"><span class="pre">issend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.util.pkl5.Comm.issend" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nonblocking send in synchronous mode.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obj</strong> (<em>Any</em>) – </p></li>
+<li><p><strong>dest</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>tag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mpi4py.util.pkl5.Request" title="mpi4py.util.pkl5.Request">Request</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.util.pkl5.Comm.recv">
+<span class="sig-name descname"><span class="pre">recv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ANY_SOURCE</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ANY_TAG</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.util.pkl5.Comm.recv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Blocking receive.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buf</strong> (<em>Optional</em><em>[</em><em>Buffer</em><em>]</em>) – </p></li>
+<li><p><strong>source</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>tag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>status</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="reference/mpi4py.MPI.Status.html#mpi4py.MPI.Status" title="mpi4py.MPI.Status"><em>Status</em></a><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Any</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.util.pkl5.Comm.irecv">
+<span class="sig-name descname"><span class="pre">irecv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ANY_SOURCE</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ANY_TAG</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.util.pkl5.Comm.irecv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nonblocking receive.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This method cannot be supported reliably
+and raises <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#RuntimeError" title="(in Python v3.10)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">RuntimeError</span></code></a>.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buf</strong> (<em>Optional</em><em>[</em><em>Buffer</em><em>]</em>) – </p></li>
+<li><p><strong>source</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>tag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mpi4py.util.pkl5.Request" title="mpi4py.util.pkl5.Request">Request</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.util.pkl5.Comm.sendrecv">
+<span class="sig-name descname"><span class="pre">sendrecv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sendobj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sendtag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recvbuf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ANY_SOURCE</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recvtag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ANY_TAG</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.util.pkl5.Comm.sendrecv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send and receive.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sendobj</strong> (<em>Any</em>) – </p></li>
+<li><p><strong>dest</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>sendtag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>recvbuf</strong> (<em>Optional</em><em>[</em><em>Buffer</em><em>]</em>) – </p></li>
+<li><p><strong>source</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>recvtag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>status</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="reference/mpi4py.MPI.Status.html#mpi4py.MPI.Status" title="mpi4py.MPI.Status"><em>Status</em></a><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Any</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.util.pkl5.Comm.mprobe">
+<span class="sig-name descname"><span class="pre">mprobe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ANY_SOURCE</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ANY_TAG</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.util.pkl5.Comm.mprobe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Blocking test for a matched message.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>tag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>status</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="reference/mpi4py.MPI.Status.html#mpi4py.MPI.Status" title="mpi4py.MPI.Status"><em>Status</em></a><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mpi4py.util.pkl5.Message" title="mpi4py.util.pkl5.Message">Message</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.util.pkl5.Comm.improbe">
+<span class="sig-name descname"><span class="pre">improbe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ANY_SOURCE</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ANY_TAG</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.util.pkl5.Comm.improbe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nonblocking test for a matched message.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>tag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>status</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="reference/mpi4py.MPI.Status.html#mpi4py.MPI.Status" title="mpi4py.MPI.Status"><em>Status</em></a><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Optional[<a class="reference internal" href="#mpi4py.util.pkl5.Message" title="mpi4py.util.pkl5.Message">Message</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mpi4py.util.pkl5.Comm.bcast">
+<span class="sig-name descname"><span class="pre">bcast</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mpi4py.util.pkl5.Comm.bcast" title="Permalink to this definition">¶</a></dt>
+<dd><p>Broadcast.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obj</strong> (<em>Any</em>) – </p></li>
+<li><p><strong>root</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Any</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mpi4py.util.pkl5.Intracomm">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mpi4py.util.pkl5.</span></span><span class="sig-name descname"><span class="pre">Intracomm</span></span><a class="headerlink" href="#mpi4py.util.pkl5.Intracomm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Intracommunicator.</p>
+<p>Intracommunicator wrapper class.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mpi4py.util.pkl5.Intercomm">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mpi4py.util.pkl5.</span></span><span class="sig-name descname"><span class="pre">Intercomm</span></span><a class="headerlink" href="#mpi4py.util.pkl5.Intercomm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Intercommunicator.</p>
+<p>Intercommunicator wrapper class.</p>
+</dd></dl>
+
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<div class="literal-block-wrapper docutils container" id="test-pkl5-1">
+<div class="code-block-caption"><span class="caption-text"><code class="file docutils literal notranslate"><span class="pre">test-pkl5-1.py</span></code></span><a class="headerlink" href="#test-pkl5-1" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="linenos"> 2</span><span class="kn">from</span> <span class="nn">mpi4py</span> <span class="kn">import</span> <span class="n">MPI</span>
+<span class="hll"><span class="linenos"> 3</span><span class="kn">from</span> <span class="nn">mpi4py.util</span> <span class="kn">import</span> <span class="n">pkl5</span>
+</span><span class="linenos"> 4</span>
+<span class="hll"><span class="linenos"> 5</span><span class="n">comm</span> <span class="o">=</span> <span class="n">pkl5</span><span class="o">.</span><span class="n">Intracomm</span><span class="p">(</span><span class="n">MPI</span><span class="o">.</span><span class="n">COMM_WORLD</span><span class="p">)</span>  <span class="c1"># comm wrapper</span>
+</span><span class="linenos"> 6</span><span class="n">size</span> <span class="o">=</span> <span class="n">comm</span><span class="o">.</span><span class="n">Get_size</span><span class="p">()</span>
+<span class="linenos"> 7</span><span class="n">rank</span> <span class="o">=</span> <span class="n">comm</span><span class="o">.</span><span class="n">Get_rank</span><span class="p">()</span>
+<span class="linenos"> 8</span><span class="n">dst</span> <span class="o">=</span> <span class="p">(</span><span class="n">rank</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">size</span>
+<span class="linenos"> 9</span><span class="n">src</span> <span class="o">=</span> <span class="p">(</span><span class="n">rank</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">size</span>
+<span class="linenos">10</span>
+<span class="hll"><span class="linenos">11</span><span class="n">sobj</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="mi">1024</span><span class="o">**</span><span class="mi">3</span><span class="p">,</span> <span class="n">rank</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;i4&#39;</span><span class="p">)</span>  <span class="c1"># &gt; 4 GiB</span>
+</span><span class="linenos">12</span><span class="n">sreq</span> <span class="o">=</span> <span class="n">comm</span><span class="o">.</span><span class="n">isend</span><span class="p">(</span><span class="n">sobj</span><span class="p">,</span> <span class="n">dst</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="linenos">13</span><span class="n">robj</span> <span class="o">=</span> <span class="n">comm</span><span class="o">.</span><span class="n">recv</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">src</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="linenos">14</span><span class="n">sreq</span><span class="o">.</span><span class="n">Free</span><span class="p">()</span>
+<span class="linenos">15</span>
+<span class="linenos">16</span><span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">robj</span><span class="p">)</span> <span class="o">==</span> <span class="n">src</span>
+<span class="linenos">17</span><span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">robj</span><span class="p">)</span> <span class="o">==</span> <span class="n">src</span>
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="test-pkl5-2">
+<div class="code-block-caption"><span class="caption-text"><code class="file docutils literal notranslate"><span class="pre">test-pkl5-2.py</span></code></span><a class="headerlink" href="#test-pkl5-2" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="linenos"> 2</span><span class="kn">from</span> <span class="nn">mpi4py</span> <span class="kn">import</span> <span class="n">MPI</span>
+<span class="hll"><span class="linenos"> 3</span><span class="kn">from</span> <span class="nn">mpi4py.util</span> <span class="kn">import</span> <span class="n">pkl5</span>
+</span><span class="linenos"> 4</span>
+<span class="hll"><span class="linenos"> 5</span><span class="n">comm</span> <span class="o">=</span> <span class="n">pkl5</span><span class="o">.</span><span class="n">Intracomm</span><span class="p">(</span><span class="n">MPI</span><span class="o">.</span><span class="n">COMM_WORLD</span><span class="p">)</span>  <span class="c1"># comm wrapper</span>
+</span><span class="linenos"> 6</span><span class="n">size</span> <span class="o">=</span> <span class="n">comm</span><span class="o">.</span><span class="n">Get_size</span><span class="p">()</span>
+<span class="linenos"> 7</span><span class="n">rank</span> <span class="o">=</span> <span class="n">comm</span><span class="o">.</span><span class="n">Get_rank</span><span class="p">()</span>
+<span class="linenos"> 8</span><span class="n">dst</span> <span class="o">=</span> <span class="p">(</span><span class="n">rank</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">size</span>
+<span class="linenos"> 9</span><span class="n">src</span> <span class="o">=</span> <span class="p">(</span><span class="n">rank</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">size</span>
+<span class="linenos">10</span>
+<span class="hll"><span class="linenos">11</span><span class="n">sobj</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="mi">1024</span><span class="o">**</span><span class="mi">3</span><span class="p">,</span> <span class="n">rank</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;i4&#39;</span><span class="p">)</span>  <span class="c1"># &gt; 4 GiB</span>
+</span><span class="linenos">12</span><span class="n">sreq</span> <span class="o">=</span> <span class="n">comm</span><span class="o">.</span><span class="n">isend</span><span class="p">(</span><span class="n">sobj</span><span class="p">,</span> <span class="n">dst</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="linenos">13</span>
+<span class="linenos">14</span><span class="n">status</span> <span class="o">=</span> <span class="n">MPI</span><span class="o">.</span><span class="n">Status</span><span class="p">()</span>
+<span class="linenos">15</span><span class="n">rmsg</span> <span class="o">=</span> <span class="n">comm</span><span class="o">.</span><span class="n">mprobe</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="p">)</span>
+<span class="linenos">16</span><span class="k">assert</span> <span class="n">status</span><span class="o">.</span><span class="n">Get_source</span><span class="p">()</span> <span class="o">==</span> <span class="n">src</span>
+<span class="linenos">17</span><span class="k">assert</span> <span class="n">status</span><span class="o">.</span><span class="n">Get_tag</span><span class="p">()</span> <span class="o">==</span> <span class="mi">42</span>
+<span class="linenos">18</span><span class="n">rreq</span> <span class="o">=</span> <span class="n">rmsg</span><span class="o">.</span><span class="n">irecv</span><span class="p">()</span>
+<span class="linenos">19</span><span class="n">robj</span> <span class="o">=</span> <span class="n">rreq</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+<span class="linenos">20</span>
+<span class="linenos">21</span><span class="n">sreq</span><span class="o">.</span><span class="n">Free</span><span class="p">()</span>
+<span class="linenos">22</span><span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">robj</span><span class="p">)</span> <span class="o">==</span> <span class="n">src</span>
+<span class="linenos">23</span><span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">robj</span><span class="p">)</span> <span class="o">==</span> <span class="n">src</span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">mpi4py.util.pkl5</a><ul>
+<li><a class="reference internal" href="#examples">Examples</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="mpi4py.util.html"
+                        title="previous chapter">mpi4py.util</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="mpi4py.util.dtlib.html"
+                        title="next chapter">mpi4py.util.dtlib</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mpi4py.util.dtlib.html" title="mpi4py.util.dtlib"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="mpi4py.util.html" title="mpi4py.util"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">MPI for Python 3.1.3 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="mpi4py.util.html" >mpi4py.util</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">mpi4py.util.pkl5</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Lisandro Dalcin.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.0.
+    </div>
+  </body>
+</html>
