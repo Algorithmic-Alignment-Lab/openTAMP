@@ -291,7 +291,7 @@ class MotionServer(Server):
                 ## replanning has now failed
                 del_list = []
                 for t in node.conditioned_obs.keys():
-                    if t[0] >= fail_step:
+                    if t[0] > fail_step:
                         del_list.append(t)
                 for t in del_list:
                     del node.conditioned_obs[t]

@@ -345,7 +345,7 @@ class GymEnvNavWrapper(GymEnvNav):
         goal_pos = self.target_dist.sample().detach().numpy()
 
         ## initalize to center
-        return np.concatenate((np.array([0.0, 0.0]), np.array([obstacle_angle]), goal_pos, soft_goal_pos, obs))
+        return np.concatenate((np.array([0.0, 0.0]), np.array([obstacle_angle]), goal_pos, np.array([8.0,0.]), obs))
 
     # determine whether or not a given state satisfies a goal condition
     def assess_goal(self, condition, state, targets=None, cont=None):

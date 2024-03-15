@@ -144,7 +144,8 @@
     "move_avoid": {
         "params": [
             ["?robot", "Robot"],
-            ["?target", "Target"]
+            ["?target", "Target"],
+            ["?softtarget", "SoftTarget"]
         ],
         "horizon": 20,
         "pre": [
@@ -172,8 +173,16 @@
                 }
             },
             {
-                "type": "RobotNearTarget",
-                "args": ["?robot", "?target"],
+                "forall": ["?w", "Obstacle"],
+                "pred": {
+                    "type": "PointingAtObs",
+                    "args": ["?robot", "?w"],
+                    "active_timesteps": [1, 10]
+                }
+            },
+            {
+                "type": "RobotCloseToTarget",
+                "args": ["?robot", "?softtarget"],
                 "active_timesteps": [19, 19]
             },
             {

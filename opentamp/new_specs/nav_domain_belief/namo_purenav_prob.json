@@ -9,7 +9,7 @@
         {
             "name": "softtarget1",
             "type": "SoftTarget",
-            "value": [3, 3]
+            "value": [8, 0]
         },
         {
             "name": "obs1",
