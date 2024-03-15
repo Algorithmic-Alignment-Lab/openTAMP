@@ -23,10 +23,8 @@ python3 -W ignore policy_hooks/run_training.py -c new_specs.nav_domain_belief.ne
                                                 -post -pre \
                                                 -warm 100 \
                                                 -neg_ratio 0. -opt_ratio 1.0 -dagger_ratio 0.0 \
-						-descr belief_nav_domain_iros
+						-descr belief_nav_domain_iros_final
 
-# sleep 1800 
-# pkill -f run_train -9
 # pkill -f ros -9
 # sleep 5
 
