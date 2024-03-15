@@ -73,7 +73,7 @@ class GymEnvNav(Env):
         #         theta_thresh[0] <= obstacle_rel_angle - 2*np.pi < theta_thresh[1]:
         #         lidar_obs[detect_idx] = obstacle_rel_distance
 
-        cam_angle = (self.curr_state[2]+np.pi/2)%(2*np.pi) - np.pi/2
+        cam_angle = (self.curr_state[2]+np.pi)%(2*np.pi) - np.pi
         if np.abs(cam_angle - obstacle_angle) <= np.pi/4 and np.linalg.norm(obstacle_rel_pos) <= 6.0:
             obs_view = obstacle_rel_pos
         else:
