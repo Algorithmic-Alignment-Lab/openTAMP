@@ -77,7 +77,7 @@ class GymEnvNav(Env):
         if np.abs(cam_angle - obstacle_angle) <= np.pi/4 and np.linalg.norm(obstacle_rel_pos) <= 6.0:
             obs_view =  obstacle_rel_pos
         else:
-            obs_view = np.array([6.0, 6.0])
+            obs_view = np.array([-10.0, -10.0])
 
         target_rel_pos = (self.curr_state[3:5] - self.curr_state[:2]) * 1 
         target_abs_angle = np.arctan(target_rel_pos[1]/target_rel_pos[0]) if np.abs(target_rel_pos[0]) > 0.001 else (np.pi/2 if target_rel_pos[1]*target_rel_pos[0]>0 else -np.pi/2)
@@ -85,7 +85,7 @@ class GymEnvNav(Env):
         if np.abs(cam_angle - target_angle) <= np.pi/4 and np.linalg.norm(target_rel_pos) <= 6.0:
             targ_view = target_rel_pos
         else:
-            targ_view = np.array([6.0, 6.0])
+            targ_view = np.array([-10.0, -10.0])
 
         self.curr_obs = np.concatenate([self.curr_state[:3], obs_view, targ_view])
 

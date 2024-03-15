@@ -164,6 +164,7 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
                         # utils.PAST_ANG_ENUM,
                         utils.PAST_TASK_ARR_ENUM,
                         utils.TASK_ENUM,
+                        utils.TIME_ENUM
                         # utils.PAST_TASK_ENUM,
                         # utils.ANG_ENUM,
                         # utils.PAST_TASK_ARR_ENUM,
@@ -222,6 +223,7 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
                 utils.PAST_POINT_ENUM: 1,
                 utils.PAST_VAL_ENUM: 1,
                 utils.PAST_TASK_ENUM: 1,
+                utils.TIME_ENUM: 1,
                 utils.PAST_TASK_ARR_ENUM: 20,
                 utils.PAST_MJCOBS_ARR_ENUM: 20 * GymEnvNavWrapper().observation_space.shape[0],
                 # utils.LIDAR_ENUM: N_DIRS,
