@@ -75,7 +75,7 @@ class GymEnvNav(Env):
 
         cam_angle = (self.curr_state[2]+np.pi)%(2*np.pi) - np.pi
         if np.abs(cam_angle - obstacle_angle) <= np.pi/4 and np.linalg.norm(obstacle_rel_pos) <= 6.0:
-            obs_view =  np.array([np.linalg.norm(obstacle_rel_pos), obstacle_angle])
+            obs_view =  obstacle_rel_pos
         else:
             obs_view = np.array([6.0, 6.0])
 
@@ -83,7 +83,7 @@ class GymEnvNav(Env):
         target_abs_angle = np.arctan(target_rel_pos[1]/target_rel_pos[0]) if np.abs(target_rel_pos[0]) > 0.001 else (np.pi/2 if target_rel_pos[1]*target_rel_pos[0]>0 else -np.pi/2)
         target_angle = target_abs_angle if target_rel_pos[0] >= 0  else (target_abs_angle + np.pi if -np.pi/2 <= target_abs_angle < 0 else target_abs_angle - np.pi)
         if np.abs(cam_angle - target_angle) <= np.pi/4 and np.linalg.norm(target_rel_pos) <= 6.0:
-            targ_view = np.array([np.linalg.norm(target_rel_pos), target_angle])
+            targ_view = target_rel_pos
         else:
             targ_view = np.array([6.0, 6.0])
 
@@ -353,7 +353,7 @@ class GymEnvNavWrapper(GymEnvNav):
         goal_rel_pose = self.curr_state[3:5] - self.curr_state[:2]
         # if pointing directly at the object
 
-        if np.abs(np.linalg.norm(goal_rel_pose)*np.cos(angle) - goal_rel_pose[0]) <= 0.5 and np.abs(np.linalg.norm(goal_rel_pose)*np.sin(angle) - goal_rel_pose[1]) <= 0.5 and np.linalg.norm(goal_rel_pose) <= 6.0:
+        if np.abs(np.linalg.norm(goal_rel_pose)*np.cos(angle) - goal_rel_pose[0]) <= 1.0 and np.abs(np.linalg.norm(goal_rel_pose)*np.sin(angle) - goal_rel_pose[1]) <= 1.0 and np.linalg.norm(goal_rel_pose) <= 6.0:
             return 0.0
         else:
             return 1.0
