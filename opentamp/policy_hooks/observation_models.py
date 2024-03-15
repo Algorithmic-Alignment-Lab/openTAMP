@@ -273,10 +273,10 @@ class NoVIObstacleObservationModel(ObservationModel):
                 rel_vec = mod_obs_vec - params['pr2'].pose[:,obs_active_ts[1]-1]
                 if self.is_in_ray(params['pr2'].theta[0,obs_active_ts[1]-1], rel_vec) and np.linalg.norm(rel_vec) <= self.obs_dist:
                     ## sample around the true belief, with extremely low variation / error
-                    log_likelihood[idx] += dist.MultivariateNormal(params['obs1'].belief.samples[idx,:,fail_ts], (0.01 * torch.eye(2))).log_prob(prefix_obs[obs_active_ts]['obs1'])
+                    log_likelihood[idx] += dist.MultivariateNormal(params['obs1'].belief.samples[idx,:,fail_ts], (0.001 * torch.eye(2))).log_prob(prefix_obs[obs_active_ts]['obs1'])
                 else:
                     ## sample from prior dist -- have no additional knowledge, don't read it
-                    log_likelihood[idx] += dist.MultivariateNormal((torch.ones((2,)) * 3).to(DEVICE), 0.01 * torch.eye(2)).log_prob(prefix_obs[obs_active_ts]['obs1'])
+                    log_likelihood[idx] += dist.MultivariateNormal((torch.zeros((2,))).to(DEVICE), 0.001 * torch.eye(2)).log_prob(prefix_obs[obs_active_ts]['obs1'])
 
             for obs_active_ts in prefix_obs:
                 obs_vec = params['target1'].belief.samples[idx,:,fail_ts]
@@ -284,10 +284,10 @@ class NoVIObstacleObservationModel(ObservationModel):
                 rel_vec = mod_obs_vec - params['pr2'].pose[:,obs_active_ts[1]-1]
                 if self.is_in_ray(params['pr2'].theta[0,obs_active_ts[1]-1], rel_vec) and np.linalg.norm(rel_vec) <= self.obs_dist:
                     ## sample around the true belief, with extremely low variation / error
-                    log_likelihood[idx] += dist.MultivariateNormal(params['target1'].belief.samples[idx,:,fail_ts], (0.01 * torch.eye(2))).log_prob(prefix_obs[obs_active_ts]['target1'])
+                    log_likelihood[idx] += dist.MultivariateNormal(params['target1'].belief.samples[idx,:,fail_ts], (0.001 * torch.eye(2))).log_prob(prefix_obs[obs_active_ts]['target1'])
                 else:
                     ## sample from prior dist -- have no additional knowledge, don't read it
-                    log_likelihood[idx] += dist.MultivariateNormal((torch.ones((2,)) * 3).to(DEVICE), 0.01 * torch.eye(2)).log_prob(prefix_obs[obs_active_ts]['target1'])
+                    log_likelihood[idx] += dist.MultivariateNormal((torch.zeros((2,))).to(DEVICE), 0.001 * torch.eye(2)).log_prob(prefix_obs[obs_active_ts]['target1'])
 
         return log_likelihood
 
@@ -307,10 +307,10 @@ class NoVIObstacleObservationModel(ObservationModel):
             rel_vec = mod_obs - params['pr2'].pose[:,obs_active_ts[1]-1]
             if self.is_in_ray(params['pr2'].theta[0,obs_active_ts[1]-1], rel_vec) and np.linalg.norm(rel_vec) <= self.obs_dist:
                 ## sample around the true belief, with extremely low variation / error
-                pyro.sample('obs1.'+str(obs_active_ts[0]), dist.MultivariateNormal(b_global_samp.float().to(DEVICE), (0.01 * torch.eye(2)).to(DEVICE)))
+                pyro.sample('obs1.'+str(obs_active_ts[0]), dist.MultivariateNormal(b_global_samp.float().to(DEVICE), (0.001 * torch.eye(2)).to(DEVICE)))
             else:
                 ## sample from prior dist -- have no additional knowledge, don't read it
-                pyro.sample('obs1.'+str(obs_active_ts[0]), dist.MultivariateNormal((torch.zeros((2,))).to(DEVICE), 0.01 * torch.eye(2).to(DEVICE)))
+                pyro.sample('obs1.'+str(obs_active_ts[0]), dist.MultivariateNormal((torch.zeros((2,))).to(DEVICE), 0.001 * torch.eye(2).to(DEVICE)))
 
         for obs_active_ts in past_obs:
             mod_targ = torch.sign(b_global_samp_targ.detach().to('cpu')) * (torch.abs(b_global_samp_targ.detach().to('cpu')))
@@ -320,7 +320,7 @@ class NoVIObstacleObservationModel(ObservationModel):
                 pyro.sample('target1.'+str(obs_active_ts[0]), dist.MultivariateNormal(b_global_samp_targ.float().to(DEVICE), (0.01 * torch.eye(2)).to(DEVICE)))
             else:
                 ## sample from prior dist -- have no additional knowledge, don't read it
-                pyro.sample('target1.'+str(obs_active_ts[0]), dist.MultivariateNormal((torch.zeros((2,))).to(DEVICE), 0.01 * torch.eye(2).to(DEVICE)))
+                pyro.sample('target1.'+str(obs_active_ts[0]), dist.MultivariateNormal((torch.zeros((2,))).to(DEVICE), 0.001 * torch.eye(2).to(DEVICE)))
         
         ## get sample for current timestep, record and return
         samps = {}
@@ -329,19 +329,19 @@ class NoVIObstacleObservationModel(ObservationModel):
         rel_vec = mod_obs  - params['pr2'].pose[:,active_ts[1]-1]
         if self.is_in_ray(params['pr2'].theta[0,active_ts[1]-1], rel_vec) and np.linalg.norm(rel_vec) <= self.obs_dist:
             ## sample around the true belief, with extremely low variation / error
-            samps['obs1'] = pyro.sample('obs1.'+str(active_ts[0]), dist.MultivariateNormal(b_global_samp.float().to(DEVICE), 0.01 * torch.eye(2).to(DEVICE)))
+            samps['obs1'] = pyro.sample('obs1.'+str(active_ts[0]), dist.MultivariateNormal(b_global_samp.float().to(DEVICE), 0.001 * torch.eye(2).to(DEVICE)))
         else:
             ## sample from prior dist -- have no additional knowledge, don't read it
-            samps['obs1'] = pyro.sample('obs1.'+str(active_ts[0]), dist.MultivariateNormal((torch.zeros((2,))).to(DEVICE), 0.01 * torch.eye(2).to(DEVICE)))
+            samps['obs1'] = pyro.sample('obs1.'+str(active_ts[0]), dist.MultivariateNormal((torch.zeros((2,))).to(DEVICE), 0.001 * torch.eye(2).to(DEVICE)))
 
         mod_targ = torch.sign(b_global_samp_targ.detach().to('cpu')) * (torch.abs(b_global_samp_targ.detach().to('cpu')))
         rel_vec = mod_targ - params['pr2'].pose[:,active_ts[1]-1]
         if self.is_in_ray(params['pr2'].theta[0,active_ts[1]-1], rel_vec) and np.linalg.norm(rel_vec) <= self.obs_dist:
             ## sample around the true belief, with extremely low variation / error
-            samps['target1'] = pyro.sample('target1.'+str(active_ts[0]), dist.MultivariateNormal(b_global_samp_targ.float().to(DEVICE), 0.01 * torch.eye(2).to(DEVICE)))
+            samps['target1'] = pyro.sample('target1.'+str(active_ts[0]), dist.MultivariateNormal(b_global_samp_targ.float().to(DEVICE), 0.001 * torch.eye(2).to(DEVICE)))
         else:
             ## sample from prior dist -- have no additional knowledge, don't read it
-            samps['target1'] = pyro.sample('target1.'+str(active_ts[0]), dist.MultivariateNormal((torch.zeros((2,))).to(DEVICE), 0.01 * torch.eye(2).to(DEVICE)))
+            samps['target1'] = pyro.sample('target1.'+str(active_ts[0]), dist.MultivariateNormal((torch.zeros((2,))).to(DEVICE), 0.001 * torch.eye(2).to(DEVICE)))
 
         # return tensors on CPU for compatib
         for samp in samps:

@@ -1859,10 +1859,11 @@ class CertainTarget(ExprPredicate):
 
     def test(self, time, negated=False, tol=None):
         diff_vec = self.target.belief.samples[:,:,time].detach().numpy() - self.target.value[:,0]
-        
+
         if negated:
-            return not np.sqrt(np.power(diff_vec, 2)).mean() <= 0.2
-        return np.sqrt(np.power(diff_vec, 2)).mean() <= 0.2
+            return not np.max(np.abs(diff_vec) >= 0.25, axis=0).mean() <= 0.1
+        
+        return np.max(np.abs(diff_vec) >= 0.25, axis=0).mean() <= 0.1
 
 ## a stub computing concentration in a given region
 class PathClear(ExprPredicate):
@@ -1920,8 +1921,8 @@ class PathClear(ExprPredicate):
             closest_dist[idx] = np.linalg.norm(obs_point - proj_point) if np.linalg.norm(proj_point - midpoint) <= np.linalg.norm(diff_line / 2) + 1.0 else 3.0
         
         if negated:
-            return not np.sum(closest_dist <= 2.0) <= 5
-        return np.sum(closest_dist <= 2.0) <= 5
+            return not np.logical_or(closest_dist <= 2.0) <= 5
+        return np.logical_or(closest_dist <= 2.0) <= 5
     
 ## a stub computing concentration in a given region
 class CertainObs(ExprPredicate):
@@ -1967,8 +1968,9 @@ class CertainObs(ExprPredicate):
         diff_vec = self.obstacle.belief.samples[:,:,time].detach().numpy() - self.obstacle.value[:,0]
         
         if negated:
-            return not np.sqrt(np.power(diff_vec, 2)).mean() <= 0.2
-        return np.sqrt(np.power(diff_vec, 2)).mean() <= 0.2
+            return not np.max(np.abs(diff_vec) >= 0.25, axis=0).mean() <= 0.1
+        
+        return np.max(np.abs(diff_vec) >= 0.25, axis=0).mean() <= 0.1
 
 
 class ConfirmedPosition(ExprPredicate):
