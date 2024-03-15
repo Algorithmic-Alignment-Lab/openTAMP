@@ -90,7 +90,7 @@ class GymEnvNav(Env):
         self.curr_obs = np.concatenate([self.curr_state[:3], obs_view, targ_view])
 
         # if too close to object, indicate that the current trajectory violated a safety constraint
-        if obstacle_rel_distance <= 1.5:
+        if obstacle_rel_distance <= 1.0:
             self.constraint_viol = True
 
         # self.curr_obs = np.concatenate((self.curr_obs)) ## add norm of destination as proxy for speed
