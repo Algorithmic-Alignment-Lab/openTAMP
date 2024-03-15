@@ -50,10 +50,16 @@ class OptimalPolicy:
     def act(self, X, O, t, noise=None):
         u = np.zeros(self.dU)
         for param, attr in self.action_inds:
-            if t < len(self.opt_traj) - 1:
-                u[self.action_inds[param, attr]] = (self.opt_traj[t + 1, self.action_inds[param, attr]] - self.opt_traj[t, self.action_inds[param, attr]]) * ACTION_SCALE
+            if attr == 'pose':
+                if t < len(self.opt_traj) - 1:
+                    u[self.action_inds[param, attr]] = (self.opt_traj[t + 1, self.action_inds[param, attr]] - self.opt_traj[t, self.action_inds[param, attr]]) * ACTION_SCALE
+                else:
+                    u[self.action_inds[param, attr]] = (self.opt_traj[-1, self.action_inds[param, attr]] - self.opt_traj[-2, self.action_inds[param, attr]]) * ACTION_SCALE
             else:
-                u[self.action_inds[param, attr]] = (self.opt_traj[-1, self.action_inds[param, attr]] - self.opt_traj[-2, self.action_inds[param, attr]]) * ACTION_SCALE
+                if t < len(self.opt_traj) - 1:
+                    u[self.action_inds[param, attr]] = (self.opt_traj[t + 1, self.action_inds[param, attr]]) * ACTION_SCALE
+                else:
+                    u[self.action_inds[param, attr]] = (self.opt_traj[-1, self.action_inds[param, attr]]) * ACTION_SCALE
         return u
 
 
