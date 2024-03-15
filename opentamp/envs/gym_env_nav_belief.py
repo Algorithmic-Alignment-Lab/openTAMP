@@ -9,19 +9,19 @@ from opentamp.policy_hooks.utils.policy_solver_utils import *
 
 class GymEnvNav(Env):    
     def __init__(self):
-        self.action_space = spaces.Box(low=0.0, high=1.0, shape=(2,), dtype='float32')
-        self.observation_space = spaces.Box(low=0.0, high=1.0, shape=(11,), dtype='float32')
+        self.action_space = spaces.Box(low=0.0, high=1.0, shape=(3,), dtype='float32')
+        self.observation_space = spaces.Box(low=0.0, high=1.0, shape=(7,), dtype='float32')
         self.curr_state = np.array([0.0]*9)
-        self.curr_obs = np.array([0.0]*11)
+        self.curr_obs = np.array([0.0]*7)
         self.obs_dist, self.target_dist = self.assemble_dist()
         self.belief_true = {}
         self.constraint_viol = False
 
     def assemble_dist(self):
-        weights = torch.tensor([0.6,0.4])
+        weights = torch.tensor([0.7,0.3])
         locs = torch.tensor([[4., 0.],
                              [4., 0.]])
-        scales = torch.tensor([1.0, 1.0])
+        scales = torch.tensor([1., 1.])
         cat_dist = distros.Categorical(probs=weights)
         stack_eye = torch.tile(torch.eye(2).unsqueeze(dim=0), dims=(2, 1, 1))
         stack_scale = torch.tile(scales.unsqueeze(dim=1).unsqueeze(dim=2), dims=(1, 2, 2))
@@ -29,10 +29,10 @@ class GymEnvNav(Env):
         batched_multivar = distros.MultivariateNormal(loc=locs, covariance_matrix=cov_tensor)
         obs_dist = distros.MixtureSameFamily(cat_dist, batched_multivar)
 
-        weights = torch.tensor([0.6,0.4])
+        weights = torch.tensor([0.7,0.3])
         locs = torch.tensor([[12., 0.],
                              [12., 0.]])
-        scales = torch.tensor([1.0, 1.0])
+        scales = torch.tensor([1., 1.])
         cat_dist = distros.Categorical(probs=weights)
         stack_eye = torch.tile(torch.eye(2).unsqueeze(dim=0), dims=(2, 1, 1))
         stack_scale = torch.tile(scales.unsqueeze(dim=1).unsqueeze(dim=2), dims=(1, 2, 2))
@@ -63,20 +63,34 @@ class GymEnvNav(Env):
         # rot_matrix = np.array([[np.cos(spot_angle),np.sin(spot_angle)],[-np.sin(spot_angle),np.cos(spot_angle)]])
         # obstacle_rel_pos_spot_frame = np.dot(rot_matrix, obstacle_rel_pos)
 
-        lidar_obs = np.array([8.0] * 8)
-        lidar_list = [(np.arange(-np.pi/4, np.pi/4, np.pi/16)[i], np.arange(-np.pi/4, np.pi/2, np.pi/16)[i+1]) for i in range(8)]
+        # lidar_obs = np.array([8.0] * 8)
+        # lidar_list = [(np.arange(-np.pi/4, np.pi/4, np.pi/16)[i], np.arange(-np.pi/4, np.pi/2, np.pi/16)[i+1]) for i in range(8)]
         
-        # formulas only valid on -pi/2 to pi/2
-        for detect_idx, theta_thresh in enumerate(lidar_list):
-            if theta_thresh[0] <= obstacle_rel_angle < theta_thresh[1] or \
-                theta_thresh[0] <= obstacle_rel_angle + 2*np.pi < theta_thresh[1] or \
-                theta_thresh[0] <= obstacle_rel_angle - 2*np.pi < theta_thresh[1]:
-                lidar_obs[detect_idx] = obstacle_rel_distance
+        # # formulas only valid on -pi/2 to pi/2
+        # for detect_idx, theta_thresh in enumerate(lidar_list):
+        #     if theta_thresh[0] <= obstacle_rel_angle < theta_thresh[1] or \
+        #         theta_thresh[0] <= obstacle_rel_angle + 2*np.pi < theta_thresh[1] or \
+        #         theta_thresh[0] <= obstacle_rel_angle - 2*np.pi < theta_thresh[1]:
+        #         lidar_obs[detect_idx] = obstacle_rel_distance
 
-        self.curr_obs = np.concatenate([goal_rel_pos, np.array([self.curr_state[2]]), lidar_obs])
+        cam_angle = (self.curr_state[2]+np.pi/2)%(2*np.pi) - np.pi/2
+        if np.abs(cam_angle - obstacle_angle) <= np.pi/4 and np.linalg.norm(obstacle_rel_pos) <= 6.0:
+            obs_view = obstacle_rel_pos
+        else:
+            obs_view = np.array([6.0, 6.0])
+
+        target_rel_pos = (self.curr_state[3:5] - self.curr_state[:2]) * 1 
+        target_abs_angle = np.arctan(target_rel_pos[1]/target_rel_pos[0]) if np.abs(target_rel_pos[0]) > 0.001 else (np.pi/2 if target_rel_pos[1]*target_rel_pos[0]>0 else -np.pi/2)
+        target_angle = target_abs_angle if target_rel_pos[0] >= 0  else (target_abs_angle + np.pi if -np.pi/2 <= target_abs_angle < 0 else target_abs_angle - np.pi)
+        if np.abs(cam_angle - target_angle) <= np.pi/4 and np.linalg.norm(target_rel_pos) <= 6.0:
+            targ_view = target_rel_pos
+        else:
+            targ_view = np.array([6.0, 6.0])
+
+        self.curr_obs = np.concatenate([self.curr_state[:3], obs_view, targ_view])
 
         # if too close to object, indicate that the current trajectory violated a safety constraint
-        if obstacle_rel_distance <= 0.5:
+        if obstacle_rel_distance <= 1.5:
             self.constraint_viol = True
 
         # self.curr_obs = np.concatenate((self.curr_obs)) ## add norm of destination as proxy for speed
@@ -102,7 +116,7 @@ class GymEnvNav(Env):
 
     def reset(self):
         self.curr_state = np.array([0.0]*9)
-        self.curr_obs = np.array([0.0]*11)
+        self.curr_obs = np.array([0.0]*7)
         self.constraint_viol = False
         return self.curr_obs
     
@@ -122,8 +136,8 @@ class GymEnvNav(Env):
         color_arr = np.ones((256, 256, 3), dtype=np.uint8) * 255
         
         ## initializing vectorized x_coord and y_coord arrays
-        x_coords = np.stack([np.tile(np.arange(-10, 10, 10./128.).reshape(-1, 1), (1, 256))]*3, axis=2)
-        y_coords = np.stack([x_coords[:,:,0].copy().T]*3, axis=2)
+        x_coords = np.stack([np.tile(np.arange(0, 15, 7.5/128.).reshape(-1, 1), (1, 256))]*3, axis=2)
+        y_coords = np.stack([np.tile(np.arange(-5, 5, 5./128.).reshape(1, -1), (256, 1))]*3, axis=2)
 
         red = np.stack((np.ones((256, 256), dtype=np.uint8)*255, np.zeros((256, 256), dtype=np.uint8), np.zeros((256, 256), dtype=np.uint8)), axis=2)
         green = np.stack((np.zeros((256, 256), dtype=np.uint8), np.ones((256, 256), dtype=np.uint8)*255, np.zeros((256, 256), np.uint8)), axis=2)
@@ -136,7 +150,7 @@ class GymEnvNav(Env):
                                             white)
 
         ## coloring in pointer
-        color_arr = np.where(is_in_ray_vectorized(self.curr_state[2], self.curr_state[:2], x_coords, y_coords, np.pi/4),
+        color_arr = np.where(is_in_ray_vectorized(self.curr_state[2], self.curr_state[:2], x_coords, y_coords, np.pi/6),
                                             green+red, 
                                             color_arr)
 
@@ -237,7 +251,7 @@ class GymEnvNavWrapper(GymEnvNav):
     def reset_to_state(self, state):
         self.curr_state[:3] = state[:3]
         self.curr_state[5:7] = state[5:7]
-        self.curr_obs = np.array([0.0]*11)
+        self.curr_obs = np.array([0.0]*7)
         self.constraint_viol = False
         return self.curr_obs
 
@@ -335,11 +349,11 @@ class GymEnvNavWrapper(GymEnvNav):
 
     # determine whether or not a given state satisfies a goal condition
     def assess_goal(self, condition, state, targets=None, cont=None):
-        item_loc = self.curr_state[3:5]
-        pose = self.curr_state[:2]
+        angle = self.curr_state[2]
+        goal_rel_pose = self.curr_state[3:5] - self.curr_state[:2]
         # if pointing directly at the object
 
-        if np.linalg.norm(item_loc - pose, ord=2) <= 1.0:
+        if np.abs(np.linalg.norm(goal_rel_pose)*np.cos(angle) - goal_rel_pose[0]) <= 0.1 and np.abs(np.linalg.norm(goal_rel_pose)*np.sin(angle) - goal_rel_pose[1]) <= 0.1 and np.linalg.norm(goal_rel_pose) <= 6.0:
             return 0.0
         else:
             return 1.0

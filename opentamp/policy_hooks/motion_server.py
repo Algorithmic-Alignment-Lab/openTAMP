@@ -152,7 +152,7 @@ class MotionServer(Server):
             plan = self.gen_plan(node)
 
 
-    def collect_trajectory(self, plan, node, cur_t):
+    def collect_trajectory(self, plan, node, cur_t):        
         x0 = None
         if cur_t < len(node.ref_traj): x0 = node.ref_traj[cur_t]
         if cur_t == 0: x0 = node.x0
@@ -288,7 +288,12 @@ class MotionServer(Server):
             fail_step, fail_pred, _ = node.get_failed_pred()
             if fail_pred:
                 ## replanning has now failed
-                # 
+                del_list = []
+                for t in node.conditioned_obs.keys():
+                    if t[0] >= fail_step:
+                        del_list.append(t)
+                for t in del_list:
+                    del node.conditioned_obs[t]
 
                 replan_success = False
 
@@ -310,8 +315,6 @@ class MotionServer(Server):
             self.plan_times = self.plan_times[-5:]
 
             self.agent.add_task_paths([path])  ## add the given history of tasks from this successful rollout
-
-        
 
         if replan_success and refine_success:
             print('Success')
@@ -351,8 +354,10 @@ class MotionServer(Server):
                    failed_preds, 
                    len(node.ref_traj), 
                    node.label,)
+            
+            plan.rollout_beliefs([0,2]) ## add a single sample, to avoid off-by-ones (latest will *not* have inference step done if stochastic)
 
-            # return ## NOTE: altered return logic here, so all failures hit expansion limit
+            return ## NOTE: altered return logic here, so all failures hit expansion limit
 
         print('Refine failed:', 
               plan.get_failed_preds((0, fail_step)), 
@@ -364,19 +369,15 @@ class MotionServer(Server):
               prev_t,)
 
         if not node.hl and not node.gen_child(): 
-            print('RETURNING EARLY!')
             return
 
 
-        #breakpoint()
         n_problem = node.get_problem(fail_step, fail_pred, fail_negated)
         abs_prob = self.agent.hl_solver.translate_problem(n_problem, goal=node.concr_prob.goal)
         prefix = node.curr_plan.prefix(fail_step)
 
-        # if failed, modify belief predicates
-        if len(plan.belief_params) > 0: 
-            if fail_pred:
-                for anum in range(len(plan.actions)):
+        if fail_pred is not None and len(plan.belief_params) > 0:
+            for anum in range(len(plan.actions)):
                     a = plan.actions[anum]
                     new_assumed_goal = {}
 
@@ -409,6 +410,7 @@ class MotionServer(Server):
                             ## disable the predicate by using no-eval notation
                             pred_dict['active_timesteps'] = (pred_dict['active_timesteps'][0], pred_dict['active_timesteps'][0]-1)
                             pred_dict['pred'].active_range = (pred_dict['pred'].active_range[0], pred_dict['pred'].active_range[0]-1)
+
 
         hlnode = HLSearchNode(abs_prob,
                              node.domain,

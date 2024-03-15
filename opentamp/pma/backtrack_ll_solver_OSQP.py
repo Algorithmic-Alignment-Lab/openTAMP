@@ -246,10 +246,11 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
                 force_init=True,
                 init_traj=init_traj
             )
+
             if not success:
                 ## if planning fails we're done
                 return False
-            
+
             ## refine belief if belief-space plan
             if len(plan.belief_params) > 0:
                 if plan.actions[anum].non_deterministic:
