@@ -353,7 +353,7 @@ class GymEnvNavWrapper(GymEnvNav):
         goal_rel_pose = self.curr_state[3:5] - self.curr_state[:2]
         # if pointing directly at the object
 
-        if np.abs(np.linalg.norm(goal_rel_pose)*np.cos(angle) - goal_rel_pose[0]) <= 0.1 and np.abs(np.linalg.norm(goal_rel_pose)*np.sin(angle) - goal_rel_pose[1]) <= 0.1 and np.linalg.norm(goal_rel_pose) <= 6.0:
+        if np.abs(np.linalg.norm(goal_rel_pose)*np.cos(angle) - goal_rel_pose[0]) <= 0.5 and np.abs(np.linalg.norm(goal_rel_pose)*np.sin(angle) - goal_rel_pose[1]) <= 0.5 and np.linalg.norm(goal_rel_pose) <= 6.0:
             return 0.0
         else:
             return 1.0

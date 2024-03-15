@@ -19,6 +19,7 @@ from opentamp.policy_hooks.sample_list import SampleList
 from opentamp.policy_hooks.utils.policy_solver_utils import *
 from opentamp.policy_hooks.server import Server
 from opentamp.policy_hooks.search_node import *
+from opentamp.errors_exceptions import PredicateException
 
 import torch
 import matplotlib.pyplot as plt
@@ -371,8 +372,10 @@ class MotionServer(Server):
         if not node.hl and not node.gen_child(): 
             return
 
-
-        n_problem = node.get_problem(fail_step, fail_pred, fail_negated)
+        try:
+            n_problem = node.get_problem(fail_step, fail_pred, fail_negated)
+        except PredicateException:
+            return ## rare exception on replanner -- 
         abs_prob = self.agent.hl_solver.translate_problem(n_problem, goal=node.concr_prob.goal)
         prefix = node.curr_plan.prefix(fail_step)
 
