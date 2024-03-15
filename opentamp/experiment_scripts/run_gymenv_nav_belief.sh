@@ -12,7 +12,7 @@ python3 -W ignore policy_hooks/run_training.py -c new_specs.nav_domain_belief.ne
                                                 -lr_schedule fixed \
                                                 -imwidth 256 -imheight 256 \
                                                 -hist_len 2 -prim_first_wt 20 -lr 0.0001 \
-                                                -hllr 0.001 -contlr 0.0001 -lldec 0.0001 -hldec 0.0001 \
+                                                -hllr 0.0001 -contlr 0.0001 -lldec 0.0001 -hldec 0.0001 \
                                                 --permute_hl 1 \
                                                 -expl_wt 10 -expl_eta 4 \
                                                 -col_coeff 0.0 \
