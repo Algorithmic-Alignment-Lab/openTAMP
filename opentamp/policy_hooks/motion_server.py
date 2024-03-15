@@ -375,7 +375,7 @@ class MotionServer(Server):
         try:
             n_problem = node.get_problem(fail_step, fail_pred, fail_negated)
         except PredicateException:
-            return ## rare exception on replanner -- 
+            return ## rare exception on replanner? 
         abs_prob = self.agent.hl_solver.translate_problem(n_problem, goal=node.concr_prob.goal)
         prefix = node.curr_plan.prefix(fail_step)
 
