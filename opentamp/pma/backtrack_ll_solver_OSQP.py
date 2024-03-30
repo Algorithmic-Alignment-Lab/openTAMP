@@ -22,7 +22,7 @@ BASE_MOVE_COEFF = 1.0
 TRAJOPT_COEFF = 5e1
 TRANSFER_COEFF = 1e-1
 FIXED_COEFF = 1e3
-INIT_TRAJ_COEFF = 1e-1
+INIT_TRAJ_COEFF = 1e-2
 RS_COEFF = 1e2  # 1e2
 COL_COEFF = 0
 SAMPLE_SIZE = 5
@@ -246,10 +246,11 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
                 force_init=True,
                 init_traj=init_traj
             )
+
             if not success:
                 ## if planning fails we're done
                 return False
-            
+
             ## refine belief if belief-space plan
             if len(plan.belief_params) > 0:
                 if plan.actions[anum].non_deterministic:

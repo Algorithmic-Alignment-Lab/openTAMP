@@ -45,6 +45,7 @@ class RnnGymAgent(GymAgent):
         sample.set(utils.PAST_TASK_ENUM, np.array([self.past_task]), t=t)
         sample.set(utils.PAST_TASK_ARR_ENUM, self.past_task_arr, t)
         sample.set(utils.PAST_MJCOBS_ARR_ENUM, self.past_obs_arr, t)
+        sample.set(utils.TIME_ENUM, np.array([t]), t)
 
     def store_hist_info(self, hist_info):
         self.num_tasks = hist_info[0] 

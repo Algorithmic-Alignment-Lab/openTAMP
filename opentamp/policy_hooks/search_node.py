@@ -126,41 +126,48 @@ class LLSearchNode(SearchNode):
             for p in preds_all:
                 if a.active_timesteps[0]<=p['active_timesteps'][0] and p['active_timesteps'][1]<=a.active_timesteps[1]:
                     preds.append(p)
-            # for p in all_preds:
-            #     preds.append({'pred': p, 'active_timesteps':(0,0), 'hl_info':'hl_state', 'negated':False})
+            for p in all_preds:
+                preds.append({'pred': p, 'active_timesteps':(0,0), 'hl_info':'hl_state', 'negated':False})
+
+
+            # must sort in increasing order of timesteps for negation
+            preds.sort(key=lambda x: x['active_timesteps'][0])
+            
             for p in preds:
                 # if the given predicate is in the new_preds buffer already
                 # if p['pred'].get_rep() in reps:
                 #     ## if already contained, but is contained in a negated way, remove it
                 
                 # FILTER OUT NEGATION TODO TEST
-
+                st, et = p['active_timesteps']
                 check_ts = ts - p['pred'].active_range[1]
 
-                if check_ts >= 0: 
-                    if p['negated'] and p['pred'].hl_test(check_ts, tol=1e-3, negated=True) and \
-                            p['pred'].get_type() in [q['pred'].get_type() for q in new_preds if not q['negated']]:
-                            for q in new_preds:
-                                if q['pred'].get_type() == p['pred'].get_type():
-                                    new_preds.remove(q)
+                if check_ts >= 0:
+                    if p['pred'].get_type() in [q['pred'].get_type() for q in new_preds]:
+                        if p['negated'] and p['pred'].hl_test(check_ts, tol=1e-3, negated=True) and \
+                                p['pred'].get_type() in [q['pred'].get_type() for q in new_preds if not q['negated']]:
+                                for q in new_preds:
+                                    if q['pred'].get_type() == p['pred'].get_type():
+                                        new_preds.remove(q)
 
-                    if not p['negated'] and p['pred'].hl_test(check_ts, tol=1e-3, negated=False) and \
-                            p['pred'].get_type() in [q['pred'].get_type() for q in new_preds if q['negated']]:
-                            for q in new_preds:
-                                if q['pred'].get_type() == p['pred'].get_type():
-                                    new_preds.remove(q)
+                        elif not p['negated'] and p['pred'].hl_test(check_ts, tol=1e-3, negated=False) and \
+                                p['pred'].get_type() in [q['pred'].get_type() for q in new_preds if q['negated']]:
+                                for q in new_preds:
+                                    if q['pred'].get_type() == p['pred'].get_type():
+                                        new_preds.remove(q)
+                        else:
+                            continue  ## then was a repeat, don't consider this predicate
                 #                     # reps.remove(p['pred'].get_rep())
                 #     else:
                 #         continue
                 # add given pred to reps
                 # reps.append(p['pred'].get_rep())
-                st, et = p['active_timesteps']
                 # include if hl_include without exception
-                if p['pred'].hl_include: 
-                    new_preds.append(p['pred'])
-                    continue
-                if p['pred'].hl_ignore:
-                    continue
+                # if p['pred'].hl_include: 
+                #     new_preds.append(p['pred'])
+                #     continue
+                # if p['pred'].hl_ignore:
+                #     continue
                 # Only check before the failed ts, previous actions fully checked while current only up to priority
                 # if predicate occurs in the applicable range
                 if st <= ts and check_ts >= 0 and et >= st:
@@ -180,7 +187,7 @@ class LLSearchNode(SearchNode):
                                     aval = getattr(plan.params[param.name], attr)[:,check_ts]
                                 old_vals[param, attr] = getattr(param, attr)[:,0].copy()
                                 getattr(param, attr)[:,0] = aval
-                        if p['negated'] and not p['pred'].hl_test(0, tol=1e-3, negated=True):
+                        if p['negated'] and p['pred'].hl_test(0, tol=1e-3, negated=True):
                             new_preds.append(p)
                         elif not p['negated'] and p['pred'].hl_test(0, tol=1e-3):
                             new_preds.append(p)
@@ -189,10 +196,10 @@ class LLSearchNode(SearchNode):
                             getattr(param, attr)[:,0] = old_vals[param, attr]
                     elif not p['negated'] and p['pred'].hl_test(check_ts, tol=1e-3):
                         new_preds.append(p)
-                    elif p['negated'] and not p['pred'].hl_test(check_ts, tol=1e-3, negated=True):
+                    elif p['negated'] and p['pred'].hl_test(check_ts, tol=1e-3, negated=True):
                         new_preds.append(p)
 
-        return [new_pred['pred'] for new_pred in new_preds]
+        return [new_pred['pred'] for new_pred in new_preds if not new_pred['negated']]
 
 
     def get_problem(self, i, failed_pred, failed_negated, suggester=None):
@@ -216,9 +223,8 @@ class LLSearchNode(SearchNode):
         preds = []
         if failed_negated:
             preds = [failed_pred]
-        state_preds = self.parse_state(self.curr_plan, preds, state_timestep, [])
-        #breakpoint()
-        state_preds.extend(self.curr_plan.hl_preds)
+        state_preds = self.parse_state(self.curr_plan, preds, state_timestep, init_preds)
+        state_preds.extend(init_preds)
         new_state = State(state_name, state_params, state_preds, state_timestep, [])
         goal_preds = self.concr_prob.goal_preds.copy()
         new_problem = Problem(new_state, goal_preds, self.concr_prob.env, False, start_action=anum)

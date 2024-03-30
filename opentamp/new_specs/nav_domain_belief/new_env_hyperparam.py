@@ -49,8 +49,7 @@ def sample_fill_method(path, plan, agent, x0):
     # Remove observation actions for easier imitation          
     active_anums = []
     for a_num in range(len(plan.actions)):
-        if plan.actions[a_num].name != 'infer_position':
-            active_anums.append(a_num)
+        active_anums.append(a_num)
 
     ## populate the sample with the entire plan
     # a_num = 0
@@ -78,7 +77,7 @@ def sample_fill_method(path, plan, agent, x0):
         targ_ang *= ACTION_SCALE
                 
         mjc_obs_array = []
-        mjc_obs_array = torch.tensor([[0.]*11] + [list(s.get(MJC_SENSOR_ENUM)[-1,:]) for s in path])
+        mjc_obs_array = torch.tensor([[0.]*7] + [list(s.get(MJC_SENSOR_ENUM)[-1,:]) for s in path])
         mjc_obs_array = torch.flatten(mjc_obs_array.T)
         mjc_obs_array = [x.item() for x in list(mjc_obs_array)]
         
@@ -104,7 +103,7 @@ def sample_fill_method(path, plan, agent, x0):
 
 def rollout_fill_method(path, agent):
     mjc_obs_array = []
-    mjc_obs_array = torch.tensor([[0.]*11] + [list(s.get(MJC_SENSOR_ENUM)[-1,:]) for s in path])
+    mjc_obs_array = torch.tensor([[0.]*7] + [list(s.get(MJC_SENSOR_ENUM)[-1,:]) for s in path])
     mjc_obs_array = torch.flatten(mjc_obs_array.T)
     mjc_obs_array = [x.item() for x in list(mjc_obs_array)]
     
@@ -138,7 +137,7 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
         'base_weight_dir': 'namo_',
         'max_sample_queue': 5e2,
         'max_opt_sample_queue': 10,
-        'task_map_file': "policy_hooks/namo/spotnav_task_mapping",
+        'task_map_file': "policy_hooks/namo/nav_belief_task_mapping",
         'prob': prob,
         'get_vector': prob.get_vector,
         'robot_name': 'pr2',

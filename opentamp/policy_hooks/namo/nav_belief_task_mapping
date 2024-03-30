@@ -1,0 +1,26 @@
+{
+    'move_avoid': [
+        '0: MOVE PR2 {0}',
+    ],
+    'point_at_obs': [
+        '0: MOVE PR2 {0}',
+    ],
+    'observe_obs': [
+        '0: MOVE PR2 {0}',
+    ],
+    'observe_targ': [
+        '0: MOVE PR2 {0}',
+    ],
+    'confirm_targ': [
+        '0: MOVE PR2 {0}',
+    ]
+
+};
+
+{
+    'move_avoid': 20,
+    'point_at_obs': 20,
+    'observe_obs': 20,
+    'observe_targ': 20,
+    'confirm_targ': 20
+}

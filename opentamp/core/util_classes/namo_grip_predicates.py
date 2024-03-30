@@ -1120,7 +1120,7 @@ class RobotNearTarget(At):
 
         A = np.c_[np.r_[np.eye(2), -np.eye(2)], np.r_[-np.eye(2), np.eye(2)]]
         b = np.zeros((4, 1))
-        val = 4 * np.ones((4, 1))
+        val = 1 * np.ones((4, 1))
         aff_e = AffExpr(A, b)
         e = LEqExpr(aff_e, val)
         super(At, self).__init__(name, e, attr_inds, params, expected_param_types)
@@ -1859,10 +1859,11 @@ class CertainTarget(ExprPredicate):
 
     def test(self, time, negated=False, tol=None):
         diff_vec = self.target.belief.samples[:,:,time].detach().numpy() - self.target.value[:,0]
-        
+
         if negated:
-            return not np.sqrt(np.power(diff_vec, 2)).mean() <= 0.2
-        return np.sqrt(np.power(diff_vec, 2)).mean() <= 0.2
+            return not np.max(np.abs(diff_vec) >= 0.25, axis=0).mean() <= 0.1
+        
+        return np.max(np.abs(diff_vec) >= 0.25, axis=0).mean() <= 0.1
 
 ## a stub computing concentration in a given region
 class PathClear(ExprPredicate):
@@ -1920,8 +1921,8 @@ class PathClear(ExprPredicate):
             closest_dist[idx] = np.linalg.norm(obs_point - proj_point) if np.linalg.norm(proj_point - midpoint) <= np.linalg.norm(diff_line / 2) + 1.0 else 3.0
         
         if negated:
-            return not np.sum(closest_dist <= 2.0) <= 5
-        return np.sum(closest_dist <= 2.0) <= 5
+            return not np.logical_or(closest_dist <= 2.0) <= 5
+        return np.logical_or(closest_dist <= 2.0) <= 5
     
 ## a stub computing concentration in a given region
 class CertainObs(ExprPredicate):
@@ -1967,8 +1968,9 @@ class CertainObs(ExprPredicate):
         diff_vec = self.obstacle.belief.samples[:,:,time].detach().numpy() - self.obstacle.value[:,0]
         
         if negated:
-            return not np.sqrt(np.power(diff_vec, 2)).mean() <= 0.2
-        return np.sqrt(np.power(diff_vec, 2)).mean() <= 0.2
+            return not np.max(np.abs(diff_vec) >= 0.25, axis=0).mean() <= 0.1
+        
+        return np.max(np.abs(diff_vec) >= 0.25, axis=0).mean() <= 0.1
 
 
 class ConfirmedPosition(ExprPredicate):
@@ -4293,7 +4295,7 @@ class AvoidObs(ExprPredicate):
             ]
         )
         col_expr = Expr(self.f, grad=self.grad_f)
-        val = -np.ones((1, 1)) * 2 #4
+        val = -np.ones((1, 1)) * 4
         # val = np.zeros((1, 1))
         e = LEqExpr(col_expr, val)
         super(AvoidObs, self).__init__(name, e, attr_inds, params, expected_param_types, priority=-1)
