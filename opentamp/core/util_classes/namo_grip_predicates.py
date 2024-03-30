@@ -921,11 +921,11 @@ class PointingAtTarget(ExprPredicate):
         attr_inds = OrderedDict(
             [
                 (self.r, [
-                    ("pose", np.array([0, 1], dtype=np.int)),
-                    ("theta", np.array([0], dtype=np.int))
+                    ("pose", np.array([0, 1], dtype=np.int_)),
+                    ("theta", np.array([0], dtype=np.int_))
                 ]),
                 (self.obs, [
-                    ("value", np.array([0, 1], dtype=np.int)),
+                    ("value", np.array([0, 1], dtype=np.int_)),
                 ])
             ]
         )
@@ -1113,8 +1113,8 @@ class RobotNearTarget(At):
         self.r, self.t = params
         attr_inds = OrderedDict(
             [
-                (self.r, [("pose", np.array([0, 1], dtype=np.int))]),
-                (self.t, [("value", np.array([0, 1], dtype=np.int))]),
+                (self.r, [("pose", np.array([0, 1], dtype=np.int_))]),
+                (self.t, [("value", np.array([0, 1], dtype=np.int_))]),
             ]
         )
 
@@ -1830,7 +1830,7 @@ class CertainTarget(ExprPredicate):
         # self._env = env
         (self.target,) = params
         attr_inds = OrderedDict(
-            [(self.target, [("value", np.array([0, 1], dtype=np.int))])]
+            [(self.target, [("value", np.array([0, 1], dtype=np.int_))])]
         )
         # self._param_to_body = {
         #     self.rp: self.lazy_spawn_or_body(self.rp, self.rp.name, self.rp.geom),
@@ -1877,9 +1877,9 @@ class PathClear(ExprPredicate):
         # self._env = env
         (self.robot, self.target, self.obstacle,) = params
         attr_inds = OrderedDict(
-            [(self.robot, [("pose", np.array([0, 1], dtype=np.int))]),
-             (self.target, [("value", np.array([0, 1], dtype=np.int))]),
-             (self.obstacle, [("value", np.array([0, 1], dtype=np.int))])]
+            [(self.robot, [("pose", np.array([0, 1], dtype=np.int_))]),
+             (self.target, [("value", np.array([0, 1], dtype=np.int_))]),
+             (self.obstacle, [("value", np.array([0, 1], dtype=np.int_))])]
         )
         # self._param_to_body = {
         #     self.rp: self.lazy_spawn_or_body(self.rp, self.rp.name, self.rp.geom),
@@ -2024,7 +2024,7 @@ class ConfirmedTarget(ExprPredicate):
         # self._env = env
         (self.target,) = params
         attr_inds = OrderedDict(
-            [(self.target, [("value", np.array([0, 1], dtype=np.int))])]
+            [(self.target, [("value", np.array([0, 1], dtype=np.int_))])]
         )
         # self._param_to_body = {
         #     self.rp: self.lazy_spawn_or_body(self.rp, self.rp.name, self.rp.geom),
@@ -2065,7 +2065,7 @@ class PerformedInitObs(ExprPredicate):
         # self._env = env
         (self.robot,) = params
         attr_inds = OrderedDict(
-            [(self.robot, [("pose", np.array([0, 1], dtype=np.int))])]
+            [(self.robot, [("pose", np.array([0, 1], dtype=np.int_))])]
         )
         # self._param_to_body = {
         #     self.rp: self.lazy_spawn_or_body(self.rp, self.rp.name, self.rp.geom),
@@ -2111,7 +2111,7 @@ class NotPerformedInitObs(ExprPredicate):
         # self._env = env
         (self.robot,) = params
         attr_inds = OrderedDict(
-            [(self.robot, [("pose", np.array([0, 1], dtype=np.int))])]
+            [(self.robot, [("pose", np.array([0, 1], dtype=np.int_))])]
         )
         # self._param_to_body = {
         #     self.rp: self.lazy_spawn_or_body(self.rp, self.rp.name, self.rp.geom),
@@ -2157,7 +2157,7 @@ class CompletedMovement(ExprPredicate):
         # self._env = env
         (self.robot,) = params
         attr_inds = OrderedDict(
-            [(self.robot, [("pose", np.array([0, 1], dtype=np.int))])]
+            [(self.robot, [("pose", np.array([0, 1], dtype=np.int_))])]
         )
         # self._param_to_body = {
         #     self.rp: self.lazy_spawn_or_body(self.rp, self.rp.name, self.rp.geom),
@@ -4391,7 +4391,7 @@ class IsStationary(ExprPredicate):
        self.r, = params
        ## constraints  |x_t - x_{t+1}| < dmove
        ## ==> x_t - x_{t+1} < dmove, -x_t + x_{t+a} < dmove
-       attr_inds = OrderedDict([(self.r, [("pose", np.array([0, 1], dtype=np.int))])])
+       attr_inds = OrderedDict([(self.r, [("pose", np.array([0, 1], dtype=np.int_))])])
        A = np.array([[1, 0, -1, 0],
                      [0, 1, 0, -1],
                      [-1, 0, 1, 0],
