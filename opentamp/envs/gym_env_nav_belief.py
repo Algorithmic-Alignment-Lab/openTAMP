@@ -228,7 +228,7 @@ class GymEnvNav(Env):
     ## get random sample to initialize uncertain problem
     def sample_belief_true(self):
         return {'obs1': self.obs_dist.sample(),
-                'target1': self.target_dist.sample()}
+                'target1': [12.0, 0.0]}
         # return {'obs1': torch.tensor([0.0, 0.0])}
         # rand = random.random() * 8
         # if rand < 1.0:
