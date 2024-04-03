@@ -466,7 +466,7 @@ class FFSolver(HLSolver):
                                                                         params=p_objs,
                                                                         expected_param_types=domain.pred_schemas[p_name].expected_params,
                                                                         env=env, debug=debug)
-                    preds.append({'negated': False, 'pred': init_pred, 'hl_info': 'hl_state', 'active_timesteps': (0,0)})
+                    preds.append({'negated': False, 'pred': init_pred, 'hl_info': 'hl_state', 'active_timesteps': (0,0), 'store_active_timesteps': (0,0)})
                 except TypeError as e:
                     print(("type error for {}".format(pred)))
                     raise e
@@ -487,7 +487,7 @@ class FFSolver(HLSolver):
                                                                           expected_param_types=domain.pred_schemas[p_name].expected_params,
                                                                           env=env, debug=debug)
                     ts = (curr_h, curr_h + a_schema.horizon - 1)
-                    preds.append({'negated': False, 'pred': invariant_pred, 'hl_info': 'invariant', 'active_timesteps': ts})
+                    preds.append({'negated': False, 'pred': invariant_pred, 'hl_info': 'invariant', 'active_timesteps': ts, 'store_active_timesteps': ts})
                 except TypeError as e:
                     print(("type error for {}".format(pred)))
                     raise e
@@ -517,7 +517,7 @@ class FFSolver(HLSolver):
                         # breakpoint()
                         pred = pred_schema.pred_class("placeholder", [params[v] for v in val], pred_schema.expected_params, env=env)
                     ts = (p_d["active_timesteps"][0] + curr_h, p_d["active_timesteps"][1] + curr_h)
-                    preds.append({"negated": p_d["negated"], "hl_info": p_d["hl_info"], "active_timesteps": ts, "pred": pred})
+                    preds.append({"negated": p_d["negated"], "hl_info": p_d["hl_info"], "active_timesteps": ts, 'store_active_timesteps': ts, "pred": pred})
             
             # updating hl_state
             hl_state.update(preds)

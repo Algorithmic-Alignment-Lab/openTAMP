@@ -46,7 +46,7 @@ class Plan(object):
         self.sampling_trace = []
         self.hl_preds = []
         self.start = 0
-        self.num_belief_samples = 100
+        self.num_belief_samples = 1000
         self.num_warmup_steps = 50
         self.mc_lock = None
         if determine_free:
@@ -62,7 +62,7 @@ class Plan(object):
                 belief_inds[param_key] = (curr_idx, curr_idx + param.belief.size)
                 curr_idx += param.belief.size
         return belief_params, belief_inds
-
+    
     @staticmethod
     def create_plan_for_preds(preds, env):
         ## preds is a list of pred, negated
@@ -454,6 +454,12 @@ class Plan(object):
     def set_mc_lock(self, lock):
         global mc_lock
         mc_lock = lock
+    
+    # wrapper for particle filter called in 
+    def particle_filter(self, active_ts, provided_goal=None, past_obs={}):
+        obs = self.observation_model.forward_model(copy.deepcopy(self.params), active_ts, provided_state=provided_goal)
+        particles = self.observation_model.filter_samples(copy.deepcopy(self.params), active_ts, obs) ## TODO method that generates list of likely particles
+        return particles, obs
 
     ## based off of hmm example from pyro docs
     def sample_mcmc_run(self, active_ts, provided_goal=None, past_obs={}):                
@@ -469,6 +475,7 @@ class Plan(object):
         print('Provided goal: ', provided_goal)
         print('New observation: ', obs)
         print('Past observation: ', past_obs)
+        print('Active timesteps: ', active_ts)
 
         # if provided_obs:
         #     ## get the assumed observation in planning (typically in replans)  
@@ -537,7 +544,8 @@ class Plan(object):
     def filter_beliefs(self, active_ts, provided_goal=None, past_obs={}):
 
         # max-likelihood feeds back on object here
-        global_samples, plan_obs = self.sample_mcmc_run(active_ts, provided_goal=provided_goal, past_obs=past_obs)
+        global_samples, plan_obs = self.particle_filter(active_ts, provided_goal=provided_goal, past_obs=past_obs) ## forward model + true observations
+        # global_samples, plan_obs = self.sample_mcmc_run(active_ts, provided_goal=provided_goal, past_obs=past_obs)
 
         for key in global_samples:
             if len(global_samples[key].shape) == 1:

@@ -76,7 +76,7 @@ class MotionServer(Server):
         
         plan = node.curr_plan
 
-        ##b elief-space planning hook
+        ## belief-space planning hook
         if 'observation_model' in self._hyperparams.keys():
             plan.set_observation_model(node.observation_model)
 
@@ -144,7 +144,7 @@ class MotionServer(Server):
             if (refine_success and replan_success) and len(path) and path[-1].success: continue
 
             # parse the failed predicates for the plan, and push the change to task queue
-            if not (refine_success and replan_success): self.parse_failed(plan, node, prev_t)
+            if not (refine_success and replan_success): self.parse_failed(plan, node, prev_t, refine_success and (not replan_success))
             while len(plan.get_failed_preds((cur_t, cur_t))) and cur_t > 0:
                 cur_t -= 1
 
@@ -163,7 +163,7 @@ class MotionServer(Server):
         # self.agent.store_hist_info(node.info)
         
         init_t = time.time()
-                
+
         ## preprocessing for beliefs vector (used for certainty constraints, e.g. )
         if plan.start == 0 and len(plan.belief_params) > 0:
             print('Planning on new problem')
@@ -178,6 +178,7 @@ class MotionServer(Server):
             ## get a true belief state, to plan against in the problem (if not given by a rollout)
             if not node.belief_true:
                 node.belief_true = self.agent.gym_env.sample_belief_true()
+                print('Node Belief True: ', node.belief_true)
 
             for param in plan.belief_params:
                 if self._hyperparams['assume_true']:
@@ -192,9 +193,10 @@ class MotionServer(Server):
                     param.value[:, 0] = planned_obs[param.name].detach().numpy()
                 else:
                     param.pose[:, 0] = planned_obs[param.name].detach().numpy()
+
+            self.config['skolem_populate_fcn'](plan)
             
             plan.observation_model.set_active_planned_observations(planned_obs)
-
             
             plan.set_mc_lock(self.config['mc_lock'])
         
@@ -212,7 +214,7 @@ class MotionServer(Server):
             for pred_dict in a.preds:
                 ## disable the predicate by using no-eval notation
                 pred_dict['active_timesteps'] = (pred_dict['active_timesteps'][0], pred_dict['active_timesteps'][0]-1)
-                pred_dict['pred'].active_range = (pred_dict['pred'].active_range[0], pred_dict['pred'].active_range[0]-1)
+                # pred_dict['pred'].active_range = (pred_dict['pred'].active_range[0], pred_dict['pred'].active_range[0]-1)
     
 
         ## reset beliefs and observations to beginning of refine_start
@@ -247,13 +249,20 @@ class MotionServer(Server):
         replan_success = True
         if refine_success and len(plan.belief_params) > 0:
             print('Refining from: ', node.replan_start)
-            
-            ## disable deterministic predicates for refined plan
+
+            # enable deterministic predicates for plan
             # for a in plan.actions:
-            #     for pred_dict in a.preds:
-            #         if not pred_dict['pred'].optimistic:
-            #             pred_dict['active_timesteps'] = (pred_dict['active_timesteps'][0], pred_dict['active_timesteps'][0]-1)
-            #             pred_dict['pred'].active_range = (pred_dict['pred'].active_range[0], pred_dict['pred'].active_range[0]-1)
+            #     if a.non_deterministic:
+            #         for pred_dict in a.preds:
+            #             # reactivate the predicate
+            #             pred_dict['active_timesteps'] = pred_dict['store_active_timesteps']
+                        # pred_dict['pred'].active_range = (pred_dict['active_timesteps'][0] - a.active_timesteps[0], pred_dict['active_timesteps'][1] - a.active_timesteps[0])
+            
+            # activate eval of optimistic predicates
+            for a_idx in range(node.replan_start, len(plan.actions)):
+                for pred_dict in plan.actions[a_idx].preds:
+                    if pred_dict['pred'].optimistic:
+                        pred_dict['active_timesteps'] = (pred_dict['active_timesteps'][0], pred_dict['active_timesteps'][0])
 
 
             ## reset beliefs and observations to beginning of refine_start
@@ -295,7 +304,7 @@ class MotionServer(Server):
                         del_list.append(t)
                 for t in del_list:
                     del node.conditioned_obs[t]
-
+                
                 replan_success = False
 
         ## path of samples in imitation
@@ -335,7 +344,7 @@ class MotionServer(Server):
         return path, refine_success, replan_success
 
 
-    def parse_failed(self, plan, node, prev_t):
+    def parse_failed(self, plan, node, prev_t, replan_fail):        
         try:
             fail_step, fail_pred, fail_negated = node.get_failed_pred(st=prev_t)
         except:
@@ -348,6 +357,13 @@ class MotionServer(Server):
         # NOTE: refines also done if linear constraints fail, owing to replanning
         failed_preds = plan.get_failed_preds((prev_t, fail_step), priority=-1)
         
+        # deactivate eval of optimistic predicates if we had a replan failure
+        if replan_fail:
+            for a_idx in range(node.replan_start, len(plan.actions)):
+                for pred_dict in plan.actions[a_idx].preds:
+                    if pred_dict['pred'].optimistic:
+                        pred_dict['active_timesteps'] = (pred_dict['active_timesteps'][0], pred_dict['active_timesteps'][0]-1)
+
         if len(failed_preds):
             print('Refine failed with linear constr. viol.', 
                    node._trace, 
@@ -375,7 +391,7 @@ class MotionServer(Server):
         try:
             n_problem = node.get_problem(fail_step, fail_pred, fail_negated)
         except PredicateException:
-            return ## rare exception on replanner? 
+            return ## TODO debug
         abs_prob = self.agent.hl_solver.translate_problem(n_problem, goal=node.concr_prob.goal)
         prefix = node.curr_plan.prefix(fail_step)
 
@@ -402,18 +418,21 @@ class MotionServer(Server):
                                 param.pose[:, a.active_timesteps[0]] = new_assumed_goal[param.name].detach().numpy()
 
                             new_assumed_goal[param.name] = torch.tensor(new_assumed_goal[param.name])
-                        node.replan_start = anum
+                        
+                        if replan_fail: ## update the counter only when you get failures from a replan
+                            node.replan_start = anum
+
+                        self.config['skolem_populate_fcn'](plan)
 
                         ## populate with new goal
                         plan.observation_model.set_active_planned_observations(new_assumed_goal)
 
                     for pred_dict in a.preds:
-                        ## disable optimistic actions for planning (ones that can change with random effects)
+                        ## disable all actions strictly prior, and optimistic actions possibly including current one, in replanning
                         if (pred_dict['active_timesteps'][0] < fail_step and fail_step <= pred_dict['active_timesteps'][1]) and pred_dict['pred'].optimistic:
                             ## disable the predicate by using no-eval notation
                             pred_dict['active_timesteps'] = (pred_dict['active_timesteps'][0], pred_dict['active_timesteps'][0]-1)
-                            pred_dict['pred'].active_range = (pred_dict['pred'].active_range[0], pred_dict['pred'].active_range[0]-1)
-
+                            # pred_dict['pred'].active_range = (pred_dict['pred'].active_range[0], pred_dict['pred'].active_range[0]-1)
 
         hlnode = HLSearchNode(abs_prob,
                              node.domain,

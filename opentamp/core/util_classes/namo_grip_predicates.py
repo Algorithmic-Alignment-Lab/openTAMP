@@ -1971,6 +1971,79 @@ class CertainObs(ExprPredicate):
             return not np.max(np.abs(diff_vec) >= 0.25, axis=0).mean() <= 0.1
         
         return np.max(np.abs(diff_vec) >= 0.25, axis=0).mean() <= 0.1
+    
+
+class CertainObsOrClearPath(ExprPredicate):
+    def __init__(self, name, params, expected_param_types, env=None, sess=None, debug=False):
+        # NOTE: Below line is for debugging purposes only, should be commented out
+        # and line below should be commented in
+        # self._debug = True
+        # self._debug = debug
+
+        # if self._debug:
+        #     self._env.SetViewer("qtcoin")
+        # self._env = env
+        (self.obstacle, self.target) = params
+        attr_inds = OrderedDict(
+            [(self.obstacle, [("value", np.array([0, 1], dtype=np.int_))]),
+             (self.target, [("value", np.array([0, 1], dtype=np.int_))])]
+        )
+        # self._param_to_body = {
+        #     self.rp: self.lazy_spawn_or_body(self.rp, self.rp.name, self.rp.geom),
+        #     self.targ: self.lazy_spawn_or_body(
+        #         self.targ, self.targ.name, self.targ.geom
+        #     ),
+        # }
+
+        # INCONTACT_COEFF = 1e1
+        # unused constraints, pass some BS in
+        A = np.zeros((1, 2))
+        b = np.zeros((1,1))
+        dummy_expr = AffExpr(A, b)
+        val = np.zeros((1, 1)) # output of fcn should be zero
+        # val = np.zeros((1, 1))
+        e = EqExpr(dummy_expr, val)
+        super(CertainObsOrClearPath, self).__init__(
+            name,
+            e,
+            attr_inds,
+            params,
+            expected_param_types,
+            debug=debug,
+            priority=1,
+            optimistic=True
+        )
+
+    def test(self, time, negated=False, tol=None):
+        diff_vec_obs = self.obstacle.belief.samples[:,:,time].detach().numpy() - self.obstacle.value[:,0]
+        
+        diff_vec_targ = self.target.value[:,0]
+
+        is_certain = np.max(np.abs(diff_vec_obs) >= 0.3, axis=0).mean() <= 0.05
+
+        dists = np.zeros((self.obstacle.belief.samples.shape[0]))
+
+        for samp_idx in range(self.obstacle.belief.samples.shape[0]):
+            normalized_inner_prod = np.dot(self.obstacle.belief.samples[:,:,time].detach().numpy()[samp_idx, :], diff_vec_targ) / (np.linalg.norm(diff_vec_targ)**2)
+            if normalized_inner_prod < 0:
+                dists[samp_idx] = np.linalg.norm(self.obstacle.belief.samples[:,:,time].detach().numpy()[samp_idx, :])
+            elif normalized_inner_prod > 1:
+                dists[samp_idx] = np.linalg.norm(self.obstacle.belief.samples[:,:,time].detach().numpy() - self.target.value[:,0])
+            else:
+                dists[samp_idx] = np.linalg.norm(diff_vec_obs[samp_idx, :] - normalized_inner_prod * diff_vec_targ) 
+        
+        path_clear = (dists >= 2.0).mean() <= 0.1
+
+        if negated:
+            return not (is_certain or path_clear)
+
+        return is_certain or path_clear
+
+
+        # if negated:
+        #     return not np.max(np.abs(diff_vec) >= 0.25, axis=0).mean() <= 0.1
+        
+        # return np.max(np.abs(diff_vec) >= 0.25, axis=0).mean() <= 0.1
 
 
 class ConfirmedPosition(ExprPredicate):

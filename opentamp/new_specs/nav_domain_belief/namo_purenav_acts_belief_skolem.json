@@ -1,0 +1,119 @@
+{
+    "move_to_vantage_and_obs": {
+        "params": [
+            ["?robot", "Robot"],
+            ["?target", "Target"],
+            ["?softtarget", "SoftTarget"]
+        ],
+        "horizon": 20,
+        "pre": [
+
+        ],
+        "eff": [
+            {
+                "type": "IsMP",
+                "args": ["?robot"],
+                "active_timesteps": [0, 18]
+            },
+            {
+                "type": "PointingAtTarget",
+                "args": ["?robot", "?target"],
+                "active_timesteps": [1, 19]
+            },
+            {
+                "type": "RobotCloseToTarget",
+                "args": ["?robot", "?softtarget"],
+                "active_timesteps": [19, 19]
+            },
+            {
+                "type": "CompletedMovement",
+                "args": ["?robot"],
+                "active_timesteps": [19, 19]
+            }
+        ]
+    },
+    "observe_at_vantage": {
+        "params": [
+            ["?robot", "Robot"],
+            ["?target", "Target"],
+            ["?softtarget", "SoftTarget"]
+        ],
+        "horizon": 20,
+        "pre": [
+            {
+                "type": "CompletedMovement",
+                "args": ["?robot"],
+                "active_timesteps": [0, 0]
+            }
+        ],
+        "eff": [
+            {
+                "type": "IsStationary",
+                "args": ["?robot"],
+                "active_timesteps": [0, 18]
+            },
+            {
+                "type": "PointingAtTarget",
+                "args": ["?robot", "?target"],
+                "active_timesteps": [1, 19]
+            },
+            {
+                "type": "~CompletedMovement",
+                "args": ["?robot"],
+                "active_timesteps": [19, 19]
+            },
+            {
+                "forall": ["?w", "Obstacle"],
+                "pred": {
+                    "type": "CertainObsOrClearPath",
+                    "args": ["?w", "?target"],
+                    "active_timesteps": [19, 18]
+                }
+            }
+        ],
+        "non_deterministic": true
+    },
+    "move_avoid_to_end": {
+        "params": [
+            ["?robot", "Robot"],
+            ["?target", "Target"],
+            ["?softtarget", "SoftTarget"]
+        ],
+        "horizon": 20,
+        "pre": [
+            {
+                "forall": ["?w", "Obstacle"],
+                "pred": {
+                    "type": "CertainObsOrClearPath",
+                    "args": ["?w", "?target"],
+                    "active_timesteps": [0, 0]
+                }
+            }
+        ],
+        "eff": [
+            {
+                "type": "IsMP",
+                "args": ["?robot"],
+                "active_timesteps": [0, 18]
+            },
+            {
+                "forall": ["?w", "Obstacle"],
+                "pred": {
+                    "type": "AvoidObs",
+                    "args": ["?robot", "?w"],
+                    "active_timesteps": [1, 19]
+                }
+            },
+            {
+                "type": "RobotAtTarget",
+                "args": ["?robot", "?target"],
+                "active_timesteps": [19, 19]
+            },
+            {
+                "type": "CompletedMovement",
+                "args": ["?robot"],
+                "active_timesteps": [19, 19]
+            }
+        ]
+    }
+}
