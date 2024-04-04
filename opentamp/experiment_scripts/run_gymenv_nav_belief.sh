@@ -7,7 +7,7 @@
 
 python3 -W ignore policy_hooks/run_training.py -c new_specs.nav_domain_belief.new_env_hyperparam \
                                                 -no 1 -llus 1000  -hlus 1000 \
-                                                -spl -mask -hln 2 -lln 2 -hldim 256 -lldim 256 \
+                                                -spl -mask -hln 2 -lln 2 -hldim 32 -lldim 32 \
                                                 -retime -vel 0.3 -eta 5 -softev \
                                                 -lr_schedule fixed \
                                                 -imwidth 256 -imheight 256 \
