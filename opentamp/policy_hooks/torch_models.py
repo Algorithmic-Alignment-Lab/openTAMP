@@ -224,7 +224,7 @@ class TorchNet(nn.Module):
         self.num_recur_features = int(overall_recur_dim / hist_len)
         recur_hidden_size = self.config.get('recur_dim_hidden', 128)
         recur_num_layers = self.config.get('recur_num_layers', 1)
-        recur_proj_size = self.config.get('recur_proj_size', 8)
+        recur_proj_size = self.config.get('recur_proj_size', 32)
         self.recur_layers.append(nn.LSTM(input_size=self.num_recur_features, hidden_size=recur_hidden_size, num_layers=recur_num_layers, proj_size=recur_proj_size))
         self.fc_input_dim = len(self.x_idx) + recur_proj_size
 
@@ -232,6 +232,7 @@ class TorchNet(nn.Module):
         n_fc_layers = self.config.get('n_layers', 1)
         dim_hidden = self.config.get('dim_hidden', 40)
         cur_dim = self.fc_input_dim
+        breakpoint()
         for n in range(n_fc_layers):
             next_dim = dim_hidden if np.isscalar(dim_hidden) else dim_hidden[n]
             fc_layer = nn.Linear(cur_dim, next_dim)
