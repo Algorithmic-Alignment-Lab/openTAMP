@@ -232,7 +232,6 @@ class TorchNet(nn.Module):
         n_fc_layers = self.config.get('n_layers', 1)
         dim_hidden = self.config.get('dim_hidden', 40)
         cur_dim = self.fc_input_dim
-        breakpoint()
         for n in range(n_fc_layers):
             next_dim = dim_hidden if np.isscalar(dim_hidden) else dim_hidden[n]
             fc_layer = nn.Linear(cur_dim, next_dim)
