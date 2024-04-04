@@ -361,7 +361,7 @@ class GymEnvNavWrapper(GymEnvNav):
         goal_rel_pose = self.curr_state[3:5] - self.curr_state[:2]
         # if pointing directly at the object
 
-        if np.linalg.norm(goal_rel_pose) <= 1.0:
+        if np.linalg.norm(goal_rel_pose) <= 2.0:
             return 0.0
         else:
             return 1.0
