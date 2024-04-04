@@ -182,7 +182,7 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
                         # utils.MJC_SENSOR_ENUM,
                         # utils.PAST_ANG_ENUM,
                         utils.TASK_ENUM,
-                        utils.PAST_COUNT_ENUM,
+                        # utils.PAST_COUNT_ENUM,
                         # utils.PAST_TASK_ENUM,
                         # utils.ANG_ENUM,
                         # utils.PAST_TASK_ARR_ENUM,
@@ -194,10 +194,10 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
                         # utils.THETA_VEC_ENUM,
                         ],
 
-        # 'recur_obs_include': [
-        #      utils.PAST_TASK_ARR_ENUM,
-        #      utils.PAST_MJCOBS_ARR_ENUM
-        # ],
+        'recur_obs_include': [
+             utils.PAST_TASK_ARR_ENUM,
+             utils.PAST_MJCOBS_ARR_ENUM
+        ],
 
         # 'cont_obs_include': [#utils.LIDAR_ENUM,
         #                 utils.MJC_SENSOR_ENUM,

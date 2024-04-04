@@ -224,7 +224,7 @@ class TorchNet(nn.Module):
         self.num_recur_features = int(overall_recur_dim / hist_len)
         recur_hidden_size = self.config.get('recur_dim_hidden', 128)
         recur_num_layers = self.config.get('recur_num_layers', 1)
-        recur_proj_size = self.config.get('recur_proj_size', 32)
+        recur_proj_size = self.config.get('recur_proj_size', 8)
         self.recur_layers.append(nn.LSTM(input_size=self.num_recur_features, hidden_size=recur_hidden_size, num_layers=recur_num_layers, proj_size=recur_proj_size))
         self.fc_input_dim = len(self.x_idx) + recur_proj_size
 
