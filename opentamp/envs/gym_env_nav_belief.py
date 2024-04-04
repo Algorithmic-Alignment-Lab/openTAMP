@@ -157,7 +157,7 @@ class GymEnvNav(Env):
                                             color_arr)
         
         ## coloring in the safety constraint
-        color_arr = np.where(is_close_to_obj_vectorized(self.curr_state[7:], x_coords, y_coords, r=1.5),
+        color_arr = np.where(is_close_to_obj_vectorized(self.curr_state[7:], x_coords, y_coords, r=1.0),
                                     orange, 
                                     color_arr)
 

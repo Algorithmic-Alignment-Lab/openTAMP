@@ -179,11 +179,10 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
 
         'obs_include': [#utils.LIDAR_ENUM,
                         utils.MJC_SENSOR_ENUM,
-                        utils.PAST_MJCOBS_ARR_ENUM,
                         # utils.MJC_SENSOR_ENUM,
                         # utils.PAST_ANG_ENUM,
-                        utils.PAST_TASK_ARR_ENUM,
                         utils.TASK_ENUM,
+                        utils.PAST_COUNT_ENUM,
                         # utils.PAST_TASK_ENUM,
                         # utils.ANG_ENUM,
                         # utils.PAST_TASK_ARR_ENUM,
@@ -195,17 +194,17 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
                         # utils.THETA_VEC_ENUM,
                         ],
 
-        'recur_obs_include': [
-             utils.PAST_TASK_ARR_ENUM,
-             utils.PAST_MJCOBS_ARR_ENUM
-        ],
+        # 'recur_obs_include': [
+        #      utils.PAST_TASK_ARR_ENUM,
+        #      utils.PAST_MJCOBS_ARR_ENUM
+        # ],
 
         # 'cont_obs_include': [#utils.LIDAR_ENUM,
         #                 utils.MJC_SENSOR_ENUM,
         #                 # utils.PAST_ANG_ENUM,
         #                 utils.TASK_ENUM,
         #                 # utils.PAST_TASK_ENUM,
-        #                 utils.PAST_POINT_ENUM,
+        #                 # utils.PAST_POINT_ENUM,
         #                 # utils.ONEHOT_GOAL_ENUM
         #                 # utils.TASK_ENUM,
         #                 # utils.END_POSE_ENUM,
@@ -213,6 +212,11 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
         #                 # #utils.VEL_ENUM,
         #                 # utils.THETA_VEC_ENUM,
         #                 ],
+
+        # 'cont_recur_obs_include': [
+        #      utils.PAST_TASK_ARR_ENUM,
+        #      utils.PAST_MJCOBS_ARR_ENUM
+        # ],
 
         'prim_obs_include': [
                             #  utils.THETA_VEC_ENUM,
@@ -225,6 +229,8 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
                             # utils.ONEHOT_GOAL_ENUM
                              ],
 
+        # 'cont_out_include': [utils.ANG_ENUM],
+
         'prim_recur_obs_include': [
              utils.PAST_TASK_ARR_ENUM,
              utils.PAST_MJCOBS_ARR_ENUM
@@ -234,7 +240,7 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
 
         'sensor_dims': {
                 # utils.OBJ_POSE_ENUM: 2,
-                utils.ANG_ENUM: 1,
+                utils.ANG_ENUM: 2,
                 utils.PAST_ANG_ENUM: 1,
                 utils.TARG_ENUM: 2,
                 utils.PAST_TARG_ENUM: 2,
