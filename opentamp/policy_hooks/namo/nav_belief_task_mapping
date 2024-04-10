@@ -1,20 +1,13 @@
 {
-    'move_avoid': [
+    'move_avoid_to_end': [
         '0: MOVE PR2 {0}',
     ],
-    'point_at_obs': [
+    'move_to_vantage_and_obs': [
         '0: MOVE PR2 {0}',
     ],
-    'observe_obs': [
-        '0: MOVE PR2 {0}',
-    ],
-    'observe_targ': [
-        '0: MOVE PR2 {0}',
-    ],
-    'confirm_targ': [
+    'observe_at_vantage': [
         '0: MOVE PR2 {0}',
     ]
-
 };
 
 {

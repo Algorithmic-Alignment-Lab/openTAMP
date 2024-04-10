@@ -23,9 +23,9 @@ python3 -W ignore -m cProfile -o profile_out policy_hooks/run_training.py -c pol
                                                 -post -pre \
                                                 -warm 100 \
                                                 -neg_ratio 0. -opt_ratio 0.9 -dagger_ratio 0.1 \
-                                                -ind 0 \
-						-descr pointer_rnn_bimodal_addstate \
-                                                -test namo_objs1_1/pointer_rnn_bimodal_addstate_0 \
+                                                -ind 25 \
+						-descr belief_nav_domain_server_iros \
+                                                -test namo_objs1_1/belief_nav_domain_server_iros_25 \
                                                 -render
 
 # sleep 1800 

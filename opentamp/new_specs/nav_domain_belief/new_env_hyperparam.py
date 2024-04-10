@@ -116,6 +116,26 @@ def rollout_fill_method(path, agent):
                             mjc_obs_array]) if path \
     else agent.store_hist_info([len(path), np.array([0.]), 0, 0, -1.0, [0.], mjc_obs_array])
 
+def skolem_populate_fcn(plan):
+    diff_vec_obs = plan.params['obs1'].belief.samples[:,:,-1].detach().numpy()
+    
+    diff_vec_targ = plan.params['target1'].value[:,0]
+    min_norm_inner = None
+
+    for samp_idx in range(plan.params['obs1'].belief.samples.shape[0]):
+        normalized_inner_prod = np.dot(diff_vec_obs[samp_idx, :], diff_vec_targ) / (np.linalg.norm(diff_vec_targ)**2)
+        if normalized_inner_prod < 0:
+            dist = np.linalg.norm(diff_vec_obs[samp_idx, :])
+        elif normalized_inner_prod > 1:
+            dist = np.linalg.norm(plan.params['obs1'].belief.samples[:,:,-1].detach().numpy() - plan.params['target1'].value[:,0])
+        else:
+            dist = np.linalg.norm(diff_vec_obs[samp_idx, :] - normalized_inner_prod * diff_vec_targ)  ## residual norm! 
+
+        if not min_norm_inner or (normalized_inner_prod < min_norm_inner and dist < 2.0):
+            min_norm_inner = normalized_inner_prod
+
+    plan.params['softtarget1'].value = (np.array(min_norm_inner * diff_vec_targ - np.array([2.0, 0.0]))).reshape(-1, 1) ## stop short of the nearest point
+
 def rollout_terminate_cond(task_idx):
     return task_idx == 0
 
@@ -150,20 +170,19 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
         'mp_solver_type': ToySolver,
         'll_solver_type': ToySolver,
         'meta_file': opentamp.__path__._path[0] + '/new_specs/nav_domain_belief/namo_purenav_meta.json',
-        'acts_file': opentamp.__path__._path[0] + '/new_specs/nav_domain_belief/namo_purenav_acts_belief.json',
+        'acts_file': opentamp.__path__._path[0] + '/new_specs/nav_domain_belief/namo_purenav_acts_belief_skolem.json',
         'prob_file': opentamp.__path__._path[0] + '/new_specs/nav_domain_belief/namo_purenav_prob.json',
-        'observation_model': NoVIObstacleObservationModel,
+        'observation_model': ParticleFilterObstacleObservationModel,
         'n_dirs': N_DIRS,
 
         'state_include': [utils.STATE_ENUM],
 
         'obs_include': [#utils.LIDAR_ENUM,
                         utils.MJC_SENSOR_ENUM,
-                        utils.PAST_MJCOBS_ARR_ENUM,
                         # utils.MJC_SENSOR_ENUM,
                         # utils.PAST_ANG_ENUM,
-                        utils.PAST_TASK_ARR_ENUM,
                         utils.TASK_ENUM,
+                        # utils.PAST_COUNT_ENUM,
                         # utils.PAST_TASK_ENUM,
                         # utils.ANG_ENUM,
                         # utils.PAST_TASK_ARR_ENUM,
@@ -185,7 +204,7 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
         #                 # utils.PAST_ANG_ENUM,
         #                 utils.TASK_ENUM,
         #                 # utils.PAST_TASK_ENUM,
-        #                 utils.PAST_POINT_ENUM,
+        #                 # utils.PAST_POINT_ENUM,
         #                 # utils.ONEHOT_GOAL_ENUM
         #                 # utils.TASK_ENUM,
         #                 # utils.END_POSE_ENUM,
@@ -193,6 +212,11 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
         #                 # #utils.VEL_ENUM,
         #                 # utils.THETA_VEC_ENUM,
         #                 ],
+
+        # 'cont_recur_obs_include': [
+        #      utils.PAST_TASK_ARR_ENUM,
+        #      utils.PAST_MJCOBS_ARR_ENUM
+        # ],
 
         'prim_obs_include': [
                             #  utils.THETA_VEC_ENUM,
@@ -205,6 +229,8 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
                             # utils.ONEHOT_GOAL_ENUM
                              ],
 
+        # 'cont_out_include': [utils.ANG_ENUM],
+
         'prim_recur_obs_include': [
              utils.PAST_TASK_ARR_ENUM,
              utils.PAST_MJCOBS_ARR_ENUM
@@ -214,7 +240,7 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
 
         'sensor_dims': {
                 # utils.OBJ_POSE_ENUM: 2,
-                utils.ANG_ENUM: 1,
+                utils.ANG_ENUM: 2,
                 utils.PAST_ANG_ENUM: 1,
                 utils.TARG_ENUM: 2,
                 utils.PAST_TARG_ENUM: 2,
@@ -258,7 +284,8 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
         'sample_fill_method': sample_fill_method,
         'rollout_fill_method': rollout_fill_method,
         'rollout_terminate_cond': rollout_terminate_cond,
-        'postproc_assumed_goal': postproc_assumed_goal
+        'postproc_assumed_goal': postproc_assumed_goal,
+        'skolem_populate_fcn': skolem_populate_fcn
         # 'll_loss_fn': F.l1_loss,
         # 'cont_loss_fn': F.l1_loss,
     }

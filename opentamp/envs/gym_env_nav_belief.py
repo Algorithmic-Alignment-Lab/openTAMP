@@ -18,9 +18,9 @@ class GymEnvNav(Env):
         self.constraint_viol = False
 
     def assemble_dist(self):
-        weights = torch.tensor([0.7,0.3])
-        locs = torch.tensor([[4., 0.],
-                             [4., 0.]])
+        weights = torch.tensor([0.6,0.4])
+        locs = torch.tensor([[6., 0.],
+                             [8., 0.]])
         scales = torch.tensor([1., 1.])
         cat_dist = distros.Categorical(probs=weights)
         stack_eye = torch.tile(torch.eye(2).unsqueeze(dim=0), dims=(2, 1, 1))
@@ -75,7 +75,7 @@ class GymEnvNav(Env):
         #         lidar_obs[detect_idx] = obstacle_rel_distance
 
         cam_angle = (self.curr_state[2]+np.pi)%(2*np.pi) - np.pi
-        if np.abs(cam_angle - obstacle_angle) <= np.pi/4 and np.linalg.norm(obstacle_rel_pos) <= 6.0:
+        if np.abs(cam_angle - obstacle_angle) <= np.pi/4 and np.linalg.norm(obstacle_rel_pos) <= 4.0:
             obs_view =  obstacle_rel_pos
         else:
             obs_view = np.array([-10.0, -10.0])
@@ -83,7 +83,7 @@ class GymEnvNav(Env):
         target_rel_pos = (self.curr_state[3:5] - self.curr_state[:2]) * 1 
         target_abs_angle = np.arctan(target_rel_pos[1]/target_rel_pos[0]) if np.abs(target_rel_pos[0]) > 0.001 else (np.pi/2 if target_rel_pos[1]*target_rel_pos[0]>0 else -np.pi/2)
         target_angle = target_abs_angle if target_rel_pos[0] >= 0  else (target_abs_angle + np.pi if -np.pi/2 <= target_abs_angle < 0 else target_abs_angle - np.pi)
-        if np.abs(cam_angle - target_angle) <= np.pi/4 and np.linalg.norm(target_rel_pos) <= 6.0:
+        if np.abs(cam_angle - target_angle) <= np.pi/4 and np.linalg.norm(target_rel_pos) <= 4.0:
             targ_view = target_rel_pos
         else:
             targ_view = np.array([-10.0, -10.0])
@@ -131,8 +131,8 @@ class GymEnvNav(Env):
                             np.abs(np.arctan((y_coord - curr_loc[1])/(x_coord - curr_loc[0])) - adjust_ang) <= ray_ang,
                             np.abs(np.arctan((y_coord - curr_loc[1])/(x_coord - curr_loc[0])) - (adjust_ang - np.pi)) <= ray_ang)
             
-        def is_close_to_obj_vectorized(true_loc, x_coord, y_coord):
-            return np.linalg.norm(np.stack((x_coord, y_coord)) - np.tile(true_loc.reshape(-1, 1, 1, 1), (1, 256, 256, 3)), axis=0) <= 0.2
+        def is_close_to_obj_vectorized(true_loc, x_coord, y_coord, r=0.2):
+            return np.linalg.norm(np.stack((x_coord, y_coord)) - np.tile(true_loc.reshape(-1, 1, 1, 1), (1, 256, 256, 3)), axis=0) <= r
 
         color_arr = np.ones((256, 256, 3), dtype=np.uint8) * 255
         
@@ -144,6 +144,7 @@ class GymEnvNav(Env):
         green = np.stack((np.zeros((256, 256), dtype=np.uint8), np.ones((256, 256), dtype=np.uint8)*255, np.zeros((256, 256), np.uint8)), axis=2)
         blue = np.stack((np.zeros((256, 256), np.uint8), np.zeros((256, 256), np.uint8), np.ones((256, 256), dtype=np.uint8)*255), axis=2)
         white = np.ones((256, 256, 3), dtype=np.uint8) * 255
+        orange = np.stack((np.ones((256, 256), np.uint8)*255, np.ones((256, 256), np.uint8)*172, np.ones((256, 256), dtype=np.uint8)*28), axis=2)
 
         ## coloring in the robot location
         color_arr = np.where(is_close_to_obj_vectorized(self.curr_state[:2], x_coords, y_coords),
@@ -154,12 +155,18 @@ class GymEnvNav(Env):
         color_arr = np.where(is_in_ray_vectorized(self.curr_state[2], self.curr_state[:2], x_coords, y_coords, np.pi/6),
                                             green+red, 
                                             color_arr)
+        
+        ## coloring in the safety constraint
+        color_arr = np.where(is_close_to_obj_vectorized(self.curr_state[7:], x_coords, y_coords, r=1.0),
+                                    orange, 
+                                    color_arr)
+
 
         ## coloring in the obstacle
         color_arr = np.where(is_close_to_obj_vectorized(self.curr_state[7:], x_coords, y_coords),
                                     blue, 
                                     color_arr)
-        
+                
         ## coloring in the target
         color_arr = np.where(is_close_to_obj_vectorized(self.curr_state[3:5], x_coords, y_coords),
                                     green, 
@@ -221,7 +228,7 @@ class GymEnvNav(Env):
     ## get random sample to initialize uncertain problem
     def sample_belief_true(self):
         return {'obs1': self.obs_dist.sample(),
-                'target1': self.target_dist.sample()}
+                'target1': [12.0, 0.0]}
         # return {'obs1': torch.tensor([0.0, 0.0])}
         # rand = random.random() * 8
         # if rand < 1.0:
@@ -346,7 +353,7 @@ class GymEnvNavWrapper(GymEnvNav):
         goal_pos = self.target_dist.sample().detach().numpy()
 
         ## initalize to center
-        return np.concatenate((np.array([0.0, 0.0]), np.array([obstacle_angle]), goal_pos, np.array([8.0,0.]), obs))
+        return np.concatenate((np.array([0.0, 0.0]), np.array([obstacle_angle]), np.array([12.0, 0.0]), np.array([8.0,0.]), obs))
 
     # determine whether or not a given state satisfies a goal condition
     def assess_goal(self, condition, state, targets=None, cont=None):
@@ -354,7 +361,7 @@ class GymEnvNavWrapper(GymEnvNav):
         goal_rel_pose = self.curr_state[3:5] - self.curr_state[:2]
         # if pointing directly at the object
 
-        if np.abs(np.linalg.norm(goal_rel_pose)*np.cos(angle) - goal_rel_pose[0]) <= 1.0 and np.abs(np.linalg.norm(goal_rel_pose)*np.sin(angle) - goal_rel_pose[1]) <= 1.0 and np.linalg.norm(goal_rel_pose) <= 6.0:
+        if np.linalg.norm(goal_rel_pose) <= 2.0:
             return 0.0
         else:
             return 1.0

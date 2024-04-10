@@ -144,13 +144,13 @@ class LLSearchNode(SearchNode):
 
                 if check_ts >= 0:
                     if p['pred'].get_type() in [q['pred'].get_type() for q in new_preds]:
-                        if p['negated'] and p['pred'].hl_test(check_ts, tol=1e-3, negated=True) and \
+                        if p['negated'] and p['pred'].hl_test(0, tol=1e-3, negated=True) and \
                                 p['pred'].get_type() in [q['pred'].get_type() for q in new_preds if not q['negated']]:
                                 for q in new_preds:
                                     if q['pred'].get_type() == p['pred'].get_type():
                                         new_preds.remove(q)
 
-                        elif not p['negated'] and p['pred'].hl_test(check_ts, tol=1e-3, negated=False) and \
+                        elif not p['negated'] and p['pred'].hl_test(0, tol=1e-3, negated=False) and \
                                 p['pred'].get_type() in [q['pred'].get_type() for q in new_preds if q['negated']]:
                                 for q in new_preds:
                                     if q['pred'].get_type() == p['pred'].get_type():

@@ -272,7 +272,8 @@ class ParseDomainConfig(object):
         pred['negated'] = (pred['type'][0] == '~')
         if pred['negated']:
             pred['type'] = pred['type'][1:] # remove ~ from type
-        pred['active_timesteps'] = tuple(pred['active_timesteps'])
+        pred['active_timesteps'] = tuple(pred['active_timesteps']) 
+        pred['store_active_timesteps'] = tuple(pred['active_timesteps']) # reference active timesteps
         pred['ind'] = idx
         return pred
 

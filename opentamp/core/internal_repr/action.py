@@ -26,9 +26,9 @@ class Action(object):
         self.linked_action = linked_action
         self.non_deterministic = non_deterministic
         # make effect attainment in all nondeterministic actions true
-        if self.non_deterministic:
-            for pred in self.preds:
-                pred['pred'].optimistic = True
+        # if self.non_deterministic:
+        #     for pred in self.preds:
+        #         pred['pred'].optimistic = True
 
     def __repr__(self):
         return "%d: %s %s %s"%(self.step_num, self.name, self.active_timesteps, " ".join([p.name for p in self.params]))

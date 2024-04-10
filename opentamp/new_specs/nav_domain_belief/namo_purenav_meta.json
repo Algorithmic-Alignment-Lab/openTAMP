@@ -7,8 +7,7 @@
     "predicates_import_path": "opentamp.core.util_classes.namo_grip_predicates",
     "type_attrs": {
         "Target": {
-            "value": "Vector2d",
-            "belief": "MixedIsotropic2DGaussianPrior"
+            "value": "Vector2d"
         },
         "SoftTarget": {
             "value": "Vector2d"
@@ -31,6 +30,7 @@
         "PointingAtObs": ["Robot", "Obstacle"],
         "PointingAtTarget": ["Robot", "Target"],
         "CertainObs": ["Obstacle"],
+        "CertainObsOrClearPath": ["Obstacle", "Target"], 
         "PerformedInitObs": ["Robot"],
         "NotPerformedInitObs": ["Robot"],
         "CompletedMovement": ["Robot"],
@@ -38,6 +38,7 @@
         "CertainTarget": ["Target"],
         "ConfirmedTarget": ["Target"],
         "PointingAtOrigin": ["Robot"],
-        "RobotAtOrigin": ["Robot"]
+        "RobotAtOrigin": ["Robot"],
+        "RobotAtTarget": ["Robot", "Target"]
     }
 }
