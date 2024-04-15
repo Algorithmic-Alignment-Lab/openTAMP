@@ -1,0 +1,44 @@
+[tool.poetry]
+name = "opentamp"
+version = "0.2.0"
+description = "Open-Source Robot Task and Motion Planne Manipulation"
+authors = ["Phillip Christoffersen <philljkc@mit.edu>, Rachel Ma <rachelm8@mit.edu>, Dylan Hadfield-Menell <dhm@csail.mit.edu>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "3.10.12"
+bosdyn-api = "4.0.0"
+bosdyn-core = "4.0.0"
+bosdyn-client = "4.0.0"
+dill = "0.3.8"
+drake = "1.23.0"
+gurobipy = "11.0.0"
+gym = "0.26.2"
+gymnasium = "0.29.1"
+h5py = "3.10.0"
+manipulation = "2023.11.8"
+matplotlib = "3.8.3"
+mpi4py = "3.1.5"
+mujoco = "3.1.2"
+numpy = "1.26.4"
+pybullet = "3.2.6"
+pyro-ppl = "1.9.0"
+pyvirtualdisplay = "3.0.0"
+dm-control = "1.0.16"
+robosuite = "1.4.1"
+sco-py = "0.4.0"
+imageio = "2.34.0"
+seaborn = "0.13.2"
+pandas = "2.2.1"
+torch = "2.2.1"
+osqp = "0.6.5"
+robodesk = "1.0.0"
+psutil = "5.9.8"
+numdifftools = "0.9.41"
+ipdb = "0.13.13"
+
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
