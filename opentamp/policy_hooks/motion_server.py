@@ -133,18 +133,18 @@ class MotionServer(Server):
         # breakpoint()
 
         while cur_t >= 0:
-            path, refine_success, replan_success = self.collect_trajectory(plan, node, cur_t)
+            path, refine_success, replan_fail_step = self.collect_trajectory(plan, node, cur_t)
             
             ## if plan about to fail since hitting expansion limit
-            if node.expansions >= EXPAND_LIMIT or (replan_success and refine_success):
-                self.log_node_info(node, replan_success, path)
+            if node.expansions >= EXPAND_LIMIT or (replan_fail_step == -1 and refine_success):
+                self.log_node_info(node, replan_fail_step == -1, path)
             
             prev_t = cur_t
             cur_t -= cur_step
-            if (refine_success and replan_success) and len(path) and path[-1].success: continue
+            if (refine_success and replan_fail_step == -1) and len(path) and path[-1].success: continue
 
             # parse the failed predicates for the plan, and push the change to task queue
-            if not (refine_success and replan_success): self.parse_failed(plan, node, prev_t, refine_success and (not replan_success))
+            if not (refine_success and replan_fail_step == -1): self.parse_failed(plan, node, prev_t, replan_fail_step)
             while len(plan.get_failed_preds((cur_t, cur_t))) and cur_t > 0:
                 cur_t -= 1
 
@@ -246,7 +246,7 @@ class MotionServer(Server):
         
         
         ## for belief-space replanning, only replan if indeed belief-space, and plan against sampled obs dict
-        replan_success = True
+        replan_fail_step = -1
         if refine_success and len(plan.belief_params) > 0:
             print('Refining from: ', node.replan_start)
 
@@ -268,13 +268,16 @@ class MotionServer(Server):
             ## reset beliefs and observations to beginning of refine_start
             for param in plan.belief_params:
                 param.belief.samples = param.belief.samples[:, :, :plan.actions[node.replan_start].active_timesteps[0]+1]
-            del_list = []
-            for t in node.conditioned_obs.keys():
-                if t[0] >= plan.actions[node.replan_start].active_timesteps[0]:
-                    del_list.append(t)
-            for t in del_list:
-                del node.conditioned_obs[t]
 
+            ## remove observations occuring after replan start    
+            # del_list = []
+            # for t in node.conditioned_obs.keys():
+            #     if t[0] >= plan.actions[node.replan_start].active_timesteps[0]:
+            #         del_list.append(t)
+            # for t in del_list:
+            #     del node.conditioned_obs[t]
+
+            true_obs = {}
             ## filter them forward, under the new assumption for the observation
             for anum in range(node.replan_start, len(plan.actions)):
                 active_ts = plan.actions[anum].active_timesteps
@@ -283,9 +286,9 @@ class MotionServer(Server):
                 
                 if plan.actions[anum].non_deterministic:
                     ## perform MCMC to update, using the goal inferred from at the time, add new observation planned against
-                    print(node.conditioned_obs)
+                    print(true_obs)
                     obs = plan.filter_beliefs(active_ts, provided_goal=goal, past_obs=node.conditioned_obs)
-                    node.conditioned_obs[plan.actions[anum].active_timesteps] = obs
+                    true_obs[plan.actions[anum].active_timesteps] = obs
                 else:
                     ## just propagate beliefs forward, no inference needed
                     for param in plan.belief_params:
@@ -293,24 +296,37 @@ class MotionServer(Server):
                         param.belief.samples = new_samp
                 anum += 1
             
+            ## get minimal step for observation failure, if such a step exists
+            for t in true_obs.keys():
+                for obj in true_obs[t].keys():
+                    if torch.linalg.vector_norm(true_obs[t][obj] - node.conditioned_obs[t][obj]) >= 0.01 and (replan_fail_step == -1 or replan_fail_step > t[1]):
+                        replan_fail_step = t[1]
+            
             ## see if plan with new beliefs is still valid
             ## reset the observation to new sample if *NOT* solved
-            fail_step, fail_pred, _ = node.get_failed_pred()
-            if fail_pred:
-                ## replanning has now failed
+            # fail_step, fail_pred, _ = node.get_failed_pred()
+            if replan_fail_step > -1:
+                ## some observation disagrees
+
+                ## remove all observations after the replan_start
                 del_list = []
                 for t in node.conditioned_obs.keys():
-                    if t[0] > fail_step:
+                    if t[0] >= plan.actions[node.replan_start].active_timesteps[0]:
                         del_list.append(t)
                 for t in del_list:
                     del node.conditioned_obs[t]
+                
+                ## add successful observations before the first disagreed timestep
+                for t in true_obs.keys():
+                    if t[0] <= replan_fail_step:
+                        node.conditioned_obs[t] = true_obs[t]
                 
                 replan_success = False
 
         ## path of samples in imitation
         path = []
 
-        if refine_success and replan_success:
+        if refine_success and replan_fail_step == -1:
             # domain-specific sample population method for agent
             self.config['sample_fill_method'](path, plan, self.agent, x0)
 
@@ -326,7 +342,7 @@ class MotionServer(Server):
 
             self.agent.add_task_paths([path])  ## add the given history of tasks from this successful rollout
 
-        if replan_success and refine_success:
+        if replan_fail_step == -1 and refine_success:
             print('Success')
 
             ## if plan only, invoke a breakpoint and inspect the plan statistics
@@ -341,30 +357,36 @@ class MotionServer(Server):
 
                 raise Exception('Terminating after single plan')
                 
-        return path, refine_success, replan_success
+        return path, refine_success, replan_fail_step
 
 
-    def parse_failed(self, plan, node, prev_t, replan_fail):        
-        try:
-            fail_step, fail_pred, fail_negated = node.get_failed_pred(st=prev_t)
-        except:
+    def parse_failed(self, plan, node, prev_t, replan_fail_step):
+        if replan_fail_step > -1:
+            fail_step = replan_fail_step
             fail_pred = None
+            fail_negated = False
+        else:
+            try:
+                fail_step, fail_pred, fail_negated = node.get_failed_pred(st=prev_t)
+            except:
+                fail_pred = None
 
-        if fail_pred is None:
-            print('WARNING: Failure without failed constr?')
-            return
+            if fail_pred is None:
+                breakpoint()
+                print('WARNING: Failure without failed constr?')
+                return
 
-        # NOTE: refines also done if linear constraints fail, owing to replanning
-        failed_preds = plan.get_failed_preds((prev_t, fail_step), priority=-1)
+            # NOTE: refines also done if linear constraints fail, owing to replanning
+            failed_preds = plan.get_failed_preds((prev_t, fail_step), priority=-1)
         
         # deactivate eval of optimistic predicates if we had a replan failure
-        if replan_fail:
+        if replan_fail_step > -1:
             for a_idx in range(node.replan_start, len(plan.actions)):
                 for pred_dict in plan.actions[a_idx].preds:
                     if pred_dict['pred'].optimistic:
                         pred_dict['active_timesteps'] = (pred_dict['active_timesteps'][0], pred_dict['active_timesteps'][0]-1)
 
-        if len(failed_preds):
+        if replan_fail_step == -1 and len(failed_preds):
             print('Refine failed with linear constr. viol.', 
                    node._trace, 
                    plan.actions, 
@@ -374,28 +396,26 @@ class MotionServer(Server):
             
             plan.rollout_beliefs([0,2]) ## add a single sample, to avoid off-by-ones (latest will *not* have inference step done if stochastic)
 
-            return ## NOTE: altered return logic here, so all failures hit expansion limit
-
-        print('Refine failed:', 
-              plan.get_failed_preds((0, fail_step)), 
-              fail_pred, 
-              fail_step, 
-              plan.actions, 
-              node.label, 
-              node._trace, 
-              prev_t,)
+            # return ## NOTE: altered return logic here, so all failures hit expansion limit
+        
+        if replan_fail_step == -1:
+            print('Refine failed:', 
+                plan.get_failed_preds((0, fail_step)), 
+                fail_pred, 
+                fail_step, 
+                plan.actions, 
+                node.label, 
+                node._trace, 
+                prev_t,)
 
         if not node.hl and not node.gen_child(): 
             return
 
-        try:
-            n_problem = node.get_problem(fail_step, fail_pred, fail_negated)
-        except PredicateException:
-            return ## TODO debug
+        n_problem = node.get_problem(fail_step, fail_pred, fail_negated)
         abs_prob = self.agent.hl_solver.translate_problem(n_problem, goal=node.concr_prob.goal)
         prefix = node.curr_plan.prefix(fail_step)
 
-        if fail_pred is not None and len(plan.belief_params) > 0:
+        if len(plan.belief_params) > 0:
             for anum in range(len(plan.actions)):
                     a = plan.actions[anum]
                     new_assumed_goal = {}
@@ -419,7 +439,7 @@ class MotionServer(Server):
 
                             new_assumed_goal[param.name] = torch.tensor(new_assumed_goal[param.name])
                         
-                        if replan_fail: ## update the counter only when you get failures from a replan
+                        if replan_fail_step > -1: ## update the counter only when you get failures from a replan
                             node.replan_start = anum
 
                         self.config['skolem_populate_fcn'](plan)

@@ -32,7 +32,7 @@ class GymEnvNav(Env):
         weights = torch.tensor([0.7,0.3])
         locs = torch.tensor([[12., 0.],
                              [12., 0.]])
-        scales = torch.tensor([1., 1.])
+        scales = torch.tensor([0.5, 0.5])
         cat_dist = distros.Categorical(probs=weights)
         stack_eye = torch.tile(torch.eye(2).unsqueeze(dim=0), dims=(2, 1, 1))
         stack_scale = torch.tile(scales.unsqueeze(dim=1).unsqueeze(dim=2), dims=(1, 2, 2))
@@ -75,7 +75,7 @@ class GymEnvNav(Env):
         #         lidar_obs[detect_idx] = obstacle_rel_distance
 
         cam_angle = (self.curr_state[2]+np.pi)%(2*np.pi) - np.pi
-        if np.abs(cam_angle - obstacle_angle) <= np.pi/4 and np.linalg.norm(obstacle_rel_pos) <= 4.0:
+        if np.abs(cam_angle - obstacle_angle) <= np.pi/4 and np.linalg.norm(obstacle_rel_pos) <= 6.0:
             obs_view =  obstacle_rel_pos
         else:
             obs_view = np.array([-10.0, -10.0])
@@ -83,7 +83,7 @@ class GymEnvNav(Env):
         target_rel_pos = (self.curr_state[3:5] - self.curr_state[:2]) * 1 
         target_abs_angle = np.arctan(target_rel_pos[1]/target_rel_pos[0]) if np.abs(target_rel_pos[0]) > 0.001 else (np.pi/2 if target_rel_pos[1]*target_rel_pos[0]>0 else -np.pi/2)
         target_angle = target_abs_angle if target_rel_pos[0] >= 0  else (target_abs_angle + np.pi if -np.pi/2 <= target_abs_angle < 0 else target_abs_angle - np.pi)
-        if np.abs(cam_angle - target_angle) <= np.pi/4 and np.linalg.norm(target_rel_pos) <= 4.0:
+        if np.abs(cam_angle - target_angle) <= np.pi/4 and np.linalg.norm(target_rel_pos) <= 6.0:
             targ_view = target_rel_pos
         else:
             targ_view = np.array([-10.0, -10.0])
@@ -128,8 +128,8 @@ class GymEnvNav(Env):
             adjust_ang = (ang + np.pi/2)%(2 * np.pi) - np.pi/2
 
             return np.where(x_coord - curr_loc[0] > 0, 
-                            np.abs(np.arctan((y_coord - curr_loc[1])/(x_coord - curr_loc[0])) - adjust_ang) <= ray_ang,
-                            np.abs(np.arctan((y_coord - curr_loc[1])/(x_coord - curr_loc[0])) - (adjust_ang - np.pi)) <= ray_ang)
+                            np.all([np.abs(np.arctan((y_coord - curr_loc[1])/(x_coord - curr_loc[0])) - adjust_ang) <= ray_ang, np.linalg.norm(np.tile(curr_loc.reshape(-1, 1,1,1), (1, 256, 256, 3)) - np.array([x_coord, y_coord]), axis=0)<= 6.0], axis=0),
+                            np.all([np.abs(np.arctan((y_coord - curr_loc[1])/(x_coord - curr_loc[0])) - (adjust_ang - np.pi)) <= ray_ang, np.linalg.norm(np.tile(curr_loc.reshape(-1, 1,1,1), (1, 256, 256, 3)) - np.array([x_coord, y_coord]), axis=0)<= 6.0], axis=0))
             
         def is_close_to_obj_vectorized(true_loc, x_coord, y_coord, r=0.2):
             return np.linalg.norm(np.stack((x_coord, y_coord)) - np.tile(true_loc.reshape(-1, 1, 1, 1), (1, 256, 256, 3)), axis=0) <= r
@@ -227,8 +227,8 @@ class GymEnvNav(Env):
 
     ## get random sample to initialize uncertain problem
     def sample_belief_true(self):
-        return {'obs1': self.obs_dist.sample(),
-                'target1': [12.0, 0.0]}
+        return {'obs1': torch.tensor([6.0, 6.0]),
+                'target1': self.target_dist.sample()}
         # return {'obs1': torch.tensor([0.0, 0.0])}
         # rand = random.random() * 8
         # if rand < 1.0:
@@ -252,7 +252,6 @@ class GymEnvNav(Env):
         self.belief_true = belief_dict
         self.curr_state[7:] = belief_dict['obs1']
         self.curr_state[3:5] = belief_dict['target1']
-        pass
     
 
 class GymEnvNavWrapper(GymEnvNav):
@@ -353,7 +352,7 @@ class GymEnvNavWrapper(GymEnvNav):
         goal_pos = self.target_dist.sample().detach().numpy()
 
         ## initalize to center
-        return np.concatenate((np.array([0.0, 0.0]), np.array([obstacle_angle]), np.array([12.0, 0.0]), np.array([8.0,0.]), obs))
+        return np.concatenate((np.array([0.0, 0.0]), np.array([obstacle_angle]), np.array([12.0 + random.random(), 0.0 + random.random()]), np.array([8.0,0.]), obs))
 
     # determine whether or not a given state satisfies a goal condition
     def assess_goal(self, condition, state, targets=None, cont=None):

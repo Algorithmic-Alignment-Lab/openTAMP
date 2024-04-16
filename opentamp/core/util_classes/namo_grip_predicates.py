@@ -7,6 +7,7 @@ from opentamp.core.util_classes.torch_funcs import GaussianBump, ThetaDir
 from opentamp.errors_exceptions import PredicateException
 
 from sco_py.expr import Expr, AffExpr, EqExpr, LEqExpr
+from opentamp.core.util_classes.prob_expr import LEqEpsExpr
 
 from collections import OrderedDict
 import numpy as np
@@ -737,6 +738,28 @@ class RobotAtTarget(At):
         e = EqExpr(aff_e, val)
         super(At, self).__init__(name, e, attr_inds, params, expected_param_types)
 
+class RobotAtSoftTarget(At):
+
+    # RobotAt Robot Targ
+
+    def __init__(self, name, params, expected_param_types, env=None, sess=None, debug=False):
+        ## At Robot Targ
+        self.r, self.rp = params
+        attr_inds = OrderedDict(
+            [
+                (self.r, [("pose", np.array([0, 1], dtype=np.int_))]),
+                (self.rp, [("value", np.array([0, 1], dtype=np.int_))]),
+            ]
+        )
+
+        A = np.c_[np.eye(2), -np.eye(2)]
+        b = np.zeros((2, 1))
+        val = np.zeros((2, 1))
+        aff_e = AffExpr(A, b)
+        e = EqExpr(aff_e, val)
+        super(At, self).__init__(name, e, attr_inds, params, expected_param_types)
+
+
 class RobotAtOrigin(At):
 
     # RobotAt Robot Targ
@@ -756,6 +779,27 @@ class RobotAtOrigin(At):
         aff_e = AffExpr(A, b)
         e = EqExpr(aff_e, val)
         super(At, self).__init__(name, e, attr_inds, params, expected_param_types)
+
+class RobotInWalls(ExprPredicate):
+
+    # RobotAt Robot Targ
+
+    def __init__(self, name, params, expected_param_types, env=None, sess=None, debug=False):
+        ## At Robot Targ
+        self.r, = params
+        attr_inds = OrderedDict(
+            [
+                (self.r, [("pose", np.array([0, 1], dtype=np.int_))])
+            ]
+        )
+
+        A = np.array([[0., 1.],[0., -1.]])
+        b = np.zeros((2, 1))
+        val = np.ones((2, 1)) * 2
+        aff_e = AffExpr(A, b)
+        e = LEqExpr(aff_e, val)
+        super(RobotInWalls, self).__init__(name, e, attr_inds, params, expected_param_types)
+
 
 
 class ThetaValid(ExprPredicate):
@@ -933,7 +977,7 @@ class PointingAtTarget(ExprPredicate):
         val = np.zeros((2,1))
         # val = np.zeros((1, 1))
         e = EqExpr(col_expr, val)
-        super(PointingAtTarget, self).__init__(name, e, attr_inds, params, expected_param_types, tol=1e-3, priority=-1)
+        super(PointingAtTarget, self).__init__(name, e, attr_inds, params, expected_param_types, tol=1e-1, priority=-1)
 
     def f(self, x):
         # breakpoint()
@@ -1120,7 +1164,7 @@ class RobotNearTarget(At):
 
         A = np.c_[np.r_[np.eye(2), -np.eye(2)], np.r_[-np.eye(2), np.eye(2)]]
         b = np.zeros((4, 1))
-        val = 1 * np.ones((4, 1))
+        val = 2 * np.ones((4, 1))
         aff_e = AffExpr(A, b)
         e = LEqExpr(aff_e, val)
         super(At, self).__init__(name, e, attr_inds, params, expected_param_types)
@@ -4353,7 +4397,7 @@ class StationaryW(ExprPredicate):
 
 
 
-class AvoidObs(ExprPredicate):
+class MLAvoidObs(ExprPredicate):
 
    # IsMP Robot
 
@@ -4371,7 +4415,7 @@ class AvoidObs(ExprPredicate):
         val = -np.ones((1, 1)) * 4
         # val = np.zeros((1, 1))
         e = LEqExpr(col_expr, val)
-        super(AvoidObs, self).__init__(name, e, attr_inds, params, expected_param_types, priority=-1)
+        super(MLAvoidObs, self).__init__(name, e, attr_inds, params, expected_param_types, priority=-1)
 
     def f(self, x):
         norm = np.sum(np.power(x[:2] - x[2:], 2))
@@ -4384,6 +4428,39 @@ class AvoidObs(ExprPredicate):
         # return np.array([grad[0], -grad[0]])
         # breakpoint()
         return -grad
+    
+class BAvoidObs(ExprPredicate):
+
+   # IsMP Robot
+
+    def __init__(self, name, params, expected_param_types, env=None, sess=None, debug=False, dmove=dmove):
+        self.r, self.rt = params
+        ## constraints  |x_t - x_{t+1}| < dmove
+        ## ==> x_t - x_{t+1} < dmove, -x_t + x_{t+a} < dmove
+        attr_inds = OrderedDict(
+            [
+                (self.r, [("pose", np.array([0, 1], dtype=np.int_))])
+            ]
+        )
+        col_expr = Expr(self.f, grad=self.grad_f)
+        val = -np.ones((self.rt.belief.samples.shape[0], 1)) * 1
+        # val = np.zeros((1, 1))
+        e = LEqEpsExpr(col_expr, val, conf=0.95)
+        super(BAvoidObs, self).__init__(name, e, attr_inds, params, expected_param_types, priority=0)
+
+    def f(self, x):
+        norm = np.sum(np.power(x - self.rt.belief.samples[:,:,-1].detach().numpy().T, 2), axis=0).reshape(-1, 1)
+        # return np.array([diff, -diff])
+        return np.maximum(-norm, np.ones(norm.shape) * -1)
+
+    def grad_f(self, x):
+        diff = x.T - self.rt.belief.samples[:,:,-1].detach().numpy()
+        grad = 2 * diff
+        eval_x = self.f(x)
+        grad = np.where(eval_x > -1.1, grad, np.zeros(grad.shape)) ## only zero constrains out when 
+        # return np.array([grad[0], -grad[0]])
+        return -grad
+
 
 class RobotWithinFinishofTarg(ExprPredicate):
 

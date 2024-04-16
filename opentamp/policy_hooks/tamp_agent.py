@@ -126,6 +126,7 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
         self.num_objs = self.config.get('num_objs', 1)
         self.rlen = self.config.get('rlen', 4 + 2 * self.num_objs * len(self.task_list))
         self.hor = self.config.get('horizon', 20)
+        # self.hor = 20 ## add 5 more steps for rollout
         self._eval_mode = False
         self.retime = self.config['master_config'].get('retime', False)
         if self.retime: self.rlen *= 2

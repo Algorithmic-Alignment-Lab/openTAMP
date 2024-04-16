@@ -1,11 +1,17 @@
 {
-    'move_avoid_to_end': [
-        '0: MOVE PR2 {0}',
-    ],
     'move_to_vantage_and_obs': [
         '0: MOVE PR2 {0}',
     ],
     'observe_at_vantage': [
+        '0: MOVE PR2 {0}',
+    ],
+    'move_avoid_to_targvantage': [
+        '0: MOVE PR2 {0}',
+    ],
+    'observe_at_targvantage': [
+        '0: MOVE PR2 {0}',
+    ],
+    'move_avoid_to_targ': [
         '0: MOVE PR2 {0}',
     ]
 };
