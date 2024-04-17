@@ -117,24 +117,55 @@ def rollout_fill_method(path, agent):
     else agent.store_hist_info([len(path), np.array([0.]), 0, 0, -1.0, [0.], mjc_obs_array])
 
 def skolem_populate_fcn(plan):
-    diff_vec_obs = plan.params['obs1'].belief.samples[:,:,-1].detach().numpy()
-    
-    diff_vec_targ = plan.params['target1'].value[:,0]
-    min_norm_inner = None
+    idx = None
+    for a_idx in range(len(plan.actions)):
+        if plan.actions[a_idx] == 'move_avoid_to_end':
+            idx = a_idx
 
-    for samp_idx in range(plan.params['obs1'].belief.samples.shape[0]):
-        normalized_inner_prod = np.dot(diff_vec_obs[samp_idx, :], diff_vec_targ) / (np.linalg.norm(diff_vec_targ)**2)
-        if normalized_inner_prod < 0:
-            dist = np.linalg.norm(diff_vec_obs[samp_idx, :])
-        elif normalized_inner_prod > 1:
-            dist = np.linalg.norm(plan.params['obs1'].belief.samples[:,:,-1].detach().numpy() - plan.params['target1'].value[:,0])
+    belief_ts = plan.actions[plan.start].active_timesteps[0]
+
+    # if idx is None:
+    #     ## advance to nearest straight-line point that
+    #     diff_vec_obs = plan.params['obs1'].belief.samples[:,:,belief_ts].detach().numpy()
+
+    #     diff_vec_targ = plan.params['target1'].value[:,0]
+    #     min_norm_inner = None
+
+    #     for samp_idx in range(plan.params['obs1'].belief.samples.shape[0]):
+    #         normalized_inner_prod = np.dot(diff_vec_obs[samp_idx, :], diff_vec_targ) / (np.linalg.norm(diff_vec_targ)**2)
+    #         if normalized_inner_prod < 0:
+    #             dist = np.linalg.norm(diff_vec_obs[samp_idx, :])
+    #         elif normalized_inner_prod > 1:
+    #             dist = np.linalg.norm(plan.params['obs1'].belief.samples[:,:,-1].detach().numpy() - plan.params['target1'].value[:,0])
+    #         else:
+    #             dist = np.linalg.norm(diff_vec_obs[samp_idx, :] - normalized_inner_prod * diff_vec_targ)  ## residual norm! 
+
+    #         if not min_norm_inner or (normalized_inner_prod < min_norm_inner and dist < 1.0):
+    #             min_norm_inner = normalized_inner_prod
+
+    #     plan.params['softtarget1'].value = (np.array(min_norm_inner * diff_vec_targ - np.array([2.0, 0.0]))).reshape(-1, 1) ## stop short of the nearest point
+
+
+    # else:
+    for i in range(plan.actions[plan.start].active_timesteps[0], plan.horizon):
+        if np.isnan(plan.params['pr2'].pose[:, i]).any():
+            break
         else:
-            dist = np.linalg.norm(diff_vec_obs[samp_idx, :] - normalized_inner_prod * diff_vec_targ)  ## residual norm! 
+            is_collide = False
+            for samp_idx in range(plan.params['obs1'].belief.samples.shape[0]):
+                dist = np.linalg.norm(plan.params['obs1'].belief.samples[samp_idx,:,belief_ts] - plan.params['pr2'].pose[:, i])
+                if dist < 2.0:
+                    is_collide = True
+                    break
+            if is_collide:
+                break
+    if i > 0:
+        plan.params['softtarget1'].value = (plan.params['pr2'].pose[:,i-1]).reshape(-1, 1)
+    else:
+        plan.params['softtarget1'].value = np.array([0.0, 0.0]).reshape(-1, 1)
 
-        if not min_norm_inner or (normalized_inner_prod < min_norm_inner and dist < 2.0):
-            min_norm_inner = normalized_inner_prod
-
-    plan.params['softtarget1'].value = (np.array(min_norm_inner * diff_vec_targ - np.array([2.0, 0.0]))).reshape(-1, 1) ## stop short of the nearest point
+    print('Skolem Replan:', plan.params['softtarget1'].value)
+    print('Plan Start: ', plan.start)
 
 def rollout_terminate_cond(task_idx):
     return task_idx == 0
@@ -172,7 +203,7 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
         'meta_file': opentamp.__path__._path[0] + '/new_specs/nav_domain_belief/namo_purenav_meta.json',
         'acts_file': opentamp.__path__._path[0] + '/new_specs/nav_domain_belief/namo_purenav_acts_belief_skolem.json',
         'prob_file': opentamp.__path__._path[0] + '/new_specs/nav_domain_belief/namo_purenav_prob.json',
-        'observation_model': ParticleFilterObstacleObservationModel,
+        'observation_model': ParticleFilterObstacleTargetObservationModel,
         'n_dirs': N_DIRS,
 
         'state_include': [utils.STATE_ENUM],

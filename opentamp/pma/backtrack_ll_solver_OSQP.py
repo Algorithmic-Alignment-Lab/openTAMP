@@ -29,7 +29,7 @@ SAMPLE_SIZE = 5
 BASE_SAMPLE_SIZE = 5
 OSQP_EPS_ABS = 1e-06
 OSQP_EPS_REL = 1e-09
-OSQP_MAX_ITER = int(1e05)
+OSQP_MAX_ITER = int(1e04)
 OSQP_SIGMA = 1e-5
 INIT_TRUST_REGION_SIZE = 1e-2
 INIT_PENALTY_COEFF = 1e0
@@ -255,7 +255,7 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
             if len(plan.belief_params) > 0:
                 if plan.actions[anum].non_deterministic:
                     ## perform MCMC to update
-                    obs = plan.filter_beliefs(active_ts, provided_goal=plan.observation_model.get_active_planned_observations(), past_obs=conditioned_obs)
+                    obs = plan.filter_beliefs(active_ts, past_obs=conditioned_obs)
                     conditioned_obs[plan.actions[anum].active_timesteps] = obs
                 else:
                     ## just propagate beliefs forward, no inference needed
@@ -323,7 +323,7 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
                 if len(plan.belief_params) > 0:
                     if plan.actions[anum].non_deterministic:
                         ## perform MCMC to update
-                        obs = plan.filter_beliefs(active_ts, provided_goal=plan.observation_model.get_active_planned_observations(), past_obs=conditioned_obs)
+                        obs = plan.filter_beliefs(active_ts, past_obs=conditioned_obs)
                         conditioned_obs[plan.actions[anum].active_timesteps] = obs
                     else:
                         ## just propagate beliefs forward, no inference needed
@@ -422,9 +422,9 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
                 
                 if success:
                     break
-            
-
-            if not success:
+                
+            ## only break from solver priorities if there are actually SOME contraints being violated! 
+            if not success and plan.get_failed_preds(active_ts, priority=priority, tol=1e-3):
                 break
 
         if DEBUG:
@@ -433,7 +433,7 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
 
         self._cleanup_plan(plan, active_ts)
 
-        return success
+        return ((not plan.get_failed_preds(active_ts, priority=priority, tol=1e-3)) and (priority == self.solve_priorities[-1]))
 
     # @profile
     def _solve_opt_prob(

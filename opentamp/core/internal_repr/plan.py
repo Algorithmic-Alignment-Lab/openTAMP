@@ -46,7 +46,7 @@ class Plan(object):
         self.sampling_trace = []
         self.hl_preds = []
         self.start = 0
-        self.num_belief_samples = 1000
+        self.num_belief_samples = 100
         self.num_warmup_steps = 50
         self.mc_lock = None
         if determine_free:
@@ -543,7 +543,7 @@ class Plan(object):
     ## called once per high-level action execution
     def filter_beliefs(self, active_ts, provided_goal=None, past_obs={}):
 
-        # max-likelihood feeds back on object here
+        # max-likelihood observation feeds back on object here
         global_samples, plan_obs = self.particle_filter(active_ts, provided_goal=provided_goal, past_obs=past_obs) ## forward model + true observations
         # global_samples, plan_obs = self.sample_mcmc_run(active_ts, provided_goal=provided_goal, past_obs=past_obs)
 
