@@ -977,7 +977,7 @@ class PointingAtTarget(ExprPredicate):
         val = np.zeros((2,1))
         # val = np.zeros((1, 1))
         e = EqExpr(col_expr, val)
-        super(PointingAtTarget, self).__init__(name, e, attr_inds, params, expected_param_types, tol=1e-1, priority=-1)
+        super(PointingAtTarget, self).__init__(name, e, attr_inds, params, expected_param_types, tol=1e-3, priority=0)
 
     def f(self, x):
         # breakpoint()
@@ -1902,7 +1902,9 @@ class CertainTarget(ExprPredicate):
         )
 
     def test(self, time, negated=False, tol=None):
-        diff_vec = self.target.belief.samples[:,:,time].detach().numpy() - self.target.value[:,0]
+        time_trunc = min(self.target.belief.samples.shape[2]-1, time)
+
+        diff_vec = self.target.belief.samples[:,:,time_trunc].detach().numpy() - self.target.value[:,0]
 
         if negated:
             return not np.max(np.abs(diff_vec) >= 0.25, axis=0).mean() <= 0.1
@@ -4533,7 +4535,7 @@ class IsMP(ExprPredicate):
                      [0, -1, 0, 1]])
        b = np.zeros((4, 1))
        e = LEqExpr(AffExpr(A, b), dmove*np.ones((4, 1)))
-       super(IsMP, self).__init__(name, e, attr_inds, params, expected_param_types, active_range=(0,1), priority=-2)
+       super(IsMP, self).__init__(name, e, attr_inds, params, expected_param_types, active_range=(0,1), priority=-2, tol=1e-2)
 
 class IsStationary(ExprPredicate):
 
@@ -4543,13 +4545,15 @@ class IsStationary(ExprPredicate):
        self.r, = params
        ## constraints  |x_t - x_{t+1}| < dmove
        ## ==> x_t - x_{t+1} < dmove, -x_t + x_{t+a} < dmove
-       attr_inds = OrderedDict([(self.r, [("pose", np.array([0, 1], dtype=np.int_))])])
-       A = np.array([[1, 0, -1, 0],
-                     [0, 1, 0, -1],
-                     [-1, 0, 1, 0],
-                     [0, -1, 0, 1]])
-       b = np.zeros((4, 1))
-       e = EqExpr(AffExpr(A, b), np.zeros((4, 1)))
+       attr_inds = OrderedDict([(self.r, [("pose", np.array([0, 1], dtype=np.int_)), ("theta", np.array([0], dtype=np.int_))])])
+       A = np.array([[1, 0, 0, -1, 0, 0],
+                     [0, 1, 0, 0, -1, 0],
+                     [0, 0, 1, 0, 0, -1],
+                     [-1, 0, 0, 1, 0, 0],
+                     [0, -1, 0, 0, 1, 0],
+                     [0, 0, -1, 0, 0, 1]])
+       b = np.zeros((6, 1))
+       e = EqExpr(AffExpr(A, b), np.zeros((6, 1)))
        super(IsStationary, self).__init__(name, e, attr_inds, params, expected_param_types, active_range=(0,1), priority=-2, tol=1e-2)
 
 

@@ -399,7 +399,7 @@ class ParticleFilterObstacleObservationModel(ObservationModel):
                 # enter observation into dict
                 is_present = False
                 for proposal_observation in observations.keys():
-                    if torch.linalg.vector_norm(proposal_observation - tmp_observation) < 0.2:
+                    if torch.linalg.vector_norm(proposal_observation - tmp_observation) < 0.1:
                         observations[proposal_observation] += 1
                         is_present = True
                         break
@@ -578,9 +578,10 @@ class ParticleFilterObstacleTargetObservationModel(ObservationModel):
         self.approx_params = {'weights'+str(os.getpid()): None, 'locs'+str(os.getpid()): None, 'scales'+str(os.getpid()): None}
         self.active_planned_observations = {'obs1': torch.empty((2,)).detach()}
         self.obs_dist = 6.0
+        self.particle_noise = 0.01
     
     def is_in_ray(self, a_pose, target):
-        ray_width = np.pi / 4  ## has 45-degree field of view on either side
+        ray_width = np.pi / 2  ## has 45-degree field of view on either side
         adjust_a_pose = (a_pose+np.pi/2)%(2*np.pi) -np.pi/2
         if target[0] > 0:
             return np.abs(np.arctan(target[1]/target[0]) - (adjust_a_pose)) <= ray_width
@@ -594,9 +595,9 @@ class ParticleFilterObstacleTargetObservationModel(ObservationModel):
         log_likelihood = torch.zeros((params['obs1'].belief.samples.shape[0], ))
 
         for idx in range(params['obs1'].belief.samples.shape[0]):
-            ## initialize log_likelihood to prior probability
-
-            log_likelihood[idx] = params['obs1'].belief.dist.log_prob(params['obs1'].belief.samples[idx, :, fail_ts]).sum().item()
+            ## initialize log_likelihood to prior probability (probability of obstacle or target)
+            log_likelihood[idx] = params['obs1'].belief.dist.log_prob(params['obs1'].belief.samples[idx, :, fail_ts]).sum().item() \
+                + params['target1'].belief.dist.log_prob(params['target1'].belief.samples[idx, :, fail_ts]).sum().item()
 
             ## add in terms for the forward model
             for obs_active_ts in prefix_obs:
@@ -605,10 +606,10 @@ class ParticleFilterObstacleTargetObservationModel(ObservationModel):
                 rel_vec = mod_obs_vec - params['pr2'].pose[:,obs_active_ts[1]-1]
                 if self.is_in_ray(params['pr2'].theta[0,obs_active_ts[1]-1], rel_vec) and np.linalg.norm(rel_vec) <= self.obs_dist:
                     ## sample around the true belief, with extremely low variation / error
-                    log_likelihood[idx] += dist.MultivariateNormal(params['obs1'].belief.samples[idx,:,fail_ts], (0.001 * torch.eye(2))).log_prob(prefix_obs[obs_active_ts]['obs1'])
+                    log_likelihood[idx] += dist.MultivariateNormal(params['obs1'].belief.samples[idx,:,fail_ts], (self.particle_noise * torch.eye(2))).log_prob(prefix_obs[obs_active_ts]['obs1'])
                 else:
                     ## sample from prior dist -- have no additional knowledge, don't read it
-                    log_likelihood[idx] += dist.MultivariateNormal((torch.zeros((2,))).to(DEVICE), 0.001 * torch.eye(2)).log_prob(prefix_obs[obs_active_ts]['obs1'])
+                    log_likelihood[idx] += dist.MultivariateNormal((torch.zeros((2,))).to(DEVICE), self.particle_noise * torch.eye(2)).log_prob(prefix_obs[obs_active_ts]['obs1'])
 
             for obs_active_ts in prefix_obs:
                 obs_vec = params['target1'].belief.samples[idx,:,fail_ts]
@@ -616,10 +617,10 @@ class ParticleFilterObstacleTargetObservationModel(ObservationModel):
                 rel_vec = mod_obs_vec - params['pr2'].pose[:,obs_active_ts[1]-1]
                 if self.is_in_ray(params['pr2'].theta[0,obs_active_ts[1]-1], rel_vec) and np.linalg.norm(rel_vec) <= self.obs_dist:
                     ## sample around the true belief, with extremely low variation / error
-                    log_likelihood[idx] += dist.MultivariateNormal(params['target1'].belief.samples[idx,:,fail_ts], (0.001 * torch.eye(2))).log_prob(prefix_obs[obs_active_ts]['target1'])
+                    log_likelihood[idx] += dist.MultivariateNormal(params['target1'].belief.samples[idx,:,fail_ts], (self.particle_noise * torch.eye(2))).log_prob(prefix_obs[obs_active_ts]['target1'])
                 else:
                     ## sample from prior dist -- have no additional knowledge, don't read it
-                    log_likelihood[idx] += dist.MultivariateNormal((torch.zeros((2,))).to(DEVICE), 0.001 * torch.eye(2)).log_prob(prefix_obs[obs_active_ts]['target1'])
+                    log_likelihood[idx] += dist.MultivariateNormal((torch.zeros((2,))).to(DEVICE), self.particle_noise * torch.eye(2)).log_prob(prefix_obs[obs_active_ts]['target1'])
 
         return log_likelihood
 
@@ -666,7 +667,7 @@ class ParticleFilterObstacleTargetObservationModel(ObservationModel):
             rel_vec = mod_obs  - params['pr2'].pose[:,active_ts[1]-1]
             if self.is_in_ray(params['pr2'].theta[0,active_ts[1]-1], rel_vec) and np.linalg.norm(rel_vec) <= self.obs_dist:
                 ## sample around the true belief, with extremely low variation / error
-                samps['obs1'] = pyro.sample('obs1.'+str(active_ts[0]), dist.MultivariateNormal(b_global_samp.float().to(DEVICE), 0.001 * torch.eye(2).to(DEVICE)))
+                samps['obs1'] = pyro.sample('obs1.'+str(active_ts[0]), dist.MultivariateNormal(b_global_samp.float().to(DEVICE), self.particle_noise * torch.eye(2).to(DEVICE)))
             else:
                 ## sample from prior dist -- have no additional knowledge, don't read it
                 samps['obs1'] = torch.tensor([0.0, 0.0])
@@ -677,7 +678,7 @@ class ParticleFilterObstacleTargetObservationModel(ObservationModel):
             rel_vec = mod_targ - params['pr2'].pose[:,active_ts[1]-1]
             if self.is_in_ray(params['pr2'].theta[0,active_ts[1]-1], rel_vec) and np.linalg.norm(rel_vec) <= self.obs_dist:
                 ## sample around the true belief, with extremely low variation / error
-                samps['target1'] = pyro.sample('target1.'+str(active_ts[0]), dist.MultivariateNormal(b_global_samp_targ.float().to(DEVICE), 0.001 * torch.eye(2).to(DEVICE)))
+                samps['target1'] = pyro.sample('target1.'+str(active_ts[0]), dist.MultivariateNormal(b_global_samp_targ.float().to(DEVICE), self.particle_noise * torch.eye(2).to(DEVICE)))
             else:
                 ## sample from prior dist -- have no additional knowledge, don't read it
                 samps['target1'] = torch.tensor([0.0, 0.0])
@@ -700,14 +701,14 @@ class ParticleFilterObstacleTargetObservationModel(ObservationModel):
                 ## obtain sample observation for this particle
                 rel_vec = obstacle_particles[idx, :]  - params['pr2'].pose[:,active_ts[1]-1]
                 if self.is_in_ray(params['pr2'].theta[0,active_ts[1]-1], rel_vec) and np.linalg.norm(rel_vec) <= self.obs_dist:
-                    tmp_observation = pyro.sample('obs1.'+str(active_ts[0]), dist.MultivariateNormal(torch.tensor(obstacle_particles[idx, :]).float(), 0.01 * torch.eye(2).to(DEVICE)))
+                    tmp_observation = pyro.sample('obs1.'+str(active_ts[0]), dist.MultivariateNormal(torch.tensor(obstacle_particles[idx, :]).float(), self.particle_noise * torch.eye(2).to(DEVICE)))
                 else: 
                     tmp_observation = torch.tensor([0.0, 0.0])
 
                 # enter observation into dict
                 is_present = False
                 for proposal_observation in observations_obs.keys():
-                    if torch.linalg.vector_norm(proposal_observation - tmp_observation) < 0.01:
+                    if torch.linalg.vector_norm(proposal_observation - tmp_observation) < 0.5:
                         observations_obs[proposal_observation] += 1
                         is_present = True
                         break
@@ -717,14 +718,14 @@ class ParticleFilterObstacleTargetObservationModel(ObservationModel):
                 
                 rel_vec = target_particles[idx, :]  - params['pr2'].pose[:,active_ts[1]-1]
                 if self.is_in_ray(params['pr2'].theta[0,active_ts[1]-1], rel_vec) and np.linalg.norm(rel_vec) <= self.obs_dist:
-                    tmp_observation = pyro.sample('obs1.'+str(active_ts[0]), dist.MultivariateNormal(torch.tensor(target_particles[idx, :]).float(), 0.01 * torch.eye(2).to(DEVICE)))
+                    tmp_observation = pyro.sample('obs1.'+str(active_ts[0]), dist.MultivariateNormal(torch.tensor(target_particles[idx, :]).float(), self.particle_noise * torch.eye(2).to(DEVICE)))
                 else: 
                     tmp_observation = torch.tensor([0.0, 0.0])
 
                 # enter observation into dict
                 is_present = False
                 for proposal_observation in observations_targ.keys():
-                    if torch.linalg.vector_norm(proposal_observation - tmp_observation) < 0.01:
+                    if torch.linalg.vector_norm(proposal_observation - tmp_observation) < 0.5:
                         observations_targ[proposal_observation] += 1
                         is_present = True
                         break
@@ -732,6 +733,7 @@ class ParticleFilterObstacleTargetObservationModel(ObservationModel):
                 if not is_present:
                     observations_targ[tmp_observation] = 1
 
+            # breakpoint()
 
             max_count = None
             max_obs_obs = None    
@@ -769,19 +771,25 @@ class ParticleFilterObstacleTargetObservationModel(ObservationModel):
             if self.is_in_ray(params['pr2'].theta[0,active_ts[1]-1], rel_vec) and np.linalg.norm(rel_vec) <= self.obs_dist:
                 probs_obs[idx] = torch.exp(dist.MultivariateNormal(rejuv_samples_obs[idx, :].float(), 0.01 * torch.eye(2)).log_prob(curr_obs['obs1']))
             else: 
-                probs_obs[idx] = torch.exp(dist.MultivariateNormal(torch.zeros((2,)), 0.01 * torch.eye(2)).log_prob(curr_obs['obs1']))
+                probs_obs[idx] = torch.exp(dist.MultivariateNormal(torch.zeros((2,)), 0.1 * torch.eye(2)).log_prob(curr_obs['obs1']))
         
-        select_idx_obs = torch.multinomial(probs_obs, num_samples=rejuv_samples_obs.shape[0], replacement=True)
+        try:
+            select_idx_obs = torch.multinomial(probs_obs, num_samples=rejuv_samples_obs.shape[0], replacement=True)
+        except:
+            select_idx_obs = torch.range(rejuv_samples_obs.shape[0]) ## if observation outside support, simply repeat the particles
         probs_targ = torch.zeros((rejuv_samples_obs.shape[0], ))
 
         for idx in range(rejuv_samples_targ.shape[0]):
             rel_vec = rejuv_samples_targ[idx, :]  - params['pr2'].pose[:,active_ts[1]-1]
             if self.is_in_ray(params['pr2'].theta[0,active_ts[1]-1], rel_vec) and np.linalg.norm(rel_vec) <= self.obs_dist:
-                probs_targ[idx] = torch.exp(dist.MultivariateNormal(rejuv_samples_targ[idx, :].float(), 0.01 * torch.eye(2)).log_prob(curr_obs['target1']))
+                probs_targ[idx] = torch.exp(dist.MultivariateNormal(rejuv_samples_targ[idx, :].float(), 0.1 * torch.eye(2)).log_prob(curr_obs['target1']))
             else: 
-                probs_targ[idx] = torch.exp(dist.MultivariateNormal(torch.zeros((2,)), 0.01 * torch.eye(2)).log_prob(curr_obs['target1']))
+                probs_targ[idx] = torch.exp(dist.MultivariateNormal(torch.zeros((2,)), 0.1 * torch.eye(2)).log_prob(curr_obs['target1']))
         
-        select_idx_targ = torch.multinomial(probs_targ, num_samples=rejuv_samples_targ.shape[0], replacement=True)
+        try:
+            select_idx_targ = torch.multinomial(probs_targ, num_samples=rejuv_samples_targ.shape[0], replacement=True)
+        except:
+            select_idx_targ = torch.range(rejuv_samples_obs.shape[0]) ## if observation outside support, simply repeat the particles
 
         particles = {}
         particles['belief_obs1'] = rejuv_samples_obs[select_idx_obs, :]

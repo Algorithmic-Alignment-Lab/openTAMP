@@ -154,7 +154,7 @@ def skolem_populate_fcn(plan):
             is_collide = False
             for samp_idx in range(plan.params['obs1'].belief.samples.shape[0]):
                 dist = np.linalg.norm(plan.params['obs1'].belief.samples[samp_idx,:,belief_ts] - plan.params['pr2'].pose[:, i])
-                if dist < 2.0:
+                if dist < 2.0 and -1.5 < plan.params['pr2'].pose[1, i] < 1.5:
                     is_collide = True
                     break
             if is_collide:
@@ -163,6 +163,8 @@ def skolem_populate_fcn(plan):
         plan.params['softtarget1'].value = (plan.params['pr2'].pose[:,i-1]).reshape(-1, 1)
     else:
         plan.params['softtarget1'].value = np.array([0.0, 0.0]).reshape(-1, 1)
+    
+    # breakpoint()
 
     print('Skolem Replan:', plan.params['softtarget1'].value)
     print('Plan Start: ', plan.start)

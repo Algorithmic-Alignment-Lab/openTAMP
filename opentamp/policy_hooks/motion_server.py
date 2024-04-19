@@ -395,6 +395,7 @@ class MotionServer(Server):
                    node.label,)
             
             plan.rollout_beliefs([0,2]) ## add a single sample, to avoid off-by-ones (latest will *not* have inference step done if stochastic)
+            
 
             # return ## NOTE: altered return logic here, so all failures hit expansion limit
         
@@ -407,6 +408,8 @@ class MotionServer(Server):
                 node.label, 
                 node._trace, 
                 prev_t,)
+            
+            plan.rollout_beliefs([0,2]) ## add a single sample, to avoid off-by-ones (latest will *not* have inference step done if stochastic)
 
         if not node.hl and not node.gen_child(): 
             return

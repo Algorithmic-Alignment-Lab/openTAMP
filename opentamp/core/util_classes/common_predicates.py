@@ -73,7 +73,7 @@ class ExprPredicate(Predicate):
         self.expr = expr
         self.attr_inds = attr_inds
         self.tol = tol
-        self.priority = priority
+        # self.priority = priority
 
         self.x_dim = sum(
             len(active_inds)

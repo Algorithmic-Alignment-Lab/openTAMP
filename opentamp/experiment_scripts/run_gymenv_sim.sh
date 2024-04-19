@@ -23,9 +23,9 @@ python3 -W ignore -m cProfile -o profile_out policy_hooks/run_training.py -c pol
                                                 -post -pre \
                                                 -warm 100 \
                                                 -neg_ratio 0. -opt_ratio 0.9 -dagger_ratio 0.1 \
-                                                -ind 5 \
+                                                -ind 8 \
 						-descr belief_nav_domain_server_skolem_simplecontrol \
-                                                -test namo_objs1_1/belief_nav_domain_server_skolem_simplecontrol_5 \
+                                                -test namo_objs1_1/belief_nav_domain_server_skolem_simplecontrol_8 \
                                                 -render
 
 # sleep 1800 

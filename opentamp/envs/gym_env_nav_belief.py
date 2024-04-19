@@ -31,8 +31,8 @@ class GymEnvNav(Env):
 
         weights = torch.tensor([0.7,0.3])
         locs = torch.tensor([[12., 0.],
-                             [12., 0.]])
-        scales = torch.tensor([0.5, 0.5])
+                             [8., 0.]])
+        scales = torch.tensor([0.6, 0.4])
         cat_dist = distros.Categorical(probs=weights)
         stack_eye = torch.tile(torch.eye(2).unsqueeze(dim=0), dims=(2, 1, 1))
         stack_scale = torch.tile(scales.unsqueeze(dim=1).unsqueeze(dim=2), dims=(1, 2, 2))
@@ -152,7 +152,7 @@ class GymEnvNav(Env):
                                             white)
 
         ## coloring in pointer
-        color_arr = np.where(is_in_ray_vectorized(self.curr_state[2], self.curr_state[:2], x_coords, y_coords, np.pi/6),
+        color_arr = np.where(is_in_ray_vectorized(self.curr_state[2], self.curr_state[:2], x_coords, y_coords, np.pi/4),
                                             green+red, 
                                             color_arr)
         
@@ -223,11 +223,11 @@ class GymEnvNav(Env):
 
 
     def is_in_ray(self, a_pose, target):
-        return np.abs(np.arctan(target[1]/target[0]) - a_pose) <= np.pi / 4
+        return np.abs(np.arctan(target[1]/target[0]) - a_pose) <= np.pi / 2
 
     ## get random sample to initialize uncertain problem
     def sample_belief_true(self):
-        return {'obs1': torch.tensor([6.0, 6.0]),
+        return {'obs1': self.obs_dist.sample(),
                 'target1': self.target_dist.sample()}
         # return {'obs1': torch.tensor([0.0, 0.0])}
         # rand = random.random() * 8

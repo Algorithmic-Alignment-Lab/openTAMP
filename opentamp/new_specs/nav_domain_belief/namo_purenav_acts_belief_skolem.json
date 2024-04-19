@@ -18,7 +18,7 @@
             {
                 "type": "PointingAtTarget",
                 "args": ["?robot", "?target"],
-                "active_timesteps": [1, 19]
+                "active_timesteps": [1, 5]
             },
             {
                 "type": "RobotAtSoftTarget",
@@ -51,11 +51,6 @@
                 "type": "IsStationary",
                 "args": ["?robot"],
                 "active_timesteps": [0, 18]
-            },
-            {
-                "type": "PointingAtTarget",
-                "args": ["?robot", "?target"],
-                "active_timesteps": [1, 19]
             },
             {
                 "type": "~CompletedMovement",
@@ -110,6 +105,11 @@
                 "active_timesteps": [0, 19]
             },
             {
+                "type": "PointingAtTarget",
+                "args": ["?robot", "?target"],
+                "active_timesteps": [1, 5]
+            },
+            {
                 "type": "RobotNearTarget",
                 "args": ["?robot", "?target"],
                 "active_timesteps": [19, 19]
@@ -142,22 +142,9 @@
                 "active_timesteps": [0, 18]
             },
             {
-                "type": "PointingAtTarget",
-                "args": ["?robot", "?target"],
-                "active_timesteps": [1, 19]
-            },
-            {
                 "type": "~CompletedMovement",
                 "args": ["?robot"],
                 "active_timesteps": [19, 19]
-            },
-            {
-                "forall": ["?w", "Obstacle"],
-                "pred": {
-                    "type": "BAvoidObs",
-                    "args": ["?robot", "?w"],
-                    "active_timesteps": [19, 18]
-                }
             },
             {
                 "type": "~RobotNearTarget",
@@ -209,6 +196,11 @@
                 "type": "RobotAtTarget",
                 "args": ["?robot", "?target"],
                 "active_timesteps": [19, 19]
+            },
+            {
+                "type": "PointingAtTarget",
+                "args": ["?robot", "?target"],
+                "active_timesteps": [1, 5]
             },
             {
                 "type": "CompletedMovement",

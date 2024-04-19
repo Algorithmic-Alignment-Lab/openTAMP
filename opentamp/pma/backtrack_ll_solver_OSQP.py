@@ -29,7 +29,7 @@ SAMPLE_SIZE = 5
 BASE_SAMPLE_SIZE = 5
 OSQP_EPS_ABS = 1e-06
 OSQP_EPS_REL = 1e-09
-OSQP_MAX_ITER = int(1e04)
+OSQP_MAX_ITER = int(1e05)
 OSQP_SIGMA = 1e-5
 INIT_TRUST_REGION_SIZE = 1e-2
 INIT_PENALTY_COEFF = 1e0
@@ -572,7 +572,7 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
             osqp_eps_abs=self.osqp_eps_abs, osqp_eps_rel=self.osqp_eps_rel,\
                 osqp_max_iter=self.osqp_max_iter, sigma=self.osqp_sigma,
                 adaptive_rho=self.adaptive_rho,)
-
+        
         # Update the values of the variables by leveraging the ll_param mapping
         self._update_ll_params()
         if priority >= 0:
