@@ -29,10 +29,10 @@ SAMPLE_SIZE = 5
 BASE_SAMPLE_SIZE = 5
 OSQP_EPS_ABS = 1e-06
 OSQP_EPS_REL = 1e-09
-OSQP_MAX_ITER = int(1e05)
+OSQP_MAX_ITER = int(1e07)
 OSQP_SIGMA = 1e-5
 INIT_TRUST_REGION_SIZE = 1e-2
-INIT_PENALTY_COEFF = 1e0
+INIT_PENALTY_COEFF = 1
 ADAPTIVE_RHO = True
 MAX_MERIT_INCR = 5
 RESAMPLE_ALL = False
@@ -419,12 +419,14 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
                     print("resample attempt: {} at priority {}".format(attempt, priority))
                     print("FAILED PREDICATES:")
                     print(plan.get_failed_preds(active_ts, priority=priority, tol=1e-3))
+                    # if not plan.get_failed_preds(active_ts, priority=priority, tol=1e-3):
+                    #     breakpoint()
                 
                 if success:
                     break
                 
             ## only break from solver priorities if there are actually SOME contraints being violated! 
-            if not success and plan.get_failed_preds(active_ts, priority=priority, tol=1e-3):
+            if not success:
                 break
 
         if DEBUG:
@@ -433,7 +435,7 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
 
         self._cleanup_plan(plan, active_ts)
 
-        return ((not plan.get_failed_preds(active_ts, priority=priority, tol=1e-3)) and (priority == self.solve_priorities[-1]))
+        return success
 
     # @profile
     def _solve_opt_prob(
@@ -566,13 +568,13 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
         else:
             solv.initial_penalty_coeff = self.init_penalty_coeff
         solv.max_merit_coeff_increases = self.max_merit_coeff_increases
-
+        
         # Call the solver on this problem now that it's been constructed
         success = solv.solve(self._prob, method="penalty_sqp", tol=tol, verbose=verbose,\
             osqp_eps_abs=self.osqp_eps_abs, osqp_eps_rel=self.osqp_eps_rel,\
                 osqp_max_iter=self.osqp_max_iter, sigma=self.osqp_sigma,
-                adaptive_rho=self.adaptive_rho,)
-        
+                adaptive_rho=self.adaptive_rho)
+                
         # Update the values of the variables by leveraging the ll_param mapping
         self._update_ll_params()
         if priority >= 0:
