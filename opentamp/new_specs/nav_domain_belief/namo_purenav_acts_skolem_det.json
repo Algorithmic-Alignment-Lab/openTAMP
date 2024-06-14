@@ -167,14 +167,7 @@
         ],
         "horizon": 20,
         "pre": [
-            {
-                "forall": ["?w", "Obstacle"],
-                "pred": {
-                    "type": "BAvoidObs",
-                    "args": ["?robot", "?w"],
-                    "active_timesteps": [19, 18]
-                }
-            }
+            
         ],
         "eff": [
             {
@@ -185,7 +178,7 @@
             {
                 "forall": ["?w", "Obstacle"],
                 "pred": {
-                    "type": "BAvoidObs",
+                    "type": "MLAvoidObs",
                     "args": ["?robot", "?w"],
                     "active_timesteps": [1, 19]
                 }

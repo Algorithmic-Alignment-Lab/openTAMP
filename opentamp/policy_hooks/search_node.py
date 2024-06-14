@@ -297,7 +297,7 @@ class LLSearchNode(SearchNode):
             anum = self.curr_plan.start
             st = self.curr_plan.actions[anum].active_timesteps[0]
         et = self.curr_plan.horizon - 1
-        failed_pred = self.curr_plan.get_failed_pred(active_ts=(st,et), hl_ignore=True, tol=5e-2)
+        failed_pred = self.curr_plan.get_failed_pred(active_ts=(st,et), hl_ignore=True, tol=1e-3)
         if hasattr(failed_pred[1], 'hl_ignore') and failed_pred[1].hl_ignore:
             return failed_pred[2], None, failed_pred[0]
         return failed_pred[2], failed_pred[1], failed_pred[0]

@@ -795,7 +795,7 @@ class RobotInWalls(ExprPredicate):
 
         A = np.array([[0., 1.],[0., -1.]])
         b = np.zeros((2, 1))
-        val = np.ones((2, 1)) * 2
+        val = np.ones((2, 1)) * 3
         aff_e = AffExpr(A, b)
         e = LEqExpr(aff_e, val)
         super(RobotInWalls, self).__init__(name, e, attr_inds, params, expected_param_types)
@@ -974,9 +974,10 @@ class PointingAtTarget(ExprPredicate):
             ]
         )
         col_expr = Expr(self.f, grad=self.grad_f)
-        val = np.zeros((2,1))
+        val = 0.25 * np.ones((4,1))
+
         # val = np.zeros((1, 1))
-        e = EqExpr(col_expr, val)
+        e = LEqExpr(col_expr, val)
         super(PointingAtTarget, self).__init__(name, e, attr_inds, params, expected_param_types, tol=1e-3, priority=0)
 
     def f(self, x):
@@ -988,7 +989,7 @@ class PointingAtTarget(ExprPredicate):
         f_res =  np.array([[relative_obs_dist * np.cos(x[2]).item() - relative_obs_pose[0]],
                          [relative_obs_dist * np.sin(x[2]).item() - relative_obs_pose[1]]])
 
-        # breakpoint()
+        f_res = np.concatenate([f_res, -f_res], axis=0)
         
         return f_res
 
@@ -1008,7 +1009,59 @@ class PointingAtTarget(ExprPredicate):
                           relative_obs_pose[0].item()/relative_obs_dist * np.sin(x[2]).item(), 
                           relative_obs_pose[1].item()/relative_obs_dist * np.sin(x[2]).item() - 1]])
         # return np.array([grad[0], -grad[0]])
+
+        grad = np.concatenate([grad, -grad], axis=0)
+
+        return grad
+
+class PointingAtTargetDotProd(ExprPredicate):
+
+    # RobotAt Robot Targ
+
+    def __init__(self, name, params, expected_param_types, env=None, sess=None, debug=False, dmove=dmove):
+        (self.r, self.obs) = params
+        ## constraints  |x_t - x_{t+1}| < dmove
+        ## ==> x_t - x_{t+1} < dmove, -x_t + x_{t+a} < dmove
+        attr_inds = OrderedDict(
+            [
+                (self.r, [
+                    ("pose", np.array([0, 1], dtype=np.int_)),
+                    ("theta", np.array([0], dtype=np.int_))
+                ]),
+                (self.obs, [
+                    ("value", np.array([0, 1], dtype=np.int_)),
+                ])
+            ]
+        )
+        col_expr = Expr(self.f, grad=self.grad_f)
+
+        val = np.zeros((1, 1))
+        e = EqExpr(col_expr, val)
+        super(PointingAtTargetDotProd, self).__init__(name, e, attr_inds, params, expected_param_types, tol=1e-3, priority=1)
+
+    def f(self, x):
         # breakpoint()
+        relative_obs_pose = (x[3:]-x[:2]).reshape((-1,))
+        relative_obs_dist = np.linalg.norm(relative_obs_pose)
+
+        # return np.array([diff, -diff])
+        f_res =  np.array([relative_obs_dist - np.cos(x[2]) * relative_obs_pose[0] - np.sin(x[2]) * relative_obs_pose[1]])
+        
+        return f_res
+
+    def grad_f(self, x):
+        # breakpoint()
+        relative_obs_pose = x[3:]-x[:2]
+        relative_obs_dist = np.linalg.norm(relative_obs_pose)
+
+        grad = np.array([
+            - relative_obs_pose[0]/relative_obs_dist + np.cos(x[2]),
+            - relative_obs_pose[1]/relative_obs_dist + np.sin(x[2]),
+            np.sin(x[2]) * relative_obs_pose[0] - np.cos(x[2]) * relative_obs_pose[1],
+            relative_obs_pose[0]/relative_obs_dist - np.cos(x[2]),
+            relative_obs_pose[1]/relative_obs_dist - np.sin(x[2])
+        ]).reshape(1,-1)
+
         return grad
 
 class VelValid(ExprPredicate):
@@ -4417,7 +4470,7 @@ class MLAvoidObs(ExprPredicate):
         val = -np.ones((1, 1)) * 4
         # val = np.zeros((1, 1))
         e = LEqExpr(col_expr, val)
-        super(MLAvoidObs, self).__init__(name, e, attr_inds, params, expected_param_types, priority=-1)
+        super(MLAvoidObs, self).__init__(name, e, attr_inds, params, expected_param_types, priority=0)
 
     def f(self, x):
         norm = np.sum(np.power(x[:2] - x[2:], 2))

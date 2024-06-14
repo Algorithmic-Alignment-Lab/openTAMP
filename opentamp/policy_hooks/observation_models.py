@@ -326,7 +326,7 @@ class ParticleFilterObstacleObservationModel(ObservationModel):
         # uninitialized parameters
         self.approx_params = {'weights'+str(os.getpid()): None, 'locs'+str(os.getpid()): None, 'scales'+str(os.getpid()): None}
         self.active_planned_observations = {'obs1': torch.empty((2,)).detach()}
-        self.obs_dist = 4.0
+        self.obs_dist = 6.0
     
     def is_in_ray(self, a_pose, target):
         ray_width = np.pi / 4  ## has 45-degree field of view on either side

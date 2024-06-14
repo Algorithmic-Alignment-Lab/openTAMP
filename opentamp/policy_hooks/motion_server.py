@@ -299,7 +299,7 @@ class MotionServer(Server):
             ## get minimal step for observation failure, if such a step exists
             for t in true_obs.keys():
                 for obj in true_obs[t].keys():
-                    if torch.linalg.vector_norm(true_obs[t][obj] - node.conditioned_obs[t][obj]) >= 0.01 and (replan_fail_step == -1 or replan_fail_step > t[1]):
+                    if torch.linalg.vector_norm(true_obs[t][obj] - node.conditioned_obs[t][obj]) >= 0.5 and (replan_fail_step == -1 or replan_fail_step > t[1]):
                         replan_fail_step = t[1]
             
             ## see if plan with new beliefs is still valid
@@ -372,7 +372,6 @@ class MotionServer(Server):
                 fail_pred = None
 
             if fail_pred is None:
-                breakpoint()
                 print('WARNING: Failure without failed constr?')
                 return
 

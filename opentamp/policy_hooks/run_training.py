@@ -181,8 +181,9 @@ def main():
 
     active = True
     start_t = time.time()
-    while active:
-        time.sleep(120.)
+    duration = config['run_time']
+    while active and (time.time() - start_t < duration or duration < 0):
+        time.sleep(60.)
         print('RUNNING...')
         active = False
         p_info = cur_main.check_processes()
@@ -190,10 +191,10 @@ def main():
         active = active or any([code is None for code in p_info])
         #if active: cur_main.expand_rollout_servers()
 
-    if not active:
-        cur_main.kill_processes()
-        print('\n\n\n\n\n\n\n\nEXITING')
-        sys.exit(0)
+    print('Time Elapsed -- Terminating program!')
+    cur_main.kill_processes()
+    print('\n\n\n\n\n\n\n\nEXITING')
+    sys.exit(0)
 
 
 def argsparser():
@@ -270,6 +271,7 @@ def argsparser():
     parser.add_argument('-imchannels', '--image_channels', type=int, default=3)
     parser.add_argument('-init_obs', '--incl_init_obs', action='store_true', default=False)
     parser.add_argument('-trans_obs', '--incl_trans_obs', action='store_true', default=False)
+    parser.add_argument('-run_time', '--run_time', type=int, default=-1)
 
     # HL args
     parser.add_argument('-check_t', '--check_prim_t', type=int, default=1)
@@ -323,6 +325,7 @@ def argsparser():
     parser.add_argument('-expl_suc', '--explore_success', type=int, default=5)
     parser.add_argument('-warmup', '--warmup_iters', type=int, default=300)
     parser.add_argument('-tfwarmup', '--tf_warmup_iters', type=int, default=0)
+
 
     # Old
     parser.add_argument('-her', '--her', action='store_true', default=False)

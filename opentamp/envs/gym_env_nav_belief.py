@@ -250,7 +250,7 @@ class GymEnvNav(Env):
 
     def set_belief_true(self, belief_dict):
         self.belief_true = belief_dict
-        self.curr_state[7:] = belief_dict['obs1']
+        self.curr_state[7:] = belief_dict['obs1'] 
         self.curr_state[3:5] = belief_dict['target1']
     
 
@@ -352,7 +352,7 @@ class GymEnvNavWrapper(GymEnvNav):
         goal_pos = self.target_dist.sample().detach().numpy()
 
         ## initalize to center
-        return np.concatenate((np.array([0.0, 0.0]), np.array([obstacle_angle]), np.array([12.0 + random.random(), 0.0 + random.random()]), np.array([8.0,0.]), obs))
+        return np.concatenate((np.array([0.0, 0.0]), np.array([obstacle_angle]), np.array([12.0, 1.0]), np.array([8.0,0.]), obs))
 
     # determine whether or not a given state satisfies a goal condition
     def assess_goal(self, condition, state, targets=None, cont=None):

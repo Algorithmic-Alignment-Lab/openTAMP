@@ -29,7 +29,7 @@ SAMPLE_SIZE = 5
 BASE_SAMPLE_SIZE = 5
 OSQP_EPS_ABS = 1e-06
 OSQP_EPS_REL = 1e-09
-OSQP_MAX_ITER = int(1e07)
+OSQP_MAX_ITER = int(3e04)
 OSQP_SIGMA = 1e-5
 INIT_TRUST_REGION_SIZE = 1e-2
 INIT_PENALTY_COEFF = 1
@@ -392,6 +392,7 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
             viewer = callback()
 
         highest_priority = -2
+        frames = []
         for priority in self.solve_priorities:
             highest_priority = priority
             if DEBUG: print('solving at priority', priority)
@@ -400,7 +401,7 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
                 ## refinement loop
                 success = self._solve_opt_prob(plan, priority=priority,
                                 callback=callback, active_ts=active_ts, verbose=verbose,
-                                init_traj=init_traj, debug=debug)
+                                init_traj=init_traj, debug=debug, frames=frames)
                 # success = len(plan.get_failed_preds(active_ts=active_ts, tol=1e-3)) == 0
 
                 # No point in resampling if the endpoints or linear constraints can't be satisfied
@@ -435,6 +436,13 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
 
         self._cleanup_plan(plan, active_ts)
 
+        # produce a GIF of optimization failure upon task refinement failure
+        # if not success:
+        #     from PIL import Image
+        #     images_proc = [Image.open(frame) for frame in frames]
+        #     images_proc[0].save('callback.gif', save_all=True, append_images=images_proc[1:], duration=500, loop=0)
+        #     breakpoint()
+
         return success
 
     # @profile
@@ -450,6 +458,7 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
         smoothing=False,
         init_traj=[],
         debug=False,
+        frames=[]
     ):
         if callback is not None:
             viewer = callback()
@@ -458,6 +467,9 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
             active_ts = (0, plan.horizon - 1)
 
         plan.save_free_attrs()  # Copies the current free_attrs
+
+        plots = []
+
         self._prob = Prob(callback=callback)
         self._spawn_parameter_to_ll_mapping(plan, active_ts)
 
@@ -512,7 +524,7 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
             )
             obj_bexprs.extend(rs_obj)
             self._add_obj_bexprs(obj_bexprs)
-            initial_trust_region_size = 1e3
+            # initial_trust_region_size = 1e3
 
         else:
             self._bexpr_to_pred = {}
@@ -533,7 +545,7 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
                     add_nonlin=False,
                 )
                 tol = 1e-3
-                initial_trust_region_size = 1e3
+                # initial_trust_region_size = 1e3
 
             elif priority == -1:
                 """
@@ -568,13 +580,75 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
         else:
             solv.initial_penalty_coeff = self.init_penalty_coeff
         solv.max_merit_coeff_increases = self.max_merit_coeff_increases
+
+        import matplotlib.pyplot as plt
+        from io import BytesIO
+
+        def tmp_callback(prob, plan, active_ts):
+            theta_buff = {}
+            pose_0_buff = {}
+            pose_1_buff = {}
+            obs_pose_0 = None
+            obs_pose_1 = None
+            targ_pose_0 = None
+            targ_pose_1 = None
+
+
+            for var in prob._osqp_vars:
+                name = var.var_name
+                if name.startswith('(pr2-pose-(0, '):
+                    pose_0_buff[int(name[len('(pr2-pose-(0, '):-2])] = var.val
+                elif name.startswith('(pr2-pose-(1, '): 
+                    pose_1_buff[int(name[len('(pr2-pose-(1, '):-2])] = var.val
+                elif name.startswith('(pr2-theta-(0, '):
+                    theta_buff[int(name[len('(pr2-theta-(0, '):-2])] = var.val
+                elif name.startswith('(obs1-value-(0, '):
+                    obs_pose_0 = var.val
+                elif name.startswith('(obs1-value-(1, '):
+                    obs_pose_1 = var.val
+                elif name.startswith('(target1-value-(0, '):
+                    targ_pose_0 = var.val
+                elif name.startswith('(target1-value-(1, '):
+                    targ_pose_1 = var.val
+
+            plt.plot(np.array([pose_0_buff[i] for i in range(len(pose_0_buff))]), np.array([pose_1_buff[i] for i in range(len(pose_1_buff))]), 'b-')
+            plt.xlim(-1, 15)
+            plt.ylim(-5, 5)
+            plt.plot(obs_pose_0, obs_pose_1, 'go')
+            plt.plot(targ_pose_0, targ_pose_1, 'gx')
+            for i in range(len(pose_0_buff)):
+                plt.arrow(
+                    pose_0_buff[i], 
+                    pose_1_buff[i], 
+                    np.cos(theta_buff[i]), 
+                    np.sin(theta_buff[i]), 
+                    color='red'
+                )
+
+            plt.plot(plan.params['obs1'].belief.samples[:, 0, active_ts[0]], 
+                    plan.params['obs1'].belief.samples[:, 1, active_ts[0]],
+                    'ro')
+
+            buf = BytesIO()
+            plt.savefig(buf, format='png')
+            plt.clf() 
+            
+            frames.append(buf)
+
+        ## initializes the callback to local scope
+        self._prob._callback = lambda : tmp_callback(self._prob, plan, active_ts)
         
         # Call the solver on this problem now that it's been constructed
         success = solv.solve(self._prob, method="penalty_sqp", tol=tol, verbose=verbose,\
             osqp_eps_abs=self.osqp_eps_abs, osqp_eps_rel=self.osqp_eps_rel,\
                 osqp_max_iter=self.osqp_max_iter, sigma=self.osqp_sigma,
                 adaptive_rho=self.adaptive_rho)
-                
+        
+        # images_proc = [Image.open(frame) for frame in images]
+        # images_proc[0].save('callback.gif', save_all=True, append_images=images_proc[1:], duration=500, loop=0)
+
+        # breakpoint()
+
         # Update the values of the variables by leveraging the ll_param mapping
         self._update_ll_params()
         if priority >= 0:

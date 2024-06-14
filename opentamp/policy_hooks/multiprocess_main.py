@@ -452,7 +452,6 @@ class MultiProcessMain(object):
         for p in self.processes:
             if p.is_alive(): p.terminate()
 
-
     def terminate_processes(self):
         for p in self.processes:
             if p.is_alive(): p.terminate()
@@ -474,7 +473,6 @@ class MultiProcessMain(object):
 
         signal.signal(signal.SIGINT, lambda sig, frame: self.terminate_processes())
         self.spawn_servers(self.config)
-
 
         if self.config['debug'] or self.config['plan_only']:
             self.start_servers_debug()  # iterates in single thread
