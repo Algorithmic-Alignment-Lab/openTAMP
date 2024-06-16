@@ -20,7 +20,7 @@ class GymEnvNav(Env):
     def assemble_dist(self):
         weights = torch.tensor([0.6,0.4])
         locs = torch.tensor([[6., 0.],
-                             [8., 0.]])
+                             [6., 5.]])
         scales = torch.tensor([1., 1.])
         cat_dist = distros.Categorical(probs=weights)
         stack_eye = torch.tile(torch.eye(2).unsqueeze(dim=0), dims=(2, 1, 1))
@@ -352,7 +352,7 @@ class GymEnvNavWrapper(GymEnvNav):
         goal_pos = self.target_dist.sample().detach().numpy()
 
         ## initalize to center
-        return np.concatenate((np.array([0.0, 0.0]), np.array([obstacle_angle]), np.array([12.0, 1.0]), np.array([8.0,0.]), obs))
+        return np.concatenate((np.array([0.0, 0.0]), np.array([obstacle_angle]), goal_pos, np.array([8.0,0.]), obs))
 
     # determine whether or not a given state satisfies a goal condition
     def assess_goal(self, condition, state, targets=None, cont=None):
