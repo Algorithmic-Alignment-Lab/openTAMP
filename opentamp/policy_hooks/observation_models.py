@@ -447,10 +447,14 @@ class ParticleFilterObstacleObservationModel(ObservationModel):
             else: 
                 probs[idx] = torch.exp(dist.MultivariateNormal(torch.zeros((2,)), 0.01 * torch.eye(2)).log_prob(curr_obs['obs1']))
         
-        select_idx = torch.multinomial(probs, num_samples=rejuv_samples.shape[0], replacement=True)
+        try:
+            select_idx = torch.multinomial(probs, num_samples=rejuv_samples.shape[0], replacement=True)
 
-        particles = {}
-        particles['belief_obs1'] = rejuv_samples[select_idx, :]
+            particles = {}
+            particles['belief_obs1'] = rejuv_samples[select_idx, :]
+        except:
+            ## if, e.g., the probs array is numerically challenged, then simply don't alter the particles upon this observation
+            particles = obstacle_particles
 
         return particles
 
