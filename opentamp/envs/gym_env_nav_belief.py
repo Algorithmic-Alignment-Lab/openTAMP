@@ -31,8 +31,8 @@ class GymEnvNav(Env):
 
         weights = torch.tensor([0.7,0.3])
         locs = torch.tensor([[12., 0.],
-                             [8., 0.]])
-        scales = torch.tensor([0.6, 0.4])
+                             [12., 0.]])
+        scales = torch.tensor([1.0, 1.0])
         cat_dist = distros.Categorical(probs=weights)
         stack_eye = torch.tile(torch.eye(2).unsqueeze(dim=0), dims=(2, 1, 1))
         stack_scale = torch.tile(scales.unsqueeze(dim=1).unsqueeze(dim=2), dims=(1, 2, 2))
@@ -75,18 +75,18 @@ class GymEnvNav(Env):
         #         lidar_obs[detect_idx] = obstacle_rel_distance
 
         cam_angle = (self.curr_state[2]+np.pi)%(2*np.pi) - np.pi
-        if np.abs(cam_angle - obstacle_angle) <= np.pi/4 and np.linalg.norm(obstacle_rel_pos) <= 6.0:
-            obs_view =  obstacle_rel_pos
-        else:
-            obs_view = np.array([-10.0, -10.0])
+        # if np.abs(cam_angle - obstacle_angle) <= np.pi/4 and np.linalg.norm(obstacle_rel_pos) <= 6.0:
+        obs_view =  obstacle_rel_pos
+        # else:
+        #     obs_view = np.array([-10.0, -10.0])
 
         target_rel_pos = (self.curr_state[3:5] - self.curr_state[:2]) * 1 
-        target_abs_angle = np.arctan(target_rel_pos[1]/target_rel_pos[0]) if np.abs(target_rel_pos[0]) > 0.001 else (np.pi/2 if target_rel_pos[1]*target_rel_pos[0]>0 else -np.pi/2)
-        target_angle = target_abs_angle if target_rel_pos[0] >= 0  else (target_abs_angle + np.pi if -np.pi/2 <= target_abs_angle < 0 else target_abs_angle - np.pi)
-        if np.abs(cam_angle - target_angle) <= np.pi/4 and np.linalg.norm(target_rel_pos) <= 6.0:
-            targ_view = target_rel_pos
-        else:
-            targ_view = np.array([-10.0, -10.0])
+        # target_abs_angle = np.arctan(target_rel_pos[1]/target_rel_pos[0]) if np.abs(target_rel_pos[0]) > 0.001 else (np.pi/2 if target_rel_pos[1]*target_rel_pos[0]>0 else -np.pi/2)
+        # target_angle = target_abs_angle if target_rel_pos[0] >= 0  else (target_abs_angle + np.pi if -np.pi/2 <= target_abs_angle < 0 else target_abs_angle - np.pi)
+        # if np.abs(cam_angle - target_angle) <= np.pi/4 and np.linalg.norm(target_rel_pos) <= 6.0:
+        targ_view = target_rel_pos
+        # else:
+        #     targ_view = np.array([-10.0, -10.0])
 
         self.curr_obs = np.concatenate([self.curr_state[:3], obs_view, targ_view])
 
@@ -360,7 +360,7 @@ class GymEnvNavWrapper(GymEnvNav):
         goal_rel_pose = self.curr_state[3:5] - self.curr_state[:2]
         # if pointing directly at the object
 
-        if np.linalg.norm(goal_rel_pose) <= 2.0:
+        if np.linalg.norm(goal_rel_pose) <= 1.0:
             return 0.0
         else:
             return 1.0

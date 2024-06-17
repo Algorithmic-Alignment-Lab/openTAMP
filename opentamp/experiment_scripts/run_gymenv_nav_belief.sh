@@ -7,7 +7,7 @@
 
 # runs the main job
 
-TRIAL_NAME='belief_nav_dettrial_simplecontrol'
+TRIAL_NAME='nav_dettrial_simplecontrol_fullobs'
 
 python3 -W ignore policy_hooks/run_training.py -c new_specs.nav_domain_belief.new_env_hyperparam \
                                                 -no 1 -llus 1000  -hlus 1000 \
@@ -26,6 +26,7 @@ python3 -W ignore policy_hooks/run_training.py -c new_specs.nav_domain_belief.ne
                                                 -task 1 \
                                                 -post -pre \
                                                 -warm 1000 \
+                                                -run_time 3600 \
                                                 -neg_ratio 0. -opt_ratio 1.0 -dagger_ratio 0.0 \
 						-descr $TRIAL_NAME
 
@@ -51,7 +52,7 @@ python3 -W ignore -m cProfile -o profile_out policy_hooks/run_training.py -c new
                                                 -neg_ratio 0. -opt_ratio 0.9 -dagger_ratio 0.1 \
                                                 -ind 0 \
 						-descr $TRIAL_NAME \
-                                                -test namo_objs1_1/$TRIAL_NAME \
+                                                -test namo_objs1_1/${TRIAL_NAME}_0 \
                                                 -render
 
 # pkill -f ros -9

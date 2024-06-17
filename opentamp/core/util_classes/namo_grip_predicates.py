@@ -795,7 +795,7 @@ class RobotInWalls(ExprPredicate):
 
         A = np.array([[0., 1.],[0., -1.]])
         b = np.zeros((2, 1))
-        val = np.ones((2, 1)) * 3
+        val = np.ones((2, 1)) * 4
         aff_e = AffExpr(A, b)
         e = LEqExpr(aff_e, val)
         super(RobotInWalls, self).__init__(name, e, attr_inds, params, expected_param_types)
@@ -4467,7 +4467,7 @@ class MLAvoidObs(ExprPredicate):
             ]
         )
         col_expr = Expr(self.f, grad=self.grad_f)
-        val = -np.ones((1, 1)) * 4
+        val = -np.ones((1, 1)) * 2
         # val = np.zeros((1, 1))
         e = LEqExpr(col_expr, val)
         super(MLAvoidObs, self).__init__(name, e, attr_inds, params, expected_param_types, priority=0)
@@ -4498,7 +4498,7 @@ class BAvoidObs(ExprPredicate):
             ]
         )
         col_expr = Expr(self.f, grad=self.grad_f)
-        val = -np.ones((self.rt.belief.samples.shape[0], 1)) * 1
+        val = -np.ones((self.rt.belief.samples.shape[0], 1)) * 2.0
         # val = np.zeros((1, 1))
         e = LEqEpsExpr(col_expr, val, conf=0.95)
         super(BAvoidObs, self).__init__(name, e, attr_inds, params, expected_param_types, priority=0)
