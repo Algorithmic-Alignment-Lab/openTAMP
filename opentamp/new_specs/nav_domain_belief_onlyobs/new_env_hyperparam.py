@@ -202,9 +202,9 @@ def refresh_config(no=NUM_OBJS, nt=NUM_TARGS):
         'gym_env_type': GymEnvNavWrapper,
         'mp_solver_type': ToySolver,
         'll_solver_type': ToySolver,
-        'meta_file': opentamp.__path__._path[0] + '/new_specs/nav_domain_belief/namo_purenav_meta.json',
-        'acts_file': opentamp.__path__._path[0] + '/new_specs/nav_domain_belief/namo_purenav_acts_belief_skolem.json',
-        'prob_file': opentamp.__path__._path[0] + '/new_specs/nav_domain_belief/namo_purenav_prob.json',
+        'meta_file': opentamp.__path__._path[0] + '/new_specs/nav_domain_belief_onlyobs/namo_purenav_meta.json',
+        'acts_file': opentamp.__path__._path[0] + '/new_specs/nav_domain_belief_onlyobs/namo_purenav_acts_belief_skolem.json',
+        'prob_file': opentamp.__path__._path[0] + '/new_specs/nav_domain_belief_onlyobs/namo_purenav_prob.json',
         'observation_model': ParticleFilterObstacleObservationModel,
         'n_dirs': N_DIRS,
 

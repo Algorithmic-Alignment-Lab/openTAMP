@@ -1,0 +1,48 @@
+{
+    "types": ["Robot", "Target", "SoftTarget",  "Obstacle"],
+    "attribute_imports": {
+        "opentamp.core.util_classes.matrix": ["Vector1d", "Vector2d","Vector3d"],
+        "opentamp.core.util_classes.beliefs": ["MixedIsotropic2DGaussianPrior"]
+    },
+    "predicates_import_path": "opentamp.core.util_classes.namo_grip_predicates",
+    "type_attrs": {
+        "Target": {
+            "value": "Vector2d",
+            "belief": "MixedIsotropic2DGaussianPrior"
+        },
+        "SoftTarget": {
+            "value": "Vector2d"
+        },
+        "Obstacle": {
+            "value": "Vector2d",
+            "belief": "MixedIsotropic2DGaussianPrior"
+        },
+        "Robot": {
+            "pose": "Vector2d",
+            "theta": "Vector1d"
+        }
+    },
+    "predicates": {
+        "RobotNearTarget": ["Robot", "Target"],
+        "RobotCloseToTarget": ["Robot", "SoftTarget"],
+        "IsMP": ["Robot"],
+        "IsStationary": ["Robot"],
+        "BAvoidObs": ["Robot", "Obstacle"],
+        "MLAvoidObs": ["Robot", "Obstacle"],
+        "PointingAtObs": ["Robot", "Obstacle"],
+        "PointingAtTargetDotProd": ["Robot", "Target"],
+        "CertainObs": ["Obstacle"],
+        "CertainObsOrClearPath": ["Obstacle", "Target"], 
+        "PerformedInitObs": ["Robot"],
+        "NotPerformedInitObs": ["Robot"],
+        "CompletedMovement": ["Robot"],
+        "PathClear": ["Robot", "Target", "Obstacle"],
+        "CertainTarget": ["Target"],
+        "ConfirmedTarget": ["Target"],
+        "PointingAtOrigin": ["Robot"],
+        "RobotAtOrigin": ["Robot"],
+        "RobotInWalls": ["Robot"],
+        "RobotAtTarget": ["Robot", "Target"],
+        "RobotAtSoftTarget": ["Robot", "SoftTarget"]
+    }
+}

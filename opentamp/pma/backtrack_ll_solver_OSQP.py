@@ -625,9 +625,9 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
                     color='red'
                 )
 
-            plt.plot(plan.params['obs1'].belief.samples[:, 0, active_ts[0]], 
-                    plan.params['obs1'].belief.samples[:, 1, active_ts[0]],
-                    'ro')
+            # plt.plot(plan.params['obs1'].belief.samples[:, 0, active_ts[0]], 
+            #         plan.params['obs1'].belief.samples[:, 1, active_ts[0]],
+            #         'ro')
 
             buf = BytesIO()
             plt.savefig(buf, format='png')

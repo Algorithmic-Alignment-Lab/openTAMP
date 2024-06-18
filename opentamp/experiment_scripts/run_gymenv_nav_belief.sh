@@ -7,9 +7,9 @@
 
 # runs the main job
 
-TRIAL_NAME='nav_dettrial_simplecontrol_fullobs'
+TRIAL_NAME='nav_dettrial_fullobs_debugsim'
 
-python3 -W ignore policy_hooks/run_training.py -c new_specs.nav_domain_belief.new_env_hyperparam \
+python3 -W ignore policy_hooks/run_training.py -c new_specs.nav_domain_belief_dettest.new_env_hyperparam \
                                                 -no 1 -llus 1000  -hlus 1000 \
                                                 -spl -mask -hln 2 -lln 2 -hldim 32 -lldim 32 \
                                                 -retime -vel 0.3 -eta 5 -softev \
@@ -20,7 +20,7 @@ python3 -W ignore policy_hooks/run_training.py -c new_specs.nav_domain_belief.ne
                                                 --permute_hl 1 \
                                                 -expl_wt 10 -expl_eta 4 \
                                                 -col_coeff 0.0 \
-                                                -motion 48 \
+                                                -motion 12 \
                                                 -n_gpu 1 \
                                                 -rollout 5 \
                                                 -task 1 \
@@ -32,7 +32,7 @@ python3 -W ignore policy_hooks/run_training.py -c new_specs.nav_domain_belief.ne
 
 # adds renders after job is done -- majority of options here ignored
 
-python3 -W ignore -m cProfile -o profile_out policy_hooks/run_training.py -c new_specs.nav_domain_belief.new_env_hyperparam \
+python3 -W ignore -m cProfile -o profile_out policy_hooks/run_training.py -c new_specs.nav_domain_belief_dettest.new_env_hyperparam \
                                                 -no 1 -llus 100  -hlus 100 \
                                                 -spl -mask -hln 2 -hldim 256 -lldim 256 \
                                                 -retime -vel 0.3 -eta 5 -softev \

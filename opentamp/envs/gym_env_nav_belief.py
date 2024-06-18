@@ -250,14 +250,15 @@ class GymEnvNav(Env):
 
     def set_belief_true(self, belief_dict):
         self.belief_true = belief_dict
-        self.curr_state[7:] = belief_dict['obs1'] 
-        self.curr_state[3:5] = belief_dict['target1']
+        # self.curr_state[7:] = belief_dict['obs1'] 
+        # self.curr_state[3:5] = belief_dict['target1']
     
 
 class GymEnvNavWrapper(GymEnvNav):
     def reset_to_state(self, state):
-        self.curr_state[:3] = state[:3]
-        self.curr_state[5:7] = state[5:7]
+        # self.curr_state[:3] = state[:3]
+        # self.curr_state[5:7] = state[5:7]
+        self.curr_state = state
         self.curr_obs = np.array([0.0]*7)
         self.constraint_viol = False
         return self.curr_obs
@@ -350,6 +351,9 @@ class GymEnvNavWrapper(GymEnvNav):
 
         obs = self.obs_dist.sample().detach().numpy()
         goal_pos = self.target_dist.sample().detach().numpy()
+
+        self.curr_state[7:] = obs
+        self.curr_state[3:5] = goal_pos
 
         ## initalize to center
         return np.concatenate((np.array([0.0, 0.0]), np.array([obstacle_angle]), goal_pos, np.array([8.0,0.]), obs))

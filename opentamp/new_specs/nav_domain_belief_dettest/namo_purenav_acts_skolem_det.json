@@ -167,11 +167,6 @@
         ],
         "horizon": 20,
         "pre": [
-            {
-                "type": "CertainTarget",
-                "args": ["?target"],
-                "active_timesteps": [1, 0]
-            }
         ],
         "eff": [
             {
@@ -182,7 +177,7 @@
             {
                 "forall": ["?w", "Obstacle"],
                 "pred": {
-                    "type": "BAvoidObs",
+                    "type": "MLAvoidObs",
                     "args": ["?robot", "?w"],
                     "active_timesteps": [1, 19]
                 }

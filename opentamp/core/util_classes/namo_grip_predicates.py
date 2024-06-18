@@ -1035,8 +1035,8 @@ class PointingAtTargetDotProd(ExprPredicate):
         )
         col_expr = Expr(self.f, grad=self.grad_f)
 
-        val = np.zeros((1, 1))
-        e = EqExpr(col_expr, val)
+        val = np.ones((2, 1)) * 1e-2
+        e = LEqExpr(col_expr, val)
         super(PointingAtTargetDotProd, self).__init__(name, e, attr_inds, params, expected_param_types, tol=1e-3, priority=1)
 
     def f(self, x):
@@ -1045,7 +1045,8 @@ class PointingAtTargetDotProd(ExprPredicate):
         relative_obs_dist = np.linalg.norm(relative_obs_pose)
 
         # return np.array([diff, -diff])
-        f_res =  np.array([relative_obs_dist - np.cos(x[2]) * relative_obs_pose[0] - np.sin(x[2]) * relative_obs_pose[1]])
+        f_val = relative_obs_dist - np.cos(x[2]) * relative_obs_pose[0] - np.sin(x[2]) * relative_obs_pose[1]
+        f_res =  np.array([f_val, -f_val])
         
         return f_res
 
@@ -1054,13 +1055,15 @@ class PointingAtTargetDotProd(ExprPredicate):
         relative_obs_pose = x[3:]-x[:2]
         relative_obs_dist = np.linalg.norm(relative_obs_pose)
 
-        grad = np.array([
+        grad_int = np.array([
             - relative_obs_pose[0]/relative_obs_dist + np.cos(x[2]),
             - relative_obs_pose[1]/relative_obs_dist + np.sin(x[2]),
             np.sin(x[2]) * relative_obs_pose[0] - np.cos(x[2]) * relative_obs_pose[1],
             relative_obs_pose[0]/relative_obs_dist - np.cos(x[2]),
             relative_obs_pose[1]/relative_obs_dist - np.sin(x[2])
         ]).reshape(1,-1)
+
+        grad = np.concatenate([grad_int, -grad_int])
 
         return grad
 
