@@ -437,11 +437,20 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
         self._cleanup_plan(plan, active_ts)
 
         # produce a GIF of optimization failure upon task refinement failure
-        if not success:
-            from PIL import Image
-            images_proc = [Image.open(frame) for frame in frames]
-            images_proc[0].save('callback.gif', save_all=True, append_images=images_proc[1:], duration=500, loop=0)
-            breakpoint()
+        # if not success:
+        #     from PIL import Image
+        #     images_proc = [Image.open(frame) for frame in frames]
+        #     images_proc[0].save('callback.gif', save_all=True, append_images=images_proc[1:], duration=500, loop=0)
+            
+        #     max_vio = 0.0
+        #     max_cnt = None
+        #     for bound_expr in self._prob._nonlin_cnt_exprs:
+        #         cnt_vio = self._prob._compute_cnt_violation(bound_expr)
+        #         cnt_max_vio = np.amax(cnt_vio)
+        #         max_vio = np.maximum(max_vio, cnt_max_vio)
+        #         max_cnt = bound_expr
+            
+        #     breakpoint()
 
         return success
 
@@ -647,7 +656,6 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
         # images_proc = [Image.open(frame) for frame in images]
         # images_proc[0].save('callback.gif', save_all=True, append_images=images_proc[1:], duration=500, loop=0)
 
-        # breakpoint()
 
         # Update the values of the variables by leveraging the ll_param mapping
         self._update_ll_params()
