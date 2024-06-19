@@ -437,11 +437,11 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
         self._cleanup_plan(plan, active_ts)
 
         # produce a GIF of optimization failure upon task refinement failure
-        # if not success:
-        #     from PIL import Image
-        #     images_proc = [Image.open(frame) for frame in frames]
-        #     images_proc[0].save('callback.gif', save_all=True, append_images=images_proc[1:], duration=500, loop=0)
-        #     breakpoint()
+        if not success:
+            from PIL import Image
+            images_proc = [Image.open(frame) for frame in frames]
+            images_proc[0].save('callback.gif', save_all=True, append_images=images_proc[1:], duration=500, loop=0)
+            breakpoint()
 
         return success
 
@@ -584,7 +584,7 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
         import matplotlib.pyplot as plt
         from io import BytesIO
 
-        def tmp_callback(prob, plan, active_ts):
+        def tmp_callback(prob, plan, active_ts, priority):
             theta_buff = {}
             pose_0_buff = {}
             pose_1_buff = {}
@@ -636,7 +636,7 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
             frames.append(buf)
 
         ## initializes the callback to local scope
-        self._prob._callback = lambda : tmp_callback(self._prob, plan, active_ts)
+        self._prob._callback = lambda : tmp_callback(self._prob, plan, active_ts, priority)
         
         # Call the solver on this problem now that it's been constructed
         success = solv.solve(self._prob, method="penalty_sqp", tol=tol, verbose=verbose,\
@@ -653,6 +653,8 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
         self._update_ll_params()
         if priority >= 0:
             failed_preds = plan.get_failed_preds(tol=tol, active_ts=active_ts, priority=priority)
+            # if not success and not failed_preds:
+            #     breakpoint()
             success = success and len(failed_preds) == 0
 
         """
@@ -1067,6 +1069,9 @@ class BacktrackLLSolverOSQP(LLSolverOSQP):
         """
         Adding only non-linear constraints on the first and last timesteps of each action.
         """
+        # if add_nonlin:
+        #     breakpoint()
+
         if active_ts is None:
             active_ts = (0, plan.horizon - 1)
 

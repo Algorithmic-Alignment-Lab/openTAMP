@@ -18,9 +18,9 @@ class GymEnvNav(Env):
         self.constraint_viol = False
 
     def assemble_dist(self):
-        weights = torch.tensor([0.6,0.4])
-        locs = torch.tensor([[6., 0.],
-                             [6., 5.]])
+        weights = torch.tensor([0.5,0.5])
+        locs = torch.tensor([[6., -2.],
+                             [6., 2.]])
         scales = torch.tensor([1., 1.])
         cat_dist = distros.Categorical(probs=weights)
         stack_eye = torch.tile(torch.eye(2).unsqueeze(dim=0), dims=(2, 1, 1))
@@ -29,9 +29,9 @@ class GymEnvNav(Env):
         batched_multivar = distros.MultivariateNormal(loc=locs, covariance_matrix=cov_tensor)
         obs_dist = distros.MixtureSameFamily(cat_dist, batched_multivar)
 
-        weights = torch.tensor([0.7,0.3])
-        locs = torch.tensor([[12., 0.],
-                             [12., 0.]])
+        weights = torch.tensor([0.5,0.5])
+        locs = torch.tensor([[12., 2.],
+                             [12., -2.]])
         scales = torch.tensor([1.0, 1.0])
         cat_dist = distros.Categorical(probs=weights)
         stack_eye = torch.tile(torch.eye(2).unsqueeze(dim=0), dims=(2, 1, 1))
@@ -91,7 +91,7 @@ class GymEnvNav(Env):
         self.curr_obs = np.concatenate([self.curr_state[:3], obs_view, targ_view])
 
         # if too close to object, indicate that the current trajectory violated a safety constraint
-        if obstacle_rel_distance <= 1.0:
+        if obstacle_rel_distance <= 1.5:
             self.constraint_viol = True
 
         # self.curr_obs = np.concatenate((self.curr_obs)) ## add norm of destination as proxy for speed
@@ -157,7 +157,7 @@ class GymEnvNav(Env):
                                             color_arr)
         
         ## coloring in the safety constraint
-        color_arr = np.where(is_close_to_obj_vectorized(self.curr_state[7:], x_coords, y_coords, r=1.0),
+        color_arr = np.where(is_close_to_obj_vectorized(self.curr_state[7:], x_coords, y_coords, r=1.5),
                                     orange, 
                                     color_arr)
 

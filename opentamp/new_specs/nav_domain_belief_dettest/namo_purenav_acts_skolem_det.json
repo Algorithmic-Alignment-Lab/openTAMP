@@ -165,42 +165,42 @@
             ["?target", "Target"],
             ["?softtarget", "SoftTarget"]
         ],
-        "horizon": 20,
+        "horizon": 40,
         "pre": [
         ],
         "eff": [
             {
                 "type": "IsMP",
                 "args": ["?robot"],
-                "active_timesteps": [0, 18]
+                "active_timesteps": [0, 38]
             },
             {
                 "forall": ["?w", "Obstacle"],
                 "pred": {
                     "type": "MLAvoidObs",
                     "args": ["?robot", "?w"],
-                    "active_timesteps": [1, 19]
+                    "active_timesteps": [1, 39]
                 }
             },
             {
                 "type": "RobotInWalls",
                 "args": ["?robot"],
-                "active_timesteps": [0, 19]
+                "active_timesteps": [0, 39]
             },
             {
                 "type": "RobotAtTarget",
                 "args": ["?robot", "?target"],
-                "active_timesteps": [19, 19]
+                "active_timesteps": [39, 39]
             },
             {
                 "type": "PointingAtTargetDotProd",
                 "args": ["?robot", "?target"],
-                "active_timesteps": [1, 10]
+                "active_timesteps": [1, 20]
             },
             {
                 "type": "CompletedMovement",
                 "args": ["?robot"],
-                "active_timesteps": [19, 19]
+                "active_timesteps": [39, 39]
             }
         ]
     }

@@ -4470,7 +4470,7 @@ class MLAvoidObs(ExprPredicate):
             ]
         )
         col_expr = Expr(self.f, grad=self.grad_f)
-        val = -np.ones((1, 1)) * 2
+        val = -np.ones((1, 1)) * 4
         # val = np.zeros((1, 1))
         e = LEqExpr(col_expr, val)
         super(MLAvoidObs, self).__init__(name, e, attr_inds, params, expected_param_types, priority=0)
@@ -4591,7 +4591,7 @@ class IsMP(ExprPredicate):
                      [0, -1, 0, 1]])
        b = np.zeros((4, 1))
        e = LEqExpr(AffExpr(A, b), dmove*np.ones((4, 1)))
-       super(IsMP, self).__init__(name, e, attr_inds, params, expected_param_types, active_range=(0,1), priority=-2, tol=1e-2)
+       super(IsMP, self).__init__(name, e, attr_inds, params, expected_param_types, active_range=(0,1), priority=-2, tol=1e-3)
 
 class IsStationary(ExprPredicate):
 
