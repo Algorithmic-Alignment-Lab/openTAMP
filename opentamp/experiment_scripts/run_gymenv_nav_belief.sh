@@ -7,7 +7,7 @@
 
 # runs the main job
 
-TRIAL_NAME='nav_dettrial_fullobs_bimodalwideavoid_medinit'
+TRIAL_NAME='nav_dettrial_fullobs_bimodalwideavoid_highimit_smallobs'
 
 python3 -W ignore policy_hooks/run_training.py -c new_specs.nav_domain_belief_dettest.new_env_hyperparam \
                                                 -no 1 -llus 1000  -hlus 1000 \
