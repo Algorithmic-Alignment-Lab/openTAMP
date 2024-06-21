@@ -346,7 +346,7 @@ class RolloutServer(Server):
         #     self.last_hl_test = time.time()
         # self.agent._eval_mode = False
         # self.agent.debug = True
-        return avg_val, avg_viol, path, samp, x0
+        return avg_val, avg_viol, path, samp, x0, (val == 0) or (constraint_viol == 1)
 
 
     def deploy(self, rlen=None, save=True, ckpt_ind=None,
