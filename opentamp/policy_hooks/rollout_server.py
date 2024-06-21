@@ -421,7 +421,7 @@ class RolloutServer(Server):
                 node.path = path
                 node.belief_true = samp
                 node.observation_model = self._hyperparams['observation_model']()
-                self.push_queue(node, self.task_queue)
+                # self.push_queue(node, self.task_queue)
 
             if self.run_hl_test: 
                 if self.debug or self.plan_only:
