@@ -346,7 +346,7 @@ class RolloutServer(Server):
         #     self.last_hl_test = time.time()
         # self.agent._eval_mode = False
         # self.agent.debug = True
-        return avg_val, avg_viol, path, samp
+        return avg_val, avg_viol, path, samp, x0
 
 
     def deploy(self, rlen=None, save=True, ckpt_ind=None,
@@ -408,7 +408,7 @@ class RolloutServer(Server):
                 self.agent.reset(0)
                 n_plans = self._hyperparams['policy_opt']['buffer_sizes']['n_plans'].value
                 save_video = self.id.find('test') >= 0
-                val, viol, path, samp = self.test_hl(save_video=save_video)
+                val, viol, path, samp, x0 = self.test_hl(save_video=save_video)
 
                 ## issue a sample rollout from this trial to the task server
                 # targets = node.targets
@@ -417,7 +417,7 @@ class RolloutServer(Server):
                 #     if s.task[0] == 2:
                 #         terminal_idx = idx
                 #         break
-                node = self.spawn_problem()  # spawn a planning instance
+                node = self.spawn_problem(x0=x0)  # spawn a planning instance
                 node.path = path
                 node.belief_true = samp
                 node.observation_model = self._hyperparams['observation_model']()
