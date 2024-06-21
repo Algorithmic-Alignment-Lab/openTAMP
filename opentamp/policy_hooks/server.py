@@ -169,7 +169,7 @@ class Server(object):
 
 
     def spawn_problem(self, x0=None, targets=None):
-        if x0 is None or targets is None:
+        if x0 is None:
             x0, targets = self.new_problem()
 
         initial, goal = self.agent.get_hl_info(x0, targets)
