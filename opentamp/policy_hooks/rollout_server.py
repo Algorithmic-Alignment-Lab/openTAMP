@@ -408,7 +408,7 @@ class RolloutServer(Server):
                 self.agent.reset(0)
                 n_plans = self._hyperparams['policy_opt']['buffer_sizes']['n_plans'].value
                 save_video = self.id.find('test') >= 0
-                val, viol, path, samp, x0 = self.test_hl(save_video=save_video)
+                val, viol, path, samp, x0, failure = self.test_hl(save_video=save_video)
 
                 ## issue a sample rollout from this trial to the task server
                 # targets = node.targets
@@ -417,11 +417,12 @@ class RolloutServer(Server):
                 #     if s.task[0] == 2:
                 #         terminal_idx = idx
                 #         break
-                node = self.spawn_problem(x0=x0)  # spawn a planning instance
-                node.path = path
-                node.belief_true = samp
-                node.observation_model = self._hyperparams['observation_model']()
-                self.push_queue(node, self.task_queue)
+                if failure:
+                    node = self.spawn_problem(x0=x0)  # spawn a planning instance
+                    node.path = path
+                    node.belief_true = samp
+                    node.observation_model = self._hyperparams['observation_model']()
+                    self.push_queue(node, self.task_queue)
 
             if self.run_hl_test: 
                 if self.debug or self.plan_only:

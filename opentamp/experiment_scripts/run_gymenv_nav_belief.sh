@@ -7,7 +7,7 @@
 
 # runs the main job
 
-TRIAL_NAME='nav_dettrial_fullobs_bimodalwideavoid_highinitdebug3'
+TRIAL_NAME='nav_dettrial_fullobs_bimodalwideavoid_highinitdebug4'
 
 python3 -W ignore policy_hooks/run_training.py -c new_specs.nav_domain_belief_dettest.new_env_hyperparam \
                                                 -no 1 -llus 1000  -hlus 1000 \
@@ -25,7 +25,7 @@ python3 -W ignore policy_hooks/run_training.py -c new_specs.nav_domain_belief_de
                                                 -rollout 5 \
                                                 -task 1 \
                                                 -post -pre \
-                                                -warm 1000 \
+                                                -warm 100 \
                                                 -run_time 3600 \
                                                 -neg_ratio 0. -opt_ratio 1.0 -dagger_ratio 0.0 \
 						-descr $TRIAL_NAME 
