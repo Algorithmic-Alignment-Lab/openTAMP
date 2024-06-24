@@ -529,20 +529,21 @@ class Server(object):
 
 
     def log_path(self, path, n_fixed=0):
-        if self.log_file is None: return
-        with open(self.log_file, 'a+') as f:
-            f.write('\n\n')
-            info = self.get_path_data(path, n_fixed)
-            pp_info = pprint.pformat(info, depth=120, width=120)
-            f.write(pp_info)
-            f.write('\n')
+        pass
+        # if self.log_file is None: return
+        # with open(self.log_file, 'a+') as f:
+        #     f.write('\n\n')
+        #     info = self.get_path_data(path, n_fixed)
+        #     pp_info = pprint.pformat(info, depth=120, width=120)
+        #     f.write(pp_info)
+        #     f.write('\n')
 
-        with open(self.verbose_log_file, 'a+') as f:
-            f.write('\n\n')
-            info = self.get_path_data(path, n_fixed, True)
-            pp_info = pprint.pformat(info, depth=120, width=120)
-            f.write(pp_info)
-            f.write('\n')
+        # with open(self.verbose_log_file, 'a+') as f:
+        #     f.write('\n\n')
+        #     info = self.get_path_data(path, n_fixed, True)
+        #     pp_info = pprint.pformat(info, depth=120, width=120)
+        #     f.write(pp_info)
+        #     f.write('\n')
 
 
     def save_image(self, rollout=None, success=None, ts=0, render=True, x=None):
