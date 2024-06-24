@@ -216,7 +216,7 @@ class RolloutServer(Server):
 
         print('Initialized policies: ', self.agent.policies_initialized())
 
-        for i in range(19,20):
+        for i in range(20):
             x0 = self.agent.gym_env.get_random_init_state()
             self.agent.reset_to_state(x0)
             samp = self.agent.gym_env.sample_belief_true()  ## resample at the start of each rollout
@@ -427,13 +427,12 @@ class RolloutServer(Server):
                 #         break
 
                 ## push each rendered failure as a new problem to solve
-                for i in range(20):
-                    if failures[i]:
-                        node = self.spawn_problem(x0=x0s[i])  # spawn a planning instance
-                        node.path = paths[i]
-                        node.belief_true = samps[i]
-                        node.observation_model = self._hyperparams['observation_model']()
-                        self.push_queue(node, self.task_queue)
+                if failures[19]:
+                    node = self.spawn_problem(x0=x0s[19])  # spawn a planning instance
+                    node.path = paths[19]
+                    node.belief_true = samps[19]
+                    node.observation_model = self._hyperparams['observation_model']()
+                    self.push_queue(node, self.task_queue)
                 
             if self.run_hl_test: 
                 if self.debug or self.plan_only:
