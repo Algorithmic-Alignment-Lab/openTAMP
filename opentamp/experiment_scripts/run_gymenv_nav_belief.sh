@@ -7,7 +7,7 @@
 
 # runs the main job
 
-TRIAL_NAME='nav_dettrial_fullobs_bimodalwideavoid_highimit_smallobs'
+TRIAL_NAME='nav_dettrial_fullobs_bimodalwideavoid_highimit_lowlr'
 
 python3 -W ignore policy_hooks/run_training.py -c new_specs.nav_domain_belief_dettest.new_env_hyperparam \
                                                 -no 1 -llus 1000  -hlus 1000 \
@@ -15,7 +15,7 @@ python3 -W ignore policy_hooks/run_training.py -c new_specs.nav_domain_belief_de
                                                 -retime -vel 0.3 -eta 5 -softev \
                                                 -lr_schedule fixed \
                                                 -imwidth 256 -imheight 256 \
-                                                -hist_len 2 -prim_first_wt 20 -lr 0.001 \
+                                                -hist_len 2 -prim_first_wt 20 -lr 0.00001 \
                                                 -hllr 0.0001 -contlr 0.0001 -lldec 0.0001 -hldec 0.0001 \
                                                 --permute_hl 1 \
                                                 -expl_wt 10 -expl_eta 4 \
