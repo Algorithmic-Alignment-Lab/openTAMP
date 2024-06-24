@@ -209,6 +209,10 @@ class RolloutServer(Server):
         
         vals = []
         constraint_viols = []
+        paths = []
+        samps = []
+        x0s = []
+        should_push = []
 
         print('Initialized policies: ', self.agent.policies_initialized())
 
@@ -221,6 +225,10 @@ class RolloutServer(Server):
             constraint_viol = self.agent.gym_env.assess_constraint_viol()
             vals.append(val)
             constraint_viols.append(constraint_viol)
+            paths.append(path)
+            samps.append(samp)
+            x0s.append(x0)
+            should_push.append((val == 0) or (constraint_viol == 1))
 
             # print(samp)
             print([s.task for s in path])
@@ -345,8 +353,8 @@ class RolloutServer(Server):
         #         print('Saved video. Rollout success was: ', val > 0)
         #     self.last_hl_test = time.time()
         # self.agent._eval_mode = False
-        # self.agent.debug = True
-        return avg_val, avg_viol, path, samp, x0, (val == 0) or (constraint_viol == 1)
+        # self.agent.debug = Trueval == 0) or (constraint_viol ==val == 0) or (constraint_viol == 1) 1)
+        return avg_val, avg_viol, paths, samps, x0s, should_push
 
 
     def deploy(self, rlen=None, save=True, ckpt_ind=None,
@@ -408,7 +416,7 @@ class RolloutServer(Server):
                 self.agent.reset(0)
                 n_plans = self._hyperparams['policy_opt']['buffer_sizes']['n_plans'].value
                 save_video = self.id.find('test') >= 0
-                val, viol, path, samp, x0, failure = self.test_hl(save_video=save_video)
+                val, viol, paths, samps, x0s, failures = self.test_hl(save_video=save_video)
 
                 ## issue a sample rollout from this trial to the task server
                 # targets = node.targets
@@ -417,13 +425,14 @@ class RolloutServer(Server):
                 #     if s.task[0] == 2:
                 #         terminal_idx = idx
                 #         break
-                if failure:
-                    node = self.spawn_problem(x0=x0)  # spawn a planning instance
-                    node.path = path
-                    node.belief_true = samp
-                    node.observation_model = self._hyperparams['observation_model']()
-                    self.push_queue(node, self.task_queue)
-
+                for i in range(20):
+                    if failures[i]:
+                        node = self.spawn_problem(x0=x0s[i])  # spawn a planning instance
+                        node.path = paths[i]
+                        node.belief_true = samps[i]
+                        node.observation_model = self._hyperparams['observation_model']()
+                        self.push_queue(node, self.task_queue)
+                
             if self.run_hl_test: 
                 if self.debug or self.plan_only:
                     break # stop iteration after one loop
