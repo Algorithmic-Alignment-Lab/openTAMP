@@ -16,7 +16,7 @@ from opentamp.policy_hooks.utils.file_utils import LOG_DIR
 from opentamp.policy_hooks.utils.policy_solver_utils import *
 
 
-MAX_QUEUE_SIZE = 100
+MAX_QUEUE_SIZE = 10
 UPDATE_TIME = 60
 
 class PolicyServer(object):
@@ -288,6 +288,7 @@ class PolicyServer(object):
 
             if (not self.iters % write_freq or (self.debug or self.plan_only)) and len(self.val_losses['all']):
                 with open(self.policy_opt_log, 'a+') as f:
+                    breakpoint()
                     info = self.get_log_info()
                     pp_info = pprint.pformat(info, depth=60)
                     f.write(str(pp_info))

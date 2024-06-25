@@ -20,7 +20,7 @@ python3 -W ignore policy_hooks/run_training.py -c new_specs.nav_domain_belief_de
                                                 --permute_hl 1 \
                                                 -expl_wt 10 -expl_eta 4 \
                                                 -col_coeff 0.0 \
-                                                -motion 12 \
+                                                -motion 4 \
                                                 -n_gpu 1 \
                                                 -rollout 5 \
                                                 -task 1 \
@@ -28,7 +28,7 @@ python3 -W ignore policy_hooks/run_training.py -c new_specs.nav_domain_belief_de
                                                 -warm 100 \
                                                 -run_time 3600 \
                                                 -neg_ratio 0. -opt_ratio 1.0 -dagger_ratio 0.0 \
-						-descr $TRIAL_NAME 
+						-descr $TRIAL_NAME
 
 # adds renders after job is done -- majority of options here ignored
 
