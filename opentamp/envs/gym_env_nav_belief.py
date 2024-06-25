@@ -58,8 +58,8 @@ class GymEnvNav(Env):
     def step(self, action):
         # make single step in direction of target
         # self.curr_state[:2] += action[:2]  # move by action
-        xy_vals = np.array(action[0] * np.cos(action[1]), action[1] * np.sin(action[1]))
-        self.curr_state += xy_vals
+        xy_vals = np.array([action[0] * np.cos(action[1]), action[0] * np.sin(action[1])])
+        self.curr_state[:2] += xy_vals
         self.curr_state[2] = action[2] # set angle explicitly
         goal_rel_pos = (self.curr_state[3:5] - self.curr_state[:2]) * 1  ## return relative position
         obstacle_rel_pos = (self.curr_state[7:] - self.curr_state[:2]) * 1 
