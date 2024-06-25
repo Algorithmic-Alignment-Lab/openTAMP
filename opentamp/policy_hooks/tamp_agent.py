@@ -89,6 +89,47 @@ class OptimalAbsolutePolicy:
         return True
 
 
+class OptimalTrigPolicy:
+    def __init__(self, dU, action_inds, state_inds, opt_traj):
+        self.dU = dU
+        self.action_inds = action_inds
+        self.state_inds = state_inds
+        self.opt_traj = opt_traj
+
+    def compute_angle(self, arr):
+        if np.abs(arr[0]) < 0.01:
+            return np.pi/2 if arr[0]*arr[1] > 0 else -np.pi/2
+        elif arr[0] > 0:
+            return np.arctan(arr[1]/arr[0])
+        else:
+            if arr[1] > 0:
+                return np.arctan(arr[1]/arr[0]) + np.pi
+            else:
+                return np.arctan(arr[1]/arr[0]) - np.pi
+
+
+    ## optimal policy simply emulates the actions taken along the optimal trajectory, as given here
+    def act(self, X, O, t, noise=None):
+        u = np.zeros(self.dU)
+        for param, attr in self.action_inds:
+            if attr == 'pose':
+                if t < len(self.opt_traj) - 1:
+                    relative_vec = (self.opt_traj[t + 1, self.action_inds[param, attr]] - self.opt_traj[t, self.action_inds[param, attr]]) * ACTION_SCALE
+                else:
+                    relative_vec = (self.opt_traj[-1, self.action_inds[param, attr]] - self.opt_traj[-2, self.action_inds[param, attr]]) * ACTION_SCALE
+                u[self.action_inds[param, attr]] = np.array([np.linalg.norm(relative_vec, ord=2), self.compute_angle(relative_vec)])
+            else:
+                if t < len(self.opt_traj) - 1:
+                    u[self.action_inds[param, attr]] = (self.opt_traj[t + 1, self.action_inds[param, attr]]) * ACTION_SCALE
+                else:
+                    u[self.action_inds[param, attr]] = (self.opt_traj[-1, self.action_inds[param, attr]]) * ACTION_SCALE
+        return u
+
+
+    def is_initialized(self):
+        return True
+
+
 class TAMPAgent(Agent, metaclass=ABCMeta):
     def __init__(self, hyperparams):
         Agent.__init__(self, hyperparams)
@@ -160,6 +201,8 @@ class TAMPAgent(Agent, metaclass=ABCMeta):
         self.swap = self.config['master_config'].get('swap', False)
         if self.config['master_config'].get('absolute_policy', False):
             self.optimal_pol_cls = OptimalAbsolutePolicy
+        elif self.config['master_config'].get('trig_policy', False):
+            self.optimal_pol_cls = OptimalTrigPolicy
         else:
             self.optimal_pol_cls = OptimalPolicy
         self.hist_len = self.config['hist_len']
