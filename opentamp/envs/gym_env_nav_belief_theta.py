@@ -5,7 +5,7 @@ import numpy as np
 import torch
 import pyro.distributions as distros
 
-from opentamp.policy_hooks.TAMPAgent import *
+from opentamp.policy_hooks.tamp_agent import *
 
 from opentamp.policy_hooks.utils.policy_solver_utils import *
 
