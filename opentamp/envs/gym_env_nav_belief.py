@@ -10,9 +10,9 @@ from opentamp.policy_hooks.utils.policy_solver_utils import *
 class GymEnvNav(Env):    
     def __init__(self, deterministic=False):
         self.action_space = spaces.Box(low=0.0, high=1.0, shape=(3,), dtype='float32')
-        self.observation_space = spaces.Box(low=0.0, high=1.0, shape=(7,), dtype='float32')
+        self.observation_space = spaces.Box(low=0.0, high=1.0, shape=(6,), dtype='float32')
         self.curr_state = np.array([0.0]*9)
-        self.curr_obs = np.array([0.0]*7)
+        self.curr_obs = np.array([0.0]*6)
         self.obs_dist, self.target_dist = self.assemble_dist()
         self.belief_true = {}
         self.constraint_viol = False
@@ -81,14 +81,15 @@ class GymEnvNav(Env):
         #     obs_view = np.array([-10.0, -10.0])
 
         target_rel_pos = (self.curr_state[3:5] - self.curr_state[:2]) * 1 
-        # target_abs_angle = np.arctan(target_rel_pos[1]/target_rel_pos[0]) if np.abs(target_rel_pos[0]) > 0.001 else (np.pi/2 if target_rel_pos[1]*target_rel_pos[0]>0 else -np.pi/2)
+        target_abs_angle = np.arctan(target_rel_pos[1]/target_rel_pos[0]) if np.abs(target_rel_pos[0]) > 0.001 else (np.pi/2 if target_rel_pos[1]*target_rel_pos[0]>0 else -np.pi/2)
         # target_angle = target_abs_angle if target_rel_pos[0] >= 0  else (target_abs_angle + np.pi if -np.pi/2 <= target_abs_angle < 0 else target_abs_angle - np.pi)
         # if np.abs(cam_angle - target_angle) <= np.pi/4 and np.linalg.norm(target_rel_pos) <= 6.0:
         targ_view = target_rel_pos
         # else:
         #     targ_view = np.array([-10.0, -10.0])
+        target_rel_distance = np.linalg.norm(target_rel_pos, ord=2)
 
-        self.curr_obs = np.concatenate([self.curr_state[:3], obs_view, targ_view])
+        self.curr_obs = np.concatenate([self.curr_state[1:3], np.array([target_abs_angle]), np.array([target_rel_distance]), np.array([obstacle_abs_angle]), np.array([obstacle_rel_distance])])
 
         # if too close to object, indicate that the current trajectory violated a safety constraint
         if obstacle_rel_distance <= 1.5:
@@ -117,7 +118,7 @@ class GymEnvNav(Env):
 
     def reset(self):
         self.curr_state = np.array([0.0]*9)
-        self.curr_obs = np.array([0.0]*7)
+        self.curr_obs = np.array([0.0]*6)
         self.constraint_viol = False
         return self.curr_obs
     
@@ -259,7 +260,7 @@ class GymEnvNavWrapper(GymEnvNav):
         # self.curr_state[:3] = state[:3]
         # self.curr_state[5:7] = state[5:7]
         self.curr_state = state
-        self.curr_obs = np.array([0.0]*7)
+        self.curr_obs = np.array([0.0]*6)
         self.constraint_viol = False
         return self.curr_obs
 
