@@ -288,7 +288,6 @@ class PolicyServer(object):
 
             if (not self.iters % write_freq or (self.debug or self.plan_only)) and len(self.val_losses['all']):
                 with open(self.policy_opt_log, 'a+') as f:
-                    breakpoint()
                     info = self.get_log_info()
                     pp_info = pprint.pformat(info, depth=60)
                     f.write(str(pp_info))
