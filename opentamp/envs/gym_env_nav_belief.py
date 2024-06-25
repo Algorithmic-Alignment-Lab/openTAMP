@@ -43,18 +43,30 @@ class GymEnvNav(Env):
         # dist = distros.Normal(torch.tensor([0.0, 0.0]), 1.0)
         return obs_dist, target_dist
 
+    def compute_angle(self, arr):
+        if np.abs(arr[0]) < 0.01:
+            return np.pi/2 if arr[0]*arr[1] > 0 else -np.pi/2
+        elif arr[0] > 0:
+            return np.arctan(arr[1]/arr[0])
+        else:
+            if arr[1] > 0:
+                return np.arctan(arr[1]/arr[0]) + np.pi
+            else:
+                return np.arctan(arr[1]/arr[0]) - np.pi
+
+
     def step(self, action):
         # make single step in direction of target
         self.curr_state[:2] += action[:2]  # move by action
         self.curr_state[2] = action[2] # set angle explicitly
         goal_rel_pos = (self.curr_state[3:5] - self.curr_state[:2]) * 1  ## return relative position
         obstacle_rel_pos = (self.curr_state[7:] - self.curr_state[:2]) * 1 
-        obstacle_abs_angle = np.arctan(obstacle_rel_pos[1]/obstacle_rel_pos[0]) if np.abs(obstacle_rel_pos[0]) > 0.001 else (np.pi/2 if obstacle_rel_pos[1]*obstacle_rel_pos[0]>0 else -np.pi/2)
+        # obstacle_abs_angle = np.arctan(obstacle_rel_pos[1]/obstacle_rel_pos[0]) if np.abs(obstacle_rel_pos[0]) > 0.001 else (np.pi/2 if obstacle_rel_pos[1]*obstacle_rel_pos[0]>0 else -np.pi/2)
         obstacle_rel_distance = np.linalg.norm(obstacle_rel_pos, ord=2)
         # spot_abs_angle = np.arctan(action[1]/action[0]) if action∂[0] > 0.001 else (np.pi/2 if action[1]>0 else -np.pi/2)
         
         # making formula globally true at all theta (correcting for angle readings behind)
-        obstacle_angle = obstacle_abs_angle if obstacle_rel_pos[0] >= 0  else (obstacle_abs_angle + np.pi if -np.pi/2 <= obstacle_abs_angle < 0 else obstacle_abs_angle - np.pi)
+        obstacle_angle = self.compute_angle(obstacle_rel_pos)
         # spot_angle = spot_abs_angle if action[0] >= 0 else (spot_abs_angle + np.pi if -np.pi/2 <= spot_abs_angle < 0 else spot_abs_angle - np.pi)
         
         # relative angle of obstacle with respect to spot camera
@@ -81,15 +93,15 @@ class GymEnvNav(Env):
         #     obs_view = np.array([-10.0, -10.0])
 
         target_rel_pos = (self.curr_state[3:5] - self.curr_state[:2]) * 1 
-        target_abs_angle = np.arctan(target_rel_pos[1]/target_rel_pos[0]) if np.abs(target_rel_pos[0]) > 0.001 else (np.pi/2 if target_rel_pos[1]*target_rel_pos[0]>0 else -np.pi/2)
-        # target_angle = target_abs_angle if target_rel_pos[0] >= 0  else (target_abs_angle + np.pi if -np.pi/2 <= target_abs_angle < 0 else target_abs_angle - np.pi)
+        # target_abs_angle = np.arctan(target_rel_pos[1]/target_rel_pos[0]) if np.abs(target_rel_pos[0]) > 0.001 else (np.pi/2 if target_rel_pos[1]*target_rel_pos[0]>0 else -np.pi/2)
+        target_angle = self.compute_angle(target_rel_pos)
         # if np.abs(cam_angle - target_angle) <= np.pi/4 and np.linalg.norm(target_rel_pos) <= 6.0:
         targ_view = target_rel_pos
         # else:
         #     targ_view = np.array([-10.0, -10.0])
         target_rel_distance = np.linalg.norm(target_rel_pos, ord=2)
 
-        self.curr_obs = np.concatenate([self.curr_state[1:3], np.array([target_abs_angle]), np.array([target_rel_distance]), np.array([obstacle_abs_angle]), np.array([obstacle_rel_distance])])
+        self.curr_obs = np.concatenate([self.curr_state[1:3], np.array([target_angle]), np.array([target_rel_distance]), np.array([obstacle_angle]), np.array([obstacle_rel_distance])])
 
         # if too close to object, indicate that the current trajectory violated a safety constraint
         if obstacle_rel_distance <= 1.5:
