@@ -5,6 +5,8 @@ import numpy as np
 import torch
 import pyro.distributions as distros
 
+from opentamp.policy_hooks.TAMPAgent import *
+
 from opentamp.policy_hooks.utils.policy_solver_utils import *
 
 from opentamp.envs.gym_env_nav_belief import GymEnvNav
@@ -13,7 +15,8 @@ class GymEnvNavTheta(GymEnvNav):
     def step(self, action):
         # make single step in direction of target
         # self.curr_state[:2] += action[:2]  # move by action
-        xy_vals = np.array([action[0] * np.cos(action[1]), action[0] * np.sin(action[1])])
+        reg_val = action[:2] / ACTION_SCALE
+        xy_vals = np.array([reg_val[0] * np.cos(reg_val[1]), reg_val[0] * np.sin(reg_val[1])])
         self.curr_state[:2] += xy_vals
         self.curr_state[2] = action[2] # set angle explicitly
         goal_rel_pos = (self.curr_state[3:5] - self.curr_state[:2]) * 1  ## return relative position

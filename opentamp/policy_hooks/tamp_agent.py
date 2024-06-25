@@ -35,7 +35,7 @@ MAX_SAMPLELISTS = 1000
 MAX_TASK_PATHS = 1000
 ROLL_TOL = 1e-3
 
-ACTION_SCALE = 1
+ACTION_SCALE = 100
 
 
 class OptimalPolicy:
@@ -114,10 +114,10 @@ class OptimalTrigPolicy:
         for param, attr in self.action_inds:
             if attr == 'pose':
                 if t < len(self.opt_traj) - 1:
-                    relative_vec = (self.opt_traj[t + 1, self.action_inds[param, attr]] - self.opt_traj[t, self.action_inds[param, attr]]) * ACTION_SCALE
+                    relative_vec = (self.opt_traj[t + 1, self.action_inds[param, attr]] - self.opt_traj[t, self.action_inds[param, attr]])
                 else:
-                    relative_vec = (self.opt_traj[-1, self.action_inds[param, attr]] - self.opt_traj[-2, self.action_inds[param, attr]]) * ACTION_SCALE
-                u[self.action_inds[param, attr]] = np.array([np.linalg.norm(relative_vec, ord=2), self.compute_angle(relative_vec)])
+                    relative_vec = (self.opt_traj[-1, self.action_inds[param, attr]] - self.opt_traj[-2, self.action_inds[param, attr]])
+                u[self.action_inds[param, attr]] = np.array([np.linalg.norm(relative_vec, ord=2), self.compute_angle(relative_vec)]) * ACTION_SCALE
             else:
                 if t < len(self.opt_traj) - 1:
                     u[self.action_inds[param, attr]] = (self.opt_traj[t + 1, self.action_inds[param, attr]]) * ACTION_SCALE

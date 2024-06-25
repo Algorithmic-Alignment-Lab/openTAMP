@@ -5,6 +5,8 @@ import numpy as np
 import torch
 import pyro.distributions as distros
 
+from opentamp.policy_hooks.TAMPAgent import *
+
 from opentamp.policy_hooks.utils.policy_solver_utils import *
 
 class GymEnvNav(Env):    
@@ -58,7 +60,7 @@ class GymEnvNav(Env):
     def step(self, action):
         # make single step in direction of target
         # self.curr_state[:2] += action[:2]  # move by action
-        self.curr_state[:2] += action[:2]
+        self.curr_state[:2] += action[:2] / ACTION_SCALE
         self.curr_state[2] = action[2] # set angle explicitly
         goal_rel_pos = (self.curr_state[3:5] - self.curr_state[:2]) * 1  ## return relative position
         obstacle_rel_pos = (self.curr_state[7:] - self.curr_state[:2]) * 1 
