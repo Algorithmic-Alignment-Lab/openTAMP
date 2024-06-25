@@ -27,6 +27,7 @@ python3 -W ignore policy_hooks/run_training.py -c new_specs.nav_domain_belief_de
                                                 -post -pre \
                                                 -warm 100 \
                                                 -run_time 3600 \
+						-trig \
                                                 -neg_ratio 0. -opt_ratio 1.0 -dagger_ratio 0.0 \
 						-descr $TRIAL_NAME
 

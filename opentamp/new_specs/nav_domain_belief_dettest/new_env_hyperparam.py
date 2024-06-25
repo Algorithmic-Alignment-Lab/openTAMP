@@ -17,7 +17,7 @@ import opentamp.new_specs.nav_domain_belief.gym_prob as prob
 from opentamp.policy_hooks.utils.file_utils import LOG_DIR
 from opentamp.policy_hooks.observation_models import *
 
-from opentamp.envs.gym_env_nav_belief import GymEnvNavWrapper
+from opentamp.envs.gym_env_nav_belief_theta import GymEnvNavWrapper
 
 import torch.nn.functional as F
 from opentamp.policy_hooks.tamp_agent import ACTION_SCALE

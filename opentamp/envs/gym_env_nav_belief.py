@@ -18,9 +18,9 @@ class GymEnvNav(Env):
         self.constraint_viol = False
 
     def assemble_dist(self):
-        weights = torch.tensor([0.5,0.5])
-        locs = torch.tensor([[6., -2.],
-                             [6., 2.]])
+        weights = torch.tensor([0.6,0.4])
+        locs = torch.tensor([[6., 0.],
+                             [6., 5.]])
         scales = torch.tensor([1., 1.])
         cat_dist = distros.Categorical(probs=weights)
         stack_eye = torch.tile(torch.eye(2).unsqueeze(dim=0), dims=(2, 1, 1))
@@ -58,8 +58,7 @@ class GymEnvNav(Env):
     def step(self, action):
         # make single step in direction of target
         # self.curr_state[:2] += action[:2]  # move by action
-        xy_vals = np.array([action[0] * np.cos(action[1]), action[0] * np.sin(action[1])])
-        self.curr_state[:2] += xy_vals
+        self.curr_state[:2] += action[:2]
         self.curr_state[2] = action[2] # set angle explicitly
         goal_rel_pos = (self.curr_state[3:5] - self.curr_state[:2]) * 1  ## return relative position
         obstacle_rel_pos = (self.curr_state[7:] - self.curr_state[:2]) * 1 
