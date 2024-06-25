@@ -89,7 +89,7 @@ class TorchPolicyOpt():
 
 
     def _set_opt(self, task):
-        opt_cls = self.config.get('opt_cls', optim.SGD)
+        opt_cls = self.config.get('opt_cls', optim.Adam)
         if type(opt_cls) is str: opt_cls = getattr(optim, opt_cls)
         if task == 'cont':
             lr = self.config.get('contlr', 1e-3)
@@ -97,8 +97,8 @@ class TorchPolicyOpt():
             lr = self.config.get('hllr', 1e-3)
         else:
             lr = self.config.get('lr', 1e-3)
-        self.opts[task] = opt_cls(self.nets[task].parameters(), lr=lr, momentum=0.9) 
-        self.schedulers[task] = optim.lr_scheduler.ExponentialLR(self.opts[task], gamma=0.99)
+        self.opts[task] = opt_cls(self.nets[task].parameters(), lr=lr) 
+        # self.schedulers[task] = optim.lr_scheduler.ExponentialLR(self.opts[task], gamma=0.99)
 
 
     def get_loss(self, task, x, y, precision=None,):
@@ -132,7 +132,7 @@ class TorchPolicyOpt():
         loss = self.get_loss(task, x, y, precision)
         loss.backward()
         self.opts[task].step()
-        self.schedulers[task].step()
+        # self.schedulers[task].step()
 
         return loss.item()
 
@@ -344,7 +344,7 @@ class TorchPolicyOpt():
     def init_solvers(self):
         """ Helper method to initialize the solver. """
         self.opts = {}
-        self.schedulers = {}
+        # self.schedulers = {}
         self.cur_dec = self.config['weight_decay']
         scopes = self.ctrl_scopes + SCOPE_LIST if self.scope is None else [self.scope]
         for scope in scopes:
