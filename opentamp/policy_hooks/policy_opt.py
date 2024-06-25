@@ -98,7 +98,7 @@ class TorchPolicyOpt():
         else:
             lr = self.config.get('lr', 1e-3)
         self.opts[task] = opt_cls(self.nets[task].parameters(), lr=lr, momentum=0.9) 
-        self.schedulers[task] = optim.lr_scheduler.ExponentialLR(self.opts[task], gamma=0.9)
+        self.schedulers[task] = optim.lr_scheduler.ExponentialLR(self.opts[task], gamma=0.99)
 
 
     def get_loss(self, task, x, y, precision=None,):
