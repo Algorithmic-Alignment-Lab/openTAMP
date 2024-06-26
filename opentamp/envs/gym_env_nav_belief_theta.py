@@ -12,11 +12,39 @@ from opentamp.policy_hooks.utils.policy_solver_utils import *
 from opentamp.envs.gym_env_nav_belief import GymEnvNav
 
 class GymEnvNavTheta(GymEnvNav):
+    def assemble_dist(self):
+        weights = torch.tensor([0.5,0.5])
+        locs = torch.tensor([[6., -2.],
+                             [6., 2.]])
+        scales = torch.tensor([1., 1.])
+        cat_dist = distros.Categorical(probs=weights)
+        stack_eye = torch.tile(torch.eye(2).unsqueeze(dim=0), dims=(2, 1, 1))
+        stack_scale = torch.tile(scales.unsqueeze(dim=1).unsqueeze(dim=2), dims=(1, 2, 2))
+        cov_tensor = stack_eye * stack_scale
+        batched_multivar = distros.MultivariateNormal(loc=locs, covariance_matrix=cov_tensor)
+        obs_dist = distros.MixtureSameFamily(cat_dist, batched_multivar)
+
+        weights = torch.tensor([0.5,0.5])
+        locs = torch.tensor([[12., 2.],
+                             [12., -2.]])
+        scales = torch.tensor([1.0, 1.0])
+        cat_dist = distros.Categorical(probs=weights)
+        stack_eye = torch.tile(torch.eye(2).unsqueeze(dim=0), dims=(2, 1, 1))
+        stack_scale = torch.tile(scales.unsqueeze(dim=1).unsqueeze(dim=2), dims=(1, 2, 2))
+        cov_tensor = stack_eye * stack_scale
+        batched_multivar = distros.MultivariateNormal(loc=locs, covariance_matrix=cov_tensor)
+        target_dist = distros.MixtureSameFamily(cat_dist, batched_multivar)
+
+        # dist = distros.Normal(torch.tensor([0.0, 0.0]), 1.0)
+        return obs_dist, target_dist
+
+
     def step(self, action):
         # make single step in direction of target
         # self.curr_state[:2] += action[:2]  # move by action
         reg_val = action[:2] / ACTION_SCALE
-        xy_vals = np.array([reg_val[0] * np.cos(reg_val[1]), reg_val[0] * np.sin(reg_val[1])])
+        self.curr_angle += reg_val[1]
+        xy_vals = np.array([reg_val[0] * np.cos(self.curr_angle), reg_val[0] * np.sin(self.curr_angle)])
         self.curr_state[:2] += xy_vals
         self.curr_state[2] = action[2] # set angle explicitly
         goal_rel_pos = (self.curr_state[3:5] - self.curr_state[:2]) * 1  ## return relative position
@@ -61,7 +89,7 @@ class GymEnvNavTheta(GymEnvNav):
         #     targ_view = np.array([-10.0, -10.0])
         target_rel_distance = np.linalg.norm(target_rel_pos, ord=2)
 
-        self.curr_obs = np.concatenate([self.curr_state[1:3], np.array([target_angle]), np.array([target_rel_distance]), np.array([obstacle_angle]), np.array([obstacle_rel_distance])])
+        self.curr_obs = np.concatenate([self.curr_state[1:3], np.array([target_angle - self.curr_angle]), np.array([target_rel_distance]), np.array([obstacle_angle - self.curr_angle]), np.array([obstacle_rel_distance])])
 
         # if too close to object, indicate that the current trajectory violated a safety constraint
         if obstacle_rel_distance <= 1.5:
@@ -87,6 +115,14 @@ class GymEnvNavTheta(GymEnvNav):
         #     self.curr_obs = np.array([0.0, 0.0])
 
         return self.curr_obs, 1.0, False, {}
+    
+    def reset(self):
+        self.curr_state = np.array([0.0]*9)
+        self.curr_obs = np.array([0.0]*6)
+        self.constraint_viol = False
+        self.curr_state = 0.0
+        return self.curr_obs
+
 
     
 
@@ -95,6 +131,7 @@ class GymEnvNavWrapper(GymEnvNavTheta):
         # self.curr_state[:3] = state[:3]
         # self.curr_state[5:7] = state[5:7]
         self.curr_state = state
+        self.curr_angle = self.compute_angle(self.curr_state[3:5])
         self.curr_obs = np.array([0.0]*6)
         self.constraint_viol = False
         return self.curr_obs
@@ -190,6 +227,8 @@ class GymEnvNavWrapper(GymEnvNavTheta):
 
         self.curr_state[7:] = obs
         self.curr_state[3:5] = goal_pos
+
+        self.curr_angle = self.compute_angle(self.curr_state[3:5])
 
         ## initalize to center
         return np.concatenate((np.array([0.0, 0.0]), np.array([obstacle_angle]), goal_pos, np.array([8.0,0.]), obs))
