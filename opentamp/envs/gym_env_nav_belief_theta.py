@@ -14,7 +14,7 @@ from opentamp.envs.gym_env_nav_belief import GymEnvNav
 class GymEnvNavTheta(GymEnvNav):
     def assemble_dist(self):
         weights = torch.tensor([0.5,0.5])
-        locs = torch.tensor([[6., -2.],
+        locs = torch.tensor([[6.,-2.],
                              [6., 2.]])
         scales = torch.tensor([1., 1.])
         cat_dist = distros.Categorical(probs=weights)
@@ -120,10 +120,8 @@ class GymEnvNavTheta(GymEnvNav):
         self.curr_state = np.array([0.0]*9)
         self.curr_obs = np.array([0.0]*6)
         self.constraint_viol = False
-        self.curr_state = 0.0
+        self.curr_angle = 0.0
         return self.curr_obs
-
-
     
 
 class GymEnvNavWrapper(GymEnvNavTheta):
