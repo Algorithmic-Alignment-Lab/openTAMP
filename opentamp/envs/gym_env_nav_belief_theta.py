@@ -12,6 +12,15 @@ from opentamp.policy_hooks.utils.policy_solver_utils import *
 from opentamp.envs.gym_env_nav_belief import GymEnvNav
 
 class GymEnvNavTheta(GymEnvNav):
+    def __init__(self, deterministic=False):
+        self.action_space = spaces.Box(low=0.0, high=1.0, shape=(3,), dtype='float32')
+        self.observation_space = spaces.Box(low=0.0, high=1.0, shape=(12,), dtype='float32')
+        self.curr_state = np.array([0.0]*9)
+        self.curr_obs = np.array([0.0]*12)
+        self.obs_dist, self.target_dist = self.assemble_dist()
+        self.belief_true = {}
+        self.constraint_viol = False
+
     def assemble_dist(self):
         weights = torch.tensor([0.5,0.5])
         locs = torch.tensor([[6.,-2.],
@@ -89,7 +98,30 @@ class GymEnvNavTheta(GymEnvNav):
         #     targ_view = np.array([-10.0, -10.0])
         target_rel_distance = np.linalg.norm(target_rel_pos, ord=2)
 
-        self.curr_obs = np.concatenate([self.curr_state[1:3], np.array([target_angle - self.curr_angle]), np.array([target_rel_distance]), np.array([obstacle_angle - self.curr_angle]), np.array([obstacle_rel_distance])])
+        rel_obstacle_angle = obstacle_angle - self.curr_angle
+
+        modulo_rel_obs_angle = rel_obstacle_angle % (2*np.pi)
+
+        obstacle_lidar = np.ones((8,)) * -10
+        
+        if 3/2 * np.pi < modulo_rel_obs_angle < 13/8 * np.pi:
+            obstacle_lidar[0] = obstacle_rel_distance
+        if 13/8 * np.pi < modulo_rel_obs_angle < 7/4 * np.pi:
+            obstacle_lidar[1] = obstacle_rel_distance
+        if 7/4 * np.pi < modulo_rel_obs_angle < 15/8 * np.pi:
+            obstacle_lidar[2] = obstacle_rel_distance
+        if 15/8 * np.pi < modulo_rel_obs_angle:
+            obstacle_lidar[3] = obstacle_rel_distance
+        if modulo_rel_obs_angle < 1/8 * np.pi:
+            obstacle_lidar[4] = obstacle_rel_distance
+        if 1/8 * np.pi < modulo_rel_obs_angle < 1/4 * np.pi:
+            obstacle_lidar[5] = obstacle_rel_distance
+        if 1/4 * np.pi < modulo_rel_obs_angle < 3/8 * np.pi:
+            obstacle_lidar[6] = obstacle_rel_distance
+        if 3/8 * np.pi < modulo_rel_obs_angle < 1/2 * np.pi:
+            obstacle_lidar[7] = obstacle_rel_distance
+
+        self.curr_obs = np.concatenate([self.curr_state[1:3], np.array([target_angle - self.curr_angle]), np.array([target_rel_distance]), obstacle_lidar])
 
         # if too close to object, indicate that the current trajectory violated a safety constraint
         if obstacle_rel_distance <= 1.5:
@@ -118,7 +150,7 @@ class GymEnvNavTheta(GymEnvNav):
     
     def reset(self):
         self.curr_state = np.array([0.0]*9)
-        self.curr_obs = np.array([0.0]*6)
+        self.curr_obs = np.array([0.0]*12)
         self.constraint_viol = False
         self.curr_angle = 0.0
         return self.curr_obs
@@ -130,7 +162,7 @@ class GymEnvNavWrapper(GymEnvNavTheta):
         # self.curr_state[5:7] = state[5:7]
         self.curr_state = state
         self.curr_angle = self.compute_angle(self.curr_state[3:5])
-        self.curr_obs = np.array([0.0]*6)
+        self.curr_obs = np.array([0.0]*12)
         self.constraint_viol = False
         return self.curr_obs
 
