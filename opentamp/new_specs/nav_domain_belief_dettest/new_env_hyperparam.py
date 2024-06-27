@@ -44,6 +44,8 @@ N_DIRS = 16
 N_GRASPS = 4
 TIME_LIMIT = 14400
 
+OBS_DIM = 21
+
 ## populating samples from plan to 
 def sample_fill_method(path, plan, agent, x0):
     # Remove observation actions for easier imitation          
@@ -77,7 +79,7 @@ def sample_fill_method(path, plan, agent, x0):
         targ_ang *= ACTION_SCALE
                 
         mjc_obs_array = []
-        mjc_obs_array = torch.tensor([[0.]*20] + [list(s.get(MJC_SENSOR_ENUM)[-1,:]) for s in path])
+        mjc_obs_array = torch.tensor([[0.]*OBS_DIM] + [list(s.get(MJC_SENSOR_ENUM)[-1,:]) for s in path])
         mjc_obs_array = torch.flatten(mjc_obs_array.T)
         mjc_obs_array = [x.item() for x in list(mjc_obs_array)]
         
@@ -103,7 +105,7 @@ def sample_fill_method(path, plan, agent, x0):
 
 def rollout_fill_method(path, agent):
     mjc_obs_array = []
-    mjc_obs_array = torch.tensor([[0.]*20] + [list(s.get(MJC_SENSOR_ENUM)[-1,:]) for s in path])
+    mjc_obs_array = torch.tensor([[0.]*OBS_DIM] + [list(s.get(MJC_SENSOR_ENUM)[-1,:]) for s in path])
     mjc_obs_array = torch.flatten(mjc_obs_array.T)
     mjc_obs_array = [x.item() for x in list(mjc_obs_array)]
     
