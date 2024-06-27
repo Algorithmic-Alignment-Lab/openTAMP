@@ -347,7 +347,7 @@ class MotionServer(Server):
 
             ## if plan only, invoke a breakpoint and inspect the plan statistics
             ## reset sim state to state planned against
-            if plan_only:
+            if self.config['plan_only']:
                 self.agent.reset_to_state(node.x0)
                 self.agent.gym_env.set_belief_true(node.belief_true)
                 
