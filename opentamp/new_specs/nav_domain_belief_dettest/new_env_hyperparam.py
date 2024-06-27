@@ -47,7 +47,7 @@ TIME_LIMIT = 14400
 OBS_DIM = 21
 
 ## populating samples from plan to 
-def sample_fill_method(path, plan, agent, x0):
+def sample_fill_method(path, plan, agent, x0, push_samps=False):
     # Remove observation actions for easier imitation          
     active_anums = []
     for a_num in range(len(plan.actions)):
@@ -83,23 +83,24 @@ def sample_fill_method(path, plan, agent, x0):
         mjc_obs_array = torch.flatten(mjc_obs_array.T)
         mjc_obs_array = [x.item() for x in list(mjc_obs_array)]
         
-        new_path, x0 = agent.run_action(plan, 
-                    active_anums[a_num_idx], 
-                    x0,
-                    agent.target_vecs[0], 
-                    tasks[active_anums[a_num_idx]], 
-                    st,
-                    reset=True,
-                    save=True, 
-                    record=True,
-                    hist_info=[len(path), 
-                                past_ang, 
-                                sum([1 if (s.task)[0] == 1 else 0 for s in path]),
-                                sum([1 if (s.task)[0] == 0 else 0 for s in path]),
-                                (path[-1].task)[0] if len(path) > 0 else -1.0,
-                                [0.] + [s.task[0] for s in path],
-                                mjc_obs_array],
-                    aux_info=targ_ang)
+        if push_samps:
+            new_path, x0 = agent.run_action(plan, 
+                        active_anums[a_num_idx], 
+                        x0,
+                        agent.target_vecs[0], 
+                        tasks[active_anums[a_num_idx]], 
+                        st,
+                        reset=True,
+                        save=push_samps, 
+                        record=True,
+                        hist_info=[len(path), 
+                                    past_ang, 
+                                    sum([1 if (s.task)[0] == 1 else 0 for s in path]),
+                                    sum([1 if (s.task)[0] == 0 else 0 for s in path]),
+                                    (path[-1].task)[0] if len(path) > 0 else -1.0,
+                                    [0.] + [s.task[0] for s in path],
+                                    mjc_obs_array],
+                        aux_info=targ_ang)
         
         path.extend(new_path)
 
