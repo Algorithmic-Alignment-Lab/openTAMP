@@ -327,9 +327,10 @@ class MotionServer(Server):
         path = []
 
         # domain-specific sample population method for agent
-        self.config['sample_fill_method'](path, plan, self.agent, x0, push_samps=(refine_success and replan_fail_step == -1))
 
         if refine_success and replan_fail_step == -1:
+            self.config['sample_fill_method'](path, plan, self.agent, x0, push_samps=(refine_success and replan_fail_step == -1))
+
             end_t = time.time()
 
             for step in path:
