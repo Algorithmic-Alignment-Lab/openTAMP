@@ -65,7 +65,7 @@ class GymEnvNavTheta(GymEnvNav):
         idxes = [7, 9, 11, 13, 15, 17]
 
         for i in range(5):
-            obstacle_rel_pose = self.curr_state[idxes[i]:idxes[i+1]]
+            obstacle_rel_pose = self.curr_state[idxes[i]:idxes[i+1]] - self.curr_state[:2]
             obstacle_rel_distance = np.linalg.norm(obstacle_rel_pose, ord=2)
             obstacle_angle = self.compute_angle(obstacle_rel_pose)
             obstacle_rel_angle = obstacle_angle - self.curr_angle
