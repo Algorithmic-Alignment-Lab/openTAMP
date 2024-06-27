@@ -347,14 +347,15 @@ class MotionServer(Server):
 
             ## if plan only, invoke a breakpoint and inspect the plan statistics
             ## reset sim state to state planned against
-            self.agent.reset_to_state(node.x0)
-            self.agent.gym_env.set_belief_true(node.belief_true)
+            if plan_only:
+                self.agent.reset_to_state(node.x0)
+                self.agent.gym_env.set_belief_true(node.belief_true)
+                
+                self.save_video(path, True, lab='vid_planner')
             
-            self.save_video(path, True, lab='vid_planner')
-        
-            breakpoint()
+                breakpoint()
 
-            raise Exception('Terminating after single plan attempt')
+                raise Exception('Terminating after single plan attempt')
                 
         return path, refine_success, replan_fail_step
 
