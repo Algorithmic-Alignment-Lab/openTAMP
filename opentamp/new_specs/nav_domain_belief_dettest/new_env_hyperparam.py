@@ -47,7 +47,7 @@ TIME_LIMIT = 14400
 OBS_DIM = 21
 
 ## populating samples from plan to 
-def sample_fill_method(path, plan, agent, x0, push_samps=False):
+def sample_fill_method(path, plan, agent, x0):
     # Remove observation actions for easier imitation          
     active_anums = []
     for a_num in range(len(plan.actions)):
@@ -90,7 +90,7 @@ def sample_fill_method(path, plan, agent, x0, push_samps=False):
                     tasks[active_anums[a_num_idx]], 
                     st,
                     reset=True,
-                    save=push_samps, 
+                    save=True, 
                     record=True,
                     hist_info=[len(path), 
                                 past_ang, 

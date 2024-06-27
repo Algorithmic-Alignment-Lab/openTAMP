@@ -326,10 +326,9 @@ class MotionServer(Server):
         ## path of samples in imitation
         path = []
 
-        # domain-specific sample population method for agent
-
         if refine_success and replan_fail_step == -1:
-            self.config['sample_fill_method'](path, plan, self.agent, x0, push_samps=(refine_success and replan_fail_step == -1))
+            # domain-specific sample population method for agent
+            self.config['sample_fill_method'](path, plan, self.agent, x0)
 
             end_t = time.time()
 
@@ -346,8 +345,7 @@ class MotionServer(Server):
         if replan_fail_step == -1 and refine_success:
             print('Success')
 
-        ## if plan only, invoke a breakpoint and inspect the plan statistics
-        if self.plan_only:
+            ## if plan only, invoke a breakpoint and inspect the plan statistics
             ## reset sim state to state planned against
             self.agent.reset_to_state(node.x0)
             self.agent.gym_env.set_belief_true(node.belief_true)

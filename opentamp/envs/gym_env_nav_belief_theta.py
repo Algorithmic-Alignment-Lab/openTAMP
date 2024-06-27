@@ -24,27 +24,31 @@ class GymEnvNavTheta(GymEnvNav):
         self.constraint_viol = False
 
     def assemble_dist(self):
-        weights = torch.tensor([0.5,0.5])
-        locs = torch.tensor([[6., 0],
-                             [8., 0]])
-        scales = torch.tensor([1.0, 1.0])
-        cat_dist = distros.Categorical(probs=weights)
-        stack_eye = torch.tile(torch.eye(2).unsqueeze(dim=0), dims=(2, 1, 1))
-        stack_scale = torch.tile(scales.unsqueeze(dim=1).unsqueeze(dim=2), dims=(1, 2, 2))
-        cov_tensor = stack_eye * stack_scale
-        batched_multivar = distros.MultivariateNormal(loc=locs, covariance_matrix=cov_tensor)
-        obs_dist = distros.MixtureSameFamily(cat_dist, batched_multivar)
+        # weights = torch.tensor([0.5,0.5])
+        # locs = torch.tensor([[6., 0],
+        #                      [8., 0]])
+        # scales = torch.tensor([1.0, 1.0])
+        # cat_dist = distros.Categorical(probs=weights)
+        # stack_eye = torch.tile(torch.eye(2).unsqueeze(dim=0), dims=(2, 1, 1))
+        # stack_scale = torch.tile(scales.unsqueeze(dim=1).unsqueeze(dim=2), dims=(1, 2, 2))
+        # cov_tensor = stack_eye * stack_scale
+        # batched_multivar = distros.MultivariateNormal(loc=locs, covariance_matrix=cov_tensor)
+        # obs_dist = distros.MixtureSameFamily(cat_dist, batched_multivar)
 
-        weights = torch.tensor([0.5,0.5])
-        locs = torch.tensor([[12., 1.],
-                             [12., -1.]])
-        scales = torch.tensor([1.0, 1.0])
-        cat_dist = distros.Categorical(probs=weights)
-        stack_eye = torch.tile(torch.eye(2).unsqueeze(dim=0), dims=(2, 1, 1))
-        stack_scale = torch.tile(scales.unsqueeze(dim=1).unsqueeze(dim=2), dims=(1, 2, 2))
-        cov_tensor = stack_eye * stack_scale
-        batched_multivar = distros.MultivariateNormal(loc=locs, covariance_matrix=cov_tensor)
-        target_dist = distros.MixtureSameFamily(cat_dist, batched_multivar)
+        obs_dist = distros.Uniform(torch.tensor([5., -4.]), torch.tensor([9., 4.]))
+
+        # weights = torch.tensor([0.5,0.5])
+        # locs = torch.tensor([[12., 1.],
+        #                      [12., -1.]])
+        # scales = torch.tensor([1.0, 1.0])
+        # cat_dist = distros.Categorical(probs=weights)
+        # stack_eye = torch.tile(torch.eye(2).unsqueeze(dim=0), dims=(2, 1, 1))
+        # stack_scale = torch.tile(scales.unsqueeze(dim=1).unsqueeze(dim=2), dims=(1, 2, 2))
+        # cov_tensor = stack_eye * stack_scale
+        # batched_multivar = distros.MultivariateNormal(loc=locs, covariance_matrix=cov_tensor)
+        # target_dist = distros.MixtureSameFamily(cat_dist, batched_multivar)
+
+        target_dist = distros.Uniform(torch.tensor([10., -4.]), torch.tensor([12., 4.]))
 
         # dist = distros.Normal(torch.tensor([0.0, 0.0]), 1.0)
         return obs_dist, target_dist
