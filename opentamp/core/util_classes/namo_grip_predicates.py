@@ -4470,7 +4470,7 @@ class MLAvoidObs(ExprPredicate):
             ]
         )
         col_expr = Expr(self.f, grad=self.grad_f)
-        val = -np.ones((1, 1)) * 4
+        val = -np.ones((1, 1)) * 2
         # val = np.zeros((1, 1))
         e = LEqExpr(col_expr, val)
         super(MLAvoidObs, self).__init__(name, e, attr_inds, params, expected_param_types, priority=0)
@@ -4501,7 +4501,7 @@ class BAvoidObs(ExprPredicate):
             ]
         )
         col_expr = Expr(self.f, grad=self.grad_f)
-        val = -np.ones((self.rt.belief.samples.shape[0], 1)) * 2.0
+        val = -np.ones((self.rt.belief.samples.shape[0], 1)) * 1.0
         # val = np.zeros((1, 1))
         e = LEqEpsExpr(col_expr, val, conf=0.95)
         super(BAvoidObs, self).__init__(name, e, attr_inds, params, expected_param_types, priority=0)
@@ -4509,13 +4509,13 @@ class BAvoidObs(ExprPredicate):
     def f(self, x):
         norm = np.sum(np.power(x - self.rt.belief.samples[:,:,-1].detach().numpy().T, 2), axis=0).reshape(-1, 1)
         # return np.array([diff, -diff])
-        return np.maximum(-norm, np.ones(norm.shape) * -1)
+        return -norm
 
     def grad_f(self, x):
         diff = x.T - self.rt.belief.samples[:,:,-1].detach().numpy()
         grad = 2 * diff
         eval_x = self.f(x)
-        grad = np.where(eval_x > -1.1, grad, np.zeros(grad.shape)) ## only zero constrains out when 
+        # grad = np.where(eval_x > -1.1, grad, np.zeros(grad.shape)) ## only zero constrains out when 
         # return np.array([grad[0], -grad[0]])
         return -grad
 

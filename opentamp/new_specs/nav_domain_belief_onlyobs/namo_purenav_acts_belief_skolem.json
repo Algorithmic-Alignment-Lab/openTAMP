@@ -5,7 +5,7 @@
             ["?target", "Target"],
             ["?softtarget", "SoftTarget"]
         ],
-        "horizon": 20,
+        "horizon": 40,
         "pre": [
 
         ],
@@ -38,7 +38,7 @@
             ["?target", "Target"],
             ["?softtarget", "SoftTarget"]
         ],
-        "horizon": 20,
+        "horizon": 40,
         "pre": [
             {
                 "type": "CompletedMovement",
@@ -74,7 +74,7 @@
             ["?target", "Target"],
             ["?softtarget", "SoftTarget"]
         ],
-        "horizon": 20,
+        "horizon": 40,
         "pre": [
             {
                 "forall": ["?w", "Obstacle"],
@@ -127,7 +127,7 @@
             ["?target", "Target"],
             ["?softtarget", "SoftTarget"]
         ],
-        "horizon": 20,
+        "horizon": 40,
         "pre": [
             {
                 "type": "RobotNearTarget",
@@ -165,7 +165,7 @@
             ["?target", "Target"],
             ["?softtarget", "SoftTarget"]
         ],
-        "horizon": 20,
+        "horizon": 40,
         "pre": [
             {
                 "forall": ["?w", "Obstacle"],

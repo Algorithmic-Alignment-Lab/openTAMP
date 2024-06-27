@@ -16,6 +16,26 @@
             "value": [0.0, 0.0]
         },
         {
+            "name": "obs2",
+            "type": "Obstacle",
+            "value": [0.0, 0.0]
+        },
+        {
+            "name": "obs3",
+            "type": "Obstacle",
+            "value": [0.0, 0.0]
+        },
+        {
+            "name": "obs4",
+            "type": "Obstacle",
+            "value": [0.0, 0.0]
+        },
+        {
+            "name": "obs5",
+            "type": "Obstacle",
+            "value": [0.0, 0.0]
+        },
+        {
             "name": "pr2",
             "type": "Robot",
             "pose": [-3, -3],
