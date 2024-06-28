@@ -12,12 +12,13 @@ from opentamp.policy_hooks.utils.policy_solver_utils import *
 from opentamp.envs.gym_env_nav_belief import GymEnvNav
 
 OBS_DIM = 21
+NUM_OBSTACLES = 3
 
 class GymEnvNavTheta(GymEnvNav):
     def __init__(self, deterministic=False):
         self.action_space = spaces.Box(low=0.0, high=1.0, shape=(3,), dtype='float32')
         self.observation_space = spaces.Box(low=0.0, high=1.0, shape=(OBS_DIM,), dtype='float32')
-        self.curr_state = np.array([0.0]*17)
+        self.curr_state = np.array([0.0]*(7+2*NUM_OBSTACLES))
         self.curr_obs = np.array([0.0]*OBS_DIM)
         self.obs_dist, self.target_dist = self.assemble_dist()
         self.belief_true = {}
@@ -66,16 +67,17 @@ class GymEnvNavTheta(GymEnvNav):
         
         obstacle_rel_distances = []
         obstacle_mod_angles = []
-        idxes = [7, 9, 11, 13, 15, 17]
+        curr_idx = 7
 
-        for i in range(5):
-            obstacle_rel_pose = self.curr_state[idxes[i]:idxes[i+1]] - self.curr_state[:2]
+        for i in range(NUM_OBSTACLES):
+            obstacle_rel_pose = self.curr_state[curr_idx:curr_idx+2] - self.curr_state[:2]
             obstacle_rel_distance = np.linalg.norm(obstacle_rel_pose, ord=2)
             obstacle_angle = self.compute_angle(obstacle_rel_pose)
             obstacle_rel_angle = obstacle_angle - self.curr_angle
             obstacle_mod_angle = obstacle_rel_angle % (2*np.pi)
             obstacle_rel_distances.append(obstacle_rel_distance)
             obstacle_mod_angles.append(obstacle_mod_angle)
+            curr_idx += 2
 
 
         # obstacle_rel_pos = (self.curr_state[7:9] - self.curr_state[:2]) * 1 
@@ -192,7 +194,7 @@ class GymEnvNavTheta(GymEnvNav):
         return self.curr_obs, 1.0, False, {}
     
     def reset(self):
-        self.curr_state = np.array([0.0]*17)
+        self.curr_state = np.array([0.0]*(7+2*NUM_OBSTACLES))
         self.curr_obs = np.array([0.0]*OBS_DIM)
         self.constraint_viol = False
         self.curr_angle = 0.0
@@ -232,52 +234,23 @@ class GymEnvNavTheta(GymEnvNav):
                                             color_arr)
         
         ## coloring in the safety constraint
-        color_arr = np.where(is_close_to_obj_vectorized(self.curr_state[7:9], x_coords, y_coords, r=1.0),
-                                    orange, 
-                                    color_arr)
+        curr_idx = 7
 
-        color_arr = np.where(is_close_to_obj_vectorized(self.curr_state[9:11], x_coords, y_coords, r=1.0),
-                                    orange, 
-                                    color_arr)
+        for _ in range(NUM_OBSTACLES):
+            color_arr = np.where(is_close_to_obj_vectorized(self.curr_state[curr_idx:curr_idx+2], x_coords, y_coords, r=1.0),
+                                        orange, 
+                                        color_arr)
 
-        color_arr = np.where(is_close_to_obj_vectorized(self.curr_state[11:13], x_coords, y_coords, r=1.0),
-                                    orange, 
-                                    color_arr)
+            curr_idx += 2
 
-        color_arr = np.where(is_close_to_obj_vectorized(self.curr_state[13:15], x_coords, y_coords, r=1.0),
-                                    orange, 
-                                    color_arr)
-
-        color_arr = np.where(is_close_to_obj_vectorized(self.curr_state[15:17], x_coords, y_coords, r=1.0),
-                                    orange, 
-                                    color_arr)
-
-
-
-
-
+        curr_idx = 7
         ## coloring in the obstacle
-        color_arr = np.where(is_close_to_obj_vectorized(self.curr_state[7:9], x_coords, y_coords),
-                                    blue, 
-                                    color_arr)
-
-        color_arr = np.where(is_close_to_obj_vectorized(self.curr_state[9:11], x_coords, y_coords),
-                                    blue, 
-                                    color_arr)
-
-        
-        color_arr = np.where(is_close_to_obj_vectorized(self.curr_state[11:13], x_coords, y_coords),
-                                    blue, 
-                                    color_arr)
-
-        
-        color_arr = np.where(is_close_to_obj_vectorized(self.curr_state[13:15], x_coords, y_coords),
-                                    blue, 
-                                    color_arr)
-
-        color_arr = np.where(is_close_to_obj_vectorized(self.curr_state[15:17], x_coords, y_coords),
-                                    blue, 
-                                    color_arr)
+        for _ in range(NUM_OBSTACLES):
+            color_arr = np.where(is_close_to_obj_vectorized(self.curr_state[curr_idx:curr_idx+2], x_coords, y_coords),
+                                        blue, 
+                                        color_arr)
+            
+            curr_idx += 2
 
                 
         ## coloring in the target
@@ -303,12 +276,13 @@ class GymEnvNavWrapper(GymEnvNavTheta):
             'pr2': ['pose', 'theta'],
             'target1': ['value'],
             'softtarget1': ['value'],
-            'obs1': ['value'],
-            'obs2': ['value'],
-            'obs3': ['value'],
-            'obs4': ['value'],
-            'obs5': ['value']
+            # 'obs1': ['value'],
+            # 'obs2': ['value'],
+            # 'obs3': ['value'],
+            # 'obs4': ['value'],
+            # 'obs5': ['value']
         }
+        state_vector_include.update({'obs'+str(i): ['value'] for i in range(1, NUM_OBSTACLES+1)})
         
         action_vector_include = {
             'pr2': ['pose', 'theta']
@@ -388,24 +362,35 @@ class GymEnvNavWrapper(GymEnvNavTheta):
         obstacle_abs_angle = np.arctan(proposal_obs[1]/proposal_obs[0]) if np.abs(proposal_obs[0]) > 0.001 else (np.pi/2 if proposal_obs[1]*proposal_obs[0]>0 else -np.pi/2)
         obstacle_angle = obstacle_abs_angle if proposal_obs[0] >= 0  else (obstacle_abs_angle + np.pi if -np.pi/2 <= obstacle_abs_angle < 0 else obstacle_abs_angle - np.pi)
 
-        obs = self.obs_dist.sample().detach().numpy()
-        obs_2 = self.obs_dist.sample().detach().numpy()
-        obs_3 = self.obs_dist.sample().detach().numpy()
-        obs_4 = self.obs_dist.sample().detach().numpy()
-        obs_5 = self.obs_dist.sample().detach().numpy()
+        obs_arr = []
+
+        for i in range(NUM_OBSTACLES):
+            obs_arr.append(self.obs_dist.sample().detach().numpy())
+
+        # obs = self.obs_dist.sample().detach().numpy()
+        # obs_2 = self.obs_dist.sample().detach().numpy()
+        # obs_3 = self.obs_dist.sample().detach().numpy()
+        # obs_4 = self.obs_dist.sample().detach().numpy()
+        # obs_5 = self.obs_dist.sample().detach().numpy()
         goal_pos = self.target_dist.sample().detach().numpy()
 
-        self.curr_state[7:9] = obs
-        self.curr_state[9:11] = obs_2
-        self.curr_state[11:13] = obs_3
-        self.curr_state[13:15] = obs_4
-        self.curr_state[15:17] = obs_5
+        curr_idx = 7
+
+        for i in range(NUM_OBSTACLES):
+            self.curr_state[curr_idx:curr_idx+2] = obs_arr[i]
+            curr_idx += 2
+
+        # self.curr_state[7:9] = obs
+        # self.curr_state[9:11] = obs_2
+        # self.curr_state[11:13] = obs_3
+        # self.curr_state[13:15] = obs_4
+        # self.curr_state[15:17] = obs_5
         self.curr_state[3:5] = goal_pos
 
         self.curr_angle = self.compute_angle(self.curr_state[3:5])
 
         ## initalize to center
-        return np.concatenate((np.array([0.0, 0.0]), np.array([obstacle_angle]), goal_pos, np.array([8.0,0.]), obs, obs_2, obs_3, obs_4, obs_5))
+        return np.concatenate([np.array([0.0, 0.0]), np.array([obstacle_angle]), goal_pos, np.array([8.0,0.])] + obs_arr)
 
     # determine whether or not a given state satisfies a goal condition
     def assess_goal(self, condition, state, targets=None, cont=None):
